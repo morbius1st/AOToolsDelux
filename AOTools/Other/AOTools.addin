@@ -1,0 +1,20 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<RevitAddIns>
+  <AddIn Type="Command">
+    <Text>AOTools</Text>
+    <Description>Description of AOTools</Description>
+    <Assembly>AOTools.dll</Assembly>
+    <FullClassName>AOTools.Command</FullClassName>
+    <ClientId>0a0ea05c-6663-4c32-9d36-832f49ff371a</ClientId>
+    <VendorId>pro.cyberstudio</VendorId>
+    <VendorDescription>CyberStudio</VendorDescription>
+  </AddIn>
+  <AddIn Type="Application">
+    <Name>Application AOTools</Name>
+    <Assembly>AOTools.dll</Assembly>
+    <FullClassName>AOTools.App</FullClassName>
+    <ClientId>290e5dfb-f4b4-4c0d-83ef-ab20e75d3c42</ClientId>
+    <VendorId>pro.cyberstudio</VendorId>
+    <VendorDescription>CyberStudio</VendorDescription>
+  </AddIn>
+</RevitAddIns>
