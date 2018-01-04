@@ -9,16 +9,16 @@ using Autodesk.Revit.UI;
 
 namespace AOTools
 {
-	class App : IExternalApplication
-	{
-		public Result OnStartup(UIControlledApplication a)
-		{
-			return Result.Succeeded;
-		}
-
-		public Result OnShutdown(UIControlledApplication a)
-		{
-			return Result.Succeeded;
-		}
-	}
+//	class App : IExternalApplication
+//	{
+//		public Result OnStartup(UIControlledApplication a)
+//		{
+//			return Result.Succeeded;
+//		}
+//
+//		public Result OnShutdown(UIControlledApplication a)
+//		{
+//			return Result.Succeeded;
+//		}
+//	}
 }
