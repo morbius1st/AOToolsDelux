@@ -5,10 +5,9 @@ using Form = System.Windows.Forms.Form;
 using Point = System.Drawing.Point;
 
 using static AOTools.Util;
-using Settings = UtilityLibrary.Settings<AOTools.SettingsFileUser>;
 using UtilityLibrary;
 
-using static AOTools.UserSettings;
+using static UtilityLibrary.SettingsUser;
 
 namespace AOTools
 {
@@ -25,9 +24,9 @@ namespace AOTools
 
 		private void FormQueryPoints_FormClosing(object sender, FormClosingEventArgs e)
 		{
-			_uSet.FormMeasurePointsLocation = this.Location;
-			_uSet.MeasurePointsShowWorkplane = this.ShowWorkplane;
-			_us.Save();
+			USet.FormMeasurePointsLocation = this.Location;
+			USet.MeasurePointsShowWorkplane = this.ShowWorkplane;
+			USetting.Save();
 			
 		}
 
@@ -38,16 +37,16 @@ namespace AOTools
 
 		private void LoadSettings()
 		{
-			if (_uSet.FormMeasurePointsLocation.Equals(new Point(0, 0)))
+			if (USet.FormMeasurePointsLocation.Equals(new Point(0, 0)))
 			{
 				CenterToParent();
 			}
 			else
 			{
-				this.Location = _uSet.FormMeasurePointsLocation;
+				this.Location = USet.FormMeasurePointsLocation;
 			}
 
-			ShowWorkplane = _uSet.MeasurePointsShowWorkplane;
+			ShowWorkplane = USet.MeasurePointsShowWorkplane;
 		}
 
 		

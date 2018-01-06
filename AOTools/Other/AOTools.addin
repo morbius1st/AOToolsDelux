@@ -4,7 +4,7 @@
     <Text>Toggle Reference Planes</Text>
     <Description>Toggle Refence Planes On/Off</Description>
     <Assembly>AOTools.dll</Assembly>
-    <FullClassName>AOTools.RefPlaneToggle</FullClassName>
+    <FullClassName>AOTools.ToggleRefPlane</FullClassName>
     <ClientId>0a0ea05c-6663-4c32-9d36-832f49ff371a</ClientId>
     <VendorId>pro.cyberstudio</VendorId>
     <VendorDescription>CyberStudio</VendorDescription>
@@ -13,7 +13,7 @@
     <Text>Toggle Annotation Visibility</Text>
     <Description>Toggle Annotation Visibility On/Off</Description>
     <Assembly>AOTools.dll</Assembly>
-    <FullClassName>AOTools.AnnotationVisibilityToggle</FullClassName>
+    <FullClassName>AOTools.ToggleAnnotationVisibility</FullClassName>
     <ClientId>2005A385-4AD4-497F-B627-9A7DDAB058E2</ClientId>
     <VendorId>pro.cyberstudio</VendorId>
     <VendorDescription>CyberStudio</VendorDescription>

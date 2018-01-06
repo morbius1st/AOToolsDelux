@@ -13,7 +13,7 @@ using Autodesk.Revit.UI.Selection;
 namespace AOTools
 {
 	[Transaction(TransactionMode.Manual)]
-	public class AnnotationVisibilityToggle : IExternalCommand
+	public class ToggleAnnotationVisibility : IExternalCommand
 	{
 		public Result Execute(
 		  ExternalCommandData commandData,

@@ -17,19 +17,14 @@ using UtilityLibrary;
 namespace AOTools
 {
 	// sample settings app
-	[XmlRoot("AppSettings")]
-	public class SettingsFileApp : SettingsFileBase
+	public class AppSettings : SettingsPathFileUserBase
 	{
 //		public int AppI { get; set; } = 0;
 //		public bool AppB { get; set; } = false;
 //		public double AppD { get; set; } = 0.0;
 //		public string AppS { get; set; } = "this is a App";
 //		public int[] AppIs { get; set; } = new[] { 20, 30 };
-	
-		// read only properties are not serialized
-		[XmlIgnore]
-		public override SettingsPathBase SettingsPath { get; } = new SettingsPathAppDefault();
-		public override string SETTINGFILEVERSION { get; } = "0.0.0.1";
+
 	
 	}
 }

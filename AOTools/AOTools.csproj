@@ -63,7 +63,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="..\..\..\UtilityLibrary\UtilityLibrary\Settings.cs">
-      <Link>Settings.cs</Link>
+      <Link>Settings\Settings.cs</Link>
     </Compile>
     <Compile Include="App.cs" />
     <Compile Include="DxMeasure.cs" />
@@ -74,12 +74,11 @@
       <DependentUpon>FormMeasurePoints.cs</DependentUpon>
     </Compile>
     <Compile Include="PickedBox2.cs" />
-    <Compile Include="AnnotationVisibilityToggle.cs" />
-    <Compile Include="RefPlaneToggle.cs" />
+    <Compile Include="ToggleAnnotationVisibility.cs" />
+    <Compile Include="ToggleRefPlane.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="SettingObjects.cs" />
-    <Compile Include="SettingsFileApp.cs" />
-    <Compile Include="SettingsFileUser.cs" />
+    <Compile Include="Settings\SettingsApp.cs" />
+    <Compile Include="Settings\SettingsUser.cs" />
     <Compile Include="Util.cs" />
   </ItemGroup>
   <ItemGroup>

@@ -16,18 +16,12 @@ using Point = System.Drawing.Point;
 namespace AOTools
 {
 	// sample Settings User
-	[XmlRoot("UserSettings")]
-	public class SettingsFileUser : SettingsFileBase
+	public class UserSettings : SettingsPathFileUserBase
 	{
 		public Point FormMeasurePointsLocation = new Point(0, 0);
 
 		public bool MeasurePointsShowWorkplane = false;
 
-
-		// read only property does not get serialized
-		[XmlIgnore]
-		public override SettingsPathBase SettingsPath { get; } = new SettingsPathUserDefault();
-		public override string SETTINGFILEVERSION { get; } = "0.0.0.1";
 	}
 
 }

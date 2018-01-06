@@ -13,7 +13,7 @@ using Autodesk.Revit.UI.Selection;
 namespace AOTools
 {
 	[Transaction(TransactionMode.Manual)]
-	public class RefPlaneToggle : IExternalCommand
+	public class ToggleRefPlane : IExternalCommand
 	{
 		public Result Execute(
 		  ExternalCommandData commandData,
