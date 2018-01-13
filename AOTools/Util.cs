@@ -1,12 +1,31 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Diagnostics;
+using System.IO;
+using System.Xml.Serialization;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI.Selection;
+
+using static AOTools.AppRibbon;
+
+using UtilityLibrary;
 
 namespace AOTools
 {
 	internal static class Util
 	{
-		public static readonly string nl = Environment.NewLine; 
+		public static RevitAddIns addinManifest;
+		public static readonly string nl = Environment.NewLine;
+
+		public static void logMsgDbLn(string msg1, string msg2 = "")
+		{
+			Debug.WriteLine($"{msg1,30}{msg2}");
+		}
+
+		public static void logMsgDbLn2(string msg1, string msg2 = "")
+		{
+			logMsgDbLn(msg1 + "| ", msg2);
+		}
 
 		internal const ObjectSnapTypes snaps =
 			ObjectSnapTypes.Centers | ObjectSnapTypes.Endpoints | ObjectSnapTypes.Intersections |
@@ -15,6 +34,7 @@ namespace AOTools
 
 		public static string FormatLengthNumber(double length, Units units)
 		{
+			
 			return UnitFormatUtils.Format(units,
 				UnitType.UT_Length, length, true, false);
 		}
@@ -89,6 +109,50 @@ namespace AOTools
 
 			return vtype;
 		}
+
+		private static void ReadManifest()
+		{
+			string path = SettingsUtil.AssemblyDirectory;
+
+			using (FileStream fs =
+				new FileStream(path + "\\" + AppRibbon.APP_NAME + ".addin", FileMode.Open))
+			{
+				XmlSerializer xs = new XmlSerializer(typeof(RevitAddIns));
+				addinManifest = (RevitAddIns) xs.Deserialize(fs);
+			}
+		}
+
+		public static string GetVendorId()
+		{
+			if (addinManifest == null)
+			{
+				ReadManifest();
+			}
+
+			return addinManifest?.AddIn[0].VendorId;
+		}
+
+		// get reference to the project basepoint
+		public static Element GetProjectBasepoint()
+		{
+			ElementCategoryFilter sitElementCategoryFilter =
+				new ElementCategoryFilter(BuiltInCategory.OST_ProjectBasePoint);
+
+			FilteredElementCollector collector =
+				new FilteredElementCollector(Doc);
+
+			IList<Element> siteElements =
+				collector.WherePasses(sitElementCategoryFilter).ToElements();
+
+			if (siteElements.Count > 1)
+			{
+				return null;
+			}
+
+			return siteElements[0];
+		}
+
+
 	}
 
 	internal struct PointMeasurements

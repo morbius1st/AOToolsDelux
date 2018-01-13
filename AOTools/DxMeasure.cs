@@ -1,9 +1,5 @@
 #region Namespaces
 
-using System;
-using System.Configuration;
-using System.Diagnostics;
-using System.Reflection;
 using System.Windows.Forms;
 
 using Autodesk.Revit.Attributes;
