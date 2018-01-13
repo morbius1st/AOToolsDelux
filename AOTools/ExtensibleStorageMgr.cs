@@ -13,6 +13,9 @@ using Autodesk.Revit.UI;
 
 using static AOTools.AppRibbon;
 using static AOTools.Util;
+using static AOTools.ExtensibleStorageMgr.SBasicKey;
+using static AOTools.ExtensibleStorageMgr.SUnitKey;
+
 using FieldInfo = AOTools.ExtensibleStorageMgr.FieldInfo;
 
 using static UtilityLibrary.MessageUtilities;
@@ -31,19 +34,21 @@ namespace AOTools
 	{
 		public static FieldInfo Clone(this FieldInfo fi)
 		{
-			return new FieldInfo(fi.FieldNumber, fi.Name,
-					fi.Desc, fi.Value, fi.UnitType, fi.Guid);
+			return new FieldInfo(fi.Key, fi.Name,fi.Desc, fi.Value, 
+				fi.UnitType, fi.Guid);
 		}
 	}
 
 	public class ExtensibleStorageMgr
 	{
+		public const string KEY_FMT_STR = "0000";
+
 		private static bool initalized = false;
 
 
 		public class FieldInfo
 		{
-			public int FieldNumber { get;}
+			public SchemaKey Key { get; }
 			public string Name { get; }
 			public string Desc { get; }
 			public UnitType UnitType { get; }
@@ -51,10 +56,10 @@ namespace AOTools
 			public dynamic Value;
 
 
-			public FieldInfo(int fieldNumber, string name, string desc, dynamic val, 
+			public FieldInfo(SchemaKey key, string name, string desc, dynamic val, 
 				UnitType unitType = UnitType.UT_Undefined, string guid = "")
 			{
-				FieldNumber = fieldNumber;
+				Key = key;
 				Name = name;
 				Desc = desc;
 				Value = val;
@@ -62,12 +67,27 @@ namespace AOTools
 				Guid = guid;
 			}
 //
-//			public static FieldInfo Duplicate(FieldInfo fi)
+//			public FieldInfo(SubScmaFldNum key, string name, string desc, dynamic val,
+//							UnitType unitType = UnitType.UT_Undefined, string guid = "")
 //			{
-//				return new FieldInfo(fi.FieldNumber, fi.Name, 
-//					fi.Desc, fi.Value, fi.UnitType, fi.Guid);
+//				Key = ((int) key).ToString(KEY_FMT_STR);
+//				Name = name;
+//				Desc = desc;
+//				Value = val;
+//				UnitType = unitType;
+//				Guid = guid;
 //			}
-
+//
+//			public FieldInfo(string key, string name, string desc, dynamic val,
+//							UnitType unitType = UnitType.UT_Undefined, string guid = "")
+//			{
+//				Key = key;
+//				Name = name;
+//				Desc = desc;
+//				Value = val;
+//				UnitType = unitType;
+//				Guid = guid;
+//			}
 
 			public dynamic ExtractValue(Entity e, Field f)
 			{
@@ -102,33 +122,51 @@ namespace AOTools
 			IGNORE = -1
 		}
 
-		public enum SchemaFldNum 
+		public abstract class SchemaKey
 		{
-			VERSION = 0,
-			USE_OFFICE = 1,
-			AUTO_RESTORE = 2,
-			CURRENT = 3
+			public abstract int Value { get; }
 		}
 
-
-		enum SubScmaFldNum
+		public class SBasicKey : SchemaKey
 		{
-			VERSION = 0,
-			STYLE_NAME = 1,
-			CAN_BE_ERASED = 2,
-			UNIT_SYSTEM = 3,
-			UNIT_TYPE = 4,
-			ACCURACY = 5,
-			DUT = 6,
-			UST = 7,
-			SUP_SPACE = 8,
-			SUP_LEAD_ZERO = 9,
-			SUP_TRAIL_ZERO = 10,
-			USE_DIG_GRP = 11,
-			USE_PLUS_PREFIX = 12,
+			public SBasicKey(int value)
+			{
+				this.Value = value;
+			}
+
+			public override int Value { get; }
+
+			public static readonly SBasicKey UNDEFINED = new SBasicKey(-1);
+			public static readonly SBasicKey VERSION_BASIC = new SBasicKey(0);
+			public static readonly SBasicKey USE_OFFICE = new SBasicKey(1);
+			public static readonly SBasicKey AUTO_RESTORE = new SBasicKey(2);
+			public static readonly SBasicKey COUNT = new SBasicKey(3);
+			public static readonly SBasicKey CURRENT = new SBasicKey(4);
 		}
 
+		public class SUnitKey : SchemaKey
+		{
+			public SUnitKey(int value)
+			{
+				this.Value = value;
+			}
 
+			public override int Value { get; }
+
+			public static readonly SUnitKey VERSION_SUB = new SUnitKey(0);
+			public static readonly SUnitKey STYLE_NAME = new SUnitKey(1);
+			public static readonly SUnitKey CAN_BE_ERASED = new SUnitKey(2);
+			public static readonly SUnitKey UNIT_SYSTEM = new SUnitKey(3);
+			public static readonly SUnitKey UNIT_TYPE = new SUnitKey(4);
+			public static readonly SUnitKey ACCURACY = new SUnitKey(5);
+			public static readonly SUnitKey DUT = new SUnitKey(6);
+			public static readonly SUnitKey UST = new SUnitKey(7);
+			public static readonly SUnitKey SUP_SPACE = new SUnitKey(8);
+			public static readonly SUnitKey SUP_LEAD_ZERO = new SUnitKey(9);
+			public static readonly SUnitKey SUP_TRAIL_ZERO = new SUnitKey(10);
+			public static readonly SUnitKey USE_DIG_GRP = new SUnitKey(11);
+			public static readonly SUnitKey USE_PLUS_PREFIX = new SUnitKey(12);
+		}
 
 		// master schema
 		//  field 0 = version
@@ -163,77 +201,117 @@ namespace AOTools
 		private const string SCHEMA_DESC = "unit style setings";
 		public static readonly Guid SchemaGUID = new Guid("B1788BC0-381E-4F4F-BE0B-93A93B947000");
 
-		public static List<FieldInfo> SchemaFields;
-		private static List<FieldInfo> _schemaFields = new List<FieldInfo>()
+		public static Dictionary<SBasicKey, FieldInfo> SchemaFields;
+		private static readonly Dictionary<SBasicKey, FieldInfo> _schemaFields = 
+			new Dictionary<SBasicKey, FieldInfo>()
 		{
-			new FieldInfo((int) SchemaFldNum.CURRENT, 
-				"CurrentUnitStyle", "number of the current style", 0),
+			{	(CURRENT), 
+					new FieldInfo(CURRENT, "CurrentUnitStyle", 
+						"number of the current style", 0)
+			},
 
-			new FieldInfo((int) SchemaFldNum.VERSION, 
-				"version", "version", "1.0"),
+			{	(COUNT), 
+					new FieldInfo(COUNT, "Count", 
+						"number of unit styles", 3)
+			},
 
-			new FieldInfo((int) SchemaFldNum.USE_OFFICE, 
-				"UseOfficeUnitStyle", "use the office standard style", true),
+			{	(USE_OFFICE),
+					new FieldInfo(USE_OFFICE, "UseOfficeUnitStyle", 
+						"use the office standard style", true)
+			},
 
-			new FieldInfo((int) SchemaFldNum.AUTO_RESTORE, 
-				"AutoRestoreUnitStyle", "auto update to the selected unit style", true),
+			{	(VERSION_BASIC),
+					new FieldInfo(VERSION_BASIC, "version", 
+						"version", "1.0")
+			},
+
+			{	(AUTO_RESTORE),
+					new FieldInfo(AUTO_RESTORE, 
+						"AutoRestoreUnitStyle", "auto update to the selected unit style", true)
+			}
 		};
 
 		static FieldInfo _subSchemaFieldInfo = 
-			new FieldInfo(-1, "LocalUnitStyle{0:00}",
+			new FieldInfo(UNDEFINED, "LocalUnitStyle{0:00}",
 				"subschema for the local unit style", 
 				null, UnitType.UT_Number, UNIT_SCHEMA_GUID);
-
 
 
 		// unit style sub-schema information
 		//
 		private const string UNIT_SCHEMA_NAME = "UnitStyleSchema";
 		private const string UNIT_SCHEMA_DESC = "unit style sub schema";
-		private static readonly Guid SubSchemaGuid = 
-			new Guid(UNIT_SCHEMA_GUID + "99");
+//		private static readonly Guid SubSchemaGuid = 
+//			new Guid(UNIT_SCHEMA_GUID + "99");
 
-		public static List<FieldInfo> UnitSchemaFields;
-		private static List<FieldInfo> _unitSchemaFields = new List<FieldInfo>()
+		public static Dictionary<SUnitKey, FieldInfo>[] UnitSchemaFields;
+		private static readonly Dictionary<SUnitKey, FieldInfo> _unitSchemaFields = 
+			new Dictionary<SUnitKey, FieldInfo>()
 		{
-			new FieldInfo((int) SubScmaFldNum.VERSION,
-				"version", "version", "1.0"),
+			{   (VERSION_SUB),
+				new FieldInfo(VERSION_SUB,
+					"version", "version", "1.0")
+			},
 
-			new FieldInfo((int) SubScmaFldNum.STYLE_NAME, 
-				"UnitStyle", "name of this unit style", "unit style {0:00}"),
+			{   (STYLE_NAME),
+				new FieldInfo(STYLE_NAME, 
+					"UnitStyle", "name of this unit style", "unit style {0:00}")
+			},
 
-			new FieldInfo((int) SubScmaFldNum.CAN_BE_ERASED, 
-				"CanBeErased", "can this unit style be erased", false),
+			{   (CAN_BE_ERASED),
+				new FieldInfo(CAN_BE_ERASED, 
+					"CanBeErased", "can this unit style be erased", false)
+			},
 
-			new FieldInfo((int) SubScmaFldNum.UNIT_SYSTEM,
-				"US", "unit system", (int) UnitSystem.Imperial),
+			{   (UNIT_SYSTEM),
+				new FieldInfo(UNIT_SYSTEM,
+					"US", "unit system", (int) UnitSystem.Imperial)
+			},
 
-			new FieldInfo((int) SubScmaFldNum.UNIT_TYPE, 
-				"UnitType", "unit type", (int) UnitType.UT_Length),
+			{   (UNIT_TYPE),
+				new FieldInfo(UNIT_TYPE, 
+					"UnitType", "unit type", (int) UnitType.UT_Length)
+			},
 
-			new FieldInfo((int) SubScmaFldNum.ACCURACY, 
-				"Accuracy", "accuracy", (1.0 / 12.0) / 16.0),
+			{   (ACCURACY),
+				new FieldInfo(ACCURACY, 
+					"Accuracy", "accuracy", (1.0 / 12.0) / 16.0)
+			},
 
-			new FieldInfo((int) SubScmaFldNum.DUT, "DUT",
-				"display unit type", (int) DisplayUnitType.DUT_FEET_FRACTIONAL_INCHES),
+			{   (DUT),
+				new FieldInfo(DUT, "DUT",
+					"display unit type", (int) DisplayUnitType.DUT_FEET_FRACTIONAL_INCHES)
+			},
 
-			new FieldInfo((int) SubScmaFldNum.UST, 
-				"UST","unit symbol type", (int) UnitSymbolType.UST_NONE),
+			{   (UST),
+				new FieldInfo(UST, 
+					"UST","unit symbol type", (int) UnitSymbolType.UST_NONE)
+			},
 
-			new FieldInfo((int) SubScmaFldNum.SUP_SPACE, 
-				"SuppressSpaces", "suppress spaces", (int) FmtOpt.YES),
+			{   (SUP_SPACE),
+				new FieldInfo(SUP_SPACE, 
+					"SuppressSpaces", "suppress spaces", (int) FmtOpt.YES)
+			},
 
-			new FieldInfo((int) SubScmaFldNum.SUP_LEAD_ZERO,
-				"SuppressLeadZero", "suppress leading zero", (int) FmtOpt.NO),
+			{   (SUP_LEAD_ZERO),
+				new FieldInfo(SUP_LEAD_ZERO,
+					"SuppressLeadZero", "suppress leading zero", (int) FmtOpt.NO)
+			},
 
-			new FieldInfo((int) SubScmaFldNum.SUP_TRAIL_ZERO, 
-				"SuppressTrailZero", "suppress trailing zero", (int) FmtOpt.IGNORE),
+			{   (SUP_TRAIL_ZERO),
+				new FieldInfo(SUP_TRAIL_ZERO, 
+					"SuppressTrailZero", "suppress trailing zero", (int) FmtOpt.IGNORE)
+			},
 
-			new FieldInfo((int) SubScmaFldNum.USE_DIG_GRP, 
-				"DigitGrouping", "digit grouping", (int) FmtOpt.YES),
+			{   (USE_DIG_GRP),
+				new FieldInfo(USE_DIG_GRP, 
+					"DigitGrouping", "digit grouping", (int) FmtOpt.YES)
+			},
 
-			new FieldInfo((int) SubScmaFldNum.USE_PLUS_PREFIX, 
-				"PlusPrefix", "plus prefix", (int) FmtOpt.NO),
+			{	(USE_PLUS_PREFIX),
+				new FieldInfo(USE_PLUS_PREFIX, 
+					"PlusPrefix", "plus prefix", (int) FmtOpt.NO)
+			}
 		};
 
 		// ******************************
@@ -241,13 +319,42 @@ namespace AOTools
 		// ******************************
 		private static void Init()
 		{
+
 			if (initalized) return;
 
 			initalized = true;
 
-			SchemaFields = new List<FieldInfo>(_schemaFields);
+			DeleteCurrentSchema();
+
+			SchemaFields = new Dictionary<SBasicKey, FieldInfo>(_schemaFields);
+
+			InitUnitSchema(_schemaFields[COUNT].Value);
 		}
 
+		private static void DeleteCurrentSchema()
+		{
+			Schema schema = Schema.Lookup(SchemaGUID);
+			if (schema != null)
+			{
+				Element elem = GetProjectBasepoint();
+				elem.DeleteEntity(schema);
+			}
+		}
+
+		private static void InitUnitSchema(int count)
+		{
+			UnitSchemaFields = new Dictionary<SUnitKey, FieldInfo>
+				[count];
+
+			// create the UnitSchema's
+			// personlize the sub schema's
+			for (int i = 0; i < count; i++)
+			{
+				UnitSchemaFields[i] = new Dictionary<SUnitKey, FieldInfo>(_unitSchemaFields);
+				UnitSchemaFields[i][STYLE_NAME].Value =
+					string.Format(_unitSchemaFields[STYLE_NAME].Value, i);
+			}
+		}
 
 		// ******************************
 		// save settings routines
@@ -265,9 +372,6 @@ namespace AOTools
 		// this saves both the basic and the unit styles
 		private static bool SaveRevitSettings()
 		{
-			SchemaFields.Sort((a, b) => (a.FieldNumber.CompareTo(b.FieldNumber)));
-//			UnitSchemaFields.Sort((a, b) => (a.FieldNumber.CompareTo(b.FieldNumber)));
-
 			try
 			{
 				Element elem = GetProjectBasepoint();
@@ -283,12 +387,40 @@ namespace AOTools
 				// this makes the basic setting fields
 				MakeFields(sbld, SchemaFields);
 
+				Dictionary<string, string> subSchemaFields = 
+					new Dictionary<string, string>(3);
+
+				// temp - test making ) unit subschemas
+				for (int i = 0; i < 3; i++)
+				{
+					string suffix = i.ToString("00");
+					string guid = _subSchemaFieldInfo.Guid + suffix;
+					string fieldName =
+						string.Format(_subSchemaFieldInfo.Name, i);
+					FieldBuilder fbld =
+						sbld.AddSimpleField(fieldName, typeof(Entity));
+					fbld.SetDocumentation(_subSchemaFieldInfo.Desc);
+					fbld.SetSubSchemaGUID(new Guid(guid));
+
+					subSchemaFields.Add(fieldName, guid);
+				}
+
 				Schema schema = sbld.Finish();
 
 				Entity entity = new Entity(schema);
 
 				// set the basic fields
 				SaveFieldValues(schema, entity, SchemaFields);
+
+				int j = 0;
+
+				foreach (KeyValuePair<string, string> kvp in subSchemaFields)
+				{
+					Field f = schema.GetField(kvp.Key);
+					Entity subEntity = 
+						MakeUnitSchema(kvp.Value, UnitSchemaFields[j]);
+					entity.Set(f, subEntity);
+				}
 
 				using (Transaction t = new Transaction(Doc, "Unit Style Settings"))
 				{
@@ -312,11 +444,12 @@ namespace AOTools
 		/// </summary>
 		/// <param name="sbld"></param>
 		/// <param name="fieldList"></param>
-		private static void MakeFields(SchemaBuilder sbld, List<FieldInfo> fieldList)
+		private static void MakeFields<T>(SchemaBuilder sbld, 
+			Dictionary<T, FieldInfo> fieldList)
 		{
-			foreach (FieldInfo fieldInfo in fieldList)
+			foreach (KeyValuePair<T, FieldInfo> kvp in fieldList)
 			{
-				MakeField(sbld, fieldInfo);
+				MakeField(sbld, kvp.Value);
 			}
 		}
 
@@ -342,17 +475,11 @@ namespace AOTools
 		/// routine to make a unit schema and its fields
 		/// </summary>
 		/// <param name="guid"></param>
+		/// <param name="unitSchemaFields"></param>
 		/// <returns>SchemaBuilder</returns>
-		private static Entity MakeUnitSchema(string guid)
+		private static Entity MakeUnitSchema(string guid, 
+			Dictionary<SUnitKey, FieldInfo> unitSchemaFields)
 		{
-			// create a copy of the template
-			UnitSchemaFields = new List<FieldInfo>(_unitSchemaFields);
-			// sort to insure everythins is in the correct order
-			UnitSchemaFields.Sort((a, b) => 
-					a.FieldNumber.CompareTo(b.FieldNumber));
-
-
-
 			SchemaBuilder sbld = new SchemaBuilder(new Guid(guid));
 
 			sbld.SetReadAccessLevel(AccessLevel.Public);
@@ -361,22 +488,23 @@ namespace AOTools
 			sbld.SetSchemaName(UNIT_SCHEMA_NAME);
 			sbld.SetDocumentation(UNIT_SCHEMA_DESC);
 
-			MakeFields(sbld, _unitSchemaFields);
+			MakeFields(sbld, unitSchemaFields);
 
 			Schema schema = sbld.Finish();
 
 			Entity entity = new Entity(schema);
 
-			SaveFieldValues(schema, entity, _unitSchemaFields);
+			SaveFieldValues(schema, entity, unitSchemaFields);
 
 			return entity;
 		}
 
-		private static void SaveFieldValues(Schema schema, Entity entity, List<FieldInfo> fieldList)
+		private static void SaveFieldValues<T>(Schema schema, Entity entity,
+			Dictionary<T, FieldInfo> fieldList)
 		{
-			foreach (FieldInfo fieldInfo in fieldList) {
-				Field field = schema.GetField(fieldInfo.Name);
-				entity.Set(field, fieldInfo.Value);
+			foreach (KeyValuePair<T, FieldInfo> kvp in fieldList) {
+				Field field = schema.GetField(kvp.Value.Name);
+				entity.Set(field, kvp.Value.Value);
 			}
 		}
 
@@ -390,7 +518,9 @@ namespace AOTools
 		// reads them back, and then flags that this is initalized
 		public static bool ReadRevitBasicSettings()
 		{
-			if (ReadRevitSettings(SchemaFields, SchemaGUID))
+			Init();
+
+			if (!ReadRevitSettings(SchemaFields, SchemaGUID))
 			{
 				SaveRevitBasicSettings();
 
@@ -400,8 +530,6 @@ namespace AOTools
 				}
 			}
 
-			Init();
-
 			return true;
 		}
 
@@ -409,7 +537,8 @@ namespace AOTools
 		// general routine to read through a saved schema and 
 		// get the value from each field 
 		// this will work with any field list
-		private static bool ReadRevitSettings(List<FieldInfo> fieldList, Guid guid)
+		private static bool ReadRevitSettings<T>(Dictionary<T, FieldInfo> fieldList, 
+			Guid guid)
 		{
 			try
 			{
@@ -419,9 +548,9 @@ namespace AOTools
 
 				Element elem = GetProjectBasepoint();
 
-				foreach (FieldInfo fieldInfo in fieldList)
+				foreach (KeyValuePair<T, FieldInfo> kvp in fieldList)
 				{
-					fieldInfo.Value = GetFieldValue(elem, schema, fieldInfo);
+					kvp.Value.Value = GetFieldValue(elem, schema, kvp.Value);
 				}
 			}
 			catch { throw; }
@@ -449,13 +578,15 @@ namespace AOTools
 			ListFieldInfo(SchemaFields);
 		}
 
-		private static void ListFieldInfo(List<FieldInfo> fieldList)
+		private static void ListFieldInfo<T>(Dictionary<T, FieldInfo> fieldList)
 		{
-			for (int i = 0; i < fieldList.Count; i++)
+			int i = 0;
+
+			foreach (KeyValuePair<T, FieldInfo> kvp in fieldList)
 			{
-				logMsgDbLn2("field #" + i, fieldList[i].FieldNumber
-					+ "  name| " + fieldList[i].Name
-					+ "  value| " + fieldList[i].Value);
+				logMsgDbLn2("field #" + i++, kvp.Key
+					+ "  name| " + kvp.Value.Name
+					+ "  value| " + kvp.Value.Value);
 			}
 		}
 

@@ -9,10 +9,11 @@ using Autodesk.Revit.UI;
 using static AOTools.Util;
 using static AOTools.AppRibbon;
 
+using static AOTools.ExtensibleStorageMgr;
+using static AOTools.ExtensibleStorageMgr.SBasicKey;
+
 using UtilityLibrary;
 using static UtilityLibrary.MessageUtilities;
-
-using static AOTools.ExtensibleStorageMgr;
 
 #endregion
 
@@ -34,7 +35,7 @@ namespace AOTools
 			logMsgDbLn2("settings", "before");
 			ListBasicFieldInfo();
 
-			_schemaFields[(int) SchemaFldNum.VERSION].Value = "100.00";
+			SchemaFields[VERSION_BASIC].Value = "100.00";
 
 			SaveRevitBasicSettings();
 
@@ -58,6 +59,31 @@ namespace AOTools
 
 			return Result.Succeeded;
 		}
+//
+//		private void test()
+//		{
+//			Dictionary<SchemaFldNum, string> t = new Dictionary<SchemaFldNum, string>()
+//			{
+//				{ SchemaFldNum.VERSION_BASIC, "version"},
+//				{ SchemaFldNum.AUTO_RESTORE, "auto restore" },
+//				{ SchemaFldNum.CURRENT, "current" },
+//				{ SchemaFldNum.UNDEFINED, "undefined" },
+//				{ SchemaFldNum.USE_OFFICE, "use office" }
+//			};
+//
+//			int i = 0;
+//
+//			logMsg(Util.nl);
+//			logMsgDbLn2("test using enum field as key");
+//
+//			foreach (KeyValuePair<SchemaFldNum, string> kvp in t)
+//			{
+//				logMsgDbLn2("item", i++.ToString("000") +
+//					"key / value|  " + kvp.Key.ToString() 
+//					+ "  value| " + kvp.Value);
+//				
+//			}
+//		}
 		
 	}
 
