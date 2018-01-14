@@ -15,7 +15,7 @@ namespace AOTools
 	internal static class Util
 	{
 		public static RevitAddIns addinManifest;
-		public static readonly string nl = Environment.NewLine;
+//		public static readonly string nl = Environment.NewLine;
 
 		public static void logMsgDbLn(string msg1, string msg2 = "")
 		{
@@ -132,24 +132,31 @@ namespace AOTools
 			return addinManifest?.AddIn[0].VendorId;
 		}
 
+		private static Element _projBasePt = null;
+
 		// get reference to the project basepoint
 		public static Element GetProjectBasepoint()
 		{
-			ElementCategoryFilter sitElementCategoryFilter =
-				new ElementCategoryFilter(BuiltInCategory.OST_ProjectBasePoint);
-
-			FilteredElementCollector collector =
-				new FilteredElementCollector(Doc);
-
-			IList<Element> siteElements =
-				collector.WherePasses(sitElementCategoryFilter).ToElements();
-
-			if (siteElements.Count > 1)
+			if (_projBasePt == null)
 			{
-				return null;
+				ElementCategoryFilter sitElementCategoryFilter =
+					new ElementCategoryFilter(BuiltInCategory.OST_ProjectBasePoint);
+
+				FilteredElementCollector collector =
+					new FilteredElementCollector(Doc);
+
+				IList<Element> siteElements =
+					collector.WherePasses(sitElementCategoryFilter).ToElements();
+
+				if (siteElements.Count > 1)
+				{
+					return null;
+				}
+
+				_projBasePt = siteElements[0];
 			}
 
-			return siteElements[0];
+			return _projBasePt;
 		}
 
 

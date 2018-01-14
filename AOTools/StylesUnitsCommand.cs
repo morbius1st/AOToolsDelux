@@ -11,6 +11,7 @@ using static AOTools.AppRibbon;
 
 using static AOTools.ExtensibleStorageMgr;
 using static AOTools.ExtensibleStorageMgr.SBasicKey;
+using static AOTools.ExtensibleStorageMgr.SUnitKey;
 
 using UtilityLibrary;
 using static UtilityLibrary.MessageUtilities;
@@ -29,23 +30,33 @@ namespace AOTools
 	{
 		public Result Execute(ExternalCommandData commandData, ref string message, ElementSet elements)
 		{
-
+//			DeleteCurrentSchema();
+//			return Result.Succeeded;
 			ReadRevitBasicSettings();
 
 			logMsgDbLn2("settings", "before");
-			ListBasicFieldInfo();
+			ListFieldInfo();
+			logMsg(nl);
+			logMsg(nl);
 
-			SchemaFields[VERSION_BASIC].Value = "100.00";
+
+			SchemaFields[VERSION_BASIC].Value = "101.00";
+
+			UnitSchemaFields[0][VERSION_UNIT].Value = "sub version 110";
+			UnitSchemaFields[1][VERSION_UNIT].Value = "sub version 111";
+			UnitSchemaFields[2][VERSION_UNIT].Value = "sub version 112";
 
 			SaveRevitBasicSettings();
 
 			logMsgDbLn2("settings", "after 1");
-			ListBasicFieldInfo();
+			ListFieldInfo();
+			logMsg(nl);
+			logMsg(nl);
 
 			ReadRevitBasicSettings();
 
 			logMsgDbLn2("settings", "after 2");
-			ListBasicFieldInfo();
+			ListFieldInfo();
 
 			//			ExtensibleStorageMgr.SaveRevitSettings2();
 			//			TaskDialog.Show(APP_NAME, "read message|\n" +
