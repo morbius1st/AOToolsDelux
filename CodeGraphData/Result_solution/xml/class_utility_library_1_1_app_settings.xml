@@ -1,0 +1,93 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.6">
+  <compounddef id="class_utility_library_1_1_app_settings" kind="class" prot="public">
+    <compoundname>UtilityLibrary::AppSettings</compoundname>
+      <sectiondef kind="public-static-attrib">
+      <memberdef kind="variable" id="class_utility_library_1_1_app_settings_1a042777961b9a4d2fa13513b3f8eb3155" prot="public" static="yes" mutable="no">
+        <type>readonly Settings&lt; SettingsFileApp &gt;</type>
+        <definition>readonly Settings&lt;SettingsFileApp&gt; UtilityLibrary.AppSettings.ASetting</definition>
+        <argsstring></argsstring>
+        <name>ASetting</name>
+        <initializer>= <ref refid="class_utility_library_1_1_app_settings_1a59c0053d5edb2c9283843e55a6d4bc80" kindref="member">AppSettings.GetInstance</ref>()</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="B:/Programming/VisualStudioProjects/UtilityLibrary/UtilityLibrary/Settings - Copy.cs" line="49" column="1" bodyfile="B:/Programming/VisualStudioProjects/UtilityLibrary/UtilityLibrary/Settings - Copy.cs" bodystart="49" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="class_utility_library_1_1_app_settings_1a6f284140d370aa9353cad9da376b8102" prot="public" static="yes" mutable="no">
+        <type>SettingsFileApp</type>
+        <definition>SettingsFileApp UtilityLibrary.AppSettings.ASet</definition>
+        <argsstring></argsstring>
+        <name>ASet</name>
+        <initializer>= ASetting.Setting</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="B:/Programming/VisualStudioProjects/UtilityLibrary/UtilityLibrary/Settings - Copy.cs" line="50" column="1" bodyfile="B:/Programming/VisualStudioProjects/UtilityLibrary/UtilityLibrary/Settings - Copy.cs" bodystart="50" bodyend="-1"/>
+      </memberdef>
+      </sectiondef>
+      <sectiondef kind="private-static-attrib">
+      <memberdef kind="variable" id="class_utility_library_1_1_app_settings_1a48f461fc08d1af8d9a534aeca2f385d5" prot="private" static="yes" mutable="no">
+        <type>Settings&lt; SettingsFileApp &gt;</type>
+        <definition>Settings&lt;SettingsFileApp&gt; UtilityLibrary.AppSettings.appSettings</definition>
+        <argsstring></argsstring>
+        <name>appSettings</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="B:/Programming/VisualStudioProjects/UtilityLibrary/UtilityLibrary/Settings - Copy.cs" line="52" column="1" bodyfile="B:/Programming/VisualStudioProjects/UtilityLibrary/UtilityLibrary/Settings - Copy.cs" bodystart="52" bodyend="-1"/>
+        <referencedby refid="class_utility_library_1_1_app_settings_1a59c0053d5edb2c9283843e55a6d4bc80" compoundref="_settings_01-_01_copy_8cs" startline="54" endline="62">UtilityLibrary.AppSettings.GetInstance</referencedby>
+      </memberdef>
+      </sectiondef>
+      <sectiondef kind="public-static-func">
+      <memberdef kind="function" id="class_utility_library_1_1_app_settings_1a59c0053d5edb2c9283843e55a6d4bc80" prot="public" static="yes" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type>Settings&lt; SettingsFileApp &gt;</type>
+        <definition>static Settings&lt;SettingsFileApp&gt; UtilityLibrary.AppSettings.GetInstance</definition>
+        <argsstring>()</argsstring>
+        <name>GetInstance</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="B:/Programming/VisualStudioProjects/UtilityLibrary/UtilityLibrary/Settings - Copy.cs" line="54" column="1" bodyfile="B:/Programming/VisualStudioProjects/UtilityLibrary/UtilityLibrary/Settings - Copy.cs" bodystart="54" bodyend="62"/>
+        <references refid="class_utility_library_1_1_app_settings_1a48f461fc08d1af8d9a534aeca2f385d5" compoundref="_settings_01-_01_copy_8cs" startline="52">UtilityLibrary.AppSettings.appSettings</references>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <collaborationgraph>
+      <node id="13">
+        <label>UtilityLibrary.AppSettings</label>
+        <link refid="class_utility_library_1_1_app_settings"/>
+        <childnode refid="14" relation="usage">
+          <edgelabel>appSettings</edgelabel>
+          <edgelabel>ASetting</edgelabel>
+          <edgelabel>ASet</edgelabel>
+        </childnode>
+      </node>
+      <node id="14">
+        <label>static</label>
+      </node>
+    </collaborationgraph>
+    <location file="B:/Programming/VisualStudioProjects/UtilityLibrary/UtilityLibrary/Settings - Copy.cs" line="48" column="1" bodyfile="B:/Programming/VisualStudioProjects/UtilityLibrary/UtilityLibrary/Settings - Copy.cs" bodystart="47" bodyend="63"/>
+    <listofallmembers>
+      <member refid="class_utility_library_1_1_app_settings_1a48f461fc08d1af8d9a534aeca2f385d5" prot="private" virt="non-virtual"><scope>UtilityLibrary::AppSettings</scope><name>appSettings</name></member>
+      <member refid="class_utility_library_1_1_app_settings_1a6f284140d370aa9353cad9da376b8102" prot="public" virt="non-virtual"><scope>UtilityLibrary::AppSettings</scope><name>ASet</name></member>
+      <member refid="class_utility_library_1_1_app_settings_1a042777961b9a4d2fa13513b3f8eb3155" prot="public" virt="non-virtual"><scope>UtilityLibrary::AppSettings</scope><name>ASetting</name></member>
+      <member refid="class_utility_library_1_1_app_settings_1a59c0053d5edb2c9283843e55a6d4bc80" prot="public" virt="non-virtual"><scope>UtilityLibrary::AppSettings</scope><name>GetInstance</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

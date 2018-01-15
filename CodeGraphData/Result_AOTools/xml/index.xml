@@ -1,0 +1,585 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygenindex xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="index.xsd" version="1.8.6">
+  <compound refid="class_a_o_tools_1_1_app_ribbon" kind="class"><name>AOTools::AppRibbon</name>
+    <member refid="class_a_o_tools_1_1_app_ribbon_1a5adbf25dea1fa317feee9918957eb06b" kind="variable"><name>APP_NAME</name></member>
+    <member refid="class_a_o_tools_1_1_app_ribbon_1a3bab729840e247d6362ac7efdfde39d2" kind="variable"><name>NAMESPACE_PREFIX</name></member>
+    <member refid="class_a_o_tools_1_1_app_ribbon_1a09590354ebdbb0e251bef5ed421d537c" kind="variable"><name>BUTTON_NAME</name></member>
+    <member refid="class_a_o_tools_1_1_app_ribbon_1ab5d59dd79c0b8223caee04c2e7dc8708" kind="variable"><name>PANEL_NAME</name></member>
+    <member refid="class_a_o_tools_1_1_app_ribbon_1aac72cbc1a168a02b8e3870b19d48a651" kind="variable"><name>TAB_NAME</name></member>
+    <member refid="class_a_o_tools_1_1_app_ribbon_1ad8b2abcbf2bb5377d0247662f1bde0fc" kind="variable"><name>_eventsRegistered</name></member>
+    <member refid="class_a_o_tools_1_1_app_ribbon_1a5882423184d9593b3717939a5dea820b" kind="variable"><name>_unitsConfigured</name></member>
+    <member refid="class_a_o_tools_1_1_app_ribbon_1ad489040bf698374d73cd85e3752fb3a6" kind="variable"><name>_uiCtrlApp</name></member>
+    <member refid="class_a_o_tools_1_1_app_ribbon_1a6f05ce97815ea9325856af558a1fffa7" kind="variable"><name>UiApp</name></member>
+    <member refid="class_a_o_tools_1_1_app_ribbon_1a66a9a8b8b1678520ffdcbf5496df0abf" kind="variable"><name>Uidoc</name></member>
+    <member refid="class_a_o_tools_1_1_app_ribbon_1afe6d89b517dbafb1fcaa88c23b79af38" kind="variable"><name>App</name></member>
+    <member refid="class_a_o_tools_1_1_app_ribbon_1a09b3c9233968bae163b27512b45a78fc" kind="variable"><name>Doc</name></member>
+    <member refid="class_a_o_tools_1_1_app_ribbon_1a531aab34829e8b9c371b22dcf41e41f4" kind="function"><name>OnStartup</name></member>
+    <member refid="class_a_o_tools_1_1_app_ribbon_1a752696269832ef4de0015b436e77c34c" kind="function"><name>OnShutdown</name></member>
+    <member refid="class_a_o_tools_1_1_app_ribbon_1a6f46788f6d2d31e9b21664c25208ec51" kind="function"><name>AddPushButton</name></member>
+    <member refid="class_a_o_tools_1_1_app_ribbon_1a9d1b8592ec1ed2ba62408532fc251e7b" kind="function"><name>AppClosing</name></member>
+    <member refid="class_a_o_tools_1_1_app_ribbon_1a63837201ad1b7fbd8f0c46dfbe97bfc2" kind="function"><name>OnIdling</name></member>
+    <member refid="class_a_o_tools_1_1_app_ribbon_1acd5e05a51c4444b9e15dbc28917458d3" kind="function"><name>RegisterDocEvents</name></member>
+    <member refid="class_a_o_tools_1_1_app_ribbon_1a2ec6aa5cda0bf4f762f0f03cbba68aa9" kind="function"><name>DocOpenEvent</name></member>
+    <member refid="class_a_o_tools_1_1_app_ribbon_1a6de9a0c744e6dda7681a886e90887479" kind="function"><name>DocCreateEvent</name></member>
+    <member refid="class_a_o_tools_1_1_app_ribbon_1a49e88f14e4a080e59ead4dd63dc151c8" kind="function"><name>ReadUnits</name></member>
+  </compound>
+  <compound refid="class_a_o_tools_1_1_app_settings" kind="class"><name>AOTools::AppSettings</name>
+  </compound>
+  <compound refid="class_utility_library_1_1_app_settings" kind="class"><name>UtilityLibrary::AppSettings</name>
+    <member refid="class_utility_library_1_1_app_settings_1a042777961b9a4d2fa13513b3f8eb3155" kind="variable"><name>ASetting</name></member>
+    <member refid="class_utility_library_1_1_app_settings_1a6f284140d370aa9353cad9da376b8102" kind="variable"><name>ASet</name></member>
+    <member refid="class_utility_library_1_1_app_settings_1a48f461fc08d1af8d9a534aeca2f385d5" kind="variable"><name>appSettings</name></member>
+    <member refid="class_utility_library_1_1_app_settings_1a59c0053d5edb2c9283843e55a6d4bc80" kind="function"><name>GetInstance</name></member>
+  </compound>
+  <compound refid="class_utility_library_1_1_cs_utilities" kind="class"><name>UtilityLibrary::CsUtilities</name>
+    <member refid="class_utility_library_1_1_cs_utilities_1ac6c01dfcdea4bc4997e38ce9b6ba0c9d" kind="function"><name>GetBitmapImage</name></member>
+    <member refid="class_utility_library_1_1_cs_utilities_1a4c0487fdf2e9db71ea7e78e5e6615269" kind="function"><name>GetImage</name></member>
+  </compound>
+  <compound refid="class_a_o_tools_1_1_dx_measure" kind="class"><name>AOTools::DxMeasure</name>
+    <member refid="class_a_o_tools_1_1_dx_measure_1af66faad427ac190a0131b16c493ae73e" kind="variable"><name>_form</name></member>
+    <member refid="class_a_o_tools_1_1_dx_measure_1ad8022693053ddf6c44bca24f865314dc" kind="variable"><name>_uiDoc</name></member>
+    <member refid="class_a_o_tools_1_1_dx_measure_1a61ed1315ed36744ddccb1a789936d0a5" kind="variable"><name>_doc</name></member>
+    <member refid="class_a_o_tools_1_1_dx_measure_1a49bf64ad4a1a2e15b449f3a2bb76d508" kind="function"><name>Execute</name></member>
+    <member refid="class_a_o_tools_1_1_dx_measure_1a73e1a51fce3862fdbccd36f0daeff4cc" kind="function"><name>Process</name></member>
+    <member refid="class_a_o_tools_1_1_dx_measure_1acf8b94312a3dd7acd77c40ff4afff792" kind="function"><name>MeasurePts</name></member>
+    <member refid="class_a_o_tools_1_1_dx_measure_1ab369dbe0aec117cdc61d6db83b6b54a5" kind="function"><name>GetPts</name></member>
+    <member refid="class_a_o_tools_1_1_dx_measure_1a84b517db6fb2a0eaf5ccbab225f354e8" kind="function"><name>ShowHideWorkplane</name></member>
+  </compound>
+  <compound refid="class_a_o_tools_1_1_extensible_storage_mgr" kind="class"><name>AOTools::ExtensibleStorageMgr</name>
+    <member refid="class_a_o_tools_1_1_extensible_storage_mgr_1ae4beab4cddd8abc5f33db2d418d4a2f9" kind="enum"><name>FmtOpt</name></member>
+    <member refid="class_a_o_tools_1_1_extensible_storage_mgr_1ae4beab4cddd8abc5f33db2d418d4a2f9ac2f3f489a00553e7a01d369c103c7251" kind="enumvalue"><name>NO</name></member>
+    <member refid="class_a_o_tools_1_1_extensible_storage_mgr_1ae4beab4cddd8abc5f33db2d418d4a2f9a7469a286259799e5b37e5db9296f00b3" kind="enumvalue"><name>YES</name></member>
+    <member refid="class_a_o_tools_1_1_extensible_storage_mgr_1ae4beab4cddd8abc5f33db2d418d4a2f9aa2e843feab94ef623fea888f07c28696" kind="enumvalue"><name>IGNORE</name></member>
+    <member refid="class_a_o_tools_1_1_extensible_storage_mgr_1a1277d7cc332c1675e89c51810ecbf922" kind="variable"><name>KEY_FMT_STR</name></member>
+    <member refid="class_a_o_tools_1_1_extensible_storage_mgr_1ad6c675dbdd845b4355d03994e9601fc1" kind="variable"><name>initalized</name></member>
+    <member refid="class_a_o_tools_1_1_extensible_storage_mgr_1a72ef416314115f8678233905726cb99e" kind="variable"><name>_schemaFields</name></member>
+    <member refid="class_a_o_tools_1_1_extensible_storage_mgr_1af3053d3a9a8518c6d9931853433fda12" kind="variable"><name>_subSchemaFieldInfo</name></member>
+    <member refid="class_a_o_tools_1_1_extensible_storage_mgr_1a9a60427fd40c224b496e0797581f4a28" kind="variable"><name>_unitSchemaFields</name></member>
+    <member refid="class_a_o_tools_1_1_extensible_storage_mgr_1a8a4ed660827f26987edcd7831242404b" kind="variable"><name>SCHEMA_NAME</name></member>
+    <member refid="class_a_o_tools_1_1_extensible_storage_mgr_1a40e28c70974648a246ff6959e0209611" kind="variable"><name>SCHEMA_DESC</name></member>
+    <member refid="class_a_o_tools_1_1_extensible_storage_mgr_1af3931906af16ef062c93b3466f345b88" kind="variable"><name>UNIT_SCHEMA_NAME</name></member>
+    <member refid="class_a_o_tools_1_1_extensible_storage_mgr_1a424f9c8f81c7107d711e62da75c80dd8" kind="variable"><name>UNIT_SCHEMA_DESC</name></member>
+    <member refid="class_a_o_tools_1_1_extensible_storage_mgr_1ad6fb17033184087631926595ef328603" kind="variable"><name>SchemaGUID</name></member>
+    <member refid="class_a_o_tools_1_1_extensible_storage_mgr_1a80a84ba50cfa6ef069209df83c248bea" kind="variable"><name>SchemaFields</name></member>
+    <member refid="class_a_o_tools_1_1_extensible_storage_mgr_1a275adf43918958e532d3575891fb7340" kind="variable"><name>UnitSchemaFields</name></member>
+    <member refid="class_a_o_tools_1_1_extensible_storage_mgr_1ad4d6d1fe93e16ad8ee1458a60d1aef95" kind="function"><name>Init</name></member>
+    <member refid="class_a_o_tools_1_1_extensible_storage_mgr_1a9b30844326da5c7b1061f184c22708ec" kind="function"><name>SaveRevitSettings</name></member>
+    <member refid="class_a_o_tools_1_1_extensible_storage_mgr_1a4fd116a960d690adfa79f0d3ee8484ac" kind="function"><name>MakeFields&lt; T &gt;</name></member>
+    <member refid="class_a_o_tools_1_1_extensible_storage_mgr_1abf4fb24ea61915c984ddb208463d2c1d" kind="function"><name>MakeField</name></member>
+    <member refid="class_a_o_tools_1_1_extensible_storage_mgr_1a597f93114f89876898ee197c9cc4c4a9" kind="function"><name>MakeUnitSchema</name></member>
+    <member refid="class_a_o_tools_1_1_extensible_storage_mgr_1ad28d331adbb7d2669105827db9ff994c" kind="function"><name>SaveFieldValues&lt; T &gt;</name></member>
+    <member refid="class_a_o_tools_1_1_extensible_storage_mgr_1a2efab59e9a6ba03e35a52f07c1fa2419" kind="function"><name>ReadRevitSettings&lt; T &gt;</name></member>
+    <member refid="class_a_o_tools_1_1_extensible_storage_mgr_1a0caea7708b931a8f0ec33f198e0442fe" kind="function"><name>ReadRevitUnitStyles</name></member>
+    <member refid="class_a_o_tools_1_1_extensible_storage_mgr_1ab8197865888878c949ceb77af55f1592" kind="function"><name>GetFieldValue</name></member>
+    <member refid="class_a_o_tools_1_1_extensible_storage_mgr_1ad1dc47dafe30965d33352942c8747bc5" kind="function"><name>ReadSubEntity</name></member>
+    <member refid="class_a_o_tools_1_1_extensible_storage_mgr_1a2f45f8785e1a990c23d20d0c8721f08b" kind="function"><name>ListFieldInfo&lt; T &gt;</name></member>
+    <member refid="class_a_o_tools_1_1_extensible_storage_mgr_1a68ed349e862030835e72e3247c1c0ba9" kind="function"><name>DeleteCurrentSchema</name></member>
+    <member refid="class_a_o_tools_1_1_extensible_storage_mgr_1aba108a6a5718eee6c8ac131e3a0c04f0" kind="function"><name>InitUnitSchema</name></member>
+    <member refid="class_a_o_tools_1_1_extensible_storage_mgr_1a3f185720df8ac3e0bc08749e99efd028" kind="function"><name>SaveRevitBasicSettings</name></member>
+    <member refid="class_a_o_tools_1_1_extensible_storage_mgr_1a62ea7a5899bc8448d1347b0e6ddf17be" kind="function"><name>ReadRevitBasicSettings</name></member>
+    <member refid="class_a_o_tools_1_1_extensible_storage_mgr_1adeb497bc9204a5180590c7e59a5a1961" kind="function"><name>ListFieldInfo</name></member>
+  </compound>
+  <compound refid="class_a_o_tools_1_1_extensions" kind="class"><name>AOTools::Extensions</name>
+    <member refid="class_a_o_tools_1_1_extensions_1ad09c72a6b12b40db8da78dc0c48b2cef" kind="function"><name>Clone</name></member>
+    <member refid="class_a_o_tools_1_1_extensions_1a5277e3886032c80c1671d9184f1e4fd3" kind="function"><name>Clone&lt; T &gt;</name></member>
+  </compound>
+  <compound refid="class_a_o_tools_1_1_extensible_storage_mgr_1_1_field_info" kind="class"><name>AOTools::ExtensibleStorageMgr::FieldInfo</name>
+    <member refid="class_a_o_tools_1_1_extensible_storage_mgr_1_1_field_info_1a8d0c6a9d62306e9c396eea4fa4da53f4" kind="property"><name>Key</name></member>
+    <member refid="class_a_o_tools_1_1_extensible_storage_mgr_1_1_field_info_1a205dd456b48945033f3fa54f79e7949e" kind="property"><name>Name</name></member>
+    <member refid="class_a_o_tools_1_1_extensible_storage_mgr_1_1_field_info_1a73470e0b6072dc0075e799ae2809e61b" kind="property"><name>Desc</name></member>
+    <member refid="class_a_o_tools_1_1_extensible_storage_mgr_1_1_field_info_1ab966e19ff1bf9c0c7a5e13f8c61ace0c" kind="property"><name>UnitType</name></member>
+    <member refid="class_a_o_tools_1_1_extensible_storage_mgr_1_1_field_info_1abc5ab9c11a0f4d3fc065a80885378be6" kind="property"><name>Guid</name></member>
+    <member refid="class_a_o_tools_1_1_extensible_storage_mgr_1_1_field_info_1a443fb009e209409c172e73f55d98c9d9" kind="variable"><name>Value</name></member>
+    <member refid="class_a_o_tools_1_1_extensible_storage_mgr_1_1_field_info_1a6997312a4b40ad79a077b81b78de4480" kind="function"><name>FieldInfo</name></member>
+    <member refid="class_a_o_tools_1_1_extensible_storage_mgr_1_1_field_info_1a90858c62017d4785104eabbe2f4daa6b" kind="function"><name>FieldInfo</name></member>
+    <member refid="class_a_o_tools_1_1_extensible_storage_mgr_1_1_field_info_1ace70da0880ba534378fd9298d3fd9907" kind="function"><name>ExtractValue</name></member>
+    <member refid="class_a_o_tools_1_1_extensible_storage_mgr_1_1_field_info_1adc632ab107beaccde1d3c187c4574703" kind="function"><name>ExtractValue</name></member>
+    <member refid="class_a_o_tools_1_1_extensible_storage_mgr_1_1_field_info_1a14d0858f4dd75099eaa82af966e088bc" kind="function"><name>ExtractValue</name></member>
+    <member refid="class_a_o_tools_1_1_extensible_storage_mgr_1_1_field_info_1a4f878e4ad9ca5c7041a293a99a6ecfd8" kind="function"><name>ExtractValue</name></member>
+    <member refid="class_a_o_tools_1_1_extensible_storage_mgr_1_1_field_info_1af271f4c6fa074850310d81fc9d992423" kind="function"><name>ExtractValue</name></member>
+    <member refid="class_a_o_tools_1_1_extensible_storage_mgr_1_1_field_info_1a8a70a5e961d4d0483734154f3fe288bc" kind="function"><name>ExtractValue</name></member>
+  </compound>
+  <compound refid="class_a_o_tools_1_1_form_measure_points" kind="class"><name>AOTools::FormMeasurePoints</name>
+    <member refid="class_a_o_tools_1_1_form_measure_points_1acc5b23c9b30118d75334c91376443cc2" kind="variable"><name>showWorkplane</name></member>
+    <member refid="class_a_o_tools_1_1_form_measure_points_1a4fec526d1a791818081c4fa554f84136" kind="property"><name>ShowWorkplane</name></member>
+    <member refid="class_a_o_tools_1_1_form_measure_points_1a3a3561ff86eeb31f14cd9d7d4987c8aa" kind="variable"><name>components</name></member>
+    <member refid="class_a_o_tools_1_1_form_measure_points_1ae0bf1098ea335ebfbf4b50674a05d088" kind="variable"><name>btnDone</name></member>
+    <member refid="class_a_o_tools_1_1_form_measure_points_1adf44b30e31a7fa9b1aa949768ba7977f" kind="variable"><name>btnSelect</name></member>
+    <member refid="class_a_o_tools_1_1_form_measure_points_1a56d0dc4fb4cd101287ea804e75ba8a1c" kind="variable"><name>lblX1</name></member>
+    <member refid="class_a_o_tools_1_1_form_measure_points_1a209a1af11a569e530642e9053d13a6eb" kind="variable"><name>lblCoordinates</name></member>
+    <member refid="class_a_o_tools_1_1_form_measure_points_1a19d9b2f4fe3fe8ce459d8610d4dd4e14" kind="variable"><name>lblPoint1</name></member>
+    <member refid="class_a_o_tools_1_1_form_measure_points_1a13c652e1cc632dd91031a153362a7175" kind="variable"><name>lblY1</name></member>
+    <member refid="class_a_o_tools_1_1_form_measure_points_1a739d2c181b826ec2d1f8229ed3752135" kind="variable"><name>lblZ1</name></member>
+    <member refid="class_a_o_tools_1_1_form_measure_points_1a0a2f1346f8fb5869111d68f2b18431d8" kind="variable"><name>lblPoint2</name></member>
+    <member refid="class_a_o_tools_1_1_form_measure_points_1ae7a6f996bdf48b1915d03fbfabfeca10" kind="variable"><name>lblDistances</name></member>
+    <member refid="class_a_o_tools_1_1_form_measure_points_1aaf61ce44822fd084ea3620fb2bc1100d" kind="variable"><name>lblAlongXaxis</name></member>
+    <member refid="class_a_o_tools_1_1_form_measure_points_1ada834a0862f8657729b4f722db49e320" kind="variable"><name>lblAlongYaxis</name></member>
+    <member refid="class_a_o_tools_1_1_form_measure_points_1a3cb2fa0669f41ee985aeb92d35cb148a" kind="variable"><name>lblAlongZaxis</name></member>
+    <member refid="class_a_o_tools_1_1_form_measure_points_1a006748019a6ef89a8ad150b93146fcf3" kind="variable"><name>lblAlongXYaxis</name></member>
+    <member refid="class_a_o_tools_1_1_form_measure_points_1add8296564d75db792646d803f2330639" kind="variable"><name>lblAlongYZaxis</name></member>
+    <member refid="class_a_o_tools_1_1_form_measure_points_1acc8976a791ae2eb62937bc8298d57b5f" kind="variable"><name>lblAlongXYZaxis</name></member>
+    <member refid="class_a_o_tools_1_1_form_measure_points_1a86e844610a2b4b9423b6ad2f2d612c2a" kind="variable"><name>lblAlongXZaxis</name></member>
+    <member refid="class_a_o_tools_1_1_form_measure_points_1a5de312d846d2a1a080b72ffed263ec6a" kind="variable"><name>lblNote</name></member>
+    <member refid="class_a_o_tools_1_1_form_measure_points_1adb64bc1878ee03abf565d5d5edaa3b8a" kind="variable"><name>lblWorkPlane</name></member>
+    <member refid="class_a_o_tools_1_1_form_measure_points_1a67104eb862f01563903ed3ff01ef4be2" kind="variable"><name>lblZ2</name></member>
+    <member refid="class_a_o_tools_1_1_form_measure_points_1a95f39112c18f0b7be029a8998db3cc42" kind="variable"><name>lblY2</name></member>
+    <member refid="class_a_o_tools_1_1_form_measure_points_1a58ed7ef199d15575a7921aa1a5954686" kind="variable"><name>lblX2</name></member>
+    <member refid="class_a_o_tools_1_1_form_measure_points_1a36594788448195998cc6ec011b2b3dae" kind="variable"><name>cbxWpOnOff</name></member>
+    <member refid="class_a_o_tools_1_1_form_measure_points_1a7f44b7a51932be3c5f3c7dd47e9116ca" kind="variable"><name>lblP1Z</name></member>
+    <member refid="class_a_o_tools_1_1_form_measure_points_1a0ab290db1677c0bd4bbcc0dfc1437297" kind="variable"><name>lblP1Y</name></member>
+    <member refid="class_a_o_tools_1_1_form_measure_points_1a5d46c2d5220cb78c096ec81f220a8111" kind="variable"><name>lblP1X</name></member>
+    <member refid="class_a_o_tools_1_1_form_measure_points_1ad18c172b2e1a162b23830c6c0163706c" kind="variable"><name>lblP2Z</name></member>
+    <member refid="class_a_o_tools_1_1_form_measure_points_1a1dff668b7745ca7c2690afbcab4cb939" kind="variable"><name>lblP2Y</name></member>
+    <member refid="class_a_o_tools_1_1_form_measure_points_1ab18e4065aa43452a40dbf11a9a4bbd33" kind="variable"><name>lblP2X</name></member>
+    <member refid="class_a_o_tools_1_1_form_measure_points_1aa9b2e320549f3348d1ac8fa1c229ad20" kind="variable"><name>lblDistX</name></member>
+    <member refid="class_a_o_tools_1_1_form_measure_points_1ae906dbd9b6bf8a6a2cbcaa08ec0e624a" kind="variable"><name>lblDistY</name></member>
+    <member refid="class_a_o_tools_1_1_form_measure_points_1a89ae18773e9858485c7466fd817b3bc2" kind="variable"><name>lblDistZ</name></member>
+    <member refid="class_a_o_tools_1_1_form_measure_points_1a99b8003e5a39efba19cc081e05ab1b5f" kind="variable"><name>lblDistXY</name></member>
+    <member refid="class_a_o_tools_1_1_form_measure_points_1a0ccffb3aacb1bda696014594e9a31983" kind="variable"><name>lblDistYZ</name></member>
+    <member refid="class_a_o_tools_1_1_form_measure_points_1a946f490b1306863f5935e1494ef1e74f" kind="variable"><name>lblDistXYZ</name></member>
+    <member refid="class_a_o_tools_1_1_form_measure_points_1a53ed95ca2d0ad3b1b847ff469b7e92cc" kind="variable"><name>lblDistXZ</name></member>
+    <member refid="class_a_o_tools_1_1_form_measure_points_1a6dcf3c52cf6bf3c55f44acfd7d3159cb" kind="variable"><name>lblWpOrigin</name></member>
+    <member refid="class_a_o_tools_1_1_form_measure_points_1ac148b29d3caf303ba2e1ed16bc2ed70f" kind="variable"><name>lblMessage</name></member>
+    <member refid="class_a_o_tools_1_1_form_measure_points_1abe792b254dbd9adaa09c3de4bac87405" kind="variable"><name>lblWpNormal</name></member>
+    <member refid="class_a_o_tools_1_1_form_measure_points_1aeb5d064b0fbfe15668e94daaea7a8792" kind="variable"><name>lblWpNormalZ</name></member>
+    <member refid="class_a_o_tools_1_1_form_measure_points_1ab09c06cf1e2295c6008fa12545ed2140" kind="variable"><name>lblWpNormalY</name></member>
+    <member refid="class_a_o_tools_1_1_form_measure_points_1af6e707d85fe6edb4e3cbb10fecd07975" kind="variable"><name>lblWpNormalX</name></member>
+    <member refid="class_a_o_tools_1_1_form_measure_points_1af75a4ab9d4b846d0e1198358433d97d1" kind="variable"><name>lblWpOriginZ</name></member>
+    <member refid="class_a_o_tools_1_1_form_measure_points_1ae22d7272d5061ca19f5f77ab546400ba" kind="variable"><name>lblWpOriginY</name></member>
+    <member refid="class_a_o_tools_1_1_form_measure_points_1adbd862c81e3158ce49699f076d790c71" kind="variable"><name>lblWpOriginX</name></member>
+    <member refid="class_a_o_tools_1_1_form_measure_points_1a0d345a160a5ffe57f38579690c1d8a34" kind="function"><name>FormMeasurePoints</name></member>
+    <member refid="class_a_o_tools_1_1_form_measure_points_1adde3dd8475bdadbbc243689fe4db517e" kind="function"><name>FormQueryPoints_FormClosing</name></member>
+    <member refid="class_a_o_tools_1_1_form_measure_points_1afad7b2cbea43a66d30cea407b0e7b280" kind="function"><name>FormQueryPoints_Load</name></member>
+    <member refid="class_a_o_tools_1_1_form_measure_points_1adff09df97b7ee62e0863d79174fff81d" kind="function"><name>LoadSettings</name></member>
+    <member refid="class_a_o_tools_1_1_form_measure_points_1acea9a14a568cb54fa25e21fb803dee03" kind="function"><name>cbxWpOnOff_CheckedChanged</name></member>
+    <member refid="class_a_o_tools_1_1_form_measure_points_1ab86d28c8d788020768a07c74f563b7f0" kind="function"><name>InitializeComponent</name></member>
+    <member refid="class_a_o_tools_1_1_form_measure_points_1aacc399f30f71a725026136d91405577f" kind="function"><name>UpdatePoints</name></member>
+    <member refid="class_a_o_tools_1_1_form_measure_points_1a74dbf4b535b43a7bbed38ab951fb3f60" kind="function"><name>ClearText</name></member>
+    <member refid="class_a_o_tools_1_1_form_measure_points_1af466ce3188385216d5a0b05d647d66f9" kind="function"><name>Dispose</name></member>
+  </compound>
+  <compound refid="class_utility_library_1_1_message_utilities" kind="class"><name>UtilityLibrary::MessageUtilities</name>
+    <member refid="class_utility_library_1_1_message_utilities_1ade22cdbdc1bee7bce5f0f5745bb096d3" kind="property"><name>defColumn</name></member>
+    <member refid="class_utility_library_1_1_message_utilities_1a8e2a9ee7acf01dd7417aec533035d035" kind="property"><name>output</name></member>
+    <member refid="class_utility_library_1_1_message_utilities_1a822d42d5865d43358ba7728182dd19b0" kind="property"><name>rtb</name></member>
+    <member refid="class_utility_library_1_1_message_utilities_1a7ae660bd5a2416447c29718bbc3c8bf9" kind="variable"><name>nl</name></member>
+    <member refid="class_utility_library_1_1_message_utilities_1a7ae062e8b8308ac8dcd69730f4eb43b7" kind="function"><name>clearConsole</name></member>
+    <member refid="class_utility_library_1_1_message_utilities_1a4e3e9b3535389ee632f5781f9fee2cb7" kind="function"><name>fmtInt</name></member>
+    <member refid="class_utility_library_1_1_message_utilities_1ac0018ae35e6f1a44743dabb2d559d363" kind="function"><name>fmt&lt; T &gt;</name></member>
+    <member refid="class_utility_library_1_1_message_utilities_1a427b06ee2a89e08c9595009935a043a6" kind="function"><name>logMsgFmtln</name></member>
+    <member refid="class_utility_library_1_1_message_utilities_1a22baaac127ba06279c09b7e717f09477" kind="function"><name>logMsgFmtln&lt; T &gt;</name></member>
+    <member refid="class_utility_library_1_1_message_utilities_1ac73dca4d3cf6d09a83d43248bfffa091" kind="function"><name>logMsgFmt</name></member>
+    <member refid="class_utility_library_1_1_message_utilities_1a875a0dd49f5e62d11532c64eb8eb91b3" kind="function"><name>logMsgFmt&lt; T &gt;</name></member>
+    <member refid="class_utility_library_1_1_message_utilities_1afe92e61e3be1281d34da4129b866cc3a" kind="function"><name>logMsgFmt&lt; T &gt;</name></member>
+    <member refid="class_utility_library_1_1_message_utilities_1a5554ebe533be2d4e7a51027bda943548" kind="function"><name>fmtMsg&lt; T &gt;</name></member>
+    <member refid="class_utility_library_1_1_message_utilities_1acb26e78dc816c83a3cc5befc0803a4ad" kind="function"><name>logMsgln&lt; T1, T2 &gt;</name></member>
+    <member refid="class_utility_library_1_1_message_utilities_1af56b477990c370f7220f88e90e0aa84d" kind="function"><name>logMsgln&lt; T &gt;</name></member>
+    <member refid="class_utility_library_1_1_message_utilities_1a6cddc2949bebb7000a3160332c358241" kind="function"><name>logMsg&lt; T1, T2 &gt;</name></member>
+    <member refid="class_utility_library_1_1_message_utilities_1a389c36c5f9e2bee828e2e352cfe371c7" kind="function"><name>logMsg&lt; T &gt;</name></member>
+    <member refid="class_utility_library_1_1_message_utilities_1a006f611a8d8135a8e05fbe6de9953349" kind="function"><name>logMsg&lt; T &gt;</name></member>
+    <member refid="class_utility_library_1_1_message_utilities_1a2e66b32170168ed46f75240dd4d8b3c9" kind="function"><name>sendMsg</name></member>
+    <member refid="class_utility_library_1_1_message_utilities_1a0e614af6da7a816ac66628cd99cad845" kind="function"><name>splitPath</name></member>
+  </compound>
+  <compound refid="class_a_o_tools_1_1_picked_box2" kind="class"><name>AOTools::PickedBox2</name>
+    <member refid="class_a_o_tools_1_1_picked_box2_1aad4604baffb768e003ed4a07dd9f8bfc" kind="variable"><name>Min</name></member>
+    <member refid="class_a_o_tools_1_1_picked_box2_1ad878e541f67e5e0621707421a927a8cc" kind="variable"><name>Max</name></member>
+    <member refid="class_a_o_tools_1_1_picked_box2_1a90edb6b973551a4360c6717132f7761a" kind="function"><name>PickedBox2</name></member>
+    <member refid="class_a_o_tools_1_1_picked_box2_1ae60eb9336dfd2c79d3773a7c66f61498" kind="function"><name>PickedBox2</name></member>
+  </compound>
+  <compound refid="struct_a_o_tools_1_1_point_measurements" kind="struct"><name>AOTools::PointMeasurements</name>
+    <member refid="struct_a_o_tools_1_1_point_measurements_1aaceb5a575cf0715d0c4a96d75f894062" kind="property"><name>P1</name></member>
+    <member refid="struct_a_o_tools_1_1_point_measurements_1a0cb5bab66c1b06c58b09c993dcbfcc87" kind="property"><name>P2</name></member>
+    <member refid="struct_a_o_tools_1_1_point_measurements_1a635b46dfdfbb87446795bb8b13106dd7" kind="property"><name>delta</name></member>
+    <member refid="struct_a_o_tools_1_1_point_measurements_1aa12ef5647e4093f378d80eb5da5b37bd" kind="property"><name>distanceXY</name></member>
+    <member refid="struct_a_o_tools_1_1_point_measurements_1a3c0b1889f1ff83f1a1a8ea9f87ebae2a" kind="property"><name>distanceXZ</name></member>
+    <member refid="struct_a_o_tools_1_1_point_measurements_1a402a1f14eefe16b887aa87a2fc33aaa7" kind="property"><name>distanceYZ</name></member>
+    <member refid="struct_a_o_tools_1_1_point_measurements_1a3ed6fbce2ec09791e86af00478233366" kind="property"><name>distanceXYZ</name></member>
+    <member refid="struct_a_o_tools_1_1_point_measurements_1a95a4bf99936d9a2739c55ecc7bba7fc5" kind="variable"><name>sqDelta</name></member>
+    <member refid="struct_a_o_tools_1_1_point_measurements_1a7ba9dc6452fccc30e2ecae25ca316e34" kind="function"><name>PointMeasurements</name></member>
+  </compound>
+  <compound refid="class_a_o_tools_1_1_properties_1_1_resources" kind="class"><name>AOTools::Properties::Resources</name>
+    <member refid="class_a_o_tools_1_1_properties_1_1_resources_1abdcf04a99f51c25d5ff4ef56d5273bf9" kind="variable"><name>resourceMan</name></member>
+    <member refid="class_a_o_tools_1_1_properties_1_1_resources_1a49ec67e7edc233252b9a886891144a35" kind="variable"><name>resourceCulture</name></member>
+    <member refid="class_a_o_tools_1_1_properties_1_1_resources_1a94520a8fbe718b6238c8d4d4a4db4bc7" kind="property"><name>ResourceManager</name></member>
+    <member refid="class_a_o_tools_1_1_properties_1_1_resources_1adb4d46d5fe41eb09cf145179ff0e405e" kind="property"><name>Culture</name></member>
+    <member refid="class_a_o_tools_1_1_properties_1_1_resources_1aebd69e38695376225c8c37bca55a6a99" kind="property"><name>ButtonCreateFail</name></member>
+    <member refid="class_a_o_tools_1_1_properties_1_1_resources_1ac1e8f9780663c503e950d9b0c8099034" kind="property"><name>UnitStyleButtonText</name></member>
+    <member refid="class_a_o_tools_1_1_properties_1_1_resources_1a34b5f32a5da868d3d1690c136c0bae86" kind="function"><name>Resources</name></member>
+  </compound>
+  <compound refid="class_a_o_tools_1_1_revit_add_ins" kind="class"><name>AOTools::RevitAddIns</name>
+    <member refid="class_a_o_tools_1_1_revit_add_ins_1ae0fae81e208a3222c33ce5f1cffd32ed" kind="variable"><name>addInField</name></member>
+    <member refid="class_a_o_tools_1_1_revit_add_ins_1a3203396b43f5f448914df1a368772fd2" kind="property"><name>AddIn</name></member>
+  </compound>
+  <compound refid="class_a_o_tools_1_1_revit_add_ins_add_in" kind="class"><name>AOTools::RevitAddInsAddIn</name>
+    <member refid="class_a_o_tools_1_1_revit_add_ins_add_in_1a51b6c76e504ab73c183614c5e7798491" kind="variable"><name>nameField</name></member>
+    <member refid="class_a_o_tools_1_1_revit_add_ins_add_in_1a90da8b3a4df7e75016bc32ef7db90f7a" kind="variable"><name>textField</name></member>
+    <member refid="class_a_o_tools_1_1_revit_add_ins_add_in_1a042f83e1376628786fad9da669691bbd" kind="variable"><name>descriptionField</name></member>
+    <member refid="class_a_o_tools_1_1_revit_add_ins_add_in_1ad6a4229de393d8eab5c199524bb20805" kind="variable"><name>assemblyField</name></member>
+    <member refid="class_a_o_tools_1_1_revit_add_ins_add_in_1a68d30c75760eb43fcd1e7beb4c5dfc0f" kind="variable"><name>fullClassNameField</name></member>
+    <member refid="class_a_o_tools_1_1_revit_add_ins_add_in_1addb49aa3b96d36f2409ed11a82bfc81b" kind="variable"><name>clientIdField</name></member>
+    <member refid="class_a_o_tools_1_1_revit_add_ins_add_in_1a449fef09ff20d1a19b0e22b67fd7e1d3" kind="variable"><name>vendorIdField</name></member>
+    <member refid="class_a_o_tools_1_1_revit_add_ins_add_in_1a67f289c1df276b1830a2c3422184967b" kind="variable"><name>vendorDescriptionField</name></member>
+    <member refid="class_a_o_tools_1_1_revit_add_ins_add_in_1a07e7efbde5b490f31c7d2cd704378a56" kind="variable"><name>typeField</name></member>
+    <member refid="class_a_o_tools_1_1_revit_add_ins_add_in_1a44069d39d10ee387ed430dd9ce48df3b" kind="property"><name>Name</name></member>
+    <member refid="class_a_o_tools_1_1_revit_add_ins_add_in_1aa2c4a87fd5402cb3c34971e94441aeb3" kind="property"><name>Text</name></member>
+    <member refid="class_a_o_tools_1_1_revit_add_ins_add_in_1a913c0250a818c881378ef1392be698e0" kind="property"><name>Description</name></member>
+    <member refid="class_a_o_tools_1_1_revit_add_ins_add_in_1a2549207b16235070b9ee326c905691fe" kind="property"><name>Assembly</name></member>
+    <member refid="class_a_o_tools_1_1_revit_add_ins_add_in_1a2f2be216a8454b557435c504c2ab1f65" kind="property"><name>FullClassName</name></member>
+    <member refid="class_a_o_tools_1_1_revit_add_ins_add_in_1aaf71cf6b550faf9e9b07c5613f96e8b0" kind="property"><name>ClientId</name></member>
+    <member refid="class_a_o_tools_1_1_revit_add_ins_add_in_1a5750e43e298b78d9bf0985decaa564d2" kind="property"><name>VendorId</name></member>
+    <member refid="class_a_o_tools_1_1_revit_add_ins_add_in_1a423d6cc0dfa12158c92899d53b93cd4f" kind="property"><name>VendorDescription</name></member>
+    <member refid="class_a_o_tools_1_1_revit_add_ins_add_in_1a083210369919fa4d914fdb7f9f1b7682" kind="property"><name>Type</name></member>
+  </compound>
+  <compound refid="class_utility_library_1_1_rich_text_box_extensions" kind="class"><name>UtilityLibrary::RichTextBoxExtensions</name>
+    <member refid="class_utility_library_1_1_rich_text_box_extensions_1ad1ea023241bd33937fdbd370f0bf203f" kind="function"><name>AppendText</name></member>
+  </compound>
+  <compound refid="class_a_o_tools_1_1_extensible_storage_mgr_1_1_s_basic_key" kind="class"><name>AOTools::ExtensibleStorageMgr::SBasicKey</name>
+    <member refid="class_a_o_tools_1_1_extensible_storage_mgr_1_1_s_basic_key_1a501d32c2acd82528bb8e2a2794f6174e" kind="property"><name>Value</name></member>
+    <member refid="class_a_o_tools_1_1_extensible_storage_mgr_1_1_s_basic_key_1a701398993901011c0190d9993b16546a" kind="variable"><name>UNDEFINED</name></member>
+    <member refid="class_a_o_tools_1_1_extensible_storage_mgr_1_1_s_basic_key_1ae7e1329d69d59050149c4556c6bbbb21" kind="variable"><name>VERSION_BASIC</name></member>
+    <member refid="class_a_o_tools_1_1_extensible_storage_mgr_1_1_s_basic_key_1a9085c8ce54b7d0ffcb19762cf5a26c06" kind="variable"><name>USE_OFFICE</name></member>
+    <member refid="class_a_o_tools_1_1_extensible_storage_mgr_1_1_s_basic_key_1a1c944921740e9e3798b95cf8f60079f3" kind="variable"><name>AUTO_RESTORE</name></member>
+    <member refid="class_a_o_tools_1_1_extensible_storage_mgr_1_1_s_basic_key_1a5f9f5122b133359702b3e892a3fec83d" kind="variable"><name>COUNT</name></member>
+    <member refid="class_a_o_tools_1_1_extensible_storage_mgr_1_1_s_basic_key_1a859ad94d4f0b4cb949fd59f34e6f0ccc" kind="variable"><name>CURRENT</name></member>
+    <member refid="class_a_o_tools_1_1_extensible_storage_mgr_1_1_s_basic_key_1a46176f529c7a07bb15d7e6f00609795a" kind="function"><name>SBasicKey</name></member>
+  </compound>
+  <compound refid="class_a_o_tools_1_1_extensible_storage_mgr_1_1_schema_key" kind="class"><name>AOTools::ExtensibleStorageMgr::SchemaKey</name>
+    <member refid="class_a_o_tools_1_1_extensible_storage_mgr_1_1_schema_key_1a0d7a9fb2f4f565c560c98d6bee51b859" kind="property"><name>Value</name></member>
+  </compound>
+  <compound refid="class_a_o_tools_1_1_properties_1_1_settings" kind="class"><name>AOTools::Properties::Settings</name>
+    <member refid="class_a_o_tools_1_1_properties_1_1_settings_1a38de4fe5e9600fa72f9f4b8454245061" kind="variable"><name>defaultInstance</name></member>
+    <member refid="class_a_o_tools_1_1_properties_1_1_settings_1a8b0db282a374b853bb5a1de38e799d2b" kind="property"><name>Default</name></member>
+    <member refid="class_a_o_tools_1_1_properties_1_1_settings_1a6ddbd4050259930a8e59ce257f30506e" kind="property"><name>FormMeasurePointsLocation</name></member>
+    <member refid="class_a_o_tools_1_1_properties_1_1_settings_1a6026c6b2554c6cb96582b5cc5bfff4d2" kind="property"><name>MeasurePointsShowWorkplane</name></member>
+    <member refid="class_a_o_tools_1_1_properties_1_1_settings_1a0e7e4fc38bae2e401790006f040fca28" kind="property"><name>ThisIsATest</name></member>
+    <member refid="class_a_o_tools_1_1_properties_1_1_settings_1acb08ea74211c1505f114988d7f50b466" kind="function"><name>Settings</name></member>
+    <member refid="class_a_o_tools_1_1_properties_1_1_settings_1afa0d3d2688a02838d33f765564293627" kind="function"><name>SettingChangingEventHandler</name></member>
+    <member refid="class_a_o_tools_1_1_properties_1_1_settings_1a28d7f3c3c7b2277350cf441a7ba38a55" kind="function"><name>SettingsSavingEventHandler</name></member>
+  </compound>
+  <compound refid="class_utility_library_1_1_settings_3_01_t_01_4" kind="class"><name>UtilityLibrary::Settings&lt; T &gt;</name>
+    <member refid="class_utility_library_1_1_settings_3_01_t_01_4_1a53150308f1714fedf97e97a68c17736b" kind="property"><name>Setting</name></member>
+    <member refid="class_utility_library_1_1_settings_3_01_t_01_4_1a069f523761dcc83c9f0607b4a350a7dc" kind="property"><name>SettingsPathAndFile</name></member>
+    <member refid="class_utility_library_1_1_settings_3_01_t_01_4_1aeb74a754082355bbe933927e6a6ac17c" kind="function"><name>Settings</name></member>
+    <member refid="class_utility_library_1_1_settings_3_01_t_01_4_1a7a79c6ed261bb2e5b128713248335751" kind="function"><name>Save</name></member>
+    <member refid="class_utility_library_1_1_settings_3_01_t_01_4_1aeb74a754082355bbe933927e6a6ac17c" kind="function"><name>Settings</name></member>
+    <member refid="class_utility_library_1_1_settings_3_01_t_01_4_1a7a79c6ed261bb2e5b128713248335751" kind="function"><name>Save</name></member>
+    <member refid="class_utility_library_1_1_settings_3_01_t_01_4_1a5a314b5080476a59a27717a9d17e5631" kind="function"><name>Read</name></member>
+    <member refid="class_utility_library_1_1_settings_3_01_t_01_4_1a5a314b5080476a59a27717a9d17e5631" kind="function"><name>Read</name></member>
+  </compound>
+  <compound refid="class_utility_library_1_1_settings_app" kind="class"><name>UtilityLibrary::SettingsApp</name>
+    <member refid="class_utility_library_1_1_settings_app_1a8ee29c7c80fcc436225e91cfcb3cd5f3" kind="property"><name>ASetting</name></member>
+    <member refid="class_utility_library_1_1_settings_app_1ac973d948e82b2a4e2ebb015ec7828c2d" kind="variable"><name>ASet</name></member>
+    <member refid="class_utility_library_1_1_settings_app_1a0a2f3007b46644e0c282c8d3636aae10" kind="variable"><name>appSettings</name></member>
+    <member refid="class_utility_library_1_1_settings_app_1a90b8331fc2a2f1fdd680f37c5944bcbd" kind="function"><name>GetInstance</name></member>
+    <member refid="class_utility_library_1_1_settings_app_1a857c8e8509a4cc65d95fd187d4994e6d" kind="function"><name>Reset</name></member>
+  </compound>
+  <compound refid="class_utility_library_1_1_settings_file_base" kind="class"><name>UtilityLibrary::SettingsFileBase</name>
+    <member refid="class_utility_library_1_1_settings_file_base_1a5e72912c59ffda028741f455231e1f7d" kind="variable"><name>SETTINGFILEBASE</name></member>
+    <member refid="class_utility_library_1_1_settings_file_base_1ac13ae991929db084d14b9d73113f383d" kind="variable"><name>VersionInfo</name></member>
+    <member refid="class_utility_library_1_1_settings_file_base_1ac174571338854a2658a35be8896ae761" kind="property"><name>SETTINGFILEVERSION</name></member>
+    <member refid="class_utility_library_1_1_settings_file_base_1a72f8446554d6849a3c9dac94f3e969b6" kind="property"><name>SettingsPath</name></member>
+  </compound>
+  <compound refid="class_utility_library_1_1_settings_path_app_default" kind="class"><name>UtilityLibrary::SettingsPathAppDefault</name>
+    <member refid="class_utility_library_1_1_settings_path_app_default_1a3ba763a041f28d82c0745d91132bcd3b" kind="function"><name>SettingsPathAppDefault</name></member>
+    <member refid="class_utility_library_1_1_settings_path_app_default_1adc43214e21e6a53c48c1ab98df1f7c26" kind="function"><name>CreateFolders</name></member>
+  </compound>
+  <compound refid="class_utility_library_1_1_settings_path_base" kind="class"><name>UtilityLibrary::SettingsPathBase</name>
+    <member refid="class_utility_library_1_1_settings_path_base_1a12f5df066cf825769fa3473f55ab437f" kind="variable"><name>FileName</name></member>
+    <member refid="class_utility_library_1_1_settings_path_base_1aed00980e4cd5e00d9fc3a3cd60cf3ac3" kind="variable"><name>RootPath</name></member>
+    <member refid="class_utility_library_1_1_settings_path_base_1a508ffc15d7ce089d5173aae2d56093a6" kind="variable"><name>SubFolders</name></member>
+    <member refid="class_utility_library_1_1_settings_path_base_1ab85cab8140a6e7ea8983a8d3c6c341e7" kind="variable"><name>SubFolderCount</name></member>
+    <member refid="class_utility_library_1_1_settings_path_base_1aa201b9d26d055baf49ce026c71462d5a" kind="property"><name>SettingsPath</name></member>
+    <member refid="class_utility_library_1_1_settings_path_base_1af6878bad305eed75d65a3021a44fce75" kind="property"><name>SettingsPathAndFile</name></member>
+    <member refid="class_utility_library_1_1_settings_path_base_1afa9e451c1b95630b3addd56682ccff5d" kind="function"><name>CreateFolders</name></member>
+  </compound>
+  <compound refid="class_utility_library_1_1_settings_path_file_app_base" kind="class"><name>UtilityLibrary::SettingsPathFileAppBase</name>
+    <member refid="class_utility_library_1_1_settings_path_file_app_base_1a48eba46f5c8f50ce06f7181636ab640b" kind="property"><name>SETTINGFILEVERSION</name></member>
+    <member refid="class_utility_library_1_1_settings_path_file_app_base_1a2b51466a7d785bb8c302dd16a4cdafea" kind="function"><name>SettingsPathFileAppBase</name></member>
+  </compound>
+  <compound refid="class_utility_library_1_1_settings_path_file_base" kind="class"><name>UtilityLibrary::SettingsPathFileBase</name>
+    <member refid="class_utility_library_1_1_settings_path_file_base_1a71f96a3382d36fed7996f2bca080048a" kind="variable"><name>FileName</name></member>
+    <member refid="class_utility_library_1_1_settings_path_file_base_1a4666be801ac2dd491f96fea2ca00769b" kind="variable"><name>RootPath</name></member>
+    <member refid="class_utility_library_1_1_settings_path_file_base_1a8a9d9a9b3ce2f036320591ca6eb02737" kind="variable"><name>SubFolders</name></member>
+    <member refid="class_utility_library_1_1_settings_path_file_base_1a3bcb74344b81698ad7bccbca81a52387" kind="variable"><name>SETTINGFILEBASE</name></member>
+    <member refid="class_utility_library_1_1_settings_path_file_base_1a59feb54756182fe7b57203bb08c41e0e" kind="variable"><name>VersionInfo</name></member>
+    <member refid="class_utility_library_1_1_settings_path_file_base_1ab53c2d08890a326b447cacc15a9de3c0" kind="property"><name>SETTINGFILEVERSION</name></member>
+    <member refid="class_utility_library_1_1_settings_path_file_base_1afb1c1dad1198b5b580f266fa3ffbb312" kind="property"><name>SettingsPath</name></member>
+    <member refid="class_utility_library_1_1_settings_path_file_base_1a496ae5ac879e40d8daa7315e0fd72408" kind="property"><name>SettingsPathAndFile</name></member>
+    <member refid="class_utility_library_1_1_settings_path_file_base_1a817460b1b17830de52031b2f67c76010" kind="variable"><name>SubFolderCount</name></member>
+    <member refid="class_utility_library_1_1_settings_path_file_base_1ac36080b136214dfea97665899f0cafa5" kind="function"><name>CreateFolders</name></member>
+  </compound>
+  <compound refid="class_utility_library_1_1_settings_path_file_user_base" kind="class"><name>UtilityLibrary::SettingsPathFileUserBase</name>
+    <member refid="class_utility_library_1_1_settings_path_file_user_base_1ae170d37a41270c19df0f0033dc83aa5f" kind="property"><name>SETTINGFILEVERSION</name></member>
+    <member refid="class_utility_library_1_1_settings_path_file_user_base_1ad4cc2061a9e43e1256a7c51c40ef2ff9" kind="function"><name>SettingsPathFileUserBase</name></member>
+  </compound>
+  <compound refid="class_utility_library_1_1_settings_path_user_default" kind="class"><name>UtilityLibrary::SettingsPathUserDefault</name>
+    <member refid="class_utility_library_1_1_settings_path_user_default_1af737829bc6358bfbfb3b560ccb186417" kind="property"><name>AssemblyName</name></member>
+    <member refid="class_utility_library_1_1_settings_path_user_default_1a00a1dfed6445beae14223c749ff16570" kind="property"><name>CompanyName</name></member>
+    <member refid="class_utility_library_1_1_settings_path_user_default_1ac82446cd697a0aa0be17f10c2601676c" kind="function"><name>SettingsPathUserDefault</name></member>
+    <member refid="class_utility_library_1_1_settings_path_user_default_1a0c1735d6cf8b74133a5e2389326e5f9c" kind="function"><name>CreateFolders</name></member>
+  </compound>
+  <compound refid="class_utility_library_1_1_settings_user" kind="class"><name>UtilityLibrary::SettingsUser</name>
+    <member refid="class_utility_library_1_1_settings_user_1aa8aa400a1a99f42e7bc1ee941a347d1e" kind="property"><name>USetting</name></member>
+    <member refid="class_utility_library_1_1_settings_user_1a8f697a6de39f0093288791fbb5424687" kind="variable"><name>USet</name></member>
+    <member refid="class_utility_library_1_1_settings_user_1a91a5fe104bec07b6e9cbbacd4fceea46" kind="variable"><name>userSettings</name></member>
+    <member refid="class_utility_library_1_1_settings_user_1a41a8cd0a0a4f0dc78dc4a7b900c04b36" kind="function"><name>GetInstance</name></member>
+    <member refid="class_utility_library_1_1_settings_user_1aaaf15d6e7f34d0dc6e9ac6568fd9d091" kind="function"><name>Reset</name></member>
+  </compound>
+  <compound refid="class_utility_library_1_1_settings_util" kind="class"><name>UtilityLibrary::SettingsUtil</name>
+    <member refid="class_utility_library_1_1_settings_util_1a2b4df5e1958e786326526b9f028a17e5" kind="variable"><name>AssemblyName</name></member>
+    <member refid="class_utility_library_1_1_settings_util_1a12e26fd0994ecb967721559cee0c3eaf" kind="property"><name>CompanyName</name></member>
+    <member refid="class_utility_library_1_1_settings_util_1aeb0f1dfa18a048773a88ea33b44b9b72" kind="property"><name>AssemblyDirectory</name></member>
+    <member refid="class_utility_library_1_1_settings_util_1ab3df35e017be3b5c9e6468b3169cc324" kind="property"><name>AssemblyVersion</name></member>
+    <member refid="class_utility_library_1_1_settings_util_1a89df559580c2fe4080c8bb67f15e9f73" kind="function"><name>CreateSubFolders</name></member>
+    <member refid="class_utility_library_1_1_settings_util_1a5d6c8cd76dfd4d9a401a800995fd8596" kind="function"><name>SubFolder</name></member>
+    <member refid="class_utility_library_1_1_settings_util_1a89df559580c2fe4080c8bb67f15e9f73" kind="function"><name>CreateSubFolders</name></member>
+    <member refid="class_utility_library_1_1_settings_util_1a5d6c8cd76dfd4d9a401a800995fd8596" kind="function"><name>SubFolder</name></member>
+  </compound>
+  <compound refid="class_utility_library_1_1_string_extensions" kind="class"><name>UtilityLibrary::StringExtensions</name>
+    <member refid="class_utility_library_1_1_string_extensions_1aea2c5212c6d12b7e96ac15d96ae40902" kind="function"><name>Repeat</name></member>
+    <member refid="class_utility_library_1_1_string_extensions_1a2130817db62e1c6df3806f1555768fee" kind="function"><name>CountSubstring</name></member>
+    <member refid="class_utility_library_1_1_string_extensions_1a1d4d83fba94b11568abcbb2538c29d64" kind="function"><name>IndexOfToOccurance</name></member>
+    <member refid="class_utility_library_1_1_string_extensions_1ac3c7927b3995fdcd6d1c9c03e129d933" kind="function"><name>GetSubDirectory</name></member>
+    <member refid="class_utility_library_1_1_string_extensions_1a5fab7995c0120da31df958e1ec8e9bb6" kind="function"><name>GetSubDirectoryName</name></member>
+    <member refid="class_utility_library_1_1_string_extensions_1a9100fde77f17685330213412b5509e96" kind="function"><name>PadCenter</name></member>
+  </compound>
+  <compound refid="class_a_o_tools_1_1_styles_units_command" kind="class"><name>AOTools::StylesUnitsCommand</name>
+    <member refid="class_a_o_tools_1_1_styles_units_command_1a050d4d9604afec26c620dbfce2914de6" kind="function"><name>Execute</name></member>
+  </compound>
+  <compound refid="class_a_o_tools_1_1_extensible_storage_mgr_1_1_s_unit_key" kind="class"><name>AOTools::ExtensibleStorageMgr::SUnitKey</name>
+    <member refid="class_a_o_tools_1_1_extensible_storage_mgr_1_1_s_unit_key_1a94b7e417fc8fb1bc3a719fcb84d46f40" kind="property"><name>Value</name></member>
+    <member refid="class_a_o_tools_1_1_extensible_storage_mgr_1_1_s_unit_key_1a79e0aea67b44f32dd319ef52718db4d5" kind="variable"><name>VERSION_UNIT</name></member>
+    <member refid="class_a_o_tools_1_1_extensible_storage_mgr_1_1_s_unit_key_1a0ab57c2b439108cd5353c80dae7ef500" kind="variable"><name>STYLE_NAME</name></member>
+    <member refid="class_a_o_tools_1_1_extensible_storage_mgr_1_1_s_unit_key_1a754565095cd8c9a15df946309ba40c4a" kind="variable"><name>CAN_BE_ERASED</name></member>
+    <member refid="class_a_o_tools_1_1_extensible_storage_mgr_1_1_s_unit_key_1a974e0e20be420922542351132afc7e39" kind="variable"><name>UNIT_SYSTEM</name></member>
+    <member refid="class_a_o_tools_1_1_extensible_storage_mgr_1_1_s_unit_key_1a8702be5027fefbd9f64df448dd2a2d74" kind="variable"><name>UNIT_TYPE</name></member>
+    <member refid="class_a_o_tools_1_1_extensible_storage_mgr_1_1_s_unit_key_1a6c8fea59770096221a8a004bc3aa8f53" kind="variable"><name>ACCURACY</name></member>
+    <member refid="class_a_o_tools_1_1_extensible_storage_mgr_1_1_s_unit_key_1a671f87cb1f7459457df9eec152522591" kind="variable"><name>DUT</name></member>
+    <member refid="class_a_o_tools_1_1_extensible_storage_mgr_1_1_s_unit_key_1ac20115b4787355640913246c763711b2" kind="variable"><name>UST</name></member>
+    <member refid="class_a_o_tools_1_1_extensible_storage_mgr_1_1_s_unit_key_1af1ed13cdb6b5cf1475c0993ac9e791e2" kind="variable"><name>SUP_SPACE</name></member>
+    <member refid="class_a_o_tools_1_1_extensible_storage_mgr_1_1_s_unit_key_1ae6c23ba4ea4531a56f76a656f7559237" kind="variable"><name>SUP_LEAD_ZERO</name></member>
+    <member refid="class_a_o_tools_1_1_extensible_storage_mgr_1_1_s_unit_key_1a44c1e1020c518ce590e79f7ce214a8b2" kind="variable"><name>SUP_TRAIL_ZERO</name></member>
+    <member refid="class_a_o_tools_1_1_extensible_storage_mgr_1_1_s_unit_key_1a244b91ee91734000a06583462671ae77" kind="variable"><name>USE_DIG_GRP</name></member>
+    <member refid="class_a_o_tools_1_1_extensible_storage_mgr_1_1_s_unit_key_1a387b466a30e88529d457db1bc63df347" kind="variable"><name>USE_PLUS_PREFIX</name></member>
+    <member refid="class_a_o_tools_1_1_extensible_storage_mgr_1_1_s_unit_key_1a955315bc5960f7f9771799dda740a9a4" kind="function"><name>SUnitKey</name></member>
+  </compound>
+  <compound refid="class_a_o_tools_1_1_toggle_annotation_visibility" kind="class"><name>AOTools::ToggleAnnotationVisibility</name>
+    <member refid="class_a_o_tools_1_1_toggle_annotation_visibility_1a45ac067061fc6bf848cc476776dd30ba" kind="function"><name>Execute</name></member>
+  </compound>
+  <compound refid="class_a_o_tools_1_1_toggle_ref_plane" kind="class"><name>AOTools::ToggleRefPlane</name>
+    <member refid="class_a_o_tools_1_1_toggle_ref_plane_1a092ab37a3e0e322c5c8b63e917e05487" kind="function"><name>Execute</name></member>
+    <member refid="class_a_o_tools_1_1_toggle_ref_plane_1abba17740cedf4274a1f74f1a5bbf980b" kind="function"><name>SetWindowText</name></member>
+    <member refid="class_a_o_tools_1_1_toggle_ref_plane_1a5bb338f1adbf549479d0650fb45539c0" kind="function"><name>FindWindowEx</name></member>
+    <member refid="class_a_o_tools_1_1_toggle_ref_plane_1aea81f683eadd24a9765de827659b33a1" kind="function"><name>SetStatusText</name></member>
+    <member refid="class_a_o_tools_1_1_toggle_ref_plane_1a32dfc563015888369aabeb27c6dc8f46" kind="function"><name>GetWinHandle</name></member>
+  </compound>
+  <compound refid="class_a_o_tools_1_1_user_settings" kind="class"><name>AOTools::UserSettings</name>
+    <member refid="class_a_o_tools_1_1_user_settings_1aa0e2570dc9f8f06b05a92ab94a4a11a6" kind="variable"><name>FormMeasurePointsLocation</name></member>
+    <member refid="class_a_o_tools_1_1_user_settings_1a33a31180073d47d69aae123b2a51adc1" kind="variable"><name>MeasurePointsShowWorkplane</name></member>
+  </compound>
+  <compound refid="class_utility_library_1_1_user_settings" kind="class"><name>UtilityLibrary::UserSettings</name>
+    <member refid="class_utility_library_1_1_user_settings_1aab76b4ab45bda9a5c4f8d85f0f1cb82c" kind="variable"><name>USetting</name></member>
+    <member refid="class_utility_library_1_1_user_settings_1ac8aa0b9c31abeb69f07534a652097b3f" kind="variable"><name>USet</name></member>
+    <member refid="class_utility_library_1_1_user_settings_1a094c5abef6e0f975fb3dc6ae82158110" kind="variable"><name>userSettings</name></member>
+    <member refid="class_utility_library_1_1_user_settings_1a7349c475fbf841f6237e062d44177749" kind="function"><name>GetInstance</name></member>
+  </compound>
+  <compound refid="class_a_o_tools_1_1_util" kind="class"><name>AOTools::Util</name>
+    <member refid="class_a_o_tools_1_1_util_1af33e57ef70e8d887198a6ab8d4a8b223" kind="enum"><name>VTtypeCat</name></member>
+    <member refid="class_a_o_tools_1_1_util_1af33e57ef70e8d887198a6ab8d4a8b223a03570470bad94692ce93e32700d2e1cb" kind="enumvalue"><name>OTHER</name></member>
+    <member refid="class_a_o_tools_1_1_util_1af33e57ef70e8d887198a6ab8d4a8b223a8aab70beaf1a7c7e4cce83dedea203d1" kind="enumvalue"><name>D2_WITHPLANE</name></member>
+    <member refid="class_a_o_tools_1_1_util_1af33e57ef70e8d887198a6ab8d4a8b223a1dec8b2200f65aba35fe8953e3feda1d" kind="enumvalue"><name>D2_WITHOUTPLANE</name></member>
+    <member refid="class_a_o_tools_1_1_util_1af33e57ef70e8d887198a6ab8d4a8b223a6025176b456d397b80c8fdc143812c3d" kind="enumvalue"><name>D3_WITHPLANE</name></member>
+    <member refid="class_a_o_tools_1_1_util_1a52752671cbfd18b2523526d456625f78" kind="enum"><name>VTypeSub</name></member>
+    <member refid="class_a_o_tools_1_1_util_1a52752671cbfd18b2523526d456625f78a03570470bad94692ce93e32700d2e1cb" kind="enumvalue"><name>OTHER</name></member>
+    <member refid="class_a_o_tools_1_1_util_1a52752671cbfd18b2523526d456625f78aa28a6b3ecbc588e0eb8289fb7894e0db" kind="enumvalue"><name>D2_HORIZONTAL</name></member>
+    <member refid="class_a_o_tools_1_1_util_1a52752671cbfd18b2523526d456625f78a7007778b0a2be315c6d319386fc7ee9c" kind="enumvalue"><name>D2_VERTICAL</name></member>
+    <member refid="class_a_o_tools_1_1_util_1a52752671cbfd18b2523526d456625f78adc2bbbb076b8b5373439b62730cabef7" kind="enumvalue"><name>D2_DRAFTING</name></member>
+    <member refid="class_a_o_tools_1_1_util_1a52752671cbfd18b2523526d456625f78a3733d7066d5e10307238df0f9f12a557" kind="enumvalue"><name>D2_SHEET</name></member>
+    <member refid="class_a_o_tools_1_1_util_1a52752671cbfd18b2523526d456625f78ab3c1a788c3101cc7896995dd41dca928" kind="enumvalue"><name>D3_VIEW</name></member>
+    <member refid="class_a_o_tools_1_1_util_1adee522fcd350d1ae4c9edf154c0c9918" kind="variable"><name>addinManifest</name></member>
+    <member refid="class_a_o_tools_1_1_util_1ae220f7f6ef5ce5bf5269cf11d321bfea" kind="variable"><name>snaps</name></member>
+    <member refid="class_a_o_tools_1_1_util_1af5a797e834c994747dd938c0b754b8ce" kind="variable"><name>_projBasePt</name></member>
+    <member refid="class_a_o_tools_1_1_util_1a5c332baf12a3e123eedb3972d651e7cb" kind="function"><name>logMsgDbLn</name></member>
+    <member refid="class_a_o_tools_1_1_util_1a3faf68fea47bdcc427e926a68dadc5ec" kind="function"><name>logMsgDbLn2</name></member>
+    <member refid="class_a_o_tools_1_1_util_1ad961073b5c2e22e495a301a5ad6fb2ee" kind="function"><name>FormatLengthNumber</name></member>
+    <member refid="class_a_o_tools_1_1_util_1a7908578571ea4b01841552963ae0e336" kind="function"><name>GetVendorId</name></member>
+    <member refid="class_a_o_tools_1_1_util_1abaabaafcee9ff3d888a5007b87a570e0" kind="function"><name>GetProjectBasepoint</name></member>
+    <member refid="class_a_o_tools_1_1_util_1a24e153c6360d9f5233d44ae434f5f6c5" kind="function"><name>GetViewType</name></member>
+    <member refid="class_a_o_tools_1_1_util_1a2e79a835bf42f81577fa109760c23b62" kind="function"><name>ReadManifest</name></member>
+  </compound>
+  <compound refid="class_utility_library_1_1_version_info" kind="class"><name>UtilityLibrary::VersionInfo</name>
+    <member refid="class_utility_library_1_1_version_info_1adc30b6dab071d557f92d143655654ad6" kind="variable"><name>SETTINGSYSTEMVERSION</name></member>
+    <member refid="class_utility_library_1_1_version_info_1a7918e0285800eb61e1dc7b1b855a545e" kind="variable"><name>SettingFileVersion</name></member>
+    <member refid="class_utility_library_1_1_version_info_1aca1e440b0567d81a739bfbbca32a3061" kind="variable"><name>AssemblyVersion</name></member>
+    <member refid="class_utility_library_1_1_version_info_1a540f74ca6432da573eecc3c2dc57f269" kind="variable"><name>SettingSystemVersion</name></member>
+  </compound>
+  <compound refid="class_utility_library_1_1version_info" kind="class"><name>UtilityLibrary::versionInfo</name>
+    <member refid="class_utility_library_1_1version_info_1a5d50fa9a48775b9ea09fd90c0a90671b" kind="variable"><name>SETTINGSYSTEMVERSION</name></member>
+    <member refid="class_utility_library_1_1version_info_1a226ef813396337183647a6b6f64fc345" kind="variable"><name>SettingFileVersion</name></member>
+    <member refid="class_utility_library_1_1version_info_1a6929163d289233fe452146b3f137cef1" kind="variable"><name>AssemblyVersion</name></member>
+    <member refid="class_utility_library_1_1version_info_1a68c852d4890c1f1c63fd1a8fa3dae946" kind="variable"><name>SettingSystemVersion</name></member>
+  </compound>
+  <compound refid="struct_a_o_tools_1_1_util_1_1_v_type" kind="struct"><name>AOTools::Util::VType</name>
+    <member refid="struct_a_o_tools_1_1_util_1_1_v_type_1aa2eec947e5bbb4aaf7f357bc1db717fb" kind="property"><name>VTSub</name></member>
+    <member refid="struct_a_o_tools_1_1_util_1_1_v_type_1a08aede393153e51e586615a8ef14e8d0" kind="property"><name>VTCat</name></member>
+    <member refid="struct_a_o_tools_1_1_util_1_1_v_type_1ab911f6d26a99b22333158c30ee5f0eaa" kind="property"><name>VTName</name></member>
+    <member refid="struct_a_o_tools_1_1_util_1_1_v_type_1a3494ba12c02ff0814b9bfa63661a6c5e" kind="function"><name>VType</name></member>
+  </compound>
+  <compound refid="class_a_o_tools_1_1_x_y_z_extensions" kind="class"><name>AOTools::XYZExtensions</name>
+    <member refid="class_a_o_tools_1_1_x_y_z_extensions_1a88b58101ae58686cbaec3ad57675afaa" kind="function"><name>Multiply</name></member>
+  </compound>
+  <compound refid="namespace_a_o_tools" kind="namespace"><name>AOTools</name>
+  </compound>
+  <compound refid="namespace_a_o_tools_1_1_app_ribbon" kind="namespace"><name>AOTools::AppRibbon</name>
+  </compound>
+  <compound refid="namespace_a_o_tools_1_1_extensible_storage_mgr" kind="namespace"><name>AOTools::ExtensibleStorageMgr</name>
+  </compound>
+  <compound refid="namespace_a_o_tools_1_1_extensible_storage_mgr_1_1_s_basic_key" kind="namespace"><name>AOTools::ExtensibleStorageMgr::SBasicKey</name>
+  </compound>
+  <compound refid="namespace_a_o_tools_1_1_extensible_storage_mgr_1_1_s_unit_key" kind="namespace"><name>AOTools::ExtensibleStorageMgr::SUnitKey</name>
+  </compound>
+  <compound refid="namespace_a_o_tools_1_1_properties" kind="namespace"><name>AOTools::Properties</name>
+  </compound>
+  <compound refid="namespace_a_o_tools_1_1_util" kind="namespace"><name>AOTools::Util</name>
+  </compound>
+  <compound refid="namespace_application" kind="namespace"><name>Application</name>
+  </compound>
+  <compound refid="namespace_autodesk_1_1_revit_1_1_application_services" kind="namespace"><name>Autodesk::Revit::ApplicationServices</name>
+  </compound>
+  <compound refid="namespace_autodesk_1_1_revit_1_1_attributes" kind="namespace"><name>Autodesk::Revit::Attributes</name>
+  </compound>
+  <compound refid="namespace_autodesk_1_1_revit_1_1_d_b" kind="namespace"><name>Autodesk::Revit::DB</name>
+  </compound>
+  <compound refid="namespace_autodesk_1_1_revit_1_1_d_b_1_1_events" kind="namespace"><name>Autodesk::Revit::DB::Events</name>
+  </compound>
+  <compound refid="namespace_autodesk_1_1_revit_1_1_d_b_1_1_extensible_storage" kind="namespace"><name>Autodesk::Revit::DB::ExtensibleStorage</name>
+  </compound>
+  <compound refid="namespace_autodesk_1_1_revit_1_1_u_i" kind="namespace"><name>Autodesk::Revit::UI</name>
+  </compound>
+  <compound refid="namespace_autodesk_1_1_revit_1_1_u_i_1_1_events" kind="namespace"><name>Autodesk::Revit::UI::Events</name>
+  </compound>
+  <compound refid="namespace_autodesk_1_1_revit_1_1_u_i_1_1_selection" kind="namespace"><name>Autodesk::Revit::UI::Selection</name>
+  </compound>
+  <compound refid="namespace_env_d_t_e" kind="namespace"><name>EnvDTE</name>
+  </compound>
+  <compound refid="namespace_env_d_t_e80" kind="namespace"><name>EnvDTE80</name>
+  </compound>
+  <compound refid="namespace_field_info" kind="namespace"><name>FieldInfo</name>
+  </compound>
+  <compound refid="namespace_form" kind="namespace"><name>Form</name>
+  </compound>
+  <compound refid="namespace_point" kind="namespace"><name>Point</name>
+  </compound>
+  <compound refid="namespace_schema_key" kind="namespace"><name>SchemaKey</name>
+  </compound>
+  <compound refid="namespacestatic" kind="namespace"><name>static</name>
+  </compound>
+  <compound refid="namespace_system" kind="namespace"><name>System</name>
+  </compound>
+  <compound refid="namespace_system_1_1_collections_1_1_generic" kind="namespace"><name>System::Collections::Generic</name>
+  </compound>
+  <compound refid="namespace_system_1_1_configuration" kind="namespace"><name>System::Configuration</name>
+  </compound>
+  <compound refid="namespace_system_1_1_diagnostics" kind="namespace"><name>System::Diagnostics</name>
+  </compound>
+  <compound refid="namespace_system_1_1_drawing" kind="namespace"><name>System::Drawing</name>
+  </compound>
+  <compound refid="namespace_system_1_1_i_o" kind="namespace"><name>System::IO</name>
+  </compound>
+  <compound refid="namespace_system_1_1_linq" kind="namespace"><name>System::Linq</name>
+  </compound>
+  <compound refid="namespace_system_1_1_reflection" kind="namespace"><name>System::Reflection</name>
+  </compound>
+  <compound refid="namespace_system_1_1_runtime_1_1_compiler_services" kind="namespace"><name>System::Runtime::CompilerServices</name>
+  </compound>
+  <compound refid="namespace_system_1_1_runtime_1_1_interop_services" kind="namespace"><name>System::Runtime::InteropServices</name>
+  </compound>
+  <compound refid="namespace_system_1_1_text" kind="namespace"><name>System::Text</name>
+  </compound>
+  <compound refid="namespace_system_1_1_threading_1_1_tasks" kind="namespace"><name>System::Threading::Tasks</name>
+  </compound>
+  <compound refid="namespace_system_1_1_windows_1_1_forms" kind="namespace"><name>System::Windows::Forms</name>
+  </compound>
+  <compound refid="namespace_system_1_1_windows_1_1_media_1_1_imaging" kind="namespace"><name>System::Windows::Media::Imaging</name>
+  </compound>
+  <compound refid="namespace_system_1_1_xml_1_1_serialization" kind="namespace"><name>System::Xml::Serialization</name>
+  </compound>
+  <compound refid="namespace_utility_library" kind="namespace"><name>UtilityLibrary</name>
+  </compound>
+  <compound refid="namespace_utility_library_1_1_message_utilities" kind="namespace"><name>UtilityLibrary::MessageUtilities</name>
+  </compound>
+  <compound refid="namespace_utility_library_1_1_settings_app" kind="namespace"><name>UtilityLibrary::SettingsApp</name>
+  </compound>
+  <compound refid="namespace_utility_library_1_1_settings_user" kind="namespace"><name>UtilityLibrary::SettingsUser</name>
+  </compound>
+  <compound refid="namespace_view" kind="namespace"><name>View</name>
+  </compound>
+  <compound refid="_addin_classes_8cs" kind="file"><name>AddinClasses.cs</name>
+  </compound>
+  <compound refid="_app_ribbon_8cs" kind="file"><name>AppRibbon.cs</name>
+    <member refid="_app_ribbon_8cs_1a9dc930c1b664f565efb80932df674385" kind="typedef"><name>Application</name></member>
+  </compound>
+  <compound refid="_dx_measure_8cs" kind="file"><name>DxMeasure.cs</name>
+    <member refid="_dx_measure_8cs_1a301ccf16c9f344c63aa03eca4789cb23" kind="typedef"><name>View</name></member>
+  </compound>
+  <compound refid="_extensible_storage_mgr_8cs" kind="file"><name>ExtensibleStorageMgr.cs</name>
+    <member refid="_extensible_storage_mgr_8cs_1af51d13c911ca1c75c01f1b4e426bfa68" kind="typedef"><name>SchemaKey</name></member>
+    <member refid="_extensible_storage_mgr_8cs_1aa67657e7b1f5ce26471261e89d4986c8" kind="typedef"><name>FieldInfo</name></member>
+  </compound>
+  <compound refid="_form_measure_points_8cs" kind="file"><name>FormMeasurePoints.cs</name>
+    <member refid="_form_measure_points_8cs_1a8cd142a5860eee5e920f021e6f40b849" kind="typedef"><name>Form</name></member>
+    <member refid="_form_measure_points_8cs_1a869cb8a0434b55ce0b742c828373c455" kind="typedef"><name>Point</name></member>
+  </compound>
+  <compound refid="_form_measure_points_8_designer_8cs" kind="file"><name>FormMeasurePoints.Designer.cs</name>
+  </compound>
+  <compound refid="_picked_box2_8cs" kind="file"><name>PickedBox2.cs</name>
+  </compound>
+  <compound refid="_assembly_info_8cs" kind="file"><name>AssemblyInfo.cs</name>
+  </compound>
+  <compound refid="_resources_8_designer_8cs" kind="file"><name>Resources.Designer.cs</name>
+  </compound>
+  <compound refid="_settings_8_designer_8cs" kind="file"><name>Settings.Designer.cs</name>
+  </compound>
+  <compound refid="_settings_app_8cs" kind="file"><name>SettingsApp.cs</name>
+  </compound>
+  <compound refid="_settings_user_8cs" kind="file"><name>SettingsUser.cs</name>
+    <member refid="_settings_user_8cs_1a869cb8a0434b55ce0b742c828373c455" kind="typedef"><name>Point</name></member>
+  </compound>
+  <compound refid="_styles_units_command_8cs" kind="file"><name>StylesUnitsCommand.cs</name>
+  </compound>
+  <compound refid="_toggle_annotation_visibility_8cs" kind="file"><name>ToggleAnnotationVisibility.cs</name>
+  </compound>
+  <compound refid="_toggle_ref_plane_8cs" kind="file"><name>ToggleRefPlane.cs</name>
+  </compound>
+  <compound refid="_util_8cs" kind="file"><name>Util.cs</name>
+  </compound>
+  <compound refid="_cs_utilities_8cs" kind="file"><name>CsUtilities.cs</name>
+  </compound>
+  <compound refid="_message_utilities_8cs" kind="file"><name>MessageUtilities.cs</name>
+  </compound>
+  <compound refid="_settings_01-_01_copy_8cs" kind="file"><name>Settings - Copy.cs</name>
+  </compound>
+  <compound refid="_utility_library_2_utility_library_2_settings_8cs" kind="file"><name>Settings.cs</name>
+  </compound>
+  <compound refid="_revit_projects_2_a_o_tools_2_a_o_tools_2_properties_2_settings_8cs" kind="file"><name>Settings.cs</name>
+  </compound>
+  <compound refid="dir_5b3c95b72c209494e8ede2864f844947" kind="dir"><name>B:/Programming/VisualStudioProjects/RevitProjects/AOTools/AOTools</name>
+  </compound>
+  <compound refid="dir_27304fd64d6a38776b5fd4ba776c732b" kind="dir"><name>B:/Programming/VisualStudioProjects/RevitProjects/AOTools</name>
+  </compound>
+  <compound refid="dir_257a5ee06f4715d7d0e7744329fe8428" kind="dir"><name>B:</name>
+  </compound>
+  <compound refid="dir_5dc2feb3d76c2f8e64d0c9af3d49fbd3" kind="dir"><name>B:/Programming</name>
+  </compound>
+  <compound refid="dir_f70de2d8787485011da7576ff921b604" kind="dir"><name>B:/Programming/VisualStudioProjects/RevitProjects/AOTools/AOTools/Properties</name>
+  </compound>
+  <compound refid="dir_51a8a4ef616f227ce022acd0b8919488" kind="dir"><name>B:/Programming/VisualStudioProjects/RevitProjects</name>
+  </compound>
+  <compound refid="dir_c428e3849bc8a62b282052206c057b9a" kind="dir"><name>B:/Programming/VisualStudioProjects/RevitProjects/AOTools/AOTools/Settings</name>
+  </compound>
+  <compound refid="dir_2b4c032fa52c234388f2815c78e51b91" kind="dir"><name>B:/Programming/VisualStudioProjects/UtilityLibrary/UtilityLibrary</name>
+  </compound>
+  <compound refid="dir_ee32d397228d589a8944ee805dd4e64c" kind="dir"><name>B:/Programming/VisualStudioProjects/UtilityLibrary</name>
+  </compound>
+  <compound refid="dir_71d2d9d8cd806f46b142fe6f5554ade0" kind="dir"><name>B:/Programming/VisualStudioProjects</name>
+  </compound>
+</doxygenindex>

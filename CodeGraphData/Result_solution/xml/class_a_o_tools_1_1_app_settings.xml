@@ -1,0 +1,67 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.6">
+  <compounddef id="class_a_o_tools_1_1_app_settings" kind="class" prot="public">
+    <compoundname>AOTools::AppSettings</compoundname>
+    <basecompoundref refid="class_utility_library_1_1_settings_path_file_user_base" prot="public" virt="non-virtual">UtilityLibrary.SettingsPathFileUserBase</basecompoundref>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <inheritancegraph>
+      <node id="7">
+        <label>SettingsPathFileBase</label>
+        <link refid="class_utility_library_1_1_settings_path_file_base"/>
+      </node>
+      <node id="6">
+        <label>SettingsPathFileUserBase</label>
+        <link refid="class_utility_library_1_1_settings_path_file_user_base"/>
+        <childnode refid="7" relation="public-inheritance">
+        </childnode>
+      </node>
+      <node id="5">
+        <label>AOTools.AppSettings</label>
+        <link refid="class_a_o_tools_1_1_app_settings"/>
+        <childnode refid="6" relation="public-inheritance">
+        </childnode>
+      </node>
+    </inheritancegraph>
+    <collaborationgraph>
+      <node id="10">
+        <label>SettingsPathFileBase</label>
+        <link refid="class_utility_library_1_1_settings_path_file_base"/>
+        <childnode refid="11" relation="usage">
+          <edgelabel>VersionInfo</edgelabel>
+        </childnode>
+      </node>
+      <node id="11">
+        <label>UtilityLibrary.VersionInfo</label>
+        <link refid="class_utility_library_1_1_version_info"/>
+      </node>
+      <node id="9">
+        <label>SettingsPathFileUserBase</label>
+        <link refid="class_utility_library_1_1_settings_path_file_user_base"/>
+        <childnode refid="10" relation="public-inheritance">
+        </childnode>
+      </node>
+      <node id="8">
+        <label>AOTools.AppSettings</label>
+        <link refid="class_a_o_tools_1_1_app_settings"/>
+        <childnode refid="9" relation="public-inheritance">
+        </childnode>
+      </node>
+    </collaborationgraph>
+    <location file="B:/Programming/VisualStudioProjects/RevitProjects/AOTools/AOTools/Settings/SettingsApp.cs" line="16" column="1" bodyfile="B:/Programming/VisualStudioProjects/RevitProjects/AOTools/AOTools/Settings/SettingsApp.cs" bodystart="15" bodyend="24"/>
+    <listofallmembers>
+      <member refid="class_utility_library_1_1_settings_path_file_base_1ac36080b136214dfea97665899f0cafa5" prot="public" virt="virtual"><scope>AOTools::AppSettings</scope><name>CreateFolders</name></member>
+      <member refid="class_utility_library_1_1_settings_path_file_base_1a71f96a3382d36fed7996f2bca080048a" prot="protected" virt="non-virtual"><scope>AOTools::AppSettings</scope><name>FileName</name></member>
+      <member refid="class_utility_library_1_1_settings_path_file_base_1a4666be801ac2dd491f96fea2ca00769b" prot="protected" virt="non-virtual"><scope>AOTools::AppSettings</scope><name>RootPath</name></member>
+      <member refid="class_utility_library_1_1_settings_path_file_base_1a3bcb74344b81698ad7bccbca81a52387" prot="public" virt="non-virtual"><scope>AOTools::AppSettings</scope><name>SETTINGFILEBASE</name></member>
+      <member refid="class_utility_library_1_1_settings_path_file_user_base_1ae170d37a41270c19df0f0033dc83aa5f" prot="public" virt="non-virtual"><scope>AOTools::AppSettings</scope><name>SETTINGFILEVERSION</name></member>
+      <member refid="class_utility_library_1_1_settings_path_file_base_1afb1c1dad1198b5b580f266fa3ffbb312" prot="public" virt="non-virtual"><scope>AOTools::AppSettings</scope><name>SettingsPath</name></member>
+      <member refid="class_utility_library_1_1_settings_path_file_base_1a496ae5ac879e40d8daa7315e0fd72408" prot="public" virt="non-virtual"><scope>AOTools::AppSettings</scope><name>SettingsPathAndFile</name></member>
+      <member refid="class_utility_library_1_1_settings_path_file_user_base_1ad4cc2061a9e43e1256a7c51c40ef2ff9" prot="public" virt="non-virtual"><scope>AOTools::AppSettings</scope><name>SettingsPathFileUserBase</name></member>
+      <member refid="class_utility_library_1_1_settings_path_file_base_1a8a9d9a9b3ce2f036320591ca6eb02737" prot="protected" virt="non-virtual"><scope>AOTools::AppSettings</scope><name>SubFolders</name></member>
+      <member refid="class_utility_library_1_1_settings_path_file_base_1a59feb54756182fe7b57203bb08c41e0e" prot="public" virt="non-virtual"><scope>AOTools::AppSettings</scope><name>VersionInfo</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

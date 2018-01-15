@@ -1,0 +1,227 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.6">
+  <compounddef id="class_a_o_tools_1_1_dx_measure" kind="class" prot="public">
+    <compoundname>AOTools::DxMeasure</compoundname>
+    <basecompoundref prot="public" virt="non-virtual">IExternalCommand</basecompoundref>
+      <sectiondef kind="private-static-attrib">
+      <memberdef kind="variable" id="class_a_o_tools_1_1_dx_measure_1af66faad427ac190a0131b16c493ae73e" prot="private" static="yes" mutable="no">
+        <type><ref refid="class_a_o_tools_1_1_form_measure_points" kindref="compound">FormMeasurePoints</ref></type>
+        <definition>FormMeasurePoints AOTools.DxMeasure._form</definition>
+        <argsstring></argsstring>
+        <name>_form</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="B:/Programming/VisualStudioProjects/RevitProjects/AOTools/AOTools/DxMeasure.cs" line="20" column="1" bodyfile="B:/Programming/VisualStudioProjects/RevitProjects/AOTools/AOTools/DxMeasure.cs" bodystart="20" bodyend="-1"/>
+        <referencedby refid="class_a_o_tools_1_1_dx_measure_1a73e1a51fce3862fdbccd36f0daeff4cc" compoundref="_dx_measure_8cs" startline="45" endline="90">AOTools.DxMeasure.Process</referencedby>
+        <referencedby refid="class_a_o_tools_1_1_dx_measure_1a84b517db6fb2a0eaf5ccbab225f354e8" compoundref="_dx_measure_8cs" startline="165" endline="190">AOTools.DxMeasure.ShowHideWorkplane</referencedby>
+      </memberdef>
+      <memberdef kind="variable" id="class_a_o_tools_1_1_dx_measure_1ad8022693053ddf6c44bca24f865314dc" prot="private" static="yes" mutable="no">
+        <type>UIDocument</type>
+        <definition>UIDocument AOTools.DxMeasure._uiDoc</definition>
+        <argsstring></argsstring>
+        <name>_uiDoc</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="B:/Programming/VisualStudioProjects/RevitProjects/AOTools/AOTools/DxMeasure.cs" line="21" column="1" bodyfile="B:/Programming/VisualStudioProjects/RevitProjects/AOTools/AOTools/DxMeasure.cs" bodystart="21" bodyend="-1"/>
+        <referencedby refid="class_a_o_tools_1_1_dx_measure_1a49bf64ad4a1a2e15b449f3a2bb76d508" compoundref="_dx_measure_8cs" startline="24" endline="43">AOTools.DxMeasure.Execute</referencedby>
+        <referencedby refid="class_a_o_tools_1_1_dx_measure_1a73e1a51fce3862fdbccd36f0daeff4cc" compoundref="_dx_measure_8cs" startline="45" endline="90">AOTools.DxMeasure.Process</referencedby>
+      </memberdef>
+      <memberdef kind="variable" id="class_a_o_tools_1_1_dx_measure_1a61ed1315ed36744ddccb1a789936d0a5" prot="private" static="yes" mutable="no">
+        <type>Document</type>
+        <definition>Document AOTools.DxMeasure._doc</definition>
+        <argsstring></argsstring>
+        <name>_doc</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="B:/Programming/VisualStudioProjects/RevitProjects/AOTools/AOTools/DxMeasure.cs" line="22" column="1" bodyfile="B:/Programming/VisualStudioProjects/RevitProjects/AOTools/AOTools/DxMeasure.cs" bodystart="22" bodyend="-1"/>
+        <referencedby refid="class_a_o_tools_1_1_dx_measure_1a49bf64ad4a1a2e15b449f3a2bb76d508" compoundref="_dx_measure_8cs" startline="24" endline="43">AOTools.DxMeasure.Execute</referencedby>
+        <referencedby refid="class_a_o_tools_1_1_dx_measure_1a73e1a51fce3862fdbccd36f0daeff4cc" compoundref="_dx_measure_8cs" startline="45" endline="90">AOTools.DxMeasure.Process</referencedby>
+        <referencedby refid="class_a_o_tools_1_1_dx_measure_1a84b517db6fb2a0eaf5ccbab225f354e8" compoundref="_dx_measure_8cs" startline="165" endline="190">AOTools.DxMeasure.ShowHideWorkplane</referencedby>
+      </memberdef>
+      </sectiondef>
+      <sectiondef kind="public-func">
+      <memberdef kind="function" id="class_a_o_tools_1_1_dx_measure_1a49bf64ad4a1a2e15b449f3a2bb76d508" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type>Result</type>
+        <definition>Result AOTools.DxMeasure.Execute</definition>
+        <argsstring>(ExternalCommandData commandData, ref string message, ElementSet elements)</argsstring>
+        <name>Execute</name>
+        <param>
+          <type>ExternalCommandData</type>
+          <declname>commandData</declname>
+        </param>
+        <param>
+          <type>ref string</type>
+          <declname>message</declname>
+        </param>
+        <param>
+          <type>ElementSet</type>
+          <declname>elements</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="B:/Programming/VisualStudioProjects/RevitProjects/AOTools/AOTools/DxMeasure.cs" line="24" column="1" bodyfile="B:/Programming/VisualStudioProjects/RevitProjects/AOTools/AOTools/DxMeasure.cs" bodystart="24" bodyend="43"/>
+        <references refid="class_a_o_tools_1_1_dx_measure_1a61ed1315ed36744ddccb1a789936d0a5" compoundref="_dx_measure_8cs" startline="22">AOTools.DxMeasure._doc</references>
+        <references refid="class_a_o_tools_1_1_dx_measure_1ad8022693053ddf6c44bca24f865314dc" compoundref="_dx_measure_8cs" startline="21">AOTools.DxMeasure._uiDoc</references>
+        <references refid="class_a_o_tools_1_1_dx_measure_1a73e1a51fce3862fdbccd36f0daeff4cc" compoundref="_dx_measure_8cs" startline="45" endline="90">AOTools.DxMeasure.Process</references>
+      </memberdef>
+      </sectiondef>
+      <sectiondef kind="package-static-func">
+      <memberdef kind="function" id="class_a_o_tools_1_1_dx_measure_1a73e1a51fce3862fdbccd36f0daeff4cc" prot="package" static="yes" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type>bool</type>
+        <definition>static bool AOTools.DxMeasure.Process</definition>
+        <argsstring>(UIDocument uiDoc, Document doc)</argsstring>
+        <name>Process</name>
+        <param>
+          <type>UIDocument</type>
+          <declname>uiDoc</declname>
+        </param>
+        <param>
+          <type>Document</type>
+          <declname>doc</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="B:/Programming/VisualStudioProjects/RevitProjects/AOTools/AOTools/DxMeasure.cs" line="45" column="1" bodyfile="B:/Programming/VisualStudioProjects/RevitProjects/AOTools/AOTools/DxMeasure.cs" bodystart="45" bodyend="90"/>
+        <references refid="class_a_o_tools_1_1_dx_measure_1a61ed1315ed36744ddccb1a789936d0a5" compoundref="_dx_measure_8cs" startline="22">AOTools.DxMeasure._doc</references>
+        <references refid="class_a_o_tools_1_1_dx_measure_1af66faad427ac190a0131b16c493ae73e" compoundref="_dx_measure_8cs" startline="20">AOTools.DxMeasure._form</references>
+        <references refid="class_a_o_tools_1_1_dx_measure_1ad8022693053ddf6c44bca24f865314dc" compoundref="_dx_measure_8cs" startline="21">AOTools.DxMeasure._uiDoc</references>
+        <references refid="class_a_o_tools_1_1_dx_measure_1acf8b94312a3dd7acd77c40ff4afff792" compoundref="_dx_measure_8cs" startline="92" endline="141">AOTools.DxMeasure.MeasurePts</references>
+        <referencedby refid="class_a_o_tools_1_1_dx_measure_1a49bf64ad4a1a2e15b449f3a2bb76d508" compoundref="_dx_measure_8cs" startline="24" endline="43">AOTools.DxMeasure.Execute</referencedby>
+      </memberdef>
+      </sectiondef>
+      <sectiondef kind="private-static-func">
+      <memberdef kind="function" id="class_a_o_tools_1_1_dx_measure_1acf8b94312a3dd7acd77c40ff4afff792" prot="private" static="yes" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type>bool</type>
+        <definition>static bool AOTools.DxMeasure.MeasurePts</definition>
+        <argsstring>(View av, VType vtype)</argsstring>
+        <name>MeasurePts</name>
+        <param>
+          <type><ref refid="_dx_measure_8cs_1a301ccf16c9f344c63aa03eca4789cb23" kindref="member">View</ref></type>
+          <declname>av</declname>
+        </param>
+        <param>
+          <type>VType</type>
+          <declname>vtype</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="B:/Programming/VisualStudioProjects/RevitProjects/AOTools/AOTools/DxMeasure.cs" line="92" column="1" bodyfile="B:/Programming/VisualStudioProjects/RevitProjects/AOTools/AOTools/DxMeasure.cs" bodystart="92" bodyend="141"/>
+        <references refid="class_a_o_tools_1_1_dx_measure_1ab369dbe0aec117cdc61d6db83b6b54a5" compoundref="_dx_measure_8cs" startline="143" endline="163">AOTools.DxMeasure.GetPts</references>
+        <references refid="class_a_o_tools_1_1_dx_measure_1a84b517db6fb2a0eaf5ccbab225f354e8" compoundref="_dx_measure_8cs" startline="165" endline="190">AOTools.DxMeasure.ShowHideWorkplane</references>
+        <referencedby refid="class_a_o_tools_1_1_dx_measure_1a73e1a51fce3862fdbccd36f0daeff4cc" compoundref="_dx_measure_8cs" startline="45" endline="90">AOTools.DxMeasure.Process</referencedby>
+      </memberdef>
+      <memberdef kind="function" id="class_a_o_tools_1_1_dx_measure_1ab369dbe0aec117cdc61d6db83b6b54a5" prot="private" static="yes" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type><ref refid="struct_a_o_tools_1_1_point_measurements" kindref="compound">PointMeasurements</ref></type>
+        <definition>static PointMeasurements AOTools.DxMeasure.GetPts</definition>
+        <argsstring>(XYZ workingOrigin)</argsstring>
+        <name>GetPts</name>
+        <param>
+          <type>XYZ</type>
+          <declname>workingOrigin</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="B:/Programming/VisualStudioProjects/RevitProjects/AOTools/AOTools/DxMeasure.cs" line="143" column="1" bodyfile="B:/Programming/VisualStudioProjects/RevitProjects/AOTools/AOTools/DxMeasure.cs" bodystart="143" bodyend="163"/>
+        <referencedby refid="class_a_o_tools_1_1_dx_measure_1acf8b94312a3dd7acd77c40ff4afff792" compoundref="_dx_measure_8cs" startline="92" endline="141">AOTools.DxMeasure.MeasurePts</referencedby>
+      </memberdef>
+      <memberdef kind="function" id="class_a_o_tools_1_1_dx_measure_1a84b517db6fb2a0eaf5ccbab225f354e8" prot="private" static="yes" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type>void</type>
+        <definition>static void AOTools.DxMeasure.ShowHideWorkplane</definition>
+        <argsstring>(Plane p, View av)</argsstring>
+        <name>ShowHideWorkplane</name>
+        <param>
+          <type>Plane</type>
+          <declname>p</declname>
+        </param>
+        <param>
+          <type><ref refid="_dx_measure_8cs_1a301ccf16c9f344c63aa03eca4789cb23" kindref="member">View</ref></type>
+          <declname>av</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="B:/Programming/VisualStudioProjects/RevitProjects/AOTools/AOTools/DxMeasure.cs" line="165" column="1" bodyfile="B:/Programming/VisualStudioProjects/RevitProjects/AOTools/AOTools/DxMeasure.cs" bodystart="165" bodyend="190"/>
+        <references refid="class_a_o_tools_1_1_dx_measure_1a61ed1315ed36744ddccb1a789936d0a5" compoundref="_dx_measure_8cs" startline="22">AOTools.DxMeasure._doc</references>
+        <references refid="class_a_o_tools_1_1_dx_measure_1af66faad427ac190a0131b16c493ae73e" compoundref="_dx_measure_8cs" startline="20">AOTools.DxMeasure._form</references>
+        <references refid="class_a_o_tools_1_1_form_measure_points_1a4fec526d1a791818081c4fa554f84136" compoundref="_form_measure_points_8cs" startline="62">AOTools.FormMeasurePoints.ShowWorkplane</references>
+        <referencedby refid="class_a_o_tools_1_1_dx_measure_1acf8b94312a3dd7acd77c40ff4afff792" compoundref="_dx_measure_8cs" startline="92" endline="141">AOTools.DxMeasure.MeasurePts</referencedby>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <inheritancegraph>
+      <node id="18">
+        <label>IExternalCommand</label>
+      </node>
+      <node id="17">
+        <label>AOTools.DxMeasure</label>
+        <link refid="class_a_o_tools_1_1_dx_measure"/>
+        <childnode refid="18" relation="public-inheritance">
+        </childnode>
+      </node>
+    </inheritancegraph>
+    <collaborationgraph>
+      <node id="20">
+        <label>IExternalCommand</label>
+      </node>
+      <node id="19">
+        <label>AOTools.DxMeasure</label>
+        <link refid="class_a_o_tools_1_1_dx_measure"/>
+        <childnode refid="20" relation="public-inheritance">
+        </childnode>
+        <childnode refid="21" relation="usage">
+          <edgelabel>_uiDoc</edgelabel>
+          <edgelabel>_doc</edgelabel>
+          <edgelabel>_form</edgelabel>
+        </childnode>
+      </node>
+      <node id="21">
+        <label>static</label>
+      </node>
+    </collaborationgraph>
+    <location file="B:/Programming/VisualStudioProjects/RevitProjects/AOTools/AOTools/DxMeasure.cs" line="19" column="1" bodyfile="B:/Programming/VisualStudioProjects/RevitProjects/AOTools/AOTools/DxMeasure.cs" bodystart="18" bodyend="191"/>
+    <listofallmembers>
+      <member refid="class_a_o_tools_1_1_dx_measure_1a61ed1315ed36744ddccb1a789936d0a5" prot="private" virt="non-virtual"><scope>AOTools::DxMeasure</scope><name>_doc</name></member>
+      <member refid="class_a_o_tools_1_1_dx_measure_1af66faad427ac190a0131b16c493ae73e" prot="private" virt="non-virtual"><scope>AOTools::DxMeasure</scope><name>_form</name></member>
+      <member refid="class_a_o_tools_1_1_dx_measure_1ad8022693053ddf6c44bca24f865314dc" prot="private" virt="non-virtual"><scope>AOTools::DxMeasure</scope><name>_uiDoc</name></member>
+      <member refid="class_a_o_tools_1_1_dx_measure_1a49bf64ad4a1a2e15b449f3a2bb76d508" prot="public" virt="non-virtual"><scope>AOTools::DxMeasure</scope><name>Execute</name></member>
+      <member refid="class_a_o_tools_1_1_dx_measure_1ab369dbe0aec117cdc61d6db83b6b54a5" prot="private" virt="non-virtual"><scope>AOTools::DxMeasure</scope><name>GetPts</name></member>
+      <member refid="class_a_o_tools_1_1_dx_measure_1acf8b94312a3dd7acd77c40ff4afff792" prot="private" virt="non-virtual"><scope>AOTools::DxMeasure</scope><name>MeasurePts</name></member>
+      <member refid="class_a_o_tools_1_1_dx_measure_1a73e1a51fce3862fdbccd36f0daeff4cc" prot="package" virt="non-virtual"><scope>AOTools::DxMeasure</scope><name>Process</name></member>
+      <member refid="class_a_o_tools_1_1_dx_measure_1a84b517db6fb2a0eaf5ccbab225f354e8" prot="private" virt="non-virtual"><scope>AOTools::DxMeasure</scope><name>ShowHideWorkplane</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

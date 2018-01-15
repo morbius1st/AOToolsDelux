@@ -1,0 +1,712 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.6">
+  <compounddef id="class_a_o_tools_1_1_extensible_storage_mgr" kind="class" prot="public">
+    <compoundname>AOTools::ExtensibleStorageMgr</compoundname>
+    <innerclass refid="class_a_o_tools_1_1_extensible_storage_mgr_1_1_field_info" prot="public">AOTools::ExtensibleStorageMgr::FieldInfo</innerclass>
+    <innerclass refid="class_a_o_tools_1_1_extensible_storage_mgr_1_1_s_basic_key" prot="public">AOTools::ExtensibleStorageMgr::SBasicKey</innerclass>
+    <innerclass refid="class_a_o_tools_1_1_extensible_storage_mgr_1_1_schema_key" prot="public">AOTools::ExtensibleStorageMgr::SchemaKey</innerclass>
+    <innerclass refid="class_a_o_tools_1_1_extensible_storage_mgr_1_1_s_unit_key" prot="public">AOTools::ExtensibleStorageMgr::SUnitKey</innerclass>
+      <sectiondef kind="private-type">
+      <memberdef kind="enum" id="class_a_o_tools_1_1_extensible_storage_mgr_1ae4beab4cddd8abc5f33db2d418d4a2f9" prot="private" static="no">
+        <name>FmtOpt</name>
+        <enumvalue id="class_a_o_tools_1_1_extensible_storage_mgr_1ae4beab4cddd8abc5f33db2d418d4a2f9ac2f3f489a00553e7a01d369c103c7251" prot="public">
+          <name>NO</name>
+          <initializer>= 0</initializer>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="class_a_o_tools_1_1_extensible_storage_mgr_1ae4beab4cddd8abc5f33db2d418d4a2f9a7469a286259799e5b37e5db9296f00b3" prot="public">
+          <name>YES</name>
+          <initializer>= 1</initializer>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="class_a_o_tools_1_1_extensible_storage_mgr_1ae4beab4cddd8abc5f33db2d418d4a2f9aa2e843feab94ef623fea888f07c28696" prot="public">
+          <name>IGNORE</name>
+          <initializer>= -1</initializer>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="B:/Programming/VisualStudioProjects/RevitProjects/AOTools/AOTools/ExtensibleStorageMgr.cs" line="142" column="1" bodyfile="B:/Programming/VisualStudioProjects/RevitProjects/AOTools/AOTools/ExtensibleStorageMgr.cs" bodystart="141" bodyend="146"/>
+      </memberdef>
+      </sectiondef>
+      <sectiondef kind="public-attrib">
+      <memberdef kind="variable" id="class_a_o_tools_1_1_extensible_storage_mgr_1a1277d7cc332c1675e89c51810ecbf922" prot="public" static="no" mutable="no">
+        <type>const string</type>
+        <definition>const string AOTools.ExtensibleStorageMgr.KEY_FMT_STR</definition>
+        <argsstring></argsstring>
+        <name>KEY_FMT_STR</name>
+        <initializer>= &quot;0000&quot;</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="B:/Programming/VisualStudioProjects/RevitProjects/AOTools/AOTools/ExtensibleStorageMgr.cs" line="52" column="1" bodyfile="B:/Programming/VisualStudioProjects/RevitProjects/AOTools/AOTools/ExtensibleStorageMgr.cs" bodystart="52" bodyend="-1"/>
+      </memberdef>
+      </sectiondef>
+      <sectiondef kind="private-static-attrib">
+      <memberdef kind="variable" id="class_a_o_tools_1_1_extensible_storage_mgr_1ad6c675dbdd845b4355d03994e9601fc1" prot="private" static="yes" mutable="no">
+        <type>bool</type>
+        <definition>bool AOTools.ExtensibleStorageMgr.initalized</definition>
+        <argsstring></argsstring>
+        <name>initalized</name>
+        <initializer>= false</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="B:/Programming/VisualStudioProjects/RevitProjects/AOTools/AOTools/ExtensibleStorageMgr.cs" line="54" column="1" bodyfile="B:/Programming/VisualStudioProjects/RevitProjects/AOTools/AOTools/ExtensibleStorageMgr.cs" bodystart="54" bodyend="-1"/>
+        <referencedby refid="class_a_o_tools_1_1_extensible_storage_mgr_1ad4d6d1fe93e16ad8ee1458a60d1aef95" compoundref="_extensible_storage_mgr_8cs" startline="344" endline="356">AOTools.ExtensibleStorageMgr.Init</referencedby>
+        <referencedby refid="class_a_o_tools_1_1_extensible_storage_mgr_1a3f185720df8ac3e0bc08749e99efd028" compoundref="_extensible_storage_mgr_8cs" startline="392" endline="397">AOTools.ExtensibleStorageMgr.SaveRevitBasicSettings</referencedby>
+      </memberdef>
+      <memberdef kind="variable" id="class_a_o_tools_1_1_extensible_storage_mgr_1a72ef416314115f8678233905726cb99e" prot="private" static="yes" mutable="no">
+        <type>readonly Dictionary&lt; <ref refid="class_a_o_tools_1_1_extensible_storage_mgr_1_1_s_basic_key" kindref="compound">SBasicKey</ref>, <ref refid="class_a_o_tools_1_1_extensible_storage_mgr_1_1_field_info" kindref="compound">FieldInfo</ref> &gt;</type>
+        <definition>readonly Dictionary&lt;SBasicKey, FieldInfo&gt; AOTools.ExtensibleStorageMgr._schemaFields</definition>
+        <argsstring></argsstring>
+        <name>_schemaFields</name>
+        <initializer>= 
+			new Dictionary&lt;<ref refid="class_a_o_tools_1_1_extensible_storage_mgr_1_1_s_basic_key" kindref="compound">SBasicKey</ref>, <ref refid="class_a_o_tools_1_1_extensible_storage_mgr_1_1_field_info" kindref="compound">FieldInfo</ref>&gt;()
+		{
+			{	(CURRENT), 
+					new <ref refid="class_a_o_tools_1_1_extensible_storage_mgr_1_1_field_info" kindref="compound">FieldInfo</ref>(CURRENT, &quot;CurrentUnitStyle&quot;, 
+						&quot;number of the current style&quot;, 0)
+			},
+			
+			{	(COUNT), 
+					new <ref refid="class_a_o_tools_1_1_extensible_storage_mgr_1_1_field_info" kindref="compound">FieldInfo</ref>(COUNT, &quot;Count&quot;, 
+						&quot;number of unit styles&quot;, 3)
+			},
+
+			{	(USE_OFFICE),
+					new <ref refid="class_a_o_tools_1_1_extensible_storage_mgr_1_1_field_info" kindref="compound">FieldInfo</ref>(USE_OFFICE, &quot;UseOfficeUnitStyle&quot;, 
+						&quot;use the office standard style&quot;, true)
+			},
+
+			{	(VERSION_BASIC),
+					new <ref refid="class_a_o_tools_1_1_extensible_storage_mgr_1_1_field_info" kindref="compound">FieldInfo</ref>(VERSION_BASIC, &quot;version&quot;, 
+						&quot;version&quot;, &quot;1.0&quot;)
+			},
+
+			{	(AUTO_RESTORE),
+					new <ref refid="class_a_o_tools_1_1_extensible_storage_mgr_1_1_field_info" kindref="compound">FieldInfo</ref>(AUTO_RESTORE, 
+						&quot;AutoRestoreUnitStyle&quot;, &quot;auto update to the selected unit style&quot;, true)
+			}
+		}</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="B:/Programming/VisualStudioProjects/RevitProjects/AOTools/AOTools/ExtensibleStorageMgr.cs" line="224" column="1" bodyfile="B:/Programming/VisualStudioProjects/RevitProjects/AOTools/AOTools/ExtensibleStorageMgr.cs" bodystart="224" bodyend="-1"/>
+        <referencedby refid="class_a_o_tools_1_1_extensible_storage_mgr_1ad4d6d1fe93e16ad8ee1458a60d1aef95" compoundref="_extensible_storage_mgr_8cs" startline="344" endline="356">AOTools.ExtensibleStorageMgr.Init</referencedby>
+      </memberdef>
+      <memberdef kind="variable" id="class_a_o_tools_1_1_extensible_storage_mgr_1af3053d3a9a8518c6d9931853433fda12" prot="private" static="yes" mutable="no">
+        <type>readonly <ref refid="class_a_o_tools_1_1_extensible_storage_mgr_1_1_field_info" kindref="compound">FieldInfo</ref></type>
+        <definition>readonly FieldInfo AOTools.ExtensibleStorageMgr._subSchemaFieldInfo</definition>
+        <argsstring></argsstring>
+        <name>_subSchemaFieldInfo</name>
+        <initializer>= 
+			new <ref refid="class_a_o_tools_1_1_extensible_storage_mgr_1_1_field_info" kindref="compound">FieldInfo</ref>(UNDEFINED, &quot;LocalUnitStyle{0:D2}&quot;,
+				&quot;subschema for the local unit style&quot;,
+				new Entity(), UnitType.UT_Number, &quot;B2788BC0-381E-4F4F-BE0B-93A93B9470{0:x2}&quot;)</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="B:/Programming/VisualStudioProjects/RevitProjects/AOTools/AOTools/ExtensibleStorageMgr.cs" line="258" column="1" bodyfile="B:/Programming/VisualStudioProjects/RevitProjects/AOTools/AOTools/ExtensibleStorageMgr.cs" bodystart="258" bodyend="-1"/>
+        <referencedby refid="class_a_o_tools_1_1_extensible_storage_mgr_1a0caea7708b931a8f0ec33f198e0442fe" compoundref="_extensible_storage_mgr_8cs" startline="606" endline="626">AOTools.ExtensibleStorageMgr.ReadRevitUnitStyles</referencedby>
+      </memberdef>
+      <memberdef kind="variable" id="class_a_o_tools_1_1_extensible_storage_mgr_1a9a60427fd40c224b496e0797581f4a28" prot="private" static="yes" mutable="no">
+        <type>readonly Dictionary&lt; <ref refid="class_a_o_tools_1_1_extensible_storage_mgr_1_1_s_unit_key" kindref="compound">SUnitKey</ref>, <ref refid="class_a_o_tools_1_1_extensible_storage_mgr_1_1_field_info" kindref="compound">FieldInfo</ref> &gt;</type>
+        <definition>readonly Dictionary&lt;SUnitKey, FieldInfo&gt; AOTools.ExtensibleStorageMgr._unitSchemaFields</definition>
+        <argsstring></argsstring>
+        <name>_unitSchemaFields</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="B:/Programming/VisualStudioProjects/RevitProjects/AOTools/AOTools/ExtensibleStorageMgr.cs" line="272" column="1" bodyfile="B:/Programming/VisualStudioProjects/RevitProjects/AOTools/AOTools/ExtensibleStorageMgr.cs" bodystart="272" bodyend="-1"/>
+        <referencedby refid="class_a_o_tools_1_1_extensible_storage_mgr_1aba108a6a5718eee6c8ac131e3a0c04f0" compoundref="_extensible_storage_mgr_8cs" startline="370" endline="385">AOTools.ExtensibleStorageMgr.InitUnitSchema</referencedby>
+      </memberdef>
+      </sectiondef>
+      <sectiondef kind="private-attrib">
+      <memberdef kind="variable" id="class_a_o_tools_1_1_extensible_storage_mgr_1a8a4ed660827f26987edcd7831242404b" prot="private" static="no" mutable="no">
+        <type>const string</type>
+        <definition>const string AOTools.ExtensibleStorageMgr.SCHEMA_NAME</definition>
+        <argsstring></argsstring>
+        <name>SCHEMA_NAME</name>
+        <initializer>= &quot;UnitStyleSettings&quot;</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="B:/Programming/VisualStudioProjects/RevitProjects/AOTools/AOTools/ExtensibleStorageMgr.cs" line="219" column="1" bodyfile="B:/Programming/VisualStudioProjects/RevitProjects/AOTools/AOTools/ExtensibleStorageMgr.cs" bodystart="219" bodyend="-1"/>
+        <referencedby refid="class_a_o_tools_1_1_extensible_storage_mgr_1a9b30844326da5c7b1061f184c22708ec" compoundref="_extensible_storage_mgr_8cs" startline="401" endline="465">AOTools.ExtensibleStorageMgr.SaveRevitSettings</referencedby>
+      </memberdef>
+      <memberdef kind="variable" id="class_a_o_tools_1_1_extensible_storage_mgr_1a40e28c70974648a246ff6959e0209611" prot="private" static="no" mutable="no">
+        <type>const string</type>
+        <definition>const string AOTools.ExtensibleStorageMgr.SCHEMA_DESC</definition>
+        <argsstring></argsstring>
+        <name>SCHEMA_DESC</name>
+        <initializer>= &quot;unit style setings&quot;</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="B:/Programming/VisualStudioProjects/RevitProjects/AOTools/AOTools/ExtensibleStorageMgr.cs" line="220" column="1" bodyfile="B:/Programming/VisualStudioProjects/RevitProjects/AOTools/AOTools/ExtensibleStorageMgr.cs" bodystart="220" bodyend="-1"/>
+        <referencedby refid="class_a_o_tools_1_1_extensible_storage_mgr_1a9b30844326da5c7b1061f184c22708ec" compoundref="_extensible_storage_mgr_8cs" startline="401" endline="465">AOTools.ExtensibleStorageMgr.SaveRevitSettings</referencedby>
+      </memberdef>
+      <memberdef kind="variable" id="class_a_o_tools_1_1_extensible_storage_mgr_1af3931906af16ef062c93b3466f345b88" prot="private" static="no" mutable="no">
+        <type>const string</type>
+        <definition>const string AOTools.ExtensibleStorageMgr.UNIT_SCHEMA_NAME</definition>
+        <argsstring></argsstring>
+        <name>UNIT_SCHEMA_NAME</name>
+        <initializer>= &quot;UnitStyleSchema&quot;</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="B:/Programming/VisualStudioProjects/RevitProjects/AOTools/AOTools/ExtensibleStorageMgr.cs" line="266" column="1" bodyfile="B:/Programming/VisualStudioProjects/RevitProjects/AOTools/AOTools/ExtensibleStorageMgr.cs" bodystart="266" bodyend="-1"/>
+        <referencedby refid="class_a_o_tools_1_1_extensible_storage_mgr_1a597f93114f89876898ee197c9cc4c4a9" compoundref="_extensible_storage_mgr_8cs" startline="507" endline="527">AOTools.ExtensibleStorageMgr.MakeUnitSchema</referencedby>
+      </memberdef>
+      <memberdef kind="variable" id="class_a_o_tools_1_1_extensible_storage_mgr_1a424f9c8f81c7107d711e62da75c80dd8" prot="private" static="no" mutable="no">
+        <type>const string</type>
+        <definition>const string AOTools.ExtensibleStorageMgr.UNIT_SCHEMA_DESC</definition>
+        <argsstring></argsstring>
+        <name>UNIT_SCHEMA_DESC</name>
+        <initializer>= &quot;unit style sub schema&quot;</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="B:/Programming/VisualStudioProjects/RevitProjects/AOTools/AOTools/ExtensibleStorageMgr.cs" line="267" column="1" bodyfile="B:/Programming/VisualStudioProjects/RevitProjects/AOTools/AOTools/ExtensibleStorageMgr.cs" bodystart="267" bodyend="-1"/>
+        <referencedby refid="class_a_o_tools_1_1_extensible_storage_mgr_1a597f93114f89876898ee197c9cc4c4a9" compoundref="_extensible_storage_mgr_8cs" startline="507" endline="527">AOTools.ExtensibleStorageMgr.MakeUnitSchema</referencedby>
+      </memberdef>
+      </sectiondef>
+      <sectiondef kind="public-static-attrib">
+      <memberdef kind="variable" id="class_a_o_tools_1_1_extensible_storage_mgr_1ad6fb17033184087631926595ef328603" prot="public" static="yes" mutable="no">
+        <type>readonly Guid</type>
+        <definition>readonly Guid AOTools.ExtensibleStorageMgr.SchemaGUID</definition>
+        <argsstring></argsstring>
+        <name>SchemaGUID</name>
+        <initializer>= new Guid(&quot;B1788BC0-381E-4F4F-BE0B-93A93B9470FF&quot;)</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="B:/Programming/VisualStudioProjects/RevitProjects/AOTools/AOTools/ExtensibleStorageMgr.cs" line="221" column="1" bodyfile="B:/Programming/VisualStudioProjects/RevitProjects/AOTools/AOTools/ExtensibleStorageMgr.cs" bodystart="221" bodyend="-1"/>
+        <referencedby refid="class_a_o_tools_1_1_extensible_storage_mgr_1a68ed349e862030835e72e3247c1c0ba9" compoundref="_extensible_storage_mgr_8cs" startline="358" endline="368">AOTools.ExtensibleStorageMgr.DeleteCurrentSchema</referencedby>
+        <referencedby refid="class_a_o_tools_1_1_extensible_storage_mgr_1a62ea7a5899bc8448d1347b0e6ddf17be" compoundref="_extensible_storage_mgr_8cs" startline="554" endline="569">AOTools.ExtensibleStorageMgr.ReadRevitBasicSettings</referencedby>
+        <referencedby refid="class_a_o_tools_1_1_extensible_storage_mgr_1a9b30844326da5c7b1061f184c22708ec" compoundref="_extensible_storage_mgr_8cs" startline="401" endline="465">AOTools.ExtensibleStorageMgr.SaveRevitSettings</referencedby>
+      </memberdef>
+      <memberdef kind="variable" id="class_a_o_tools_1_1_extensible_storage_mgr_1a80a84ba50cfa6ef069209df83c248bea" prot="public" static="yes" mutable="no">
+        <type>Dictionary&lt; <ref refid="class_a_o_tools_1_1_extensible_storage_mgr_1_1_s_basic_key" kindref="compound">SBasicKey</ref>, <ref refid="class_a_o_tools_1_1_extensible_storage_mgr_1_1_field_info" kindref="compound">FieldInfo</ref> &gt;</type>
+        <definition>Dictionary&lt;SBasicKey, FieldInfo&gt; AOTools.ExtensibleStorageMgr.SchemaFields</definition>
+        <argsstring></argsstring>
+        <name>SchemaFields</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="B:/Programming/VisualStudioProjects/RevitProjects/AOTools/AOTools/ExtensibleStorageMgr.cs" line="223" column="1" bodyfile="B:/Programming/VisualStudioProjects/RevitProjects/AOTools/AOTools/ExtensibleStorageMgr.cs" bodystart="223" bodyend="-1"/>
+        <referencedby refid="class_a_o_tools_1_1_extensible_storage_mgr_1ad4d6d1fe93e16ad8ee1458a60d1aef95" compoundref="_extensible_storage_mgr_8cs" startline="344" endline="356">AOTools.ExtensibleStorageMgr.Init</referencedby>
+        <referencedby refid="class_a_o_tools_1_1_extensible_storage_mgr_1adeb497bc9204a5180590c7e59a5a1961" compoundref="_extensible_storage_mgr_8cs" startline="656" endline="667">AOTools.ExtensibleStorageMgr.ListFieldInfo</referencedby>
+        <referencedby refid="class_a_o_tools_1_1_extensible_storage_mgr_1a62ea7a5899bc8448d1347b0e6ddf17be" compoundref="_extensible_storage_mgr_8cs" startline="554" endline="569">AOTools.ExtensibleStorageMgr.ReadRevitBasicSettings</referencedby>
+        <referencedby refid="class_a_o_tools_1_1_extensible_storage_mgr_1a0caea7708b931a8f0ec33f198e0442fe" compoundref="_extensible_storage_mgr_8cs" startline="606" endline="626">AOTools.ExtensibleStorageMgr.ReadRevitUnitStyles</referencedby>
+        <referencedby refid="class_a_o_tools_1_1_extensible_storage_mgr_1a9b30844326da5c7b1061f184c22708ec" compoundref="_extensible_storage_mgr_8cs" startline="401" endline="465">AOTools.ExtensibleStorageMgr.SaveRevitSettings</referencedby>
+      </memberdef>
+      <memberdef kind="variable" id="class_a_o_tools_1_1_extensible_storage_mgr_1a275adf43918958e532d3575891fb7340" prot="public" static="yes" mutable="no">
+        <type>Dictionary&lt; <ref refid="class_a_o_tools_1_1_extensible_storage_mgr_1_1_s_unit_key" kindref="compound">SUnitKey</ref>, <ref refid="class_a_o_tools_1_1_extensible_storage_mgr_1_1_field_info" kindref="compound">FieldInfo</ref> &gt;[]</type>
+        <definition>Dictionary&lt;SUnitKey, FieldInfo&gt; [] AOTools.ExtensibleStorageMgr.UnitSchemaFields</definition>
+        <argsstring></argsstring>
+        <name>UnitSchemaFields</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="B:/Programming/VisualStudioProjects/RevitProjects/AOTools/AOTools/ExtensibleStorageMgr.cs" line="271" column="1" bodyfile="B:/Programming/VisualStudioProjects/RevitProjects/AOTools/AOTools/ExtensibleStorageMgr.cs" bodystart="271" bodyend="-1"/>
+        <referencedby refid="class_a_o_tools_1_1_extensible_storage_mgr_1aba108a6a5718eee6c8ac131e3a0c04f0" compoundref="_extensible_storage_mgr_8cs" startline="370" endline="385">AOTools.ExtensibleStorageMgr.InitUnitSchema</referencedby>
+        <referencedby refid="class_a_o_tools_1_1_extensible_storage_mgr_1adeb497bc9204a5180590c7e59a5a1961" compoundref="_extensible_storage_mgr_8cs" startline="656" endline="667">AOTools.ExtensibleStorageMgr.ListFieldInfo</referencedby>
+        <referencedby refid="class_a_o_tools_1_1_extensible_storage_mgr_1a2efab59e9a6ba03e35a52f07c1fa2419" compoundref="_extensible_storage_mgr_8cs" startline="575" endline="604">AOTools.ExtensibleStorageMgr.ReadRevitSettings&lt; T &gt;</referencedby>
+        <referencedby refid="class_a_o_tools_1_1_extensible_storage_mgr_1a0caea7708b931a8f0ec33f198e0442fe" compoundref="_extensible_storage_mgr_8cs" startline="606" endline="626">AOTools.ExtensibleStorageMgr.ReadRevitUnitStyles</referencedby>
+        <referencedby refid="class_a_o_tools_1_1_extensible_storage_mgr_1a9b30844326da5c7b1061f184c22708ec" compoundref="_extensible_storage_mgr_8cs" startline="401" endline="465">AOTools.ExtensibleStorageMgr.SaveRevitSettings</referencedby>
+      </memberdef>
+      </sectiondef>
+      <sectiondef kind="private-static-func">
+      <memberdef kind="function" id="class_a_o_tools_1_1_extensible_storage_mgr_1ad4d6d1fe93e16ad8ee1458a60d1aef95" prot="private" static="yes" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type>void</type>
+        <definition>static void AOTools.ExtensibleStorageMgr.Init</definition>
+        <argsstring>()</argsstring>
+        <name>Init</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="B:/Programming/VisualStudioProjects/RevitProjects/AOTools/AOTools/ExtensibleStorageMgr.cs" line="344" column="1" bodyfile="B:/Programming/VisualStudioProjects/RevitProjects/AOTools/AOTools/ExtensibleStorageMgr.cs" bodystart="344" bodyend="356"/>
+        <references refid="class_a_o_tools_1_1_extensible_storage_mgr_1a72ef416314115f8678233905726cb99e" compoundref="_extensible_storage_mgr_8cs" startline="224">AOTools.ExtensibleStorageMgr._schemaFields</references>
+        <references refid="class_a_o_tools_1_1_extensible_storage_mgr_1ad6c675dbdd845b4355d03994e9601fc1" compoundref="_extensible_storage_mgr_8cs" startline="54">AOTools.ExtensibleStorageMgr.initalized</references>
+        <references refid="class_a_o_tools_1_1_extensible_storage_mgr_1aba108a6a5718eee6c8ac131e3a0c04f0" compoundref="_extensible_storage_mgr_8cs" startline="370" endline="385">AOTools.ExtensibleStorageMgr.InitUnitSchema</references>
+        <references refid="class_a_o_tools_1_1_extensible_storage_mgr_1a80a84ba50cfa6ef069209df83c248bea" compoundref="_extensible_storage_mgr_8cs" startline="223">AOTools.ExtensibleStorageMgr.SchemaFields</references>
+        <referencedby refid="class_a_o_tools_1_1_extensible_storage_mgr_1a62ea7a5899bc8448d1347b0e6ddf17be" compoundref="_extensible_storage_mgr_8cs" startline="554" endline="569">AOTools.ExtensibleStorageMgr.ReadRevitBasicSettings</referencedby>
+      </memberdef>
+      <memberdef kind="function" id="class_a_o_tools_1_1_extensible_storage_mgr_1a9b30844326da5c7b1061f184c22708ec" prot="private" static="yes" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type>bool</type>
+        <definition>static bool AOTools.ExtensibleStorageMgr.SaveRevitSettings</definition>
+        <argsstring>()</argsstring>
+        <name>SaveRevitSettings</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="B:/Programming/VisualStudioProjects/RevitProjects/AOTools/AOTools/ExtensibleStorageMgr.cs" line="401" column="1" bodyfile="B:/Programming/VisualStudioProjects/RevitProjects/AOTools/AOTools/ExtensibleStorageMgr.cs" bodystart="401" bodyend="465"/>
+        <references refid="class_a_o_tools_1_1_extensible_storage_mgr_1a597f93114f89876898ee197c9cc4c4a9" compoundref="_extensible_storage_mgr_8cs" startline="507" endline="527">AOTools.ExtensibleStorageMgr.MakeUnitSchema</references>
+        <references refid="class_a_o_tools_1_1_extensible_storage_mgr_1a40e28c70974648a246ff6959e0209611" compoundref="_extensible_storage_mgr_8cs" startline="220">AOTools.ExtensibleStorageMgr.SCHEMA_DESC</references>
+        <references refid="class_a_o_tools_1_1_extensible_storage_mgr_1a8a4ed660827f26987edcd7831242404b" compoundref="_extensible_storage_mgr_8cs" startline="219">AOTools.ExtensibleStorageMgr.SCHEMA_NAME</references>
+        <references refid="class_a_o_tools_1_1_extensible_storage_mgr_1a80a84ba50cfa6ef069209df83c248bea" compoundref="_extensible_storage_mgr_8cs" startline="223">AOTools.ExtensibleStorageMgr.SchemaFields</references>
+        <references refid="class_a_o_tools_1_1_extensible_storage_mgr_1ad6fb17033184087631926595ef328603" compoundref="_extensible_storage_mgr_8cs" startline="221">AOTools.ExtensibleStorageMgr.SchemaGUID</references>
+        <references refid="class_a_o_tools_1_1_extensible_storage_mgr_1a275adf43918958e532d3575891fb7340" compoundref="_extensible_storage_mgr_8cs" startline="271">AOTools.ExtensibleStorageMgr.UnitSchemaFields</references>
+        <referencedby refid="class_a_o_tools_1_1_extensible_storage_mgr_1a3f185720df8ac3e0bc08749e99efd028" compoundref="_extensible_storage_mgr_8cs" startline="392" endline="397">AOTools.ExtensibleStorageMgr.SaveRevitBasicSettings</referencedby>
+      </memberdef>
+      <memberdef kind="function" id="class_a_o_tools_1_1_extensible_storage_mgr_1a4fd116a960d690adfa79f0d3ee8484ac" prot="private" static="yes" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type>void</type>
+        <definition>static void AOTools.ExtensibleStorageMgr.MakeFields&lt; T &gt;</definition>
+        <argsstring>(SchemaBuilder sbld, Dictionary&lt; T, FieldInfo &gt; fieldList)</argsstring>
+        <name>MakeFields&lt; T &gt;</name>
+        <param>
+          <type>SchemaBuilder</type>
+          <declname>sbld</declname>
+        </param>
+        <param>
+          <type>Dictionary&lt; T, <ref refid="class_a_o_tools_1_1_extensible_storage_mgr_1_1_field_info" kindref="compound">FieldInfo</ref> &gt;</type>
+          <declname>fieldList</declname>
+        </param>
+        <briefdescription>
+<para>general routine to make one schema field for</para><para>each item in a field info list </para>        </briefdescription>
+        <detaileddescription>
+<para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>sbld</parametername>
+</parameternamelist>
+<parameterdescription>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>fieldList</parametername>
+</parameternamelist>
+<parameterdescription>
+</parameterdescription>
+</parameteritem>
+</parameterlist>
+</para>        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="B:/Programming/VisualStudioProjects/RevitProjects/AOTools/AOTools/ExtensibleStorageMgr.cs" line="474" column="1" bodyfile="B:/Programming/VisualStudioProjects/RevitProjects/AOTools/AOTools/ExtensibleStorageMgr.cs" bodystart="474" bodyend="481"/>
+        <references refid="class_a_o_tools_1_1_extensible_storage_mgr_1abf4fb24ea61915c984ddb208463d2c1d" compoundref="_extensible_storage_mgr_8cs" startline="488" endline="499">AOTools.ExtensibleStorageMgr.MakeField</references>
+      </memberdef>
+      <memberdef kind="function" id="class_a_o_tools_1_1_extensible_storage_mgr_1abf4fb24ea61915c984ddb208463d2c1d" prot="private" static="yes" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type>void</type>
+        <definition>static void AOTools.ExtensibleStorageMgr.MakeField</definition>
+        <argsstring>(SchemaBuilder sbld, FieldInfo fieldInfo)</argsstring>
+        <name>MakeField</name>
+        <param>
+          <type>SchemaBuilder</type>
+          <declname>sbld</declname>
+        </param>
+        <param>
+          <type><ref refid="class_a_o_tools_1_1_extensible_storage_mgr_1_1_field_info" kindref="compound">FieldInfo</ref></type>
+          <declname>fieldInfo</declname>
+        </param>
+        <briefdescription>
+<para>general routine to make a single schema field </para>        </briefdescription>
+        <detaileddescription>
+<para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>sbld</parametername>
+</parameternamelist>
+<parameterdescription>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>fieldInfo</parametername>
+</parameternamelist>
+<parameterdescription>
+</parameterdescription>
+</parameteritem>
+</parameterlist>
+</para>        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="B:/Programming/VisualStudioProjects/RevitProjects/AOTools/AOTools/ExtensibleStorageMgr.cs" line="488" column="1" bodyfile="B:/Programming/VisualStudioProjects/RevitProjects/AOTools/AOTools/ExtensibleStorageMgr.cs" bodystart="488" bodyend="499"/>
+        <references refid="class_a_o_tools_1_1_extensible_storage_mgr_1_1_field_info_1ab966e19ff1bf9c0c7a5e13f8c61ace0c" compoundref="_extensible_storage_mgr_8cs" startline="62">AOTools.ExtensibleStorageMgr.FieldInfo.UnitType</references>
+        <referencedby refid="class_a_o_tools_1_1_extensible_storage_mgr_1a4fd116a960d690adfa79f0d3ee8484ac" compoundref="_extensible_storage_mgr_8cs" startline="474" endline="481">AOTools.ExtensibleStorageMgr.MakeFields&lt; T &gt;</referencedby>
+      </memberdef>
+      <memberdef kind="function" id="class_a_o_tools_1_1_extensible_storage_mgr_1a597f93114f89876898ee197c9cc4c4a9" prot="private" static="yes" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type>Entity</type>
+        <definition>static Entity AOTools.ExtensibleStorageMgr.MakeUnitSchema</definition>
+        <argsstring>(string guid, Dictionary&lt; SUnitKey, FieldInfo &gt; unitSchemaFields)</argsstring>
+        <name>MakeUnitSchema</name>
+        <param>
+          <type>string</type>
+          <declname>guid</declname>
+        </param>
+        <param>
+          <type>Dictionary&lt; <ref refid="class_a_o_tools_1_1_extensible_storage_mgr_1_1_s_unit_key" kindref="compound">SUnitKey</ref>, <ref refid="class_a_o_tools_1_1_extensible_storage_mgr_1_1_field_info" kindref="compound">FieldInfo</ref> &gt;</type>
+          <declname>unitSchemaFields</declname>
+        </param>
+        <briefdescription>
+<para>routine to make a unit schema and its fields </para>        </briefdescription>
+        <detaileddescription>
+<para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>guid</parametername>
+</parameternamelist>
+<parameterdescription>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername>unitSchemaFields</parametername>
+</parameternamelist>
+<parameterdescription>
+</parameterdescription>
+</parameteritem>
+</parameterlist>
+<simplesect kind="return"><para>SchemaBuilder</para></simplesect>
+</para>        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="B:/Programming/VisualStudioProjects/RevitProjects/AOTools/AOTools/ExtensibleStorageMgr.cs" line="507" column="1" bodyfile="B:/Programming/VisualStudioProjects/RevitProjects/AOTools/AOTools/ExtensibleStorageMgr.cs" bodystart="507" bodyend="527"/>
+        <references refid="class_a_o_tools_1_1_extensible_storage_mgr_1a424f9c8f81c7107d711e62da75c80dd8" compoundref="_extensible_storage_mgr_8cs" startline="267">AOTools.ExtensibleStorageMgr.UNIT_SCHEMA_DESC</references>
+        <references refid="class_a_o_tools_1_1_extensible_storage_mgr_1af3931906af16ef062c93b3466f345b88" compoundref="_extensible_storage_mgr_8cs" startline="266">AOTools.ExtensibleStorageMgr.UNIT_SCHEMA_NAME</references>
+        <referencedby refid="class_a_o_tools_1_1_extensible_storage_mgr_1a9b30844326da5c7b1061f184c22708ec" compoundref="_extensible_storage_mgr_8cs" startline="401" endline="465">AOTools.ExtensibleStorageMgr.SaveRevitSettings</referencedby>
+      </memberdef>
+      <memberdef kind="function" id="class_a_o_tools_1_1_extensible_storage_mgr_1ad28d331adbb7d2669105827db9ff994c" prot="private" static="yes" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type>void</type>
+        <definition>static void AOTools.ExtensibleStorageMgr.SaveFieldValues&lt; T &gt;</definition>
+        <argsstring>(Schema schema, Entity entity, Dictionary&lt; T, FieldInfo &gt; fieldList)</argsstring>
+        <name>SaveFieldValues&lt; T &gt;</name>
+        <param>
+          <type>Schema</type>
+          <declname>schema</declname>
+        </param>
+        <param>
+          <type>Entity</type>
+          <declname>entity</declname>
+        </param>
+        <param>
+          <type>Dictionary&lt; T, <ref refid="class_a_o_tools_1_1_extensible_storage_mgr_1_1_field_info" kindref="compound">FieldInfo</ref> &gt;</type>
+          <declname>fieldList</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="B:/Programming/VisualStudioProjects/RevitProjects/AOTools/AOTools/ExtensibleStorageMgr.cs" line="529" column="1" bodyfile="B:/Programming/VisualStudioProjects/RevitProjects/AOTools/AOTools/ExtensibleStorageMgr.cs" bodystart="529" bodyend="544"/>
+      </memberdef>
+      <memberdef kind="function" id="class_a_o_tools_1_1_extensible_storage_mgr_1a2efab59e9a6ba03e35a52f07c1fa2419" prot="private" static="yes" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type>bool</type>
+        <definition>static bool AOTools.ExtensibleStorageMgr.ReadRevitSettings&lt; T &gt;</definition>
+        <argsstring>(Dictionary&lt; T, FieldInfo &gt; fieldList, Guid guid)</argsstring>
+        <name>ReadRevitSettings&lt; T &gt;</name>
+        <param>
+          <type>Dictionary&lt; T, <ref refid="class_a_o_tools_1_1_extensible_storage_mgr_1_1_field_info" kindref="compound">FieldInfo</ref> &gt;</type>
+          <declname>fieldList</declname>
+        </param>
+        <param>
+          <type>Guid</type>
+          <declname>guid</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="B:/Programming/VisualStudioProjects/RevitProjects/AOTools/AOTools/ExtensibleStorageMgr.cs" line="575" column="1" bodyfile="B:/Programming/VisualStudioProjects/RevitProjects/AOTools/AOTools/ExtensibleStorageMgr.cs" bodystart="575" bodyend="604"/>
+        <references refid="class_a_o_tools_1_1_extensible_storage_mgr_1ab8197865888878c949ceb77af55f1592" compoundref="_extensible_storage_mgr_8cs" startline="630" endline="638">AOTools.ExtensibleStorageMgr.GetFieldValue</references>
+        <references refid="class_a_o_tools_1_1_extensible_storage_mgr_1a0caea7708b931a8f0ec33f198e0442fe" compoundref="_extensible_storage_mgr_8cs" startline="606" endline="626">AOTools.ExtensibleStorageMgr.ReadRevitUnitStyles</references>
+        <references refid="class_a_o_tools_1_1_extensible_storage_mgr_1a275adf43918958e532d3575891fb7340" compoundref="_extensible_storage_mgr_8cs" startline="271">AOTools.ExtensibleStorageMgr.UnitSchemaFields</references>
+      </memberdef>
+      <memberdef kind="function" id="class_a_o_tools_1_1_extensible_storage_mgr_1a0caea7708b931a8f0ec33f198e0442fe" prot="private" static="yes" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type>bool</type>
+        <definition>static bool AOTools.ExtensibleStorageMgr.ReadRevitUnitStyles</definition>
+        <argsstring>(Entity elemEntity, Schema schema, Dictionary&lt; SUnitKey, FieldInfo &gt;[] unitSchemaFields)</argsstring>
+        <name>ReadRevitUnitStyles</name>
+        <param>
+          <type>Entity</type>
+          <declname>elemEntity</declname>
+        </param>
+        <param>
+          <type>Schema</type>
+          <declname>schema</declname>
+        </param>
+        <param>
+          <type>Dictionary&lt; <ref refid="class_a_o_tools_1_1_extensible_storage_mgr_1_1_s_unit_key" kindref="compound">SUnitKey</ref>, <ref refid="class_a_o_tools_1_1_extensible_storage_mgr_1_1_field_info" kindref="compound">FieldInfo</ref> &gt;[]</type>
+          <declname>unitSchemaFields</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="B:/Programming/VisualStudioProjects/RevitProjects/AOTools/AOTools/ExtensibleStorageMgr.cs" line="606" column="1" bodyfile="B:/Programming/VisualStudioProjects/RevitProjects/AOTools/AOTools/ExtensibleStorageMgr.cs" bodystart="606" bodyend="626"/>
+        <references refid="class_a_o_tools_1_1_extensible_storage_mgr_1af3053d3a9a8518c6d9931853433fda12" compoundref="_extensible_storage_mgr_8cs" startline="258">AOTools.ExtensibleStorageMgr._subSchemaFieldInfo</references>
+        <references refid="class_a_o_tools_1_1_extensible_storage_mgr_1ad1dc47dafe30965d33352942c8747bc5" compoundref="_extensible_storage_mgr_8cs" startline="640" endline="650">AOTools.ExtensibleStorageMgr.ReadSubEntity</references>
+        <references refid="class_a_o_tools_1_1_extensible_storage_mgr_1a80a84ba50cfa6ef069209df83c248bea" compoundref="_extensible_storage_mgr_8cs" startline="223">AOTools.ExtensibleStorageMgr.SchemaFields</references>
+        <references refid="class_a_o_tools_1_1_extensible_storage_mgr_1a275adf43918958e532d3575891fb7340" compoundref="_extensible_storage_mgr_8cs" startline="271">AOTools.ExtensibleStorageMgr.UnitSchemaFields</references>
+        <referencedby refid="class_a_o_tools_1_1_extensible_storage_mgr_1a2efab59e9a6ba03e35a52f07c1fa2419" compoundref="_extensible_storage_mgr_8cs" startline="575" endline="604">AOTools.ExtensibleStorageMgr.ReadRevitSettings&lt; T &gt;</referencedby>
+      </memberdef>
+      <memberdef kind="function" id="class_a_o_tools_1_1_extensible_storage_mgr_1ab8197865888878c949ceb77af55f1592" prot="private" static="yes" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type>dynamic</type>
+        <definition>static dynamic AOTools.ExtensibleStorageMgr.GetFieldValue</definition>
+        <argsstring>(Entity elemEntity, Schema schema, FieldInfo fi)</argsstring>
+        <name>GetFieldValue</name>
+        <param>
+          <type>Entity</type>
+          <declname>elemEntity</declname>
+        </param>
+        <param>
+          <type>Schema</type>
+          <declname>schema</declname>
+        </param>
+        <param>
+          <type><ref refid="class_a_o_tools_1_1_extensible_storage_mgr_1_1_field_info" kindref="compound">FieldInfo</ref></type>
+          <declname>fi</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="B:/Programming/VisualStudioProjects/RevitProjects/AOTools/AOTools/ExtensibleStorageMgr.cs" line="630" column="1" bodyfile="B:/Programming/VisualStudioProjects/RevitProjects/AOTools/AOTools/ExtensibleStorageMgr.cs" bodystart="630" bodyend="638"/>
+        <referencedby refid="class_a_o_tools_1_1_extensible_storage_mgr_1a2efab59e9a6ba03e35a52f07c1fa2419" compoundref="_extensible_storage_mgr_8cs" startline="575" endline="604">AOTools.ExtensibleStorageMgr.ReadRevitSettings&lt; T &gt;</referencedby>
+      </memberdef>
+      <memberdef kind="function" id="class_a_o_tools_1_1_extensible_storage_mgr_1ad1dc47dafe30965d33352942c8747bc5" prot="private" static="yes" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type>void</type>
+        <definition>static void AOTools.ExtensibleStorageMgr.ReadSubEntity</definition>
+        <argsstring>(Entity subSchema, Schema schema, Dictionary&lt; SUnitKey, FieldInfo &gt; unitSchemaField)</argsstring>
+        <name>ReadSubEntity</name>
+        <param>
+          <type>Entity</type>
+          <declname>subSchema</declname>
+        </param>
+        <param>
+          <type>Schema</type>
+          <declname>schema</declname>
+        </param>
+        <param>
+          <type>Dictionary&lt; <ref refid="class_a_o_tools_1_1_extensible_storage_mgr_1_1_s_unit_key" kindref="compound">SUnitKey</ref>, <ref refid="class_a_o_tools_1_1_extensible_storage_mgr_1_1_field_info" kindref="compound">FieldInfo</ref> &gt;</type>
+          <declname>unitSchemaField</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="B:/Programming/VisualStudioProjects/RevitProjects/AOTools/AOTools/ExtensibleStorageMgr.cs" line="640" column="1" bodyfile="B:/Programming/VisualStudioProjects/RevitProjects/AOTools/AOTools/ExtensibleStorageMgr.cs" bodystart="640" bodyend="650"/>
+        <referencedby refid="class_a_o_tools_1_1_extensible_storage_mgr_1a0caea7708b931a8f0ec33f198e0442fe" compoundref="_extensible_storage_mgr_8cs" startline="606" endline="626">AOTools.ExtensibleStorageMgr.ReadRevitUnitStyles</referencedby>
+      </memberdef>
+      <memberdef kind="function" id="class_a_o_tools_1_1_extensible_storage_mgr_1a2f45f8785e1a990c23d20d0c8721f08b" prot="private" static="yes" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type>void</type>
+        <definition>static void AOTools.ExtensibleStorageMgr.ListFieldInfo&lt; T &gt;</definition>
+        <argsstring>(Dictionary&lt; T, FieldInfo &gt; fieldList)</argsstring>
+        <name>ListFieldInfo&lt; T &gt;</name>
+        <param>
+          <type>Dictionary&lt; T, <ref refid="class_a_o_tools_1_1_extensible_storage_mgr_1_1_field_info" kindref="compound">FieldInfo</ref> &gt;</type>
+          <declname>fieldList</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="B:/Programming/VisualStudioProjects/RevitProjects/AOTools/AOTools/ExtensibleStorageMgr.cs" line="669" column="1" bodyfile="B:/Programming/VisualStudioProjects/RevitProjects/AOTools/AOTools/ExtensibleStorageMgr.cs" bodystart="669" bodyend="679"/>
+      </memberdef>
+      </sectiondef>
+      <sectiondef kind="public-static-func">
+      <memberdef kind="function" id="class_a_o_tools_1_1_extensible_storage_mgr_1a68ed349e862030835e72e3247c1c0ba9" prot="public" static="yes" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type>void</type>
+        <definition>static void AOTools.ExtensibleStorageMgr.DeleteCurrentSchema</definition>
+        <argsstring>()</argsstring>
+        <name>DeleteCurrentSchema</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="B:/Programming/VisualStudioProjects/RevitProjects/AOTools/AOTools/ExtensibleStorageMgr.cs" line="358" column="1" bodyfile="B:/Programming/VisualStudioProjects/RevitProjects/AOTools/AOTools/ExtensibleStorageMgr.cs" bodystart="358" bodyend="368"/>
+        <references refid="class_a_o_tools_1_1_extensible_storage_mgr_1ad6fb17033184087631926595ef328603" compoundref="_extensible_storage_mgr_8cs" startline="221">AOTools.ExtensibleStorageMgr.SchemaGUID</references>
+      </memberdef>
+      <memberdef kind="function" id="class_a_o_tools_1_1_extensible_storage_mgr_1aba108a6a5718eee6c8ac131e3a0c04f0" prot="public" static="yes" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type>void</type>
+        <definition>static void AOTools.ExtensibleStorageMgr.InitUnitSchema</definition>
+        <argsstring>(int count)</argsstring>
+        <name>InitUnitSchema</name>
+        <param>
+          <type>int</type>
+          <declname>count</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="B:/Programming/VisualStudioProjects/RevitProjects/AOTools/AOTools/ExtensibleStorageMgr.cs" line="370" column="1" bodyfile="B:/Programming/VisualStudioProjects/RevitProjects/AOTools/AOTools/ExtensibleStorageMgr.cs" bodystart="370" bodyend="385"/>
+        <references refid="class_a_o_tools_1_1_extensible_storage_mgr_1a9a60427fd40c224b496e0797581f4a28" compoundref="_extensible_storage_mgr_8cs" startline="272">AOTools.ExtensibleStorageMgr._unitSchemaFields</references>
+        <references refid="class_a_o_tools_1_1_extensible_storage_mgr_1a275adf43918958e532d3575891fb7340" compoundref="_extensible_storage_mgr_8cs" startline="271">AOTools.ExtensibleStorageMgr.UnitSchemaFields</references>
+        <referencedby refid="class_a_o_tools_1_1_extensible_storage_mgr_1ad4d6d1fe93e16ad8ee1458a60d1aef95" compoundref="_extensible_storage_mgr_8cs" startline="344" endline="356">AOTools.ExtensibleStorageMgr.Init</referencedby>
+      </memberdef>
+      <memberdef kind="function" id="class_a_o_tools_1_1_extensible_storage_mgr_1a3f185720df8ac3e0bc08749e99efd028" prot="public" static="yes" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type>bool</type>
+        <definition>static bool AOTools.ExtensibleStorageMgr.SaveRevitBasicSettings</definition>
+        <argsstring>()</argsstring>
+        <name>SaveRevitBasicSettings</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="B:/Programming/VisualStudioProjects/RevitProjects/AOTools/AOTools/ExtensibleStorageMgr.cs" line="392" column="1" bodyfile="B:/Programming/VisualStudioProjects/RevitProjects/AOTools/AOTools/ExtensibleStorageMgr.cs" bodystart="392" bodyend="397"/>
+        <references refid="class_a_o_tools_1_1_extensible_storage_mgr_1ad6c675dbdd845b4355d03994e9601fc1" compoundref="_extensible_storage_mgr_8cs" startline="54">AOTools.ExtensibleStorageMgr.initalized</references>
+        <references refid="class_a_o_tools_1_1_extensible_storage_mgr_1a9b30844326da5c7b1061f184c22708ec" compoundref="_extensible_storage_mgr_8cs" startline="401" endline="465">AOTools.ExtensibleStorageMgr.SaveRevitSettings</references>
+        <referencedby refid="class_a_o_tools_1_1_extensible_storage_mgr_1a62ea7a5899bc8448d1347b0e6ddf17be" compoundref="_extensible_storage_mgr_8cs" startline="554" endline="569">AOTools.ExtensibleStorageMgr.ReadRevitBasicSettings</referencedby>
+      </memberdef>
+      <memberdef kind="function" id="class_a_o_tools_1_1_extensible_storage_mgr_1a62ea7a5899bc8448d1347b0e6ddf17be" prot="public" static="yes" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type>bool</type>
+        <definition>static bool AOTools.ExtensibleStorageMgr.ReadRevitBasicSettings</definition>
+        <argsstring>()</argsstring>
+        <name>ReadRevitBasicSettings</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="B:/Programming/VisualStudioProjects/RevitProjects/AOTools/AOTools/ExtensibleStorageMgr.cs" line="554" column="1" bodyfile="B:/Programming/VisualStudioProjects/RevitProjects/AOTools/AOTools/ExtensibleStorageMgr.cs" bodystart="554" bodyend="569"/>
+        <references refid="class_a_o_tools_1_1_extensible_storage_mgr_1ad4d6d1fe93e16ad8ee1458a60d1aef95" compoundref="_extensible_storage_mgr_8cs" startline="344" endline="356">AOTools.ExtensibleStorageMgr.Init</references>
+        <references refid="class_a_o_tools_1_1_extensible_storage_mgr_1a3f185720df8ac3e0bc08749e99efd028" compoundref="_extensible_storage_mgr_8cs" startline="392" endline="397">AOTools.ExtensibleStorageMgr.SaveRevitBasicSettings</references>
+        <references refid="class_a_o_tools_1_1_extensible_storage_mgr_1a80a84ba50cfa6ef069209df83c248bea" compoundref="_extensible_storage_mgr_8cs" startline="223">AOTools.ExtensibleStorageMgr.SchemaFields</references>
+        <references refid="class_a_o_tools_1_1_extensible_storage_mgr_1ad6fb17033184087631926595ef328603" compoundref="_extensible_storage_mgr_8cs" startline="221">AOTools.ExtensibleStorageMgr.SchemaGUID</references>
+      </memberdef>
+      <memberdef kind="function" id="class_a_o_tools_1_1_extensible_storage_mgr_1adeb497bc9204a5180590c7e59a5a1961" prot="public" static="yes" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type>void</type>
+        <definition>static void AOTools.ExtensibleStorageMgr.ListFieldInfo</definition>
+        <argsstring>()</argsstring>
+        <name>ListFieldInfo</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="B:/Programming/VisualStudioProjects/RevitProjects/AOTools/AOTools/ExtensibleStorageMgr.cs" line="656" column="1" bodyfile="B:/Programming/VisualStudioProjects/RevitProjects/AOTools/AOTools/ExtensibleStorageMgr.cs" bodystart="656" bodyend="667"/>
+        <references refid="class_a_o_tools_1_1_extensible_storage_mgr_1a80a84ba50cfa6ef069209df83c248bea" compoundref="_extensible_storage_mgr_8cs" startline="223">AOTools.ExtensibleStorageMgr.SchemaFields</references>
+        <references refid="class_a_o_tools_1_1_extensible_storage_mgr_1a275adf43918958e532d3575891fb7340" compoundref="_extensible_storage_mgr_8cs" startline="271">AOTools.ExtensibleStorageMgr.UnitSchemaFields</references>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <collaborationgraph>
+      <node id="23">
+        <label>AOTools.ExtensibleStorageMgr</label>
+        <link refid="class_a_o_tools_1_1_extensible_storage_mgr"/>
+        <childnode refid="24" relation="usage">
+          <edgelabel>_schemaFields</edgelabel>
+          <edgelabel>SchemaFields</edgelabel>
+          <edgelabel>SchemaGUID</edgelabel>
+          <edgelabel>initalized</edgelabel>
+          <edgelabel>_unitSchemaFields</edgelabel>
+          <edgelabel>UnitSchemaFields</edgelabel>
+          <edgelabel>_subSchemaFieldInfo</edgelabel>
+        </childnode>
+      </node>
+      <node id="24">
+        <label>static</label>
+      </node>
+    </collaborationgraph>
+    <location file="B:/Programming/VisualStudioProjects/RevitProjects/AOTools/AOTools/ExtensibleStorageMgr.cs" line="51" column="1" bodyfile="B:/Programming/VisualStudioProjects/RevitProjects/AOTools/AOTools/ExtensibleStorageMgr.cs" bodystart="50" bodyend="875"/>
+    <listofallmembers>
+      <member refid="class_a_o_tools_1_1_extensible_storage_mgr_1a72ef416314115f8678233905726cb99e" prot="private" virt="non-virtual"><scope>AOTools::ExtensibleStorageMgr</scope><name>_schemaFields</name></member>
+      <member refid="class_a_o_tools_1_1_extensible_storage_mgr_1af3053d3a9a8518c6d9931853433fda12" prot="private" virt="non-virtual"><scope>AOTools::ExtensibleStorageMgr</scope><name>_subSchemaFieldInfo</name></member>
+      <member refid="class_a_o_tools_1_1_extensible_storage_mgr_1a9a60427fd40c224b496e0797581f4a28" prot="private" virt="non-virtual"><scope>AOTools::ExtensibleStorageMgr</scope><name>_unitSchemaFields</name></member>
+      <member refid="class_a_o_tools_1_1_extensible_storage_mgr_1a68ed349e862030835e72e3247c1c0ba9" prot="public" virt="non-virtual"><scope>AOTools::ExtensibleStorageMgr</scope><name>DeleteCurrentSchema</name></member>
+      <member refid="class_a_o_tools_1_1_extensible_storage_mgr_1ae4beab4cddd8abc5f33db2d418d4a2f9" prot="private" virt="non-virtual"><scope>AOTools::ExtensibleStorageMgr</scope><name>FmtOpt</name></member>
+      <member refid="class_a_o_tools_1_1_extensible_storage_mgr_1ab8197865888878c949ceb77af55f1592" prot="private" virt="non-virtual"><scope>AOTools::ExtensibleStorageMgr</scope><name>GetFieldValue</name></member>
+      <member refid="class_a_o_tools_1_1_extensible_storage_mgr_1ad4d6d1fe93e16ad8ee1458a60d1aef95" prot="private" virt="non-virtual"><scope>AOTools::ExtensibleStorageMgr</scope><name>Init</name></member>
+      <member refid="class_a_o_tools_1_1_extensible_storage_mgr_1ad6c675dbdd845b4355d03994e9601fc1" prot="private" virt="non-virtual"><scope>AOTools::ExtensibleStorageMgr</scope><name>initalized</name></member>
+      <member refid="class_a_o_tools_1_1_extensible_storage_mgr_1aba108a6a5718eee6c8ac131e3a0c04f0" prot="public" virt="non-virtual"><scope>AOTools::ExtensibleStorageMgr</scope><name>InitUnitSchema</name></member>
+      <member refid="class_a_o_tools_1_1_extensible_storage_mgr_1a1277d7cc332c1675e89c51810ecbf922" prot="public" virt="non-virtual"><scope>AOTools::ExtensibleStorageMgr</scope><name>KEY_FMT_STR</name></member>
+      <member refid="class_a_o_tools_1_1_extensible_storage_mgr_1adeb497bc9204a5180590c7e59a5a1961" prot="public" virt="non-virtual"><scope>AOTools::ExtensibleStorageMgr</scope><name>ListFieldInfo</name></member>
+      <member refid="class_a_o_tools_1_1_extensible_storage_mgr_1a2f45f8785e1a990c23d20d0c8721f08b" prot="private" virt="non-virtual"><scope>AOTools::ExtensibleStorageMgr</scope><name>ListFieldInfo&lt; T &gt;</name></member>
+      <member refid="class_a_o_tools_1_1_extensible_storage_mgr_1abf4fb24ea61915c984ddb208463d2c1d" prot="private" virt="non-virtual"><scope>AOTools::ExtensibleStorageMgr</scope><name>MakeField</name></member>
+      <member refid="class_a_o_tools_1_1_extensible_storage_mgr_1a4fd116a960d690adfa79f0d3ee8484ac" prot="private" virt="non-virtual"><scope>AOTools::ExtensibleStorageMgr</scope><name>MakeFields&lt; T &gt;</name></member>
+      <member refid="class_a_o_tools_1_1_extensible_storage_mgr_1a597f93114f89876898ee197c9cc4c4a9" prot="private" virt="non-virtual"><scope>AOTools::ExtensibleStorageMgr</scope><name>MakeUnitSchema</name></member>
+      <member refid="class_a_o_tools_1_1_extensible_storage_mgr_1a62ea7a5899bc8448d1347b0e6ddf17be" prot="public" virt="non-virtual"><scope>AOTools::ExtensibleStorageMgr</scope><name>ReadRevitBasicSettings</name></member>
+      <member refid="class_a_o_tools_1_1_extensible_storage_mgr_1a2efab59e9a6ba03e35a52f07c1fa2419" prot="private" virt="non-virtual"><scope>AOTools::ExtensibleStorageMgr</scope><name>ReadRevitSettings&lt; T &gt;</name></member>
+      <member refid="class_a_o_tools_1_1_extensible_storage_mgr_1a0caea7708b931a8f0ec33f198e0442fe" prot="private" virt="non-virtual"><scope>AOTools::ExtensibleStorageMgr</scope><name>ReadRevitUnitStyles</name></member>
+      <member refid="class_a_o_tools_1_1_extensible_storage_mgr_1ad1dc47dafe30965d33352942c8747bc5" prot="private" virt="non-virtual"><scope>AOTools::ExtensibleStorageMgr</scope><name>ReadSubEntity</name></member>
+      <member refid="class_a_o_tools_1_1_extensible_storage_mgr_1ad28d331adbb7d2669105827db9ff994c" prot="private" virt="non-virtual"><scope>AOTools::ExtensibleStorageMgr</scope><name>SaveFieldValues&lt; T &gt;</name></member>
+      <member refid="class_a_o_tools_1_1_extensible_storage_mgr_1a3f185720df8ac3e0bc08749e99efd028" prot="public" virt="non-virtual"><scope>AOTools::ExtensibleStorageMgr</scope><name>SaveRevitBasicSettings</name></member>
+      <member refid="class_a_o_tools_1_1_extensible_storage_mgr_1a9b30844326da5c7b1061f184c22708ec" prot="private" virt="non-virtual"><scope>AOTools::ExtensibleStorageMgr</scope><name>SaveRevitSettings</name></member>
+      <member refid="class_a_o_tools_1_1_extensible_storage_mgr_1a40e28c70974648a246ff6959e0209611" prot="private" virt="non-virtual"><scope>AOTools::ExtensibleStorageMgr</scope><name>SCHEMA_DESC</name></member>
+      <member refid="class_a_o_tools_1_1_extensible_storage_mgr_1a8a4ed660827f26987edcd7831242404b" prot="private" virt="non-virtual"><scope>AOTools::ExtensibleStorageMgr</scope><name>SCHEMA_NAME</name></member>
+      <member refid="class_a_o_tools_1_1_extensible_storage_mgr_1a80a84ba50cfa6ef069209df83c248bea" prot="public" virt="non-virtual"><scope>AOTools::ExtensibleStorageMgr</scope><name>SchemaFields</name></member>
+      <member refid="class_a_o_tools_1_1_extensible_storage_mgr_1ad6fb17033184087631926595ef328603" prot="public" virt="non-virtual"><scope>AOTools::ExtensibleStorageMgr</scope><name>SchemaGUID</name></member>
+      <member refid="class_a_o_tools_1_1_extensible_storage_mgr_1a424f9c8f81c7107d711e62da75c80dd8" prot="private" virt="non-virtual"><scope>AOTools::ExtensibleStorageMgr</scope><name>UNIT_SCHEMA_DESC</name></member>
+      <member refid="class_a_o_tools_1_1_extensible_storage_mgr_1af3931906af16ef062c93b3466f345b88" prot="private" virt="non-virtual"><scope>AOTools::ExtensibleStorageMgr</scope><name>UNIT_SCHEMA_NAME</name></member>
+      <member refid="class_a_o_tools_1_1_extensible_storage_mgr_1a275adf43918958e532d3575891fb7340" prot="public" virt="non-virtual"><scope>AOTools::ExtensibleStorageMgr</scope><name>UnitSchemaFields</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

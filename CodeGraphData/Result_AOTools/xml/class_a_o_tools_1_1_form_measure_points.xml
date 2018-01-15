@@ -1,0 +1,941 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.6">
+  <compounddef id="class_a_o_tools_1_1_form_measure_points" kind="class" prot="public">
+    <compoundname>AOTools::FormMeasurePoints</compoundname>
+    <basecompoundref prot="public" virt="non-virtual">Form</basecompoundref>
+      <sectiondef kind="private-static-attrib">
+      <memberdef kind="variable" id="class_a_o_tools_1_1_form_measure_points_1acc5b23c9b30118d75334c91376443cc2" prot="private" static="yes" mutable="no">
+        <type>bool</type>
+        <definition>bool AOTools.FormMeasurePoints.showWorkplane</definition>
+        <argsstring></argsstring>
+        <name>showWorkplane</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="B:/Programming/VisualStudioProjects/RevitProjects/AOTools/AOTools/FormMeasurePoints.cs" line="16" column="1" bodyfile="B:/Programming/VisualStudioProjects/RevitProjects/AOTools/AOTools/FormMeasurePoints.cs" bodystart="16" bodyend="-1"/>
+        <referencedby refid="class_a_o_tools_1_1_form_measure_points_1acea9a14a568cb54fa25e21fb803dee03" compoundref="_form_measure_points_8cs" startline="53" endline="56">AOTools.FormMeasurePoints.cbxWpOnOff_CheckedChanged</referencedby>
+      </memberdef>
+      </sectiondef>
+      <sectiondef kind="property">
+      <memberdef kind="property" id="class_a_o_tools_1_1_form_measure_points_1a4fec526d1a791818081c4fa554f84136" prot="package" static="no" readable="no" writable="no" gettable="yes" settable="yes">
+        <type>bool</type>
+        <definition>bool AOTools.FormMeasurePoints.ShowWorkplane</definition>
+        <argsstring></argsstring>
+        <name>ShowWorkplane</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="B:/Programming/VisualStudioProjects/RevitProjects/AOTools/AOTools/FormMeasurePoints.cs" line="61" column="1" bodyfile="B:/Programming/VisualStudioProjects/RevitProjects/AOTools/AOTools/FormMeasurePoints.cs" bodystart="62" bodyend="-1"/>
+        <referencedby refid="class_a_o_tools_1_1_form_measure_points_1adff09df97b7ee62e0863d79174fff81d" compoundref="_form_measure_points_8cs" startline="38" endline="50">AOTools.FormMeasurePoints.LoadSettings</referencedby>
+        <referencedby refid="class_a_o_tools_1_1_dx_measure_1a84b517db6fb2a0eaf5ccbab225f354e8" compoundref="_dx_measure_8cs" startline="165" endline="190">AOTools.DxMeasure.ShowHideWorkplane</referencedby>
+      </memberdef>
+      </sectiondef>
+      <sectiondef kind="private-attrib">
+      <memberdef kind="variable" id="class_a_o_tools_1_1_form_measure_points_1a3a3561ff86eeb31f14cd9d7d4987c8aa" prot="private" static="no" mutable="no">
+        <type>System.ComponentModel.IContainer</type>
+        <definition>System.ComponentModel.IContainer AOTools.FormMeasurePoints.components</definition>
+        <argsstring></argsstring>
+        <name>components</name>
+        <initializer>= null</initializer>
+        <briefdescription>
+<para>Required designer variable. </para>        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="B:/Programming/VisualStudioProjects/RevitProjects/AOTools/AOTools/FormMeasurePoints.Designer.cs" line="8" column="1" bodyfile="B:/Programming/VisualStudioProjects/RevitProjects/AOTools/AOTools/FormMeasurePoints.Designer.cs" bodystart="8" bodyend="-1"/>
+        <referencedby refid="class_a_o_tools_1_1_form_measure_points_1af466ce3188385216d5a0b05d647d66f9" compoundref="_form_measure_points_8_designer_8cs" startline="14" endline="21">AOTools.FormMeasurePoints.Dispose</referencedby>
+      </memberdef>
+      <memberdef kind="variable" id="class_a_o_tools_1_1_form_measure_points_1ae0bf1098ea335ebfbf4b50674a05d088" prot="private" static="no" mutable="no">
+        <type>System.Windows.Forms.Button</type>
+        <definition>System.Windows.Forms.Button AOTools.FormMeasurePoints.btnDone</definition>
+        <argsstring></argsstring>
+        <name>btnDone</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="B:/Programming/VisualStudioProjects/RevitProjects/AOTools/AOTools/FormMeasurePoints.Designer.cs" line="564" column="1" bodyfile="B:/Programming/VisualStudioProjects/RevitProjects/AOTools/AOTools/FormMeasurePoints.Designer.cs" bodystart="564" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="class_a_o_tools_1_1_form_measure_points_1adf44b30e31a7fa9b1aa949768ba7977f" prot="private" static="no" mutable="no">
+        <type>System.Windows.Forms.Button</type>
+        <definition>System.Windows.Forms.Button AOTools.FormMeasurePoints.btnSelect</definition>
+        <argsstring></argsstring>
+        <name>btnSelect</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="B:/Programming/VisualStudioProjects/RevitProjects/AOTools/AOTools/FormMeasurePoints.Designer.cs" line="565" column="1" bodyfile="B:/Programming/VisualStudioProjects/RevitProjects/AOTools/AOTools/FormMeasurePoints.Designer.cs" bodystart="565" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="class_a_o_tools_1_1_form_measure_points_1a56d0dc4fb4cd101287ea804e75ba8a1c" prot="private" static="no" mutable="no">
+        <type>System.Windows.Forms.Label</type>
+        <definition>System.Windows.Forms.Label AOTools.FormMeasurePoints.lblX1</definition>
+        <argsstring></argsstring>
+        <name>lblX1</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="B:/Programming/VisualStudioProjects/RevitProjects/AOTools/AOTools/FormMeasurePoints.Designer.cs" line="566" column="1" bodyfile="B:/Programming/VisualStudioProjects/RevitProjects/AOTools/AOTools/FormMeasurePoints.Designer.cs" bodystart="566" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="class_a_o_tools_1_1_form_measure_points_1a209a1af11a569e530642e9053d13a6eb" prot="private" static="no" mutable="no">
+        <type>System.Windows.Forms.Label</type>
+        <definition>System.Windows.Forms.Label AOTools.FormMeasurePoints.lblCoordinates</definition>
+        <argsstring></argsstring>
+        <name>lblCoordinates</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="B:/Programming/VisualStudioProjects/RevitProjects/AOTools/AOTools/FormMeasurePoints.Designer.cs" line="567" column="1" bodyfile="B:/Programming/VisualStudioProjects/RevitProjects/AOTools/AOTools/FormMeasurePoints.Designer.cs" bodystart="567" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="class_a_o_tools_1_1_form_measure_points_1a19d9b2f4fe3fe8ce459d8610d4dd4e14" prot="private" static="no" mutable="no">
+        <type>System.Windows.Forms.Label</type>
+        <definition>System.Windows.Forms.Label AOTools.FormMeasurePoints.lblPoint1</definition>
+        <argsstring></argsstring>
+        <name>lblPoint1</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="B:/Programming/VisualStudioProjects/RevitProjects/AOTools/AOTools/FormMeasurePoints.Designer.cs" line="568" column="1" bodyfile="B:/Programming/VisualStudioProjects/RevitProjects/AOTools/AOTools/FormMeasurePoints.Designer.cs" bodystart="568" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="class_a_o_tools_1_1_form_measure_points_1a13c652e1cc632dd91031a153362a7175" prot="private" static="no" mutable="no">
+        <type>System.Windows.Forms.Label</type>
+        <definition>System.Windows.Forms.Label AOTools.FormMeasurePoints.lblY1</definition>
+        <argsstring></argsstring>
+        <name>lblY1</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="B:/Programming/VisualStudioProjects/RevitProjects/AOTools/AOTools/FormMeasurePoints.Designer.cs" line="569" column="1" bodyfile="B:/Programming/VisualStudioProjects/RevitProjects/AOTools/AOTools/FormMeasurePoints.Designer.cs" bodystart="569" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="class_a_o_tools_1_1_form_measure_points_1a739d2c181b826ec2d1f8229ed3752135" prot="private" static="no" mutable="no">
+        <type>System.Windows.Forms.Label</type>
+        <definition>System.Windows.Forms.Label AOTools.FormMeasurePoints.lblZ1</definition>
+        <argsstring></argsstring>
+        <name>lblZ1</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="B:/Programming/VisualStudioProjects/RevitProjects/AOTools/AOTools/FormMeasurePoints.Designer.cs" line="570" column="1" bodyfile="B:/Programming/VisualStudioProjects/RevitProjects/AOTools/AOTools/FormMeasurePoints.Designer.cs" bodystart="570" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="class_a_o_tools_1_1_form_measure_points_1a0a2f1346f8fb5869111d68f2b18431d8" prot="private" static="no" mutable="no">
+        <type>System.Windows.Forms.Label</type>
+        <definition>System.Windows.Forms.Label AOTools.FormMeasurePoints.lblPoint2</definition>
+        <argsstring></argsstring>
+        <name>lblPoint2</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="B:/Programming/VisualStudioProjects/RevitProjects/AOTools/AOTools/FormMeasurePoints.Designer.cs" line="571" column="1" bodyfile="B:/Programming/VisualStudioProjects/RevitProjects/AOTools/AOTools/FormMeasurePoints.Designer.cs" bodystart="571" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="class_a_o_tools_1_1_form_measure_points_1ae7a6f996bdf48b1915d03fbfabfeca10" prot="private" static="no" mutable="no">
+        <type>System.Windows.Forms.Label</type>
+        <definition>System.Windows.Forms.Label AOTools.FormMeasurePoints.lblDistances</definition>
+        <argsstring></argsstring>
+        <name>lblDistances</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="B:/Programming/VisualStudioProjects/RevitProjects/AOTools/AOTools/FormMeasurePoints.Designer.cs" line="578" column="1" bodyfile="B:/Programming/VisualStudioProjects/RevitProjects/AOTools/AOTools/FormMeasurePoints.Designer.cs" bodystart="578" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="class_a_o_tools_1_1_form_measure_points_1aaf61ce44822fd084ea3620fb2bc1100d" prot="private" static="no" mutable="no">
+        <type>System.Windows.Forms.Label</type>
+        <definition>System.Windows.Forms.Label AOTools.FormMeasurePoints.lblAlongXaxis</definition>
+        <argsstring></argsstring>
+        <name>lblAlongXaxis</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="B:/Programming/VisualStudioProjects/RevitProjects/AOTools/AOTools/FormMeasurePoints.Designer.cs" line="580" column="1" bodyfile="B:/Programming/VisualStudioProjects/RevitProjects/AOTools/AOTools/FormMeasurePoints.Designer.cs" bodystart="580" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="class_a_o_tools_1_1_form_measure_points_1ada834a0862f8657729b4f722db49e320" prot="private" static="no" mutable="no">
+        <type>System.Windows.Forms.Label</type>
+        <definition>System.Windows.Forms.Label AOTools.FormMeasurePoints.lblAlongYaxis</definition>
+        <argsstring></argsstring>
+        <name>lblAlongYaxis</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="B:/Programming/VisualStudioProjects/RevitProjects/AOTools/AOTools/FormMeasurePoints.Designer.cs" line="582" column="1" bodyfile="B:/Programming/VisualStudioProjects/RevitProjects/AOTools/AOTools/FormMeasurePoints.Designer.cs" bodystart="582" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="class_a_o_tools_1_1_form_measure_points_1a3cb2fa0669f41ee985aeb92d35cb148a" prot="private" static="no" mutable="no">
+        <type>System.Windows.Forms.Label</type>
+        <definition>System.Windows.Forms.Label AOTools.FormMeasurePoints.lblAlongZaxis</definition>
+        <argsstring></argsstring>
+        <name>lblAlongZaxis</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="B:/Programming/VisualStudioProjects/RevitProjects/AOTools/AOTools/FormMeasurePoints.Designer.cs" line="584" column="1" bodyfile="B:/Programming/VisualStudioProjects/RevitProjects/AOTools/AOTools/FormMeasurePoints.Designer.cs" bodystart="584" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="class_a_o_tools_1_1_form_measure_points_1a006748019a6ef89a8ad150b93146fcf3" prot="private" static="no" mutable="no">
+        <type>System.Windows.Forms.Label</type>
+        <definition>System.Windows.Forms.Label AOTools.FormMeasurePoints.lblAlongXYaxis</definition>
+        <argsstring></argsstring>
+        <name>lblAlongXYaxis</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="B:/Programming/VisualStudioProjects/RevitProjects/AOTools/AOTools/FormMeasurePoints.Designer.cs" line="586" column="1" bodyfile="B:/Programming/VisualStudioProjects/RevitProjects/AOTools/AOTools/FormMeasurePoints.Designer.cs" bodystart="586" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="class_a_o_tools_1_1_form_measure_points_1add8296564d75db792646d803f2330639" prot="private" static="no" mutable="no">
+        <type>System.Windows.Forms.Label</type>
+        <definition>System.Windows.Forms.Label AOTools.FormMeasurePoints.lblAlongYZaxis</definition>
+        <argsstring></argsstring>
+        <name>lblAlongYZaxis</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="B:/Programming/VisualStudioProjects/RevitProjects/AOTools/AOTools/FormMeasurePoints.Designer.cs" line="588" column="1" bodyfile="B:/Programming/VisualStudioProjects/RevitProjects/AOTools/AOTools/FormMeasurePoints.Designer.cs" bodystart="588" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="class_a_o_tools_1_1_form_measure_points_1acc8976a791ae2eb62937bc8298d57b5f" prot="private" static="no" mutable="no">
+        <type>System.Windows.Forms.Label</type>
+        <definition>System.Windows.Forms.Label AOTools.FormMeasurePoints.lblAlongXYZaxis</definition>
+        <argsstring></argsstring>
+        <name>lblAlongXYZaxis</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="B:/Programming/VisualStudioProjects/RevitProjects/AOTools/AOTools/FormMeasurePoints.Designer.cs" line="590" column="1" bodyfile="B:/Programming/VisualStudioProjects/RevitProjects/AOTools/AOTools/FormMeasurePoints.Designer.cs" bodystart="590" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="class_a_o_tools_1_1_form_measure_points_1a86e844610a2b4b9423b6ad2f2d612c2a" prot="private" static="no" mutable="no">
+        <type>System.Windows.Forms.Label</type>
+        <definition>System.Windows.Forms.Label AOTools.FormMeasurePoints.lblAlongXZaxis</definition>
+        <argsstring></argsstring>
+        <name>lblAlongXZaxis</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="B:/Programming/VisualStudioProjects/RevitProjects/AOTools/AOTools/FormMeasurePoints.Designer.cs" line="592" column="1" bodyfile="B:/Programming/VisualStudioProjects/RevitProjects/AOTools/AOTools/FormMeasurePoints.Designer.cs" bodystart="592" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="class_a_o_tools_1_1_form_measure_points_1a5de312d846d2a1a080b72ffed263ec6a" prot="private" static="no" mutable="no">
+        <type>System.Windows.Forms.Label</type>
+        <definition>System.Windows.Forms.Label AOTools.FormMeasurePoints.lblNote</definition>
+        <argsstring></argsstring>
+        <name>lblNote</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="B:/Programming/VisualStudioProjects/RevitProjects/AOTools/AOTools/FormMeasurePoints.Designer.cs" line="596" column="1" bodyfile="B:/Programming/VisualStudioProjects/RevitProjects/AOTools/AOTools/FormMeasurePoints.Designer.cs" bodystart="596" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="class_a_o_tools_1_1_form_measure_points_1adb64bc1878ee03abf565d5d5edaa3b8a" prot="private" static="no" mutable="no">
+        <type>System.Windows.Forms.Label</type>
+        <definition>System.Windows.Forms.Label AOTools.FormMeasurePoints.lblWorkPlane</definition>
+        <argsstring></argsstring>
+        <name>lblWorkPlane</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="B:/Programming/VisualStudioProjects/RevitProjects/AOTools/AOTools/FormMeasurePoints.Designer.cs" line="597" column="1" bodyfile="B:/Programming/VisualStudioProjects/RevitProjects/AOTools/AOTools/FormMeasurePoints.Designer.cs" bodystart="597" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="class_a_o_tools_1_1_form_measure_points_1a67104eb862f01563903ed3ff01ef4be2" prot="private" static="no" mutable="no">
+        <type>System.Windows.Forms.Label</type>
+        <definition>System.Windows.Forms.Label AOTools.FormMeasurePoints.lblZ2</definition>
+        <argsstring></argsstring>
+        <name>lblZ2</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="B:/Programming/VisualStudioProjects/RevitProjects/AOTools/AOTools/FormMeasurePoints.Designer.cs" line="598" column="1" bodyfile="B:/Programming/VisualStudioProjects/RevitProjects/AOTools/AOTools/FormMeasurePoints.Designer.cs" bodystart="598" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="class_a_o_tools_1_1_form_measure_points_1a95f39112c18f0b7be029a8998db3cc42" prot="private" static="no" mutable="no">
+        <type>System.Windows.Forms.Label</type>
+        <definition>System.Windows.Forms.Label AOTools.FormMeasurePoints.lblY2</definition>
+        <argsstring></argsstring>
+        <name>lblY2</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="B:/Programming/VisualStudioProjects/RevitProjects/AOTools/AOTools/FormMeasurePoints.Designer.cs" line="599" column="1" bodyfile="B:/Programming/VisualStudioProjects/RevitProjects/AOTools/AOTools/FormMeasurePoints.Designer.cs" bodystart="599" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="class_a_o_tools_1_1_form_measure_points_1a58ed7ef199d15575a7921aa1a5954686" prot="private" static="no" mutable="no">
+        <type>System.Windows.Forms.Label</type>
+        <definition>System.Windows.Forms.Label AOTools.FormMeasurePoints.lblX2</definition>
+        <argsstring></argsstring>
+        <name>lblX2</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="B:/Programming/VisualStudioProjects/RevitProjects/AOTools/AOTools/FormMeasurePoints.Designer.cs" line="600" column="1" bodyfile="B:/Programming/VisualStudioProjects/RevitProjects/AOTools/AOTools/FormMeasurePoints.Designer.cs" bodystart="600" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="class_a_o_tools_1_1_form_measure_points_1a36594788448195998cc6ec011b2b3dae" prot="private" static="no" mutable="no">
+        <type>System.Windows.Forms.CheckBox</type>
+        <definition>System.Windows.Forms.CheckBox AOTools.FormMeasurePoints.cbxWpOnOff</definition>
+        <argsstring></argsstring>
+        <name>cbxWpOnOff</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="B:/Programming/VisualStudioProjects/RevitProjects/AOTools/AOTools/FormMeasurePoints.Designer.cs" line="607" column="1" bodyfile="B:/Programming/VisualStudioProjects/RevitProjects/AOTools/AOTools/FormMeasurePoints.Designer.cs" bodystart="607" bodyend="-1"/>
+      </memberdef>
+      </sectiondef>
+      <sectiondef kind="package-attrib">
+      <memberdef kind="variable" id="class_a_o_tools_1_1_form_measure_points_1a7f44b7a51932be3c5f3c7dd47e9116ca" prot="package" static="no" mutable="no">
+        <type>System.Windows.Forms.Label</type>
+        <definition>System.Windows.Forms.Label AOTools.FormMeasurePoints.lblP1Z</definition>
+        <argsstring></argsstring>
+        <name>lblP1Z</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="B:/Programming/VisualStudioProjects/RevitProjects/AOTools/AOTools/FormMeasurePoints.Designer.cs" line="572" column="1" bodyfile="B:/Programming/VisualStudioProjects/RevitProjects/AOTools/AOTools/FormMeasurePoints.Designer.cs" bodystart="572" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="class_a_o_tools_1_1_form_measure_points_1a0ab290db1677c0bd4bbcc0dfc1437297" prot="package" static="no" mutable="no">
+        <type>System.Windows.Forms.Label</type>
+        <definition>System.Windows.Forms.Label AOTools.FormMeasurePoints.lblP1Y</definition>
+        <argsstring></argsstring>
+        <name>lblP1Y</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="B:/Programming/VisualStudioProjects/RevitProjects/AOTools/AOTools/FormMeasurePoints.Designer.cs" line="573" column="1" bodyfile="B:/Programming/VisualStudioProjects/RevitProjects/AOTools/AOTools/FormMeasurePoints.Designer.cs" bodystart="573" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="class_a_o_tools_1_1_form_measure_points_1a5d46c2d5220cb78c096ec81f220a8111" prot="package" static="no" mutable="no">
+        <type>System.Windows.Forms.Label</type>
+        <definition>System.Windows.Forms.Label AOTools.FormMeasurePoints.lblP1X</definition>
+        <argsstring></argsstring>
+        <name>lblP1X</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="B:/Programming/VisualStudioProjects/RevitProjects/AOTools/AOTools/FormMeasurePoints.Designer.cs" line="574" column="1" bodyfile="B:/Programming/VisualStudioProjects/RevitProjects/AOTools/AOTools/FormMeasurePoints.Designer.cs" bodystart="574" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="class_a_o_tools_1_1_form_measure_points_1ad18c172b2e1a162b23830c6c0163706c" prot="package" static="no" mutable="no">
+        <type>System.Windows.Forms.Label</type>
+        <definition>System.Windows.Forms.Label AOTools.FormMeasurePoints.lblP2Z</definition>
+        <argsstring></argsstring>
+        <name>lblP2Z</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="B:/Programming/VisualStudioProjects/RevitProjects/AOTools/AOTools/FormMeasurePoints.Designer.cs" line="575" column="1" bodyfile="B:/Programming/VisualStudioProjects/RevitProjects/AOTools/AOTools/FormMeasurePoints.Designer.cs" bodystart="575" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="class_a_o_tools_1_1_form_measure_points_1a1dff668b7745ca7c2690afbcab4cb939" prot="package" static="no" mutable="no">
+        <type>System.Windows.Forms.Label</type>
+        <definition>System.Windows.Forms.Label AOTools.FormMeasurePoints.lblP2Y</definition>
+        <argsstring></argsstring>
+        <name>lblP2Y</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="B:/Programming/VisualStudioProjects/RevitProjects/AOTools/AOTools/FormMeasurePoints.Designer.cs" line="576" column="1" bodyfile="B:/Programming/VisualStudioProjects/RevitProjects/AOTools/AOTools/FormMeasurePoints.Designer.cs" bodystart="576" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="class_a_o_tools_1_1_form_measure_points_1ab18e4065aa43452a40dbf11a9a4bbd33" prot="package" static="no" mutable="no">
+        <type>System.Windows.Forms.Label</type>
+        <definition>System.Windows.Forms.Label AOTools.FormMeasurePoints.lblP2X</definition>
+        <argsstring></argsstring>
+        <name>lblP2X</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="B:/Programming/VisualStudioProjects/RevitProjects/AOTools/AOTools/FormMeasurePoints.Designer.cs" line="577" column="1" bodyfile="B:/Programming/VisualStudioProjects/RevitProjects/AOTools/AOTools/FormMeasurePoints.Designer.cs" bodystart="577" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="class_a_o_tools_1_1_form_measure_points_1aa9b2e320549f3348d1ac8fa1c229ad20" prot="package" static="no" mutable="no">
+        <type>System.Windows.Forms.Label</type>
+        <definition>System.Windows.Forms.Label AOTools.FormMeasurePoints.lblDistX</definition>
+        <argsstring></argsstring>
+        <name>lblDistX</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="B:/Programming/VisualStudioProjects/RevitProjects/AOTools/AOTools/FormMeasurePoints.Designer.cs" line="579" column="1" bodyfile="B:/Programming/VisualStudioProjects/RevitProjects/AOTools/AOTools/FormMeasurePoints.Designer.cs" bodystart="579" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="class_a_o_tools_1_1_form_measure_points_1ae906dbd9b6bf8a6a2cbcaa08ec0e624a" prot="package" static="no" mutable="no">
+        <type>System.Windows.Forms.Label</type>
+        <definition>System.Windows.Forms.Label AOTools.FormMeasurePoints.lblDistY</definition>
+        <argsstring></argsstring>
+        <name>lblDistY</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="B:/Programming/VisualStudioProjects/RevitProjects/AOTools/AOTools/FormMeasurePoints.Designer.cs" line="581" column="1" bodyfile="B:/Programming/VisualStudioProjects/RevitProjects/AOTools/AOTools/FormMeasurePoints.Designer.cs" bodystart="581" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="class_a_o_tools_1_1_form_measure_points_1a89ae18773e9858485c7466fd817b3bc2" prot="package" static="no" mutable="no">
+        <type>System.Windows.Forms.Label</type>
+        <definition>System.Windows.Forms.Label AOTools.FormMeasurePoints.lblDistZ</definition>
+        <argsstring></argsstring>
+        <name>lblDistZ</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="B:/Programming/VisualStudioProjects/RevitProjects/AOTools/AOTools/FormMeasurePoints.Designer.cs" line="583" column="1" bodyfile="B:/Programming/VisualStudioProjects/RevitProjects/AOTools/AOTools/FormMeasurePoints.Designer.cs" bodystart="583" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="class_a_o_tools_1_1_form_measure_points_1a99b8003e5a39efba19cc081e05ab1b5f" prot="package" static="no" mutable="no">
+        <type>System.Windows.Forms.Label</type>
+        <definition>System.Windows.Forms.Label AOTools.FormMeasurePoints.lblDistXY</definition>
+        <argsstring></argsstring>
+        <name>lblDistXY</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="B:/Programming/VisualStudioProjects/RevitProjects/AOTools/AOTools/FormMeasurePoints.Designer.cs" line="585" column="1" bodyfile="B:/Programming/VisualStudioProjects/RevitProjects/AOTools/AOTools/FormMeasurePoints.Designer.cs" bodystart="585" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="class_a_o_tools_1_1_form_measure_points_1a0ccffb3aacb1bda696014594e9a31983" prot="package" static="no" mutable="no">
+        <type>System.Windows.Forms.Label</type>
+        <definition>System.Windows.Forms.Label AOTools.FormMeasurePoints.lblDistYZ</definition>
+        <argsstring></argsstring>
+        <name>lblDistYZ</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="B:/Programming/VisualStudioProjects/RevitProjects/AOTools/AOTools/FormMeasurePoints.Designer.cs" line="587" column="1" bodyfile="B:/Programming/VisualStudioProjects/RevitProjects/AOTools/AOTools/FormMeasurePoints.Designer.cs" bodystart="587" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="class_a_o_tools_1_1_form_measure_points_1a946f490b1306863f5935e1494ef1e74f" prot="package" static="no" mutable="no">
+        <type>System.Windows.Forms.Label</type>
+        <definition>System.Windows.Forms.Label AOTools.FormMeasurePoints.lblDistXYZ</definition>
+        <argsstring></argsstring>
+        <name>lblDistXYZ</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="B:/Programming/VisualStudioProjects/RevitProjects/AOTools/AOTools/FormMeasurePoints.Designer.cs" line="589" column="1" bodyfile="B:/Programming/VisualStudioProjects/RevitProjects/AOTools/AOTools/FormMeasurePoints.Designer.cs" bodystart="589" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="class_a_o_tools_1_1_form_measure_points_1a53ed95ca2d0ad3b1b847ff469b7e92cc" prot="package" static="no" mutable="no">
+        <type>System.Windows.Forms.Label</type>
+        <definition>System.Windows.Forms.Label AOTools.FormMeasurePoints.lblDistXZ</definition>
+        <argsstring></argsstring>
+        <name>lblDistXZ</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="B:/Programming/VisualStudioProjects/RevitProjects/AOTools/AOTools/FormMeasurePoints.Designer.cs" line="591" column="1" bodyfile="B:/Programming/VisualStudioProjects/RevitProjects/AOTools/AOTools/FormMeasurePoints.Designer.cs" bodystart="591" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="class_a_o_tools_1_1_form_measure_points_1a6dcf3c52cf6bf3c55f44acfd7d3159cb" prot="package" static="no" mutable="no">
+        <type>System.Windows.Forms.Label</type>
+        <definition>System.Windows.Forms.Label AOTools.FormMeasurePoints.lblWpOrigin</definition>
+        <argsstring></argsstring>
+        <name>lblWpOrigin</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="B:/Programming/VisualStudioProjects/RevitProjects/AOTools/AOTools/FormMeasurePoints.Designer.cs" line="593" column="1" bodyfile="B:/Programming/VisualStudioProjects/RevitProjects/AOTools/AOTools/FormMeasurePoints.Designer.cs" bodystart="593" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="class_a_o_tools_1_1_form_measure_points_1ac148b29d3caf303ba2e1ed16bc2ed70f" prot="package" static="no" mutable="no">
+        <type>System.Windows.Forms.Label</type>
+        <definition>System.Windows.Forms.Label AOTools.FormMeasurePoints.lblMessage</definition>
+        <argsstring></argsstring>
+        <name>lblMessage</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="B:/Programming/VisualStudioProjects/RevitProjects/AOTools/AOTools/FormMeasurePoints.Designer.cs" line="594" column="1" bodyfile="B:/Programming/VisualStudioProjects/RevitProjects/AOTools/AOTools/FormMeasurePoints.Designer.cs" bodystart="594" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="class_a_o_tools_1_1_form_measure_points_1abe792b254dbd9adaa09c3de4bac87405" prot="package" static="no" mutable="no">
+        <type>System.Windows.Forms.Label</type>
+        <definition>System.Windows.Forms.Label AOTools.FormMeasurePoints.lblWpNormal</definition>
+        <argsstring></argsstring>
+        <name>lblWpNormal</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="B:/Programming/VisualStudioProjects/RevitProjects/AOTools/AOTools/FormMeasurePoints.Designer.cs" line="595" column="1" bodyfile="B:/Programming/VisualStudioProjects/RevitProjects/AOTools/AOTools/FormMeasurePoints.Designer.cs" bodystart="595" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="class_a_o_tools_1_1_form_measure_points_1aeb5d064b0fbfe15668e94daaea7a8792" prot="package" static="no" mutable="no">
+        <type>System.Windows.Forms.Label</type>
+        <definition>System.Windows.Forms.Label AOTools.FormMeasurePoints.lblWpNormalZ</definition>
+        <argsstring></argsstring>
+        <name>lblWpNormalZ</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="B:/Programming/VisualStudioProjects/RevitProjects/AOTools/AOTools/FormMeasurePoints.Designer.cs" line="601" column="1" bodyfile="B:/Programming/VisualStudioProjects/RevitProjects/AOTools/AOTools/FormMeasurePoints.Designer.cs" bodystart="601" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="class_a_o_tools_1_1_form_measure_points_1ab09c06cf1e2295c6008fa12545ed2140" prot="package" static="no" mutable="no">
+        <type>System.Windows.Forms.Label</type>
+        <definition>System.Windows.Forms.Label AOTools.FormMeasurePoints.lblWpNormalY</definition>
+        <argsstring></argsstring>
+        <name>lblWpNormalY</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="B:/Programming/VisualStudioProjects/RevitProjects/AOTools/AOTools/FormMeasurePoints.Designer.cs" line="602" column="1" bodyfile="B:/Programming/VisualStudioProjects/RevitProjects/AOTools/AOTools/FormMeasurePoints.Designer.cs" bodystart="602" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="class_a_o_tools_1_1_form_measure_points_1af6e707d85fe6edb4e3cbb10fecd07975" prot="package" static="no" mutable="no">
+        <type>System.Windows.Forms.Label</type>
+        <definition>System.Windows.Forms.Label AOTools.FormMeasurePoints.lblWpNormalX</definition>
+        <argsstring></argsstring>
+        <name>lblWpNormalX</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="B:/Programming/VisualStudioProjects/RevitProjects/AOTools/AOTools/FormMeasurePoints.Designer.cs" line="603" column="1" bodyfile="B:/Programming/VisualStudioProjects/RevitProjects/AOTools/AOTools/FormMeasurePoints.Designer.cs" bodystart="603" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="class_a_o_tools_1_1_form_measure_points_1af75a4ab9d4b846d0e1198358433d97d1" prot="package" static="no" mutable="no">
+        <type>System.Windows.Forms.Label</type>
+        <definition>System.Windows.Forms.Label AOTools.FormMeasurePoints.lblWpOriginZ</definition>
+        <argsstring></argsstring>
+        <name>lblWpOriginZ</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="B:/Programming/VisualStudioProjects/RevitProjects/AOTools/AOTools/FormMeasurePoints.Designer.cs" line="604" column="1" bodyfile="B:/Programming/VisualStudioProjects/RevitProjects/AOTools/AOTools/FormMeasurePoints.Designer.cs" bodystart="604" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="class_a_o_tools_1_1_form_measure_points_1ae22d7272d5061ca19f5f77ab546400ba" prot="package" static="no" mutable="no">
+        <type>System.Windows.Forms.Label</type>
+        <definition>System.Windows.Forms.Label AOTools.FormMeasurePoints.lblWpOriginY</definition>
+        <argsstring></argsstring>
+        <name>lblWpOriginY</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="B:/Programming/VisualStudioProjects/RevitProjects/AOTools/AOTools/FormMeasurePoints.Designer.cs" line="605" column="1" bodyfile="B:/Programming/VisualStudioProjects/RevitProjects/AOTools/AOTools/FormMeasurePoints.Designer.cs" bodystart="605" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="class_a_o_tools_1_1_form_measure_points_1adbd862c81e3158ce49699f076d790c71" prot="package" static="no" mutable="no">
+        <type>System.Windows.Forms.Label</type>
+        <definition>System.Windows.Forms.Label AOTools.FormMeasurePoints.lblWpOriginX</definition>
+        <argsstring></argsstring>
+        <name>lblWpOriginX</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="B:/Programming/VisualStudioProjects/RevitProjects/AOTools/AOTools/FormMeasurePoints.Designer.cs" line="606" column="1" bodyfile="B:/Programming/VisualStudioProjects/RevitProjects/AOTools/AOTools/FormMeasurePoints.Designer.cs" bodystart="606" bodyend="-1"/>
+      </memberdef>
+      </sectiondef>
+      <sectiondef kind="public-func">
+      <memberdef kind="function" id="class_a_o_tools_1_1_form_measure_points_1a0d345a160a5ffe57f38579690c1d8a34" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type></type>
+        <definition>AOTools.FormMeasurePoints.FormMeasurePoints</definition>
+        <argsstring>()</argsstring>
+        <name>FormMeasurePoints</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="B:/Programming/VisualStudioProjects/RevitProjects/AOTools/AOTools/FormMeasurePoints.cs" line="18" column="1" bodyfile="B:/Programming/VisualStudioProjects/RevitProjects/AOTools/AOTools/FormMeasurePoints.cs" bodystart="18" bodyend="23"/>
+        <references refid="class_a_o_tools_1_1_form_measure_points_1ab86d28c8d788020768a07c74f563b7f0" compoundref="_form_measure_points_8_designer_8cs" startline="29" endline="561">AOTools.FormMeasurePoints.InitializeComponent</references>
+        <references refid="class_a_o_tools_1_1_form_measure_points_1adff09df97b7ee62e0863d79174fff81d" compoundref="_form_measure_points_8cs" startline="38" endline="50">AOTools.FormMeasurePoints.LoadSettings</references>
+      </memberdef>
+      </sectiondef>
+      <sectiondef kind="private-func">
+      <memberdef kind="function" id="class_a_o_tools_1_1_form_measure_points_1adde3dd8475bdadbbc243689fe4db517e" prot="private" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type>void</type>
+        <definition>void AOTools.FormMeasurePoints.FormQueryPoints_FormClosing</definition>
+        <argsstring>(object sender, FormClosingEventArgs e)</argsstring>
+        <name>FormQueryPoints_FormClosing</name>
+        <param>
+          <type>object</type>
+          <declname>sender</declname>
+        </param>
+        <param>
+          <type>FormClosingEventArgs</type>
+          <declname>e</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="B:/Programming/VisualStudioProjects/RevitProjects/AOTools/AOTools/FormMeasurePoints.cs" line="25" column="1" bodyfile="B:/Programming/VisualStudioProjects/RevitProjects/AOTools/AOTools/FormMeasurePoints.cs" bodystart="25" bodyend="31"/>
+      </memberdef>
+      <memberdef kind="function" id="class_a_o_tools_1_1_form_measure_points_1afad7b2cbea43a66d30cea407b0e7b280" prot="private" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type>void</type>
+        <definition>void AOTools.FormMeasurePoints.FormQueryPoints_Load</definition>
+        <argsstring>(object sender, EventArgs e)</argsstring>
+        <name>FormQueryPoints_Load</name>
+        <param>
+          <type>object</type>
+          <declname>sender</declname>
+        </param>
+        <param>
+          <type>EventArgs</type>
+          <declname>e</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="B:/Programming/VisualStudioProjects/RevitProjects/AOTools/AOTools/FormMeasurePoints.cs" line="33" column="1" bodyfile="B:/Programming/VisualStudioProjects/RevitProjects/AOTools/AOTools/FormMeasurePoints.cs" bodystart="33" bodyend="36"/>
+        <references refid="class_a_o_tools_1_1_form_measure_points_1adff09df97b7ee62e0863d79174fff81d" compoundref="_form_measure_points_8cs" startline="38" endline="50">AOTools.FormMeasurePoints.LoadSettings</references>
+      </memberdef>
+      <memberdef kind="function" id="class_a_o_tools_1_1_form_measure_points_1adff09df97b7ee62e0863d79174fff81d" prot="private" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type>void</type>
+        <definition>void AOTools.FormMeasurePoints.LoadSettings</definition>
+        <argsstring>()</argsstring>
+        <name>LoadSettings</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="B:/Programming/VisualStudioProjects/RevitProjects/AOTools/AOTools/FormMeasurePoints.cs" line="38" column="1" bodyfile="B:/Programming/VisualStudioProjects/RevitProjects/AOTools/AOTools/FormMeasurePoints.cs" bodystart="38" bodyend="50"/>
+        <references refid="class_a_o_tools_1_1_form_measure_points_1a4fec526d1a791818081c4fa554f84136" compoundref="_form_measure_points_8cs" startline="62">AOTools.FormMeasurePoints.ShowWorkplane</references>
+        <referencedby refid="class_a_o_tools_1_1_form_measure_points_1a0d345a160a5ffe57f38579690c1d8a34" compoundref="_form_measure_points_8cs" startline="18" endline="23">AOTools.FormMeasurePoints.FormMeasurePoints</referencedby>
+        <referencedby refid="class_a_o_tools_1_1_form_measure_points_1afad7b2cbea43a66d30cea407b0e7b280" compoundref="_form_measure_points_8cs" startline="33" endline="36">AOTools.FormMeasurePoints.FormQueryPoints_Load</referencedby>
+      </memberdef>
+      <memberdef kind="function" id="class_a_o_tools_1_1_form_measure_points_1acea9a14a568cb54fa25e21fb803dee03" prot="private" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type>void</type>
+        <definition>void AOTools.FormMeasurePoints.cbxWpOnOff_CheckedChanged</definition>
+        <argsstring>(object sender, EventArgs e)</argsstring>
+        <name>cbxWpOnOff_CheckedChanged</name>
+        <param>
+          <type>object</type>
+          <declname>sender</declname>
+        </param>
+        <param>
+          <type>EventArgs</type>
+          <declname>e</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="B:/Programming/VisualStudioProjects/RevitProjects/AOTools/AOTools/FormMeasurePoints.cs" line="53" column="1" bodyfile="B:/Programming/VisualStudioProjects/RevitProjects/AOTools/AOTools/FormMeasurePoints.cs" bodystart="53" bodyend="56"/>
+        <references refid="class_a_o_tools_1_1_form_measure_points_1acc5b23c9b30118d75334c91376443cc2" compoundref="_form_measure_points_8cs" startline="16">AOTools.FormMeasurePoints.showWorkplane</references>
+      </memberdef>
+      <memberdef kind="function" id="class_a_o_tools_1_1_form_measure_points_1ab86d28c8d788020768a07c74f563b7f0" prot="private" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type>void</type>
+        <definition>void AOTools.FormMeasurePoints.InitializeComponent</definition>
+        <argsstring>()</argsstring>
+        <name>InitializeComponent</name>
+        <briefdescription>
+<para>Required method for Designer support - do not modify the contents of this method with the code editor. </para>        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="B:/Programming/VisualStudioProjects/RevitProjects/AOTools/AOTools/FormMeasurePoints.Designer.cs" line="29" column="1" bodyfile="B:/Programming/VisualStudioProjects/RevitProjects/AOTools/AOTools/FormMeasurePoints.Designer.cs" bodystart="29" bodyend="561"/>
+        <referencedby refid="class_a_o_tools_1_1_form_measure_points_1a0d345a160a5ffe57f38579690c1d8a34" compoundref="_form_measure_points_8cs" startline="18" endline="23">AOTools.FormMeasurePoints.FormMeasurePoints</referencedby>
+      </memberdef>
+      </sectiondef>
+      <sectiondef kind="package-func">
+      <memberdef kind="function" id="class_a_o_tools_1_1_form_measure_points_1aacc399f30f71a725026136d91405577f" prot="package" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type>void</type>
+        <definition>void AOTools.FormMeasurePoints.UpdatePoints</definition>
+        <argsstring>(PointMeasurements?pm, Util.VType vtype, XYZ normal, XYZ origin, string planeName, Units units)</argsstring>
+        <name>UpdatePoints</name>
+        <param>
+          <type><ref refid="struct_a_o_tools_1_1_point_measurements" kindref="compound">PointMeasurements</ref>?</type>
+          <declname>pm</declname>
+        </param>
+        <param>
+          <type><ref refid="struct_a_o_tools_1_1_util_1_1_v_type" kindref="compound">Util.VType</ref></type>
+          <declname>vtype</declname>
+        </param>
+        <param>
+          <type>XYZ</type>
+          <declname>normal</declname>
+        </param>
+        <param>
+          <type>XYZ</type>
+          <declname>origin</declname>
+        </param>
+        <param>
+          <type>string</type>
+          <declname>planeName</declname>
+        </param>
+        <param>
+          <type>Units</type>
+          <declname>units</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="B:/Programming/VisualStudioProjects/RevitProjects/AOTools/AOTools/FormMeasurePoints.cs" line="71" column="1" bodyfile="B:/Programming/VisualStudioProjects/RevitProjects/AOTools/AOTools/FormMeasurePoints.cs" bodystart="71" bodyend="116"/>
+        <references refid="class_a_o_tools_1_1_form_measure_points_1a74dbf4b535b43a7bbed38ab951fb3f60" compoundref="_form_measure_points_8cs" startline="118" endline="150">AOTools.FormMeasurePoints.ClearText</references>
+        <references refid="struct_a_o_tools_1_1_point_measurements_1a635b46dfdfbb87446795bb8b13106dd7" compoundref="_util_8cs" startline="170">AOTools.PointMeasurements.delta</references>
+        <references refid="struct_a_o_tools_1_1_point_measurements_1aa12ef5647e4093f378d80eb5da5b37bd" compoundref="_util_8cs" startline="173">AOTools.PointMeasurements.distanceXY</references>
+        <references refid="struct_a_o_tools_1_1_point_measurements_1a3ed6fbce2ec09791e86af00478233366" compoundref="_util_8cs" startline="176">AOTools.PointMeasurements.distanceXYZ</references>
+        <references refid="struct_a_o_tools_1_1_point_measurements_1a3c0b1889f1ff83f1a1a8ea9f87ebae2a" compoundref="_util_8cs" startline="174">AOTools.PointMeasurements.distanceXZ</references>
+        <references refid="struct_a_o_tools_1_1_point_measurements_1a402a1f14eefe16b887aa87a2fc33aaa7" compoundref="_util_8cs" startline="175">AOTools.PointMeasurements.distanceYZ</references>
+        <references refid="struct_a_o_tools_1_1_point_measurements_1aaceb5a575cf0715d0c4a96d75f894062" compoundref="_util_8cs" startline="167">AOTools.PointMeasurements.P1</references>
+        <references refid="struct_a_o_tools_1_1_point_measurements_1a0cb5bab66c1b06c58b09c993dcbfcc87" compoundref="_util_8cs" startline="168">AOTools.PointMeasurements.P2</references>
+      </memberdef>
+      <memberdef kind="function" id="class_a_o_tools_1_1_form_measure_points_1a74dbf4b535b43a7bbed38ab951fb3f60" prot="package" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type>void</type>
+        <definition>void AOTools.FormMeasurePoints.ClearText</definition>
+        <argsstring>()</argsstring>
+        <name>ClearText</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="B:/Programming/VisualStudioProjects/RevitProjects/AOTools/AOTools/FormMeasurePoints.cs" line="118" column="1" bodyfile="B:/Programming/VisualStudioProjects/RevitProjects/AOTools/AOTools/FormMeasurePoints.cs" bodystart="118" bodyend="150"/>
+        <referencedby refid="class_a_o_tools_1_1_form_measure_points_1aacc399f30f71a725026136d91405577f" compoundref="_form_measure_points_8cs" startline="71" endline="116">AOTools.FormMeasurePoints.UpdatePoints</referencedby>
+      </memberdef>
+      </sectiondef>
+      <sectiondef kind="protected-func">
+      <memberdef kind="function" id="class_a_o_tools_1_1_form_measure_points_1af466ce3188385216d5a0b05d647d66f9" prot="protected" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type>override void</type>
+        <definition>override void AOTools.FormMeasurePoints.Dispose</definition>
+        <argsstring>(bool disposing)</argsstring>
+        <name>Dispose</name>
+        <param>
+          <type>bool</type>
+          <declname>disposing</declname>
+        </param>
+        <briefdescription>
+<para>Clean up any resources being used. </para>        </briefdescription>
+        <detaileddescription>
+<para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername>disposing</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>true if managed resources should be disposed; otherwise, false.</para></parameterdescription>
+</parameteritem>
+</parameterlist>
+</para>        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="B:/Programming/VisualStudioProjects/RevitProjects/AOTools/AOTools/FormMeasurePoints.Designer.cs" line="14" column="1" bodyfile="B:/Programming/VisualStudioProjects/RevitProjects/AOTools/AOTools/FormMeasurePoints.Designer.cs" bodystart="14" bodyend="21"/>
+        <references refid="class_a_o_tools_1_1_form_measure_points_1a3a3561ff86eeb31f14cd9d7d4987c8aa" compoundref="_form_measure_points_8_designer_8cs" startline="8">AOTools.FormMeasurePoints.components</references>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <inheritancegraph>
+      <node id="30">
+        <label>Form</label>
+      </node>
+      <node id="29">
+        <label>AOTools.FormMeasurePoints</label>
+        <link refid="class_a_o_tools_1_1_form_measure_points"/>
+        <childnode refid="30" relation="public-inheritance">
+        </childnode>
+      </node>
+    </inheritancegraph>
+    <collaborationgraph>
+      <node id="32">
+        <label>Form</label>
+      </node>
+      <node id="33">
+        <label>System</label>
+      </node>
+      <node id="31">
+        <label>AOTools.FormMeasurePoints</label>
+        <link refid="class_a_o_tools_1_1_form_measure_points"/>
+        <childnode refid="32" relation="public-inheritance">
+        </childnode>
+        <childnode refid="33" relation="usage">
+          <edgelabel>lblMessage</edgelabel>
+          <edgelabel>lblP2X</edgelabel>
+          <edgelabel>cbxWpOnOff</edgelabel>
+          <edgelabel>lblP2Y</edgelabel>
+          <edgelabel>lblP1X</edgelabel>
+          <edgelabel>lblPoint1</edgelabel>
+          <edgelabel>lblP2Z</edgelabel>
+          <edgelabel>lblP1Y</edgelabel>
+          <edgelabel>lblPoint2</edgelabel>
+          <edgelabel>lblP1Z</edgelabel>
+          <edgelabel>...</edgelabel>
+        </childnode>
+        <childnode refid="34" relation="usage">
+          <edgelabel>showWorkplane</edgelabel>
+        </childnode>
+      </node>
+      <node id="34">
+        <label>static</label>
+      </node>
+    </collaborationgraph>
+    <location file="B:/Programming/VisualStudioProjects/RevitProjects/AOTools/AOTools/FormMeasurePoints.cs" line="15" column="1" bodyfile="B:/Programming/VisualStudioProjects/RevitProjects/AOTools/AOTools/FormMeasurePoints.cs" bodystart="14" bodyend="152"/>
+    <listofallmembers>
+      <member refid="class_a_o_tools_1_1_form_measure_points_1ae0bf1098ea335ebfbf4b50674a05d088" prot="private" virt="non-virtual"><scope>AOTools::FormMeasurePoints</scope><name>btnDone</name></member>
+      <member refid="class_a_o_tools_1_1_form_measure_points_1adf44b30e31a7fa9b1aa949768ba7977f" prot="private" virt="non-virtual"><scope>AOTools::FormMeasurePoints</scope><name>btnSelect</name></member>
+      <member refid="class_a_o_tools_1_1_form_measure_points_1a36594788448195998cc6ec011b2b3dae" prot="private" virt="non-virtual"><scope>AOTools::FormMeasurePoints</scope><name>cbxWpOnOff</name></member>
+      <member refid="class_a_o_tools_1_1_form_measure_points_1acea9a14a568cb54fa25e21fb803dee03" prot="private" virt="non-virtual"><scope>AOTools::FormMeasurePoints</scope><name>cbxWpOnOff_CheckedChanged</name></member>
+      <member refid="class_a_o_tools_1_1_form_measure_points_1a74dbf4b535b43a7bbed38ab951fb3f60" prot="package" virt="non-virtual"><scope>AOTools::FormMeasurePoints</scope><name>ClearText</name></member>
+      <member refid="class_a_o_tools_1_1_form_measure_points_1a3a3561ff86eeb31f14cd9d7d4987c8aa" prot="private" virt="non-virtual"><scope>AOTools::FormMeasurePoints</scope><name>components</name></member>
+      <member refid="class_a_o_tools_1_1_form_measure_points_1af466ce3188385216d5a0b05d647d66f9" prot="protected" virt="non-virtual"><scope>AOTools::FormMeasurePoints</scope><name>Dispose</name></member>
+      <member refid="class_a_o_tools_1_1_form_measure_points_1a0d345a160a5ffe57f38579690c1d8a34" prot="public" virt="non-virtual"><scope>AOTools::FormMeasurePoints</scope><name>FormMeasurePoints</name></member>
+      <member refid="class_a_o_tools_1_1_form_measure_points_1adde3dd8475bdadbbc243689fe4db517e" prot="private" virt="non-virtual"><scope>AOTools::FormMeasurePoints</scope><name>FormQueryPoints_FormClosing</name></member>
+      <member refid="class_a_o_tools_1_1_form_measure_points_1afad7b2cbea43a66d30cea407b0e7b280" prot="private" virt="non-virtual"><scope>AOTools::FormMeasurePoints</scope><name>FormQueryPoints_Load</name></member>
+      <member refid="class_a_o_tools_1_1_form_measure_points_1ab86d28c8d788020768a07c74f563b7f0" prot="private" virt="non-virtual"><scope>AOTools::FormMeasurePoints</scope><name>InitializeComponent</name></member>
+      <member refid="class_a_o_tools_1_1_form_measure_points_1aaf61ce44822fd084ea3620fb2bc1100d" prot="private" virt="non-virtual"><scope>AOTools::FormMeasurePoints</scope><name>lblAlongXaxis</name></member>
+      <member refid="class_a_o_tools_1_1_form_measure_points_1a006748019a6ef89a8ad150b93146fcf3" prot="private" virt="non-virtual"><scope>AOTools::FormMeasurePoints</scope><name>lblAlongXYaxis</name></member>
+      <member refid="class_a_o_tools_1_1_form_measure_points_1acc8976a791ae2eb62937bc8298d57b5f" prot="private" virt="non-virtual"><scope>AOTools::FormMeasurePoints</scope><name>lblAlongXYZaxis</name></member>
+      <member refid="class_a_o_tools_1_1_form_measure_points_1a86e844610a2b4b9423b6ad2f2d612c2a" prot="private" virt="non-virtual"><scope>AOTools::FormMeasurePoints</scope><name>lblAlongXZaxis</name></member>
+      <member refid="class_a_o_tools_1_1_form_measure_points_1ada834a0862f8657729b4f722db49e320" prot="private" virt="non-virtual"><scope>AOTools::FormMeasurePoints</scope><name>lblAlongYaxis</name></member>
+      <member refid="class_a_o_tools_1_1_form_measure_points_1add8296564d75db792646d803f2330639" prot="private" virt="non-virtual"><scope>AOTools::FormMeasurePoints</scope><name>lblAlongYZaxis</name></member>
+      <member refid="class_a_o_tools_1_1_form_measure_points_1a3cb2fa0669f41ee985aeb92d35cb148a" prot="private" virt="non-virtual"><scope>AOTools::FormMeasurePoints</scope><name>lblAlongZaxis</name></member>
+      <member refid="class_a_o_tools_1_1_form_measure_points_1a209a1af11a569e530642e9053d13a6eb" prot="private" virt="non-virtual"><scope>AOTools::FormMeasurePoints</scope><name>lblCoordinates</name></member>
+      <member refid="class_a_o_tools_1_1_form_measure_points_1ae7a6f996bdf48b1915d03fbfabfeca10" prot="private" virt="non-virtual"><scope>AOTools::FormMeasurePoints</scope><name>lblDistances</name></member>
+      <member refid="class_a_o_tools_1_1_form_measure_points_1aa9b2e320549f3348d1ac8fa1c229ad20" prot="package" virt="non-virtual"><scope>AOTools::FormMeasurePoints</scope><name>lblDistX</name></member>
+      <member refid="class_a_o_tools_1_1_form_measure_points_1a99b8003e5a39efba19cc081e05ab1b5f" prot="package" virt="non-virtual"><scope>AOTools::FormMeasurePoints</scope><name>lblDistXY</name></member>
+      <member refid="class_a_o_tools_1_1_form_measure_points_1a946f490b1306863f5935e1494ef1e74f" prot="package" virt="non-virtual"><scope>AOTools::FormMeasurePoints</scope><name>lblDistXYZ</name></member>
+      <member refid="class_a_o_tools_1_1_form_measure_points_1a53ed95ca2d0ad3b1b847ff469b7e92cc" prot="package" virt="non-virtual"><scope>AOTools::FormMeasurePoints</scope><name>lblDistXZ</name></member>
+      <member refid="class_a_o_tools_1_1_form_measure_points_1ae906dbd9b6bf8a6a2cbcaa08ec0e624a" prot="package" virt="non-virtual"><scope>AOTools::FormMeasurePoints</scope><name>lblDistY</name></member>
+      <member refid="class_a_o_tools_1_1_form_measure_points_1a0ccffb3aacb1bda696014594e9a31983" prot="package" virt="non-virtual"><scope>AOTools::FormMeasurePoints</scope><name>lblDistYZ</name></member>
+      <member refid="class_a_o_tools_1_1_form_measure_points_1a89ae18773e9858485c7466fd817b3bc2" prot="package" virt="non-virtual"><scope>AOTools::FormMeasurePoints</scope><name>lblDistZ</name></member>
+      <member refid="class_a_o_tools_1_1_form_measure_points_1ac148b29d3caf303ba2e1ed16bc2ed70f" prot="package" virt="non-virtual"><scope>AOTools::FormMeasurePoints</scope><name>lblMessage</name></member>
+      <member refid="class_a_o_tools_1_1_form_measure_points_1a5de312d846d2a1a080b72ffed263ec6a" prot="private" virt="non-virtual"><scope>AOTools::FormMeasurePoints</scope><name>lblNote</name></member>
+      <member refid="class_a_o_tools_1_1_form_measure_points_1a5d46c2d5220cb78c096ec81f220a8111" prot="package" virt="non-virtual"><scope>AOTools::FormMeasurePoints</scope><name>lblP1X</name></member>
+      <member refid="class_a_o_tools_1_1_form_measure_points_1a0ab290db1677c0bd4bbcc0dfc1437297" prot="package" virt="non-virtual"><scope>AOTools::FormMeasurePoints</scope><name>lblP1Y</name></member>
+      <member refid="class_a_o_tools_1_1_form_measure_points_1a7f44b7a51932be3c5f3c7dd47e9116ca" prot="package" virt="non-virtual"><scope>AOTools::FormMeasurePoints</scope><name>lblP1Z</name></member>
+      <member refid="class_a_o_tools_1_1_form_measure_points_1ab18e4065aa43452a40dbf11a9a4bbd33" prot="package" virt="non-virtual"><scope>AOTools::FormMeasurePoints</scope><name>lblP2X</name></member>
+      <member refid="class_a_o_tools_1_1_form_measure_points_1a1dff668b7745ca7c2690afbcab4cb939" prot="package" virt="non-virtual"><scope>AOTools::FormMeasurePoints</scope><name>lblP2Y</name></member>
+      <member refid="class_a_o_tools_1_1_form_measure_points_1ad18c172b2e1a162b23830c6c0163706c" prot="package" virt="non-virtual"><scope>AOTools::FormMeasurePoints</scope><name>lblP2Z</name></member>
+      <member refid="class_a_o_tools_1_1_form_measure_points_1a19d9b2f4fe3fe8ce459d8610d4dd4e14" prot="private" virt="non-virtual"><scope>AOTools::FormMeasurePoints</scope><name>lblPoint1</name></member>
+      <member refid="class_a_o_tools_1_1_form_measure_points_1a0a2f1346f8fb5869111d68f2b18431d8" prot="private" virt="non-virtual"><scope>AOTools::FormMeasurePoints</scope><name>lblPoint2</name></member>
+      <member refid="class_a_o_tools_1_1_form_measure_points_1adb64bc1878ee03abf565d5d5edaa3b8a" prot="private" virt="non-virtual"><scope>AOTools::FormMeasurePoints</scope><name>lblWorkPlane</name></member>
+      <member refid="class_a_o_tools_1_1_form_measure_points_1abe792b254dbd9adaa09c3de4bac87405" prot="package" virt="non-virtual"><scope>AOTools::FormMeasurePoints</scope><name>lblWpNormal</name></member>
+      <member refid="class_a_o_tools_1_1_form_measure_points_1af6e707d85fe6edb4e3cbb10fecd07975" prot="package" virt="non-virtual"><scope>AOTools::FormMeasurePoints</scope><name>lblWpNormalX</name></member>
+      <member refid="class_a_o_tools_1_1_form_measure_points_1ab09c06cf1e2295c6008fa12545ed2140" prot="package" virt="non-virtual"><scope>AOTools::FormMeasurePoints</scope><name>lblWpNormalY</name></member>
+      <member refid="class_a_o_tools_1_1_form_measure_points_1aeb5d064b0fbfe15668e94daaea7a8792" prot="package" virt="non-virtual"><scope>AOTools::FormMeasurePoints</scope><name>lblWpNormalZ</name></member>
+      <member refid="class_a_o_tools_1_1_form_measure_points_1a6dcf3c52cf6bf3c55f44acfd7d3159cb" prot="package" virt="non-virtual"><scope>AOTools::FormMeasurePoints</scope><name>lblWpOrigin</name></member>
+      <member refid="class_a_o_tools_1_1_form_measure_points_1adbd862c81e3158ce49699f076d790c71" prot="package" virt="non-virtual"><scope>AOTools::FormMeasurePoints</scope><name>lblWpOriginX</name></member>
+      <member refid="class_a_o_tools_1_1_form_measure_points_1ae22d7272d5061ca19f5f77ab546400ba" prot="package" virt="non-virtual"><scope>AOTools::FormMeasurePoints</scope><name>lblWpOriginY</name></member>
+      <member refid="class_a_o_tools_1_1_form_measure_points_1af75a4ab9d4b846d0e1198358433d97d1" prot="package" virt="non-virtual"><scope>AOTools::FormMeasurePoints</scope><name>lblWpOriginZ</name></member>
+      <member refid="class_a_o_tools_1_1_form_measure_points_1a56d0dc4fb4cd101287ea804e75ba8a1c" prot="private" virt="non-virtual"><scope>AOTools::FormMeasurePoints</scope><name>lblX1</name></member>
+      <member refid="class_a_o_tools_1_1_form_measure_points_1a58ed7ef199d15575a7921aa1a5954686" prot="private" virt="non-virtual"><scope>AOTools::FormMeasurePoints</scope><name>lblX2</name></member>
+      <member refid="class_a_o_tools_1_1_form_measure_points_1a13c652e1cc632dd91031a153362a7175" prot="private" virt="non-virtual"><scope>AOTools::FormMeasurePoints</scope><name>lblY1</name></member>
+      <member refid="class_a_o_tools_1_1_form_measure_points_1a95f39112c18f0b7be029a8998db3cc42" prot="private" virt="non-virtual"><scope>AOTools::FormMeasurePoints</scope><name>lblY2</name></member>
+      <member refid="class_a_o_tools_1_1_form_measure_points_1a739d2c181b826ec2d1f8229ed3752135" prot="private" virt="non-virtual"><scope>AOTools::FormMeasurePoints</scope><name>lblZ1</name></member>
+      <member refid="class_a_o_tools_1_1_form_measure_points_1a67104eb862f01563903ed3ff01ef4be2" prot="private" virt="non-virtual"><scope>AOTools::FormMeasurePoints</scope><name>lblZ2</name></member>
+      <member refid="class_a_o_tools_1_1_form_measure_points_1adff09df97b7ee62e0863d79174fff81d" prot="private" virt="non-virtual"><scope>AOTools::FormMeasurePoints</scope><name>LoadSettings</name></member>
+      <member refid="class_a_o_tools_1_1_form_measure_points_1a4fec526d1a791818081c4fa554f84136" prot="package" virt="non-virtual"><scope>AOTools::FormMeasurePoints</scope><name>ShowWorkplane</name></member>
+      <member refid="class_a_o_tools_1_1_form_measure_points_1acc5b23c9b30118d75334c91376443cc2" prot="private" virt="non-virtual"><scope>AOTools::FormMeasurePoints</scope><name>showWorkplane</name></member>
+      <member refid="class_a_o_tools_1_1_form_measure_points_1aacc399f30f71a725026136d91405577f" prot="package" virt="non-virtual"><scope>AOTools::FormMeasurePoints</scope><name>UpdatePoints</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

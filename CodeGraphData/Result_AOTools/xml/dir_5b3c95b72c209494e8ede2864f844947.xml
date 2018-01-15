@@ -1,0 +1,24 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.6">
+  <compounddef id="dir_5b3c95b72c209494e8ede2864f844947" kind="dir">
+    <compoundname>B:/Programming/VisualStudioProjects/RevitProjects/AOTools/AOTools</compoundname>
+    <innerdir refid="dir_f70de2d8787485011da7576ff921b604">B:/Programming/VisualStudioProjects/RevitProjects/AOTools/AOTools/Properties</innerdir>
+    <innerdir refid="dir_c428e3849bc8a62b282052206c057b9a">B:/Programming/VisualStudioProjects/RevitProjects/AOTools/AOTools/Settings</innerdir>
+    <innerfile refid="_addin_classes_8cs">AddinClasses.cs</innerfile>
+    <innerfile refid="_app_ribbon_8cs">AppRibbon.cs</innerfile>
+    <innerfile refid="_dx_measure_8cs">DxMeasure.cs</innerfile>
+    <innerfile refid="_extensible_storage_mgr_8cs">ExtensibleStorageMgr.cs</innerfile>
+    <innerfile refid="_form_measure_points_8cs">FormMeasurePoints.cs</innerfile>
+    <innerfile refid="_form_measure_points_8_designer_8cs">FormMeasurePoints.Designer.cs</innerfile>
+    <innerfile refid="_picked_box2_8cs">PickedBox2.cs</innerfile>
+    <innerfile refid="_styles_units_command_8cs">StylesUnitsCommand.cs</innerfile>
+    <innerfile refid="_toggle_annotation_visibility_8cs">ToggleAnnotationVisibility.cs</innerfile>
+    <innerfile refid="_toggle_ref_plane_8cs">ToggleRefPlane.cs</innerfile>
+    <innerfile refid="_util_8cs">Util.cs</innerfile>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <location file="B:/Programming/VisualStudioProjects/RevitProjects/AOTools/AOTools/"/>
+  </compounddef>
+</doxygen>

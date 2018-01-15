@@ -1,0 +1,30 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.6">
+  <compounddef id="namespace_utility_library" kind="namespace">
+    <compoundname>UtilityLibrary</compoundname>
+    <innerclass refid="class_utility_library_1_1_cs_utilities" prot="public">UtilityLibrary::CsUtilities</innerclass>
+    <innerclass refid="class_utility_library_1_1_message_utilities" prot="public">UtilityLibrary::MessageUtilities</innerclass>
+    <innerclass refid="class_utility_library_1_1_string_extensions" prot="public">UtilityLibrary::StringExtensions</innerclass>
+    <innerclass refid="class_utility_library_1_1_rich_text_box_extensions" prot="public">UtilityLibrary::RichTextBoxExtensions</innerclass>
+    <innerclass refid="class_utility_library_1_1version_info" prot="public">UtilityLibrary::versionInfo</innerclass>
+    <innerclass refid="class_utility_library_1_1_user_settings" prot="public">UtilityLibrary::UserSettings</innerclass>
+    <innerclass refid="class_utility_library_1_1_app_settings" prot="public">UtilityLibrary::AppSettings</innerclass>
+    <innerclass refid="class_utility_library_1_1_settings_3_01_t_01_4" prot="public">UtilityLibrary::Settings&lt; T &gt;</innerclass>
+    <innerclass refid="class_utility_library_1_1_settings_util" prot="public">UtilityLibrary::SettingsUtil</innerclass>
+    <innerclass refid="class_utility_library_1_1_settings_path_base" prot="public">UtilityLibrary::SettingsPathBase</innerclass>
+    <innerclass refid="class_utility_library_1_1_settings_path_app_default" prot="public">UtilityLibrary::SettingsPathAppDefault</innerclass>
+    <innerclass refid="class_utility_library_1_1_settings_path_user_default" prot="public">UtilityLibrary::SettingsPathUserDefault</innerclass>
+    <innerclass refid="class_utility_library_1_1_settings_file_base" prot="public">UtilityLibrary::SettingsFileBase</innerclass>
+    <innerclass refid="class_utility_library_1_1_version_info" prot="public">UtilityLibrary::VersionInfo</innerclass>
+    <innerclass refid="class_utility_library_1_1_settings_user" prot="public">UtilityLibrary::SettingsUser</innerclass>
+    <innerclass refid="class_utility_library_1_1_settings_app" prot="public">UtilityLibrary::SettingsApp</innerclass>
+    <innerclass refid="class_utility_library_1_1_settings_path_file_base" prot="public">UtilityLibrary::SettingsPathFileBase</innerclass>
+    <innerclass refid="class_utility_library_1_1_settings_path_file_user_base" prot="public">UtilityLibrary::SettingsPathFileUserBase</innerclass>
+    <innerclass refid="class_utility_library_1_1_settings_path_file_app_base" prot="public">UtilityLibrary::SettingsPathFileAppBase</innerclass>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <location file="B:/Programming/VisualStudioProjects/UtilityLibrary/UtilityLibrary/CsUtilities.cs" line="8" column="1"/>
+  </compounddef>
+</doxygen>

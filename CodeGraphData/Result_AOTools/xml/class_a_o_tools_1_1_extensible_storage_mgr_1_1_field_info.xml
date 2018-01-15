@@ -1,0 +1,336 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.6">
+  <compounddef id="class_a_o_tools_1_1_extensible_storage_mgr_1_1_field_info" kind="class" prot="public">
+    <compoundname>AOTools::ExtensibleStorageMgr::FieldInfo</compoundname>
+      <sectiondef kind="property">
+      <memberdef kind="property" id="class_a_o_tools_1_1_extensible_storage_mgr_1_1_field_info_1a8d0c6a9d62306e9c396eea4fa4da53f4" prot="public" static="no" readable="no" writable="no" gettable="yes" settable="no">
+        <type><ref refid="class_a_o_tools_1_1_extensible_storage_mgr_1_1_schema_key" kindref="compound">SchemaKey</ref></type>
+        <definition>SchemaKey AOTools.ExtensibleStorageMgr.FieldInfo.Key</definition>
+        <argsstring></argsstring>
+        <name>Key</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="B:/Programming/VisualStudioProjects/RevitProjects/AOTools/AOTools/ExtensibleStorageMgr.cs" line="59" column="1" bodyfile="B:/Programming/VisualStudioProjects/RevitProjects/AOTools/AOTools/ExtensibleStorageMgr.cs" bodystart="59" bodyend="-1"/>
+        <referencedby refid="class_a_o_tools_1_1_extensible_storage_mgr_1_1_field_info_1a6997312a4b40ad79a077b81b78de4480" compoundref="_extensible_storage_mgr_8cs" startline="67" endline="76">AOTools.ExtensibleStorageMgr.FieldInfo.FieldInfo</referencedby>
+      </memberdef>
+      <memberdef kind="property" id="class_a_o_tools_1_1_extensible_storage_mgr_1_1_field_info_1a205dd456b48945033f3fa54f79e7949e" prot="public" static="no" readable="no" writable="no" gettable="yes" settable="yes">
+        <type>string</type>
+        <definition>string AOTools.ExtensibleStorageMgr.FieldInfo.Name</definition>
+        <argsstring></argsstring>
+        <name>Name</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="B:/Programming/VisualStudioProjects/RevitProjects/AOTools/AOTools/ExtensibleStorageMgr.cs" line="60" column="1" bodyfile="B:/Programming/VisualStudioProjects/RevitProjects/AOTools/AOTools/ExtensibleStorageMgr.cs" bodystart="60" bodyend="-1"/>
+        <referencedby refid="class_a_o_tools_1_1_extensible_storage_mgr_1_1_field_info_1a6997312a4b40ad79a077b81b78de4480" compoundref="_extensible_storage_mgr_8cs" startline="67" endline="76">AOTools.ExtensibleStorageMgr.FieldInfo.FieldInfo</referencedby>
+      </memberdef>
+      <memberdef kind="property" id="class_a_o_tools_1_1_extensible_storage_mgr_1_1_field_info_1a73470e0b6072dc0075e799ae2809e61b" prot="public" static="no" readable="no" writable="no" gettable="yes" settable="no">
+        <type>string</type>
+        <definition>string AOTools.ExtensibleStorageMgr.FieldInfo.Desc</definition>
+        <argsstring></argsstring>
+        <name>Desc</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="B:/Programming/VisualStudioProjects/RevitProjects/AOTools/AOTools/ExtensibleStorageMgr.cs" line="61" column="1" bodyfile="B:/Programming/VisualStudioProjects/RevitProjects/AOTools/AOTools/ExtensibleStorageMgr.cs" bodystart="61" bodyend="-1"/>
+        <referencedby refid="class_a_o_tools_1_1_extensible_storage_mgr_1_1_field_info_1a6997312a4b40ad79a077b81b78de4480" compoundref="_extensible_storage_mgr_8cs" startline="67" endline="76">AOTools.ExtensibleStorageMgr.FieldInfo.FieldInfo</referencedby>
+      </memberdef>
+      <memberdef kind="property" id="class_a_o_tools_1_1_extensible_storage_mgr_1_1_field_info_1ab966e19ff1bf9c0c7a5e13f8c61ace0c" prot="public" static="no" readable="no" writable="no" gettable="yes" settable="no">
+        <type>UnitType</type>
+        <definition>UnitType AOTools.ExtensibleStorageMgr.FieldInfo.UnitType</definition>
+        <argsstring></argsstring>
+        <name>UnitType</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="B:/Programming/VisualStudioProjects/RevitProjects/AOTools/AOTools/ExtensibleStorageMgr.cs" line="62" column="1" bodyfile="B:/Programming/VisualStudioProjects/RevitProjects/AOTools/AOTools/ExtensibleStorageMgr.cs" bodystart="62" bodyend="-1"/>
+        <referencedby refid="class_a_o_tools_1_1_extensible_storage_mgr_1_1_field_info_1a6997312a4b40ad79a077b81b78de4480" compoundref="_extensible_storage_mgr_8cs" startline="67" endline="76">AOTools.ExtensibleStorageMgr.FieldInfo.FieldInfo</referencedby>
+        <referencedby refid="class_a_o_tools_1_1_extensible_storage_mgr_1abf4fb24ea61915c984ddb208463d2c1d" compoundref="_extensible_storage_mgr_8cs" startline="488" endline="499">AOTools.ExtensibleStorageMgr.MakeField</referencedby>
+      </memberdef>
+      <memberdef kind="property" id="class_a_o_tools_1_1_extensible_storage_mgr_1_1_field_info_1abc5ab9c11a0f4d3fc065a80885378be6" prot="public" static="no" readable="no" writable="no" gettable="yes" settable="no">
+        <type>string</type>
+        <definition>string AOTools.ExtensibleStorageMgr.FieldInfo.Guid</definition>
+        <argsstring></argsstring>
+        <name>Guid</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="B:/Programming/VisualStudioProjects/RevitProjects/AOTools/AOTools/ExtensibleStorageMgr.cs" line="63" column="1" bodyfile="B:/Programming/VisualStudioProjects/RevitProjects/AOTools/AOTools/ExtensibleStorageMgr.cs" bodystart="63" bodyend="-1"/>
+        <referencedby refid="class_a_o_tools_1_1_extensible_storage_mgr_1_1_field_info_1a6997312a4b40ad79a077b81b78de4480" compoundref="_extensible_storage_mgr_8cs" startline="67" endline="76">AOTools.ExtensibleStorageMgr.FieldInfo.FieldInfo</referencedby>
+      </memberdef>
+      </sectiondef>
+      <sectiondef kind="public-attrib">
+      <memberdef kind="variable" id="class_a_o_tools_1_1_extensible_storage_mgr_1_1_field_info_1a443fb009e209409c172e73f55d98c9d9" prot="public" static="no" mutable="no">
+        <type>dynamic</type>
+        <definition>dynamic AOTools.ExtensibleStorageMgr.FieldInfo.Value</definition>
+        <argsstring></argsstring>
+        <name>Value</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="B:/Programming/VisualStudioProjects/RevitProjects/AOTools/AOTools/ExtensibleStorageMgr.cs" line="64" column="1" bodyfile="B:/Programming/VisualStudioProjects/RevitProjects/AOTools/AOTools/ExtensibleStorageMgr.cs" bodystart="64" bodyend="-1"/>
+        <referencedby refid="class_a_o_tools_1_1_extensible_storage_mgr_1_1_field_info_1ace70da0880ba534378fd9298d3fd9907" compoundref="_extensible_storage_mgr_8cs" startline="110" endline="113">AOTools.ExtensibleStorageMgr.FieldInfo.ExtractValue</referencedby>
+        <referencedby refid="class_a_o_tools_1_1_extensible_storage_mgr_1_1_field_info_1a6997312a4b40ad79a077b81b78de4480" compoundref="_extensible_storage_mgr_8cs" startline="67" endline="76">AOTools.ExtensibleStorageMgr.FieldInfo.FieldInfo</referencedby>
+      </memberdef>
+      </sectiondef>
+      <sectiondef kind="public-func">
+      <memberdef kind="function" id="class_a_o_tools_1_1_extensible_storage_mgr_1_1_field_info_1a6997312a4b40ad79a077b81b78de4480" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type></type>
+        <definition>AOTools.ExtensibleStorageMgr.FieldInfo.FieldInfo</definition>
+        <argsstring>(SchemaKey key, string name, string desc, dynamic val, UnitType unitType=UnitType.UT_Undefined, string guid=&quot;&quot;)</argsstring>
+        <name>FieldInfo</name>
+        <param>
+          <type><ref refid="class_a_o_tools_1_1_extensible_storage_mgr_1_1_schema_key" kindref="compound">SchemaKey</ref></type>
+          <declname>key</declname>
+        </param>
+        <param>
+          <type>string</type>
+          <declname>name</declname>
+        </param>
+        <param>
+          <type>string</type>
+          <declname>desc</declname>
+        </param>
+        <param>
+          <type>dynamic</type>
+          <declname>val</declname>
+        </param>
+        <param>
+          <type><ref refid="class_a_o_tools_1_1_extensible_storage_mgr_1_1_field_info_1ab966e19ff1bf9c0c7a5e13f8c61ace0c" kindref="member">UnitType</ref></type>
+          <declname>unitType</declname>
+          <defval>UnitType.UT_Undefined</defval>
+        </param>
+        <param>
+          <type>string</type>
+          <declname>guid</declname>
+          <defval>&quot;&quot;</defval>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="B:/Programming/VisualStudioProjects/RevitProjects/AOTools/AOTools/ExtensibleStorageMgr.cs" line="67" column="1" bodyfile="B:/Programming/VisualStudioProjects/RevitProjects/AOTools/AOTools/ExtensibleStorageMgr.cs" bodystart="67" bodyend="76"/>
+        <references refid="class_a_o_tools_1_1_extensible_storage_mgr_1_1_field_info_1a73470e0b6072dc0075e799ae2809e61b" compoundref="_extensible_storage_mgr_8cs" startline="61">AOTools.ExtensibleStorageMgr.FieldInfo.Desc</references>
+        <references refid="class_a_o_tools_1_1_extensible_storage_mgr_1_1_field_info_1abc5ab9c11a0f4d3fc065a80885378be6" compoundref="_extensible_storage_mgr_8cs" startline="63">AOTools.ExtensibleStorageMgr.FieldInfo.Guid</references>
+        <references refid="class_a_o_tools_1_1_extensible_storage_mgr_1_1_field_info_1a8d0c6a9d62306e9c396eea4fa4da53f4" compoundref="_extensible_storage_mgr_8cs" startline="59">AOTools.ExtensibleStorageMgr.FieldInfo.Key</references>
+        <references refid="class_a_o_tools_1_1_extensible_storage_mgr_1_1_field_info_1a205dd456b48945033f3fa54f79e7949e" compoundref="_extensible_storage_mgr_8cs" startline="60">AOTools.ExtensibleStorageMgr.FieldInfo.Name</references>
+        <references refid="class_a_o_tools_1_1_extensible_storage_mgr_1_1_field_info_1ab966e19ff1bf9c0c7a5e13f8c61ace0c" compoundref="_extensible_storage_mgr_8cs" startline="62">AOTools.ExtensibleStorageMgr.FieldInfo.UnitType</references>
+        <references refid="class_a_o_tools_1_1_extensible_storage_mgr_1_1_field_info_1a443fb009e209409c172e73f55d98c9d9" compoundref="_extensible_storage_mgr_8cs" startline="64">AOTools.ExtensibleStorageMgr.FieldInfo.Value</references>
+      </memberdef>
+      <memberdef kind="function" id="class_a_o_tools_1_1_extensible_storage_mgr_1_1_field_info_1a90858c62017d4785104eabbe2f4daa6b" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type></type>
+        <definition>AOTools.ExtensibleStorageMgr.FieldInfo.FieldInfo</definition>
+        <argsstring>(FieldInfo fi)</argsstring>
+        <name>FieldInfo</name>
+        <param>
+          <type><ref refid="class_a_o_tools_1_1_extensible_storage_mgr_1_1_field_info" kindref="compound">FieldInfo</ref></type>
+          <declname>fi</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="B:/Programming/VisualStudioProjects/RevitProjects/AOTools/AOTools/ExtensibleStorageMgr.cs" line="78" column="1" bodyfile="B:/Programming/VisualStudioProjects/RevitProjects/AOTools/AOTools/ExtensibleStorageMgr.cs" bodystart="78" bodyend="86"/>
+        <references refid="class_a_o_tools_1_1_extensible_storage_mgr_1_1_field_info_1a73470e0b6072dc0075e799ae2809e61b" compoundref="_extensible_storage_mgr_8cs" startline="61">AOTools.ExtensibleStorageMgr.FieldInfo.Desc</references>
+        <references refid="class_a_o_tools_1_1_extensible_storage_mgr_1_1_field_info_1abc5ab9c11a0f4d3fc065a80885378be6" compoundref="_extensible_storage_mgr_8cs" startline="63">AOTools.ExtensibleStorageMgr.FieldInfo.Guid</references>
+        <references refid="class_a_o_tools_1_1_extensible_storage_mgr_1_1_field_info_1a8d0c6a9d62306e9c396eea4fa4da53f4" compoundref="_extensible_storage_mgr_8cs" startline="59">AOTools.ExtensibleStorageMgr.FieldInfo.Key</references>
+        <references refid="class_a_o_tools_1_1_extensible_storage_mgr_1_1_field_info_1a205dd456b48945033f3fa54f79e7949e" compoundref="_extensible_storage_mgr_8cs" startline="60">AOTools.ExtensibleStorageMgr.FieldInfo.Name</references>
+        <references refid="class_a_o_tools_1_1_extensible_storage_mgr_1_1_field_info_1ab966e19ff1bf9c0c7a5e13f8c61ace0c" compoundref="_extensible_storage_mgr_8cs" startline="62">AOTools.ExtensibleStorageMgr.FieldInfo.UnitType</references>
+        <references refid="class_a_o_tools_1_1_extensible_storage_mgr_1_1_field_info_1a443fb009e209409c172e73f55d98c9d9" compoundref="_extensible_storage_mgr_8cs" startline="64">AOTools.ExtensibleStorageMgr.FieldInfo.Value</references>
+      </memberdef>
+      <memberdef kind="function" id="class_a_o_tools_1_1_extensible_storage_mgr_1_1_field_info_1ace70da0880ba534378fd9298d3fd9907" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type>dynamic</type>
+        <definition>dynamic AOTools.ExtensibleStorageMgr.FieldInfo.ExtractValue</definition>
+        <argsstring>(Entity e, Field f)</argsstring>
+        <name>ExtractValue</name>
+        <param>
+          <type>Entity</type>
+          <declname>e</declname>
+        </param>
+        <param>
+          <type>Field</type>
+          <declname>f</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="B:/Programming/VisualStudioProjects/RevitProjects/AOTools/AOTools/ExtensibleStorageMgr.cs" line="110" column="1" bodyfile="B:/Programming/VisualStudioProjects/RevitProjects/AOTools/AOTools/ExtensibleStorageMgr.cs" bodystart="110" bodyend="113"/>
+        <references refid="class_a_o_tools_1_1_extensible_storage_mgr_1_1_field_info_1a443fb009e209409c172e73f55d98c9d9" compoundref="_extensible_storage_mgr_8cs" startline="64">AOTools.ExtensibleStorageMgr.FieldInfo.Value</references>
+      </memberdef>
+      </sectiondef>
+      <sectiondef kind="private-func">
+      <memberdef kind="function" id="class_a_o_tools_1_1_extensible_storage_mgr_1_1_field_info_1adc632ab107beaccde1d3c187c4574703" prot="private" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type>Entity</type>
+        <definition>Entity AOTools.ExtensibleStorageMgr.FieldInfo.ExtractValue</definition>
+        <argsstring>(Entity key, Entity e, Field f)</argsstring>
+        <name>ExtractValue</name>
+        <param>
+          <type>Entity</type>
+          <declname>key</declname>
+        </param>
+        <param>
+          <type>Entity</type>
+          <declname>e</declname>
+        </param>
+        <param>
+          <type>Field</type>
+          <declname>f</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="B:/Programming/VisualStudioProjects/RevitProjects/AOTools/AOTools/ExtensibleStorageMgr.cs" line="115" column="1" bodyfile="B:/Programming/VisualStudioProjects/RevitProjects/AOTools/AOTools/ExtensibleStorageMgr.cs" bodystart="115" bodyend="118"/>
+      </memberdef>
+      <memberdef kind="function" id="class_a_o_tools_1_1_extensible_storage_mgr_1_1_field_info_1a14d0858f4dd75099eaa82af966e088bc" prot="private" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type>string</type>
+        <definition>string AOTools.ExtensibleStorageMgr.FieldInfo.ExtractValue</definition>
+        <argsstring>(string key, Entity e, Field f)</argsstring>
+        <name>ExtractValue</name>
+        <param>
+          <type>string</type>
+          <declname>key</declname>
+        </param>
+        <param>
+          <type>Entity</type>
+          <declname>e</declname>
+        </param>
+        <param>
+          <type>Field</type>
+          <declname>f</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="B:/Programming/VisualStudioProjects/RevitProjects/AOTools/AOTools/ExtensibleStorageMgr.cs" line="120" column="1" bodyfile="B:/Programming/VisualStudioProjects/RevitProjects/AOTools/AOTools/ExtensibleStorageMgr.cs" bodystart="120" bodyend="123"/>
+      </memberdef>
+      <memberdef kind="function" id="class_a_o_tools_1_1_extensible_storage_mgr_1_1_field_info_1a4f878e4ad9ca5c7041a293a99a6ecfd8" prot="private" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type>int</type>
+        <definition>int AOTools.ExtensibleStorageMgr.FieldInfo.ExtractValue</definition>
+        <argsstring>(int key, Entity e, Field f)</argsstring>
+        <name>ExtractValue</name>
+        <param>
+          <type>int</type>
+          <declname>key</declname>
+        </param>
+        <param>
+          <type>Entity</type>
+          <declname>e</declname>
+        </param>
+        <param>
+          <type>Field</type>
+          <declname>f</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="B:/Programming/VisualStudioProjects/RevitProjects/AOTools/AOTools/ExtensibleStorageMgr.cs" line="125" column="1" bodyfile="B:/Programming/VisualStudioProjects/RevitProjects/AOTools/AOTools/ExtensibleStorageMgr.cs" bodystart="125" bodyend="128"/>
+      </memberdef>
+      <memberdef kind="function" id="class_a_o_tools_1_1_extensible_storage_mgr_1_1_field_info_1af271f4c6fa074850310d81fc9d992423" prot="private" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type>bool</type>
+        <definition>bool AOTools.ExtensibleStorageMgr.FieldInfo.ExtractValue</definition>
+        <argsstring>(bool key, Entity e, Field f)</argsstring>
+        <name>ExtractValue</name>
+        <param>
+          <type>bool</type>
+          <declname>key</declname>
+        </param>
+        <param>
+          <type>Entity</type>
+          <declname>e</declname>
+        </param>
+        <param>
+          <type>Field</type>
+          <declname>f</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="B:/Programming/VisualStudioProjects/RevitProjects/AOTools/AOTools/ExtensibleStorageMgr.cs" line="130" column="1" bodyfile="B:/Programming/VisualStudioProjects/RevitProjects/AOTools/AOTools/ExtensibleStorageMgr.cs" bodystart="130" bodyend="133"/>
+      </memberdef>
+      <memberdef kind="function" id="class_a_o_tools_1_1_extensible_storage_mgr_1_1_field_info_1a8a70a5e961d4d0483734154f3fe288bc" prot="private" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type>double</type>
+        <definition>double AOTools.ExtensibleStorageMgr.FieldInfo.ExtractValue</definition>
+        <argsstring>(double key, Entity e, Field f)</argsstring>
+        <name>ExtractValue</name>
+        <param>
+          <type>double</type>
+          <declname>key</declname>
+        </param>
+        <param>
+          <type>Entity</type>
+          <declname>e</declname>
+        </param>
+        <param>
+          <type>Field</type>
+          <declname>f</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="B:/Programming/VisualStudioProjects/RevitProjects/AOTools/AOTools/ExtensibleStorageMgr.cs" line="135" column="1" bodyfile="B:/Programming/VisualStudioProjects/RevitProjects/AOTools/AOTools/ExtensibleStorageMgr.cs" bodystart="135" bodyend="138"/>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <location file="B:/Programming/VisualStudioProjects/RevitProjects/AOTools/AOTools/ExtensibleStorageMgr.cs" line="58" column="1" bodyfile="B:/Programming/VisualStudioProjects/RevitProjects/AOTools/AOTools/ExtensibleStorageMgr.cs" bodystart="57" bodyend="139"/>
+    <listofallmembers>
+      <member refid="class_a_o_tools_1_1_extensible_storage_mgr_1_1_field_info_1a73470e0b6072dc0075e799ae2809e61b" prot="public" virt="non-virtual"><scope>AOTools::ExtensibleStorageMgr::FieldInfo</scope><name>Desc</name></member>
+      <member refid="class_a_o_tools_1_1_extensible_storage_mgr_1_1_field_info_1ace70da0880ba534378fd9298d3fd9907" prot="public" virt="non-virtual"><scope>AOTools::ExtensibleStorageMgr::FieldInfo</scope><name>ExtractValue</name></member>
+      <member refid="class_a_o_tools_1_1_extensible_storage_mgr_1_1_field_info_1adc632ab107beaccde1d3c187c4574703" prot="private" virt="non-virtual"><scope>AOTools::ExtensibleStorageMgr::FieldInfo</scope><name>ExtractValue</name></member>
+      <member refid="class_a_o_tools_1_1_extensible_storage_mgr_1_1_field_info_1a14d0858f4dd75099eaa82af966e088bc" prot="private" virt="non-virtual"><scope>AOTools::ExtensibleStorageMgr::FieldInfo</scope><name>ExtractValue</name></member>
+      <member refid="class_a_o_tools_1_1_extensible_storage_mgr_1_1_field_info_1a4f878e4ad9ca5c7041a293a99a6ecfd8" prot="private" virt="non-virtual"><scope>AOTools::ExtensibleStorageMgr::FieldInfo</scope><name>ExtractValue</name></member>
+      <member refid="class_a_o_tools_1_1_extensible_storage_mgr_1_1_field_info_1af271f4c6fa074850310d81fc9d992423" prot="private" virt="non-virtual"><scope>AOTools::ExtensibleStorageMgr::FieldInfo</scope><name>ExtractValue</name></member>
+      <member refid="class_a_o_tools_1_1_extensible_storage_mgr_1_1_field_info_1a8a70a5e961d4d0483734154f3fe288bc" prot="private" virt="non-virtual"><scope>AOTools::ExtensibleStorageMgr::FieldInfo</scope><name>ExtractValue</name></member>
+      <member refid="class_a_o_tools_1_1_extensible_storage_mgr_1_1_field_info_1a6997312a4b40ad79a077b81b78de4480" prot="public" virt="non-virtual"><scope>AOTools::ExtensibleStorageMgr::FieldInfo</scope><name>FieldInfo</name></member>
+      <member refid="class_a_o_tools_1_1_extensible_storage_mgr_1_1_field_info_1a90858c62017d4785104eabbe2f4daa6b" prot="public" virt="non-virtual"><scope>AOTools::ExtensibleStorageMgr::FieldInfo</scope><name>FieldInfo</name></member>
+      <member refid="class_a_o_tools_1_1_extensible_storage_mgr_1_1_field_info_1abc5ab9c11a0f4d3fc065a80885378be6" prot="public" virt="non-virtual"><scope>AOTools::ExtensibleStorageMgr::FieldInfo</scope><name>Guid</name></member>
+      <member refid="class_a_o_tools_1_1_extensible_storage_mgr_1_1_field_info_1a8d0c6a9d62306e9c396eea4fa4da53f4" prot="public" virt="non-virtual"><scope>AOTools::ExtensibleStorageMgr::FieldInfo</scope><name>Key</name></member>
+      <member refid="class_a_o_tools_1_1_extensible_storage_mgr_1_1_field_info_1a205dd456b48945033f3fa54f79e7949e" prot="public" virt="non-virtual"><scope>AOTools::ExtensibleStorageMgr::FieldInfo</scope><name>Name</name></member>
+      <member refid="class_a_o_tools_1_1_extensible_storage_mgr_1_1_field_info_1ab966e19ff1bf9c0c7a5e13f8c61ace0c" prot="public" virt="non-virtual"><scope>AOTools::ExtensibleStorageMgr::FieldInfo</scope><name>UnitType</name></member>
+      <member refid="class_a_o_tools_1_1_extensible_storage_mgr_1_1_field_info_1a443fb009e209409c172e73f55d98c9d9" prot="public" virt="non-virtual"><scope>AOTools::ExtensibleStorageMgr::FieldInfo</scope><name>Value</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

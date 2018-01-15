@@ -1,0 +1,13 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.6">
+  <compounddef id="dir_71d2d9d8cd806f46b142fe6f5554ade0" kind="dir">
+    <compoundname>B:/Programming/VisualStudioProjects</compoundname>
+    <innerdir refid="dir_51a8a4ef616f227ce022acd0b8919488">B:/Programming/VisualStudioProjects/RevitProjects</innerdir>
+    <innerdir refid="dir_ee32d397228d589a8944ee805dd4e64c">B:/Programming/VisualStudioProjects/UtilityLibrary</innerdir>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <location file="B:/Programming/VisualStudioProjects/"/>
+  </compounddef>
+</doxygen>

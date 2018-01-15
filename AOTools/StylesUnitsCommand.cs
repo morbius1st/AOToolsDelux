@@ -10,8 +10,8 @@ using static AOTools.Util;
 using static AOTools.AppRibbon;
 
 using static AOTools.ExtensibleStorageMgr;
-using static AOTools.ExtensibleStorageMgr.SBasicKey;
-using static AOTools.ExtensibleStorageMgr.SUnitKey;
+using static AOTools.SBasicKey;
+using static AOTools.SUnitKey;
 
 using UtilityLibrary;
 using static UtilityLibrary.MessageUtilities;
@@ -32,28 +32,30 @@ namespace AOTools
 		{
 //			DeleteCurrentSchema();
 //			return Result.Succeeded;
-			ReadRevitBasicSettings();
 
+			ReadRevitSettings();
+
+			logMsg("");
 			logMsgDbLn2("settings", "before");
 			ListFieldInfo();
-			logMsg(nl);
-			logMsg(nl);
+			logMsg("");
 
 
-			SchemaFields[VERSION_BASIC].Value = "101.00";
+			SchemaFields[VERSION_BASIC].Value = "102.00";
+			
+			SchemaFields[AUTO_RESTORE].Value = false;
 
-			UnitSchemaFields[0][VERSION_UNIT].Value = "sub version 110";
-			UnitSchemaFields[1][VERSION_UNIT].Value = "sub version 111";
-			UnitSchemaFields[2][VERSION_UNIT].Value = "sub version 112";
+			UnitSchemaFields[0][VERSION_UNIT].Value = "sub version 130";
+			UnitSchemaFields[1][VERSION_UNIT].Value = "sub version 131";
+			UnitSchemaFields[2][VERSION_UNIT].Value = "sub version 132";
 
-			SaveRevitBasicSettings();
+			SaveRevitSettings();
 
 			logMsgDbLn2("settings", "after 1");
 			ListFieldInfo();
-			logMsg(nl);
-			logMsg(nl);
+			logMsg("");
 
-			ReadRevitBasicSettings();
+			ReadRevitSettings();
 
 			logMsgDbLn2("settings", "after 2");
 			ListFieldInfo();
@@ -64,7 +66,7 @@ namespace AOTools
 
 			//			ExtensibleStorageMgr.SaveRevitBasicSettings("the lazy brown dog... etc. for| " + Environment.UserName.ToLower());
 			//			TaskDialog.Show(APP_NAME, "read message|\n" + 
-			//				ExtensibleStorageMgr.ReadRevitBasicSettings());
+			//				ExtensibleStorageMgr.ReadRevitSettings());
 
 
 

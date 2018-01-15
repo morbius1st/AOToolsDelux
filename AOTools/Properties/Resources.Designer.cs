@@ -70,7 +70,7 @@ namespace AOTools.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Unit\nStyles.
+        ///   Looks up a localized string similar to Unit Styles.
         /// </summary>
         internal static string UnitStyleButtonText {
             get {

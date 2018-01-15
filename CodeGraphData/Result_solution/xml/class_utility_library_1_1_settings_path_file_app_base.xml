@@ -1,0 +1,90 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.6">
+  <compounddef id="class_utility_library_1_1_settings_path_file_app_base" kind="class" prot="public">
+    <compoundname>UtilityLibrary::SettingsPathFileAppBase</compoundname>
+    <basecompoundref refid="class_utility_library_1_1_settings_path_file_base" prot="public" virt="non-virtual">UtilityLibrary.SettingsPathFileBase</basecompoundref>
+      <sectiondef kind="property">
+      <memberdef kind="property" id="class_utility_library_1_1_settings_path_file_app_base_1a48eba46f5c8f50ce06f7181636ab640b" prot="public" static="no" readable="no" writable="no" gettable="yes" settable="no">
+        <type>override string</type>
+        <definition>override string UtilityLibrary.SettingsPathFileAppBase.SETTINGFILEVERSION</definition>
+        <argsstring></argsstring>
+        <name>SETTINGFILEVERSION</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="B:/Programming/VisualStudioProjects/UtilityLibrary/UtilityLibrary/Settings.cs" line="285" column="1" bodyfile="B:/Programming/VisualStudioProjects/UtilityLibrary/UtilityLibrary/Settings.cs" bodystart="285" bodyend="-1"/>
+      </memberdef>
+      </sectiondef>
+      <sectiondef kind="public-func">
+      <memberdef kind="function" id="class_utility_library_1_1_settings_path_file_app_base_1a2b51466a7d785bb8c302dd16a4cdafea" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type></type>
+        <definition>UtilityLibrary.SettingsPathFileAppBase.SettingsPathFileAppBase</definition>
+        <argsstring>()</argsstring>
+        <name>SettingsPathFileAppBase</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="B:/Programming/VisualStudioProjects/UtilityLibrary/UtilityLibrary/Settings.cs" line="287" column="1" bodyfile="B:/Programming/VisualStudioProjects/UtilityLibrary/UtilityLibrary/Settings.cs" bodystart="287" bodyend="292"/>
+        <references refid="class_utility_library_1_1_settings_util_1aeb0f1dfa18a048773a88ea33b44b9b72" compoundref="_settings_01-_01_copy_8cs" startline="149">UtilityLibrary.SettingsUtil.AssemblyDirectory</references>
+        <references refid="class_utility_library_1_1_settings_path_file_base_1a71f96a3382d36fed7996f2bca080048a" compoundref="_utility_library_2_utility_library_2_settings_8cs" startline="216">UtilityLibrary.SettingsPathFileBase.FileName</references>
+        <references refid="class_utility_library_1_1_settings_path_file_base_1a4666be801ac2dd491f96fea2ca00769b" compoundref="_utility_library_2_utility_library_2_settings_8cs" startline="217">UtilityLibrary.SettingsPathFileBase.RootPath</references>
+        <references refid="class_utility_library_1_1_settings_path_file_base_1a3bcb74344b81698ad7bccbca81a52387" compoundref="_utility_library_2_utility_library_2_settings_8cs" startline="220">UtilityLibrary.SettingsPathFileBase.SETTINGFILEBASE</references>
+        <references refid="class_utility_library_1_1_settings_path_file_base_1a8a9d9a9b3ce2f036320591ca6eb02737" compoundref="_utility_library_2_utility_library_2_settings_8cs" startline="218">UtilityLibrary.SettingsPathFileBase.SubFolders</references>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <inheritancegraph>
+      <node id="82">
+        <label>UtilityLibrary.SettingsPathFileAppBase</label>
+        <link refid="class_utility_library_1_1_settings_path_file_app_base"/>
+        <childnode refid="83" relation="public-inheritance">
+        </childnode>
+      </node>
+      <node id="83">
+        <label>SettingsPathFileBase</label>
+        <link refid="class_utility_library_1_1_settings_path_file_base"/>
+      </node>
+    </inheritancegraph>
+    <collaborationgraph>
+      <node id="84">
+        <label>UtilityLibrary.SettingsPathFileAppBase</label>
+        <link refid="class_utility_library_1_1_settings_path_file_app_base"/>
+        <childnode refid="85" relation="public-inheritance">
+        </childnode>
+      </node>
+      <node id="85">
+        <label>SettingsPathFileBase</label>
+        <link refid="class_utility_library_1_1_settings_path_file_base"/>
+        <childnode refid="86" relation="usage">
+          <edgelabel>VersionInfo</edgelabel>
+        </childnode>
+      </node>
+      <node id="86">
+        <label>UtilityLibrary.VersionInfo</label>
+        <link refid="class_utility_library_1_1_version_info"/>
+      </node>
+    </collaborationgraph>
+    <location file="B:/Programming/VisualStudioProjects/UtilityLibrary/UtilityLibrary/Settings.cs" line="284" column="1" bodyfile="B:/Programming/VisualStudioProjects/UtilityLibrary/UtilityLibrary/Settings.cs" bodystart="283" bodyend="293"/>
+    <listofallmembers>
+      <member refid="class_utility_library_1_1_settings_path_file_base_1ac36080b136214dfea97665899f0cafa5" prot="public" virt="virtual"><scope>UtilityLibrary::SettingsPathFileAppBase</scope><name>CreateFolders</name></member>
+      <member refid="class_utility_library_1_1_settings_path_file_base_1a71f96a3382d36fed7996f2bca080048a" prot="protected" virt="non-virtual"><scope>UtilityLibrary::SettingsPathFileAppBase</scope><name>FileName</name></member>
+      <member refid="class_utility_library_1_1_settings_path_file_base_1a4666be801ac2dd491f96fea2ca00769b" prot="protected" virt="non-virtual"><scope>UtilityLibrary::SettingsPathFileAppBase</scope><name>RootPath</name></member>
+      <member refid="class_utility_library_1_1_settings_path_file_base_1a3bcb74344b81698ad7bccbca81a52387" prot="public" virt="non-virtual"><scope>UtilityLibrary::SettingsPathFileAppBase</scope><name>SETTINGFILEBASE</name></member>
+      <member refid="class_utility_library_1_1_settings_path_file_app_base_1a48eba46f5c8f50ce06f7181636ab640b" prot="public" virt="non-virtual"><scope>UtilityLibrary::SettingsPathFileAppBase</scope><name>SETTINGFILEVERSION</name></member>
+      <member refid="class_utility_library_1_1_settings_path_file_base_1afb1c1dad1198b5b580f266fa3ffbb312" prot="public" virt="non-virtual"><scope>UtilityLibrary::SettingsPathFileAppBase</scope><name>SettingsPath</name></member>
+      <member refid="class_utility_library_1_1_settings_path_file_base_1a496ae5ac879e40d8daa7315e0fd72408" prot="public" virt="non-virtual"><scope>UtilityLibrary::SettingsPathFileAppBase</scope><name>SettingsPathAndFile</name></member>
+      <member refid="class_utility_library_1_1_settings_path_file_app_base_1a2b51466a7d785bb8c302dd16a4cdafea" prot="public" virt="non-virtual"><scope>UtilityLibrary::SettingsPathFileAppBase</scope><name>SettingsPathFileAppBase</name></member>
+      <member refid="class_utility_library_1_1_settings_path_file_base_1a8a9d9a9b3ce2f036320591ca6eb02737" prot="protected" virt="non-virtual"><scope>UtilityLibrary::SettingsPathFileAppBase</scope><name>SubFolders</name></member>
+      <member refid="class_utility_library_1_1_settings_path_file_base_1a59feb54756182fe7b57203bb08c41e0e" prot="public" virt="non-virtual"><scope>UtilityLibrary::SettingsPathFileAppBase</scope><name>VersionInfo</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

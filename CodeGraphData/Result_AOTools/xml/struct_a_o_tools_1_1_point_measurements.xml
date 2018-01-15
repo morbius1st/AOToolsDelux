@@ -1,0 +1,180 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.6">
+  <compounddef id="struct_a_o_tools_1_1_point_measurements" kind="struct" prot="package">
+    <compoundname>AOTools::PointMeasurements</compoundname>
+      <sectiondef kind="property">
+      <memberdef kind="property" id="struct_a_o_tools_1_1_point_measurements_1aaceb5a575cf0715d0c4a96d75f894062" prot="package" static="no" readable="no" writable="no" gettable="yes" settable="no">
+        <type>XYZ</type>
+        <definition>XYZ AOTools.PointMeasurements.P1</definition>
+        <argsstring></argsstring>
+        <name>P1</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="B:/Programming/VisualStudioProjects/RevitProjects/AOTools/AOTools/Util.cs" line="167" column="1" bodyfile="B:/Programming/VisualStudioProjects/RevitProjects/AOTools/AOTools/Util.cs" bodystart="167" bodyend="-1"/>
+        <referencedby refid="struct_a_o_tools_1_1_point_measurements_1a7ba9dc6452fccc30e2ecae25ca316e34" compoundref="_util_8cs" startline="178" endline="191">AOTools.PointMeasurements.PointMeasurements</referencedby>
+        <referencedby refid="class_a_o_tools_1_1_form_measure_points_1aacc399f30f71a725026136d91405577f" compoundref="_form_measure_points_8cs" startline="71" endline="116">AOTools.FormMeasurePoints.UpdatePoints</referencedby>
+      </memberdef>
+      <memberdef kind="property" id="struct_a_o_tools_1_1_point_measurements_1a0cb5bab66c1b06c58b09c993dcbfcc87" prot="package" static="no" readable="no" writable="no" gettable="yes" settable="no">
+        <type>XYZ</type>
+        <definition>XYZ AOTools.PointMeasurements.P2</definition>
+        <argsstring></argsstring>
+        <name>P2</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="B:/Programming/VisualStudioProjects/RevitProjects/AOTools/AOTools/Util.cs" line="168" column="1" bodyfile="B:/Programming/VisualStudioProjects/RevitProjects/AOTools/AOTools/Util.cs" bodystart="168" bodyend="-1"/>
+        <referencedby refid="struct_a_o_tools_1_1_point_measurements_1a7ba9dc6452fccc30e2ecae25ca316e34" compoundref="_util_8cs" startline="178" endline="191">AOTools.PointMeasurements.PointMeasurements</referencedby>
+        <referencedby refid="class_a_o_tools_1_1_form_measure_points_1aacc399f30f71a725026136d91405577f" compoundref="_form_measure_points_8cs" startline="71" endline="116">AOTools.FormMeasurePoints.UpdatePoints</referencedby>
+      </memberdef>
+      <memberdef kind="property" id="struct_a_o_tools_1_1_point_measurements_1a635b46dfdfbb87446795bb8b13106dd7" prot="package" static="no" readable="no" writable="no" gettable="yes" settable="no">
+        <type>XYZ</type>
+        <definition>XYZ AOTools.PointMeasurements.delta</definition>
+        <argsstring></argsstring>
+        <name>delta</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="B:/Programming/VisualStudioProjects/RevitProjects/AOTools/AOTools/Util.cs" line="170" column="1" bodyfile="B:/Programming/VisualStudioProjects/RevitProjects/AOTools/AOTools/Util.cs" bodystart="170" bodyend="-1"/>
+        <referencedby refid="struct_a_o_tools_1_1_point_measurements_1a7ba9dc6452fccc30e2ecae25ca316e34" compoundref="_util_8cs" startline="178" endline="191">AOTools.PointMeasurements.PointMeasurements</referencedby>
+        <referencedby refid="class_a_o_tools_1_1_form_measure_points_1aacc399f30f71a725026136d91405577f" compoundref="_form_measure_points_8cs" startline="71" endline="116">AOTools.FormMeasurePoints.UpdatePoints</referencedby>
+      </memberdef>
+      <memberdef kind="property" id="struct_a_o_tools_1_1_point_measurements_1aa12ef5647e4093f378d80eb5da5b37bd" prot="package" static="no" readable="no" writable="no" gettable="yes" settable="no">
+        <type>double</type>
+        <definition>double AOTools.PointMeasurements.distanceXY</definition>
+        <argsstring></argsstring>
+        <name>distanceXY</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="B:/Programming/VisualStudioProjects/RevitProjects/AOTools/AOTools/Util.cs" line="173" column="1" bodyfile="B:/Programming/VisualStudioProjects/RevitProjects/AOTools/AOTools/Util.cs" bodystart="173" bodyend="-1"/>
+        <referencedby refid="struct_a_o_tools_1_1_point_measurements_1a7ba9dc6452fccc30e2ecae25ca316e34" compoundref="_util_8cs" startline="178" endline="191">AOTools.PointMeasurements.PointMeasurements</referencedby>
+        <referencedby refid="class_a_o_tools_1_1_form_measure_points_1aacc399f30f71a725026136d91405577f" compoundref="_form_measure_points_8cs" startline="71" endline="116">AOTools.FormMeasurePoints.UpdatePoints</referencedby>
+      </memberdef>
+      <memberdef kind="property" id="struct_a_o_tools_1_1_point_measurements_1a3c0b1889f1ff83f1a1a8ea9f87ebae2a" prot="package" static="no" readable="no" writable="no" gettable="yes" settable="no">
+        <type>double</type>
+        <definition>double AOTools.PointMeasurements.distanceXZ</definition>
+        <argsstring></argsstring>
+        <name>distanceXZ</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="B:/Programming/VisualStudioProjects/RevitProjects/AOTools/AOTools/Util.cs" line="174" column="1" bodyfile="B:/Programming/VisualStudioProjects/RevitProjects/AOTools/AOTools/Util.cs" bodystart="174" bodyend="-1"/>
+        <referencedby refid="struct_a_o_tools_1_1_point_measurements_1a7ba9dc6452fccc30e2ecae25ca316e34" compoundref="_util_8cs" startline="178" endline="191">AOTools.PointMeasurements.PointMeasurements</referencedby>
+        <referencedby refid="class_a_o_tools_1_1_form_measure_points_1aacc399f30f71a725026136d91405577f" compoundref="_form_measure_points_8cs" startline="71" endline="116">AOTools.FormMeasurePoints.UpdatePoints</referencedby>
+      </memberdef>
+      <memberdef kind="property" id="struct_a_o_tools_1_1_point_measurements_1a402a1f14eefe16b887aa87a2fc33aaa7" prot="package" static="no" readable="no" writable="no" gettable="yes" settable="no">
+        <type>double</type>
+        <definition>double AOTools.PointMeasurements.distanceYZ</definition>
+        <argsstring></argsstring>
+        <name>distanceYZ</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="B:/Programming/VisualStudioProjects/RevitProjects/AOTools/AOTools/Util.cs" line="175" column="1" bodyfile="B:/Programming/VisualStudioProjects/RevitProjects/AOTools/AOTools/Util.cs" bodystart="175" bodyend="-1"/>
+        <referencedby refid="struct_a_o_tools_1_1_point_measurements_1a7ba9dc6452fccc30e2ecae25ca316e34" compoundref="_util_8cs" startline="178" endline="191">AOTools.PointMeasurements.PointMeasurements</referencedby>
+        <referencedby refid="class_a_o_tools_1_1_form_measure_points_1aacc399f30f71a725026136d91405577f" compoundref="_form_measure_points_8cs" startline="71" endline="116">AOTools.FormMeasurePoints.UpdatePoints</referencedby>
+      </memberdef>
+      <memberdef kind="property" id="struct_a_o_tools_1_1_point_measurements_1a3ed6fbce2ec09791e86af00478233366" prot="package" static="no" readable="no" writable="no" gettable="yes" settable="no">
+        <type>double</type>
+        <definition>double AOTools.PointMeasurements.distanceXYZ</definition>
+        <argsstring></argsstring>
+        <name>distanceXYZ</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="B:/Programming/VisualStudioProjects/RevitProjects/AOTools/AOTools/Util.cs" line="176" column="1" bodyfile="B:/Programming/VisualStudioProjects/RevitProjects/AOTools/AOTools/Util.cs" bodystart="176" bodyend="-1"/>
+        <referencedby refid="struct_a_o_tools_1_1_point_measurements_1a7ba9dc6452fccc30e2ecae25ca316e34" compoundref="_util_8cs" startline="178" endline="191">AOTools.PointMeasurements.PointMeasurements</referencedby>
+        <referencedby refid="class_a_o_tools_1_1_form_measure_points_1aacc399f30f71a725026136d91405577f" compoundref="_form_measure_points_8cs" startline="71" endline="116">AOTools.FormMeasurePoints.UpdatePoints</referencedby>
+      </memberdef>
+      </sectiondef>
+      <sectiondef kind="private-attrib">
+      <memberdef kind="variable" id="struct_a_o_tools_1_1_point_measurements_1a95a4bf99936d9a2739c55ecc7bba7fc5" prot="private" static="no" mutable="no">
+        <type>XYZ</type>
+        <definition>XYZ AOTools.PointMeasurements.sqDelta</definition>
+        <argsstring></argsstring>
+        <name>sqDelta</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="B:/Programming/VisualStudioProjects/RevitProjects/AOTools/AOTools/Util.cs" line="171" column="1" bodyfile="B:/Programming/VisualStudioProjects/RevitProjects/AOTools/AOTools/Util.cs" bodystart="171" bodyend="-1"/>
+        <referencedby refid="struct_a_o_tools_1_1_point_measurements_1a7ba9dc6452fccc30e2ecae25ca316e34" compoundref="_util_8cs" startline="178" endline="191">AOTools.PointMeasurements.PointMeasurements</referencedby>
+      </memberdef>
+      </sectiondef>
+      <sectiondef kind="package-func">
+      <memberdef kind="function" id="struct_a_o_tools_1_1_point_measurements_1a7ba9dc6452fccc30e2ecae25ca316e34" prot="package" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type></type>
+        <definition>AOTools.PointMeasurements.PointMeasurements</definition>
+        <argsstring>(XYZ p1, XYZ p2, XYZ origin)</argsstring>
+        <name>PointMeasurements</name>
+        <param>
+          <type>XYZ</type>
+          <declname>p1</declname>
+        </param>
+        <param>
+          <type>XYZ</type>
+          <declname>p2</declname>
+        </param>
+        <param>
+          <type>XYZ</type>
+          <declname>origin</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="B:/Programming/VisualStudioProjects/RevitProjects/AOTools/AOTools/Util.cs" line="178" column="1" bodyfile="B:/Programming/VisualStudioProjects/RevitProjects/AOTools/AOTools/Util.cs" bodystart="178" bodyend="191"/>
+        <references refid="struct_a_o_tools_1_1_point_measurements_1a635b46dfdfbb87446795bb8b13106dd7" compoundref="_util_8cs" startline="170">AOTools.PointMeasurements.delta</references>
+        <references refid="struct_a_o_tools_1_1_point_measurements_1aa12ef5647e4093f378d80eb5da5b37bd" compoundref="_util_8cs" startline="173">AOTools.PointMeasurements.distanceXY</references>
+        <references refid="struct_a_o_tools_1_1_point_measurements_1a3ed6fbce2ec09791e86af00478233366" compoundref="_util_8cs" startline="176">AOTools.PointMeasurements.distanceXYZ</references>
+        <references refid="struct_a_o_tools_1_1_point_measurements_1a3c0b1889f1ff83f1a1a8ea9f87ebae2a" compoundref="_util_8cs" startline="174">AOTools.PointMeasurements.distanceXZ</references>
+        <references refid="struct_a_o_tools_1_1_point_measurements_1a402a1f14eefe16b887aa87a2fc33aaa7" compoundref="_util_8cs" startline="175">AOTools.PointMeasurements.distanceYZ</references>
+        <references refid="struct_a_o_tools_1_1_point_measurements_1aaceb5a575cf0715d0c4a96d75f894062" compoundref="_util_8cs" startline="167">AOTools.PointMeasurements.P1</references>
+        <references refid="struct_a_o_tools_1_1_point_measurements_1a0cb5bab66c1b06c58b09c993dcbfcc87" compoundref="_util_8cs" startline="168">AOTools.PointMeasurements.P2</references>
+        <references refid="struct_a_o_tools_1_1_point_measurements_1a95a4bf99936d9a2739c55ecc7bba7fc5" compoundref="_util_8cs" startline="171">AOTools.PointMeasurements.sqDelta</references>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <location file="B:/Programming/VisualStudioProjects/RevitProjects/AOTools/AOTools/Util.cs" line="166" column="1" bodyfile="B:/Programming/VisualStudioProjects/RevitProjects/AOTools/AOTools/Util.cs" bodystart="165" bodyend="192"/>
+    <listofallmembers>
+      <member refid="struct_a_o_tools_1_1_point_measurements_1a635b46dfdfbb87446795bb8b13106dd7" prot="package" virt="non-virtual"><scope>AOTools::PointMeasurements</scope><name>delta</name></member>
+      <member refid="struct_a_o_tools_1_1_point_measurements_1aa12ef5647e4093f378d80eb5da5b37bd" prot="package" virt="non-virtual"><scope>AOTools::PointMeasurements</scope><name>distanceXY</name></member>
+      <member refid="struct_a_o_tools_1_1_point_measurements_1a3ed6fbce2ec09791e86af00478233366" prot="package" virt="non-virtual"><scope>AOTools::PointMeasurements</scope><name>distanceXYZ</name></member>
+      <member refid="struct_a_o_tools_1_1_point_measurements_1a3c0b1889f1ff83f1a1a8ea9f87ebae2a" prot="package" virt="non-virtual"><scope>AOTools::PointMeasurements</scope><name>distanceXZ</name></member>
+      <member refid="struct_a_o_tools_1_1_point_measurements_1a402a1f14eefe16b887aa87a2fc33aaa7" prot="package" virt="non-virtual"><scope>AOTools::PointMeasurements</scope><name>distanceYZ</name></member>
+      <member refid="struct_a_o_tools_1_1_point_measurements_1aaceb5a575cf0715d0c4a96d75f894062" prot="package" virt="non-virtual"><scope>AOTools::PointMeasurements</scope><name>P1</name></member>
+      <member refid="struct_a_o_tools_1_1_point_measurements_1a0cb5bab66c1b06c58b09c993dcbfcc87" prot="package" virt="non-virtual"><scope>AOTools::PointMeasurements</scope><name>P2</name></member>
+      <member refid="struct_a_o_tools_1_1_point_measurements_1a7ba9dc6452fccc30e2ecae25ca316e34" prot="package" virt="non-virtual"><scope>AOTools::PointMeasurements</scope><name>PointMeasurements</name></member>
+      <member refid="struct_a_o_tools_1_1_point_measurements_1a95a4bf99936d9a2739c55ecc7bba7fc5" prot="private" virt="non-virtual"><scope>AOTools::PointMeasurements</scope><name>sqDelta</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

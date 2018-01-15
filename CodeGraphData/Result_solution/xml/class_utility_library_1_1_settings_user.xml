@@ -1,0 +1,117 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.6">
+  <compounddef id="class_utility_library_1_1_settings_user" kind="class" prot="public">
+    <compoundname>UtilityLibrary::SettingsUser</compoundname>
+      <sectiondef kind="property">
+      <memberdef kind="property" id="class_utility_library_1_1_settings_user_1aa8aa400a1a99f42e7bc1ee941a347d1e" prot="public" static="yes" readable="no" writable="no" gettable="yes" settable="yes">
+        <type>Settings&lt; <ref refid="class_utility_library_1_1_user_settings" kindref="compound">UserSettings</ref> &gt;</type>
+        <definition>Settings&lt;UserSettings&gt; UtilityLibrary.SettingsUser.USetting</definition>
+        <argsstring></argsstring>
+        <name>USetting</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="B:/Programming/VisualStudioProjects/UtilityLibrary/UtilityLibrary/Settings.cs" line="31" column="1" bodyfile="B:/Programming/VisualStudioProjects/UtilityLibrary/UtilityLibrary/Settings.cs" bodystart="31" bodyend="-1"/>
+      </memberdef>
+      </sectiondef>
+      <sectiondef kind="public-static-attrib">
+      <memberdef kind="variable" id="class_utility_library_1_1_settings_user_1a8f697a6de39f0093288791fbb5424687" prot="public" static="yes" mutable="no">
+        <type><ref refid="class_utility_library_1_1_user_settings" kindref="compound">UserSettings</ref></type>
+        <definition>UserSettings UtilityLibrary.SettingsUser.USet</definition>
+        <argsstring></argsstring>
+        <name>USet</name>
+        <initializer>= <ref refid="class_utility_library_1_1_settings_user_1a41a8cd0a0a4f0dc78dc4a7b900c04b36" kindref="member">GetInstance</ref>()</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="B:/Programming/VisualStudioProjects/UtilityLibrary/UtilityLibrary/Settings.cs" line="34" column="1" bodyfile="B:/Programming/VisualStudioProjects/UtilityLibrary/UtilityLibrary/Settings.cs" bodystart="32" bodyend="-1"/>
+        <referencedby refid="class_utility_library_1_1_settings_user_1a41a8cd0a0a4f0dc78dc4a7b900c04b36" compoundref="_utility_library_2_utility_library_2_settings_8cs" startline="38" endline="48">UtilityLibrary.SettingsUser.GetInstance</referencedby>
+      </memberdef>
+      </sectiondef>
+      <sectiondef kind="private-static-attrib">
+      <memberdef kind="variable" id="class_utility_library_1_1_settings_user_1a91a5fe104bec07b6e9cbbacd4fceea46" prot="private" static="yes" mutable="no">
+        <type>Settings&lt; <ref refid="class_utility_library_1_1_user_settings" kindref="compound">UserSettings</ref> &gt;</type>
+        <definition>Settings&lt;UserSettings&gt; UtilityLibrary.SettingsUser.userSettings</definition>
+        <argsstring></argsstring>
+        <name>userSettings</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="B:/Programming/VisualStudioProjects/UtilityLibrary/UtilityLibrary/Settings.cs" line="36" column="1" bodyfile="B:/Programming/VisualStudioProjects/UtilityLibrary/UtilityLibrary/Settings.cs" bodystart="36" bodyend="-1"/>
+        <referencedby refid="class_utility_library_1_1_settings_user_1a41a8cd0a0a4f0dc78dc4a7b900c04b36" compoundref="_utility_library_2_utility_library_2_settings_8cs" startline="38" endline="48">UtilityLibrary.SettingsUser.GetInstance</referencedby>
+      </memberdef>
+      </sectiondef>
+      <sectiondef kind="private-static-func">
+      <memberdef kind="function" id="class_utility_library_1_1_settings_user_1a41a8cd0a0a4f0dc78dc4a7b900c04b36" prot="private" static="yes" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type>Settings&lt; <ref refid="class_utility_library_1_1_user_settings" kindref="compound">UserSettings</ref> &gt;</type>
+        <definition>static Settings&lt;UserSettings&gt; UtilityLibrary.SettingsUser.GetInstance</definition>
+        <argsstring>()</argsstring>
+        <name>GetInstance</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="B:/Programming/VisualStudioProjects/UtilityLibrary/UtilityLibrary/Settings.cs" line="38" column="1" bodyfile="B:/Programming/VisualStudioProjects/UtilityLibrary/UtilityLibrary/Settings.cs" bodystart="38" bodyend="48"/>
+        <references refid="class_utility_library_1_1_settings_user_1a91a5fe104bec07b6e9cbbacd4fceea46" compoundref="_utility_library_2_utility_library_2_settings_8cs" startline="36">UtilityLibrary.SettingsUser.userSettings</references>
+        <references refid="class_utility_library_1_1_settings_user_1a8f697a6de39f0093288791fbb5424687" compoundref="_utility_library_2_utility_library_2_settings_8cs" startline="32">UtilityLibrary.SettingsUser.USet</references>
+        <referencedby refid="class_utility_library_1_1_settings_user_1aaaf15d6e7f34d0dc6e9ac6568fd9d091" compoundref="_utility_library_2_utility_library_2_settings_8cs" startline="50" endline="55">UtilityLibrary.SettingsUser.Reset</referencedby>
+      </memberdef>
+      </sectiondef>
+      <sectiondef kind="public-static-func">
+      <memberdef kind="function" id="class_utility_library_1_1_settings_user_1aaaf15d6e7f34d0dc6e9ac6568fd9d091" prot="public" static="yes" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type>void</type>
+        <definition>static void UtilityLibrary.SettingsUser.Reset</definition>
+        <argsstring>(this Settings&lt; UserSettings &gt; user)</argsstring>
+        <name>Reset</name>
+        <param>
+          <type>this Settings&lt; <ref refid="class_utility_library_1_1_user_settings" kindref="compound">UserSettings</ref> &gt;</type>
+          <declname>user</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="B:/Programming/VisualStudioProjects/UtilityLibrary/UtilityLibrary/Settings.cs" line="50" column="1" bodyfile="B:/Programming/VisualStudioProjects/UtilityLibrary/UtilityLibrary/Settings.cs" bodystart="50" bodyend="55"/>
+        <references refid="class_utility_library_1_1_settings_user_1a41a8cd0a0a4f0dc78dc4a7b900c04b36" compoundref="_utility_library_2_utility_library_2_settings_8cs" startline="38" endline="48">UtilityLibrary.SettingsUser.GetInstance</references>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <collaborationgraph>
+      <node id="106">
+        <label>UtilityLibrary.SettingsUser</label>
+        <link refid="class_utility_library_1_1_settings_user"/>
+        <childnode refid="107" relation="usage">
+          <edgelabel>userSettings</edgelabel>
+          <edgelabel>USet</edgelabel>
+        </childnode>
+      </node>
+      <node id="107">
+        <label>static</label>
+      </node>
+    </collaborationgraph>
+    <location file="B:/Programming/VisualStudioProjects/UtilityLibrary/UtilityLibrary/Settings.cs" line="30" column="1" bodyfile="B:/Programming/VisualStudioProjects/UtilityLibrary/UtilityLibrary/Settings.cs" bodystart="29" bodyend="56"/>
+    <listofallmembers>
+      <member refid="class_utility_library_1_1_settings_user_1a41a8cd0a0a4f0dc78dc4a7b900c04b36" prot="private" virt="non-virtual"><scope>UtilityLibrary::SettingsUser</scope><name>GetInstance</name></member>
+      <member refid="class_utility_library_1_1_settings_user_1aaaf15d6e7f34d0dc6e9ac6568fd9d091" prot="public" virt="non-virtual"><scope>UtilityLibrary::SettingsUser</scope><name>Reset</name></member>
+      <member refid="class_utility_library_1_1_settings_user_1a91a5fe104bec07b6e9cbbacd4fceea46" prot="private" virt="non-virtual"><scope>UtilityLibrary::SettingsUser</scope><name>userSettings</name></member>
+      <member refid="class_utility_library_1_1_settings_user_1a8f697a6de39f0093288791fbb5424687" prot="public" virt="non-virtual"><scope>UtilityLibrary::SettingsUser</scope><name>USet</name></member>
+      <member refid="class_utility_library_1_1_settings_user_1aa8aa400a1a99f42e7bc1ee941a347d1e" prot="public" virt="non-virtual"><scope>UtilityLibrary::SettingsUser</scope><name>USetting</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

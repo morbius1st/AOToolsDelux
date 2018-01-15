@@ -1,0 +1,76 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.6">
+  <compounddef id="class_utility_library_1_1version_info" kind="class" prot="public">
+    <compoundname>UtilityLibrary::versionInfo</compoundname>
+      <sectiondef kind="public-attrib">
+      <memberdef kind="variable" id="class_utility_library_1_1version_info_1a5d50fa9a48775b9ea09fd90c0a90671b" prot="public" static="no" mutable="no">
+        <type>const string</type>
+        <definition>const string UtilityLibrary.versionInfo.SETTINGSYSTEMVERSION</definition>
+        <argsstring></argsstring>
+        <name>SETTINGSYSTEMVERSION</name>
+        <initializer>= &quot;1.0.0.4&quot;</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="B:/Programming/VisualStudioProjects/UtilityLibrary/UtilityLibrary/Settings - Copy.cs" line="19" column="1" bodyfile="B:/Programming/VisualStudioProjects/UtilityLibrary/UtilityLibrary/Settings - Copy.cs" bodystart="19" bodyend="-1"/>
+        <referencedby refid="class_utility_library_1_1_settings_3_01_t_01_4_1a7a79c6ed261bb2e5b128713248335751" compoundref="_settings_01-_01_copy_8cs" startline="110" endline="127">UtilityLibrary.Settings&lt; T &gt;.Save</referencedby>
+      </memberdef>
+      <memberdef kind="variable" id="class_utility_library_1_1version_info_1a226ef813396337183647a6b6f64fc345" prot="public" static="no" mutable="no">
+        <type>string</type>
+        <definition>string UtilityLibrary.versionInfo.SettingFileVersion</definition>
+        <argsstring></argsstring>
+        <name>SettingFileVersion</name>
+        <initializer>= &quot;0.0.0.0&quot;</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="B:/Programming/VisualStudioProjects/UtilityLibrary/UtilityLibrary/Settings - Copy.cs" line="22" column="1" bodyfile="B:/Programming/VisualStudioProjects/UtilityLibrary/UtilityLibrary/Settings - Copy.cs" bodystart="22" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="class_utility_library_1_1version_info_1a6929163d289233fe452146b3f137cef1" prot="public" static="no" mutable="no">
+        <type>string</type>
+        <definition>string UtilityLibrary.versionInfo.AssemblyVersion</definition>
+        <argsstring></argsstring>
+        <name>AssemblyVersion</name>
+        <initializer>= SettingsUtil.AssemblyVersion</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="B:/Programming/VisualStudioProjects/UtilityLibrary/UtilityLibrary/Settings - Copy.cs" line="24" column="1" bodyfile="B:/Programming/VisualStudioProjects/UtilityLibrary/UtilityLibrary/Settings - Copy.cs" bodystart="24" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="class_utility_library_1_1version_info_1a68c852d4890c1f1c63fd1a8fa3dae946" prot="public" static="no" mutable="no">
+        <type>string</type>
+        <definition>string UtilityLibrary.versionInfo.SettingSystemVersion</definition>
+        <argsstring></argsstring>
+        <name>SettingSystemVersion</name>
+        <initializer>= <ref refid="class_utility_library_1_1version_info_1a5d50fa9a48775b9ea09fd90c0a90671b" kindref="member">SETTINGSYSTEMVERSION</ref></initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="B:/Programming/VisualStudioProjects/UtilityLibrary/UtilityLibrary/Settings - Copy.cs" line="26" column="1" bodyfile="B:/Programming/VisualStudioProjects/UtilityLibrary/UtilityLibrary/Settings - Copy.cs" bodystart="26" bodyend="-1"/>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <location file="B:/Programming/VisualStudioProjects/UtilityLibrary/UtilityLibrary/Settings - Copy.cs" line="18" column="1" bodyfile="B:/Programming/VisualStudioProjects/UtilityLibrary/UtilityLibrary/Settings - Copy.cs" bodystart="17" bodyend="27"/>
+    <listofallmembers>
+      <member refid="class_utility_library_1_1version_info_1a6929163d289233fe452146b3f137cef1" prot="public" virt="non-virtual"><scope>UtilityLibrary::versionInfo</scope><name>AssemblyVersion</name></member>
+      <member refid="class_utility_library_1_1version_info_1a226ef813396337183647a6b6f64fc345" prot="public" virt="non-virtual"><scope>UtilityLibrary::versionInfo</scope><name>SettingFileVersion</name></member>
+      <member refid="class_utility_library_1_1version_info_1a68c852d4890c1f1c63fd1a8fa3dae946" prot="public" virt="non-virtual"><scope>UtilityLibrary::versionInfo</scope><name>SettingSystemVersion</name></member>
+      <member refid="class_utility_library_1_1version_info_1a5d50fa9a48775b9ea09fd90c0a90671b" prot="public" virt="non-virtual"><scope>UtilityLibrary::versionInfo</scope><name>SETTINGSYSTEMVERSION</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

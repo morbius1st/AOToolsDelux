@@ -1,0 +1,150 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.6">
+  <compounddef id="class_utility_library_1_1_settings_path_base" kind="class" prot="public" abstract="yes">
+    <compoundname>UtilityLibrary::SettingsPathBase</compoundname>
+    <derivedcompoundref refid="class_utility_library_1_1_settings_path_app_default" prot="public" virt="non-virtual">UtilityLibrary.SettingsPathAppDefault</derivedcompoundref>
+    <derivedcompoundref refid="class_utility_library_1_1_settings_path_user_default" prot="public" virt="non-virtual">UtilityLibrary.SettingsPathUserDefault</derivedcompoundref>
+      <sectiondef kind="protected-attrib">
+      <memberdef kind="variable" id="class_utility_library_1_1_settings_path_base_1a12f5df066cf825769fa3473f55ab437f" prot="protected" static="no" mutable="no">
+        <type>string</type>
+        <definition>string UtilityLibrary.SettingsPathBase.FileName</definition>
+        <argsstring></argsstring>
+        <name>FileName</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="B:/Programming/VisualStudioProjects/UtilityLibrary/UtilityLibrary/Settings - Copy.cs" line="198" column="1" bodyfile="B:/Programming/VisualStudioProjects/UtilityLibrary/UtilityLibrary/Settings - Copy.cs" bodystart="198" bodyend="-1"/>
+        <referencedby refid="class_utility_library_1_1_settings_path_app_default_1a3ba763a041f28d82c0745d91132bcd3b" compoundref="_settings_01-_01_copy_8cs" startline="238" endline="243">UtilityLibrary.SettingsPathAppDefault.SettingsPathAppDefault</referencedby>
+        <referencedby refid="class_utility_library_1_1_settings_path_user_default_1ac82446cd697a0aa0be17f10c2601676c" compoundref="_settings_01-_01_copy_8cs" startline="256" endline="266">UtilityLibrary.SettingsPathUserDefault.SettingsPathUserDefault</referencedby>
+      </memberdef>
+      <memberdef kind="variable" id="class_utility_library_1_1_settings_path_base_1aed00980e4cd5e00d9fc3a3cd60cf3ac3" prot="protected" static="no" mutable="no">
+        <type>string</type>
+        <definition>string UtilityLibrary.SettingsPathBase.RootPath</definition>
+        <argsstring></argsstring>
+        <name>RootPath</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="B:/Programming/VisualStudioProjects/UtilityLibrary/UtilityLibrary/Settings - Copy.cs" line="200" column="1" bodyfile="B:/Programming/VisualStudioProjects/UtilityLibrary/UtilityLibrary/Settings - Copy.cs" bodystart="200" bodyend="-1"/>
+        <referencedby refid="class_utility_library_1_1_settings_path_user_default_1a0c1735d6cf8b74133a5e2389326e5f9c" compoundref="_settings_01-_01_copy_8cs" startline="268" endline="271">UtilityLibrary.SettingsPathUserDefault.CreateFolders</referencedby>
+        <referencedby refid="class_utility_library_1_1_settings_path_app_default_1a3ba763a041f28d82c0745d91132bcd3b" compoundref="_settings_01-_01_copy_8cs" startline="238" endline="243">UtilityLibrary.SettingsPathAppDefault.SettingsPathAppDefault</referencedby>
+        <referencedby refid="class_utility_library_1_1_settings_path_user_default_1ac82446cd697a0aa0be17f10c2601676c" compoundref="_settings_01-_01_copy_8cs" startline="256" endline="266">UtilityLibrary.SettingsPathUserDefault.SettingsPathUserDefault</referencedby>
+      </memberdef>
+      <memberdef kind="variable" id="class_utility_library_1_1_settings_path_base_1a508ffc15d7ce089d5173aae2d56093a6" prot="protected" static="no" mutable="no">
+        <type>string[]</type>
+        <definition>string [] UtilityLibrary.SettingsPathBase.SubFolders</definition>
+        <argsstring></argsstring>
+        <name>SubFolders</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="B:/Programming/VisualStudioProjects/UtilityLibrary/UtilityLibrary/Settings - Copy.cs" line="201" column="1" bodyfile="B:/Programming/VisualStudioProjects/UtilityLibrary/UtilityLibrary/Settings - Copy.cs" bodystart="201" bodyend="-1"/>
+        <referencedby refid="class_utility_library_1_1_settings_path_user_default_1a0c1735d6cf8b74133a5e2389326e5f9c" compoundref="_settings_01-_01_copy_8cs" startline="268" endline="271">UtilityLibrary.SettingsPathUserDefault.CreateFolders</referencedby>
+        <referencedby refid="class_utility_library_1_1_settings_path_app_default_1a3ba763a041f28d82c0745d91132bcd3b" compoundref="_settings_01-_01_copy_8cs" startline="238" endline="243">UtilityLibrary.SettingsPathAppDefault.SettingsPathAppDefault</referencedby>
+        <referencedby refid="class_utility_library_1_1_settings_path_user_default_1ac82446cd697a0aa0be17f10c2601676c" compoundref="_settings_01-_01_copy_8cs" startline="256" endline="266">UtilityLibrary.SettingsPathUserDefault.SettingsPathUserDefault</referencedby>
+      </memberdef>
+      </sectiondef>
+      <sectiondef kind="private-attrib">
+      <memberdef kind="variable" id="class_utility_library_1_1_settings_path_base_1ab85cab8140a6e7ea8983a8d3c6c341e7" prot="private" static="no" mutable="no">
+        <type>int</type>
+        <definition>int UtilityLibrary.SettingsPathBase.SubFolderCount</definition>
+        <argsstring></argsstring>
+        <name>SubFolderCount</name>
+        <initializer>=&gt; SubFolders.Length</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="B:/Programming/VisualStudioProjects/UtilityLibrary/UtilityLibrary/Settings - Copy.cs" line="203" column="1" bodyfile="B:/Programming/VisualStudioProjects/UtilityLibrary/UtilityLibrary/Settings - Copy.cs" bodystart="203" bodyend="-1"/>
+      </memberdef>
+      </sectiondef>
+      <sectiondef kind="property">
+      <memberdef kind="property" id="class_utility_library_1_1_settings_path_base_1aa201b9d26d055baf49ce026c71462d5a" prot="protected" static="no" readable="no" writable="no" gettable="yes" settable="no">
+        <type>string</type>
+        <definition>string UtilityLibrary.SettingsPathBase.SettingsPath</definition>
+        <argsstring></argsstring>
+        <name>SettingsPath</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="B:/Programming/VisualStudioProjects/UtilityLibrary/UtilityLibrary/Settings - Copy.cs" line="207" column="1" bodyfile="B:/Programming/VisualStudioProjects/UtilityLibrary/UtilityLibrary/Settings - Copy.cs" bodystart="208" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="property" id="class_utility_library_1_1_settings_path_base_1af6878bad305eed75d65a3021a44fce75" prot="public" static="no" readable="no" writable="no" gettable="yes" settable="no">
+        <type>string</type>
+        <definition>string UtilityLibrary.SettingsPathBase.SettingsPathAndFile</definition>
+        <argsstring></argsstring>
+        <name>SettingsPathAndFile</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="B:/Programming/VisualStudioProjects/UtilityLibrary/UtilityLibrary/Settings - Copy.cs" line="220" column="1" bodyfile="B:/Programming/VisualStudioProjects/UtilityLibrary/UtilityLibrary/Settings - Copy.cs" bodystart="221" bodyend="-1"/>
+      </memberdef>
+      </sectiondef>
+      <sectiondef kind="protected-func">
+      <memberdef kind="function" id="class_utility_library_1_1_settings_path_base_1afa9e451c1b95630b3addd56682ccff5d" prot="protected" static="no" const="no" explicit="no" inline="no" virt="pure-virtual">
+        <type>abstract bool</type>
+        <definition>abstract bool UtilityLibrary.SettingsPathBase.CreateFolders</definition>
+        <argsstring>()</argsstring>
+        <name>CreateFolders</name>
+        <reimplementedby refid="class_utility_library_1_1_settings_path_app_default_1adc43214e21e6a53c48c1ab98df1f7c26">CreateFolders</reimplementedby>
+        <reimplementedby refid="class_utility_library_1_1_settings_path_user_default_1a0c1735d6cf8b74133a5e2389326e5f9c">CreateFolders</reimplementedby>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="B:/Programming/VisualStudioProjects/UtilityLibrary/UtilityLibrary/Settings - Copy.cs" line="205" column="1"/>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <inheritancegraph>
+      <node id="80">
+        <label>UtilityLibrary.SettingsPathUserDefault</label>
+        <link refid="class_utility_library_1_1_settings_path_user_default"/>
+        <childnode refid="78" relation="public-inheritance">
+        </childnode>
+      </node>
+      <node id="79">
+        <label>UtilityLibrary.SettingsPathAppDefault</label>
+        <link refid="class_utility_library_1_1_settings_path_app_default"/>
+        <childnode refid="78" relation="public-inheritance">
+        </childnode>
+      </node>
+      <node id="78">
+        <label>UtilityLibrary.SettingsPathBase</label>
+        <link refid="class_utility_library_1_1_settings_path_base"/>
+      </node>
+    </inheritancegraph>
+    <location file="B:/Programming/VisualStudioProjects/UtilityLibrary/UtilityLibrary/Settings - Copy.cs" line="197" column="1" bodyfile="B:/Programming/VisualStudioProjects/UtilityLibrary/UtilityLibrary/Settings - Copy.cs" bodystart="196" bodyend="234"/>
+    <listofallmembers>
+      <member refid="class_utility_library_1_1_settings_path_base_1afa9e451c1b95630b3addd56682ccff5d" prot="protected" virt="pure-virtual"><scope>UtilityLibrary::SettingsPathBase</scope><name>CreateFolders</name></member>
+      <member refid="class_utility_library_1_1_settings_path_base_1a12f5df066cf825769fa3473f55ab437f" prot="protected" virt="non-virtual"><scope>UtilityLibrary::SettingsPathBase</scope><name>FileName</name></member>
+      <member refid="class_utility_library_1_1_settings_path_base_1aed00980e4cd5e00d9fc3a3cd60cf3ac3" prot="protected" virt="non-virtual"><scope>UtilityLibrary::SettingsPathBase</scope><name>RootPath</name></member>
+      <member refid="class_utility_library_1_1_settings_path_base_1aa201b9d26d055baf49ce026c71462d5a" prot="protected" virt="non-virtual"><scope>UtilityLibrary::SettingsPathBase</scope><name>SettingsPath</name></member>
+      <member refid="class_utility_library_1_1_settings_path_base_1af6878bad305eed75d65a3021a44fce75" prot="public" virt="non-virtual"><scope>UtilityLibrary::SettingsPathBase</scope><name>SettingsPathAndFile</name></member>
+      <member refid="class_utility_library_1_1_settings_path_base_1ab85cab8140a6e7ea8983a8d3c6c341e7" prot="private" virt="non-virtual"><scope>UtilityLibrary::SettingsPathBase</scope><name>SubFolderCount</name></member>
+      <member refid="class_utility_library_1_1_settings_path_base_1a508ffc15d7ce089d5173aae2d56093a6" prot="protected" virt="non-virtual"><scope>UtilityLibrary::SettingsPathBase</scope><name>SubFolders</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

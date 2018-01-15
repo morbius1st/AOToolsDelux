@@ -26,7 +26,8 @@ namespace AOTools
 
 		private const string NAMESPACE_PREFIX = "AOTools.Resources";
 
-		private const string BUTTON_NAME = "Unit\nStyles";
+		private const string BUTTON_NAME1 = "Unit\nStyles";
+		private const string BUTTON_NAME2 = "Delete\nStyles";
 		private const string PANEL_NAME = "AO Tools";
 		private const string TAB_NAME = "AO Tools";
 
@@ -100,7 +101,7 @@ namespace AOTools
 				}
 
 				// create a button for the 'copy sheet' command
-				if (!AddPushButton(m_RibbonPanel, "UnitStyles", BUTTON_NAME,
+				if (!AddPushButton(m_RibbonPanel, "UnitStyles", BUTTON_NAME1,
 					"information16.png",
 					"information32.png",
 					Assembly.GetExecutingAssembly().Location, "AOTools.StylesUnitsCommand", 
@@ -116,6 +117,25 @@ namespace AOTools
 
 					return Result.Failed;
 				}
+
+				// create a button for the 'copy sheet' command
+				if (!AddPushButton(m_RibbonPanel, "DeleteUnitStyles", BUTTON_NAME2,
+					"information16.png",
+					"information32.png",
+					Assembly.GetExecutingAssembly().Location, "AOTools.DeleteUnitStyles",
+						"Create and Modify Unit Styles"))
+
+				{
+					// creating the pushbutton failed
+					TaskDialog td = new TaskDialog("AO Tools");
+					td.MainIcon = TaskDialogIcon.TaskDialogIconWarning;
+					td.MainContent = "failed to create the delete unit styles button";
+					td.Show();
+
+					return Result.Failed;
+				}
+
+				//DeleteUnitStyles
 
 				return Result.Succeeded;
 			}

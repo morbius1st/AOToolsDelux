@@ -1,0 +1,161 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.6">
+  <compounddef id="class_utility_library_1_1_string_extensions" kind="class" prot="public">
+    <compoundname>UtilityLibrary::StringExtensions</compoundname>
+      <sectiondef kind="public-static-func">
+      <memberdef kind="function" id="class_utility_library_1_1_string_extensions_1aea2c5212c6d12b7e96ac15d96ae40902" prot="public" static="yes" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type>string</type>
+        <definition>static string UtilityLibrary.StringExtensions.Repeat</definition>
+        <argsstring>(this string s, int quantity)</argsstring>
+        <name>Repeat</name>
+        <param>
+          <type>this string</type>
+          <declname>s</declname>
+        </param>
+        <param>
+          <type>int</type>
+          <declname>quantity</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="B:/Programming/VisualStudioProjects/UtilityLibrary/UtilityLibrary/MessageUtilities.cs" line="145" column="1" bodyfile="B:/Programming/VisualStudioProjects/UtilityLibrary/UtilityLibrary/MessageUtilities.cs" bodystart="145" bodyend="157"/>
+      </memberdef>
+      <memberdef kind="function" id="class_utility_library_1_1_string_extensions_1a2130817db62e1c6df3806f1555768fee" prot="public" static="yes" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type>int</type>
+        <definition>static int UtilityLibrary.StringExtensions.CountSubstring</definition>
+        <argsstring>(this string s, string substring)</argsstring>
+        <name>CountSubstring</name>
+        <param>
+          <type>this string</type>
+          <declname>s</declname>
+        </param>
+        <param>
+          <type>string</type>
+          <declname>substring</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="B:/Programming/VisualStudioProjects/UtilityLibrary/UtilityLibrary/MessageUtilities.cs" line="159" column="1" bodyfile="B:/Programming/VisualStudioProjects/UtilityLibrary/UtilityLibrary/MessageUtilities.cs" bodystart="159" bodyend="170"/>
+      </memberdef>
+      <memberdef kind="function" id="class_utility_library_1_1_string_extensions_1a1d4d83fba94b11568abcbb2538c29d64" prot="public" static="yes" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type>int</type>
+        <definition>static int UtilityLibrary.StringExtensions.IndexOfToOccurance</definition>
+        <argsstring>(this string s, string substring, int occurance, int start=0)</argsstring>
+        <name>IndexOfToOccurance</name>
+        <param>
+          <type>this string</type>
+          <declname>s</declname>
+        </param>
+        <param>
+          <type>string</type>
+          <declname>substring</declname>
+        </param>
+        <param>
+          <type>int</type>
+          <declname>occurance</declname>
+        </param>
+        <param>
+          <type>int</type>
+          <declname>start</declname>
+          <defval>0</defval>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="B:/Programming/VisualStudioProjects/UtilityLibrary/UtilityLibrary/MessageUtilities.cs" line="172" column="1" bodyfile="B:/Programming/VisualStudioProjects/UtilityLibrary/UtilityLibrary/MessageUtilities.cs" bodystart="172" bodyend="189"/>
+      </memberdef>
+      <memberdef kind="function" id="class_utility_library_1_1_string_extensions_1ac3c7927b3995fdcd6d1c9c03e129d933" prot="public" static="yes" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type>string</type>
+        <definition>static string UtilityLibrary.StringExtensions.GetSubDirectory</definition>
+        <argsstring>(this string path, int requestedDepth)</argsstring>
+        <name>GetSubDirectory</name>
+        <param>
+          <type>this string</type>
+          <declname>path</declname>
+        </param>
+        <param>
+          <type>int</type>
+          <declname>requestedDepth</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="B:/Programming/VisualStudioProjects/UtilityLibrary/UtilityLibrary/MessageUtilities.cs" line="191" column="1" bodyfile="B:/Programming/VisualStudioProjects/UtilityLibrary/UtilityLibrary/MessageUtilities.cs" bodystart="191" bodyend="211"/>
+      </memberdef>
+      <memberdef kind="function" id="class_utility_library_1_1_string_extensions_1a5fab7995c0120da31df958e1ec8e9bb6" prot="public" static="yes" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type>string</type>
+        <definition>static string UtilityLibrary.StringExtensions.GetSubDirectoryName</definition>
+        <argsstring>(this string path, int requestedDepth)</argsstring>
+        <name>GetSubDirectoryName</name>
+        <param>
+          <type>this string</type>
+          <declname>path</declname>
+        </param>
+        <param>
+          <type>int</type>
+          <declname>requestedDepth</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="B:/Programming/VisualStudioProjects/UtilityLibrary/UtilityLibrary/MessageUtilities.cs" line="213" column="1" bodyfile="B:/Programming/VisualStudioProjects/UtilityLibrary/UtilityLibrary/MessageUtilities.cs" bodystart="213" bodyend="228"/>
+      </memberdef>
+      <memberdef kind="function" id="class_utility_library_1_1_string_extensions_1a9100fde77f17685330213412b5509e96" prot="public" static="yes" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type>string</type>
+        <definition>static string UtilityLibrary.StringExtensions.PadCenter</definition>
+        <argsstring>(this string str, int totalLength, char padChar= &apos;\u00A0&apos;)</argsstring>
+        <name>PadCenter</name>
+        <param>
+          <type>this string</type>
+          <declname>str</declname>
+        </param>
+        <param>
+          <type>int</type>
+          <declname>totalLength</declname>
+        </param>
+        <param>
+          <type>char</type>
+          <declname>padChar</declname>
+          <defval>&apos;\u00A0&apos;</defval>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="B:/Programming/VisualStudioProjects/UtilityLibrary/UtilityLibrary/MessageUtilities.cs" line="230" column="1" bodyfile="B:/Programming/VisualStudioProjects/UtilityLibrary/UtilityLibrary/MessageUtilities.cs" bodystart="230" bodyend="246"/>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <location file="B:/Programming/VisualStudioProjects/UtilityLibrary/UtilityLibrary/MessageUtilities.cs" line="143" column="1" bodyfile="B:/Programming/VisualStudioProjects/UtilityLibrary/UtilityLibrary/MessageUtilities.cs" bodystart="142" bodyend="248"/>
+    <listofallmembers>
+      <member refid="class_utility_library_1_1_string_extensions_1a2130817db62e1c6df3806f1555768fee" prot="public" virt="non-virtual"><scope>UtilityLibrary::StringExtensions</scope><name>CountSubstring</name></member>
+      <member refid="class_utility_library_1_1_string_extensions_1ac3c7927b3995fdcd6d1c9c03e129d933" prot="public" virt="non-virtual"><scope>UtilityLibrary::StringExtensions</scope><name>GetSubDirectory</name></member>
+      <member refid="class_utility_library_1_1_string_extensions_1a5fab7995c0120da31df958e1ec8e9bb6" prot="public" virt="non-virtual"><scope>UtilityLibrary::StringExtensions</scope><name>GetSubDirectoryName</name></member>
+      <member refid="class_utility_library_1_1_string_extensions_1a1d4d83fba94b11568abcbb2538c29d64" prot="public" virt="non-virtual"><scope>UtilityLibrary::StringExtensions</scope><name>IndexOfToOccurance</name></member>
+      <member refid="class_utility_library_1_1_string_extensions_1a9100fde77f17685330213412b5509e96" prot="public" virt="non-virtual"><scope>UtilityLibrary::StringExtensions</scope><name>PadCenter</name></member>
+      <member refid="class_utility_library_1_1_string_extensions_1aea2c5212c6d12b7e96ac15d96ae40902" prot="public" virt="non-virtual"><scope>UtilityLibrary::StringExtensions</scope><name>Repeat</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

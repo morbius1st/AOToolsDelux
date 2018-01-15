@@ -1,0 +1,89 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.6">
+  <compounddef id="class_a_o_tools_1_1_picked_box2" kind="class" prot="public">
+    <compoundname>AOTools::PickedBox2</compoundname>
+      <sectiondef kind="public-attrib">
+      <memberdef kind="variable" id="class_a_o_tools_1_1_picked_box2_1aad4604baffb768e003ed4a07dd9f8bfc" prot="public" static="no" mutable="no">
+        <type>XYZ</type>
+        <definition>XYZ AOTools.PickedBox2.Min</definition>
+        <argsstring></argsstring>
+        <name>Min</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="B:/Programming/VisualStudioProjects/RevitProjects/AOTools/AOTools/PickedBox2.cs" line="13" column="1" bodyfile="B:/Programming/VisualStudioProjects/RevitProjects/AOTools/AOTools/PickedBox2.cs" bodystart="13" bodyend="-1"/>
+        <referencedby refid="class_a_o_tools_1_1_picked_box2_1a90edb6b973551a4360c6717132f7761a" compoundref="_picked_box2_8cs" startline="16" endline="46">AOTools.PickedBox2.PickedBox2</referencedby>
+      </memberdef>
+      <memberdef kind="variable" id="class_a_o_tools_1_1_picked_box2_1ad878e541f67e5e0621707421a927a8cc" prot="public" static="no" mutable="no">
+        <type>XYZ</type>
+        <definition>XYZ AOTools.PickedBox2.Max</definition>
+        <argsstring></argsstring>
+        <name>Max</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="B:/Programming/VisualStudioProjects/RevitProjects/AOTools/AOTools/PickedBox2.cs" line="14" column="1" bodyfile="B:/Programming/VisualStudioProjects/RevitProjects/AOTools/AOTools/PickedBox2.cs" bodystart="14" bodyend="-1"/>
+        <referencedby refid="class_a_o_tools_1_1_picked_box2_1a90edb6b973551a4360c6717132f7761a" compoundref="_picked_box2_8cs" startline="16" endline="46">AOTools.PickedBox2.PickedBox2</referencedby>
+      </memberdef>
+      </sectiondef>
+      <sectiondef kind="public-func">
+      <memberdef kind="function" id="class_a_o_tools_1_1_picked_box2_1a90edb6b973551a4360c6717132f7761a" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type></type>
+        <definition>AOTools.PickedBox2.PickedBox2</definition>
+        <argsstring>(PickedBox picked, bool fixRange)</argsstring>
+        <name>PickedBox2</name>
+        <param>
+          <type>PickedBox</type>
+          <declname>picked</declname>
+        </param>
+        <param>
+          <type>bool</type>
+          <declname>fixRange</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="B:/Programming/VisualStudioProjects/RevitProjects/AOTools/AOTools/PickedBox2.cs" line="16" column="1" bodyfile="B:/Programming/VisualStudioProjects/RevitProjects/AOTools/AOTools/PickedBox2.cs" bodystart="16" bodyend="46"/>
+        <references refid="class_a_o_tools_1_1_picked_box2_1ad878e541f67e5e0621707421a927a8cc" compoundref="_picked_box2_8cs" startline="14">AOTools.PickedBox2.Max</references>
+        <references refid="class_a_o_tools_1_1_picked_box2_1aad4604baffb768e003ed4a07dd9f8bfc" compoundref="_picked_box2_8cs" startline="13">AOTools.PickedBox2.Min</references>
+      </memberdef>
+      <memberdef kind="function" id="class_a_o_tools_1_1_picked_box2_1ae60eb9336dfd2c79d3773a7c66f61498" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type></type>
+        <definition>AOTools.PickedBox2.PickedBox2</definition>
+        <argsstring>(PickedBox picked)</argsstring>
+        <name>PickedBox2</name>
+        <param>
+          <type>PickedBox</type>
+          <declname>picked</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="B:/Programming/VisualStudioProjects/RevitProjects/AOTools/AOTools/PickedBox2.cs" line="48" column="1" bodyfile="B:/Programming/VisualStudioProjects/RevitProjects/AOTools/AOTools/PickedBox2.cs" bodystart="48" bodyend="48"/>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <location file="B:/Programming/VisualStudioProjects/RevitProjects/AOTools/AOTools/PickedBox2.cs" line="12" column="1" bodyfile="B:/Programming/VisualStudioProjects/RevitProjects/AOTools/AOTools/PickedBox2.cs" bodystart="11" bodyend="49"/>
+    <listofallmembers>
+      <member refid="class_a_o_tools_1_1_picked_box2_1ad878e541f67e5e0621707421a927a8cc" prot="public" virt="non-virtual"><scope>AOTools::PickedBox2</scope><name>Max</name></member>
+      <member refid="class_a_o_tools_1_1_picked_box2_1aad4604baffb768e003ed4a07dd9f8bfc" prot="public" virt="non-virtual"><scope>AOTools::PickedBox2</scope><name>Min</name></member>
+      <member refid="class_a_o_tools_1_1_picked_box2_1a90edb6b973551a4360c6717132f7761a" prot="public" virt="non-virtual"><scope>AOTools::PickedBox2</scope><name>PickedBox2</name></member>
+      <member refid="class_a_o_tools_1_1_picked_box2_1ae60eb9336dfd2c79d3773a7c66f61498" prot="public" virt="non-virtual"><scope>AOTools::PickedBox2</scope><name>PickedBox2</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

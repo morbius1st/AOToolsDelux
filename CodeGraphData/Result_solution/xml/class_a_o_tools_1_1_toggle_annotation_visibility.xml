@@ -1,0 +1,64 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.6">
+  <compounddef id="class_a_o_tools_1_1_toggle_annotation_visibility" kind="class" prot="public">
+    <compoundname>AOTools::ToggleAnnotationVisibility</compoundname>
+    <basecompoundref prot="public" virt="non-virtual">IExternalCommand</basecompoundref>
+      <sectiondef kind="public-func">
+      <memberdef kind="function" id="class_a_o_tools_1_1_toggle_annotation_visibility_1a45ac067061fc6bf848cc476776dd30ba" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type>Result</type>
+        <definition>Result AOTools.ToggleAnnotationVisibility.Execute</definition>
+        <argsstring>(ExternalCommandData commandData, ref string message, ElementSet elements)</argsstring>
+        <name>Execute</name>
+        <param>
+          <type>ExternalCommandData</type>
+          <declname>commandData</declname>
+        </param>
+        <param>
+          <type>ref string</type>
+          <declname>message</declname>
+        </param>
+        <param>
+          <type>ElementSet</type>
+          <declname>elements</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="B:/Programming/VisualStudioProjects/RevitProjects/AOTools/AOTools/ToggleAnnotationVisibility.cs" line="18" column="1" bodyfile="B:/Programming/VisualStudioProjects/RevitProjects/AOTools/AOTools/ToggleAnnotationVisibility.cs" bodystart="18" bodyend="36"/>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <inheritancegraph>
+      <node id="122">
+        <label>AOTools.ToggleAnnotationVisibility</label>
+        <link refid="class_a_o_tools_1_1_toggle_annotation_visibility"/>
+        <childnode refid="123" relation="public-inheritance">
+        </childnode>
+      </node>
+      <node id="123">
+        <label>IExternalCommand</label>
+      </node>
+    </inheritancegraph>
+    <collaborationgraph>
+      <node id="124">
+        <label>AOTools.ToggleAnnotationVisibility</label>
+        <link refid="class_a_o_tools_1_1_toggle_annotation_visibility"/>
+        <childnode refid="125" relation="public-inheritance">
+        </childnode>
+      </node>
+      <node id="125">
+        <label>IExternalCommand</label>
+      </node>
+    </collaborationgraph>
+    <location file="B:/Programming/VisualStudioProjects/RevitProjects/AOTools/AOTools/ToggleAnnotationVisibility.cs" line="17" column="1" bodyfile="B:/Programming/VisualStudioProjects/RevitProjects/AOTools/AOTools/ToggleAnnotationVisibility.cs" bodystart="16" bodyend="37"/>
+    <listofallmembers>
+      <member refid="class_a_o_tools_1_1_toggle_annotation_visibility_1a45ac067061fc6bf848cc476776dd30ba" prot="public" virt="non-virtual"><scope>AOTools::ToggleAnnotationVisibility</scope><name>Execute</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

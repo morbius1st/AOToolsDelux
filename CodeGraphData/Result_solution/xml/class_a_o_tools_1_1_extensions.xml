@@ -1,0 +1,51 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.6">
+  <compounddef id="class_a_o_tools_1_1_extensions" kind="class" prot="public">
+    <compoundname>AOTools::Extensions</compoundname>
+      <sectiondef kind="public-static-func">
+      <memberdef kind="function" id="class_a_o_tools_1_1_extensions_1ad09c72a6b12b40db8da78dc0c48b2cef" prot="public" static="yes" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type><ref refid="_extensible_storage_mgr_8cs_1aa67657e7b1f5ce26471261e89d4986c8" kindref="member">FieldInfo</ref></type>
+        <definition>static FieldInfo AOTools.Extensions.Clone</definition>
+        <argsstring>(this FieldInfo fi)</argsstring>
+        <name>Clone</name>
+        <param>
+          <type>this <ref refid="_extensible_storage_mgr_8cs_1aa67657e7b1f5ce26471261e89d4986c8" kindref="member">FieldInfo</ref></type>
+          <declname>fi</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="B:/Programming/VisualStudioProjects/RevitProjects/AOTools/AOTools/ExtensibleStorageMgr.cs" line="28" column="1" bodyfile="B:/Programming/VisualStudioProjects/RevitProjects/AOTools/AOTools/ExtensibleStorageMgr.cs" bodystart="28" bodyend="32"/>
+      </memberdef>
+      <memberdef kind="function" id="class_a_o_tools_1_1_extensions_1a5277e3886032c80c1671d9184f1e4fd3" prot="public" static="yes" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type>Dictionary&lt; T, <ref refid="_extensible_storage_mgr_8cs_1aa67657e7b1f5ce26471261e89d4986c8" kindref="member">FieldInfo</ref> &gt;</type>
+        <definition>static Dictionary&lt;T, FieldInfo&gt; AOTools.Extensions.Clone&lt; T &gt;</definition>
+        <argsstring>(this Dictionary&lt; T, FieldInfo &gt; d)</argsstring>
+        <name>Clone&lt; T &gt;</name>
+        <param>
+          <type>this Dictionary&lt; T, <ref refid="_extensible_storage_mgr_8cs_1aa67657e7b1f5ce26471261e89d4986c8" kindref="member">FieldInfo</ref> &gt;</type>
+          <declname>d</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="B:/Programming/VisualStudioProjects/RevitProjects/AOTools/AOTools/ExtensibleStorageMgr.cs" line="34" column="1" bodyfile="B:/Programming/VisualStudioProjects/RevitProjects/AOTools/AOTools/ExtensibleStorageMgr.cs" bodystart="35" bodyend="47"/>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <location file="B:/Programming/VisualStudioProjects/RevitProjects/AOTools/AOTools/ExtensibleStorageMgr.cs" line="27" column="1" bodyfile="B:/Programming/VisualStudioProjects/RevitProjects/AOTools/AOTools/ExtensibleStorageMgr.cs" bodystart="26" bodyend="48"/>
+    <listofallmembers>
+      <member refid="class_a_o_tools_1_1_extensions_1ad09c72a6b12b40db8da78dc0c48b2cef" prot="public" virt="non-virtual"><scope>AOTools::Extensions</scope><name>Clone</name></member>
+      <member refid="class_a_o_tools_1_1_extensions_1a5277e3886032c80c1671d9184f1e4fd3" prot="public" virt="non-virtual"><scope>AOTools::Extensions</scope><name>Clone&lt; T &gt;</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

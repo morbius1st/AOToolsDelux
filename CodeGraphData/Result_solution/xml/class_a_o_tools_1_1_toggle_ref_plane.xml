@@ -1,0 +1,160 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.6">
+  <compounddef id="class_a_o_tools_1_1_toggle_ref_plane" kind="class" prot="public">
+    <compoundname>AOTools::ToggleRefPlane</compoundname>
+    <basecompoundref prot="public" virt="non-virtual">IExternalCommand</basecompoundref>
+      <sectiondef kind="public-func">
+      <memberdef kind="function" id="class_a_o_tools_1_1_toggle_ref_plane_1a092ab37a3e0e322c5c8b63e917e05487" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type>Result</type>
+        <definition>Result AOTools.ToggleRefPlane.Execute</definition>
+        <argsstring>(ExternalCommandData commandData, ref string message, ElementSet elements)</argsstring>
+        <name>Execute</name>
+        <param>
+          <type>ExternalCommandData</type>
+          <declname>commandData</declname>
+        </param>
+        <param>
+          <type>ref string</type>
+          <declname>message</declname>
+        </param>
+        <param>
+          <type>ElementSet</type>
+          <declname>elements</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="B:/Programming/VisualStudioProjects/RevitProjects/AOTools/AOTools/ToggleRefPlane.cs" line="18" column="1" bodyfile="B:/Programming/VisualStudioProjects/RevitProjects/AOTools/AOTools/ToggleRefPlane.cs" bodystart="18" bodyend="48"/>
+        <references refid="class_a_o_tools_1_1_toggle_ref_plane_1aea81f683eadd24a9765de827659b33a1" compoundref="_toggle_ref_plane_8cs" startline="65" endline="75">AOTools.ToggleRefPlane.SetStatusText</references>
+      </memberdef>
+      </sectiondef>
+      <sectiondef kind="private-func">
+      <memberdef kind="function" id="class_a_o_tools_1_1_toggle_ref_plane_1abba17740cedf4274a1f74f1a5bbf980b" prot="private" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>int</type>
+        <definition>static int AOTools.ToggleRefPlane.SetWindowText</definition>
+        <argsstring>(IntPtr hWnd, string lpString)</argsstring>
+        <name>SetWindowText</name>
+        <param>
+          <type>IntPtr</type>
+          <declname>hWnd</declname>
+        </param>
+        <param>
+          <type>string</type>
+          <declname>lpString</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="B:/Programming/VisualStudioProjects/RevitProjects/AOTools/AOTools/ToggleRefPlane.cs" line="53" column="1"/>
+        <referencedby refid="class_a_o_tools_1_1_toggle_ref_plane_1aea81f683eadd24a9765de827659b33a1" compoundref="_toggle_ref_plane_8cs" startline="65" endline="75">AOTools.ToggleRefPlane.SetStatusText</referencedby>
+      </memberdef>
+      <memberdef kind="function" id="class_a_o_tools_1_1_toggle_ref_plane_1a5bb338f1adbf549479d0650fb45539c0" prot="private" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>IntPtr</type>
+        <definition>static IntPtr AOTools.ToggleRefPlane.FindWindowEx</definition>
+        <argsstring>(IntPtr hwndParent, IntPtr hwndChildAfter, string lpszClass, string lpszWindow)</argsstring>
+        <name>FindWindowEx</name>
+        <param>
+          <type>IntPtr</type>
+          <declname>hwndParent</declname>
+        </param>
+        <param>
+          <type>IntPtr</type>
+          <declname>hwndChildAfter</declname>
+        </param>
+        <param>
+          <type>string</type>
+          <declname>lpszClass</declname>
+        </param>
+        <param>
+          <type>string</type>
+          <declname>lpszWindow</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="B:/Programming/VisualStudioProjects/RevitProjects/AOTools/AOTools/ToggleRefPlane.cs" line="59" column="1"/>
+        <referencedby refid="class_a_o_tools_1_1_toggle_ref_plane_1aea81f683eadd24a9765de827659b33a1" compoundref="_toggle_ref_plane_8cs" startline="65" endline="75">AOTools.ToggleRefPlane.SetStatusText</referencedby>
+      </memberdef>
+      </sectiondef>
+      <sectiondef kind="private-static-func">
+      <memberdef kind="function" id="class_a_o_tools_1_1_toggle_ref_plane_1aea81f683eadd24a9765de827659b33a1" prot="private" static="yes" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type>void</type>
+        <definition>static void AOTools.ToggleRefPlane.SetStatusText</definition>
+        <argsstring>(string text)</argsstring>
+        <name>SetStatusText</name>
+        <param>
+          <type>string</type>
+          <declname>text</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="B:/Programming/VisualStudioProjects/RevitProjects/AOTools/AOTools/ToggleRefPlane.cs" line="65" column="1" bodyfile="B:/Programming/VisualStudioProjects/RevitProjects/AOTools/AOTools/ToggleRefPlane.cs" bodystart="65" bodyend="75"/>
+        <references refid="class_a_o_tools_1_1_toggle_ref_plane_1a5bb338f1adbf549479d0650fb45539c0">AOTools.ToggleRefPlane.FindWindowEx</references>
+        <references refid="class_a_o_tools_1_1_toggle_ref_plane_1a32dfc563015888369aabeb27c6dc8f46" compoundref="_toggle_ref_plane_8cs" startline="77" endline="81">AOTools.ToggleRefPlane.GetWinHandle</references>
+        <references refid="class_a_o_tools_1_1_toggle_ref_plane_1abba17740cedf4274a1f74f1a5bbf980b">AOTools.ToggleRefPlane.SetWindowText</references>
+        <referencedby refid="class_a_o_tools_1_1_toggle_ref_plane_1a092ab37a3e0e322c5c8b63e917e05487" compoundref="_toggle_ref_plane_8cs" startline="18" endline="48">AOTools.ToggleRefPlane.Execute</referencedby>
+      </memberdef>
+      <memberdef kind="function" id="class_a_o_tools_1_1_toggle_ref_plane_1a32dfc563015888369aabeb27c6dc8f46" prot="private" static="yes" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type>IntPtr</type>
+        <definition>static IntPtr AOTools.ToggleRefPlane.GetWinHandle</definition>
+        <argsstring>()</argsstring>
+        <name>GetWinHandle</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="B:/Programming/VisualStudioProjects/RevitProjects/AOTools/AOTools/ToggleRefPlane.cs" line="77" column="1" bodyfile="B:/Programming/VisualStudioProjects/RevitProjects/AOTools/AOTools/ToggleRefPlane.cs" bodystart="77" bodyend="81"/>
+        <referencedby refid="class_a_o_tools_1_1_toggle_ref_plane_1aea81f683eadd24a9765de827659b33a1" compoundref="_toggle_ref_plane_8cs" startline="65" endline="75">AOTools.ToggleRefPlane.SetStatusText</referencedby>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <inheritancegraph>
+      <node id="126">
+        <label>AOTools.ToggleRefPlane</label>
+        <link refid="class_a_o_tools_1_1_toggle_ref_plane"/>
+        <childnode refid="127" relation="public-inheritance">
+        </childnode>
+      </node>
+      <node id="127">
+        <label>IExternalCommand</label>
+      </node>
+    </inheritancegraph>
+    <collaborationgraph>
+      <node id="128">
+        <label>AOTools.ToggleRefPlane</label>
+        <link refid="class_a_o_tools_1_1_toggle_ref_plane"/>
+        <childnode refid="129" relation="public-inheritance">
+        </childnode>
+      </node>
+      <node id="129">
+        <label>IExternalCommand</label>
+      </node>
+    </collaborationgraph>
+    <location file="B:/Programming/VisualStudioProjects/RevitProjects/AOTools/AOTools/ToggleRefPlane.cs" line="17" column="1" bodyfile="B:/Programming/VisualStudioProjects/RevitProjects/AOTools/AOTools/ToggleRefPlane.cs" bodystart="16" bodyend="82"/>
+    <listofallmembers>
+      <member refid="class_a_o_tools_1_1_toggle_ref_plane_1a092ab37a3e0e322c5c8b63e917e05487" prot="public" virt="non-virtual"><scope>AOTools::ToggleRefPlane</scope><name>Execute</name></member>
+      <member refid="class_a_o_tools_1_1_toggle_ref_plane_1a5bb338f1adbf549479d0650fb45539c0" prot="private" virt="non-virtual"><scope>AOTools::ToggleRefPlane</scope><name>FindWindowEx</name></member>
+      <member refid="class_a_o_tools_1_1_toggle_ref_plane_1a32dfc563015888369aabeb27c6dc8f46" prot="private" virt="non-virtual"><scope>AOTools::ToggleRefPlane</scope><name>GetWinHandle</name></member>
+      <member refid="class_a_o_tools_1_1_toggle_ref_plane_1aea81f683eadd24a9765de827659b33a1" prot="private" virt="non-virtual"><scope>AOTools::ToggleRefPlane</scope><name>SetStatusText</name></member>
+      <member refid="class_a_o_tools_1_1_toggle_ref_plane_1abba17740cedf4274a1f74f1a5bbf980b" prot="private" virt="non-virtual"><scope>AOTools::ToggleRefPlane</scope><name>SetWindowText</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

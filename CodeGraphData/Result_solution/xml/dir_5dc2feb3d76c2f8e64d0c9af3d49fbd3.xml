@@ -1,0 +1,12 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.6">
+  <compounddef id="dir_5dc2feb3d76c2f8e64d0c9af3d49fbd3" kind="dir">
+    <compoundname>B:/Programming</compoundname>
+    <innerdir refid="dir_71d2d9d8cd806f46b142fe6f5554ade0">B:/Programming/VisualStudioProjects</innerdir>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <location file="B:/Programming/"/>
+  </compounddef>
+</doxygen>

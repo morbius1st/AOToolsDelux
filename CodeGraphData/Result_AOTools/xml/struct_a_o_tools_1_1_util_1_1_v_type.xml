@@ -1,0 +1,91 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.6">
+  <compounddef id="struct_a_o_tools_1_1_util_1_1_v_type" kind="struct" prot="package">
+    <compoundname>AOTools::Util::VType</compoundname>
+      <sectiondef kind="property">
+      <memberdef kind="property" id="struct_a_o_tools_1_1_util_1_1_v_type_1aa2eec947e5bbb4aaf7f357bc1db717fb" prot="package" static="no" readable="no" writable="no" gettable="yes" settable="no">
+        <type><ref refid="class_a_o_tools_1_1_util_1a52752671cbfd18b2523526d456625f78" kindref="member">VTypeSub</ref></type>
+        <definition>VTypeSub AOTools.Util.VType.VTSub</definition>
+        <argsstring></argsstring>
+        <name>VTSub</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="B:/Programming/VisualStudioProjects/RevitProjects/AOTools/AOTools/Util.cs" line="65" column="1" bodyfile="B:/Programming/VisualStudioProjects/RevitProjects/AOTools/AOTools/Util.cs" bodystart="65" bodyend="-1"/>
+        <referencedby refid="struct_a_o_tools_1_1_util_1_1_v_type_1a3494ba12c02ff0814b9bfa63661a6c5e" compoundref="_util_8cs" startline="69" endline="74">AOTools.Util.VType.VType</referencedby>
+      </memberdef>
+      <memberdef kind="property" id="struct_a_o_tools_1_1_util_1_1_v_type_1a08aede393153e51e586615a8ef14e8d0" prot="package" static="no" readable="no" writable="no" gettable="yes" settable="no">
+        <type><ref refid="class_a_o_tools_1_1_util_1af33e57ef70e8d887198a6ab8d4a8b223" kindref="member">VTtypeCat</ref></type>
+        <definition>VTtypeCat AOTools.Util.VType.VTCat</definition>
+        <argsstring></argsstring>
+        <name>VTCat</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="B:/Programming/VisualStudioProjects/RevitProjects/AOTools/AOTools/Util.cs" line="66" column="1" bodyfile="B:/Programming/VisualStudioProjects/RevitProjects/AOTools/AOTools/Util.cs" bodystart="66" bodyend="-1"/>
+        <referencedby refid="struct_a_o_tools_1_1_util_1_1_v_type_1a3494ba12c02ff0814b9bfa63661a6c5e" compoundref="_util_8cs" startline="69" endline="74">AOTools.Util.VType.VType</referencedby>
+      </memberdef>
+      <memberdef kind="property" id="struct_a_o_tools_1_1_util_1_1_v_type_1ab911f6d26a99b22333158c30ee5f0eaa" prot="package" static="no" readable="no" writable="no" gettable="yes" settable="no">
+        <type>string</type>
+        <definition>string AOTools.Util.VType.VTName</definition>
+        <argsstring></argsstring>
+        <name>VTName</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="B:/Programming/VisualStudioProjects/RevitProjects/AOTools/AOTools/Util.cs" line="67" column="1" bodyfile="B:/Programming/VisualStudioProjects/RevitProjects/AOTools/AOTools/Util.cs" bodystart="67" bodyend="-1"/>
+        <referencedby refid="struct_a_o_tools_1_1_util_1_1_v_type_1a3494ba12c02ff0814b9bfa63661a6c5e" compoundref="_util_8cs" startline="69" endline="74">AOTools.Util.VType.VType</referencedby>
+      </memberdef>
+      </sectiondef>
+      <sectiondef kind="package-func">
+      <memberdef kind="function" id="struct_a_o_tools_1_1_util_1_1_v_type_1a3494ba12c02ff0814b9bfa63661a6c5e" prot="package" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type></type>
+        <definition>AOTools.Util.VType.VType</definition>
+        <argsstring>(VTypeSub VTSub, VTtypeCat VTCat, string VTName)</argsstring>
+        <name>VType</name>
+        <param>
+          <type><ref refid="class_a_o_tools_1_1_util_1a52752671cbfd18b2523526d456625f78" kindref="member">VTypeSub</ref></type>
+          <declname>VTSub</declname>
+        </param>
+        <param>
+          <type><ref refid="class_a_o_tools_1_1_util_1af33e57ef70e8d887198a6ab8d4a8b223" kindref="member">VTtypeCat</ref></type>
+          <declname>VTCat</declname>
+        </param>
+        <param>
+          <type>string</type>
+          <declname>VTName</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="B:/Programming/VisualStudioProjects/RevitProjects/AOTools/AOTools/Util.cs" line="69" column="1" bodyfile="B:/Programming/VisualStudioProjects/RevitProjects/AOTools/AOTools/Util.cs" bodystart="69" bodyend="74"/>
+        <references refid="struct_a_o_tools_1_1_util_1_1_v_type_1a08aede393153e51e586615a8ef14e8d0" compoundref="_util_8cs" startline="66">AOTools.Util.VType.VTCat</references>
+        <references refid="struct_a_o_tools_1_1_util_1_1_v_type_1ab911f6d26a99b22333158c30ee5f0eaa" compoundref="_util_8cs" startline="67">AOTools.Util.VType.VTName</references>
+        <references refid="struct_a_o_tools_1_1_util_1_1_v_type_1aa2eec947e5bbb4aaf7f357bc1db717fb" compoundref="_util_8cs" startline="65">AOTools.Util.VType.VTSub</references>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <location file="B:/Programming/VisualStudioProjects/RevitProjects/AOTools/AOTools/Util.cs" line="64" column="1" bodyfile="B:/Programming/VisualStudioProjects/RevitProjects/AOTools/AOTools/Util.cs" bodystart="63" bodyend="75"/>
+    <listofallmembers>
+      <member refid="struct_a_o_tools_1_1_util_1_1_v_type_1a08aede393153e51e586615a8ef14e8d0" prot="package" virt="non-virtual"><scope>AOTools::Util::VType</scope><name>VTCat</name></member>
+      <member refid="struct_a_o_tools_1_1_util_1_1_v_type_1ab911f6d26a99b22333158c30ee5f0eaa" prot="package" virt="non-virtual"><scope>AOTools::Util::VType</scope><name>VTName</name></member>
+      <member refid="struct_a_o_tools_1_1_util_1_1_v_type_1aa2eec947e5bbb4aaf7f357bc1db717fb" prot="package" virt="non-virtual"><scope>AOTools::Util::VType</scope><name>VTSub</name></member>
+      <member refid="struct_a_o_tools_1_1_util_1_1_v_type_1a3494ba12c02ff0814b9bfa63661a6c5e" prot="package" virt="non-virtual"><scope>AOTools::Util::VType</scope><name>VType</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

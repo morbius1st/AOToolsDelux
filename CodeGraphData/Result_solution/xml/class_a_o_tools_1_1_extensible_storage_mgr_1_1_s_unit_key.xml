@@ -1,0 +1,287 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.6">
+  <compounddef id="class_a_o_tools_1_1_extensible_storage_mgr_1_1_s_unit_key" kind="class" prot="public">
+    <compoundname>AOTools::ExtensibleStorageMgr::SUnitKey</compoundname>
+    <basecompoundref refid="class_a_o_tools_1_1_extensible_storage_mgr_1_1_schema_key" prot="public" virt="non-virtual">AOTools.ExtensibleStorageMgr.SchemaKey</basecompoundref>
+      <sectiondef kind="property">
+      <memberdef kind="property" id="class_a_o_tools_1_1_extensible_storage_mgr_1_1_s_unit_key_1a94b7e417fc8fb1bc3a719fcb84d46f40" prot="public" static="no" readable="no" writable="no" gettable="yes" settable="no">
+        <type>override int</type>
+        <definition>override int AOTools.ExtensibleStorageMgr.SUnitKey.Value</definition>
+        <argsstring></argsstring>
+        <name>Value</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="B:/Programming/VisualStudioProjects/RevitProjects/AOTools/AOTools/ExtensibleStorageMgr.cs" line="177" column="1" bodyfile="B:/Programming/VisualStudioProjects/RevitProjects/AOTools/AOTools/ExtensibleStorageMgr.cs" bodystart="177" bodyend="-1"/>
+      </memberdef>
+      </sectiondef>
+      <sectiondef kind="public-static-attrib">
+      <memberdef kind="variable" id="class_a_o_tools_1_1_extensible_storage_mgr_1_1_s_unit_key_1a79e0aea67b44f32dd319ef52718db4d5" prot="public" static="yes" mutable="no">
+        <type>readonly <ref refid="class_a_o_tools_1_1_extensible_storage_mgr_1_1_s_unit_key" kindref="compound">SUnitKey</ref></type>
+        <definition>readonly SUnitKey AOTools.ExtensibleStorageMgr.SUnitKey.VERSION_UNIT</definition>
+        <argsstring></argsstring>
+        <name>VERSION_UNIT</name>
+        <initializer>= new <ref refid="class_a_o_tools_1_1_extensible_storage_mgr_1_1_s_unit_key" kindref="compound">SUnitKey</ref>(0)</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="B:/Programming/VisualStudioProjects/RevitProjects/AOTools/AOTools/ExtensibleStorageMgr.cs" line="179" column="1" bodyfile="B:/Programming/VisualStudioProjects/RevitProjects/AOTools/AOTools/ExtensibleStorageMgr.cs" bodystart="179" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="class_a_o_tools_1_1_extensible_storage_mgr_1_1_s_unit_key_1a0ab57c2b439108cd5353c80dae7ef500" prot="public" static="yes" mutable="no">
+        <type>readonly <ref refid="class_a_o_tools_1_1_extensible_storage_mgr_1_1_s_unit_key" kindref="compound">SUnitKey</ref></type>
+        <definition>readonly SUnitKey AOTools.ExtensibleStorageMgr.SUnitKey.STYLE_NAME</definition>
+        <argsstring></argsstring>
+        <name>STYLE_NAME</name>
+        <initializer>= new <ref refid="class_a_o_tools_1_1_extensible_storage_mgr_1_1_s_unit_key" kindref="compound">SUnitKey</ref>(1)</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="B:/Programming/VisualStudioProjects/RevitProjects/AOTools/AOTools/ExtensibleStorageMgr.cs" line="180" column="1" bodyfile="B:/Programming/VisualStudioProjects/RevitProjects/AOTools/AOTools/ExtensibleStorageMgr.cs" bodystart="180" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="class_a_o_tools_1_1_extensible_storage_mgr_1_1_s_unit_key_1a754565095cd8c9a15df946309ba40c4a" prot="public" static="yes" mutable="no">
+        <type>readonly <ref refid="class_a_o_tools_1_1_extensible_storage_mgr_1_1_s_unit_key" kindref="compound">SUnitKey</ref></type>
+        <definition>readonly SUnitKey AOTools.ExtensibleStorageMgr.SUnitKey.CAN_BE_ERASED</definition>
+        <argsstring></argsstring>
+        <name>CAN_BE_ERASED</name>
+        <initializer>= new <ref refid="class_a_o_tools_1_1_extensible_storage_mgr_1_1_s_unit_key" kindref="compound">SUnitKey</ref>(2)</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="B:/Programming/VisualStudioProjects/RevitProjects/AOTools/AOTools/ExtensibleStorageMgr.cs" line="181" column="1" bodyfile="B:/Programming/VisualStudioProjects/RevitProjects/AOTools/AOTools/ExtensibleStorageMgr.cs" bodystart="181" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="class_a_o_tools_1_1_extensible_storage_mgr_1_1_s_unit_key_1a974e0e20be420922542351132afc7e39" prot="public" static="yes" mutable="no">
+        <type>readonly <ref refid="class_a_o_tools_1_1_extensible_storage_mgr_1_1_s_unit_key" kindref="compound">SUnitKey</ref></type>
+        <definition>readonly SUnitKey AOTools.ExtensibleStorageMgr.SUnitKey.UNIT_SYSTEM</definition>
+        <argsstring></argsstring>
+        <name>UNIT_SYSTEM</name>
+        <initializer>= new <ref refid="class_a_o_tools_1_1_extensible_storage_mgr_1_1_s_unit_key" kindref="compound">SUnitKey</ref>(3)</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="B:/Programming/VisualStudioProjects/RevitProjects/AOTools/AOTools/ExtensibleStorageMgr.cs" line="182" column="1" bodyfile="B:/Programming/VisualStudioProjects/RevitProjects/AOTools/AOTools/ExtensibleStorageMgr.cs" bodystart="182" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="class_a_o_tools_1_1_extensible_storage_mgr_1_1_s_unit_key_1a8702be5027fefbd9f64df448dd2a2d74" prot="public" static="yes" mutable="no">
+        <type>readonly <ref refid="class_a_o_tools_1_1_extensible_storage_mgr_1_1_s_unit_key" kindref="compound">SUnitKey</ref></type>
+        <definition>readonly SUnitKey AOTools.ExtensibleStorageMgr.SUnitKey.UNIT_TYPE</definition>
+        <argsstring></argsstring>
+        <name>UNIT_TYPE</name>
+        <initializer>= new <ref refid="class_a_o_tools_1_1_extensible_storage_mgr_1_1_s_unit_key" kindref="compound">SUnitKey</ref>(4)</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="B:/Programming/VisualStudioProjects/RevitProjects/AOTools/AOTools/ExtensibleStorageMgr.cs" line="183" column="1" bodyfile="B:/Programming/VisualStudioProjects/RevitProjects/AOTools/AOTools/ExtensibleStorageMgr.cs" bodystart="183" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="class_a_o_tools_1_1_extensible_storage_mgr_1_1_s_unit_key_1a6c8fea59770096221a8a004bc3aa8f53" prot="public" static="yes" mutable="no">
+        <type>readonly <ref refid="class_a_o_tools_1_1_extensible_storage_mgr_1_1_s_unit_key" kindref="compound">SUnitKey</ref></type>
+        <definition>readonly SUnitKey AOTools.ExtensibleStorageMgr.SUnitKey.ACCURACY</definition>
+        <argsstring></argsstring>
+        <name>ACCURACY</name>
+        <initializer>= new <ref refid="class_a_o_tools_1_1_extensible_storage_mgr_1_1_s_unit_key" kindref="compound">SUnitKey</ref>(5)</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="B:/Programming/VisualStudioProjects/RevitProjects/AOTools/AOTools/ExtensibleStorageMgr.cs" line="184" column="1" bodyfile="B:/Programming/VisualStudioProjects/RevitProjects/AOTools/AOTools/ExtensibleStorageMgr.cs" bodystart="184" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="class_a_o_tools_1_1_extensible_storage_mgr_1_1_s_unit_key_1a671f87cb1f7459457df9eec152522591" prot="public" static="yes" mutable="no">
+        <type>readonly <ref refid="class_a_o_tools_1_1_extensible_storage_mgr_1_1_s_unit_key" kindref="compound">SUnitKey</ref></type>
+        <definition>readonly SUnitKey AOTools.ExtensibleStorageMgr.SUnitKey.DUT</definition>
+        <argsstring></argsstring>
+        <name>DUT</name>
+        <initializer>= new <ref refid="class_a_o_tools_1_1_extensible_storage_mgr_1_1_s_unit_key" kindref="compound">SUnitKey</ref>(6)</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="B:/Programming/VisualStudioProjects/RevitProjects/AOTools/AOTools/ExtensibleStorageMgr.cs" line="185" column="1" bodyfile="B:/Programming/VisualStudioProjects/RevitProjects/AOTools/AOTools/ExtensibleStorageMgr.cs" bodystart="185" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="class_a_o_tools_1_1_extensible_storage_mgr_1_1_s_unit_key_1ac20115b4787355640913246c763711b2" prot="public" static="yes" mutable="no">
+        <type>readonly <ref refid="class_a_o_tools_1_1_extensible_storage_mgr_1_1_s_unit_key" kindref="compound">SUnitKey</ref></type>
+        <definition>readonly SUnitKey AOTools.ExtensibleStorageMgr.SUnitKey.UST</definition>
+        <argsstring></argsstring>
+        <name>UST</name>
+        <initializer>= new <ref refid="class_a_o_tools_1_1_extensible_storage_mgr_1_1_s_unit_key" kindref="compound">SUnitKey</ref>(7)</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="B:/Programming/VisualStudioProjects/RevitProjects/AOTools/AOTools/ExtensibleStorageMgr.cs" line="186" column="1" bodyfile="B:/Programming/VisualStudioProjects/RevitProjects/AOTools/AOTools/ExtensibleStorageMgr.cs" bodystart="186" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="class_a_o_tools_1_1_extensible_storage_mgr_1_1_s_unit_key_1af1ed13cdb6b5cf1475c0993ac9e791e2" prot="public" static="yes" mutable="no">
+        <type>readonly <ref refid="class_a_o_tools_1_1_extensible_storage_mgr_1_1_s_unit_key" kindref="compound">SUnitKey</ref></type>
+        <definition>readonly SUnitKey AOTools.ExtensibleStorageMgr.SUnitKey.SUP_SPACE</definition>
+        <argsstring></argsstring>
+        <name>SUP_SPACE</name>
+        <initializer>= new <ref refid="class_a_o_tools_1_1_extensible_storage_mgr_1_1_s_unit_key" kindref="compound">SUnitKey</ref>(8)</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="B:/Programming/VisualStudioProjects/RevitProjects/AOTools/AOTools/ExtensibleStorageMgr.cs" line="187" column="1" bodyfile="B:/Programming/VisualStudioProjects/RevitProjects/AOTools/AOTools/ExtensibleStorageMgr.cs" bodystart="187" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="class_a_o_tools_1_1_extensible_storage_mgr_1_1_s_unit_key_1ae6c23ba4ea4531a56f76a656f7559237" prot="public" static="yes" mutable="no">
+        <type>readonly <ref refid="class_a_o_tools_1_1_extensible_storage_mgr_1_1_s_unit_key" kindref="compound">SUnitKey</ref></type>
+        <definition>readonly SUnitKey AOTools.ExtensibleStorageMgr.SUnitKey.SUP_LEAD_ZERO</definition>
+        <argsstring></argsstring>
+        <name>SUP_LEAD_ZERO</name>
+        <initializer>= new <ref refid="class_a_o_tools_1_1_extensible_storage_mgr_1_1_s_unit_key" kindref="compound">SUnitKey</ref>(9)</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="B:/Programming/VisualStudioProjects/RevitProjects/AOTools/AOTools/ExtensibleStorageMgr.cs" line="188" column="1" bodyfile="B:/Programming/VisualStudioProjects/RevitProjects/AOTools/AOTools/ExtensibleStorageMgr.cs" bodystart="188" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="class_a_o_tools_1_1_extensible_storage_mgr_1_1_s_unit_key_1a44c1e1020c518ce590e79f7ce214a8b2" prot="public" static="yes" mutable="no">
+        <type>readonly <ref refid="class_a_o_tools_1_1_extensible_storage_mgr_1_1_s_unit_key" kindref="compound">SUnitKey</ref></type>
+        <definition>readonly SUnitKey AOTools.ExtensibleStorageMgr.SUnitKey.SUP_TRAIL_ZERO</definition>
+        <argsstring></argsstring>
+        <name>SUP_TRAIL_ZERO</name>
+        <initializer>= new <ref refid="class_a_o_tools_1_1_extensible_storage_mgr_1_1_s_unit_key" kindref="compound">SUnitKey</ref>(10)</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="B:/Programming/VisualStudioProjects/RevitProjects/AOTools/AOTools/ExtensibleStorageMgr.cs" line="189" column="1" bodyfile="B:/Programming/VisualStudioProjects/RevitProjects/AOTools/AOTools/ExtensibleStorageMgr.cs" bodystart="189" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="class_a_o_tools_1_1_extensible_storage_mgr_1_1_s_unit_key_1a244b91ee91734000a06583462671ae77" prot="public" static="yes" mutable="no">
+        <type>readonly <ref refid="class_a_o_tools_1_1_extensible_storage_mgr_1_1_s_unit_key" kindref="compound">SUnitKey</ref></type>
+        <definition>readonly SUnitKey AOTools.ExtensibleStorageMgr.SUnitKey.USE_DIG_GRP</definition>
+        <argsstring></argsstring>
+        <name>USE_DIG_GRP</name>
+        <initializer>= new <ref refid="class_a_o_tools_1_1_extensible_storage_mgr_1_1_s_unit_key" kindref="compound">SUnitKey</ref>(11)</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="B:/Programming/VisualStudioProjects/RevitProjects/AOTools/AOTools/ExtensibleStorageMgr.cs" line="190" column="1" bodyfile="B:/Programming/VisualStudioProjects/RevitProjects/AOTools/AOTools/ExtensibleStorageMgr.cs" bodystart="190" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="class_a_o_tools_1_1_extensible_storage_mgr_1_1_s_unit_key_1a387b466a30e88529d457db1bc63df347" prot="public" static="yes" mutable="no">
+        <type>readonly <ref refid="class_a_o_tools_1_1_extensible_storage_mgr_1_1_s_unit_key" kindref="compound">SUnitKey</ref></type>
+        <definition>readonly SUnitKey AOTools.ExtensibleStorageMgr.SUnitKey.USE_PLUS_PREFIX</definition>
+        <argsstring></argsstring>
+        <name>USE_PLUS_PREFIX</name>
+        <initializer>= new <ref refid="class_a_o_tools_1_1_extensible_storage_mgr_1_1_s_unit_key" kindref="compound">SUnitKey</ref>(12)</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="B:/Programming/VisualStudioProjects/RevitProjects/AOTools/AOTools/ExtensibleStorageMgr.cs" line="191" column="1" bodyfile="B:/Programming/VisualStudioProjects/RevitProjects/AOTools/AOTools/ExtensibleStorageMgr.cs" bodystart="191" bodyend="-1"/>
+      </memberdef>
+      </sectiondef>
+      <sectiondef kind="public-func">
+      <memberdef kind="function" id="class_a_o_tools_1_1_extensible_storage_mgr_1_1_s_unit_key_1a955315bc5960f7f9771799dda740a9a4" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type></type>
+        <definition>AOTools.ExtensibleStorageMgr.SUnitKey.SUnitKey</definition>
+        <argsstring>(int value)</argsstring>
+        <name>SUnitKey</name>
+        <param>
+          <type>int</type>
+          <declname>value</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="B:/Programming/VisualStudioProjects/RevitProjects/AOTools/AOTools/ExtensibleStorageMgr.cs" line="172" column="1" bodyfile="B:/Programming/VisualStudioProjects/RevitProjects/AOTools/AOTools/ExtensibleStorageMgr.cs" bodystart="172" bodyend="175"/>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <inheritancegraph>
+      <node id="117">
+        <label>AOTools.ExtensibleStorageMgr.SUnitKey</label>
+        <link refid="class_a_o_tools_1_1_extensible_storage_mgr_1_1_s_unit_key"/>
+        <childnode refid="118" relation="public-inheritance">
+        </childnode>
+      </node>
+      <node id="118">
+        <label>SchemaKey</label>
+        <link refid="class_a_o_tools_1_1_extensible_storage_mgr_1_1_schema_key"/>
+      </node>
+    </inheritancegraph>
+    <collaborationgraph>
+      <node id="119">
+        <label>AOTools.ExtensibleStorageMgr.SUnitKey</label>
+        <link refid="class_a_o_tools_1_1_extensible_storage_mgr_1_1_s_unit_key"/>
+        <childnode refid="120" relation="public-inheritance">
+        </childnode>
+        <childnode refid="121" relation="usage">
+          <edgelabel>ACCURACY</edgelabel>
+          <edgelabel>UST</edgelabel>
+          <edgelabel>UNIT_SYSTEM</edgelabel>
+          <edgelabel>CAN_BE_ERASED</edgelabel>
+          <edgelabel>VERSION_UNIT</edgelabel>
+          <edgelabel>USE_DIG_GRP</edgelabel>
+          <edgelabel>SUP_TRAIL_ZERO</edgelabel>
+          <edgelabel>STYLE_NAME</edgelabel>
+          <edgelabel>USE_PLUS_PREFIX</edgelabel>
+          <edgelabel>SUP_SPACE</edgelabel>
+          <edgelabel>...</edgelabel>
+        </childnode>
+      </node>
+      <node id="120">
+        <label>SchemaKey</label>
+        <link refid="class_a_o_tools_1_1_extensible_storage_mgr_1_1_schema_key"/>
+      </node>
+      <node id="121">
+        <label>static</label>
+      </node>
+    </collaborationgraph>
+    <location file="B:/Programming/VisualStudioProjects/RevitProjects/AOTools/AOTools/ExtensibleStorageMgr.cs" line="171" column="1" bodyfile="B:/Programming/VisualStudioProjects/RevitProjects/AOTools/AOTools/ExtensibleStorageMgr.cs" bodystart="170" bodyend="192"/>
+    <listofallmembers>
+      <member refid="class_a_o_tools_1_1_extensible_storage_mgr_1_1_s_unit_key_1a6c8fea59770096221a8a004bc3aa8f53" prot="public" virt="non-virtual"><scope>AOTools::ExtensibleStorageMgr::SUnitKey</scope><name>ACCURACY</name></member>
+      <member refid="class_a_o_tools_1_1_extensible_storage_mgr_1_1_s_unit_key_1a754565095cd8c9a15df946309ba40c4a" prot="public" virt="non-virtual"><scope>AOTools::ExtensibleStorageMgr::SUnitKey</scope><name>CAN_BE_ERASED</name></member>
+      <member refid="class_a_o_tools_1_1_extensible_storage_mgr_1_1_s_unit_key_1a671f87cb1f7459457df9eec152522591" prot="public" virt="non-virtual"><scope>AOTools::ExtensibleStorageMgr::SUnitKey</scope><name>DUT</name></member>
+      <member refid="class_a_o_tools_1_1_extensible_storage_mgr_1_1_s_unit_key_1a0ab57c2b439108cd5353c80dae7ef500" prot="public" virt="non-virtual"><scope>AOTools::ExtensibleStorageMgr::SUnitKey</scope><name>STYLE_NAME</name></member>
+      <member refid="class_a_o_tools_1_1_extensible_storage_mgr_1_1_s_unit_key_1a955315bc5960f7f9771799dda740a9a4" prot="public" virt="non-virtual"><scope>AOTools::ExtensibleStorageMgr::SUnitKey</scope><name>SUnitKey</name></member>
+      <member refid="class_a_o_tools_1_1_extensible_storage_mgr_1_1_s_unit_key_1ae6c23ba4ea4531a56f76a656f7559237" prot="public" virt="non-virtual"><scope>AOTools::ExtensibleStorageMgr::SUnitKey</scope><name>SUP_LEAD_ZERO</name></member>
+      <member refid="class_a_o_tools_1_1_extensible_storage_mgr_1_1_s_unit_key_1af1ed13cdb6b5cf1475c0993ac9e791e2" prot="public" virt="non-virtual"><scope>AOTools::ExtensibleStorageMgr::SUnitKey</scope><name>SUP_SPACE</name></member>
+      <member refid="class_a_o_tools_1_1_extensible_storage_mgr_1_1_s_unit_key_1a44c1e1020c518ce590e79f7ce214a8b2" prot="public" virt="non-virtual"><scope>AOTools::ExtensibleStorageMgr::SUnitKey</scope><name>SUP_TRAIL_ZERO</name></member>
+      <member refid="class_a_o_tools_1_1_extensible_storage_mgr_1_1_s_unit_key_1a974e0e20be420922542351132afc7e39" prot="public" virt="non-virtual"><scope>AOTools::ExtensibleStorageMgr::SUnitKey</scope><name>UNIT_SYSTEM</name></member>
+      <member refid="class_a_o_tools_1_1_extensible_storage_mgr_1_1_s_unit_key_1a8702be5027fefbd9f64df448dd2a2d74" prot="public" virt="non-virtual"><scope>AOTools::ExtensibleStorageMgr::SUnitKey</scope><name>UNIT_TYPE</name></member>
+      <member refid="class_a_o_tools_1_1_extensible_storage_mgr_1_1_s_unit_key_1a244b91ee91734000a06583462671ae77" prot="public" virt="non-virtual"><scope>AOTools::ExtensibleStorageMgr::SUnitKey</scope><name>USE_DIG_GRP</name></member>
+      <member refid="class_a_o_tools_1_1_extensible_storage_mgr_1_1_s_unit_key_1a387b466a30e88529d457db1bc63df347" prot="public" virt="non-virtual"><scope>AOTools::ExtensibleStorageMgr::SUnitKey</scope><name>USE_PLUS_PREFIX</name></member>
+      <member refid="class_a_o_tools_1_1_extensible_storage_mgr_1_1_s_unit_key_1ac20115b4787355640913246c763711b2" prot="public" virt="non-virtual"><scope>AOTools::ExtensibleStorageMgr::SUnitKey</scope><name>UST</name></member>
+      <member refid="class_a_o_tools_1_1_extensible_storage_mgr_1_1_s_unit_key_1a94b7e417fc8fb1bc3a719fcb84d46f40" prot="public" virt="non-virtual"><scope>AOTools::ExtensibleStorageMgr::SUnitKey</scope><name>Value</name></member>
+      <member refid="class_a_o_tools_1_1_extensible_storage_mgr_1_1_s_unit_key_1a79e0aea67b44f32dd319ef52718db4d5" prot="public" virt="non-virtual"><scope>AOTools::ExtensibleStorageMgr::SUnitKey</scope><name>VERSION_UNIT</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

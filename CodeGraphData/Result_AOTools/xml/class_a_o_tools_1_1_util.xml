@@ -1,0 +1,319 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.6">
+  <compounddef id="class_a_o_tools_1_1_util" kind="class" prot="package">
+    <compoundname>AOTools::Util</compoundname>
+    <innerclass refid="struct_a_o_tools_1_1_util_1_1_v_type" prot="package">AOTools::Util::VType</innerclass>
+      <sectiondef kind="package-type">
+      <memberdef kind="enum" id="class_a_o_tools_1_1_util_1af33e57ef70e8d887198a6ab8d4a8b223" prot="package" static="no">
+        <name>VTtypeCat</name>
+        <enumvalue id="class_a_o_tools_1_1_util_1af33e57ef70e8d887198a6ab8d4a8b223a03570470bad94692ce93e32700d2e1cb" prot="public">
+          <name>OTHER</name>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="class_a_o_tools_1_1_util_1af33e57ef70e8d887198a6ab8d4a8b223a8aab70beaf1a7c7e4cce83dedea203d1" prot="public">
+          <name>D2_WITHPLANE</name>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="class_a_o_tools_1_1_util_1af33e57ef70e8d887198a6ab8d4a8b223a1dec8b2200f65aba35fe8953e3feda1d" prot="public">
+          <name>D2_WITHOUTPLANE</name>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="class_a_o_tools_1_1_util_1af33e57ef70e8d887198a6ab8d4a8b223a6025176b456d397b80c8fdc143812c3d" prot="public">
+          <name>D3_WITHPLANE</name>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="B:/Programming/VisualStudioProjects/RevitProjects/AOTools/AOTools/Util.cs" line="46" column="1" bodyfile="B:/Programming/VisualStudioProjects/RevitProjects/AOTools/AOTools/Util.cs" bodystart="45" bodyend="51"/>
+      </memberdef>
+      <memberdef kind="enum" id="class_a_o_tools_1_1_util_1a52752671cbfd18b2523526d456625f78" prot="package" static="no">
+        <name>VTypeSub</name>
+        <enumvalue id="class_a_o_tools_1_1_util_1a52752671cbfd18b2523526d456625f78a03570470bad94692ce93e32700d2e1cb" prot="public">
+          <name>OTHER</name>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="class_a_o_tools_1_1_util_1a52752671cbfd18b2523526d456625f78aa28a6b3ecbc588e0eb8289fb7894e0db" prot="public">
+          <name>D2_HORIZONTAL</name>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="class_a_o_tools_1_1_util_1a52752671cbfd18b2523526d456625f78a7007778b0a2be315c6d319386fc7ee9c" prot="public">
+          <name>D2_VERTICAL</name>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="class_a_o_tools_1_1_util_1a52752671cbfd18b2523526d456625f78adc2bbbb076b8b5373439b62730cabef7" prot="public">
+          <name>D2_DRAFTING</name>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="class_a_o_tools_1_1_util_1a52752671cbfd18b2523526d456625f78a3733d7066d5e10307238df0f9f12a557" prot="public">
+          <name>D2_SHEET</name>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <enumvalue id="class_a_o_tools_1_1_util_1a52752671cbfd18b2523526d456625f78ab3c1a788c3101cc7896995dd41dca928" prot="public">
+          <name>D3_VIEW</name>
+          <briefdescription>
+          </briefdescription>
+          <detaileddescription>
+          </detaileddescription>
+        </enumvalue>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="B:/Programming/VisualStudioProjects/RevitProjects/AOTools/AOTools/Util.cs" line="54" column="1" bodyfile="B:/Programming/VisualStudioProjects/RevitProjects/AOTools/AOTools/Util.cs" bodystart="53" bodyend="61"/>
+      </memberdef>
+      </sectiondef>
+      <sectiondef kind="public-static-attrib">
+      <memberdef kind="variable" id="class_a_o_tools_1_1_util_1adee522fcd350d1ae4c9edf154c0c9918" prot="public" static="yes" mutable="no">
+        <type><ref refid="class_a_o_tools_1_1_revit_add_ins" kindref="compound">RevitAddIns</ref></type>
+        <definition>RevitAddIns AOTools.Util.addinManifest</definition>
+        <argsstring></argsstring>
+        <name>addinManifest</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="B:/Programming/VisualStudioProjects/RevitProjects/AOTools/AOTools/Util.cs" line="17" column="1" bodyfile="B:/Programming/VisualStudioProjects/RevitProjects/AOTools/AOTools/Util.cs" bodystart="17" bodyend="-1"/>
+        <referencedby refid="class_a_o_tools_1_1_util_1a7908578571ea4b01841552963ae0e336" compoundref="_util_8cs" startline="125" endline="133">AOTools.Util.GetVendorId</referencedby>
+        <referencedby refid="class_a_o_tools_1_1_util_1a2e79a835bf42f81577fa109760c23b62" compoundref="_util_8cs" startline="113" endline="123">AOTools.Util.ReadManifest</referencedby>
+      </memberdef>
+      </sectiondef>
+      <sectiondef kind="package-attrib">
+      <memberdef kind="variable" id="class_a_o_tools_1_1_util_1ae220f7f6ef5ce5bf5269cf11d321bfea" prot="package" static="no" mutable="no">
+        <type>const ObjectSnapTypes</type>
+        <definition>const ObjectSnapTypes AOTools.Util.snaps</definition>
+        <argsstring></argsstring>
+        <name>snaps</name>
+        <initializer>=
+			ObjectSnapTypes.Centers | ObjectSnapTypes.Endpoints | ObjectSnapTypes.Intersections |
+			ObjectSnapTypes.Midpoints | ObjectSnapTypes.Nearest | ObjectSnapTypes.Perpendicular |
+			ObjectSnapTypes.Quadrants | ObjectSnapTypes.Tangents</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="B:/Programming/VisualStudioProjects/RevitProjects/AOTools/AOTools/Util.cs" line="30" column="1" bodyfile="B:/Programming/VisualStudioProjects/RevitProjects/AOTools/AOTools/Util.cs" bodystart="30" bodyend="-1"/>
+      </memberdef>
+      </sectiondef>
+      <sectiondef kind="private-static-attrib">
+      <memberdef kind="variable" id="class_a_o_tools_1_1_util_1af5a797e834c994747dd938c0b754b8ce" prot="private" static="yes" mutable="no">
+        <type>Element</type>
+        <definition>Element AOTools.Util._projBasePt</definition>
+        <argsstring></argsstring>
+        <name>_projBasePt</name>
+        <initializer>= null</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="B:/Programming/VisualStudioProjects/RevitProjects/AOTools/AOTools/Util.cs" line="135" column="1" bodyfile="B:/Programming/VisualStudioProjects/RevitProjects/AOTools/AOTools/Util.cs" bodystart="135" bodyend="-1"/>
+        <referencedby refid="class_a_o_tools_1_1_util_1abaabaafcee9ff3d888a5007b87a570e0" compoundref="_util_8cs" startline="138" endline="160">AOTools.Util.GetProjectBasepoint</referencedby>
+      </memberdef>
+      </sectiondef>
+      <sectiondef kind="public-static-func">
+      <memberdef kind="function" id="class_a_o_tools_1_1_util_1a5c332baf12a3e123eedb3972d651e7cb" prot="public" static="yes" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type>void</type>
+        <definition>static void AOTools.Util.logMsgDbLn</definition>
+        <argsstring>(string msg1, string msg2=&quot;&quot;)</argsstring>
+        <name>logMsgDbLn</name>
+        <param>
+          <type>string</type>
+          <declname>msg1</declname>
+        </param>
+        <param>
+          <type>string</type>
+          <declname>msg2</declname>
+          <defval>&quot;&quot;</defval>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="B:/Programming/VisualStudioProjects/RevitProjects/AOTools/AOTools/Util.cs" line="20" column="1" bodyfile="B:/Programming/VisualStudioProjects/RevitProjects/AOTools/AOTools/Util.cs" bodystart="20" bodyend="23"/>
+        <referencedby refid="class_a_o_tools_1_1_util_1a3faf68fea47bdcc427e926a68dadc5ec" compoundref="_util_8cs" startline="25" endline="28">AOTools.Util.logMsgDbLn2</referencedby>
+      </memberdef>
+      <memberdef kind="function" id="class_a_o_tools_1_1_util_1a3faf68fea47bdcc427e926a68dadc5ec" prot="public" static="yes" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type>void</type>
+        <definition>static void AOTools.Util.logMsgDbLn2</definition>
+        <argsstring>(string msg1, string msg2=&quot;&quot;)</argsstring>
+        <name>logMsgDbLn2</name>
+        <param>
+          <type>string</type>
+          <declname>msg1</declname>
+        </param>
+        <param>
+          <type>string</type>
+          <declname>msg2</declname>
+          <defval>&quot;&quot;</defval>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="B:/Programming/VisualStudioProjects/RevitProjects/AOTools/AOTools/Util.cs" line="25" column="1" bodyfile="B:/Programming/VisualStudioProjects/RevitProjects/AOTools/AOTools/Util.cs" bodystart="25" bodyend="28"/>
+        <references refid="class_a_o_tools_1_1_util_1a5c332baf12a3e123eedb3972d651e7cb" compoundref="_util_8cs" startline="20" endline="23">AOTools.Util.logMsgDbLn</references>
+      </memberdef>
+      <memberdef kind="function" id="class_a_o_tools_1_1_util_1ad961073b5c2e22e495a301a5ad6fb2ee" prot="public" static="yes" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type>string</type>
+        <definition>static string AOTools.Util.FormatLengthNumber</definition>
+        <argsstring>(double length, Units units)</argsstring>
+        <name>FormatLengthNumber</name>
+        <param>
+          <type>double</type>
+          <declname>length</declname>
+        </param>
+        <param>
+          <type>Units</type>
+          <declname>units</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="B:/Programming/VisualStudioProjects/RevitProjects/AOTools/AOTools/Util.cs" line="35" column="1" bodyfile="B:/Programming/VisualStudioProjects/RevitProjects/AOTools/AOTools/Util.cs" bodystart="35" bodyend="40"/>
+      </memberdef>
+      <memberdef kind="function" id="class_a_o_tools_1_1_util_1a7908578571ea4b01841552963ae0e336" prot="public" static="yes" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type>string</type>
+        <definition>static string AOTools.Util.GetVendorId</definition>
+        <argsstring>()</argsstring>
+        <name>GetVendorId</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="B:/Programming/VisualStudioProjects/RevitProjects/AOTools/AOTools/Util.cs" line="125" column="1" bodyfile="B:/Programming/VisualStudioProjects/RevitProjects/AOTools/AOTools/Util.cs" bodystart="125" bodyend="133"/>
+        <references refid="class_a_o_tools_1_1_util_1adee522fcd350d1ae4c9edf154c0c9918" compoundref="_util_8cs" startline="17">AOTools.Util.addinManifest</references>
+        <references refid="class_a_o_tools_1_1_util_1a2e79a835bf42f81577fa109760c23b62" compoundref="_util_8cs" startline="113" endline="123">AOTools.Util.ReadManifest</references>
+      </memberdef>
+      <memberdef kind="function" id="class_a_o_tools_1_1_util_1abaabaafcee9ff3d888a5007b87a570e0" prot="public" static="yes" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type>Element</type>
+        <definition>static Element AOTools.Util.GetProjectBasepoint</definition>
+        <argsstring>()</argsstring>
+        <name>GetProjectBasepoint</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="B:/Programming/VisualStudioProjects/RevitProjects/AOTools/AOTools/Util.cs" line="138" column="1" bodyfile="B:/Programming/VisualStudioProjects/RevitProjects/AOTools/AOTools/Util.cs" bodystart="138" bodyend="160"/>
+        <references refid="class_a_o_tools_1_1_util_1af5a797e834c994747dd938c0b754b8ce" compoundref="_util_8cs" startline="135">AOTools.Util._projBasePt</references>
+      </memberdef>
+      </sectiondef>
+      <sectiondef kind="package-static-func">
+      <memberdef kind="function" id="class_a_o_tools_1_1_util_1a24e153c6360d9f5233d44ae434f5f6c5" prot="package" static="yes" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type><ref refid="struct_a_o_tools_1_1_util_1_1_v_type" kindref="compound">VType</ref></type>
+        <definition>static VType AOTools.Util.GetViewType</definition>
+        <argsstring>(Autodesk.Revit.DB.View v)</argsstring>
+        <name>GetViewType</name>
+        <param>
+          <type><ref refid="_dx_measure_8cs_1a301ccf16c9f344c63aa03eca4789cb23" kindref="member">Autodesk.Revit.DB.View</ref></type>
+          <declname>v</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="B:/Programming/VisualStudioProjects/RevitProjects/AOTools/AOTools/Util.cs" line="77" column="1" bodyfile="B:/Programming/VisualStudioProjects/RevitProjects/AOTools/AOTools/Util.cs" bodystart="77" bodyend="111"/>
+      </memberdef>
+      </sectiondef>
+      <sectiondef kind="private-static-func">
+      <memberdef kind="function" id="class_a_o_tools_1_1_util_1a2e79a835bf42f81577fa109760c23b62" prot="private" static="yes" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type>void</type>
+        <definition>static void AOTools.Util.ReadManifest</definition>
+        <argsstring>()</argsstring>
+        <name>ReadManifest</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="B:/Programming/VisualStudioProjects/RevitProjects/AOTools/AOTools/Util.cs" line="113" column="1" bodyfile="B:/Programming/VisualStudioProjects/RevitProjects/AOTools/AOTools/Util.cs" bodystart="113" bodyend="123"/>
+        <references refid="class_a_o_tools_1_1_util_1adee522fcd350d1ae4c9edf154c0c9918" compoundref="_util_8cs" startline="17">AOTools.Util.addinManifest</references>
+        <references refid="class_a_o_tools_1_1_app_ribbon_1a5adbf25dea1fa317feee9918957eb06b" compoundref="_app_ribbon_8cs" startline="25">AOTools.AppRibbon.APP_NAME</references>
+        <referencedby refid="class_a_o_tools_1_1_util_1a7908578571ea4b01841552963ae0e336" compoundref="_util_8cs" startline="125" endline="133">AOTools.Util.GetVendorId</referencedby>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <collaborationgraph>
+      <node id="142">
+        <label>AOTools.Util</label>
+        <link refid="class_a_o_tools_1_1_util"/>
+        <childnode refid="143" relation="usage">
+          <edgelabel>addinManifest</edgelabel>
+          <edgelabel>_projBasePt</edgelabel>
+        </childnode>
+      </node>
+      <node id="143">
+        <label>static</label>
+      </node>
+    </collaborationgraph>
+    <location file="B:/Programming/VisualStudioProjects/RevitProjects/AOTools/AOTools/Util.cs" line="16" column="1" bodyfile="B:/Programming/VisualStudioProjects/RevitProjects/AOTools/AOTools/Util.cs" bodystart="15" bodyend="163"/>
+    <listofallmembers>
+      <member refid="class_a_o_tools_1_1_util_1af5a797e834c994747dd938c0b754b8ce" prot="private" virt="non-virtual"><scope>AOTools::Util</scope><name>_projBasePt</name></member>
+      <member refid="class_a_o_tools_1_1_util_1adee522fcd350d1ae4c9edf154c0c9918" prot="public" virt="non-virtual"><scope>AOTools::Util</scope><name>addinManifest</name></member>
+      <member refid="class_a_o_tools_1_1_util_1ad961073b5c2e22e495a301a5ad6fb2ee" prot="public" virt="non-virtual"><scope>AOTools::Util</scope><name>FormatLengthNumber</name></member>
+      <member refid="class_a_o_tools_1_1_util_1abaabaafcee9ff3d888a5007b87a570e0" prot="public" virt="non-virtual"><scope>AOTools::Util</scope><name>GetProjectBasepoint</name></member>
+      <member refid="class_a_o_tools_1_1_util_1a7908578571ea4b01841552963ae0e336" prot="public" virt="non-virtual"><scope>AOTools::Util</scope><name>GetVendorId</name></member>
+      <member refid="class_a_o_tools_1_1_util_1a24e153c6360d9f5233d44ae434f5f6c5" prot="package" virt="non-virtual"><scope>AOTools::Util</scope><name>GetViewType</name></member>
+      <member refid="class_a_o_tools_1_1_util_1a5c332baf12a3e123eedb3972d651e7cb" prot="public" virt="non-virtual"><scope>AOTools::Util</scope><name>logMsgDbLn</name></member>
+      <member refid="class_a_o_tools_1_1_util_1a3faf68fea47bdcc427e926a68dadc5ec" prot="public" virt="non-virtual"><scope>AOTools::Util</scope><name>logMsgDbLn2</name></member>
+      <member refid="class_a_o_tools_1_1_util_1a2e79a835bf42f81577fa109760c23b62" prot="private" virt="non-virtual"><scope>AOTools::Util</scope><name>ReadManifest</name></member>
+      <member refid="class_a_o_tools_1_1_util_1ae220f7f6ef5ce5bf5269cf11d321bfea" prot="package" virt="non-virtual"><scope>AOTools::Util</scope><name>snaps</name></member>
+      <member refid="class_a_o_tools_1_1_util_1af33e57ef70e8d887198a6ab8d4a8b223" prot="package" virt="non-virtual"><scope>AOTools::Util</scope><name>VTtypeCat</name></member>
+      <member refid="class_a_o_tools_1_1_util_1a52752671cbfd18b2523526d456625f78" prot="package" virt="non-virtual"><scope>AOTools::Util</scope><name>VTypeSub</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

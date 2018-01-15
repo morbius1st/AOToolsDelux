@@ -1,0 +1,58 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.6">
+  <compounddef id="class_a_o_tools_1_1_revit_add_ins" kind="class" prot="public">
+    <compoundname>AOTools::RevitAddIns</compoundname>
+      <sectiondef kind="private-attrib">
+      <memberdef kind="variable" id="class_a_o_tools_1_1_revit_add_ins_1ae0fae81e208a3222c33ce5f1cffd32ed" prot="private" static="no" mutable="no">
+        <type><ref refid="class_a_o_tools_1_1_revit_add_ins_add_in" kindref="compound">RevitAddInsAddIn</ref>[]</type>
+        <definition>RevitAddInsAddIn [] AOTools.RevitAddIns.addInField</definition>
+        <argsstring></argsstring>
+        <name>addInField</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="B:/Programming/VisualStudioProjects/RevitProjects/AOTools/AOTools/AddinClasses.cs" line="26" column="1" bodyfile="B:/Programming/VisualStudioProjects/RevitProjects/AOTools/AOTools/AddinClasses.cs" bodystart="26" bodyend="-1"/>
+      </memberdef>
+      </sectiondef>
+      <sectiondef kind="property">
+      <memberdef kind="property" id="class_a_o_tools_1_1_revit_add_ins_1a3203396b43f5f448914df1a368772fd2" prot="public" static="no" readable="no" writable="no" gettable="yes" settable="yes">
+        <type><ref refid="class_a_o_tools_1_1_revit_add_ins_add_in" kindref="compound">RevitAddInsAddIn</ref>[]</type>
+        <definition>RevitAddInsAddIn [] AOTools.RevitAddIns.AddIn</definition>
+        <argsstring></argsstring>
+        <name>AddIn</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="B:/Programming/VisualStudioProjects/RevitProjects/AOTools/AOTools/AddinClasses.cs" line="30" column="1" bodyfile="B:/Programming/VisualStudioProjects/RevitProjects/AOTools/AOTools/AddinClasses.cs" bodystart="31" bodyend="-1"/>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <collaborationgraph>
+      <node id="47">
+        <label>AOTools.RevitAddInsAddIn</label>
+        <link refid="class_a_o_tools_1_1_revit_add_ins_add_in"/>
+      </node>
+      <node id="46">
+        <label>AOTools.RevitAddIns</label>
+        <link refid="class_a_o_tools_1_1_revit_add_ins"/>
+        <childnode refid="47" relation="usage">
+          <edgelabel>addInField</edgelabel>
+        </childnode>
+      </node>
+    </collaborationgraph>
+    <location file="B:/Programming/VisualStudioProjects/RevitProjects/AOTools/AOTools/AddinClasses.cs" line="24" column="1" bodyfile="B:/Programming/VisualStudioProjects/RevitProjects/AOTools/AOTools/AddinClasses.cs" bodystart="23" bodyend="41"/>
+    <listofallmembers>
+      <member refid="class_a_o_tools_1_1_revit_add_ins_1a3203396b43f5f448914df1a368772fd2" prot="public" virt="non-virtual"><scope>AOTools::RevitAddIns</scope><name>AddIn</name></member>
+      <member refid="class_a_o_tools_1_1_revit_add_ins_1ae0fae81e208a3222c33ce5f1cffd32ed" prot="private" virt="non-virtual"><scope>AOTools::RevitAddIns</scope><name>addInField</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

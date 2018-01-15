@@ -1,0 +1,45 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.6">
+  <compounddef id="class_utility_library_1_1_rich_text_box_extensions" kind="class" prot="public">
+    <compoundname>UtilityLibrary::RichTextBoxExtensions</compoundname>
+      <sectiondef kind="public-static-func">
+      <memberdef kind="function" id="class_utility_library_1_1_rich_text_box_extensions_1ad1ea023241bd33937fdbd370f0bf203f" prot="public" static="yes" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type>void</type>
+        <definition>static void UtilityLibrary.RichTextBoxExtensions.AppendText</definition>
+        <argsstring>(this RichTextBox rtb, string text, Color color, Font font)</argsstring>
+        <name>AppendText</name>
+        <param>
+          <type>this RichTextBox</type>
+          <declname>rtb</declname>
+        </param>
+        <param>
+          <type>string</type>
+          <declname>text</declname>
+        </param>
+        <param>
+          <type>Color</type>
+          <declname>color</declname>
+        </param>
+        <param>
+          <type>Font</type>
+          <declname>font</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="B:/Programming/VisualStudioProjects/UtilityLibrary/UtilityLibrary/MessageUtilities.cs" line="252" column="1" bodyfile="B:/Programming/VisualStudioProjects/UtilityLibrary/UtilityLibrary/MessageUtilities.cs" bodystart="252" bodyend="280"/>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <location file="B:/Programming/VisualStudioProjects/UtilityLibrary/UtilityLibrary/MessageUtilities.cs" line="251" column="1" bodyfile="B:/Programming/VisualStudioProjects/UtilityLibrary/UtilityLibrary/MessageUtilities.cs" bodystart="250" bodyend="281"/>
+    <listofallmembers>
+      <member refid="class_utility_library_1_1_rich_text_box_extensions_1ad1ea023241bd33937fdbd370f0bf203f" prot="public" virt="non-virtual"><scope>UtilityLibrary::RichTextBoxExtensions</scope><name>AppendText</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

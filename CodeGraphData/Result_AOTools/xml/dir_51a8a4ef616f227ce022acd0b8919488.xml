@@ -1,0 +1,12 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.6">
+  <compounddef id="dir_51a8a4ef616f227ce022acd0b8919488" kind="dir">
+    <compoundname>B:/Programming/VisualStudioProjects/RevitProjects</compoundname>
+    <innerdir refid="dir_27304fd64d6a38776b5fd4ba776c732b">B:/Programming/VisualStudioProjects/RevitProjects/AOTools</innerdir>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <location file="B:/Programming/VisualStudioProjects/RevitProjects/"/>
+  </compounddef>
+</doxygen>

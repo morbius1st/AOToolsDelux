@@ -1,0 +1,177 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.6">
+  <compounddef id="class_a_o_tools_1_1_extensible_storage_mgr_1_1_s_basic_key" kind="class" prot="public">
+    <compoundname>AOTools::ExtensibleStorageMgr::SBasicKey</compoundname>
+    <basecompoundref refid="class_a_o_tools_1_1_extensible_storage_mgr_1_1_schema_key" prot="public" virt="non-virtual">AOTools.ExtensibleStorageMgr.SchemaKey</basecompoundref>
+      <sectiondef kind="property">
+      <memberdef kind="property" id="class_a_o_tools_1_1_extensible_storage_mgr_1_1_s_basic_key_1a501d32c2acd82528bb8e2a2794f6174e" prot="public" static="no" readable="no" writable="no" gettable="yes" settable="no">
+        <type>override int</type>
+        <definition>override int AOTools.ExtensibleStorageMgr.SBasicKey.Value</definition>
+        <argsstring></argsstring>
+        <name>Value</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="B:/Programming/VisualStudioProjects/RevitProjects/AOTools/AOTools/ExtensibleStorageMgr.cs" line="160" column="1" bodyfile="B:/Programming/VisualStudioProjects/RevitProjects/AOTools/AOTools/ExtensibleStorageMgr.cs" bodystart="160" bodyend="-1"/>
+      </memberdef>
+      </sectiondef>
+      <sectiondef kind="public-static-attrib">
+      <memberdef kind="variable" id="class_a_o_tools_1_1_extensible_storage_mgr_1_1_s_basic_key_1a701398993901011c0190d9993b16546a" prot="public" static="yes" mutable="no">
+        <type>readonly <ref refid="class_a_o_tools_1_1_extensible_storage_mgr_1_1_s_basic_key" kindref="compound">SBasicKey</ref></type>
+        <definition>readonly SBasicKey AOTools.ExtensibleStorageMgr.SBasicKey.UNDEFINED</definition>
+        <argsstring></argsstring>
+        <name>UNDEFINED</name>
+        <initializer>= new <ref refid="class_a_o_tools_1_1_extensible_storage_mgr_1_1_s_basic_key" kindref="compound">SBasicKey</ref>(-1)</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="B:/Programming/VisualStudioProjects/RevitProjects/AOTools/AOTools/ExtensibleStorageMgr.cs" line="162" column="1" bodyfile="B:/Programming/VisualStudioProjects/RevitProjects/AOTools/AOTools/ExtensibleStorageMgr.cs" bodystart="162" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="class_a_o_tools_1_1_extensible_storage_mgr_1_1_s_basic_key_1ae7e1329d69d59050149c4556c6bbbb21" prot="public" static="yes" mutable="no">
+        <type>readonly <ref refid="class_a_o_tools_1_1_extensible_storage_mgr_1_1_s_basic_key" kindref="compound">SBasicKey</ref></type>
+        <definition>readonly SBasicKey AOTools.ExtensibleStorageMgr.SBasicKey.VERSION_BASIC</definition>
+        <argsstring></argsstring>
+        <name>VERSION_BASIC</name>
+        <initializer>= new <ref refid="class_a_o_tools_1_1_extensible_storage_mgr_1_1_s_basic_key" kindref="compound">SBasicKey</ref>(0)</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="B:/Programming/VisualStudioProjects/RevitProjects/AOTools/AOTools/ExtensibleStorageMgr.cs" line="163" column="1" bodyfile="B:/Programming/VisualStudioProjects/RevitProjects/AOTools/AOTools/ExtensibleStorageMgr.cs" bodystart="163" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="class_a_o_tools_1_1_extensible_storage_mgr_1_1_s_basic_key_1a9085c8ce54b7d0ffcb19762cf5a26c06" prot="public" static="yes" mutable="no">
+        <type>readonly <ref refid="class_a_o_tools_1_1_extensible_storage_mgr_1_1_s_basic_key" kindref="compound">SBasicKey</ref></type>
+        <definition>readonly SBasicKey AOTools.ExtensibleStorageMgr.SBasicKey.USE_OFFICE</definition>
+        <argsstring></argsstring>
+        <name>USE_OFFICE</name>
+        <initializer>= new <ref refid="class_a_o_tools_1_1_extensible_storage_mgr_1_1_s_basic_key" kindref="compound">SBasicKey</ref>(1)</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="B:/Programming/VisualStudioProjects/RevitProjects/AOTools/AOTools/ExtensibleStorageMgr.cs" line="164" column="1" bodyfile="B:/Programming/VisualStudioProjects/RevitProjects/AOTools/AOTools/ExtensibleStorageMgr.cs" bodystart="164" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="class_a_o_tools_1_1_extensible_storage_mgr_1_1_s_basic_key_1a1c944921740e9e3798b95cf8f60079f3" prot="public" static="yes" mutable="no">
+        <type>readonly <ref refid="class_a_o_tools_1_1_extensible_storage_mgr_1_1_s_basic_key" kindref="compound">SBasicKey</ref></type>
+        <definition>readonly SBasicKey AOTools.ExtensibleStorageMgr.SBasicKey.AUTO_RESTORE</definition>
+        <argsstring></argsstring>
+        <name>AUTO_RESTORE</name>
+        <initializer>= new <ref refid="class_a_o_tools_1_1_extensible_storage_mgr_1_1_s_basic_key" kindref="compound">SBasicKey</ref>(2)</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="B:/Programming/VisualStudioProjects/RevitProjects/AOTools/AOTools/ExtensibleStorageMgr.cs" line="165" column="1" bodyfile="B:/Programming/VisualStudioProjects/RevitProjects/AOTools/AOTools/ExtensibleStorageMgr.cs" bodystart="165" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="class_a_o_tools_1_1_extensible_storage_mgr_1_1_s_basic_key_1a5f9f5122b133359702b3e892a3fec83d" prot="public" static="yes" mutable="no">
+        <type>readonly <ref refid="class_a_o_tools_1_1_extensible_storage_mgr_1_1_s_basic_key" kindref="compound">SBasicKey</ref></type>
+        <definition>readonly SBasicKey AOTools.ExtensibleStorageMgr.SBasicKey.COUNT</definition>
+        <argsstring></argsstring>
+        <name>COUNT</name>
+        <initializer>= new <ref refid="class_a_o_tools_1_1_extensible_storage_mgr_1_1_s_basic_key" kindref="compound">SBasicKey</ref>(3)</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="B:/Programming/VisualStudioProjects/RevitProjects/AOTools/AOTools/ExtensibleStorageMgr.cs" line="166" column="1" bodyfile="B:/Programming/VisualStudioProjects/RevitProjects/AOTools/AOTools/ExtensibleStorageMgr.cs" bodystart="166" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="class_a_o_tools_1_1_extensible_storage_mgr_1_1_s_basic_key_1a859ad94d4f0b4cb949fd59f34e6f0ccc" prot="public" static="yes" mutable="no">
+        <type>readonly <ref refid="class_a_o_tools_1_1_extensible_storage_mgr_1_1_s_basic_key" kindref="compound">SBasicKey</ref></type>
+        <definition>readonly SBasicKey AOTools.ExtensibleStorageMgr.SBasicKey.CURRENT</definition>
+        <argsstring></argsstring>
+        <name>CURRENT</name>
+        <initializer>= new <ref refid="class_a_o_tools_1_1_extensible_storage_mgr_1_1_s_basic_key" kindref="compound">SBasicKey</ref>(4)</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="B:/Programming/VisualStudioProjects/RevitProjects/AOTools/AOTools/ExtensibleStorageMgr.cs" line="167" column="1" bodyfile="B:/Programming/VisualStudioProjects/RevitProjects/AOTools/AOTools/ExtensibleStorageMgr.cs" bodystart="167" bodyend="-1"/>
+      </memberdef>
+      </sectiondef>
+      <sectiondef kind="public-func">
+      <memberdef kind="function" id="class_a_o_tools_1_1_extensible_storage_mgr_1_1_s_basic_key_1a46176f529c7a07bb15d7e6f00609795a" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type></type>
+        <definition>AOTools.ExtensibleStorageMgr.SBasicKey.SBasicKey</definition>
+        <argsstring>(int value)</argsstring>
+        <name>SBasicKey</name>
+        <param>
+          <type>int</type>
+          <declname>value</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="B:/Programming/VisualStudioProjects/RevitProjects/AOTools/AOTools/ExtensibleStorageMgr.cs" line="155" column="1" bodyfile="B:/Programming/VisualStudioProjects/RevitProjects/AOTools/AOTools/ExtensibleStorageMgr.cs" bodystart="155" bodyend="158"/>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <inheritancegraph>
+      <node id="52">
+        <label>AOTools.ExtensibleStorageMgr.SBasicKey</label>
+        <link refid="class_a_o_tools_1_1_extensible_storage_mgr_1_1_s_basic_key"/>
+        <childnode refid="53" relation="public-inheritance">
+        </childnode>
+      </node>
+      <node id="53">
+        <label>SchemaKey</label>
+        <link refid="class_a_o_tools_1_1_extensible_storage_mgr_1_1_schema_key"/>
+      </node>
+    </inheritancegraph>
+    <collaborationgraph>
+      <node id="54">
+        <label>AOTools.ExtensibleStorageMgr.SBasicKey</label>
+        <link refid="class_a_o_tools_1_1_extensible_storage_mgr_1_1_s_basic_key"/>
+        <childnode refid="55" relation="public-inheritance">
+        </childnode>
+        <childnode refid="56" relation="usage">
+          <edgelabel>UNDEFINED</edgelabel>
+          <edgelabel>USE_OFFICE</edgelabel>
+          <edgelabel>VERSION_BASIC</edgelabel>
+          <edgelabel>CURRENT</edgelabel>
+          <edgelabel>COUNT</edgelabel>
+          <edgelabel>AUTO_RESTORE</edgelabel>
+        </childnode>
+      </node>
+      <node id="55">
+        <label>SchemaKey</label>
+        <link refid="class_a_o_tools_1_1_extensible_storage_mgr_1_1_schema_key"/>
+      </node>
+      <node id="56">
+        <label>static</label>
+      </node>
+    </collaborationgraph>
+    <location file="B:/Programming/VisualStudioProjects/RevitProjects/AOTools/AOTools/ExtensibleStorageMgr.cs" line="154" column="1" bodyfile="B:/Programming/VisualStudioProjects/RevitProjects/AOTools/AOTools/ExtensibleStorageMgr.cs" bodystart="153" bodyend="168"/>
+    <listofallmembers>
+      <member refid="class_a_o_tools_1_1_extensible_storage_mgr_1_1_s_basic_key_1a1c944921740e9e3798b95cf8f60079f3" prot="public" virt="non-virtual"><scope>AOTools::ExtensibleStorageMgr::SBasicKey</scope><name>AUTO_RESTORE</name></member>
+      <member refid="class_a_o_tools_1_1_extensible_storage_mgr_1_1_s_basic_key_1a5f9f5122b133359702b3e892a3fec83d" prot="public" virt="non-virtual"><scope>AOTools::ExtensibleStorageMgr::SBasicKey</scope><name>COUNT</name></member>
+      <member refid="class_a_o_tools_1_1_extensible_storage_mgr_1_1_s_basic_key_1a859ad94d4f0b4cb949fd59f34e6f0ccc" prot="public" virt="non-virtual"><scope>AOTools::ExtensibleStorageMgr::SBasicKey</scope><name>CURRENT</name></member>
+      <member refid="class_a_o_tools_1_1_extensible_storage_mgr_1_1_s_basic_key_1a46176f529c7a07bb15d7e6f00609795a" prot="public" virt="non-virtual"><scope>AOTools::ExtensibleStorageMgr::SBasicKey</scope><name>SBasicKey</name></member>
+      <member refid="class_a_o_tools_1_1_extensible_storage_mgr_1_1_s_basic_key_1a701398993901011c0190d9993b16546a" prot="public" virt="non-virtual"><scope>AOTools::ExtensibleStorageMgr::SBasicKey</scope><name>UNDEFINED</name></member>
+      <member refid="class_a_o_tools_1_1_extensible_storage_mgr_1_1_s_basic_key_1a9085c8ce54b7d0ffcb19762cf5a26c06" prot="public" virt="non-virtual"><scope>AOTools::ExtensibleStorageMgr::SBasicKey</scope><name>USE_OFFICE</name></member>
+      <member refid="class_a_o_tools_1_1_extensible_storage_mgr_1_1_s_basic_key_1a501d32c2acd82528bb8e2a2794f6174e" prot="public" virt="non-virtual"><scope>AOTools::ExtensibleStorageMgr::SBasicKey</scope><name>Value</name></member>
+      <member refid="class_a_o_tools_1_1_extensible_storage_mgr_1_1_s_basic_key_1ae7e1329d69d59050149c4556c6bbbb21" prot="public" virt="non-virtual"><scope>AOTools::ExtensibleStorageMgr::SBasicKey</scope><name>VERSION_BASIC</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

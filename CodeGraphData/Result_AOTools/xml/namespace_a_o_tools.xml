@@ -1,0 +1,28 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.6">
+  <compounddef id="namespace_a_o_tools" kind="namespace">
+    <compoundname>AOTools</compoundname>
+    <innerclass refid="class_a_o_tools_1_1_revit_add_ins" prot="public">AOTools::RevitAddIns</innerclass>
+    <innerclass refid="class_a_o_tools_1_1_revit_add_ins_add_in" prot="public">AOTools::RevitAddInsAddIn</innerclass>
+    <innerclass refid="class_a_o_tools_1_1_app_ribbon" prot="public">AOTools::AppRibbon</innerclass>
+    <innerclass refid="class_a_o_tools_1_1_dx_measure" prot="public">AOTools::DxMeasure</innerclass>
+    <innerclass refid="class_a_o_tools_1_1_extensions" prot="public">AOTools::Extensions</innerclass>
+    <innerclass refid="class_a_o_tools_1_1_extensible_storage_mgr" prot="public">AOTools::ExtensibleStorageMgr</innerclass>
+    <innerclass refid="class_a_o_tools_1_1_form_measure_points" prot="public">AOTools::FormMeasurePoints</innerclass>
+    <innerclass refid="class_a_o_tools_1_1_picked_box2" prot="public">AOTools::PickedBox2</innerclass>
+    <innerclass refid="class_a_o_tools_1_1_styles_units_command" prot="public">AOTools::StylesUnitsCommand</innerclass>
+    <innerclass refid="class_a_o_tools_1_1_toggle_annotation_visibility" prot="public">AOTools::ToggleAnnotationVisibility</innerclass>
+    <innerclass refid="class_a_o_tools_1_1_toggle_ref_plane" prot="public">AOTools::ToggleRefPlane</innerclass>
+    <innerclass refid="class_a_o_tools_1_1_util" prot="package">AOTools::Util</innerclass>
+    <innerclass refid="struct_a_o_tools_1_1_point_measurements" prot="package">AOTools::PointMeasurements</innerclass>
+    <innerclass refid="class_a_o_tools_1_1_x_y_z_extensions" prot="public">AOTools::XYZExtensions</innerclass>
+    <innerclass refid="class_a_o_tools_1_1_app_settings" prot="public">AOTools::AppSettings</innerclass>
+    <innerclass refid="class_a_o_tools_1_1_user_settings" prot="public">AOTools::UserSettings</innerclass>
+    <innernamespace refid="namespace_a_o_tools_1_1_properties">AOTools::Properties</innernamespace>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <location file="B:/Programming/VisualStudioProjects/RevitProjects/AOTools/AOTools/AddinClasses.cs" line="16" column="1"/>
+  </compounddef>
+</doxygen>

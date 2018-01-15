@@ -1,0 +1,59 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.6">
+  <compounddef id="class_utility_library_1_1_cs_utilities" kind="class" prot="public">
+    <compoundname>UtilityLibrary::CsUtilities</compoundname>
+      <sectiondef kind="public-static-func">
+      <memberdef kind="function" id="class_utility_library_1_1_cs_utilities_1ac6c01dfcdea4bc4997e38ce9b6ba0c9d" prot="public" static="yes" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type>BitmapImage</type>
+        <definition>static BitmapImage UtilityLibrary.CsUtilities.GetBitmapImage</definition>
+        <argsstring>(string imageName, string namespacePrefix)</argsstring>
+        <name>GetBitmapImage</name>
+        <param>
+          <type>string</type>
+          <declname>imageName</declname>
+        </param>
+        <param>
+          <type>string</type>
+          <declname>namespacePrefix</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="B:/Programming/VisualStudioProjects/UtilityLibrary/UtilityLibrary/CsUtilities.cs" line="12" column="1" bodyfile="B:/Programming/VisualStudioProjects/UtilityLibrary/UtilityLibrary/CsUtilities.cs" bodystart="12" bodyend="24"/>
+      </memberdef>
+      <memberdef kind="function" id="class_utility_library_1_1_cs_utilities_1a4c0487fdf2e9db71ea7e78e5e6615269" prot="public" static="yes" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type>Image</type>
+        <definition>static Image UtilityLibrary.CsUtilities.GetImage</definition>
+        <argsstring>(string imageName, string namespacePrefix)</argsstring>
+        <name>GetImage</name>
+        <param>
+          <type>string</type>
+          <declname>imageName</declname>
+        </param>
+        <param>
+          <type>string</type>
+          <declname>namespacePrefix</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="B:/Programming/VisualStudioProjects/UtilityLibrary/UtilityLibrary/CsUtilities.cs" line="26" column="1" bodyfile="B:/Programming/VisualStudioProjects/UtilityLibrary/UtilityLibrary/CsUtilities.cs" bodystart="26" bodyend="31"/>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <location file="B:/Programming/VisualStudioProjects/UtilityLibrary/UtilityLibrary/CsUtilities.cs" line="10" column="1" bodyfile="B:/Programming/VisualStudioProjects/UtilityLibrary/UtilityLibrary/CsUtilities.cs" bodystart="9" bodyend="32"/>
+    <listofallmembers>
+      <member refid="class_utility_library_1_1_cs_utilities_1ac6c01dfcdea4bc4997e38ce9b6ba0c9d" prot="public" virt="non-virtual"><scope>UtilityLibrary::CsUtilities</scope><name>GetBitmapImage</name></member>
+      <member refid="class_utility_library_1_1_cs_utilities_1a4c0487fdf2e9db71ea7e78e5e6615269" prot="public" virt="non-virtual"><scope>UtilityLibrary::CsUtilities</scope><name>GetImage</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

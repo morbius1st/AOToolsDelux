@@ -1,0 +1,49 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.6">
+  <compounddef id="class_a_o_tools_1_1_extensible_storage_mgr_1_1_schema_key" kind="class" prot="public">
+    <compoundname>AOTools::ExtensibleStorageMgr::SchemaKey</compoundname>
+    <derivedcompoundref refid="class_a_o_tools_1_1_extensible_storage_mgr_1_1_s_basic_key" prot="public" virt="non-virtual">AOTools.ExtensibleStorageMgr.SBasicKey</derivedcompoundref>
+    <derivedcompoundref refid="class_a_o_tools_1_1_extensible_storage_mgr_1_1_s_unit_key" prot="public" virt="non-virtual">AOTools.ExtensibleStorageMgr.SUnitKey</derivedcompoundref>
+      <sectiondef kind="property">
+      <memberdef kind="property" id="class_a_o_tools_1_1_extensible_storage_mgr_1_1_schema_key_1a0d7a9fb2f4f565c560c98d6bee51b859" prot="public" static="no" readable="no" writable="no" gettable="yes" settable="no">
+        <type>abstract int</type>
+        <definition>abstract int AOTools.ExtensibleStorageMgr.SchemaKey.Value</definition>
+        <argsstring></argsstring>
+        <name>Value</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="B:/Programming/VisualStudioProjects/RevitProjects/AOTools/AOTools/ExtensibleStorageMgr.cs" line="150" column="1" bodyfile="B:/Programming/VisualStudioProjects/RevitProjects/AOTools/AOTools/ExtensibleStorageMgr.cs" bodystart="150" bodyend="-1"/>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <inheritancegraph>
+      <node id="59">
+        <label>AOTools.ExtensibleStorageMgr.SUnitKey</label>
+        <link refid="class_a_o_tools_1_1_extensible_storage_mgr_1_1_s_unit_key"/>
+        <childnode refid="57" relation="public-inheritance">
+        </childnode>
+      </node>
+      <node id="58">
+        <label>AOTools.ExtensibleStorageMgr.SBasicKey</label>
+        <link refid="class_a_o_tools_1_1_extensible_storage_mgr_1_1_s_basic_key"/>
+        <childnode refid="57" relation="public-inheritance">
+        </childnode>
+      </node>
+      <node id="57">
+        <label>AOTools.ExtensibleStorageMgr.SchemaKey</label>
+        <link refid="class_a_o_tools_1_1_extensible_storage_mgr_1_1_schema_key"/>
+      </node>
+    </inheritancegraph>
+    <location file="B:/Programming/VisualStudioProjects/RevitProjects/AOTools/AOTools/ExtensibleStorageMgr.cs" line="149" column="1" bodyfile="B:/Programming/VisualStudioProjects/RevitProjects/AOTools/AOTools/ExtensibleStorageMgr.cs" bodystart="148" bodyend="151"/>
+    <listofallmembers>
+      <member refid="class_a_o_tools_1_1_extensible_storage_mgr_1_1_schema_key_1a0d7a9fb2f4f565c560c98d6bee51b859" prot="public" virt="non-virtual"><scope>AOTools::ExtensibleStorageMgr::SchemaKey</scope><name>Value</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

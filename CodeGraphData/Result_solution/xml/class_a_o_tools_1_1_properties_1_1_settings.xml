@@ -1,0 +1,179 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.6">
+  <compounddef id="class_a_o_tools_1_1_properties_1_1_settings" kind="class" prot="package">
+    <compoundname>AOTools::Properties::Settings</compoundname>
+    <basecompoundref prot="public" virt="non-virtual">ApplicationSettingsBase</basecompoundref>
+      <sectiondef kind="private-static-attrib">
+      <memberdef kind="variable" id="class_a_o_tools_1_1_properties_1_1_settings_1a38de4fe5e9600fa72f9f4b8454245061" prot="private" static="yes" mutable="no">
+        <type><ref refid="class_a_o_tools_1_1_properties_1_1_settings" kindref="compound">Settings</ref></type>
+        <definition>Settings AOTools.Properties.Settings.defaultInstance</definition>
+        <argsstring></argsstring>
+        <name>defaultInstance</name>
+        <initializer>= ((<ref refid="class_a_o_tools_1_1_properties_1_1_settings" kindref="compound">Settings</ref>)(global::System.Configuration.ApplicationSettingsBase.Synchronized(new <ref refid="class_a_o_tools_1_1_properties_1_1_settings" kindref="compound">Settings</ref>())))</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="B:/Programming/VisualStudioProjects/RevitProjects/AOTools/AOTools/Properties/Settings.Designer.cs" line="18" column="1" bodyfile="B:/Programming/VisualStudioProjects/RevitProjects/AOTools/AOTools/Properties/Settings.Designer.cs" bodystart="18" bodyend="-1"/>
+      </memberdef>
+      </sectiondef>
+      <sectiondef kind="property">
+      <memberdef kind="property" id="class_a_o_tools_1_1_properties_1_1_settings_1a8b0db282a374b853bb5a1de38e799d2b" prot="public" static="yes" readable="no" writable="no" gettable="yes" settable="no">
+        <type><ref refid="class_a_o_tools_1_1_properties_1_1_settings" kindref="compound">Settings</ref></type>
+        <definition>Settings AOTools.Properties.Settings.Default</definition>
+        <argsstring></argsstring>
+        <name>Default</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="B:/Programming/VisualStudioProjects/RevitProjects/AOTools/AOTools/Properties/Settings.Designer.cs" line="20" column="1" bodyfile="B:/Programming/VisualStudioProjects/RevitProjects/AOTools/AOTools/Properties/Settings.Designer.cs" bodystart="20" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="property" id="class_a_o_tools_1_1_properties_1_1_settings_1a6ddbd4050259930a8e59ce257f30506e" prot="public" static="no" readable="no" writable="no" gettable="yes" settable="yes">
+        <type><ref refid="_settings_user_8cs_1a869cb8a0434b55ce0b742c828373c455" kindref="member">global::System.Drawing.Point</ref></type>
+        <definition>global::System.Drawing.Point AOTools.Properties.Settings.FormMeasurePointsLocation</definition>
+        <argsstring></argsstring>
+        <name>FormMeasurePointsLocation</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="B:/Programming/VisualStudioProjects/RevitProjects/AOTools/AOTools/Properties/Settings.Designer.cs" line="29" column="1" bodyfile="B:/Programming/VisualStudioProjects/RevitProjects/AOTools/AOTools/Properties/Settings.Designer.cs" bodystart="29" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="property" id="class_a_o_tools_1_1_properties_1_1_settings_1a6026c6b2554c6cb96582b5cc5bfff4d2" prot="public" static="no" readable="no" writable="no" gettable="yes" settable="yes">
+        <type>bool</type>
+        <definition>bool AOTools.Properties.Settings.MeasurePointsShowWorkplane</definition>
+        <argsstring></argsstring>
+        <name>MeasurePointsShowWorkplane</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="B:/Programming/VisualStudioProjects/RevitProjects/AOTools/AOTools/Properties/Settings.Designer.cs" line="41" column="1" bodyfile="B:/Programming/VisualStudioProjects/RevitProjects/AOTools/AOTools/Properties/Settings.Designer.cs" bodystart="41" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="property" id="class_a_o_tools_1_1_properties_1_1_settings_1a0e7e4fc38bae2e401790006f040fca28" prot="public" static="no" readable="no" writable="no" gettable="yes" settable="yes">
+        <type>string</type>
+        <definition>string AOTools.Properties.Settings.ThisIsATest</definition>
+        <argsstring></argsstring>
+        <name>ThisIsATest</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="B:/Programming/VisualStudioProjects/RevitProjects/AOTools/AOTools/Properties/Settings.Designer.cs" line="53" column="1" bodyfile="B:/Programming/VisualStudioProjects/RevitProjects/AOTools/AOTools/Properties/Settings.Designer.cs" bodystart="53" bodyend="-1"/>
+      </memberdef>
+      </sectiondef>
+      <sectiondef kind="public-func">
+      <memberdef kind="function" id="class_a_o_tools_1_1_properties_1_1_settings_1acb08ea74211c1505f114988d7f50b466" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type></type>
+        <definition>AOTools.Properties.Settings.Settings</definition>
+        <argsstring>()</argsstring>
+        <name>Settings</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="B:/Programming/VisualStudioProjects/RevitProjects/AOTools/AOTools/Properties/Settings.cs" line="13" column="1" bodyfile="B:/Programming/VisualStudioProjects/RevitProjects/AOTools/AOTools/Properties/Settings.cs" bodystart="13" bodyend="20"/>
+      </memberdef>
+      </sectiondef>
+      <sectiondef kind="private-func">
+      <memberdef kind="function" id="class_a_o_tools_1_1_properties_1_1_settings_1afa0d3d2688a02838d33f765564293627" prot="private" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type>void</type>
+        <definition>void AOTools.Properties.Settings.SettingChangingEventHandler</definition>
+        <argsstring>(object sender, System.Configuration.SettingChangingEventArgs e)</argsstring>
+        <name>SettingChangingEventHandler</name>
+        <param>
+          <type>object</type>
+          <declname>sender</declname>
+        </param>
+        <param>
+          <type>System.Configuration.SettingChangingEventArgs</type>
+          <declname>e</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="B:/Programming/VisualStudioProjects/RevitProjects/AOTools/AOTools/Properties/Settings.cs" line="22" column="1" bodyfile="B:/Programming/VisualStudioProjects/RevitProjects/AOTools/AOTools/Properties/Settings.cs" bodystart="22" bodyend="24"/>
+      </memberdef>
+      <memberdef kind="function" id="class_a_o_tools_1_1_properties_1_1_settings_1a28d7f3c3c7b2277350cf441a7ba38a55" prot="private" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type>void</type>
+        <definition>void AOTools.Properties.Settings.SettingsSavingEventHandler</definition>
+        <argsstring>(object sender, System.ComponentModel.CancelEventArgs e)</argsstring>
+        <name>SettingsSavingEventHandler</name>
+        <param>
+          <type>object</type>
+          <declname>sender</declname>
+        </param>
+        <param>
+          <type>System.ComponentModel.CancelEventArgs</type>
+          <declname>e</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="B:/Programming/VisualStudioProjects/RevitProjects/AOTools/AOTools/Properties/Settings.cs" line="26" column="1" bodyfile="B:/Programming/VisualStudioProjects/RevitProjects/AOTools/AOTools/Properties/Settings.cs" bodystart="26" bodyend="28"/>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <inheritancegraph>
+      <node id="62">
+        <label>global::SystemConfiguration::ApplicationSettingsBase</label>
+      </node>
+      <node id="61">
+        <label>AOTools.Properties.Settings</label>
+        <link refid="class_a_o_tools_1_1_properties_1_1_settings"/>
+        <childnode refid="62" relation="public-inheritance">
+        </childnode>
+      </node>
+    </inheritancegraph>
+    <collaborationgraph>
+      <node id="64">
+        <label>global::SystemConfiguration::ApplicationSettingsBase</label>
+      </node>
+      <node id="63">
+        <label>AOTools.Properties.Settings</label>
+        <link refid="class_a_o_tools_1_1_properties_1_1_settings"/>
+        <childnode refid="64" relation="public-inheritance">
+        </childnode>
+        <childnode refid="65" relation="usage">
+          <edgelabel>defaultInstance</edgelabel>
+        </childnode>
+      </node>
+      <node id="65">
+        <label>static</label>
+      </node>
+    </collaborationgraph>
+    <location file="B:/Programming/VisualStudioProjects/RevitProjects/AOTools/AOTools/Properties/Settings.cs" line="11" column="1" bodyfile="B:/Programming/VisualStudioProjects/RevitProjects/AOTools/AOTools/Properties/Settings.cs" bodystart="11" bodyend="29"/>
+    <listofallmembers>
+      <member refid="class_a_o_tools_1_1_properties_1_1_settings_1a8b0db282a374b853bb5a1de38e799d2b" prot="public" virt="non-virtual"><scope>AOTools::Properties::Settings</scope><name>Default</name></member>
+      <member refid="class_a_o_tools_1_1_properties_1_1_settings_1a38de4fe5e9600fa72f9f4b8454245061" prot="private" virt="non-virtual"><scope>AOTools::Properties::Settings</scope><name>defaultInstance</name></member>
+      <member refid="class_a_o_tools_1_1_properties_1_1_settings_1a6ddbd4050259930a8e59ce257f30506e" prot="public" virt="non-virtual"><scope>AOTools::Properties::Settings</scope><name>FormMeasurePointsLocation</name></member>
+      <member refid="class_a_o_tools_1_1_properties_1_1_settings_1a6026c6b2554c6cb96582b5cc5bfff4d2" prot="public" virt="non-virtual"><scope>AOTools::Properties::Settings</scope><name>MeasurePointsShowWorkplane</name></member>
+      <member refid="class_a_o_tools_1_1_properties_1_1_settings_1afa0d3d2688a02838d33f765564293627" prot="private" virt="non-virtual"><scope>AOTools::Properties::Settings</scope><name>SettingChangingEventHandler</name></member>
+      <member refid="class_a_o_tools_1_1_properties_1_1_settings_1acb08ea74211c1505f114988d7f50b466" prot="public" virt="non-virtual"><scope>AOTools::Properties::Settings</scope><name>Settings</name></member>
+      <member refid="class_a_o_tools_1_1_properties_1_1_settings_1a28d7f3c3c7b2277350cf441a7ba38a55" prot="private" virt="non-virtual"><scope>AOTools::Properties::Settings</scope><name>SettingsSavingEventHandler</name></member>
+      <member refid="class_a_o_tools_1_1_properties_1_1_settings_1a0e7e4fc38bae2e401790006f040fca28" prot="public" virt="non-virtual"><scope>AOTools::Properties::Settings</scope><name>ThisIsATest</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

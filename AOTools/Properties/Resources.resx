@@ -121,6 +121,6 @@
     <value>Failed to create the {0} button</value>
   </data>
   <data name="UnitStyleButtonText" xml:space="preserve">
-    <value>Unit\nStyles</value>
+    <value>Unit Styles</value>
   </data>
 </root>

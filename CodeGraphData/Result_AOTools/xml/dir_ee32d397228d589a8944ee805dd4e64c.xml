@@ -1,0 +1,12 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.6">
+  <compounddef id="dir_ee32d397228d589a8944ee805dd4e64c" kind="dir">
+    <compoundname>B:/Programming/VisualStudioProjects/UtilityLibrary</compoundname>
+    <innerdir refid="dir_2b4c032fa52c234388f2815c78e51b91">B:/Programming/VisualStudioProjects/UtilityLibrary/UtilityLibrary</innerdir>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <location file="B:/Programming/VisualStudioProjects/UtilityLibrary/"/>
+  </compounddef>
+</doxygen>

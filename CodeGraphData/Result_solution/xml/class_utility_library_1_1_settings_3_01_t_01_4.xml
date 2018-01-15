@@ -1,0 +1,138 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.6">
+  <compounddef id="class_utility_library_1_1_settings_3_01_t_01_4" kind="class" prot="public">
+    <compoundname>UtilityLibrary::Settings&lt; T &gt;</compoundname>
+    <templateparamlist>
+      <param>
+        <type>T</type>
+      </param>
+    </templateparamlist>
+      <sectiondef kind="property">
+      <memberdef kind="property" id="class_utility_library_1_1_settings_3_01_t_01_4_1a53150308f1714fedf97e97a68c17736b" prot="package" static="no" readable="no" writable="no" gettable="yes" settable="yes">
+        <type>T</type>
+        <definition>T UtilityLibrary.Settings&lt; T &gt;::Setting</definition>
+        <argsstring></argsstring>
+        <name>Setting</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="B:/Programming/VisualStudioProjects/UtilityLibrary/UtilityLibrary/Settings - Copy.cs" line="67" column="1" bodyfile="B:/Programming/VisualStudioProjects/UtilityLibrary/UtilityLibrary/Settings - Copy.cs" bodystart="67" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="property" id="class_utility_library_1_1_settings_3_01_t_01_4_1a069f523761dcc83c9f0607b4a350a7dc" prot="package" static="no" readable="no" writable="no" gettable="yes" settable="yes">
+        <type>string</type>
+        <definition>string UtilityLibrary.Settings&lt; T &gt;::SettingsPathAndFile</definition>
+        <argsstring></argsstring>
+        <name>SettingsPathAndFile</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="B:/Programming/VisualStudioProjects/UtilityLibrary/UtilityLibrary/Settings - Copy.cs" line="69" column="1" bodyfile="B:/Programming/VisualStudioProjects/UtilityLibrary/UtilityLibrary/Settings - Copy.cs" bodystart="69" bodyend="-1"/>
+      </memberdef>
+      </sectiondef>
+      <sectiondef kind="public-func">
+      <memberdef kind="function" id="class_utility_library_1_1_settings_3_01_t_01_4_1aeb74a754082355bbe933927e6a6ac17c" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type></type>
+        <definition>UtilityLibrary.Settings&lt; T &gt;.Settings</definition>
+        <argsstring>()</argsstring>
+        <name>Settings</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="B:/Programming/VisualStudioProjects/UtilityLibrary/UtilityLibrary/Settings - Copy.cs" line="71" column="1" bodyfile="B:/Programming/VisualStudioProjects/UtilityLibrary/UtilityLibrary/Settings - Copy.cs" bodystart="71" bodyend="75"/>
+      </memberdef>
+      <memberdef kind="function" id="class_utility_library_1_1_settings_3_01_t_01_4_1a7a79c6ed261bb2e5b128713248335751" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type>void</type>
+        <definition>void UtilityLibrary.Settings&lt; T &gt;.Save</definition>
+        <argsstring>()</argsstring>
+        <name>Save</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="B:/Programming/VisualStudioProjects/UtilityLibrary/UtilityLibrary/Settings - Copy.cs" line="110" column="1" bodyfile="B:/Programming/VisualStudioProjects/UtilityLibrary/UtilityLibrary/Settings - Copy.cs" bodystart="110" bodyend="127"/>
+        <references refid="class_utility_library_1_1_settings_util_1ab3df35e017be3b5c9e6468b3169cc324" compoundref="_settings_01-_01_copy_8cs" startline="160">UtilityLibrary.SettingsUtil.AssemblyVersion</references>
+        <references refid="class_utility_library_1_1version_info_1a5d50fa9a48775b9ea09fd90c0a90671b" compoundref="_settings_01-_01_copy_8cs" startline="19">UtilityLibrary.versionInfo.SETTINGSYSTEMVERSION</references>
+      </memberdef>
+      <memberdef kind="function" id="class_utility_library_1_1_settings_3_01_t_01_4_1aeb74a754082355bbe933927e6a6ac17c" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type></type>
+        <definition>UtilityLibrary.Settings&lt; T &gt;.Settings</definition>
+        <argsstring>()</argsstring>
+        <name>Settings</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="B:/Programming/VisualStudioProjects/UtilityLibrary/UtilityLibrary/Settings.cs" line="93" column="1" bodyfile="B:/Programming/VisualStudioProjects/UtilityLibrary/UtilityLibrary/Settings.cs" bodystart="93" bodyend="97"/>
+      </memberdef>
+      <memberdef kind="function" id="class_utility_library_1_1_settings_3_01_t_01_4_1a7a79c6ed261bb2e5b128713248335751" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type>void</type>
+        <definition>void UtilityLibrary.Settings&lt; T &gt;.Save</definition>
+        <argsstring>()</argsstring>
+        <name>Save</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="B:/Programming/VisualStudioProjects/UtilityLibrary/UtilityLibrary/Settings.cs" line="132" column="1" bodyfile="B:/Programming/VisualStudioProjects/UtilityLibrary/UtilityLibrary/Settings.cs" bodystart="132" bodyend="145"/>
+      </memberdef>
+      </sectiondef>
+      <sectiondef kind="private-func">
+      <memberdef kind="function" id="class_utility_library_1_1_settings_3_01_t_01_4_1a5a314b5080476a59a27717a9d17e5631" prot="private" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type>void</type>
+        <definition>void UtilityLibrary.Settings&lt; T &gt;.Read</definition>
+        <argsstring>()</argsstring>
+        <name>Read</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="B:/Programming/VisualStudioProjects/UtilityLibrary/UtilityLibrary/Settings - Copy.cs" line="77" column="1" bodyfile="B:/Programming/VisualStudioProjects/UtilityLibrary/UtilityLibrary/Settings - Copy.cs" bodystart="77" bodyend="108"/>
+      </memberdef>
+      <memberdef kind="function" id="class_utility_library_1_1_settings_3_01_t_01_4_1a5a314b5080476a59a27717a9d17e5631" prot="private" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type>void</type>
+        <definition>void UtilityLibrary.Settings&lt; T &gt;.Read</definition>
+        <argsstring>()</argsstring>
+        <name>Read</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="B:/Programming/VisualStudioProjects/UtilityLibrary/UtilityLibrary/Settings.cs" line="99" column="1" bodyfile="B:/Programming/VisualStudioProjects/UtilityLibrary/UtilityLibrary/Settings.cs" bodystart="99" bodyend="130"/>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <location file="B:/Programming/VisualStudioProjects/UtilityLibrary/UtilityLibrary/Settings - Copy.cs" line="66" column="1" bodyfile="B:/Programming/VisualStudioProjects/UtilityLibrary/UtilityLibrary/Settings - Copy.cs" bodystart="65" bodyend="128"/>
+    <listofallmembers>
+      <member refid="class_utility_library_1_1_settings_3_01_t_01_4_1a5a314b5080476a59a27717a9d17e5631" prot="private" virt="non-virtual"><scope>UtilityLibrary::Settings&lt; T &gt;</scope><name>Read</name></member>
+      <member refid="class_utility_library_1_1_settings_3_01_t_01_4_1a5a314b5080476a59a27717a9d17e5631" prot="private" virt="non-virtual"><scope>UtilityLibrary::Settings&lt; T &gt;</scope><name>Read</name></member>
+      <member refid="class_utility_library_1_1_settings_3_01_t_01_4_1a7a79c6ed261bb2e5b128713248335751" prot="public" virt="non-virtual"><scope>UtilityLibrary::Settings&lt; T &gt;</scope><name>Save</name></member>
+      <member refid="class_utility_library_1_1_settings_3_01_t_01_4_1a7a79c6ed261bb2e5b128713248335751" prot="public" virt="non-virtual"><scope>UtilityLibrary::Settings&lt; T &gt;</scope><name>Save</name></member>
+      <member refid="class_utility_library_1_1_settings_3_01_t_01_4_1a53150308f1714fedf97e97a68c17736b" prot="package" virt="non-virtual"><scope>UtilityLibrary::Settings&lt; T &gt;</scope><name>Setting</name></member>
+      <member refid="class_utility_library_1_1_settings_3_01_t_01_4_1aeb74a754082355bbe933927e6a6ac17c" prot="public" virt="non-virtual"><scope>UtilityLibrary::Settings&lt; T &gt;</scope><name>Settings</name></member>
+      <member refid="class_utility_library_1_1_settings_3_01_t_01_4_1aeb74a754082355bbe933927e6a6ac17c" prot="public" virt="non-virtual"><scope>UtilityLibrary::Settings&lt; T &gt;</scope><name>Settings</name></member>
+      <member refid="class_utility_library_1_1_settings_3_01_t_01_4_1a069f523761dcc83c9f0607b4a350a7dc" prot="package" virt="non-virtual"><scope>UtilityLibrary::Settings&lt; T &gt;</scope><name>SettingsPathAndFile</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

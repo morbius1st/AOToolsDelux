@@ -79,8 +79,11 @@
       <Link>Settings\Settings.cs</Link>
     </Compile>
     <Compile Include="AppRibbon.cs" />
+    <Compile Include="DeleteUnitStyles.cs" />
     <Compile Include="DxMeasure.cs" />
     <Compile Include="ExtensibleStorageMgr.cs" />
+    <Compile Include="Extensions.cs" />
+    <Compile Include="FieldInfo.cs" />
     <Compile Include="FormMeasurePoints.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -93,6 +96,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <Compile Include="SchemaDefinitions.cs" />
     <Compile Include="StylesUnitsCommand.cs" />
     <Compile Include="ToggleAnnotationVisibility.cs" />
     <Compile Include="ToggleRefPlane.cs" />

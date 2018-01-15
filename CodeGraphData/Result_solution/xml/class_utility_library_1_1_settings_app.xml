@@ -1,0 +1,117 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.8.6">
+  <compounddef id="class_utility_library_1_1_settings_app" kind="class" prot="public">
+    <compoundname>UtilityLibrary::SettingsApp</compoundname>
+      <sectiondef kind="property">
+      <memberdef kind="property" id="class_utility_library_1_1_settings_app_1a8ee29c7c80fcc436225e91cfcb3cd5f3" prot="public" static="yes" readable="no" writable="no" gettable="yes" settable="yes">
+        <type>Settings&lt; <ref refid="class_utility_library_1_1_app_settings" kindref="compound">AppSettings</ref> &gt;</type>
+        <definition>Settings&lt;AppSettings&gt; UtilityLibrary.SettingsApp.ASetting</definition>
+        <argsstring></argsstring>
+        <name>ASetting</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="B:/Programming/VisualStudioProjects/UtilityLibrary/UtilityLibrary/Settings.cs" line="60" column="1" bodyfile="B:/Programming/VisualStudioProjects/UtilityLibrary/UtilityLibrary/Settings.cs" bodystart="60" bodyend="-1"/>
+      </memberdef>
+      </sectiondef>
+      <sectiondef kind="public-static-attrib">
+      <memberdef kind="variable" id="class_utility_library_1_1_settings_app_1ac973d948e82b2a4e2ebb015ec7828c2d" prot="public" static="yes" mutable="no">
+        <type><ref refid="class_utility_library_1_1_app_settings" kindref="compound">AppSettings</ref></type>
+        <definition>AppSettings UtilityLibrary.SettingsApp.ASet</definition>
+        <argsstring></argsstring>
+        <name>ASet</name>
+        <initializer>= <ref refid="class_utility_library_1_1_settings_app_1a90b8331fc2a2f1fdd680f37c5944bcbd" kindref="member">GetInstance</ref>()</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="B:/Programming/VisualStudioProjects/UtilityLibrary/UtilityLibrary/Settings.cs" line="63" column="1" bodyfile="B:/Programming/VisualStudioProjects/UtilityLibrary/UtilityLibrary/Settings.cs" bodystart="61" bodyend="-1"/>
+        <referencedby refid="class_utility_library_1_1_settings_app_1a90b8331fc2a2f1fdd680f37c5944bcbd" compoundref="_utility_library_2_utility_library_2_settings_8cs" startline="67" endline="77">UtilityLibrary.SettingsApp.GetInstance</referencedby>
+      </memberdef>
+      </sectiondef>
+      <sectiondef kind="private-static-attrib">
+      <memberdef kind="variable" id="class_utility_library_1_1_settings_app_1a0a2f3007b46644e0c282c8d3636aae10" prot="private" static="yes" mutable="no">
+        <type>Settings&lt; <ref refid="class_utility_library_1_1_app_settings" kindref="compound">AppSettings</ref> &gt;</type>
+        <definition>Settings&lt;AppSettings&gt; UtilityLibrary.SettingsApp.appSettings</definition>
+        <argsstring></argsstring>
+        <name>appSettings</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="B:/Programming/VisualStudioProjects/UtilityLibrary/UtilityLibrary/Settings.cs" line="65" column="1" bodyfile="B:/Programming/VisualStudioProjects/UtilityLibrary/UtilityLibrary/Settings.cs" bodystart="65" bodyend="-1"/>
+        <referencedby refid="class_utility_library_1_1_settings_app_1a90b8331fc2a2f1fdd680f37c5944bcbd" compoundref="_utility_library_2_utility_library_2_settings_8cs" startline="67" endline="77">UtilityLibrary.SettingsApp.GetInstance</referencedby>
+      </memberdef>
+      </sectiondef>
+      <sectiondef kind="private-static-func">
+      <memberdef kind="function" id="class_utility_library_1_1_settings_app_1a90b8331fc2a2f1fdd680f37c5944bcbd" prot="private" static="yes" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type>Settings&lt; <ref refid="class_utility_library_1_1_app_settings" kindref="compound">AppSettings</ref> &gt;</type>
+        <definition>static Settings&lt;AppSettings&gt; UtilityLibrary.SettingsApp.GetInstance</definition>
+        <argsstring>()</argsstring>
+        <name>GetInstance</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="B:/Programming/VisualStudioProjects/UtilityLibrary/UtilityLibrary/Settings.cs" line="67" column="1" bodyfile="B:/Programming/VisualStudioProjects/UtilityLibrary/UtilityLibrary/Settings.cs" bodystart="67" bodyend="77"/>
+        <references refid="class_utility_library_1_1_settings_app_1a0a2f3007b46644e0c282c8d3636aae10" compoundref="_utility_library_2_utility_library_2_settings_8cs" startline="65">UtilityLibrary.SettingsApp.appSettings</references>
+        <references refid="class_utility_library_1_1_settings_app_1ac973d948e82b2a4e2ebb015ec7828c2d" compoundref="_utility_library_2_utility_library_2_settings_8cs" startline="61">UtilityLibrary.SettingsApp.ASet</references>
+        <referencedby refid="class_utility_library_1_1_settings_app_1a857c8e8509a4cc65d95fd187d4994e6d" compoundref="_utility_library_2_utility_library_2_settings_8cs" startline="79" endline="84">UtilityLibrary.SettingsApp.Reset</referencedby>
+      </memberdef>
+      </sectiondef>
+      <sectiondef kind="public-static-func">
+      <memberdef kind="function" id="class_utility_library_1_1_settings_app_1a857c8e8509a4cc65d95fd187d4994e6d" prot="public" static="yes" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type>void</type>
+        <definition>static void UtilityLibrary.SettingsApp.Reset</definition>
+        <argsstring>(this Settings&lt; AppSettings &gt; app)</argsstring>
+        <name>Reset</name>
+        <param>
+          <type>this Settings&lt; <ref refid="class_utility_library_1_1_app_settings" kindref="compound">AppSettings</ref> &gt;</type>
+          <declname>app</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="B:/Programming/VisualStudioProjects/UtilityLibrary/UtilityLibrary/Settings.cs" line="79" column="1" bodyfile="B:/Programming/VisualStudioProjects/UtilityLibrary/UtilityLibrary/Settings.cs" bodystart="79" bodyend="84"/>
+        <references refid="class_utility_library_1_1_settings_app_1a90b8331fc2a2f1fdd680f37c5944bcbd" compoundref="_utility_library_2_utility_library_2_settings_8cs" startline="67" endline="77">UtilityLibrary.SettingsApp.GetInstance</references>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <collaborationgraph>
+      <node id="69">
+        <label>UtilityLibrary.SettingsApp</label>
+        <link refid="class_utility_library_1_1_settings_app"/>
+        <childnode refid="70" relation="usage">
+          <edgelabel>appSettings</edgelabel>
+          <edgelabel>ASet</edgelabel>
+        </childnode>
+      </node>
+      <node id="70">
+        <label>static</label>
+      </node>
+    </collaborationgraph>
+    <location file="B:/Programming/VisualStudioProjects/UtilityLibrary/UtilityLibrary/Settings.cs" line="59" column="1" bodyfile="B:/Programming/VisualStudioProjects/UtilityLibrary/UtilityLibrary/Settings.cs" bodystart="58" bodyend="85"/>
+    <listofallmembers>
+      <member refid="class_utility_library_1_1_settings_app_1a0a2f3007b46644e0c282c8d3636aae10" prot="private" virt="non-virtual"><scope>UtilityLibrary::SettingsApp</scope><name>appSettings</name></member>
+      <member refid="class_utility_library_1_1_settings_app_1ac973d948e82b2a4e2ebb015ec7828c2d" prot="public" virt="non-virtual"><scope>UtilityLibrary::SettingsApp</scope><name>ASet</name></member>
+      <member refid="class_utility_library_1_1_settings_app_1a8ee29c7c80fcc436225e91cfcb3cd5f3" prot="public" virt="non-virtual"><scope>UtilityLibrary::SettingsApp</scope><name>ASetting</name></member>
+      <member refid="class_utility_library_1_1_settings_app_1a90b8331fc2a2f1fdd680f37c5944bcbd" prot="private" virt="non-virtual"><scope>UtilityLibrary::SettingsApp</scope><name>GetInstance</name></member>
+      <member refid="class_utility_library_1_1_settings_app_1a857c8e8509a4cc65d95fd187d4994e6d" prot="public" virt="non-virtual"><scope>UtilityLibrary::SettingsApp</scope><name>Reset</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>
