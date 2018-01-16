@@ -73,50 +73,57 @@ namespace AOTools
 		public static bool SaveRevitSettings()
 		{
 			if (!initalized) { return false; }
-//			try
-//			{
-				Element elem = GetProjectBasepoint();
+			Element elem = GetProjectBasepoint();
 
-				SchemaBuilder sbld = new SchemaBuilder(SchemaGUID);
+			SchemaBuilder sbld = CreateSchema(SCHEMA_NAME, SCHEMA_DESC, SchemaGUID);
+//			SchemaBuilder sbld = new SchemaBuilder(SchemaGUID);
+//
+//			sbld.SetReadAccessLevel(AccessLevel.Public);
+//			sbld.SetWriteAccessLevel(AccessLevel.Vendor);
+//			sbld.SetVendorId(Util.GetVendorId());
+//			sbld.SetSchemaName(SCHEMA_NAME);
+//			sbld.SetDocumentation(SCHEMA_DESC);
 
-				sbld.SetReadAccessLevel(AccessLevel.Public);
-				sbld.SetWriteAccessLevel(AccessLevel.Vendor);
-				sbld.SetVendorId(Util.GetVendorId());
-				sbld.SetSchemaName(SCHEMA_NAME);
-				sbld.SetDocumentation(SCHEMA_DESC);
+			// this makes the basic setting fields
+			MakeFields(sbld, SchemaFields);
 
-				// this makes the basic setting fields
-				MakeFields(sbld, SchemaFields);
+			Dictionary<string, string> subSchemaFields = 
+				new Dictionary<string, string>(SchemaFields[COUNT].Value);
 
-				Dictionary<string, string> subSchemaFields = 
-					new Dictionary<string, string>(SchemaFields[COUNT].Value);
+			CreateUnitSchemaFields(sbld, subSchemaFields);
 
-				CreateUnitSchemaFields(sbld, subSchemaFields);
+			Schema schema = sbld.Finish();
 
-				Schema schema = sbld.Finish();
+			Entity entity = new Entity(schema);
 
-				Entity entity = new Entity(schema);
+			// set the basic fields
+			SaveFieldValues(entity, schema, SchemaFields);
 
-				// set the basic fields
-				SaveFieldValues(entity, schema, SchemaFields);
+			SaveUnitSettings(entity, schema, subSchemaFields);
 
-				SaveUnitSettings(entity, schema, subSchemaFields);
+			using (Transaction t = new Transaction(Doc, "Unit Style Settings"))
+			{
+				t.Start();
+				elem.SetEntity(entity);
+				t.Commit();
+			}
 
-				using (Transaction t = new Transaction(Doc, "Unit Style Settings"))
-				{
-					t.Start();
-					elem.SetEntity(entity);
-					t.Commit();
-				}
+			schema.Dispose();
 
-				schema.Dispose();
-
-//			}
-//			catch
-//			{
-//				return false;
-//			}
 			return true;
+		}
+
+		private static SchemaBuilder CreateSchema(string name, string description, Guid guid)
+		{
+			SchemaBuilder sbld = new SchemaBuilder(guid);
+
+			sbld.SetReadAccessLevel(AccessLevel.Public);
+			sbld.SetWriteAccessLevel(AccessLevel.Vendor);
+			sbld.SetVendorId(Util.GetVendorId());
+			sbld.SetSchemaName(name);
+			sbld.SetDocumentation(description);
+
+			return sbld;
 		}
 
 		private static void CreateUnitSchemaFields(SchemaBuilder sbld, 

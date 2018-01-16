@@ -41,13 +41,13 @@ namespace AOTools
 			logMsg("");
 
 
-			SchemaFields[VERSION_BASIC].Value = "102.00";
+			SchemaFields[VERSION_BASIC].Value = "50.00";
 			
 			SchemaFields[AUTO_RESTORE].Value = false;
 
-			UnitSchemaFields[0][VERSION_UNIT].Value = "sub version 130";
-			UnitSchemaFields[1][VERSION_UNIT].Value = "sub version 131";
-			UnitSchemaFields[2][VERSION_UNIT].Value = "sub version 132";
+			UnitSchemaFields[0][VERSION_UNIT].Value = "sub version 51";
+			UnitSchemaFields[1][VERSION_UNIT].Value = "sub version 52";
+			UnitSchemaFields[2][VERSION_UNIT].Value = "sub version 53";
 
 			SaveRevitSettings();
 
