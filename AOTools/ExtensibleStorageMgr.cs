@@ -76,13 +76,6 @@ namespace AOTools
 			Element elem = GetProjectBasepoint();
 
 			SchemaBuilder sbld = CreateSchema(SCHEMA_NAME, SCHEMA_DESC, SchemaGUID);
-//			SchemaBuilder sbld = new SchemaBuilder(SchemaGUID);
-//
-//			sbld.SetReadAccessLevel(AccessLevel.Public);
-//			sbld.SetWriteAccessLevel(AccessLevel.Vendor);
-//			sbld.SetVendorId(Util.GetVendorId());
-//			sbld.SetSchemaName(SCHEMA_NAME);
-//			sbld.SetDocumentation(SCHEMA_DESC);
 
 			// this makes the basic setting fields
 			MakeFields(sbld, SchemaFields);
