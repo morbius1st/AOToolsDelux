@@ -1,6 +1,7 @@
 ﻿#region Using directives
 using System;
 using System.Collections.Generic;
+using System.Drawing;
 using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.DB.ExtensibleStorage;
@@ -16,6 +17,7 @@ using static AOTools.SUnitKey;
 using UtilityLibrary;
 using static UtilityLibrary.MessageUtilities;
 using static UtilityLibrary.SettingsApp;
+using static UtilityLibrary.SettingsUser;
 
 #endregion
 
@@ -33,7 +35,7 @@ namespace AOTools
 
 		public Result Execute(ExternalCommandData commandData, ref string message, ElementSet elements)
 		{
-			test1();
+			test4();
 
 			return Result.Succeeded;
 		}
@@ -46,6 +48,14 @@ namespace AOTools
 			ASetting.Save();
 
 			logMsgDbLn2("app settings file", ASetting.SettingsPathAndFile);
+
+			USet.FormMeasurePointsLocation = new System.Drawing.Point(100, 100);
+			USet.MeasurePointsShowWorkplane = true;
+			ASetting.Save();
+			
+			logMsgDbLn2("user Settings file", USetting.SettingsPathAndFile);
+
+
 		}
 
 		// test update settings

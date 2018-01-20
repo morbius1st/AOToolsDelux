@@ -82,9 +82,7 @@
     <Compile Include="AppRibbon.cs" />
     <Compile Include="DeleteUnitStyles.cs" />
     <Compile Include="DxMeasure.cs" />
-    <Compile Include="ExtensibleStorage\ExtensibleStorageMgr.cs" />
     <Compile Include="Extensions.cs" />
-    <Compile Include="ExtensibleStorage\FieldInfo.cs" />
     <Compile Include="FormMeasurePoints.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -97,7 +95,9 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
-    <Compile Include="ExtensibleStorage\SchemaDefinitions.cs" />
+    <Compile Include="Settings\ExtensibleStorageMgr.cs" />
+    <Compile Include="Settings\FieldInfo.cs" />
+    <Compile Include="Settings\SchemaDefinitions.cs" />
     <Compile Include="StylesUnitsCommand.cs" />
     <Compile Include="ToggleAnnotationVisibility.cs" />
     <Compile Include="ToggleRefPlane.cs" />

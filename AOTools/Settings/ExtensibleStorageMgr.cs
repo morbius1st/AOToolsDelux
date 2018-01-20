@@ -48,7 +48,6 @@ namespace AOTools
 		public static bool DeleteCurrentSchema()
 		{
 			if (App.Documents.Size != 1) { return false;}
-//			ListSchema();
 
 			Schema schema = Schema.Lookup(SchemaGUID);
 			if (schema != null)
