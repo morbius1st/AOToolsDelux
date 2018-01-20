@@ -79,6 +79,7 @@ namespace AOTools
 			return true;
 		}
 
+		// update the schema with the current schema
 		public static void UpdateSettings()
 		{
 			ReadRevitSettings();
@@ -88,6 +89,7 @@ namespace AOTools
 			SaveRevitSettings();
 		}
 
+		// reset the settings to their default values
 		public static void ResetSettings()
 		{
 			DeleteCurrentSchema();
