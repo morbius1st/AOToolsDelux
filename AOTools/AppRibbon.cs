@@ -9,8 +9,10 @@ using Autodesk.Revit.UI;
 using Autodesk.Revit.UI.Events;
 using Application = Autodesk.Revit.ApplicationServices.Application;
 
-using static AOTools.Util;
 using static AOTools.ExtensibleStorageMgr;
+using static AOTools.Util;
+
+using static UtilityLibrary.SettingsUser;
 
 using UtilityLibrary;
 using static UtilityLibrary.SettingsApp;
@@ -286,9 +288,9 @@ namespace AOTools
 
 			Units u = Doc.GetUnits();
 
-			FormatOptions f = u.GetFormatOptions(UnitType.UT_Length);
-
-			logMsgDbLn2("read units| accuracy", f.Accuracy.ToString());
+//			FormatOptions f = u.GetFormatOptions(UnitType.UT_Length);
+//
+//			logMsgDbLn2("read units| accuracy", f.Accuracy.ToString());
 
 			double accuracy = (1.0 / 12.0) / 16.0;
 
@@ -331,106 +333,6 @@ namespace AOTools
 
 			return _unitsConfigured;
 		}
-//
-//		private void AddInfoToProjectBasepoint()
-//		{
-//			logMsgDbLn2("add info to base point", "0");
-//
-//			ElementCategoryFilter sitElementCategoryFilter =
-//				new ElementCategoryFilter(BuiltInCategory.OST_ProjectBasePoint);
-//
-//			logMsgDbLn2("add info to base point", "1");
-//
-//			FilteredElementCollector collector =
-//				new FilteredElementCollector(Doc);
-//
-//			logMsgDbLn2("add info to base point", "2");
-//
-//			IList<Element> siteElements =
-//				collector.WherePasses(sitElementCategoryFilter).ToElements();
-//
-//			logMsgDbLn2("site elements found", siteElements.Count.ToString());
-//
-//			foreach (Element e in siteElements)
-//			{
-//				logMsgDbLn2("site element", e.Name + "elev| " + e.ParametersMap.get_Item("Elev").AsDouble());
-//			}
-//
-//			if (siteElements.Count > 1)
-//			{
-//				return;
-//			}
-//
-//			Element basePoint = siteElements[0];
-//
-//			if (StoreDataInElement(basePoint, "now is the time for all good men"))
-//			{
-//				ReadDataInElement(basePoint);
-//			}
-//			else
-//			{
-//				TaskDialog.Show(APP_NAME, "extensible storage failed");
-//			}
-//
-//		}
-//
-//		private bool StoreDataInElement(Element elem, string message)
-//		{
-//			SchemaBuilder sbld = new SchemaBuilder(
-//				new Guid("B2788BC0-381E-4F4F-BE0B-93A93B94700C"));
-//
-//			try
-//			{
-//				using (Transaction t = new Transaction(Doc, "Unit Style Settings"))
-//				{
-//					t.Start();
-//					sbld.SetReadAccessLevel(AccessLevel.Public);
-//					sbld.SetWriteAccessLevel(AccessLevel.Vendor);
-//					sbld.SetVendorId("pro.cyberstudio");
-//
-//					FieldBuilder fbld = sbld.AddSimpleField("UnitStyleSettings", typeof(string));
-////					fbld.SetUnitType(UnitType.UT_Custom);
-//					fbld.SetDocumentation("test ext storage");
-//
-//					sbld.SetSchemaName("UnitStyleSettings");
-//
-//					Schema schema = sbld.Finish();
-//
-//					Entity entity = new Entity(schema);
-//
-//					Field unitStyleSetting = schema.GetField("UnitStyleSettings");
-//				
-//					entity.Set(unitStyleSetting, message);
-//
-//					elem.SetEntity(entity);
-//
-//					t.Commit();
-//				}
-//
-//			}
-//			catch
-//			{
-//				return false;
-//			}
-//			return true;
-//		}
-//
-//		private bool ReadDataInElement(Element elem)
-//		{
-//			Schema schema = Schema.Lookup(new Guid("B2788BC0-381E-4F4F-BE0B-93A93B94700C"));
-//
-//			if (schema == null) return false;
-//
-//			Field fld = schema.GetField("UnitStyleSettings");
-//
-//			Entity entity = elem.GetEntity(schema);
-//
-//			string message =
-//				entity.Get<string>(fld);
-//
-//			TaskDialog.Show(APP_NAME, "unit setting message read\n" + message);
-//
-//			return true;
-//		}
+
 	}
 }

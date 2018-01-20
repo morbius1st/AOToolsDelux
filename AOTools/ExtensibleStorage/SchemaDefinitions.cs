@@ -94,6 +94,11 @@ namespace AOTools
 			new FieldInfo(UNDEFINED, "LocalUnitStyle{0:D2}",
 				"subschema for the local unit style",
 				new Entity(), UnitType.UT_Number, "B2788BC0-381E-4F4F-BE0B-93A93B9470{0:x2}");
+
+		public static Guid GetSubSchemaGuid(int i)
+		{
+			return new Guid(string.Format(_subSchemaFieldInfo.Guid, i));
+		}
 	}
 
 
@@ -115,6 +120,12 @@ namespace AOTools
 					(STYLE_NAME),
 					new FieldInfo(STYLE_NAME,
 						"UnitStyleName", "name of this unit style", "unit style {0:D2}")
+				},
+
+				{
+					(STYLE_DESC),
+					new FieldInfo(STYLE_DESC,
+						"UnitStyleDesc", "description for this unit style", "unit style description")
 				},
 
 				{

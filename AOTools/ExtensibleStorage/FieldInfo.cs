@@ -106,16 +106,17 @@ namespace AOTools
 
 		public static readonly SUnitKey VERSION_UNIT = new SUnitKey(0);
 		public static readonly SUnitKey STYLE_NAME = new SUnitKey(1);
-		public static readonly SUnitKey CAN_BE_ERASED = new SUnitKey(2);
-		public static readonly SUnitKey UNIT_SYSTEM = new SUnitKey(3);
-		public static readonly SUnitKey UNIT_TYPE = new SUnitKey(4);
-		public static readonly SUnitKey ACCURACY = new SUnitKey(5);
-		public static readonly SUnitKey DUT = new SUnitKey(6);
-		public static readonly SUnitKey UST = new SUnitKey(7);
-		public static readonly SUnitKey SUP_SPACE = new SUnitKey(8);
-		public static readonly SUnitKey SUP_LEAD_ZERO = new SUnitKey(9);
-		public static readonly SUnitKey SUP_TRAIL_ZERO = new SUnitKey(10);
-		public static readonly SUnitKey USE_DIG_GRP = new SUnitKey(11);
-		public static readonly SUnitKey USE_PLUS_PREFIX = new SUnitKey(12);
+		public static readonly SUnitKey STYLE_DESC = new SUnitKey(2);
+		public static readonly SUnitKey CAN_BE_ERASED = new SUnitKey(3);
+		public static readonly SUnitKey UNIT_SYSTEM = new SUnitKey(4);
+		public static readonly SUnitKey UNIT_TYPE = new SUnitKey(5);
+		public static readonly SUnitKey ACCURACY = new SUnitKey(6);
+		public static readonly SUnitKey DUT = new SUnitKey(7);
+		public static readonly SUnitKey UST = new SUnitKey(8);
+		public static readonly SUnitKey SUP_SPACE = new SUnitKey(9);
+		public static readonly SUnitKey SUP_LEAD_ZERO = new SUnitKey(10);
+		public static readonly SUnitKey SUP_TRAIL_ZERO = new SUnitKey(11);
+		public static readonly SUnitKey USE_DIG_GRP = new SUnitKey(12);
+		public static readonly SUnitKey USE_PLUS_PREFIX = new SUnitKey(13);
 	}
 }
