@@ -63,6 +63,7 @@
     <Reference Include="System.Configuration" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
     <Reference Include="System.Xml.Linq" />
@@ -81,9 +82,9 @@
     <Compile Include="AppRibbon.cs" />
     <Compile Include="DeleteUnitStyles.cs" />
     <Compile Include="DxMeasure.cs" />
-    <Compile Include="Settings\ExtensibleStorageMgr.cs" />
+    <Compile Include="ExtensibleStorage\ExtensibleStorageMgr.cs" />
     <Compile Include="Extensions.cs" />
-    <Compile Include="Settings\FieldInfo.cs" />
+    <Compile Include="ExtensibleStorage\FieldInfo.cs" />
     <Compile Include="FormMeasurePoints.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -96,7 +97,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
-    <Compile Include="Settings\SchemaDefinitions.cs" />
+    <Compile Include="ExtensibleStorage\SchemaDefinitions.cs" />
     <Compile Include="StylesUnitsCommand.cs" />
     <Compile Include="ToggleAnnotationVisibility.cs" />
     <Compile Include="ToggleRefPlane.cs" />

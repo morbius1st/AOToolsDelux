@@ -1,6 +1,10 @@
 ﻿#region Using directives
 
+using System.Collections.Generic;
 using UtilityLibrary;
+
+using static AOTools.SBasicKey;
+using static AOTools.SUnitKey;
 
 #endregion
 
@@ -12,14 +16,13 @@ using UtilityLibrary;
 namespace AOTools
 {
 	// sample settings app
-	public class AppSettings : SettingsPathFileUserBase
+	public class AppSettings : SettingsPathFileAppBase
 	{
-//		public int AppI { get; set; } = 0;
-//		public bool AppB { get; set; } = false;
-//		public double AppD { get; set; } = 0.0;
-//		public string AppS { get; set; } = "this is a App";
-//		public int[] AppIs { get; set; } = new[] { 20, 30 };
-
-	
+		//		public int AppI { get; set; } = 0;
+		//		public bool AppB { get; set; } = false;
+		//		public double AppD { get; set; } = 0.0;
+		//		public string AppS { get; set; } = "this is a App";
+				public int[] AppIs { get; set; } = new[] {10, 20, 30 };
 	}
+
 }

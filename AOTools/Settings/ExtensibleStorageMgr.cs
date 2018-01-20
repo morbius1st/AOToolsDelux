@@ -13,6 +13,7 @@ using static AOTools.UnitSchema;
 
 
 using static UtilityLibrary.MessageUtilities;
+using InvalidOperationException = Autodesk.Revit.Exceptions.InvalidOperationException;
 
 #endregion
 
@@ -30,6 +31,7 @@ namespace AOTools
 
 		public static Dictionary<SBasicKey, FieldInfo> SchemaFields;
 		public static Dictionary<SUnitKey, FieldInfo>[] UnitSchemaFields;
+		private static List<Schema> _subSchema = new List<Schema>(_schemaFields[COUNT].Value);
 
 		// ******************************
 		// general routines
@@ -40,28 +42,67 @@ namespace AOTools
 
 			initalized = true;
 
-			SchemaFields = new Dictionary<SBasicKey, FieldInfo>(_schemaFields);
-
-			UnitSchemaFields = GetUnitSchemaFields(_schemaFields[COUNT].Value);
+			SetDefaultFields();
 		}
 
-		public static void DeleteCurrentSchema()
+		public static bool DeleteCurrentSchema()
 		{
+			if (App.Documents.Size != 1) { return false;}
+//			ListSchema();
+
 			Schema schema = Schema.Lookup(SchemaGUID);
 			if (schema != null)
 			{
+				Init();
 
 				using (Transaction t = new Transaction(Doc, "Delete old schema"))
 				{
 					t.Start();
-					Element elem = GetProjectBasepoint();
-					logMsgDbLn2("delete current schema", elem.DeleteEntity(schema) ? "worked" : "failed");
+				
+					if (ReadAllRevitSettings() && _subSchema.Count > 0)
+					{
+						for (int i = 0; i < SchemaFields[COUNT].Value; i++)
+						{
+							Schema.EraseSchemaAndAllEntities(_subSchema[i], false);
+							_subSchema[i].Dispose();
+						}
+					}
+					//					logMsgDbLn2("delete current schema", elem.DeleteEntity(schema) ? "worked" : "failed");
+
 					Schema.EraseSchemaAndAllEntities(schema, false);
-					schema.Dispose();
 					t.Commit();
 
 				}
+				schema.Dispose();
 			}
+
+			return true;
+		}
+
+		// update the schema with the current schema
+		public static void UpdateSettings()
+		{
+			ReadRevitSettings();
+
+			DeleteCurrentSchema();
+
+			SaveRevitSettings();
+		}
+
+		// reset the settings to their default values
+		public static void ResetSettings()
+		{
+			DeleteCurrentSchema();
+
+			SetDefaultFields();
+
+			SaveRevitSettings();
+		}
+
+		public static void SetDefaultFields()
+		{
+			SchemaFields = _schemaFields.Clone();
+			UnitSchemaFields = GetUnitSchemaFields(_schemaFields[COUNT].Value);
 		}
 
 		// ******************************
@@ -72,47 +113,49 @@ namespace AOTools
 		// this saves both the basic and the unit styles
 		public static bool SaveRevitSettings()
 		{
-			if (!initalized) { return false; }
-			Element elem = GetProjectBasepoint();
-
-			SchemaBuilder sbld = CreateSchema(SCHEMA_NAME, SCHEMA_DESC, SchemaGUID);
-//			SchemaBuilder sbld = new SchemaBuilder(SchemaGUID);
-//
-//			sbld.SetReadAccessLevel(AccessLevel.Public);
-//			sbld.SetWriteAccessLevel(AccessLevel.Vendor);
-//			sbld.SetVendorId(Util.GetVendorId());
-//			sbld.SetSchemaName(SCHEMA_NAME);
-//			sbld.SetDocumentation(SCHEMA_DESC);
-
-			// this makes the basic setting fields
-			MakeFields(sbld, SchemaFields);
-
-			Dictionary<string, string> subSchemaFields = 
-				new Dictionary<string, string>(SchemaFields[COUNT].Value);
-
-			CreateUnitSchemaFields(sbld, subSchemaFields);
-
-			Schema schema = sbld.Finish();
-
-			Entity entity = new Entity(schema);
-
-			// set the basic fields
-			SaveFieldValues(entity, schema, SchemaFields);
-
-			SaveUnitSettings(entity, schema, subSchemaFields);
-
-			using (Transaction t = new Transaction(Doc, "Unit Style Settings"))
+			try
 			{
-				t.Start();
-				elem.SetEntity(entity);
-				t.Commit();
-			}
+				if (!initalized) { return false; }
+				Element elem = GetProjectBasepoint();
 
-			schema.Dispose();
+				SchemaBuilder sbld = CreateSchema(SCHEMA_NAME, SCHEMA_DESC, SchemaGUID);
+
+				// this makes the basic setting fields
+				MakeFields(sbld, SchemaFields);
+
+				// create and get the unit style schema fields
+				// and then the sub-schemd (unit styles)
+				Dictionary<string, string> subSchemaFields = 
+					CreateUnitFields(sbld);
+
+				// all fields created and added
+				Schema schema = sbld.Finish();
+
+				Entity entity = new Entity(schema);
+
+				// set the basic fields
+				SaveFieldValues(entity, schema, SchemaFields);
+
+				SaveUnitSettings(entity, schema, subSchemaFields);
+
+				using (Transaction t = new Transaction(Doc, "Unit Style Settings"))
+				{
+					t.Start();
+					elem.SetEntity(entity);
+					t.Commit();
+				}
+
+				schema.Dispose();
+			}
+			catch (InvalidOperationException e)
+			{
+				return false;
+			}
 
 			return true;
 		}
 
+		// create the schema builder opject
 		private static SchemaBuilder CreateSchema(string name, string description, Guid guid)
 		{
 			SchemaBuilder sbld = new SchemaBuilder(guid);
@@ -126,21 +169,46 @@ namespace AOTools
 			return sbld;
 		}
 
-		private static void CreateUnitSchemaFields(SchemaBuilder sbld, 
-			Dictionary<string, string> subSchemaFields)
+		// create the fields that hold the unit schemas
+		private static Dictionary<string, string> CreateUnitFields(SchemaBuilder sbld)
 		{
+			Dictionary<string, string> subSchemaFields =
+				new Dictionary<string, string>(SchemaFields[COUNT].Value);
+
 			// temp - test making ) unit subschemas
 			for (int i = 0; i < SchemaFields[COUNT].Value; i++)
 			{
-				string guid = String.Format(_subSchemaFieldInfo.Guid, i);   // + suffix;
+				string guid = string.Format(_subSchemaFieldInfo.Guid, i);   // + suffix;
 				string fieldName =
-					String.Format(_subSchemaFieldInfo.Name, i);
+					string.Format(_subSchemaFieldInfo.Name, i);
 				FieldBuilder fbld =
 					sbld.AddSimpleField(fieldName, typeof(Entity));
 				fbld.SetDocumentation(_subSchemaFieldInfo.Desc);
 				fbld.SetSubSchemaGUID(new Guid(guid));
 
 				subSchemaFields.Add(fieldName, guid);
+			}
+
+			return subSchemaFields;
+		}
+
+		// save the settings held in the 
+		private static void SaveFieldValues<T>(Entity entity, Schema schema, 
+			Dictionary<T, FieldInfo> fieldList)
+		{
+			foreach (KeyValuePair<T, FieldInfo> kvp in fieldList)
+			{
+				Field field = schema.GetField(kvp.Value.Name);
+				if (field == null || !field.IsValidObject) { continue; }
+
+				if (kvp.Value.UnitType != UnitType.UT_Undefined)
+				{
+					entity.Set(field, kvp.Value.Value, DisplayUnitType.DUT_GENERAL);
+				}
+				else
+				{
+					entity.Set(field, kvp.Value.Value);
+				}
 			}
 		}
 
@@ -151,20 +219,15 @@ namespace AOTools
 
 			foreach (KeyValuePair<string, string> kvp in subSchemaFields)
 			{
-				Field f = schema.GetField(kvp.Key);
+				Field field = schema.GetField(kvp.Key);
+				if (field == null || !field.IsValidObject) { continue; }
+
 				Entity subEntity =
 					MakeUnitSchema(kvp.Value, UnitSchemaFields[j++]);
-				entity.Set(f, subEntity);
+				entity.Set(field, subEntity);
 			}
 		}
 
-
-		/// <summary>
-		/// general routine to make one schema field for<para/>
-		/// each item in a field info list
-		/// </summary>
-		/// <param name="sbld"></param>
-		/// <param name="fieldList"></param>
 		private static void MakeFields<T>(SchemaBuilder sbld, 
 			Dictionary<T, FieldInfo> fieldList)
 		{
@@ -174,11 +237,6 @@ namespace AOTools
 			}
 		}
 
-		/// <summary>
-		/// general routine to make a single schema field
-		/// </summary>
-		/// <param name="sbld"></param>
-		/// <param name="fieldInfo"></param>
 		private static void MakeField(SchemaBuilder sbld, FieldInfo fieldInfo)
 		{
 			FieldBuilder fbld = sbld.AddSimpleField(
@@ -192,22 +250,11 @@ namespace AOTools
 			}
 		}
 
-		/// <summary>
-		/// routine to make a unit schema and its fields
-		/// </summary>
-		/// <param name="guid"></param>
-		/// <param name="unitSchemaFields"></param>
-		/// <returns>SchemaBuilder</returns>
 		private static Entity MakeUnitSchema(string guid, 
 			Dictionary<SUnitKey, FieldInfo> unitSchemaFields)
 		{
-			SchemaBuilder sbld = new SchemaBuilder(new Guid(guid));
-
-			sbld.SetReadAccessLevel(AccessLevel.Public);
-			sbld.SetWriteAccessLevel(AccessLevel.Vendor);
-			sbld.SetVendorId(Util.GetVendorId());
-			sbld.SetSchemaName(UNIT_SCHEMA_NAME);
-			sbld.SetDocumentation(UNIT_SCHEMA_DESC);
+			SchemaBuilder sbld = CreateSchema(UNIT_SCHEMA_NAME,
+				UNIT_SCHEMA_DESC, new Guid(guid));
 
 			MakeFields(sbld, unitSchemaFields);
 
@@ -218,24 +265,6 @@ namespace AOTools
 			SaveFieldValues(entity, schema, unitSchemaFields);
 
 			return entity;
-		}
-
-		private static void SaveFieldValues<T>(Entity entity, Schema schema, 
-			Dictionary<T, FieldInfo> fieldList)
-		{
-			foreach (KeyValuePair<T, FieldInfo> kvp in fieldList)
-			{
-				Field field = schema.GetField(kvp.Value.Name);
-
-				if (kvp.Value.UnitType != UnitType.UT_Undefined)
-				{
-					entity.Set(field, kvp.Value.Value, DisplayUnitType.DUT_GENERAL);
-				}
-				else
-				{
-					entity.Set(field, kvp.Value.Value);
-				}
-			}
 		}
 
 		// ******************************
@@ -263,22 +292,34 @@ namespace AOTools
 			return true;
 		}
 
-
-		// general routine to read through a saved schema and 
-		// get the value from each field 
-		// this will work with any field list
-		private static bool ReadAllRevitSettings()
+		private static bool SettingsExist(out Schema schema, out Entity elemEntity)
 		{
-			Schema schema = Schema.Lookup(SchemaGUID);
+			elemEntity = null;
+
+			schema = Schema.Lookup(SchemaGUID);
 
 			if (schema == null ||
 				schema.IsValidObject == false) { return false; }
 
 			Element elem = GetProjectBasepoint();
 
-			Entity elemEntity = elem.GetEntity(schema);
+			elemEntity = elem.GetEntity(schema);
 
 			if (elemEntity?.Schema == null) { return false; }
+
+			return true;
+		}
+
+
+		// general routine to read through a saved schema and 
+		// get the value from each field 
+		// this will work with any field list
+		private static bool ReadAllRevitSettings()
+		{
+			Schema schema;
+			Entity elemEntity;
+
+			if (!SettingsExist(out schema, out elemEntity)) { return false; }
 
 			ReadBasicRevitSettings(elemEntity, schema);
 
@@ -296,8 +337,10 @@ namespace AOTools
 		{
 			foreach (KeyValuePair<SBasicKey, FieldInfo> kvp in SchemaFields)
 			{
-				Field f = schema.GetField(kvp.Value.Name);
-				kvp.Value.Value = kvp.Value.ExtractValue(elemEntity, f);
+				Field field = schema.GetField(kvp.Value.Name);
+				if (field == null || !field.IsValidObject) { continue; }
+
+				kvp.Value.Value = kvp.Value.ExtractValue(elemEntity, field);
 			}
 		}
 
@@ -310,12 +353,13 @@ namespace AOTools
 			{
 				string subSchemaName = GetSubSchemaName(i);
 
-				Field f = schema.GetField(subSchemaName);
+				Field field = schema.GetField(subSchemaName);
+				if (field == null || !field.IsValidObject) { continue; }
 
-				if (f == null || !f.IsValidObject) { continue; }
+				Entity subSchema = elemEntity.Get<Entity>(field);
 
-				Entity subSchema = elemEntity.Get<Entity>(f);
 				
+				_subSchema.Add(field.SubSchema);
 
 				if (subSchema == null || !subSchema.IsValidObject) { continue; }
 
@@ -331,9 +375,11 @@ namespace AOTools
 			foreach (KeyValuePair<SUnitKey, FieldInfo> kvp
 				in unitSchemaField)
 			{
-				Field f = schema.GetField(kvp.Value.Name);
+				Field field = schema.GetField(kvp.Value.Name);
+				if (field == null || !field.IsValidObject) { continue; }
+
 				kvp.Value.Value =
-					kvp.Value.ExtractValue(subSchemaEntity, f);
+					kvp.Value.ExtractValue(subSchemaEntity, field);
 			}
 		}
 
@@ -363,6 +409,17 @@ namespace AOTools
 				logMsgDbLn2("field #" + i++, kvp.Key.GetType().Name
 					+ "  name| " + kvp.Value.Name
 					+ "  value| " + kvp.Value.Value);
+			}
+		}
+
+		private static void ListSchema()
+		{
+			IList<Schema> schemas = Schema.ListSchemas();
+			logMsgDbLn2("number of schema found", schemas.Count.ToString());
+
+			foreach (Schema schema in schemas)
+			{
+				logMsgDbLn2("schema name", schema.SchemaName + "  guid| " + schema.GUID);
 			}
 		}
 

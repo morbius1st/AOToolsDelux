@@ -15,6 +15,7 @@ using static AOTools.SUnitKey;
 
 using UtilityLibrary;
 using static UtilityLibrary.MessageUtilities;
+using static UtilityLibrary.SettingsApp;
 
 #endregion
 
@@ -28,11 +29,29 @@ namespace AOTools
 	[Transaction(TransactionMode.Manual)]
 	class StylesUnitsCommand : IExternalCommand
 	{
+		private const int testVal = 70;
+
 		public Result Execute(ExternalCommandData commandData, ref string message, ElementSet elements)
 		{
-//			DeleteCurrentSchema();
-//			return Result.Succeeded;
+			test1();
 
+			return Result.Succeeded;
+		}
+
+		private void test4()
+		{
+			ASet.AppIs[0] = 100;
+			ASet.AppIs[1] = 200;
+			ASet.AppIs[2] = 300;
+			ASetting.Save();
+
+			logMsgDbLn2("app settings file", ASetting.SettingsPathAndFile);
+		}
+
+		// test update settings
+		private void test3()
+		{
+			// first read and display the current settings
 			ReadRevitSettings();
 
 			logMsg("");
@@ -40,64 +59,72 @@ namespace AOTools
 			ListFieldInfo();
 			logMsg("");
 
+			UpdateSettings();
 
-			SchemaFields[VERSION_BASIC].Value = "50.00";
-			
-			SchemaFields[AUTO_RESTORE].Value = false;
+			logMsg("");
+			logMsgDbLn2("settings", "after");
+			ListFieldInfo();
+			logMsg("");
+		}
 
-			UnitSchemaFields[0][VERSION_UNIT].Value = "sub version 51";
-			UnitSchemaFields[1][VERSION_UNIT].Value = "sub version 52";
-			UnitSchemaFields[2][VERSION_UNIT].Value = "sub version 53";
+		// test reset settings to default
+		private void test2()
+		{
+			// first read and display the current settings
+			ReadRevitSettings();
 
-			SaveRevitSettings();
-
-			logMsgDbLn2("settings", "after 1");
+			logMsg("");
+			logMsgDbLn2("settings", "before");
 			ListFieldInfo();
 			logMsg("");
 
+			SchemaFields[VERSION_BASIC].Value = (testVal * 10.00).ToString();
+
+			SchemaFields[AUTO_RESTORE].Value = (testVal / 10) % 2 == 0;
+
+			UnitSchemaFields[0][VERSION_UNIT].Value = "sub version " + (testVal + 1);
+			UnitSchemaFields[1][VERSION_UNIT].Value = "sub version " + (testVal + 2);
+			UnitSchemaFields[2][VERSION_UNIT].Value = "sub version " + (testVal + 3);
+
+			ResetSettings();
+
+			logMsg("");
+			logMsgDbLn2("settings", "after");
+			ListFieldInfo();
+			logMsg("");
+		}
+
+
+
+		// this is just a basic read, modify, save, re-read test
+		private void test1()
+		{
+			ReadRevitSettings();
+
+			logMsg("");
+			logMsgDbLn2("settings", "before");
+			ListFieldInfo();
+			logMsg("");
+
+			SchemaFields[VERSION_BASIC].Value = (testVal * 10.00).ToString();
+
+			SchemaFields[AUTO_RESTORE].Value = (testVal / 10) % 2 == 0;
+
+			UnitSchemaFields[0][VERSION_UNIT].Value = "sub version " + (testVal + 1);
+			UnitSchemaFields[1][VERSION_UNIT].Value = "sub version " + (testVal + 2);
+			UnitSchemaFields[2][VERSION_UNIT].Value = "sub version " + (testVal + 3);
+
+			if (!SaveRevitSettings())
+			{
+				logMsgDbLn2("save settings", "failed");
+			}
+			
 			ReadRevitSettings();
 
 			logMsgDbLn2("settings", "after 2");
 			ListFieldInfo();
-
-			//			ExtensibleStorageMgr.SaveRevitSettings2();
-			//			TaskDialog.Show(APP_NAME, "read message|\n" +
-			//				ExtensibleStorageMgr.ReadRevitSettings2());
-
-			//			ExtensibleStorageMgr.SaveRevitBasicSettings("the lazy brown dog... etc. for| " + Environment.UserName.ToLower());
-			//			TaskDialog.Show(APP_NAME, "read message|\n" + 
-			//				ExtensibleStorageMgr.ReadRevitSettings());
-
-
-
-			return Result.Succeeded;
 		}
-//
-//		private void test()
-//		{
-//			Dictionary<SchemaFldNum, string> t = new Dictionary<SchemaFldNum, string>()
-//			{
-//				{ SchemaFldNum.VERSION_BASIC, "version"},
-//				{ SchemaFldNum.AUTO_RESTORE, "auto restore" },
-//				{ SchemaFldNum.CURRENT, "current" },
-//				{ SchemaFldNum.UNDEFINED, "undefined" },
-//				{ SchemaFldNum.USE_OFFICE, "use office" }
-//			};
-//
-//			int i = 0;
-//
-//			logMsg(Util.nl);
-//			logMsgDbLn2("test using enum field as key");
-//
-//			foreach (KeyValuePair<SchemaFldNum, string> kvp in t)
-//			{
-//				logMsgDbLn2("item", i++.ToString("000") +
-//					"key / value|  " + kvp.Key.ToString() 
-//					+ "  value| " + kvp.Value);
-//				
-//			}
-//		}
-		
+
 	}
 
 }
