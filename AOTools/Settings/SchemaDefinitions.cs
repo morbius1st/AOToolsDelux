@@ -90,14 +90,10 @@ namespace AOTools.Settings
 		}
 	}
 
-
-
 	// basic schema is only saved in the Revitfile
 	[DataContract]
 	public class BasicSchema
 	{
-		
-
 		public const string SCHEMA_NAME = "UnitStyleSettings";
 		public const string SCHEMA_DESC = "unit style setings";
 

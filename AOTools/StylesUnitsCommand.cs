@@ -37,12 +37,13 @@ namespace AOTools
 
 		private void test4()
 		{
-			ASet.AppIs[0] = 100;
-			ASet.AppIs[1] = 200;
-			ASet.AppIs[2] = 300;
-			ASettings.Save();
-
-			logMsgDbLn2("app settings file", ASettings.SettingsPathAndFile);
+			// no app settings
+//			ASet.AppIs[0] = 100;
+//			ASet.AppIs[1] = 200;
+//			ASet.AppIs[2] = 300;
+//			ASettings.Save();
+//
+//			logMsgDbLn2("app settings file", ASettings.SettingsPathAndFile);
 
 			USet.FormMeasurePointsLocation = new System.Drawing.Point(100, 100);
 			USet.MeasurePointsShowWorkplane = true;
