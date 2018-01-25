@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using AOTools.Settings;
 using Autodesk.Revit.DB;
 
 namespace AOTools
@@ -15,23 +16,22 @@ namespace AOTools
 	{
 		public static FieldInfo Clone(this FieldInfo fi)
 		{
-			return new FieldInfo(fi.Key, fi.Name,fi.Desc, fi.Value, 
-				fi.UnitType, fi.Guid);
+			return new FieldInfo(fi);
 		}
 
-		public static Dictionary<T, FieldInfo> 
-			Clone<T>(this Dictionary<T, FieldInfo> d) where T : SchemaKey
-
-		{
-			Dictionary<T, FieldInfo> copy = 
-				new Dictionary<T, FieldInfo>(d.Count);
-
-			foreach (KeyValuePair<T, FieldInfo> kvp in d)
-			{
-				copy.Add(kvp.Key, new FieldInfo(kvp.Value));
-			}
-
-			return copy;
-		}
+//		public static SchemaDictionary<T, FieldInfo> 
+//			Clone<T>(this SchemaDictionary<T, FieldInfo> d) where T : SchemaKey
+//
+//		{
+//			SchemaDictionary<T, FieldInfo> copy = 
+//				new SchemaDictionary<T, FieldInfo>(d.Count);
+//
+//			foreach (KeyValuePair<T, FieldInfo> kvp in d)
+//			{
+//				copy.Add(kvp.Key, new FieldInfo(kvp.Value));
+//			}
+//
+//			return copy;
+//		}
 	}
 }

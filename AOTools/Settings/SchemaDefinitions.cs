@@ -1,12 +1,14 @@
 ﻿#region Using directives
+
 using System;
 using System.Collections.Generic;
-
-using static AOTools.SBasicKey;
-using static AOTools.SUnitKey;
-
+using System.Runtime.Serialization;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.DB.ExtensibleStorage;
+//using static AOTools.Settings.SUnitKey;
+//using static AOTools.Settings.SBasicKey;
+using static AOTools.Settings.SBasicKey;
+using static AOTools.Settings.SUnitKey;
 
 #endregion
 
@@ -15,7 +17,7 @@ using Autodesk.Revit.DB.ExtensibleStorage;
 // created:		1/14/2018 4:28:23 PM
 
 
-namespace AOTools
+namespace AOTools.Settings
 {
 	// master schema
 	//  field 0 = version
@@ -39,15 +41,70 @@ namespace AOTools
 	//	field 11= int    : fmt op: use digit grouping		// 0 = false; 1 = true; -1 = ignore
 	//	field 12= int    : fmt op: use plus prefix			// 0 = false; 1 = true; -1 = ignore
 
-	class BasicSchema
+
+	[CollectionDataContract(Name = "SchemaFields", KeyName = "OrderKey", 
+		ValueName = "SchemaField", ItemName = "SchemaFieldItem")]
+	public class SchemaDictionaryBase<T> : Dictionary<T, FieldInfo> 
+//		public class SchemaDictionary<T, Field> : Dictionary<T, FieldInfo> where T: SchemaKey
 	{
+		public SchemaDictionaryBase() { }
+
+		public SchemaDictionaryBase(int capacity) : base(capacity) { }
+
+		protected U Clone<U>(U original) where U : SchemaDictionaryBase<T>, new()
+		{
+			U copy = new U();
+
+			foreach (KeyValuePair<T, FieldInfo> kvp in original)
+			{
+				copy.Add(kvp.Key, kvp.Value);
+			}
+			return copy;
+		}
+	}
+
+	[CollectionDataContract(Name = "SchemaFields", KeyName = "OrderKey",
+		ValueName = "SchemaField", ItemName = "SchemaFieldItem")]
+	public class SchemaDictionaryUser : SchemaDictionaryBase<SUnitKey>
+	{
+		public SchemaDictionaryUser() { }
+		public SchemaDictionaryUser(int capacity) :base(capacity) { }
+		public SchemaDictionaryUser Clone()
+		{
+			return Clone(this); 
+		
+		}
+
+	}
+
+	[CollectionDataContract(Name = "SchemaFields", KeyName = "OrderKey",
+		ValueName = "SchemaField", ItemName = "SchemaFieldItem")]
+	public class SchemaDictionaryBasic : SchemaDictionaryBase<SBasicKey>
+	{
+		public SchemaDictionaryBasic() { }
+		public SchemaDictionaryBasic(int capacity) :base(capacity) { }
+		public SchemaDictionaryBasic Clone()
+		{
+			return Clone(this);
+
+		}
+	}
+
+
+
+	// basic schema is only saved in the Revitfile
+	[DataContract]
+	public class BasicSchema
+	{
+		
+
 		public const string SCHEMA_NAME = "UnitStyleSettings";
 		public const string SCHEMA_DESC = "unit style setings";
 
 		public static readonly Guid SchemaGUID = new Guid("B1788BC0-381E-4F4F-BE0B-93A93B9470FF");
 
-		public static readonly Dictionary<SBasicKey, FieldInfo> _schemaFields =
-			new Dictionary<SBasicKey, FieldInfo>()
+		public static readonly SchemaDictionaryBasic _schemaFields =
+			new SchemaDictionaryBasic
 			{
 				{
 					(CURRENT),
@@ -80,7 +137,7 @@ namespace AOTools
 				}
 			};
 
-		internal static Dictionary<SBasicKey, FieldInfo> GetBasicSchemaFields()
+		internal static SchemaDictionaryBasic GetBasicSchemaFields()
 		{
 			return _schemaFields.Clone();
 		}
@@ -102,13 +159,27 @@ namespace AOTools
 	}
 
 
-	class UnitSchema
+	// unit schema is saved in
+	// the app settings as a list of office standard unit styles
+	// the user settings for a list of their personal unit styles
+	// in the revit files as a list of custom unit styles
+	[DataContract]
+	public class UnitSchema
 	{
+		public static SchemaDictionaryUser Make(string name, string desc)
+		{
+			SchemaDictionaryUser temp = _unitSchemaFields.Clone();
+			temp[STYLE_NAME].Value = name;
+			temp[STYLE_DESC].Value = desc;
+
+			return temp;
+		}
+
 		public const string UNIT_SCHEMA_NAME = "UnitStyleSchema";
 		public const string UNIT_SCHEMA_DESC = "unit style sub schema";
 
-		public static readonly Dictionary<SUnitKey, FieldInfo> _unitSchemaFields =
-			new Dictionary<SUnitKey, FieldInfo>()
+		public static readonly SchemaDictionaryUser _unitSchemaFields =
+			new SchemaDictionaryUser
 			{
 				{
 					(VERSION_UNIT),
@@ -195,10 +266,10 @@ namespace AOTools
 				}
 			};
 
-		internal static Dictionary<SUnitKey, FieldInfo>[] GetUnitSchemaFields(int count)
+		internal static SchemaDictionaryUser[] GetUnitSchemaFields(int count)
 		{
-			Dictionary<SUnitKey, FieldInfo>[] unitSchemaFields =
-				new Dictionary<SUnitKey, FieldInfo>[count];
+			SchemaDictionaryUser[] unitSchemaFields =
+				new SchemaDictionaryUser[count];
 
 			// create the UnitSchema's
 			// personlize the sub schema's
@@ -215,7 +286,7 @@ namespace AOTools
 
 		internal static string GetSubSchemaName(int i)
 		{
-			return string.Format(BasicSchema._subSchemaFieldInfo.Name, i);
+			return String.Format(BasicSchema._subSchemaFieldInfo.Name, i);
 		}
 	}
 }

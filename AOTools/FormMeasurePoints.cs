@@ -5,9 +5,9 @@ using Form = System.Windows.Forms.Form;
 using Point = System.Drawing.Point;
 
 using static AOTools.Util;
-using UtilityLibrary;
 
-using static UtilityLibrary.SettingsUser;
+using static AOTools.Settings.SettingsUser;
+using AOTools.Settings;
 
 namespace AOTools
 {
@@ -26,7 +26,7 @@ namespace AOTools
 		{
 			USet.FormMeasurePointsLocation = this.Location;
 			USet.MeasurePointsShowWorkplane = this.ShowWorkplane;
-			USetting.Save();
+			USettings.Save();
 			
 		}
 

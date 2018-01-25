@@ -1,15 +1,16 @@
 ﻿#region Using directives
 using System;
 using System.Collections.Generic;
+using AOTools.Settings;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.DB.ExtensibleStorage;
 using EnvDTE;
 using static AOTools.Util;
 using static AOTools.AppRibbon;
-using static AOTools.SBasicKey;
-using static AOTools.SUnitKey;
-using static AOTools.BasicSchema;
-using static AOTools.UnitSchema;
+using static AOTools.Settings.SBasicKey;
+using static AOTools.Settings.SUnitKey;
+using static AOTools.Settings.BasicSchema;
+using static AOTools.Settings.UnitSchema;
 
 
 using static UtilityLibrary.MessageUtilities;

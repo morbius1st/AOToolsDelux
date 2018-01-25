@@ -5,7 +5,7 @@ using System.Runtime.Serialization;
 using UtilityLibrary;
 using Point = System.Drawing.Point;
 
-using static AOTools.Settings.SUnitKey;
+//using static AOTools.Settings.SUnitKey;
 
 #endregion
 
@@ -14,7 +14,7 @@ using static AOTools.Settings.SUnitKey;
 // created:		1/3/2018 8:04:40 PM
 
 
-namespace AOTools.Settings
+namespace AOToolsVue.Settings
 {
 	public static class SettingsUser
 	{
@@ -42,8 +42,9 @@ namespace AOTools.Settings
 		[DataMember]
 		public bool MeasurePointsShowWorkplane = false;
 
-		[DataMember] public List<SchemaDictionaryUser> UserUnitStyleSchemas =
-			new List<SchemaDictionaryUser>()
+		[DataMember(Name = "UnitStyleList")]
+		public List<SchemaDictionary2> UserUnitStyleSchemas =
+			new List<SchemaDictionary2>()
 			{
 				UnitSchema.Make("User Unit Style 01", "User unit style desc 01"),
 				UnitSchema.Make("User Unit Style 02", "User unit style desc 02"),

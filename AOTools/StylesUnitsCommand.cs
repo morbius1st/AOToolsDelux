@@ -1,23 +1,18 @@
 ﻿#region Using directives
-using System;
-using System.Collections.Generic;
-using System.Drawing;
+
+using AOTools.Settings;
 using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
-using Autodesk.Revit.DB.ExtensibleStorage;
 using Autodesk.Revit.UI;
 
 using static AOTools.Util;
-using static AOTools.AppRibbon;
-
 using static AOTools.ExtensibleStorageMgr;
-using static AOTools.SBasicKey;
-using static AOTools.SUnitKey;
+using static AOTools.Settings.SBasicKey;
+using static AOTools.Settings.SettingsApp;
+using static AOTools.Settings.SettingsUser;
+using static AOTools.Settings.SUnitKey;
 
-using UtilityLibrary;
 using static UtilityLibrary.MessageUtilities;
-using static UtilityLibrary.SettingsApp;
-using static UtilityLibrary.SettingsUser;
 
 #endregion
 
@@ -45,17 +40,15 @@ namespace AOTools
 			ASet.AppIs[0] = 100;
 			ASet.AppIs[1] = 200;
 			ASet.AppIs[2] = 300;
-			ASetting.Save();
+			ASettings.Save();
 
-			logMsgDbLn2("app settings file", ASetting.SettingsPathAndFile);
+			logMsgDbLn2("app settings file", ASettings.SettingsPathAndFile);
 
 			USet.FormMeasurePointsLocation = new System.Drawing.Point(100, 100);
 			USet.MeasurePointsShowWorkplane = true;
-			ASetting.Save();
+			USettings.Save();
 			
-			logMsgDbLn2("user Settings file", USetting.SettingsPathAndFile);
-
-
+			logMsgDbLn2("user Settings file", USettings.SettingsPathAndFile);
 		}
 
 		// test update settings

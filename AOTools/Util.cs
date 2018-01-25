@@ -112,7 +112,7 @@ namespace AOTools
 
 		private static void ReadManifest()
 		{
-			string path = SettingsUtil.AssemblyDirectory;
+			string path = CsUtilities.AssemblyDirectory;
 
 			using (FileStream fs =
 				new FileStream(path + "\\" + AppRibbon.APP_NAME + ".addin", FileMode.Open))

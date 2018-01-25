@@ -12,10 +12,10 @@ using Application = Autodesk.Revit.ApplicationServices.Application;
 using static AOTools.ExtensibleStorageMgr;
 using static AOTools.Util;
 
-using static UtilityLibrary.SettingsUser;
+using static AOTools.Settings.SettingsUser;
 
 using UtilityLibrary;
-using static UtilityLibrary.SettingsApp;
+using static AOTools.Settings.SettingsApp;
 using static UtilityLibrary.MessageUtilities;
 
 #endregion

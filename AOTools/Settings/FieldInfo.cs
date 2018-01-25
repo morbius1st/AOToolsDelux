@@ -1,22 +1,42 @@
-﻿using Autodesk.Revit.DB;
+﻿using System.Reflection;
+using System.Runtime.Serialization;
+using Autodesk.Revit.DB;
 using Autodesk.Revit.DB.ExtensibleStorage;
 
-namespace AOTools
+namespace AOTools.Settings
 {
+	[DataContract]
 	public class FieldInfo
 	{
-		public SchemaKey Key { get; }
+		[DataMember(Order = 1)]
+		public int Sequence { get; set; }
+		[DataMember(Order = 2)]
 		public string Name { get; set; }
-		public string Desc { get; }
-		public UnitType UnitType { get; }
-		public string Guid { get; }
+		[DataMember(Order = 3)]
+		public string Desc { get; set; }
+		[DataMember(Order = 4)]
+		public UnitType UnitType { get; set; }
+		[DataMember(Order = 5)]
+		public string Guid { get; set; }
+		[DataMember(Name = "RevitFieldValue", Order = 6)]
 		public dynamic Value { get; set; }
 
 
-		public FieldInfo(SchemaKey key, string name, string desc, dynamic val, 
+		public FieldInfo(SUnitKey sequence, string name, string desc, dynamic val, 
 			UnitType unitType = UnitType.UT_Undefined, string guid = "")
 		{
-			Key = key;
+			Sequence = (int) sequence;
+			Name = name;
+			Desc = desc;
+			Value = val;
+			UnitType = unitType;
+			Guid = guid;
+		}
+
+		public FieldInfo(SBasicKey sequence, string name, string desc, dynamic val, 
+			UnitType unitType = UnitType.UT_Undefined, string guid = "")
+		{
+			Sequence = (int) sequence;
 			Name = name;
 			Desc = desc;
 			Value = val;
@@ -26,7 +46,7 @@ namespace AOTools
 
 		public FieldInfo(FieldInfo fi)
 		{
-			Key = fi.Key;
+			Sequence = fi.Sequence;
 			Name = fi.Name;
 			Desc = fi.Desc;
 			Value = fi.Value;
@@ -66,6 +86,7 @@ namespace AOTools
 		}
 	}
 
+	[DataContract]
 	public enum FmtOpt
 	{
 		NO = 0,
@@ -73,50 +94,88 @@ namespace AOTools
 		IGNORE = -1
 	}
 
-	public abstract class SchemaKey
+	public enum SUnitKey
 	{
-		public abstract int Value { get; }
+		VERSION_UNIT = 0,
+		STYLE_NAME = 1, 
+		STYLE_DESC = 2, 
+		CAN_BE_ERASED = 3, 
+		UNIT_SYSTEM = 4, 
+		UNIT_TYPE = 5, 
+		ACCURACY = 6, 
+		DUT = 7, 
+		UST = 8, 
+		SUP_SPACE = 9, 
+		SUP_LEAD_ZERO = 10, 
+		SUP_TRAIL_ZERO = 11, 
+		USE_DIG_GRP = 12, 
+		USE_PLUS_PREFIX = 13
 	}
 
-	public class SBasicKey : SchemaKey
+	public enum SBasicKey
 	{
-		public SBasicKey(int value)
-		{
-			this.Value = value;
-		}
-
-		public override int Value { get; }
-
-		public static readonly SBasicKey UNDEFINED = new SBasicKey(-1);
-		public static readonly SBasicKey VERSION_BASIC = new SBasicKey(0);
-		public static readonly SBasicKey USE_OFFICE = new SBasicKey(1);
-		public static readonly SBasicKey AUTO_RESTORE = new SBasicKey(2);
-		public static readonly SBasicKey COUNT = new SBasicKey(3);
-		public static readonly SBasicKey CURRENT = new SBasicKey(4);
+		UNDEFINED = -1, 
+		VERSION_BASIC = 0,
+		USE_OFFICE = 1, 
+		AUTO_RESTORE = 2, 
+		COUNT = 3, 
+		CURRENT = 4
 	}
 
-	public class SUnitKey : SchemaKey
-	{
-		public SUnitKey(int value)
-		{
-			this.Value = value;
-		}
 
-		public override int Value { get; }
+//
+//	[DataContract]
+//	public abstract class SchemaKey
+//	{
+//		[DataMember]
+//		public abstract int Key { get; set; }
+//	}
+//
+//
+//	[DataContract]
+//	public class SUnitKey : SchemaKey
+//	{
+//		public SUnitKey(int key)
+//		{
+//			this.Key = key;
+//		}
+//
+//		[DataMember]
+//		public override int Key { get; set; }
+//
+//		public static SUnitKey VERSION_UNIT = new SUnitKey(0);
+//		public static SUnitKey STYLE_NAME = new SUnitKey(1);
+//		public static SUnitKey STYLE_DESC = new SUnitKey(2);
+//		public static SUnitKey CAN_BE_ERASED = new SUnitKey(3);
+//		public static SUnitKey UNIT_SYSTEM = new SUnitKey(4);
+//		public static SUnitKey UNIT_TYPE = new SUnitKey(5);
+//		public static SUnitKey ACCURACY = new SUnitKey(6);
+//		public static SUnitKey DUT = new SUnitKey(7);
+//		public static SUnitKey UST = new SUnitKey(8);
+//		public static SUnitKey SUP_SPACE = new SUnitKey(9);
+//		public static SUnitKey SUP_LEAD_ZERO = new SUnitKey(10);
+//		public static SUnitKey SUP_TRAIL_ZERO = new SUnitKey(11);
+//		public static SUnitKey USE_DIG_GRP = new SUnitKey(12);
+//		public static SUnitKey USE_PLUS_PREFIX = new SUnitKey(13);
+//	}
+//
+//	[DataContract]
+//	public class SBasicKey : SchemaKey
+//	{
+//		public SBasicKey(int key)
+//		{
+//			this.Key = key;
+//		}
+//
+//		[DataMember]
+//		public override int Key { get; set; }
+//
+//		public static readonly SBasicKey UNDEFINED = new SBasicKey(-1);
+//		public static readonly SBasicKey VERSION_BASIC = new SBasicKey(0);
+//		public static readonly SBasicKey USE_OFFICE = new SBasicKey(1);
+//		public static readonly SBasicKey AUTO_RESTORE = new SBasicKey(2);
+//		public static readonly SBasicKey COUNT = new SBasicKey(3);
+//		public static readonly SBasicKey CURRENT = new SBasicKey(4);
+//	}
 
-		public static readonly SUnitKey VERSION_UNIT = new SUnitKey(0);
-		public static readonly SUnitKey STYLE_NAME = new SUnitKey(1);
-		public static readonly SUnitKey STYLE_DESC = new SUnitKey(2);
-		public static readonly SUnitKey CAN_BE_ERASED = new SUnitKey(3);
-		public static readonly SUnitKey UNIT_SYSTEM = new SUnitKey(4);
-		public static readonly SUnitKey UNIT_TYPE = new SUnitKey(5);
-		public static readonly SUnitKey ACCURACY = new SUnitKey(6);
-		public static readonly SUnitKey DUT = new SUnitKey(7);
-		public static readonly SUnitKey UST = new SUnitKey(8);
-		public static readonly SUnitKey SUP_SPACE = new SUnitKey(9);
-		public static readonly SUnitKey SUP_LEAD_ZERO = new SUnitKey(10);
-		public static readonly SUnitKey SUP_TRAIL_ZERO = new SUnitKey(11);
-		public static readonly SUnitKey USE_DIG_GRP = new SUnitKey(12);
-		public static readonly SUnitKey USE_PLUS_PREFIX = new SUnitKey(13);
-	}
 }
