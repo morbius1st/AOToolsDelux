@@ -1,5 +1,6 @@
 ﻿#region Using directives
 
+using System.Collections.Generic;
 using AOTools.Settings;
 using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
@@ -30,7 +31,7 @@ namespace AOTools
 
 		public Result Execute(ExternalCommandData commandData, ref string message, ElementSet elements)
 		{
-			test4();
+			test1();
 
 			return Result.Succeeded;
 		}
@@ -115,12 +116,24 @@ namespace AOTools
 			SchemaFields[AUTO_RESTORE].Value = (testVal / 10) % 2 == 0;
 
 			UnitSchemaFields[0][VERSION_UNIT].Value = "sub version " + (testVal + 1);
-			UnitSchemaFields[1][VERSION_UNIT].Value = "sub version " + (testVal + 2);
-			UnitSchemaFields[2][VERSION_UNIT].Value = "sub version " + (testVal + 3);
+			UnitSchemaFields[0][STYLE_NAME].Value = "style name " + (testVal + 1);
+			UnitSchemaFields[0][STYLE_DESC].Value = "style description " + (testVal + 1);
 
+			UnitSchemaFields[1][VERSION_UNIT].Value = "sub version " + (testVal + 2);
+			UnitSchemaFields[1][STYLE_NAME].Value = "style name " + (testVal + 2);
+			UnitSchemaFields[1][STYLE_DESC].Value = "style description " + (testVal + 2);
+
+			UnitSchemaFields[2][VERSION_UNIT].Value = "sub version " + (testVal + 3);
+			UnitSchemaFields[2][STYLE_NAME].Value = "style name " + (testVal + 3);
+			UnitSchemaFields[2][STYLE_DESC].Value = "style description " + (testVal + 3);
+
+			Dictionary<SUnitKey, FieldInfo>[] x = UnitSchemaFields;
+
+			logMsg("");
 			if (!SaveRevitSettings())
 			{
 				logMsgDbLn2("save settings", "failed");
+				return;
 			}
 			
 			ReadRevitSettings();

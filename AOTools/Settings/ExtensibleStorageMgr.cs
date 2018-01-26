@@ -25,7 +25,7 @@ using InvalidOperationException = Autodesk.Revit.Exceptions.InvalidOperationExce
 
 namespace AOTools
 {
-	public class ExtensibleStorageMgr
+	public static class ExtensibleStorageMgr
 	{
 
 		public static bool initalized = false;
@@ -67,8 +67,6 @@ namespace AOTools
 							_subSchema[i].Dispose();
 						}
 					}
-					//					logMsgDbLn2("delete current schema", elem.DeleteEntity(schema) ? "worked" : "failed");
-
 					Schema.EraseSchemaAndAllEntities(schema, false);
 					t.Commit();
 
@@ -292,6 +290,7 @@ namespace AOTools
 			return true;
 		}
 
+		// does the schema exist
 		private static bool SettingsExist(out Schema schema, out Entity elemEntity)
 		{
 			elemEntity = null;
@@ -358,7 +357,6 @@ namespace AOTools
 
 				Entity subSchema = elemEntity.Get<Entity>(field);
 
-				
 				_subSchema.Add(field.SubSchema);
 
 				if (subSchema == null || !subSchema.IsValidObject) { continue; }

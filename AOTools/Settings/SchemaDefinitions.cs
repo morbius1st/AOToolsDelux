@@ -5,8 +5,6 @@ using System.Collections.Generic;
 using System.Runtime.Serialization;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.DB.ExtensibleStorage;
-//using static AOTools.Settings.SUnitKey;
-//using static AOTools.Settings.SBasicKey;
 using static AOTools.Settings.SBasicKey;
 using static AOTools.Settings.SUnitKey;
 
@@ -57,7 +55,7 @@ namespace AOTools.Settings
 
 			foreach (KeyValuePair<T, FieldInfo> kvp in original)
 			{
-				copy.Add(kvp.Key, kvp.Value);
+				copy.Add(kvp.Key, new FieldInfo(kvp.Value));
 			}
 			return copy;
 		}
