@@ -73,7 +73,6 @@ namespace AOTools
 				}
 				schema.Dispose();
 			}
-
 			return true;
 		}
 

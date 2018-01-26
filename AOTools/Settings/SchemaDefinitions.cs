@@ -43,7 +43,6 @@ namespace AOTools.Settings
 	[CollectionDataContract(Name = "SchemaFields", KeyName = "OrderKey", 
 		ValueName = "SchemaField", ItemName = "SchemaFieldItem")]
 	public class SchemaDictionaryBase<T> : Dictionary<T, FieldInfo> 
-//		public class SchemaDictionary<T, Field> : Dictionary<T, FieldInfo> where T: SchemaKey
 	{
 		public SchemaDictionaryBase() { }
 

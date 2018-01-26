@@ -127,8 +127,6 @@ namespace AOTools
 			UnitSchemaFields[2][STYLE_NAME].Value = "style name " + (testVal + 3);
 			UnitSchemaFields[2][STYLE_DESC].Value = "style description " + (testVal + 3);
 
-			Dictionary<SUnitKey, FieldInfo>[] x = UnitSchemaFields;
-
 			logMsg("");
 			if (!SaveRevitSettings())
 			{
