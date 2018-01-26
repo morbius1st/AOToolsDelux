@@ -62,11 +62,11 @@ namespace AOTools.Settings
 
 	[CollectionDataContract(Name = "SchemaFields", KeyName = "OrderKey",
 		ValueName = "SchemaField", ItemName = "SchemaFieldItem")]
-	public class SchemaDictionaryUser : SchemaDictionaryBase<SUnitKey>
+	public class SchemaDictionaryUnit : SchemaDictionaryBase<SUnitKey>
 	{
-		public SchemaDictionaryUser() { }
-		public SchemaDictionaryUser(int capacity) :base(capacity) { }
-		public SchemaDictionaryUser Clone()
+		public SchemaDictionaryUnit() { }
+		public SchemaDictionaryUnit(int capacity) :base(capacity) { }
+		public SchemaDictionaryUnit Clone()
 		{
 			return Clone(this); 
 		
@@ -159,9 +159,9 @@ namespace AOTools.Settings
 	[DataContract]
 	public class UnitSchema
 	{
-		public static SchemaDictionaryUser Make(string name, string desc)
+		public static SchemaDictionaryUnit Make(string name, string desc)
 		{
-			SchemaDictionaryUser temp = _unitSchemaFields.Clone();
+			SchemaDictionaryUnit temp = _unitSchemaFields.Clone();
 			temp[STYLE_NAME].Value = name;
 			temp[STYLE_DESC].Value = desc;
 
@@ -171,8 +171,8 @@ namespace AOTools.Settings
 		public const string UNIT_SCHEMA_NAME = "UnitStyleSchema";
 		public const string UNIT_SCHEMA_DESC = "unit style sub schema";
 
-		public static readonly SchemaDictionaryUser _unitSchemaFields =
-			new SchemaDictionaryUser
+		public static readonly SchemaDictionaryUnit _unitSchemaFields =
+			new SchemaDictionaryUnit
 			{
 				{
 					(VERSION_UNIT),
@@ -259,10 +259,10 @@ namespace AOTools.Settings
 				}
 			};
 
-		internal static SchemaDictionaryUser[] GetUnitSchemaFields(int count)
+		internal static SchemaDictionaryUnit[] GetUnitSchemaFields(int count)
 		{
-			SchemaDictionaryUser[] unitSchemaFields =
-				new SchemaDictionaryUser[count];
+			SchemaDictionaryUnit[] unitSchemaFields =
+				new SchemaDictionaryUnit[count];
 
 			// create the UnitSchema's
 			// personlize the sub schema's

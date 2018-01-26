@@ -42,8 +42,8 @@ namespace AOTools.Settings
 		[DataMember]
 		public bool MeasurePointsShowWorkplane = false;
 
-		[DataMember] public List<SchemaDictionaryUser> UserUnitStyleSchemas =
-			new List<SchemaDictionaryUser>()
+		[DataMember] public List<SchemaDictionaryUnit> UserUnitStyleSchemas =
+			new List<SchemaDictionaryUnit>()
 			{
 				UnitSchema.Make("User Unit Style 01", "User unit style desc 01"),
 				UnitSchema.Make("User Unit Style 02", "User unit style desc 02"),

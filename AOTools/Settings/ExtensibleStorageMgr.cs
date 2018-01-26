@@ -4,13 +4,14 @@ using System.Collections.Generic;
 using AOTools.Settings;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.DB.ExtensibleStorage;
-using EnvDTE;
+
 using static AOTools.Util;
 using static AOTools.AppRibbon;
 using static AOTools.Settings.SBasicKey;
-using static AOTools.Settings.SUnitKey;
 using static AOTools.Settings.BasicSchema;
 using static AOTools.Settings.UnitSchema;
+
+using static AOTools.Settings.SettingsUser;
 
 
 using static UtilityLibrary.MessageUtilities;
@@ -30,8 +31,8 @@ namespace AOTools
 
 		public static bool initalized = false;
 
-		public static Dictionary<SBasicKey, FieldInfo> SchemaFields;
-		public static Dictionary<SUnitKey, FieldInfo>[] UnitSchemaFields;
+		public static SchemaDictionaryBasic SchemaFields;
+		public static List<SchemaDictionaryUnit> UnitSchemaFields = new List<SchemaDictionaryUnit>(3);
 		private static List<Schema> _subSchema = new List<Schema>(_schemaFields[COUNT].Value);
 
 		// ******************************
@@ -44,6 +45,7 @@ namespace AOTools
 			initalized = true;
 
 			SetDefaultFields();
+
 		}
 
 		public static bool DeleteCurrentSchema()
@@ -185,13 +187,12 @@ namespace AOTools
 
 				subSchemaFields.Add(fieldName, guid);
 			}
-
 			return subSchemaFields;
 		}
 
 		// save the settings held in the 
-		private static void SaveFieldValues<T>(Entity entity, Schema schema, 
-			Dictionary<T, FieldInfo> fieldList)
+		private static void SaveFieldValues<T>(Entity entity, Schema schema,
+			SchemaDictionaryBase<T> fieldList)
 		{
 			foreach (KeyValuePair<T, FieldInfo> kvp in fieldList)
 			{
@@ -225,8 +226,8 @@ namespace AOTools
 			}
 		}
 
-		private static void MakeFields<T>(SchemaBuilder sbld, 
-			Dictionary<T, FieldInfo> fieldList)
+		private static void MakeFields<T>(SchemaBuilder sbld,
+			SchemaDictionaryBase<T> fieldList)
 		{
 			foreach (KeyValuePair<T, FieldInfo> kvp in fieldList)
 			{
@@ -247,8 +248,8 @@ namespace AOTools
 			}
 		}
 
-		private static Entity MakeUnitSchema(string guid, 
-			Dictionary<SUnitKey, FieldInfo> unitSchemaFields)
+		private static Entity MakeUnitSchema(string guid,
+			SchemaDictionaryUnit unitSchemaFields)
 		{
 			SchemaBuilder sbld = CreateSchema(UNIT_SCHEMA_NAME,
 				UNIT_SCHEMA_DESC, new Guid(guid));
@@ -367,7 +368,7 @@ namespace AOTools
 		}
 
 		private static void ReadSubSchema(Entity subSchemaEntity, Schema schema,
-			Dictionary<SUnitKey, FieldInfo> unitSchemaField)
+			SchemaDictionaryUnit unitSchemaField)
 		{
 			foreach (KeyValuePair<SUnitKey, FieldInfo> kvp
 				in unitSchemaField)
@@ -397,7 +398,7 @@ namespace AOTools
 			}
 		}
 
-		private static void ListFieldInfo<T>(Dictionary<T, FieldInfo> fieldList)
+		private static void ListFieldInfo<T>(SchemaDictionaryBase<T> fieldList)
 		{
 			int i = 0;
 

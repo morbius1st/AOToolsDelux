@@ -9,7 +9,6 @@ using Autodesk.Revit.UI;
 using static AOTools.Util;
 using static AOTools.ExtensibleStorageMgr;
 using static AOTools.Settings.SBasicKey;
-using static AOTools.Settings.SettingsApp;
 using static AOTools.Settings.SettingsUser;
 using static AOTools.Settings.SUnitKey;
 
@@ -27,13 +26,44 @@ namespace AOTools
 	[Transaction(TransactionMode.Manual)]
 	class StylesUnitsCommand : IExternalCommand
 	{
-		private const int testVal = 70;
+		private const int testVal = 80;
 
 		public Result Execute(ExternalCommandData commandData, ref string message, ElementSet elements)
 		{
-			test1();
+			test5();
 
 			return Result.Succeeded;
+		}
+
+		private void test5()
+		{
+			logMsg("");
+			logMsgDbLn2("user settings", "before");
+			logMsg("");
+			ListSettings();
+
+			logMsg("");
+			logMsgDbLn2("revit settings", "before");
+			ListFieldInfo();
+			logMsg("");
+		}
+
+		private void ListSettings()
+		{
+			int j = 0;
+			foreach (SchemaDictionaryUnit sd in USet.UserUnitStyleSchemas)
+			{
+				int i = 0;
+				logMsgDbLn2("unit style #", j++ + "  before");
+
+				foreach (KeyValuePair<SUnitKey, FieldInfo> kvp in sd)
+				{
+					logMsgDbLn2("field #" + i++, kvp.Key
+						+ "  name| " + kvp.Value.Name
+						+ "  value| " + kvp.Value.Value);
+				}
+				logMsg("");
+			}
 		}
 
 		private void test4()
@@ -60,14 +90,14 @@ namespace AOTools
 			ReadRevitSettings();
 
 			logMsg("");
-			logMsgDbLn2("settings", "before");
+			logMsgDbLn2("revit settings", "before");
 			ListFieldInfo();
 			logMsg("");
 
 			UpdateSettings();
 
 			logMsg("");
-			logMsgDbLn2("settings", "after");
+			logMsgDbLn2("revit settings", "after");
 			ListFieldInfo();
 			logMsg("");
 		}
@@ -79,7 +109,7 @@ namespace AOTools
 			ReadRevitSettings();
 
 			logMsg("");
-			logMsgDbLn2("settings", "before");
+			logMsgDbLn2("revit settings", "before");
 			ListFieldInfo();
 			logMsg("");
 

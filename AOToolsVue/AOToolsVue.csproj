@@ -60,8 +60,8 @@
     <Compile Include="..\..\..\UtilityLibrary\UtilityLibrary\MessageUtilities.cs">
       <Link>MessageUtilities.cs</Link>
     </Compile>
-    <Compile Include="..\..\..\UtilityLibrary\UtilityLibrary\SettingsBase.cs">
-      <Link>Settings\SettingsBase.cs</Link>
+    <Compile Include="..\..\..\UtilityLibrary\UtilityLibrary\SettingsMgr.cs">
+      <Link>Settings\SettingsMgr.cs</Link>
     </Compile>
     <Compile Include="Extensions.cs" />
     <Compile Include="Settings\FieldInfo.cs" />
