@@ -47,7 +47,7 @@ namespace AOTools.Settings
 
 		[DataMember]
 		public List<SchemaDictionaryUnit> UserUnitStyleSchemas =
-			GetUnitSchemaFields(_basicSchemaFields[COUNT].Value);
+			GetUnitSchemaFields(_basicSchemaFieldsDefault[COUNT].Value);
 	}
 
 }

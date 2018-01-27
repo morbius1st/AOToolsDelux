@@ -69,9 +69,7 @@ namespace AOTools.Settings
 		public SchemaDictionaryUnit Clone()
 		{
 			return Clone(this); 
-		
 		}
-
 	}
 
 	[CollectionDataContract(Name = "SchemaFields", KeyName = "OrderKey",
@@ -83,12 +81,10 @@ namespace AOTools.Settings
 		public SchemaDictionaryBasic Clone()
 		{
 			return Clone(this);
-
 		}
 	}
 
 	// basic schema is only saved in the Revitfile
-	[DataContract]
 	public class BasicSchema
 	{
 		public const string SCHEMA_NAME = "UnitStyleSettings";
@@ -96,7 +92,7 @@ namespace AOTools.Settings
 
 		public static readonly Guid SchemaGUID = new Guid("B1788BC0-381E-4F4F-BE0B-93A93B9470FF");
 
-		public static readonly SchemaDictionaryBasic _basicSchemaFields =
+		public static readonly SchemaDictionaryBasic _basicSchemaFieldsDefault =
 			new SchemaDictionaryBasic
 			{
 				{
@@ -132,7 +128,7 @@ namespace AOTools.Settings
 
 		internal static SchemaDictionaryBasic GetBasicSchemaFields()
 		{
-			return _basicSchemaFields.Clone();
+			return _basicSchemaFieldsDefault.Clone();
 		}
 
 		// the guid for each sub-schema and the 
@@ -156,13 +152,13 @@ namespace AOTools.Settings
 	// the app settings as a list of office standard unit styles
 	// the user settings for a list of their personal unit styles
 	// in the revit files as a list of custom unit styles
-	[DataContract]
+//	[DataContract]
 	public class UnitSchema
 	{
 		public const string UNIT_SCHEMA_NAME = "UnitStyleSchema";
 		public const string UNIT_SCHEMA_DESC = "unit style sub schema";
 
-		public static readonly SchemaDictionaryUnit _unitSchemaFields =
+		public static readonly SchemaDictionaryUnit _unitSchemaFieldsDefault =
 			new SchemaDictionaryUnit
 			{
 				{
@@ -249,15 +245,6 @@ namespace AOTools.Settings
 						"PlusPrefix", "plus prefix", (int) FmtOpt.NO)
 				}
 			};
-//
-//		public static SchemaDictionaryUnit Make(string name, string desc)
-//		{
-//			SchemaDictionaryUnit temp = _unitSchemaFields.Clone();
-//			temp[STYLE_NAME].Value = name;
-//			temp[STYLE_DESC].Value = desc;
-//
-//			return temp;
-//		}
 
 		internal static List<SchemaDictionaryUnit> GetUnitSchemaFields(int count)
 		{
@@ -269,9 +256,9 @@ namespace AOTools.Settings
 			for (int i = 0; i < count; i++)
 			{
 				unitSchemaFields.Add(new SchemaDictionaryUnit());
-				unitSchemaFields[i] = _unitSchemaFields.Clone();
+				unitSchemaFields[i] = _unitSchemaFieldsDefault.Clone();
 				unitSchemaFields[i][STYLE_NAME].Value =
-					string.Format(_unitSchemaFields[STYLE_NAME].Value, i);
+					string.Format(_unitSchemaFieldsDefault[STYLE_NAME].Value, i);
 
 			}
 

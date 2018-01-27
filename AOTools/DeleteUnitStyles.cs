@@ -20,9 +20,7 @@ namespace AOTools
 	{
 		public Result Execute(ExternalCommandData commandData, ref string message, ElementSet elements)
 		{
-			DeleteCurrentSchema();
-
-			initalized = false;
+			RSettings.DeleteCurrentSchema();
 
 			return Result.Succeeded;
 		}

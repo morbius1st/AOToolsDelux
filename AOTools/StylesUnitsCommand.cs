@@ -11,7 +11,7 @@ using static AOTools.Settings.ExtensibleStorageMgr;
 using static AOTools.Settings.SBasicKey;
 using static AOTools.Settings.SettingsUser;
 using static AOTools.Settings.SUnitKey;
-using static AOTools.Settings.RevitSettings;
+using static AOTools.Settings.ExtensibleStorageMgr;
 
 using static UtilityLibrary.MessageUtilities;
 
@@ -27,34 +27,16 @@ namespace AOTools
 	[Transaction(TransactionMode.Manual)]
 	class StylesUnitsCommand : IExternalCommand
 	{
-		private const int testVal = 30;
+		private const int testVal = 20;
 
 		public Result Execute(ExternalCommandData commandData, ref string message, ElementSet elements)
 		{
 			output = outputLocation.debug;
 
-			test1();
+			test5();
 
 			return Result.Succeeded;
 		}
-
-		private void test7()
-		{
-			logMsgDbLn2("RS compare", RSCompare().ToString());
-			logMsgDbLn2("ES compare", ESCompare(RSet).ToString());
-
-			List<SchemaDictionaryUnit> a = RSet;
-			List<SchemaDictionaryUnit> b = UnitRevitSchemaFields;
-
-			Init();
-
-			logMsgDbLn2("RS compare", RSCompare().ToString());
-			logMsgDbLn2("ES compare", ESCompare(RSet).ToString());
-
-			List<SchemaDictionaryUnit> c = RSet;
-			List<SchemaDictionaryUnit> d = UnitRevitSchemaFields;
-		}
-
 
 		private void test6()
 		{
@@ -73,6 +55,19 @@ namespace AOTools
 			logMsg("");
 			ListSettings();
 
+			USet.FormMeasurePointsLocation = new System.Drawing.Point(100, 100);
+			USet.MeasurePointsShowWorkplane = true;
+			USet.UserUnitStyleSchemas[0][STYLE_NAME].Value = "Revised Style Name 0";
+			USet.UserUnitStyleSchemas[1][STYLE_NAME].Value = "Revised Style Name 1";
+			USet.UserUnitStyleSchemas[2][STYLE_NAME].Value = "Revised Style Name 2";
+
+			USettings.Save();
+
+			logMsgDbLn2("user settings file", "after");
+			logMsg("");
+			ListSettings();
+
+
 		}
 
 		private void ListSettings()
@@ -81,7 +76,7 @@ namespace AOTools
 			foreach (SchemaDictionaryUnit sd in USet.UserUnitStyleSchemas)
 			{
 				int i = 0;
-				logMsgDbLn2("unit style #", j++ + "  before");
+				logMsgDbLn2("unit style #", j++.ToString());
 
 				foreach (KeyValuePair<SUnitKey, FieldInfo> kvp in sd)
 				{
@@ -116,18 +111,18 @@ namespace AOTools
 		private void test3()
 		{
 			// first read and display the current settings
-			ReadRevitSettings();
+			RSettings.ReadRevitSettings();
 
 			logMsg("");
 			logMsgDbLn2("revit settings", "before");
-			ListFieldInfo();
+			RSettings.ListFieldInfo();
 			logMsg("");
 
-			UpdateRevitSettings();
+			RSettings.UpdateRevitSettings();
 
 			logMsg("");
 			logMsgDbLn2("revit settings", "after");
-			ListFieldInfo();
+			RSettings.ListFieldInfo();
 			logMsg("");
 		}
 
@@ -135,11 +130,11 @@ namespace AOTools
 		private void test2()
 		{
 			// first read and display the current settings
-			ReadRevitSettings();
+			RSettings.ReadRevitSettings();
 
 			logMsg("");
 			logMsgDbLn2("revit settings", "before");
-			ListFieldInfo();
+			RSettings.ListFieldInfo();
 			logMsg("");
 
 			RBSet[VERSION_BASIC].Value = (testVal * 10.00).ToString();
@@ -150,11 +145,11 @@ namespace AOTools
 			RSet[1][VERSION_UNIT].Value = "sub version " + (testVal + 2);
 			RSet[2][VERSION_UNIT].Value = "sub version " + (testVal + 3);
 
-			ResetRevitSettings();
+			RSettings.ResetRevitSettings();
 
 			logMsg("");
 			logMsgDbLn2("settings", "after");
-			ListFieldInfo();
+			RSettings.ListFieldInfo();
 			logMsg("");
 		}
 
@@ -163,16 +158,18 @@ namespace AOTools
 		// this is just a basic read, modify, save, re-read test
 		private void test1()
 		{
-			Init();
-//			ReadRevitSettings();
+			RSettings.InitalizeRevitSettings();
+
+			if (!RSettings.ReadRevitSettings())
+			{
+				TaskDialog.Show("AO Tools", "Could not read Revit Settings or " + nl + "is not Initalized");
+				return;
+			}
 
 			logMsg("");
 			logMsgDbLn2("revit saved settings", "before");
-			ListFieldInfo(4);
+			RSettings.ListFieldInfo(4);
 			logMsg("");
-
-			List<SchemaDictionaryUnit> a = RSet;
-			SchemaDictionaryBasic b = RBSet;
 
 			RBSet[VERSION_BASIC].Value = (testVal * 10.00).ToString();
 
@@ -191,16 +188,16 @@ namespace AOTools
 			RSet[2][STYLE_DESC].Value = "style description " + (testVal + 3);
 
 			logMsg("");
-			if (!SaveRevitSettings())
+			if (!RSettings.SaveRevitSettings())
 			{
 				logMsgDbLn2("revit save settings", "failed");
 				return;
 			}
-			
-			ReadRevitSettings();
+
+			RSettings.ReadRevitSettings();
 
 			logMsgDbLn2("revit saved settings", "after");
-			ListFieldInfo(4);
+			RSettings.ListFieldInfo(4);
 		}
 
 	}

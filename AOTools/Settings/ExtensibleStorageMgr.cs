@@ -18,75 +18,43 @@ using static AOTools.Settings.UnitSchema;
 
 namespace AOTools.Settings
 {
-	public class RevitSettings : ExtensibleStorageMgr
+	public class ExtensibleStorageMgr
 	{
-		public static RevitSettings RSettings = new RevitSettings();
-		public static List<SchemaDictionaryUnit> RSet = null;
-		public static SchemaDictionaryBasic RBSet = null;
+		public static readonly ExtensibleStorageMgr RSettings = new ExtensibleStorageMgr();
 
-		public static bool RSCompare()
-		{
-			return RSet == UnitRevitSchemaFields;
-		}
+		public static SchemaDictionaryBasic RBSet => _basicRevitSchemaFields;
+		public static List<SchemaDictionaryUnit> RSet => _unitRevitSchemaFields;
 
-//		static RevitSettings()
-//		{
-//
-//			RSet = ExtensibleStorageMgr.UnitRevitSchemaFields;
-//			RBSet = ExtensibleStorageMgr.BasicRevitSchemaFields;
-//		}
+		private static bool _initalized = false;
 
-		public static void Init()
-		{
-			if (RSet == null)
-			{
-				ReadRevitSettings();
-				RSet = UnitRevitSchemaFields;
-				RBSet = BasicRevitSchemaFields;
-				
-			}
-		}
-
-	}
-
-
-	public abstract class ExtensibleStorageMgr
-	{
-		public static bool initalized = false;
-
-		protected static SchemaDictionaryBasic BasicRevitSchemaFields;
-		public static List<SchemaDictionaryUnit> UnitRevitSchemaFields = new List<SchemaDictionaryUnit>(3);
+		private static SchemaDictionaryBasic _basicRevitSchemaFields;
+		private static List<SchemaDictionaryUnit> _unitRevitSchemaFields = 
+			new List<SchemaDictionaryUnit>(3);
 
 		// ******************************
 		// general routines
 		// ******************************
-		private static void InitRevitSettings()
+		public void InitalizeRevitSettings()
 		{
-			if (initalized) return;
+			_basicRevitSchemaFields = BasicSchema._basicSchemaFieldsDefault.Clone();
+			_unitRevitSchemaFields = GetUnitSchemaFields(BasicSchema._basicSchemaFieldsDefault[SBasicKey.COUNT].Value);
 
-			initalized = true;
-
-			SetDefaultFields();
-
-		}
-
-		public static bool ESCompare(List<SchemaDictionaryUnit> test)
-		{
-			return test == UnitRevitSchemaFields;
+			_initalized = true;
 		}
 
 		// delete thecurrent schema from the current model only
-		public static bool DeleteCurrentSchema()
+		public bool DeleteCurrentSchema()
 		{
 			if (AppRibbon.App.Documents.Size != 1) { return false;}
 
-			List<Schema> _subSchema = new List<Schema>(BasicSchema._basicSchemaFields[SBasicKey.COUNT].Value);
+			List<Schema> _subSchema = 
+				new List<Schema>(BasicSchema._basicSchemaFieldsDefault[SBasicKey.COUNT].Value);
 
 			Schema schema = Schema.Lookup(BasicSchema.SchemaGUID);
 
 			if (schema != null)
 			{
-				InitRevitSettings();
+				InitalizeRevitSettings();
 
 				using (Transaction t = new Transaction(AppRibbon.Doc, "Delete old schema"))
 				{
@@ -94,7 +62,7 @@ namespace AOTools.Settings
 				
 					if (ReadAllRevitSettings() && _subSchema.Count > 0)
 					{
-						for (int i = 0; i < BasicRevitSchemaFields[SBasicKey.COUNT].Value; i++)
+						for (int i = 0; i < _basicRevitSchemaFields[SBasicKey.COUNT].Value; i++)
 						{
 							Schema.EraseSchemaAndAllEntities(_subSchema[i], false);
 							_subSchema[i].Dispose();
@@ -106,11 +74,12 @@ namespace AOTools.Settings
 				}
 				schema.Dispose();
 			}
+
 			return true;
 		}
 
 		// update the schema with the current schema
-		public static void UpdateRevitSettings()
+		public void UpdateRevitSettings()
 		{
 			ReadRevitSettings();
 
@@ -120,38 +89,79 @@ namespace AOTools.Settings
 		}
 
 		// reset the settings to their default values
-		public static void ResetRevitSettings()
+		public void ResetRevitSettings()
 		{
 			DeleteCurrentSchema();
 
-			SetDefaultFields();
+			InitalizeRevitSettings();
 
 			SaveRevitSettings();
 		}
 
-		public static void SetDefaultFields()
+
+		// ******************************
+		// read setting
+		// ******************************
+
+
+
+		public bool ReadRevitSettings()
 		{
-			BasicRevitSchemaFields = BasicSchema._basicSchemaFields.Clone();
-			UnitRevitSchemaFields = GetUnitSchemaFields(BasicSchema._basicSchemaFields[SBasicKey.COUNT].Value);
+			if (!_initalized) { return false; }
+
+			if (!ReadAllRevitSettings())
+			{
+				SaveRevitSettings();
+			}
+
+			return ReadAllRevitSettings();
+		}
+
+		public bool SaveRevitSettings()
+		{
+			if (!_initalized) { return false; }
+
+			return SaveRevitSettings2();
+		}
+
+		// routine to read the existing saved settings
+		// if none exist, this saves the default settings, then
+		// reads them back, and then flags that this is initalized
+		public bool ReadRevitSettings2()
+		{
+			InitalizeRevitSettings();
+
+			if (!ReadAllRevitSettings())
+			{
+				SaveRevitSettings();
+
+				if (ReadAllRevitSettings())
+				{
+					return false;
+				}
+			}
+
+			return true;
 		}
 
 		// ******************************
-		// save settings routines
+		// save settings
 		// ******************************
 
 		// save the basic settings to the revit project base point
 		// this saves both the basic and the unit styles
-		public static bool SaveRevitSettings()
+		public bool SaveRevitSettings2()
 		{
 			try
 			{
-				if (!initalized) { return false; }
+				if (!_initalized) { return false; }
+
 				Element elem = Util.GetProjectBasepoint();
 
 				SchemaBuilder sbld = CreateSchema(BasicSchema.SCHEMA_NAME, BasicSchema.SCHEMA_DESC, BasicSchema.SchemaGUID);
 
 				// this makes the basic setting fields
-				MakeFields(sbld, BasicRevitSchemaFields);
+				MakeFields(sbld, _basicRevitSchemaFields);
 
 				// create and get the unit style schema fields
 				// and then the sub-schemd (unit styles)
@@ -164,7 +174,7 @@ namespace AOTools.Settings
 				Entity entity = new Entity(schema);
 
 				// set the basic fields
-				SaveFieldValues(entity, schema, BasicRevitSchemaFields);
+				SaveFieldValues(entity, schema, _basicRevitSchemaFields);
 
 				SaveUnitSettings(entity, schema, subSchemaFields);
 
@@ -185,8 +195,12 @@ namespace AOTools.Settings
 			return true;
 		}
 
+		// ******************************
+		// save settings routines
+		// ******************************
+
 		// create the schema builder opject
-		private static SchemaBuilder CreateSchema(string name, string description, Guid guid)
+		private SchemaBuilder CreateSchema(string name, string description, Guid guid)
 		{
 			SchemaBuilder sbld = new SchemaBuilder(guid);
 
@@ -200,13 +214,13 @@ namespace AOTools.Settings
 		}
 
 		// create the fields that hold the unit schemas
-		private static Dictionary<string, string> CreateUnitFields(SchemaBuilder sbld)
+		private Dictionary<string, string> CreateUnitFields(SchemaBuilder sbld)
 		{
 			Dictionary<string, string> subSchemaFields =
-				new Dictionary<string, string>(BasicRevitSchemaFields[SBasicKey.COUNT].Value);
+				new Dictionary<string, string>(_basicRevitSchemaFields[SBasicKey.COUNT].Value);
 
 			// temp - test making ) unit subschemas
-			for (int i = 0; i < BasicRevitSchemaFields[SBasicKey.COUNT].Value; i++)
+			for (int i = 0; i < _basicRevitSchemaFields[SBasicKey.COUNT].Value; i++)
 			{
 				string guid = string.Format(BasicSchema._subSchemaFieldInfo.Guid, i);   // + suffix;
 				string fieldName =
@@ -222,7 +236,7 @@ namespace AOTools.Settings
 		}
 
 		// save the settings held in the 
-		private static void SaveFieldValues<T>(Entity entity, Schema schema,
+		private void SaveFieldValues<T>(Entity entity, Schema schema,
 			SchemaDictionaryBase<T> fieldList)
 		{
 			foreach (KeyValuePair<T, FieldInfo> kvp in fieldList)
@@ -241,7 +255,7 @@ namespace AOTools.Settings
 			}
 		}
 
-		private static void SaveUnitSettings(Entity entity, Schema schema, 
+		private void SaveUnitSettings(Entity entity, Schema schema, 
 			Dictionary<string, string> subSchemaFields)
 		{
 			int j = 0;
@@ -252,12 +266,12 @@ namespace AOTools.Settings
 				if (field == null || !field.IsValidObject) { continue; }
 
 				Entity subEntity =
-					MakeUnitSchema(kvp.Value, UnitRevitSchemaFields[j++]);
+					MakeUnitSchema(kvp.Value, _unitRevitSchemaFields[j++]);
 				entity.Set(field, subEntity);
 			}
 		}
 
-		private static void MakeFields<T>(SchemaBuilder sbld,
+		private void MakeFields<T>(SchemaBuilder sbld,
 			SchemaDictionaryBase<T> fieldList)
 		{
 			foreach (KeyValuePair<T, FieldInfo> kvp in fieldList)
@@ -266,7 +280,7 @@ namespace AOTools.Settings
 			}
 		}
 
-		private static void MakeField(SchemaBuilder sbld, FieldInfo fieldInfo)
+		private void MakeField(SchemaBuilder sbld, FieldInfo fieldInfo)
 		{
 			FieldBuilder fbld = sbld.AddSimpleField(
 					fieldInfo.Name, fieldInfo.Value.GetType());
@@ -279,7 +293,7 @@ namespace AOTools.Settings
 			}
 		}
 
-		private static Entity MakeUnitSchema(string guid,
+		private Entity MakeUnitSchema(string guid,
 			SchemaDictionaryUnit unitSchemaFields)
 		{
 			SchemaBuilder sbld = CreateSchema(UnitSchema.UNIT_SCHEMA_NAME,
@@ -300,29 +314,8 @@ namespace AOTools.Settings
 		// read setting routines
 		// ******************************
 
-
-		// routine to read the existing saved settings
-		// if none exist, this saves the default settings, then
-		// reads them back, and then flags that this is initalized
-		public static bool ReadRevitSettings()
-		{
-			InitRevitSettings();
-
-			if (!ReadAllRevitSettings())
-			{
-				SaveRevitSettings();
-
-				if (ReadAllRevitSettings())
-				{
-					return false;
-				}
-			}
-
-			return true;
-		}
-
 		// does the schema exist
-		private static bool SettingsExist(out Schema schema, out Entity elemEntity)
+		private bool SettingsExist(out Schema schema, out Entity elemEntity)
 		{
 			elemEntity = null;
 
@@ -344,7 +337,7 @@ namespace AOTools.Settings
 		// general routine to read through a saved schema and 
 		// get the value from each field 
 		// this will work with any field list
-		private static bool ReadAllRevitSettings()
+		private bool ReadAllRevitSettings()
 		{
 			Schema schema;
 			Entity elemEntity;
@@ -363,9 +356,9 @@ namespace AOTools.Settings
 			return true;
 		}
 
-		private static void ReadBasicRevitSettings(Entity elemEntity, Schema schema)
+		private void ReadBasicRevitSettings(Entity elemEntity, Schema schema)
 		{
-			foreach (KeyValuePair<SBasicKey, FieldInfo> kvp in BasicRevitSchemaFields)
+			foreach (KeyValuePair<SBasicKey, FieldInfo> kvp in _basicRevitSchemaFields)
 			{
 				Field field = schema.GetField(kvp.Value.Name);
 				if (field == null || !field.IsValidObject) { continue; }
@@ -377,11 +370,11 @@ namespace AOTools.Settings
 		// this reads through the basic fields associated with the unit style schema
 		// it passes these down to the readsubentity method that then reads
 		// through all of the fields in the subschema
-		private static bool ReadRevitUnitStyles(Entity elemEntity, Schema schema)
+		private bool ReadRevitUnitStyles(Entity elemEntity, Schema schema)
 		{
-			List<Schema> _subSchema = new List<Schema>(BasicSchema._basicSchemaFields[SBasicKey.COUNT].Value);
+			List<Schema> _subSchema = new List<Schema>(BasicSchema._basicSchemaFieldsDefault[SBasicKey.COUNT].Value);
 
-			for (int i = 0; i < BasicRevitSchemaFields[SBasicKey.COUNT].Value; i++)
+			for (int i = 0; i < _basicRevitSchemaFields[SBasicKey.COUNT].Value; i++)
 			{
 				string subSchemaName = UnitSchema.GetSubSchemaName(i);
 
@@ -394,13 +387,13 @@ namespace AOTools.Settings
 
 				if (subSchema == null || !subSchema.IsValidObject) { continue; }
 
-				ReadSubSchema(subSchema, subSchema.Schema, UnitRevitSchemaFields[i]);
+				ReadSubSchema(subSchema, subSchema.Schema, _unitRevitSchemaFields[i]);
 			}
 
 			return true;
 		}
 
-		private static void ReadSubSchema(Entity subSchemaEntity, Schema schema,
+		private void ReadSubSchema(Entity subSchemaEntity, Schema schema,
 			SchemaDictionaryUnit unitSchemaField)
 		{
 			foreach (KeyValuePair<SUnitKey, FieldInfo> kvp
@@ -418,22 +411,22 @@ namespace AOTools.Settings
 		// listing routines
 		// ******************************
 
-		public static void ListFieldInfo(int count = 0)
+		public void ListFieldInfo(int count = 0)
 		{
 			MessageUtilities.logMsgDbLn2("basic", "settings");
-			ListFieldInfo(BasicRevitSchemaFields);
+			ListFieldInfo(_basicRevitSchemaFields);
 
-			for (int i = 0; i < BasicRevitSchemaFields[SBasicKey.COUNT].Value; i++)
+			for (int i = 0; i < _basicRevitSchemaFields[SBasicKey.COUNT].Value; i++)
 			{
 				MessageUtilities.logMsg(MessageUtilities.nl);
 				MessageUtilities.logMsgDbLn2("unit", "settings");
-				ListFieldInfo(UnitRevitSchemaFields[i]);
+				ListFieldInfo(_unitRevitSchemaFields[i]);
 
 				if (i == count) { return; }
 			}
 		}
 
-		private static void ListFieldInfo<T>(SchemaDictionaryBase<T> fieldList)
+		private void ListFieldInfo<T>(SchemaDictionaryBase<T> fieldList)
 		{
 			int i = 0;
 
@@ -445,7 +438,7 @@ namespace AOTools.Settings
 			}
 		}
 
-		private static void ListSchema()
+		private void ListSchema()
 		{
 			IList<Schema> schemas = Schema.ListSchemas();
 			MessageUtilities.logMsgDbLn2("number of schema found", schemas.Count.ToString());

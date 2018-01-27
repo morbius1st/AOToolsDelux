@@ -107,7 +107,8 @@
     </Compile>
     <Compile Include="Settings\ExtensibleStorageMgr.cs" />
     <Compile Include="Settings\FieldInfo.cs" />
-    <Compile Include="Settings\SchemaDataMgr.cs" />
+    <Compile Include="Settings\SchemaBase.cs" />
+    <Compile Include="Settings\RevitSettingsDataMgr.cs" />
     <Compile Include="StylesUnitsCommand.cs" />
     <Compile Include="ToggleAnnotationVisibility.cs" />
     <Compile Include="ToggleRefPlane.cs" />

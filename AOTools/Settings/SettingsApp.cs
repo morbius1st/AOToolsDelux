@@ -40,7 +40,7 @@ namespace AOTools.Settings
 //
 //		[DataMember]
 //		public SchemaDictionaryBasic AppUnitStyleSchema = 
-//			_basicSchemaFields.Clone();
+//			_basicSchemaFieldsDefault.Clone();
 //
 //
 	}
