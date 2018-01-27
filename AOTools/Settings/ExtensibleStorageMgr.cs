@@ -31,23 +31,24 @@ namespace AOTools
 
 		public static bool initalized = false;
 
-		public static SchemaDictionaryBasic SchemaFields;
+		public static SchemaDictionaryBasic BasicSchemaFields;
 		public static List<SchemaDictionaryUnit> UnitSchemaFields = new List<SchemaDictionaryUnit>(3);
 		private static List<Schema> _subSchema = new List<Schema>(_basicSchemaFields[COUNT].Value);
 
 		// ******************************
 		// general routines
 		// ******************************
-		private static void Init()
+		private static void InitRevitSettings()
 		{
 			if (initalized) return;
 
 			initalized = true;
 
 			SetDefaultFields();
-
+			USet.UserUnitStyleSchemas;
 		}
 
+		// delete thecurrent schema from the current model only
 		public static bool DeleteCurrentSchema()
 		{
 			if (App.Documents.Size != 1) { return false;}
@@ -55,7 +56,7 @@ namespace AOTools
 			Schema schema = Schema.Lookup(SchemaGUID);
 			if (schema != null)
 			{
-				Init();
+				InitRevitSettings();
 
 				using (Transaction t = new Transaction(Doc, "Delete old schema"))
 				{
@@ -63,7 +64,7 @@ namespace AOTools
 				
 					if (ReadAllRevitSettings() && _subSchema.Count > 0)
 					{
-						for (int i = 0; i < SchemaFields[COUNT].Value; i++)
+						for (int i = 0; i < BasicSchemaFields[COUNT].Value; i++)
 						{
 							Schema.EraseSchemaAndAllEntities(_subSchema[i], false);
 							_subSchema[i].Dispose();
@@ -79,7 +80,7 @@ namespace AOTools
 		}
 
 		// update the schema with the current schema
-		public static void UpdateSettings()
+		public static void UpdateRevitSettings()
 		{
 			ReadRevitSettings();
 
@@ -89,7 +90,7 @@ namespace AOTools
 		}
 
 		// reset the settings to their default values
-		public static void ResetSettings()
+		public static void ResetRevitSettings()
 		{
 			DeleteCurrentSchema();
 
@@ -100,19 +101,7 @@ namespace AOTools
 
 		public static void SetDefaultFields()
 		{
-			SchemaFields = _basicSchemaFields.Clone();
-
-
-//			SchemaDictionaryBasic b = _basicSchemaFields;
-//
-//			SBasicKey c = COUNT;
-//			FieldInfo f = b[SBasicKey.COUNT];
-//			int a = f.Value;
-//			int x = b[c].Value;
-//			int y = _basicSchemaFields[SBasicKey.COUNT].Value;
-//			int z = _basicSchemaFields[COUNT].Value;
-//
-//			UnitSchemaFields = GetUnitSchemaFields(z);
+			BasicSchemaFields = _basicSchemaFields.Clone();
 			UnitSchemaFields = GetUnitSchemaFields(_basicSchemaFields[COUNT].Value);
 		}
 
@@ -132,7 +121,7 @@ namespace AOTools
 				SchemaBuilder sbld = CreateSchema(SCHEMA_NAME, SCHEMA_DESC, SchemaGUID);
 
 				// this makes the basic setting fields
-				MakeFields(sbld, SchemaFields);
+				MakeFields(sbld, BasicSchemaFields);
 
 				// create and get the unit style schema fields
 				// and then the sub-schemd (unit styles)
@@ -145,7 +134,7 @@ namespace AOTools
 				Entity entity = new Entity(schema);
 
 				// set the basic fields
-				SaveFieldValues(entity, schema, SchemaFields);
+				SaveFieldValues(entity, schema, BasicSchemaFields);
 
 				SaveUnitSettings(entity, schema, subSchemaFields);
 
@@ -184,10 +173,10 @@ namespace AOTools
 		private static Dictionary<string, string> CreateUnitFields(SchemaBuilder sbld)
 		{
 			Dictionary<string, string> subSchemaFields =
-				new Dictionary<string, string>(SchemaFields[COUNT].Value);
+				new Dictionary<string, string>(BasicSchemaFields[COUNT].Value);
 
 			// temp - test making ) unit subschemas
-			for (int i = 0; i < SchemaFields[COUNT].Value; i++)
+			for (int i = 0; i < BasicSchemaFields[COUNT].Value; i++)
 			{
 				string guid = string.Format(_subSchemaFieldInfo.Guid, i);   // + suffix;
 				string fieldName =
@@ -287,7 +276,7 @@ namespace AOTools
 		// reads them back, and then flags that this is initalized
 		public static bool ReadRevitSettings()
 		{
-			Init();
+			InitRevitSettings();
 
 			if (!ReadAllRevitSettings())
 			{
@@ -346,7 +335,7 @@ namespace AOTools
 
 		private static void ReadBasicRevitSettings(Entity elemEntity, Schema schema)
 		{
-			foreach (KeyValuePair<SBasicKey, FieldInfo> kvp in SchemaFields)
+			foreach (KeyValuePair<SBasicKey, FieldInfo> kvp in BasicSchemaFields)
 			{
 				Field field = schema.GetField(kvp.Value.Name);
 				if (field == null || !field.IsValidObject) { continue; }
@@ -360,7 +349,7 @@ namespace AOTools
 		// through all of the fields in the subschema
 		private static bool ReadRevitUnitStyles(Entity elemEntity, Schema schema)
 		{
-			for (int i = 0; i < SchemaFields[COUNT].Value; i++)
+			for (int i = 0; i < BasicSchemaFields[COUNT].Value; i++)
 			{
 				string subSchemaName = GetSubSchemaName(i);
 
@@ -400,9 +389,9 @@ namespace AOTools
 		public static void ListFieldInfo(int count = 0)
 		{
 			logMsgDbLn2("basic", "settings");
-			ListFieldInfo(SchemaFields);
+			ListFieldInfo(BasicSchemaFields);
 
-			for (int i = 0; i < SchemaFields[COUNT].Value; i++)
+			for (int i = 0; i < BasicSchemaFields[COUNT].Value; i++)
 			{
 				logMsg(nl);
 				logMsgDbLn2("unit", "settings");

@@ -33,6 +33,7 @@ namespace AOTools
 			output = outputLocation.debug;
 
 			test5();
+			test1();
 
 			return Result.Succeeded;
 		}
@@ -50,7 +51,7 @@ namespace AOTools
 		private void test5()
 		{
 			logMsg("");
-			logMsgDbLn2("user settings", "before");
+			logMsgDbLn2("user settings file", "before");
 			logMsg("");
 			ListSettings();
 
@@ -102,7 +103,7 @@ namespace AOTools
 			ListFieldInfo();
 			logMsg("");
 
-			UpdateSettings();
+			UpdateRevitSettings();
 
 			logMsg("");
 			logMsgDbLn2("revit settings", "after");
@@ -121,15 +122,15 @@ namespace AOTools
 			ListFieldInfo();
 			logMsg("");
 
-			SchemaFields[VERSION_BASIC].Value = (testVal * 10.00).ToString();
+			BasicSchemaFields[VERSION_BASIC].Value = (testVal * 10.00).ToString();
 
-			SchemaFields[AUTO_RESTORE].Value = (testVal / 10) % 2 == 0;
+			BasicSchemaFields[AUTO_RESTORE].Value = (testVal / 10) % 2 == 0;
 
 			UnitSchemaFields[0][VERSION_UNIT].Value = "sub version " + (testVal + 1);
 			UnitSchemaFields[1][VERSION_UNIT].Value = "sub version " + (testVal + 2);
 			UnitSchemaFields[2][VERSION_UNIT].Value = "sub version " + (testVal + 3);
 
-			ResetSettings();
+			ResetRevitSettings();
 
 			logMsg("");
 			logMsgDbLn2("settings", "after");
@@ -145,13 +146,13 @@ namespace AOTools
 			ReadRevitSettings();
 
 			logMsg("");
-			logMsgDbLn2("settings", "before");
+			logMsgDbLn2("revit saved settings", "before");
 			ListFieldInfo(4);
 			logMsg("");
 
-			SchemaFields[VERSION_BASIC].Value = (testVal * 10.00).ToString();
+			BasicSchemaFields[VERSION_BASIC].Value = (testVal * 10.00).ToString();
 
-			SchemaFields[AUTO_RESTORE].Value = (testVal / 10) % 2 == 0;
+			BasicSchemaFields[AUTO_RESTORE].Value = (testVal / 10) % 2 == 0;
 
 			UnitSchemaFields[0][VERSION_UNIT].Value = "sub version " + (testVal + 1);
 			UnitSchemaFields[0][STYLE_NAME].Value = "style name " + (testVal + 1);
@@ -168,13 +169,13 @@ namespace AOTools
 			logMsg("");
 			if (!SaveRevitSettings())
 			{
-				logMsgDbLn2("save settings", "failed");
+				logMsgDbLn2("revit save settings", "failed");
 				return;
 			}
 			
 			ReadRevitSettings();
 
-			logMsgDbLn2("settings", "after 2");
+			logMsgDbLn2("revit saved settings", "after");
 			ListFieldInfo(4);
 		}
 

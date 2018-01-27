@@ -249,15 +249,15 @@ namespace AOTools.Settings
 						"PlusPrefix", "plus prefix", (int) FmtOpt.NO)
 				}
 			};
-
-		public static SchemaDictionaryUnit Make(string name, string desc)
-		{
-			SchemaDictionaryUnit temp = _unitSchemaFields.Clone();
-			temp[STYLE_NAME].Value = name;
-			temp[STYLE_DESC].Value = desc;
-
-			return temp;
-		}
+//
+//		public static SchemaDictionaryUnit Make(string name, string desc)
+//		{
+//			SchemaDictionaryUnit temp = _unitSchemaFields.Clone();
+//			temp[STYLE_NAME].Value = name;
+//			temp[STYLE_DESC].Value = desc;
+//
+//			return temp;
+//		}
 
 		internal static List<SchemaDictionaryUnit> GetUnitSchemaFields(int count)
 		{

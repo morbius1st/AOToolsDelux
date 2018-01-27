@@ -45,9 +45,9 @@ namespace AOTools.Settings
 		[DataMember]
 		public bool MeasurePointsShowWorkplane = false;
 
-		[DataMember] public List<SchemaDictionaryUnit> UserUnitStyleSchemas =
+		[DataMember]
+		public List<SchemaDictionaryUnit> UserUnitStyleSchemas =
 			GetUnitSchemaFields(_basicSchemaFields[COUNT].Value);
-
 	}
 
 }
