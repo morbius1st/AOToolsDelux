@@ -33,7 +33,7 @@ namespace AOTools
 
 		public static SchemaDictionaryBasic SchemaFields;
 		public static List<SchemaDictionaryUnit> UnitSchemaFields = new List<SchemaDictionaryUnit>(3);
-		private static List<Schema> _subSchema = new List<Schema>(_schemaFields[COUNT].Value);
+		private static List<Schema> _subSchema = new List<Schema>(_basicSchemaFields[COUNT].Value);
 
 		// ******************************
 		// general routines
@@ -100,8 +100,20 @@ namespace AOTools
 
 		public static void SetDefaultFields()
 		{
-			SchemaFields = _schemaFields.Clone();
-			UnitSchemaFields = GetUnitSchemaFields(_schemaFields[COUNT].Value);
+			SchemaFields = _basicSchemaFields.Clone();
+
+
+//			SchemaDictionaryBasic b = _basicSchemaFields;
+//
+//			SBasicKey c = COUNT;
+//			FieldInfo f = b[SBasicKey.COUNT];
+//			int a = f.Value;
+//			int x = b[c].Value;
+//			int y = _basicSchemaFields[SBasicKey.COUNT].Value;
+//			int z = _basicSchemaFields[COUNT].Value;
+//
+//			UnitSchemaFields = GetUnitSchemaFields(z);
+			UnitSchemaFields = GetUnitSchemaFields(_basicSchemaFields[COUNT].Value);
 		}
 
 		// ******************************
@@ -385,7 +397,7 @@ namespace AOTools
 		// listing routines
 		// ******************************
 
-		public static void ListFieldInfo()
+		public static void ListFieldInfo(int count = 0)
 		{
 			logMsgDbLn2("basic", "settings");
 			ListFieldInfo(SchemaFields);
@@ -395,6 +407,8 @@ namespace AOTools
 				logMsg(nl);
 				logMsgDbLn2("unit", "settings");
 				ListFieldInfo(UnitSchemaFields[i]);
+
+				if (i == count) { return; }
 			}
 		}
 

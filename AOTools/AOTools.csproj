@@ -92,6 +92,7 @@
     <Compile Include="DeleteUnitStyles.cs" />
     <Compile Include="DxMeasure.cs" />
     <Compile Include="Extensions.cs" />
+    <Compile Include="FieldInfoMgr.cs" />
     <Compile Include="FormMeasurePoints.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -106,7 +107,7 @@
     </Compile>
     <Compile Include="Settings\ExtensibleStorageMgr.cs" />
     <Compile Include="Settings\FieldInfo.cs" />
-    <Compile Include="Settings\SchemaDefinitions.cs" />
+    <Compile Include="Settings\SchemaDataMgr.cs" />
     <Compile Include="StylesUnitsCommand.cs" />
     <Compile Include="ToggleAnnotationVisibility.cs" />
     <Compile Include="ToggleRefPlane.cs" />

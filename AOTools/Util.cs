@@ -16,16 +16,7 @@ namespace AOTools
 	{
 		public static RevitAddIns addinManifest;
 //		public static readonly string nl = Environment.NewLine;
-
-		public static void logMsgDbLn(string msg1, string msg2 = "")
-		{
-			Debug.WriteLine($"{msg1,30}{msg2}");
-		}
-
-		public static void logMsgDbLn2(string msg1, string msg2 = "")
-		{
-			logMsgDbLn(msg1 + "| ", msg2);
-		}
+	
 
 		internal const ObjectSnapTypes snaps =
 			ObjectSnapTypes.Centers | ObjectSnapTypes.Endpoints | ObjectSnapTypes.Intersections |

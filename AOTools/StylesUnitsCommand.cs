@@ -26,13 +26,25 @@ namespace AOTools
 	[Transaction(TransactionMode.Manual)]
 	class StylesUnitsCommand : IExternalCommand
 	{
-		private const int testVal = 80;
+		private const int testVal = 10;
 
 		public Result Execute(ExternalCommandData commandData, ref string message, ElementSet elements)
 		{
+			output = outputLocation.debug;
+
 			test5();
 
 			return Result.Succeeded;
+		}
+
+		private void test6()
+		{
+			logMsgDbLn2("enum test");
+			logMsgDbLn2("unit type", UnitType.UT_Undefined.ToString());
+
+			UnitType u = (UnitType) (int) UnitType.UT_Undefined;
+
+			logMsgDbLn2("unit type", u.ToString());
 		}
 
 		private void test5()
@@ -42,10 +54,6 @@ namespace AOTools
 			logMsg("");
 			ListSettings();
 
-			logMsg("");
-			logMsgDbLn2("revit settings", "before");
-			ListFieldInfo();
-			logMsg("");
 		}
 
 		private void ListSettings()
@@ -138,7 +146,7 @@ namespace AOTools
 
 			logMsg("");
 			logMsgDbLn2("settings", "before");
-			ListFieldInfo();
+			ListFieldInfo(4);
 			logMsg("");
 
 			SchemaFields[VERSION_BASIC].Value = (testVal * 10.00).ToString();
@@ -167,7 +175,7 @@ namespace AOTools
 			ReadRevitSettings();
 
 			logMsgDbLn2("settings", "after 2");
-			ListFieldInfo();
+			ListFieldInfo(4);
 		}
 
 	}

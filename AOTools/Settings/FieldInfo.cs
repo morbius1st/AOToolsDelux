@@ -21,6 +21,15 @@ namespace AOTools.Settings
 		[DataMember(Name = "RevitFieldValue", Order = 6)]
 		public dynamic Value { get; set; }
 
+		public FieldInfo()
+		{
+			Sequence = -1;
+			Name = null;
+			Desc = null;
+			Value = null;
+			UnitType = UnitType.UT_Undefined;
+			Guid = null;
+		}
 
 		public FieldInfo(SUnitKey sequence, string name, string desc, dynamic val, 
 			UnitType unitType = UnitType.UT_Undefined, string guid = "")
@@ -69,21 +78,22 @@ namespace AOTools.Settings
 		{
 			return e.Get<string>(f);
 		}
-			
+
 		private int ExtractValue(int key, Entity e, Field f)
 		{
 			return e.Get<int>(f);
 		}
-			
+
 		private bool ExtractValue(bool key, Entity e, Field f)
 		{
 			return e.Get<bool>(f);
 		}
-			
+
 		private double ExtractValue(double key, Entity e, Field f)
 		{
 			return e.Get<double>(f, DisplayUnitType.DUT_GENERAL);
 		}
+
 	}
 
 	[DataContract]

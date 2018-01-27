@@ -6,6 +6,9 @@ using UtilityLibrary;
 using Point = System.Drawing.Point;
 
 using static AOTools.Settings.SUnitKey;
+using static AOTools.Settings.SBasicKey;
+using static AOTools.Settings.UnitSchema;
+using static AOTools.Settings.BasicSchema;
 
 #endregion
 
@@ -43,12 +46,8 @@ namespace AOTools.Settings
 		public bool MeasurePointsShowWorkplane = false;
 
 		[DataMember] public List<SchemaDictionaryUnit> UserUnitStyleSchemas =
-			new List<SchemaDictionaryUnit>()
-			{
-				UnitSchema.Make("User Unit Style 01", "User unit style desc 01"),
-				UnitSchema.Make("User Unit Style 02", "User unit style desc 02"),
-				UnitSchema.Make("User Unit Style 03", "User unit style desc 03")
-			};
+			GetUnitSchemaFields(_basicSchemaFields[COUNT].Value);
+
 	}
 
 }

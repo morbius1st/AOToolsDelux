@@ -96,7 +96,7 @@ namespace AOTools.Settings
 
 		public static readonly Guid SchemaGUID = new Guid("B1788BC0-381E-4F4F-BE0B-93A93B9470FF");
 
-		public static readonly SchemaDictionaryBasic _schemaFields =
+		public static readonly SchemaDictionaryBasic _basicSchemaFields =
 			new SchemaDictionaryBasic
 			{
 				{
@@ -132,7 +132,7 @@ namespace AOTools.Settings
 
 		internal static SchemaDictionaryBasic GetBasicSchemaFields()
 		{
-			return _schemaFields.Clone();
+			return _basicSchemaFields.Clone();
 		}
 
 		// the guid for each sub-schema and the 
@@ -159,15 +159,6 @@ namespace AOTools.Settings
 	[DataContract]
 	public class UnitSchema
 	{
-		public static SchemaDictionaryUnit Make(string name, string desc)
-		{
-			SchemaDictionaryUnit temp = _unitSchemaFields.Clone();
-			temp[STYLE_NAME].Value = name;
-			temp[STYLE_DESC].Value = desc;
-
-			return temp;
-		}
-
 		public const string UNIT_SCHEMA_NAME = "UnitStyleSchema";
 		public const string UNIT_SCHEMA_DESC = "unit style sub schema";
 
@@ -259,15 +250,25 @@ namespace AOTools.Settings
 				}
 			};
 
-		internal static SchemaDictionaryUnit[] GetUnitSchemaFields(int count)
+		public static SchemaDictionaryUnit Make(string name, string desc)
 		{
-			SchemaDictionaryUnit[] unitSchemaFields =
-				new SchemaDictionaryUnit[count];
+			SchemaDictionaryUnit temp = _unitSchemaFields.Clone();
+			temp[STYLE_NAME].Value = name;
+			temp[STYLE_DESC].Value = desc;
+
+			return temp;
+		}
+
+		internal static List<SchemaDictionaryUnit> GetUnitSchemaFields(int count)
+		{
+			List<SchemaDictionaryUnit> unitSchemaFields =
+				new List<SchemaDictionaryUnit>(count);
 
 			// create the UnitSchema's
 			// personlize the sub schema's
 			for (int i = 0; i < count; i++)
 			{
+				unitSchemaFields.Add(new SchemaDictionaryUnit());
 				unitSchemaFields[i] = _unitSchemaFields.Clone();
 				unitSchemaFields[i][STYLE_NAME].Value =
 					string.Format(_unitSchemaFields[STYLE_NAME].Value, i);
