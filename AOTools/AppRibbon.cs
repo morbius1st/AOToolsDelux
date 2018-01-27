@@ -9,7 +9,7 @@ using Autodesk.Revit.UI;
 using Autodesk.Revit.UI.Events;
 using Application = Autodesk.Revit.ApplicationServices.Application;
 
-using static AOTools.ExtensibleStorageMgr;
+using static AOTools.Settings.ExtensibleStorageMgr;
 using static AOTools.Util;
 
 using static AOTools.Settings.SettingsUser;

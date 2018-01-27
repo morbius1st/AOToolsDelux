@@ -4,7 +4,7 @@ using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
 
-using static AOTools.ExtensibleStorageMgr;
+using static AOTools.Settings.ExtensibleStorageMgr;
 
 #endregion
 

@@ -7,10 +7,11 @@ using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
 
 using static AOTools.Util;
-using static AOTools.ExtensibleStorageMgr;
+using static AOTools.Settings.ExtensibleStorageMgr;
 using static AOTools.Settings.SBasicKey;
 using static AOTools.Settings.SettingsUser;
 using static AOTools.Settings.SUnitKey;
+using static AOTools.Settings.RevitSettings;
 
 using static UtilityLibrary.MessageUtilities;
 
@@ -26,17 +27,34 @@ namespace AOTools
 	[Transaction(TransactionMode.Manual)]
 	class StylesUnitsCommand : IExternalCommand
 	{
-		private const int testVal = 10;
+		private const int testVal = 30;
 
 		public Result Execute(ExternalCommandData commandData, ref string message, ElementSet elements)
 		{
 			output = outputLocation.debug;
 
-			test5();
 			test1();
 
 			return Result.Succeeded;
 		}
+
+		private void test7()
+		{
+			logMsgDbLn2("RS compare", RSCompare().ToString());
+			logMsgDbLn2("ES compare", ESCompare(RSet).ToString());
+
+			List<SchemaDictionaryUnit> a = RSet;
+			List<SchemaDictionaryUnit> b = UnitRevitSchemaFields;
+
+			Init();
+
+			logMsgDbLn2("RS compare", RSCompare().ToString());
+			logMsgDbLn2("ES compare", ESCompare(RSet).ToString());
+
+			List<SchemaDictionaryUnit> c = RSet;
+			List<SchemaDictionaryUnit> d = UnitRevitSchemaFields;
+		}
+
 
 		private void test6()
 		{
@@ -88,6 +106,8 @@ namespace AOTools
 			USet.FormMeasurePointsLocation = new System.Drawing.Point(100, 100);
 			USet.MeasurePointsShowWorkplane = true;
 			USettings.Save();
+
+			
 			
 			logMsgDbLn2("user Settings file", USettings.SettingsPathAndFile);
 		}
@@ -122,13 +142,13 @@ namespace AOTools
 			ListFieldInfo();
 			logMsg("");
 
-			BasicSchemaFields[VERSION_BASIC].Value = (testVal * 10.00).ToString();
+			RBSet[VERSION_BASIC].Value = (testVal * 10.00).ToString();
 
-			BasicSchemaFields[AUTO_RESTORE].Value = (testVal / 10) % 2 == 0;
+			RBSet[AUTO_RESTORE].Value = (testVal / 10) % 2 == 0;
 
-			UnitSchemaFields[0][VERSION_UNIT].Value = "sub version " + (testVal + 1);
-			UnitSchemaFields[1][VERSION_UNIT].Value = "sub version " + (testVal + 2);
-			UnitSchemaFields[2][VERSION_UNIT].Value = "sub version " + (testVal + 3);
+			RSet[0][VERSION_UNIT].Value = "sub version " + (testVal + 1);
+			RSet[1][VERSION_UNIT].Value = "sub version " + (testVal + 2);
+			RSet[2][VERSION_UNIT].Value = "sub version " + (testVal + 3);
 
 			ResetRevitSettings();
 
@@ -143,28 +163,32 @@ namespace AOTools
 		// this is just a basic read, modify, save, re-read test
 		private void test1()
 		{
-			ReadRevitSettings();
+			Init();
+//			ReadRevitSettings();
 
 			logMsg("");
 			logMsgDbLn2("revit saved settings", "before");
 			ListFieldInfo(4);
 			logMsg("");
 
-			BasicSchemaFields[VERSION_BASIC].Value = (testVal * 10.00).ToString();
+			List<SchemaDictionaryUnit> a = RSet;
+			SchemaDictionaryBasic b = RBSet;
 
-			BasicSchemaFields[AUTO_RESTORE].Value = (testVal / 10) % 2 == 0;
+			RBSet[VERSION_BASIC].Value = (testVal * 10.00).ToString();
 
-			UnitSchemaFields[0][VERSION_UNIT].Value = "sub version " + (testVal + 1);
-			UnitSchemaFields[0][STYLE_NAME].Value = "style name " + (testVal + 1);
-			UnitSchemaFields[0][STYLE_DESC].Value = "style description " + (testVal + 1);
+			RBSet[AUTO_RESTORE].Value = (testVal / 10) % 2 == 0;
 
-			UnitSchemaFields[1][VERSION_UNIT].Value = "sub version " + (testVal + 2);
-			UnitSchemaFields[1][STYLE_NAME].Value = "style name " + (testVal + 2);
-			UnitSchemaFields[1][STYLE_DESC].Value = "style description " + (testVal + 2);
+			RSet[0][VERSION_UNIT].Value = "sub version " + (testVal + 1);
+			RSet[0][STYLE_NAME].Value = "style name " + (testVal + 1);
+			RSet[0][STYLE_DESC].Value = "style description " + (testVal + 1);
 
-			UnitSchemaFields[2][VERSION_UNIT].Value = "sub version " + (testVal + 3);
-			UnitSchemaFields[2][STYLE_NAME].Value = "style name " + (testVal + 3);
-			UnitSchemaFields[2][STYLE_DESC].Value = "style description " + (testVal + 3);
+			RSet[1][VERSION_UNIT].Value = "sub version " + (testVal + 2);
+			RSet[1][STYLE_NAME].Value = "style name " + (testVal + 2);
+			RSet[1][STYLE_DESC].Value = "style description " + (testVal + 2);
+
+			RSet[2][VERSION_UNIT].Value = "sub version " + (testVal + 3);
+			RSet[2][STYLE_NAME].Value = "style name " + (testVal + 3);
+			RSet[2][STYLE_DESC].Value = "style description " + (testVal + 3);
 
 			logMsg("");
 			if (!SaveRevitSettings())
