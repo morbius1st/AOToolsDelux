@@ -41,7 +41,6 @@ namespace AOTools.Settings
 	//	field 11= int    : fmt op: use digit grouping		// 0 = false; 1 = true; -1 = ignore
 	//	field 12= int    : fmt op: use plus prefix			// 0 = false; 1 = true; -1 = ignore
 
-
 	// basic schema is only saved in the Revitfile
 	public class SchemaUnitApp
 	{

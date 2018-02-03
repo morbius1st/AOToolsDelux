@@ -12,6 +12,7 @@ using static AOTools.Settings.RevitSettingsUnitUsr;
 // username:	jeffs
 // created:		1/3/2018 8:04:40 PM
 
+// user settings - incomplete
 
 namespace AOTools.Settings
 {

@@ -2,6 +2,9 @@
 using Autodesk.Revit.DB;
 using Autodesk.Revit.DB.ExtensibleStorage;
 
+
+// the definition of the a schema field
+
 namespace AOTools.Settings
 {
 	[DataContract]

@@ -10,6 +10,9 @@ using static AOTools.Settings.RevitSettingsUnitApp;
 using System.Runtime.Serialization;
 using UtilityLibrary;
 
+// app settings (generic)
+
+
 namespace AOTools.Settings
 {
 	// no app settings yet.
