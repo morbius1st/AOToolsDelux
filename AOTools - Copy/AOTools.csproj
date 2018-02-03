@@ -80,13 +80,13 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="..\..\..\UtilityLibrary\UtilityLibrary\CsUtilities.cs">
-      <Link>CsUtilities.cs</Link>
+      <Link>Reference\CsUtilities.cs</Link>
     </Compile>
     <Compile Include="..\..\..\UtilityLibrary\UtilityLibrary\MessageUtilities.cs">
-      <Link>MessageUtilities.cs</Link>
+      <Link>Reference\MessageUtilities.cs</Link>
     </Compile>
     <Compile Include="..\..\..\UtilityLibrary\UtilityLibrary\SettingsMgr.cs">
-      <Link>AppSettings\Settings\SettingsMgr.cs</Link>
+      <Link>Reference\SettingsMgr.cs</Link>
     </Compile>
     <Compile Include="AppRibbon.cs" />
     <Compile Include="DeleteUnitStyles.cs" />
