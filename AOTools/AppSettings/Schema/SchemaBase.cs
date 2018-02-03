@@ -2,8 +2,10 @@
 
 using System;
 using System.Collections.Generic;
+using AOTools.AppSettings.RevitSettings;
 using Autodesk.Revit.DB;
 using UtilityLibrary;
+
 //using Autodesk.Revit.DB;
 //using Autodesk.Revit.DB.ExtensibleStorage;
 
@@ -14,7 +16,7 @@ using UtilityLibrary;
 // created:		1/14/2018 4:28:23 PM
 
 
-namespace AOTools.AppSettings
+namespace AOTools.AppSettings.Schema
 {
 	// master schema
 	//  field 0 = version

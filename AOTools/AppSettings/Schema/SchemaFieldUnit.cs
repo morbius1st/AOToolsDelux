@@ -1,8 +1,9 @@
 ﻿using System.Runtime.Serialization;
+using AOTools.AppSettings.RevitSettings;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.DB.ExtensibleStorage;
 
-namespace AOTools.AppSettings
+namespace AOTools.AppSettings.Schema
 {
 	[DataContract]
 	public class SchemaFieldUnit

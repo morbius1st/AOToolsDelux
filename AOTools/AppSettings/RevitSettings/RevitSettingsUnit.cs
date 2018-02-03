@@ -2,6 +2,7 @@
 
 using System;
 using System.Collections.Generic;
+using AOTools.AppSettings.Schema;
 using Autodesk.Revit.DB;
 
 #endregion
@@ -11,7 +12,7 @@ using Autodesk.Revit.DB;
 // created:		1/27/2018 10:26:23 AM
 
 
-namespace AOTools.AppSettings
+namespace AOTools.AppSettings.RevitSettings
 {
 	public class RevitSettingsUnitApp : SchemaUnitApp
 	{

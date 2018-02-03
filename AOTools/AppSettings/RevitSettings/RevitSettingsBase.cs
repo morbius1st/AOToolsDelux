@@ -2,6 +2,7 @@
 
 using System;
 using System.Collections.Generic;
+using AOTools.AppSettings.Schema;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.DB.ExtensibleStorage;
 using UtilityLibrary;
@@ -14,7 +15,7 @@ using InvalidOperationException = Autodesk.Revit.Exceptions.InvalidOperationExce
 // created:		1/30/2018 9:10:15 PM
 
 
-namespace AOTools.AppSettings
+namespace AOTools.AppSettings.RevitSettings
 {
 	internal class RevitSettingsBase
 	{
@@ -41,7 +42,7 @@ namespace AOTools.AppSettings
 					CreateUnitFields(sbld);
 
 				// all fields created and added
-				Schema schema = sbld.Finish();
+				Autodesk.Revit.DB.ExtensibleStorage.Schema schema = sbld.Finish();
 
 				Entity entity = new Entity(schema);
 
@@ -104,7 +105,7 @@ namespace AOTools.AppSettings
 		}
 
 		// save the settings held in the 
-		private void SaveFieldValues<T>(Entity entity, Schema schema,
+		private void SaveFieldValues<T>(Entity entity, Autodesk.Revit.DB.ExtensibleStorage.Schema schema,
 			SchemaDictionaryBase<T> fieldList)
 		{
 			foreach (KeyValuePair<T, SchemaFieldUnit> kvp in fieldList)
@@ -123,7 +124,7 @@ namespace AOTools.AppSettings
 			}
 		}
 
-		private void SaveUnitSettings(Entity entity, Schema schema,
+		private void SaveUnitSettings(Entity entity, Autodesk.Revit.DB.ExtensibleStorage.Schema schema,
 			Dictionary<string, string> subSchemaFields)
 		{
 			int j = 0;
@@ -169,7 +170,7 @@ namespace AOTools.AppSettings
 
 			MakeFields(sbld, usrSchemaFields);
 
-			Schema schema = sbld.Finish();
+			Autodesk.Revit.DB.ExtensibleStorage.Schema schema = sbld.Finish();
 
 			Entity entity = new Entity(schema);
 
@@ -183,11 +184,11 @@ namespace AOTools.AppSettings
 		// ******************************
 
 		// does the schema exist
-		private bool SettingsExist(out Schema schema, out Entity elemEntity)
+		private bool SettingsExist(out Autodesk.Revit.DB.ExtensibleStorage.Schema schema, out Entity elemEntity)
 		{
 			elemEntity = null;
 
-			schema = Schema.Lookup(RevitSettingsUnitApp.RsuApp.SchemaGuid);
+			schema = Autodesk.Revit.DB.ExtensibleStorage.Schema.Lookup(RevitSettingsUnitApp.RsuApp.SchemaGuid);
 
 			if (schema == null ||
 				schema.IsValidObject == false) { return false; }
@@ -207,7 +208,7 @@ namespace AOTools.AppSettings
 		// this will work with any field list
 		protected bool ReadAllRevitSettings()
 		{
-			Schema schema;
+			Autodesk.Revit.DB.ExtensibleStorage.Schema schema;
 			Entity elemEntity;
 
 			if (!SettingsExist(out schema, out elemEntity)) { return false; }
@@ -224,7 +225,7 @@ namespace AOTools.AppSettings
 			return true;
 		}
 
-		private void ReadBasicRevitSettings(Entity elemEntity, Schema schema)
+		private void ReadBasicRevitSettings(Entity elemEntity, Autodesk.Revit.DB.ExtensibleStorage.Schema schema)
 		{
 			foreach (KeyValuePair<SchemaAppKey, SchemaFieldUnit> kvp in RevitSettingsUnitApp.RsuApp.RsuAppSetg)
 			{
@@ -238,7 +239,7 @@ namespace AOTools.AppSettings
 		// this reads through the basic fields associated with the unit style schema
 		// it passes these down to the readsubentity method that then reads
 		// through all of the fields in the subschema
-		private bool ReadRevitUnitStyles(Entity elemEntity, Schema schema)
+		private bool ReadRevitUnitStyles(Entity elemEntity, Autodesk.Revit.DB.ExtensibleStorage.Schema schema)
 		{
 			// adjust the list based on the actual size
 			RevitSettingsUnitUsr.RsuUsr.Resize(RevitSettingsUnitApp.RsuApp.RsuAppSetg[SchemaAppKey.COUNT].Value);
@@ -260,7 +261,7 @@ namespace AOTools.AppSettings
 			return true;
 		}
 
-		private void ReadSubSchema(Entity subSchemaEntity, Schema schema,
+		private void ReadSubSchema(Entity subSchemaEntity, Autodesk.Revit.DB.ExtensibleStorage.Schema schema,
 			SchemaDictionaryUsr usrSchemaField)
 		{
 			foreach (KeyValuePair<SchemaUsrKey, SchemaFieldUnit> kvp
@@ -295,10 +296,10 @@ namespace AOTools.AppSettings
 
 		public void ListRevitSchema()
 		{
-			IList<Schema> schemas = Schema.ListSchemas();
+			IList<Autodesk.Revit.DB.ExtensibleStorage.Schema> schemas = Autodesk.Revit.DB.ExtensibleStorage.Schema.ListSchemas();
 			MessageUtilities.logMsgDbLn2("number of schema found", schemas.Count.ToString());
 
-			foreach (Schema schema in schemas)
+			foreach (Autodesk.Revit.DB.ExtensibleStorage.Schema schema in schemas)
 			{
 				MessageUtilities.logMsgDbLn2("schema name", schema.SchemaName + "  guid| " + schema.GUID);
 			}

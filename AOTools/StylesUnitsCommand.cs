@@ -1,15 +1,17 @@
 ﻿#region Using directives
 
 using AOTools.AppSettings;
+using AOTools.AppSettings.RevitSettings;
+using AOTools.AppSettings.Schema;
 using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
-using static AOTools.AppSettings.SettingsMgrUsr;
-using static AOTools.AppSettings.SchemaAppKey;
-using static AOTools.AppSettings.SchemaUsrKey;
-using static AOTools.AppSettings.RevitSettingsMgr;
-using static AOTools.AppSettings.RevitSettingsUnitUsr;
-using static AOTools.AppSettings.RevitSettingsUnitApp;
+using static AOTools.AppSettings.Settings.SettingsMgrUsr;
+using static AOTools.AppSettings.Schema.SchemaAppKey;
+using static AOTools.AppSettings.Schema.SchemaUsrKey;
+using static AOTools.AppSettings.RevitSettings.RevitSettingsMgr;
+using static AOTools.AppSettings.RevitSettings.RevitSettingsUnitUsr;
+using static AOTools.AppSettings.RevitSettings.RevitSettingsUnitApp;
 
 using static UtilityLibrary.MessageUtilities;
 

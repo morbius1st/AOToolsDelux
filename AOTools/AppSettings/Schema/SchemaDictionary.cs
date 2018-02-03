@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Runtime.Serialization;
 
-namespace AOTools.AppSettings
+namespace AOTools.AppSettings.Schema
 {
 	[CollectionDataContract(Name = "SchemaFields", KeyName = "OrderKey", 
 		ValueName = "SchemaField", ItemName = "SchemaFieldItem")]
