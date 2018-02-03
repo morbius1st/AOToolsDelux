@@ -2,13 +2,10 @@
 
 using System;
 using System.Collections.Generic;
-using System.Diagnostics.Contracts;
 using Autodesk.Revit.DB;
+using UtilityLibrary;
 //using Autodesk.Revit.DB;
 //using Autodesk.Revit.DB.ExtensibleStorage;
-using static AOTools.Settings.SchemaAppKey;
-using static AOTools.Settings.SchemaUsrKey;
-using static UtilityLibrary.MessageUtilities;
 
 #endregion
 
@@ -17,7 +14,7 @@ using static UtilityLibrary.MessageUtilities;
 // created:		1/14/2018 4:28:23 PM
 
 
-namespace AOTools.Settings
+namespace AOTools.AppSettings
 {
 	// master schema
 	//  field 0 = version
@@ -55,32 +52,32 @@ namespace AOTools.Settings
 			new SchemaDictionaryApp
 			{
 				{
-					(CURRENT),
-					new SchemaFieldUnit(CURRENT, "CurrentUnitStyle",
+					(SchemaAppKey.CURRENT),
+					new SchemaFieldUnit(SchemaAppKey.CURRENT, "CurrentUnitStyle",
 						"number of the current style", 0)
 				},
 
 				{
-					(COUNT),
-					new SchemaFieldUnit(COUNT, "Count",
+					(SchemaAppKey.COUNT),
+					new SchemaFieldUnit(SchemaAppKey.COUNT, "Count",
 						"number of unit styles", DEFAULT_COUNT)
 				},
 
 				{
-					(USE_OFFICE),
-					new SchemaFieldUnit(USE_OFFICE, "UseOfficeUnitStyle",
+					(SchemaAppKey.USE_OFFICE),
+					new SchemaFieldUnit(SchemaAppKey.USE_OFFICE, "UseOfficeUnitStyle",
 						"use the office standard style", true)
 				},
 
 				{
-					(VERSION_BASIC),
-					new SchemaFieldUnit(VERSION_BASIC, "version",
+					(SchemaAppKey.VERSION_BASIC),
+					new SchemaFieldUnit(SchemaAppKey.VERSION_BASIC, "version",
 						"version", "1.0")
 				},
 
 				{
-					(AUTO_RESTORE),
-					new SchemaFieldUnit(AUTO_RESTORE,
+					(SchemaAppKey.AUTO_RESTORE),
+					new SchemaFieldUnit(SchemaAppKey.AUTO_RESTORE,
 						"AutoRestoreUnitStyle", "auto update to the selected unit style", true)
 				}
 			};
@@ -106,7 +103,7 @@ namespace AOTools.Settings
 		// fill in for each sub-schema 
 		// unit type is number is a filler
 		public static readonly SchemaFieldUnit SubSchemaFieldInfo =
-			new SchemaFieldUnit(UNDEFINED, "LocalUnitStyle{0:D2}",
+			new SchemaFieldUnit(SchemaAppKey.UNDEFINED, "LocalUnitStyle{0:D2}",
 				"subschema for the local unit style",
 				null, RevitUnitType.UT_UNDEFINED, "B2788BC0-381E-4F4F-BE0B-93A93B9470{0:x2}");
 	}
@@ -125,85 +122,85 @@ namespace AOTools.Settings
 			new SchemaDictionaryUsr
 			{
 				{
-					(VERSION_UNIT),
-					new SchemaFieldUnit(VERSION_UNIT,
+					(SchemaUsrKey.VERSION_UNIT),
+					new SchemaFieldUnit(SchemaUsrKey.VERSION_UNIT,
 						"version", "version", "1.0")
 				},
 
 				{
-					(STYLE_NAME),
-					new SchemaFieldUnit(STYLE_NAME,
+					(SchemaUsrKey.STYLE_NAME),
+					new SchemaFieldUnit(SchemaUsrKey.STYLE_NAME,
 						"UnitStyleName", "name of this unit style", "unit style {0:D2}")
 				},
 
 				{
-					(STYLE_DESC),
-					new SchemaFieldUnit(STYLE_DESC,
+					(SchemaUsrKey.STYLE_DESC),
+					new SchemaFieldUnit(SchemaUsrKey.STYLE_DESC,
 						"UnitStyleDesc", "description for this unit style", "unit style description")
 				},
 
 				{
-					(CAN_BE_ERASED),
-					new SchemaFieldUnit(CAN_BE_ERASED,
+					(SchemaUsrKey.CAN_BE_ERASED),
+					new SchemaFieldUnit(SchemaUsrKey.CAN_BE_ERASED,
 						"CanBeErased", "can this unit style be erased", false)
 				},
 
 				{
-					(UNIT_SYSTEM),
-					new SchemaFieldUnit(UNIT_SYSTEM, "US", "unit system", 0)
+					(SchemaUsrKey.UNIT_SYSTEM),
+					new SchemaFieldUnit(SchemaUsrKey.UNIT_SYSTEM, "US", "unit system", 0)
 				},
 
 				{
-					(UNIT_TYPE),
-					new SchemaFieldUnit(UNIT_TYPE,
+					(SchemaUsrKey.UNIT_TYPE),
+					new SchemaFieldUnit(SchemaUsrKey.UNIT_TYPE,
 						"UnitType", "unit type", 0)
 				},
 
 				{
-					(ACCURACY),
-					new SchemaFieldUnit(ACCURACY,
+					(SchemaUsrKey.ACCURACY),
+					new SchemaFieldUnit(SchemaUsrKey.ACCURACY,
 						"Accuracy", "accuracy", 0.0, RevitUnitType.UT_NUMBER)
 				},
 
 				{
-					(DUT),
-					new SchemaFieldUnit(DUT, "DUT",
+					(SchemaUsrKey.DUT),
+					new SchemaFieldUnit(SchemaUsrKey.DUT, "DUT",
 						"display unit type", 0)
 				},
 
 				{
-					(UST),
-					new SchemaFieldUnit(UST,
+					(SchemaUsrKey.UST),
+					new SchemaFieldUnit(SchemaUsrKey.UST,
 						"UST", "unit symbol type", 0)
 				},
 
 				{
-					(SUP_SPACE),
-					new SchemaFieldUnit(SUP_SPACE,
+					(SchemaUsrKey.SUP_SPACE),
+					new SchemaFieldUnit(SchemaUsrKey.SUP_SPACE,
 						"SuppressSpaces", "suppress spaces", (int) SchemaBoolOpts.YES)
 				},
 
 				{
-					(SUP_LEAD_ZERO),
-					new SchemaFieldUnit(SUP_LEAD_ZERO,
+					(SchemaUsrKey.SUP_LEAD_ZERO),
+					new SchemaFieldUnit(SchemaUsrKey.SUP_LEAD_ZERO,
 						"SuppressLeadZero", "suppress leading zero", (int) SchemaBoolOpts.NO)
 				},
 
 				{
-					(SUP_TRAIL_ZERO),
-					new SchemaFieldUnit(SUP_TRAIL_ZERO,
+					(SchemaUsrKey.SUP_TRAIL_ZERO),
+					new SchemaFieldUnit(SchemaUsrKey.SUP_TRAIL_ZERO,
 						"SuppressTrailZero", "suppress trailing zero", (int) SchemaBoolOpts.IGNORE)
 				},
 
 				{
-					(USE_DIG_GRP),
-					new SchemaFieldUnit(USE_DIG_GRP,
+					(SchemaUsrKey.USE_DIG_GRP),
+					new SchemaFieldUnit(SchemaUsrKey.USE_DIG_GRP,
 						"DigitGrouping", "digit grouping", (int) SchemaBoolOpts.YES)
 				},
 
 				{
-					(USE_PLUS_PREFIX),
-					new SchemaFieldUnit(USE_PLUS_PREFIX,
+					(SchemaUsrKey.USE_PLUS_PREFIX),
+					new SchemaFieldUnit(SchemaUsrKey.USE_PLUS_PREFIX,
 						"PlusPrefix", "plus prefix", (int) SchemaBoolOpts.NO)
 				}
 			};
@@ -228,14 +225,14 @@ namespace AOTools.Settings
 		{
 			SchemaDictionaryUsr def = SchemaUnitUsr.SchemaUnitUsrDefault.Clone();
 
-			def[STYLE_NAME].Value =
-				string.Format(SchemaUnitUsr.SchemaUnitUsrDefault[STYLE_NAME].Value, itemNumber);
+			def[SchemaUsrKey.STYLE_NAME].Value =
+				string.Format(SchemaUnitUsr.SchemaUnitUsrDefault[SchemaUsrKey.STYLE_NAME].Value, itemNumber);
 
-			def[UNIT_SYSTEM].Value = (int) UnitSystem.Imperial;
-			def[UNIT_TYPE].Value = (int) UnitType.UT_Length;
-			def[ACCURACY].Value = (1.0 / 12.0) / 16.0;
-			def[DUT].Value = (int) DisplayUnitType.DUT_FEET_FRACTIONAL_INCHES;
-			def[UST].Value = (int) UnitSymbolType.UST_NONE;
+			def[SchemaUsrKey.UNIT_SYSTEM].Value = (int) UnitSystem.Imperial;
+			def[SchemaUsrKey.UNIT_TYPE].Value = (int) UnitType.UT_Length;
+			def[SchemaUsrKey.ACCURACY].Value = (1.0 / 12.0) / 16.0;
+			def[SchemaUsrKey.DUT].Value = (int) DisplayUnitType.DUT_FEET_FRACTIONAL_INCHES;
+			def[SchemaUsrKey.UST].Value = (int) UnitSymbolType.UST_NONE;
 
 			return def;
 		}
@@ -247,11 +244,11 @@ namespace AOTools.Settings
 			int j = 0;
 			foreach (SchemaDictionaryUsr sd in u)
 			{
-				logMsgDbLn2("unit style #", j++.ToString());
+				MessageUtilities.logMsgDbLn2("unit style #", j++.ToString());
 
 				ListFieldInfo(sd, count);
 
-				logMsg("");
+				MessageUtilities.logMsg("");
 			}
 		}
 
@@ -263,7 +260,7 @@ namespace AOTools.Settings
 			{
 				if (i == count) return;
 
-				logMsgDbLn2("field #" + i++,
+				MessageUtilities.logMsgDbLn2("field #" + i++,
 					FormatFieldInfo(kvp.Key as Enum, kvp.Value));
 			}
 		}

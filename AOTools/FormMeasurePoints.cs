@@ -6,7 +6,7 @@ using Point = System.Drawing.Point;
 
 using static AOTools.Util;
 
-using static AOTools.Settings.SettingsMgrUsr;
+using static AOTools.AppSettings.SettingsMgrUsr;
 
 namespace AOTools
 {

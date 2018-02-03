@@ -3,9 +3,6 @@
 using System.Collections.Generic;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.DB.ExtensibleStorage;
-using static AOTools.Settings.RevitSettingsUnitApp;
-using static AOTools.Settings.SchemaAppKey;
-using static AOTools.Settings.RevitSettingsBase;
 
 #endregion
 
@@ -14,7 +11,7 @@ using static AOTools.Settings.RevitSettingsBase;
 // created:		1/7/2018 3:37:43 PM
 
 
-namespace AOTools.Settings
+namespace AOTools.AppSettings
 {
 	internal class RevitSettingsMgr : RevitSettingsBase
 	{
@@ -51,9 +48,9 @@ namespace AOTools.Settings
 
 			// allocate subSchema and make sure not null
 			List<Schema> subSchema = 
-				new List<Schema>(RsuApp.DefAppSchema[COUNT].Value);
+				new List<Schema>(RevitSettingsUnitApp.RsuApp.DefAppSchema[SchemaAppKey.COUNT].Value);
 
-			Schema schema = Schema.Lookup(RsuApp.SchemaGuid);
+			Schema schema = Schema.Lookup(RevitSettingsUnitApp.RsuApp.SchemaGuid);
 
 			if (schema != null)
 			{
@@ -63,7 +60,7 @@ namespace AOTools.Settings
 				
 					if (ReadAllRevitSettings() && subSchema.Count > 0)
 					{
-						for (int i = 0; i < RsuApp.RsuAppSetg[COUNT].Value; i++)
+						for (int i = 0; i < RevitSettingsUnitApp.RsuApp.RsuAppSetg[SchemaAppKey.COUNT].Value; i++)
 						{
 							Schema.EraseSchemaAndAllEntities(subSchema[i], false);
 							subSchema[i].Dispose();

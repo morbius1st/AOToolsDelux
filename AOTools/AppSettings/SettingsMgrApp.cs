@@ -1,16 +1,16 @@
 ﻿#region Using directives
-using static AOTools.Settings.RevitSettingsUnitApp;
+
+using System.Runtime.Serialization;
+using static AOTools.AppSettings.RevitSettingsUnitApp;
 #endregion
+
+using UtilityLibrary;
 
 // itemname:	SettingsFileApp
 // username:	jeffs
 // created:		1/3/2018 8:05:02 PM
 
-
-using System.Runtime.Serialization;
-using UtilityLibrary;
-
-namespace AOTools.Settings
+namespace AOTools.AppSettings
 {
 	// no app settings yet.
 	public static class SettingsMgrApp
