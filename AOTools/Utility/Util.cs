@@ -4,12 +4,9 @@ using System.IO;
 using System.Xml.Serialization;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI.Selection;
-
-using static AOTools.AppRibbon;
-
 using UtilityLibrary;
 
-namespace AOTools
+namespace AOTools.Utility
 {
 	internal static class Util
 	{
@@ -133,7 +130,7 @@ namespace AOTools
 					new ElementCategoryFilter(BuiltInCategory.OST_ProjectBasePoint);
 
 				FilteredElementCollector collector =
-					new FilteredElementCollector(Doc);
+					new FilteredElementCollector(AppRibbon.Doc);
 
 				IList<Element> siteElements =
 					collector.WherePasses(sitElementCategoryFilter).ToElements();
