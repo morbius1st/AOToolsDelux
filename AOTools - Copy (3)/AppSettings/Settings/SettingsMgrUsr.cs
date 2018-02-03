@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Runtime.Serialization;
 using AOTools.AppSettings.RevitSettings;
 using AOTools.AppSettings.Schema;
-using AOTools.AppSettings.Settings;
+using AOTools.Settings;
 using UtilityLibrary;
 using Point = System.Drawing.Point;
 

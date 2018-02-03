@@ -3,16 +3,11 @@
 using System;
 using System.Collections.Generic;
 using AOTools.AppSettings.Schema;
+using AOTools.Settings;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.DB.ExtensibleStorage;
 using UtilityLibrary;
 using InvalidOperationException = Autodesk.Revit.Exceptions.InvalidOperationException;
-
-using static AOTools.AppSettings.RevitSettings.RevitSettingsUnitUsr;
-using static AOTools.Settings.RevitSettingsUnitApp;
-using static AOTools.Settings.SchemaUnitUsr;
-using static AOTools.Settings.SchemaAppKey;
-using static UtilityLibrary.MessageUtilities;
 
 #endregion
 
@@ -48,7 +43,7 @@ namespace AOTools.AppSettings.RevitSettings
 					CreateUnitFields(sbld);
 
 				// all fields created and added
-				Autodesk.Revit.DB.ExtensibleStorage.Schema schema = sbld.Finish();
+				Schema schema = sbld.Finish();
 
 				Entity entity = new Entity(schema);
 

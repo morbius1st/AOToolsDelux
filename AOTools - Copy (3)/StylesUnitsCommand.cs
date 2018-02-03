@@ -2,7 +2,7 @@
 
 using AOTools.AppSettings.RevitSettings;
 using AOTools.AppSettings.Schema;
-using AOTools.AppSettings.Settings;
+using AOTools.Settings;
 using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;

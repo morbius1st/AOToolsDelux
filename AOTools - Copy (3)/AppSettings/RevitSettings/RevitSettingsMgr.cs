@@ -2,7 +2,7 @@
 
 using System.Collections.Generic;
 using AOTools.AppSettings.Schema;
-using AOTools.AppSettings.Settings;
+using AOTools.Settings;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.DB.ExtensibleStorage;
 
