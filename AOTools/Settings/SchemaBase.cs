@@ -2,11 +2,13 @@
 
 using System;
 using System.Collections.Generic;
-using System.Runtime.Serialization;
+using System.Diagnostics.Contracts;
 using Autodesk.Revit.DB;
-using Autodesk.Revit.DB.ExtensibleStorage;
-using static AOTools.Settings.SBasicKey;
-using static AOTools.Settings.SUnitKey;
+//using Autodesk.Revit.DB;
+//using Autodesk.Revit.DB.ExtensibleStorage;
+using static AOTools.Settings.SchemaAppKey;
+using static AOTools.Settings.SchemaUsrKey;
+using static UtilityLibrary.MessageUtilities;
 
 #endregion
 
@@ -40,95 +42,62 @@ namespace AOTools.Settings
 	//	field 12= int    : fmt op: use plus prefix			// 0 = false; 1 = true; -1 = ignore
 
 
-	[CollectionDataContract(Name = "SchemaFields", KeyName = "OrderKey", 
-		ValueName = "SchemaField", ItemName = "SchemaFieldItem")]
-	public class SchemaDictionaryBase<T> : Dictionary<T, FieldInfo> 
-	{
-		public SchemaDictionaryBase() { }
-
-		public SchemaDictionaryBase(int capacity) : base(capacity) { }
-
-		protected U Clone<U>(U original) where U : SchemaDictionaryBase<T>, new()
-		{
-			U copy = new U();
-
-			foreach (KeyValuePair<T, FieldInfo> kvp in original)
-			{
-				copy.Add(kvp.Key, new FieldInfo(kvp.Value));
-			}
-			return copy;
-		}
-	}
-
-	[CollectionDataContract(Name = "SchemaFields", KeyName = "OrderKey",
-		ValueName = "SchemaField", ItemName = "SchemaFieldItem")]
-	public class SchemaDictionaryUnit : SchemaDictionaryBase<SUnitKey>
-	{
-		public SchemaDictionaryUnit() { }
-		public SchemaDictionaryUnit(int capacity) :base(capacity) { }
-		public SchemaDictionaryUnit Clone()
-		{
-			return Clone(this); 
-		}
-	}
-
-	[CollectionDataContract(Name = "SchemaFields", KeyName = "OrderKey",
-		ValueName = "SchemaField", ItemName = "SchemaFieldItem")]
-	public class SchemaDictionaryBasic : SchemaDictionaryBase<SBasicKey>
-	{
-		public SchemaDictionaryBasic() { }
-		public SchemaDictionaryBasic(int capacity) :base(capacity) { }
-		public SchemaDictionaryBasic Clone()
-		{
-			return Clone(this);
-		}
-	}
-
 	// basic schema is only saved in the Revitfile
-	public class BasicSchema
+	public class SchemaUnitApp
 	{
-		public const string SCHEMA_NAME = "UnitStyleSettings";
-		public const string SCHEMA_DESC = "unit style setings";
+		private const int DEFAULT_COUNT = 3;
+		protected const string SCHEMA_NAME = "UnitStyleSettings";
+		protected const string SCHEMA_DESC = "unit style setings";
 
-		public static readonly Guid SchemaGUID = new Guid("B1788BC0-381E-4F4F-BE0B-93A93B9470FF");
+		protected readonly Guid Schemaguid = new Guid("B1788BC0-381E-4F4F-BE0B-93A93B9470FF");
 
-		public static readonly SchemaDictionaryBasic _basicSchemaFieldsDefault =
-			new SchemaDictionaryBasic
+		protected SchemaDictionaryApp SchemaUnitAppDefault { get; } =
+			new SchemaDictionaryApp
 			{
 				{
 					(CURRENT),
-					new FieldInfo(CURRENT, "CurrentUnitStyle",
+					new SchemaFieldUnit(CURRENT, "CurrentUnitStyle",
 						"number of the current style", 0)
 				},
 
 				{
 					(COUNT),
-					new FieldInfo(COUNT, "Count",
-						"number of unit styles", 3)
+					new SchemaFieldUnit(COUNT, "Count",
+						"number of unit styles", DEFAULT_COUNT)
 				},
 
 				{
 					(USE_OFFICE),
-					new FieldInfo(USE_OFFICE, "UseOfficeUnitStyle",
+					new SchemaFieldUnit(USE_OFFICE, "UseOfficeUnitStyle",
 						"use the office standard style", true)
 				},
 
 				{
 					(VERSION_BASIC),
-					new FieldInfo(VERSION_BASIC, "version",
+					new SchemaFieldUnit(VERSION_BASIC, "version",
 						"version", "1.0")
 				},
 
 				{
 					(AUTO_RESTORE),
-					new FieldInfo(AUTO_RESTORE,
+					new SchemaFieldUnit(AUTO_RESTORE,
 						"AutoRestoreUnitStyle", "auto update to the selected unit style", true)
 				}
 			};
 
-		internal static SchemaDictionaryBasic GetBasicSchemaFields()
+		protected SchemaDictionaryApp GetSchemaUnitAppDefault()
 		{
-			return _basicSchemaFieldsDefault.Clone();
+			return SchemaUnitAppDefault.Clone();
+		}
+
+		public string GetSubSchemaName(int i)
+		{
+			return string.Format(SubSchemaFieldInfo.Name, i);
+		}
+
+		public static Guid GetSubSchemaGuid(int i)
+		{
+			return new Guid(string.Format(SubSchemaFieldInfo.Guid, i));
 		}
 
 		// the guid for each sub-schema and the 
@@ -136,138 +105,175 @@ namespace AOTools.Settings
 		// the guid here is missing the last (2) digits.
 		// fill in for each sub-schema 
 		// unit type is number is a filler
-		public static readonly FieldInfo _subSchemaFieldInfo =
-			new FieldInfo(UNDEFINED, "LocalUnitStyle{0:D2}",
+		public static readonly SchemaFieldUnit SubSchemaFieldInfo =
+			new SchemaFieldUnit(UNDEFINED, "LocalUnitStyle{0:D2}",
 				"subschema for the local unit style",
-				new Entity(), UnitType.UT_Number, "B2788BC0-381E-4F4F-BE0B-93A93B9470{0:x2}");
-
-		public static Guid GetSubSchemaGuid(int i)
-		{
-			return new Guid(string.Format(_subSchemaFieldInfo.Guid, i));
-		}
+				null, RevitUnitType.UT_UNDEFINED, "B2788BC0-381E-4F4F-BE0B-93A93B9470{0:x2}");
 	}
-
 
 	// unit schema is saved in
 	// the app settings as a list of office standard unit styles
 	// the user settings for a list of their personal unit styles
 	// in the revit files as a list of custom unit styles
-//	[DataContract]
-	public class UnitSchema
+	//	[DataContract]
+	public class SchemaUnitUsr 
 	{
-		public const string UNIT_SCHEMA_NAME = "UnitStyleSchema";
-		public const string UNIT_SCHEMA_DESC = "unit style sub schema";
+		protected const string SCHEMA_NAME = "UnitStyleSchema";
+		protected const string SCHEMA_DESC = "unit style sub schema";
 
-		public static readonly SchemaDictionaryUnit _unitSchemaFieldsDefault =
-			new SchemaDictionaryUnit
+		public static SchemaDictionaryUsr SchemaUnitUsrDefault { get; } =
+			new SchemaDictionaryUsr
 			{
 				{
 					(VERSION_UNIT),
-					new FieldInfo(VERSION_UNIT,
+					new SchemaFieldUnit(VERSION_UNIT,
 						"version", "version", "1.0")
 				},
 
 				{
 					(STYLE_NAME),
-					new FieldInfo(STYLE_NAME,
+					new SchemaFieldUnit(STYLE_NAME,
 						"UnitStyleName", "name of this unit style", "unit style {0:D2}")
 				},
 
 				{
 					(STYLE_DESC),
-					new FieldInfo(STYLE_DESC,
+					new SchemaFieldUnit(STYLE_DESC,
 						"UnitStyleDesc", "description for this unit style", "unit style description")
 				},
 
 				{
 					(CAN_BE_ERASED),
-					new FieldInfo(CAN_BE_ERASED,
+					new SchemaFieldUnit(CAN_BE_ERASED,
 						"CanBeErased", "can this unit style be erased", false)
 				},
 
 				{
 					(UNIT_SYSTEM),
-					new FieldInfo(UNIT_SYSTEM,
-						"US", "unit system", (int) UnitSystem.Imperial)
+					new SchemaFieldUnit(UNIT_SYSTEM, "US", "unit system", 0)
 				},
 
 				{
 					(UNIT_TYPE),
-					new FieldInfo(UNIT_TYPE,
-						"UnitType", "unit type", (int) UnitType.UT_Length)
+					new SchemaFieldUnit(UNIT_TYPE,
+						"UnitType", "unit type", 0)
 				},
 
 				{
 					(ACCURACY),
-					new FieldInfo(ACCURACY,
-						"Accuracy", "accuracy", (1.0 / 12.0) / 16.0, UnitType.UT_Number)
+					new SchemaFieldUnit(ACCURACY,
+						"Accuracy", "accuracy", 0.0, RevitUnitType.UT_NUMBER)
 				},
 
 				{
 					(DUT),
-					new FieldInfo(DUT, "DUT",
-						"display unit type", (int) DisplayUnitType.DUT_FEET_FRACTIONAL_INCHES)
+					new SchemaFieldUnit(DUT, "DUT",
+						"display unit type", 0)
 				},
 
 				{
 					(UST),
-					new FieldInfo(UST,
-						"UST", "unit symbol type", (int) UnitSymbolType.UST_NONE)
+					new SchemaFieldUnit(UST,
+						"UST", "unit symbol type", 0)
 				},
 
 				{
 					(SUP_SPACE),
-					new FieldInfo(SUP_SPACE,
-						"SuppressSpaces", "suppress spaces", (int) FmtOpt.YES)
+					new SchemaFieldUnit(SUP_SPACE,
+						"SuppressSpaces", "suppress spaces", (int) SchemaBoolOpts.YES)
 				},
 
 				{
 					(SUP_LEAD_ZERO),
-					new FieldInfo(SUP_LEAD_ZERO,
-						"SuppressLeadZero", "suppress leading zero", (int) FmtOpt.NO)
+					new SchemaFieldUnit(SUP_LEAD_ZERO,
+						"SuppressLeadZero", "suppress leading zero", (int) SchemaBoolOpts.NO)
 				},
 
 				{
 					(SUP_TRAIL_ZERO),
-					new FieldInfo(SUP_TRAIL_ZERO,
-						"SuppressTrailZero", "suppress trailing zero", (int) FmtOpt.IGNORE)
+					new SchemaFieldUnit(SUP_TRAIL_ZERO,
+						"SuppressTrailZero", "suppress trailing zero", (int) SchemaBoolOpts.IGNORE)
 				},
 
 				{
 					(USE_DIG_GRP),
-					new FieldInfo(USE_DIG_GRP,
-						"DigitGrouping", "digit grouping", (int) FmtOpt.YES)
+					new SchemaFieldUnit(USE_DIG_GRP,
+						"DigitGrouping", "digit grouping", (int) SchemaBoolOpts.YES)
 				},
 
 				{
 					(USE_PLUS_PREFIX),
-					new FieldInfo(USE_PLUS_PREFIX,
-						"PlusPrefix", "plus prefix", (int) FmtOpt.NO)
+					new SchemaFieldUnit(USE_PLUS_PREFIX,
+						"PlusPrefix", "plus prefix", (int) SchemaBoolOpts.NO)
 				}
 			};
+	}
 
-		internal static List<SchemaDictionaryUnit> GetUnitSchemaFields(int count)
+	public static class SchemaUnitUtil
+	{
+
+		public static List<SchemaDictionaryUsr> CreateDefaultSchemaList(int quantity)
 		{
-			List<SchemaDictionaryUnit> unitSchemaFields =
-				new List<SchemaDictionaryUnit>(count);
+			List<SchemaDictionaryUsr> SettingList = new List<SchemaDictionaryUsr>(quantity);
 
-			// create the UnitSchema's
-			// personlize the sub schema's
-			for (int i = 0; i < count; i++)
+			for (int i = 0; i < quantity; i++)
 			{
-				unitSchemaFields.Add(new SchemaDictionaryUnit());
-				unitSchemaFields[i] = _unitSchemaFieldsDefault.Clone();
-				unitSchemaFields[i][STYLE_NAME].Value =
-					string.Format(_unitSchemaFieldsDefault[STYLE_NAME].Value, i);
-
+				SettingList.Add(CreateDefaultSchema(i));
 			}
 
-			return unitSchemaFields;
+			return SettingList;
 		}
 
-		internal static string GetSubSchemaName(int i)
+		private static SchemaDictionaryUsr CreateDefaultSchema(int itemNumber)
 		{
-			return String.Format(BasicSchema._subSchemaFieldInfo.Name, i);
+			SchemaDictionaryUsr def = SchemaUnitUsr.SchemaUnitUsrDefault.Clone();
+
+			def[STYLE_NAME].Value =
+				string.Format(SchemaUnitUsr.SchemaUnitUsrDefault[STYLE_NAME].Value, itemNumber);
+
+			def[UNIT_SYSTEM].Value = (int) UnitSystem.Imperial;
+			def[UNIT_TYPE].Value = (int) UnitType.UT_Length;
+			def[ACCURACY].Value = (1.0 / 12.0) / 16.0;
+			def[DUT].Value = (int) DisplayUnitType.DUT_FEET_FRACTIONAL_INCHES;
+			def[UST].Value = (int) UnitSymbolType.UST_NONE;
+
+			return def;
+		}
+
+
+
+		public static void ListUnitDictionary(List<SchemaDictionaryUsr> u, int count = -1)
+		{
+			int j = 0;
+			foreach (SchemaDictionaryUsr sd in u)
+			{
+				logMsgDbLn2("unit style #", j++.ToString());
+
+				ListFieldInfo(sd, count);
+
+				logMsg("");
+			}
+		}
+
+		public static void ListFieldInfo<T>(SchemaDictionaryBase<T> fieldList, int count = -1)
+		{
+			int i = 0;
+
+			foreach (KeyValuePair<T, SchemaFieldUnit> kvp in fieldList)
+			{
+				if (i == count) return;
+
+				logMsgDbLn2("field #" + i++,
+					FormatFieldInfo(kvp.Key as Enum, kvp.Value));
+			}
+		}
+
+		private static string FormatFieldInfo(Enum key, SchemaFieldUnit fi)
+		{
+			int len = 28;
+			string keyDesc = key?.ToString() ?? "undefined";
+			string valueDesc = fi.Value.ToString().PadRight(len).Substring(0, len);
+			return $"key| {keyDesc,-20}  name| {fi.Name,-20} value| {valueDesc,-30} unit type| {fi.UnitType}";
 		}
 	}
 }

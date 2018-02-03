@@ -1,12 +1,11 @@
-﻿using System.Reflection;
-using System.Runtime.Serialization;
+﻿using System.Runtime.Serialization;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.DB.ExtensibleStorage;
 
 namespace AOTools.Settings
 {
 	[DataContract]
-	public class FieldInfo
+	public class SchemaFieldUnit
 	{
 		[DataMember(Order = 1)]
 		public int Sequence { get; set; }
@@ -15,24 +14,24 @@ namespace AOTools.Settings
 		[DataMember(Order = 3)]
 		public string Desc { get; set; }
 		[DataMember(Order = 4)]
-		public UnitType UnitType { get; set; }
+		public RevitUnitType UnitType { get; set; }
 		[DataMember(Order = 5)]
 		public string Guid { get; set; }
 		[DataMember(Name = "RevitFieldValue", Order = 6)]
 		public dynamic Value { get; set; }
 
-		public FieldInfo()
+		public SchemaFieldUnit()
 		{
 			Sequence = -1;
 			Name = null;
 			Desc = null;
 			Value = null;
-			UnitType = UnitType.UT_Undefined;
+			UnitType = RevitUnitType.UT_UNDEFINED;
 			Guid = null;
 		}
 
-		public FieldInfo(SUnitKey sequence, string name, string desc, dynamic val, 
-			UnitType unitType = UnitType.UT_Undefined, string guid = "")
+		public SchemaFieldUnit(SchemaUsrKey sequence, string name, string desc, dynamic val,
+			RevitUnitType unitType = RevitUnitType.UT_UNDEFINED, string guid = "")
 		{
 			Sequence = (int) sequence;
 			Name = name;
@@ -42,8 +41,8 @@ namespace AOTools.Settings
 			Guid = guid;
 		}
 
-		public FieldInfo(SBasicKey sequence, string name, string desc, dynamic val, 
-			UnitType unitType = UnitType.UT_Undefined, string guid = "")
+		public SchemaFieldUnit(SchemaAppKey sequence, string name, string desc, dynamic val,
+			RevitUnitType unitType = RevitUnitType.UT_UNDEFINED, string guid = "")
 		{
 			Sequence = (int) sequence;
 			Name = name;
@@ -53,7 +52,7 @@ namespace AOTools.Settings
 			Guid = guid;
 		}
 
-		public FieldInfo(FieldInfo fi)
+		public SchemaFieldUnit(SchemaFieldUnit fi)
 		{
 			Sequence = fi.Sequence;
 			Name = fi.Name;
@@ -93,18 +92,19 @@ namespace AOTools.Settings
 		{
 			return e.Get<double>(f, DisplayUnitType.DUT_GENERAL);
 		}
-
 	}
 
+
+
 	[DataContract]
-	public enum FmtOpt
+	public enum SchemaBoolOpts
 	{
 		NO = 0,
 		YES = 1,
 		IGNORE = -1
 	}
 
-	public enum SUnitKey
+	public enum SchemaUsrKey
 	{
 		VERSION_UNIT = 0,
 		STYLE_NAME = 1, 
@@ -122,7 +122,7 @@ namespace AOTools.Settings
 		USE_PLUS_PREFIX = 13
 	}
 
-	public enum SBasicKey
+	public enum SchemaAppKey
 	{
 		UNDEFINED = -1, 
 		VERSION_BASIC = 0,

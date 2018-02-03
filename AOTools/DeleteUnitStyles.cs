@@ -4,7 +4,7 @@ using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
 
-using static AOTools.Settings.ExtensibleStorageMgr;
+using static AOTools.Settings.RevitSettingsMgr;
 
 #endregion
 
@@ -20,7 +20,7 @@ namespace AOTools
 	{
 		public Result Execute(ExternalCommandData commandData, ref string message, ElementSet elements)
 		{
-			RSettings.DeleteCurrentSchema();
+			RsMgr.DeleteSchema();
 
 			return Result.Succeeded;
 		}

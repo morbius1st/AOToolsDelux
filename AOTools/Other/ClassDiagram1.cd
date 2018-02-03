@@ -1,0 +1,154 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="AOTools.Settings.RevitSettingsUnitApp">
+    <Position X="5.25" Y="5.75" Width="2.5" />
+    <TypeIdentifier>
+      <HashCode>QAAAAAAAAAAAABAEAAAAAAAAAAAgAAIAAAAQgAAAQAA=</HashCode>
+      <FileName>Settings\RevitSettingsUnit.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="AOTools.Settings.RevitSettingsUnitUsr">
+    <Position X="1.25" Y="5.75" Width="2.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAACAAAAAAAAAEAAAEAAAAAAAAAAAAAAQAgAEAAAA=</HashCode>
+      <FileName>Settings\RevitSettingsUnit.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="AOTools.Settings.SchemaDictionaryBase&lt;T&gt;">
+    <Position X="3" Y="17.75" Width="3.25" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABA=</HashCode>
+      <FileName>Settings\SchemaDictionary.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="AOTools.Settings.SchemaUnitField">
+    <Position X="8.25" Y="15" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>AAAAACAAAAAAAAAAAAAAAAQAAAAABAAAAAAgQAEAAAA=</HashCode>
+      <FileName>Settings\SchemaUnitField.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="UtilityLibrary.SettingsBase&lt;T&gt;">
+    <Position X="19.25" Y="5.75" Width="2.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAIAgAAAABAAAAAAAAAAgAAAAAAAAgAAAAAAAAAA=</HashCode>
+      <FileName>B:\Programming\VisualStudioProjects\UtilityLibrary\UtilityLibrary\SettingsMgr.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="UtilityLibrary.SettingsPathFileBase">
+    <Position X="19.25" Y="11" Width="2.5" />
+    <TypeIdentifier>
+      <HashCode>BAIAAAAgAAAAAAAIAAQAAAAAAAAAAAAAAAAAAABAAgA=</HashCode>
+      <FileName>B:\Programming\VisualStudioProjects\UtilityLibrary\UtilityLibrary\SettingsMgr.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="UtilityLibrary.SettingsPathFileUserBase">
+    <Position X="16.5" Y="11" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>B:\Programming\VisualStudioProjects\UtilityLibrary\UtilityLibrary\SettingsMgr.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="UtilityLibrary.SettingsPathFileAppBase">
+    <Position X="22.25" Y="11" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>B:\Programming\VisualStudioProjects\UtilityLibrary\UtilityLibrary\SettingsMgr.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="AOTools.Settings.SettingsApp">
+    <Position X="22.25" Y="5.75" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Settings\SettingsApp.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="AOTools.Settings.SettingsUser">
+    <Position X="16.25" Y="5.75" Width="2.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAABAAAAAAgAAAAAAAAAAA=</HashCode>
+      <FileName>Settings\SettingsUser.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="AOTools.Settings.UserSettings">
+    <Position X="16.25" Y="8.25" Width="2.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAABAAAAAAAAAAAAAAQAAAAAAAAAAAAAAAAEAAA=</HashCode>
+      <FileName>Settings\SettingsUser.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="AOTools.Settings.SchemaDictionaryApp">
+    <Position X="5" Y="15.5" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABA=</HashCode>
+      <FileName>Settings\SchemaDictionary.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="AOTools.Settings.SchemaUnitApp">
+    <Position X="5.25" Y="9.75" Width="3" />
+    <TypeIdentifier>
+      <HashCode>AAAAAEIAAAAiAAAAAIQAAAAAAAAABAAAAAAIAAAABAA=</HashCode>
+      <FileName>Settings\SchemaBase.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="AOTools.Settings.SchemaUnitUsr">
+    <Position X="1.25" Y="9.75" Width="2.75" />
+    <Compartments>
+      <Compartment Name="Nested Types" Collapsed="false" />
+    </Compartments>
+    <TypeIdentifier>
+      <HashCode>AAAAAAIAAAAgAAAAAAAAAAAAAAAAgAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Settings\SchemaBase.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="AOTools.Settings.SchemaDictionaryUsr">
+    <Position X="2.25" Y="15.5" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABA=</HashCode>
+      <FileName>Settings\SchemaDictionary.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="AOTools.Settings.RevitSettingsBase">
+    <Position X="9" Y="8.75" Width="2.75" />
+    <TypeIdentifier>
+      <HashCode>AQAAAEQAAAAEAAwAAgAAAAAABAEQAAAAAIAEAkEAAAA=</HashCode>
+      <FileName>Settings\RevitSettingsBase.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="AOTools.Settings.RevitSettingsMgr">
+    <Position X="9" Y="5.75" Width="2.75" />
+    <TypeIdentifier>
+      <HashCode>AAQAAIAAAAAABAAAAAAQAAAgAAAQAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Settings\RevitSettingsMgr.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="AOTools.Settings.SchemaUnitUtil">
+    <Position X="2.25" Y="13" Width="2.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAQAAAAAAAAAAAAAgBAAAAAAAAAAAQAEAAAAA=</HashCode>
+      <FileName>Settings\SchemaBase.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Enum Name="AOTools.Settings.SchemaBoolOpts">
+    <Position X="8.75" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAACAAAAAQAAAAAAAAAAAAIAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Settings\SchemaUnitField.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="AOTools.Settings.SchemaUsrKey">
+    <Position X="12.25" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>CCAAAAAgAAAASEAAAAAACEABAgAAAAQAAAAGAAAAAEA=</HashCode>
+      <FileName>Settings\SchemaUnitField.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="AOTools.Settings.SchemaAppKey">
+    <Position X="10.5" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAgIAAAAAACAEAAAAACEAAAAAAAAAA=</HashCode>
+      <FileName>Settings\SchemaUnitField.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

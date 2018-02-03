@@ -18,13 +18,13 @@ namespace AOToolsVue.Settings
 {
 	public static class SettingsUser
 	{
-		public static readonly SettingsBase<UserSettings> USettings;
+		public static readonly SettingsMgr<UserSettings> USettings;
 
 		public static readonly UserSettings USet;
 
 		static SettingsUser()
 		{
-			USettings = new SettingsBase<UserSettings>();
+			USettings = new SettingsMgr<UserSettings>();
 			USet = USettings.Settings;
 			USet.Header = new Header(UserSettings.USERSETTINGFILEVERSION);
 		}

@@ -4,18 +4,10 @@ using System.Collections.Generic;
 using System.Reflection;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.DB.Events;
-using Autodesk.Revit.DB.ExtensibleStorage;
 using Autodesk.Revit.UI;
 using Autodesk.Revit.UI.Events;
 using Application = Autodesk.Revit.ApplicationServices.Application;
-
-using static AOTools.Settings.ExtensibleStorageMgr;
-using static AOTools.Util;
-
-using static AOTools.Settings.SettingsUser;
-
 using UtilityLibrary;
-using static AOTools.Settings.SettingsApp;
 using static UtilityLibrary.MessageUtilities;
 
 #endregion
