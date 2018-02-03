@@ -4,7 +4,7 @@ using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
 
-using static AOTools.Settings.RevitSettingsMgr;
+using static AOTools.AppSettings.RevitSettings.RevitSettingsMgr;
 
 #endregion
 

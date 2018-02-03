@@ -2,9 +2,11 @@
 
 using System.Collections.Generic;
 using System.Runtime.Serialization;
+using AOTools.AppSettings.RevitSettings;
+using AOTools.AppSettings.Schema;
+using AOTools.Settings;
 using UtilityLibrary;
 using Point = System.Drawing.Point;
-using static AOTools.Settings.RevitSettingsUnitUsr;
 
 #endregion
 
@@ -14,7 +16,7 @@ using static AOTools.Settings.RevitSettingsUnitUsr;
 
 // user settings - incomplete
 
-namespace AOTools.Settings
+namespace AOTools.AppSettings.Settings
 {
 	public static class SettingsMgrUsr
 	{
@@ -45,7 +47,7 @@ namespace AOTools.Settings
 		public bool MeasurePointsShowWorkplane = false;
 
 		[DataMember]
-		public List<SchemaDictionaryUsr> UnitStylesList = RsuUsr.RsuUsrSetg;
+		public List<SchemaDictionaryUsr> UnitStylesList = RevitSettingsUnitUsr.RsuUsr.RsuUsrSetg;
 		
 	}
 
