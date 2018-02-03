@@ -9,9 +9,11 @@ using static Autodesk.Revit.DB.ExtensibleStorage.Schema;
 using InvalidOperationException = Autodesk.Revit.Exceptions.InvalidOperationException;
 
 using static AOTools.AppSettings.RevitSettings.RevitSettingsUnitApp;
+using static AOTools.AppSettings.RevitSettings.RevitSettingsUnitUsr;
 using AOTools.Utility;
 
 using UtilityLibrary;
+using static UtilityLibrary.MessageUtilities;
 
 #endregion
 
@@ -47,7 +49,7 @@ namespace AOTools.AppSettings.RevitSettings
 					CreateUnitFields(sbld);
 
 				// all fields created and added
-				Autodesk.Revit.DB.ExtensibleStorage.Schema schema = sbld.Finish();
+				Schema schema = sbld.Finish();
 
 				Entity entity = new Entity(schema);
 
@@ -110,7 +112,7 @@ namespace AOTools.AppSettings.RevitSettings
 		}
 
 		// save the settings held in the 
-		private void SaveFieldValues<T>(Entity entity, Autodesk.Revit.DB.ExtensibleStorage.Schema schema,
+		private void SaveFieldValues<T>(Entity entity, Schema schema,
 			SchemaDictionaryBase<T> fieldList)
 		{
 			foreach (KeyValuePair<T, SchemaFieldUnit> kvp in fieldList)
@@ -129,7 +131,7 @@ namespace AOTools.AppSettings.RevitSettings
 			}
 		}
 
-		private void SaveUnitSettings(Entity entity, Autodesk.Revit.DB.ExtensibleStorage.Schema schema,
+		private void SaveUnitSettings(Entity entity, Schema schema,
 			Dictionary<string, string> subSchemaFields)
 		{
 			int j = 0;
@@ -140,7 +142,7 @@ namespace AOTools.AppSettings.RevitSettings
 				if (field == null || !field.IsValidObject) { continue; }
 
 				Entity subEntity =
-					MakeUnitSchema(kvp.Value, RevitSettingsUnitUsr.RsuUsr.RsuUsrSetg[j++]);
+					MakeUnitSchema(kvp.Value, RsuUsr.RsuUsrSetg[j++]);
 				entity.Set(field, subEntity);
 			}
 		}
@@ -170,12 +172,12 @@ namespace AOTools.AppSettings.RevitSettings
 		private Entity MakeUnitSchema(string guid,
 			SchemaDictionaryUsr usrSchemaFields)
 		{
-			SchemaBuilder sbld = CreateSchema(RevitSettingsUnitUsr.RsuUsr.UnitSchemaName,
-				RevitSettingsUnitUsr.RsuUsr.SchemaDesc, new Guid(guid));
+			SchemaBuilder sbld = CreateSchema(RsuUsr.UnitSchemaName,
+				RsuUsr.SchemaDesc, new Guid(guid));
 
 			MakeFields(sbld, usrSchemaFields);
 
-			Autodesk.Revit.DB.ExtensibleStorage.Schema schema = sbld.Finish();
+			Schema schema = sbld.Finish();
 
 			Entity entity = new Entity(schema);
 
@@ -189,11 +191,11 @@ namespace AOTools.AppSettings.RevitSettings
 		// ******************************
 
 		// does the schema exist
-		private bool SettingsExist(out Autodesk.Revit.DB.ExtensibleStorage.Schema schema, out Entity elemEntity)
+		private bool SettingsExist(out Schema schema, out Entity elemEntity)
 		{
 			elemEntity = null;
 
-			schema = Autodesk.Revit.DB.ExtensibleStorage.Schema.Lookup(RsuApp.SchemaGuid);
+			schema = Lookup(RsuApp.SchemaGuid);
 
 			if (schema == null ||
 				schema.IsValidObject == false) { return false; }
@@ -213,7 +215,7 @@ namespace AOTools.AppSettings.RevitSettings
 		// this will work with any field list
 		protected bool ReadAllRevitSettings()
 		{
-			Autodesk.Revit.DB.ExtensibleStorage.Schema schema;
+			Schema schema;
 			Entity elemEntity;
 
 			if (!SettingsExist(out schema, out elemEntity)) { return false; }
@@ -230,7 +232,7 @@ namespace AOTools.AppSettings.RevitSettings
 			return true;
 		}
 
-		private void ReadBasicRevitSettings(Entity elemEntity, Autodesk.Revit.DB.ExtensibleStorage.Schema schema)
+		private void ReadBasicRevitSettings(Entity elemEntity, Schema schema)
 		{
 			foreach (KeyValuePair<SchemaAppKey, SchemaFieldUnit> kvp in RsuApp.RsuAppSetg)
 			{
@@ -244,10 +246,10 @@ namespace AOTools.AppSettings.RevitSettings
 		// this reads through the basic fields associated with the unit style schema
 		// it passes these down to the readsubentity method that then reads
 		// through all of the fields in the subschema
-		private bool ReadRevitUnitStyles2(Entity elemEntity, Autodesk.Revit.DB.ExtensibleStorage.Schema schema)
+		private bool ReadRevitUnitStyles2(Entity elemEntity, Schema schema)
 		{
 			// adjust the list based on the actual size
-			RevitSettingsUnitUsr.RsuUsr.Resize(RsuApp.RsuAppSetg[SchemaAppKey.COUNT].Value);
+			RsuUsr.DefaultList(RsuApp.RsuAppSetg[SchemaAppKey.COUNT].Value);
 
 			for (int i = 0; i < RsuApp.RsuAppSetg[SchemaAppKey.COUNT].Value; i++)
 			{
@@ -260,7 +262,7 @@ namespace AOTools.AppSettings.RevitSettings
 
 				if (subSchema == null || !subSchema.IsValidObject) { continue; }
 
-				ReadSubSchema(subSchema, subSchema.Schema, RevitSettingsUnitUsr.RsuUsr.RsuUsrSetg[i]);
+				ReadSubSchema(subSchema, subSchema.Schema, RsuUsr.RsuUsrSetg[i]);
 			}
 
 			return true;
@@ -268,29 +270,34 @@ namespace AOTools.AppSettings.RevitSettings
 		// this reads through the basic fields associated with the unit style schema
 		// it passes these down to the readsubentity method that then reads
 		// through all of the fields in the subschema
-		private bool ReadRevitUnitStyles(Entity elemEntity, Autodesk.Revit.DB.ExtensibleStorage.Schema schema)
+		private bool ReadRevitUnitStyles(Entity elemEntity, Schema schema)
 		{
-			// adjust the list based on the actual size
-			RevitSettingsUnitUsr.RsuUsr.Resize(RsuApp.RsuAppSetg[SchemaAppKey.COUNT].Value);
+			// provide a default list to start with - this will be populated
+			// per the below
+			RsuUsr.Clear();
 
-			for (int i = 0; i < RsuApp.RsuAppSetg[SchemaAppKey.COUNT].Value; i++)
+			int i = 0;
+
+			foreach (Field f in schema.ListFields())
 			{
-				string subSchemaName = RsuApp.GetSubSchemaName(i);
+				if (f.SubSchema == null) { continue; }
 
-				Field field = schema.GetField(subSchemaName);
-				if (field == null || !field.IsValidObject) { continue; }
+				Field field = schema.GetField(f.FieldName);
+				if (field == null || !field.IsValidObject) { break; }
 
 				Entity subSchema = elemEntity.Get<Entity>(field);
+				if (subSchema == null || !subSchema.IsValidObject) { break; }
 
-				if (subSchema == null || !subSchema.IsValidObject) { continue; }
+				RsuUsr.RsuUsrSetg.Add(SchemaUnitUtil.CreateDefaultSchema(i));
 
-				ReadSubSchema(subSchema, subSchema.Schema, RevitSettingsUnitUsr.RsuUsr.RsuUsrSetg[i]);
+				ReadSubSchema(subSchema, subSchema.Schema, RsuUsr.RsuUsrSetg[i++]);
 			}
+
 
 			return true;
 		}
 
-		private void ReadSubSchema(Entity subSchemaEntity, Autodesk.Revit.DB.ExtensibleStorage.Schema schema,
+		private void ReadSubSchema(Entity subSchemaEntity, Schema schema,
 			SchemaDictionaryUsr usrSchemaField)
 		{
 			foreach (KeyValuePair<SchemaUsrKey, SchemaFieldUnit> kvp
@@ -318,17 +325,17 @@ namespace AOTools.AppSettings.RevitSettings
 			for (int i = 0; i < RsuApp.RsuAppSetg[SchemaAppKey.COUNT].Value; i++)
 			{
 				MessageUtilities.logMsgDbLn2("unit", "settings");
-				SchemaUnitUtil.ListFieldInfo(RevitSettingsUnitUsr.RsuUsr.RsuUsrSetg[i], count);
+				SchemaUnitUtil.ListFieldInfo(RsuUsr.RsuUsrSetg[i], count);
 				MessageUtilities.logMsg("");
 			}
 		}
 
 		public void ListRevitSchema()
 		{
-			IList<Autodesk.Revit.DB.ExtensibleStorage.Schema> schemas = Autodesk.Revit.DB.ExtensibleStorage.Schema.ListSchemas();
+			IList<Schema> schemas = ListSchemas();
 			MessageUtilities.logMsgDbLn2("number of schema found", schemas.Count.ToString());
 
-			foreach (Autodesk.Revit.DB.ExtensibleStorage.Schema schema in schemas)
+			foreach (Schema schema in schemas)
 			{
 				MessageUtilities.logMsgDbLn2("schema name", schema.SchemaName + "  guid| " + schema.GUID);
 			}

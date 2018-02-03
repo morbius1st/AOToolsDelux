@@ -44,7 +44,7 @@ namespace AOTools.AppSettings.SchemaSettings
 	// basic schema is only saved in the Revitfile
 	public class SchemaUnitApp
 	{
-		private const int DEFAULT_COUNT = 3;
+		
 		protected const string SCHEMA_NAME = "UnitStyleSettings";
 		protected const string SCHEMA_DESC = "unit style setings";
 
@@ -62,7 +62,7 @@ namespace AOTools.AppSettings.SchemaSettings
 				{
 					(SchemaAppKey.COUNT),
 					new SchemaFieldUnit(SchemaAppKey.COUNT, "Count",
-						"number of unit styles", DEFAULT_COUNT)
+						"number of unit styles", SchemaUnitUsr.DEFAULT_COUNT)
 				},
 
 				{
@@ -117,6 +117,8 @@ namespace AOTools.AppSettings.SchemaSettings
 	//	[DataContract]
 	public class SchemaUnitUsr 
 	{
+		public const int DEFAULT_COUNT = 3;
+
 		protected const string SCHEMA_NAME = "UnitStyleSchema";
 		protected const string SCHEMA_DESC = "unit style sub schema";
 
@@ -223,7 +225,7 @@ namespace AOTools.AppSettings.SchemaSettings
 			return SettingList;
 		}
 
-		private static SchemaDictionaryUsr CreateDefaultSchema(int itemNumber)
+		public static SchemaDictionaryUsr CreateDefaultSchema(int itemNumber)
 		{
 			SchemaDictionaryUsr def = SchemaUnitUsr.SchemaUnitUsrDefault.Clone();
 

@@ -4,6 +4,8 @@ using System;
 using System.Collections.Generic;
 using AOTools.AppSettings.SchemaSettings;
 using Autodesk.Revit.DB;
+using static AOTools.AppSettings.RevitSettings.RevitSettingsUnitApp;
+using static AOTools.AppSettings.SchemaSettings.SchemaUnitUtil;
 
 #endregion
 
@@ -58,7 +60,7 @@ namespace AOTools.AppSettings.RevitSettings
 
 		private RevitSettingsUnitUsr()
 		{
-			if (RevitSettingsUnitApp.RsuApp.Initalized == false)
+			if (RsuApp.Initalized == false)
 			{
 				throw new Exception("Basic Manager Must be Initalized First");
 			}
@@ -68,12 +70,17 @@ namespace AOTools.AppSettings.RevitSettings
 
 		public void Initalize()
 		{
-			RsuUsrSetg = SchemaUnitUtil.CreateDefaultSchemaList(RevitSettingsUnitApp.RsuApp.RsuAppSetg[SchemaAppKey.COUNT].Value);
+			RsuUsrSetg = CreateDefaultSchemaList(RsuApp.RsuAppSetg[SchemaAppKey.COUNT].Value);
 		}
 
-		public void Resize(int quantity)
+		public void DefaultList(int quantity)
 		{
-			RsuUsrSetg = SchemaUnitUtil.CreateDefaultSchemaList(quantity);
+			RsuUsrSetg = CreateDefaultSchemaList(quantity);
+		}
+
+		public void Clear()
+		{
+			RsuUsrSetg = new List<SchemaDictionaryUsr>(DEFAULT_COUNT);
 		}
 	}
 }
