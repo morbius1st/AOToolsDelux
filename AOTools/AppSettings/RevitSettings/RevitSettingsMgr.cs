@@ -19,7 +19,7 @@ namespace AOTools.Settings
 	internal class RevitSettingsMgr : RevitSettingsBase
 	{
 		public static readonly RevitSettingsMgr RsMgr = new RevitSettingsMgr();
-
+		
 		// ******************************
 		// read setting
 		// ******************************
