@@ -3,7 +3,7 @@
 using System.Collections.Generic;
 using System.Runtime.Serialization;
 using AOTools.AppSettings.RevitSettings;
-using AOTools.AppSettings.Schema;
+using AOTools.AppSettings.SchemaSettings;
 using UtilityLibrary;
 using Point = System.Drawing.Point;
 
@@ -14,7 +14,7 @@ using Point = System.Drawing.Point;
 // created:		1/3/2018 8:04:40 PM
 
 
-namespace AOTools.AppSettings.Settings
+namespace AOTools.AppSettings.ConfigSettings
 {
 	public static class SettingsMgrUsr
 	{

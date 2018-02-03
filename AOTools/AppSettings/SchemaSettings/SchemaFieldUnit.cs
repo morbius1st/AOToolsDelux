@@ -3,7 +3,7 @@ using AOTools.AppSettings.RevitSettings;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.DB.ExtensibleStorage;
 
-namespace AOTools.AppSettings.Schema
+namespace AOTools.AppSettings.SchemaSettings
 {
 	[DataContract]
 	public class SchemaFieldUnit

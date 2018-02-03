@@ -2,14 +2,13 @@
 
 using System;
 using System.Collections.Generic;
-
+using AOTools.AppSettings.SchemaSettings;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.DB.ExtensibleStorage;
 using static Autodesk.Revit.DB.ExtensibleStorage.Schema;
 using InvalidOperationException = Autodesk.Revit.Exceptions.InvalidOperationException;
 
 using static AOTools.AppSettings.RevitSettings.RevitSettingsUnitApp;
-using AOTools.AppSettings.Schema;
 using AOTools.Utility;
 
 using UtilityLibrary;

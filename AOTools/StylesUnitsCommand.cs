@@ -2,13 +2,13 @@
 
 using AOTools.AppSettings;
 using AOTools.AppSettings.RevitSettings;
-using AOTools.AppSettings.Schema;
+using AOTools.AppSettings.SchemaSettings;
 using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
-using static AOTools.AppSettings.Settings.SettingsMgrUsr;
-using static AOTools.AppSettings.Schema.SchemaAppKey;
-using static AOTools.AppSettings.Schema.SchemaUsrKey;
+using static AOTools.AppSettings.ConfigSettings.SettingsMgrUsr;
+using static AOTools.AppSettings.SchemaSettings.SchemaAppKey;
+using static AOTools.AppSettings.SchemaSettings.SchemaUsrKey;
 using static AOTools.AppSettings.RevitSettings.RevitSettingsMgr;
 using static AOTools.AppSettings.RevitSettings.RevitSettingsUnitUsr;
 using static AOTools.AppSettings.RevitSettings.RevitSettingsUnitApp;

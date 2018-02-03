@@ -16,7 +16,7 @@ using UtilityLibrary;
 // created:		1/14/2018 4:28:23 PM
 
 
-namespace AOTools.AppSettings.Schema
+namespace AOTools.AppSettings.SchemaSettings
 {
 	// master schema
 	//  field 0 = version

@@ -106,16 +106,16 @@
     </Compile>
     <Compile Include="AppSettings\RevitSettings\RevitSettingsBase.cs" />
     <Compile Include="AppSettings\RevitSettings\RevitSettingsMgr.cs" />
-    <Compile Include="AppSettings\Schema\SchemaDictionary.cs" />
-    <Compile Include="AppSettings\Schema\SchemaFieldUnit.cs" />
-    <Compile Include="AppSettings\Schema\SchemaBase.cs" />
+    <Compile Include="AppSettings\SchemaSettings\SchemaDictionary.cs" />
+    <Compile Include="AppSettings\SchemaSettings\SchemaFieldUnit.cs" />
+    <Compile Include="AppSettings\SchemaSettings\SchemaBase.cs" />
     <Compile Include="AppSettings\RevitSettings\RevitSettingsUnit.cs" />
     <Compile Include="StylesUnitsCommand.cs" />
     <Compile Include="ToggleAnnotationVisibility.cs" />
     <Compile Include="ToggleRefPlane.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="AppSettings\Settings\SettingsMgrApp.cs" />
-    <Compile Include="AppSettings\Settings\SettingsMgrUsr.cs" />
+    <Compile Include="AppSettings\ConfigSettings\SettingsMgrApp.cs" />
+    <Compile Include="AppSettings\ConfigSettings\SettingsMgrUsr.cs" />
     <Compile Include="Utility\Util.cs" />
     <Compile Include="Utility\AddinClasses.cs" />
   </ItemGroup>

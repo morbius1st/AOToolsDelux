@@ -4,14 +4,14 @@ using System.Runtime.Serialization;
 using static AOTools.AppSettings.RevitSettings.RevitSettingsUnitApp;
 #endregion
 
-using AOTools.AppSettings.Schema;
+using AOTools.AppSettings.SchemaSettings;
 using UtilityLibrary;
 
 // itemname:	SettingsFileApp
 // username:	jeffs
 // created:		1/3/2018 8:05:02 PM
 
-namespace AOTools.AppSettings.Settings
+namespace AOTools.AppSettings.ConfigSettings
 {
 	// no app settings yet.
 	public static class SettingsMgrApp

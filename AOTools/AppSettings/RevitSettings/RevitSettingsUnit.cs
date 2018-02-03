@@ -2,7 +2,7 @@
 
 using System;
 using System.Collections.Generic;
-using AOTools.AppSettings.Schema;
+using AOTools.AppSettings.SchemaSettings;
 using Autodesk.Revit.DB;
 
 #endregion
