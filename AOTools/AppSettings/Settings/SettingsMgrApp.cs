@@ -1,5 +1,5 @@
 ﻿#region Using directives
-using static AOTools.AppSettings.RevitSettings.RevitSettingsUnitApp;
+using static AOTools.Settings.RevitSettingsUnitApp;
 #endregion
 
 // itemname:	SettingsFileApp
@@ -8,13 +8,9 @@ using static AOTools.AppSettings.RevitSettings.RevitSettingsUnitApp;
 
 
 using System.Runtime.Serialization;
-using AOTools.AppSettings.Schema;
 using UtilityLibrary;
 
-// app settings (generic)
-
-
-namespace AOTools.AppSettings.Settings
+namespace AOTools.Settings
 {
 	// no app settings yet.
 	public static class SettingsMgrApp

@@ -1,9 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Runtime.Serialization;
 
-// contains the sub-classed dictionaries
-
-namespace AOTools.AppSettings.Schema
+namespace AOTools.Settings
 {
 	[CollectionDataContract(Name = "SchemaFields", KeyName = "OrderKey", 
 		ValueName = "SchemaField", ItemName = "SchemaFieldItem")]

@@ -14,7 +14,6 @@ using Point = System.Drawing.Point;
 // username:	jeffs
 // created:		1/3/2018 8:04:40 PM
 
-// user settings - incomplete
 
 namespace AOTools.AppSettings.Settings
 {

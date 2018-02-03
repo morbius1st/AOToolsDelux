@@ -17,7 +17,6 @@ namespace AOTools.AppSettings.RevitSettings
 {
 	public class RevitSettingsUnitApp : SchemaUnitApp
 	{
-		// scheme description info
 		public string SchemaName => SCHEMA_NAME;
 		public string SchemaDesc => SCHEMA_DESC;
 		public Guid SchemaGuid => Schemaguid;
