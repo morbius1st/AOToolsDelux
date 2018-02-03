@@ -33,7 +33,7 @@ namespace AOTools
 		{
 			output = outputLocation.debug;
 
-			test101();
+			test0();
 
 			return Result.Succeeded;
 		}
