@@ -58,12 +58,12 @@ namespace AOTools.AppSettings.SchemaSettings
 					new SchemaFieldUnit(SchemaAppKey.CURRENT, "CurrentUnitStyle",
 						"number of the current style", 0)
 				},
-
-				{
-					(SchemaAppKey.COUNT),
-					new SchemaFieldUnit(SchemaAppKey.COUNT, "Count",
-						"number of unit styles", SchemaUnitUsr.DEFAULT_COUNT)
-				},
+//
+//				{
+//					(SchemaAppKey.COUNT),
+//					new SchemaFieldUnit(SchemaAppKey.COUNT, "Count",
+//						"number of unit styles", SchemaUnitUsr.DEFAULT_COUNT)
+//				},
 
 				{
 					(SchemaAppKey.USE_OFFICE),

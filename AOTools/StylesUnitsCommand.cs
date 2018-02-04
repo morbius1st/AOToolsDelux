@@ -27,13 +27,13 @@ namespace AOTools
 	[Transaction(TransactionMode.Manual)]
 	class StylesUnitsCommand : IExternalCommand
 	{
-		private const int testVal = 30;
+		private const int testVal = 25;
 
 		public Result Execute(ExternalCommandData commandData, ref string message, ElementSet elements)
 		{
 			output = outputLocation.debug;
 
-			test0();
+			test1();
 
 			return Result.Succeeded;
 		}
@@ -111,8 +111,6 @@ namespace AOTools
 			// first read and display the current settings
 			RsMgr.Read();
 
-			int a = RsuApp.RsuAppSetg[COUNT].Value;
-
 			logMsg("");
 			logMsgDbLn2("revit settings", "before");
 			RevitSettingsBase.ListRevitSettingInfo();
@@ -122,9 +120,11 @@ namespace AOTools
 
 			RsuApp.RsuAppSetg[AUTO_RESTORE].Value = (testVal / 10) % 2 == 0;
 
-			for (int i = 0; i < RsuApp.RsuAppSetg[COUNT].Value; i++)
+			int i = 0;
+
+			foreach (SchemaDictionaryUsr unitStyle in RsuUsr.RsuUsrSetg)
 			{
-				RsuUsr.RsuUsrSetg[i][VERSION_UNIT].Value = "sub version " + (testVal + i + 1);
+				unitStyle[VERSION_UNIT].Value = "sub version " + (testVal + i++ + 1);
 			}
 
 			RsMgr.Reset();

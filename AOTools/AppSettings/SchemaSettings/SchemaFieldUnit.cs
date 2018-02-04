@@ -129,7 +129,7 @@ namespace AOTools.AppSettings.SchemaSettings
 		VERSION_BASIC = 0,
 		USE_OFFICE = 1, 
 		AUTO_RESTORE = 2, 
-		COUNT = 3, 
+//		COUNT = 3, 
 		CURRENT = 4
 	}
 }

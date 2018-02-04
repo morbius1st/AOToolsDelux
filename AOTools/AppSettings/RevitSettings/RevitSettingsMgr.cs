@@ -1,8 +1,13 @@
 ﻿#region Using directives
 
 using System.Collections.Generic;
-using AOTools.AppSettings.SchemaSettings;
 using Autodesk.Revit.DB;
+using Autodesk.Revit.DB.ExtensibleStorage;
+using static Autodesk.Revit.DB.ExtensibleStorage.Schema;
+
+using AOTools.AppSettings.SchemaSettings;
+using static AOTools.AppSettings.RevitSettings.RevitSettingsUnitApp;
+using static AOTools.AppSettings.RevitSettings.RevitSettingsUnitUsr;
 
 #endregion
 
@@ -47,10 +52,10 @@ namespace AOTools.AppSettings.RevitSettings
 			if (AppRibbon.App.Documents.Size != 1) { return false;}
 
 			// allocate subSchema and make sure not null
-			List<Autodesk.Revit.DB.ExtensibleStorage.Schema> subSchema = 
-				new List<Autodesk.Revit.DB.ExtensibleStorage.Schema>(RevitSettingsUnitApp.RsuApp.DefAppSchema[SchemaAppKey.COUNT].Value);
+			List<Schema> subSchema = 
+				new List<Schema>(RsuUsr.Count);
 
-			Autodesk.Revit.DB.ExtensibleStorage.Schema schema = Autodesk.Revit.DB.ExtensibleStorage.Schema.Lookup(RevitSettingsUnitApp.RsuApp.SchemaGuid);
+			Schema schema = Lookup(RsuApp.SchemaGuid);
 
 			if (schema != null)
 			{
@@ -60,13 +65,13 @@ namespace AOTools.AppSettings.RevitSettings
 				
 					if (ReadAllRevitSettings() && subSchema.Count > 0)
 					{
-						for (int i = 0; i < RevitSettingsUnitApp.RsuApp.RsuAppSetg[SchemaAppKey.COUNT].Value; i++)
+						for (int i = 0; i < RsuUsr.Count; i++)
 						{
-							Autodesk.Revit.DB.ExtensibleStorage.Schema.EraseSchemaAndAllEntities(subSchema[i], false);
+							EraseSchemaAndAllEntities(subSchema[i], false);
 							subSchema[i].Dispose();
 						}
 					}
-					Autodesk.Revit.DB.ExtensibleStorage.Schema.EraseSchemaAndAllEntities(schema, false);
+					EraseSchemaAndAllEntities(schema, false);
 					t.Commit();
 
 				}

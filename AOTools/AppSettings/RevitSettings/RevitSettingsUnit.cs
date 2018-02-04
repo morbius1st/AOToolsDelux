@@ -70,7 +70,7 @@ namespace AOTools.AppSettings.RevitSettings
 
 		public void Initalize()
 		{
-			RsuUsrSetg = CreateDefaultSchemaList(RsuApp.RsuAppSetg[SchemaAppKey.COUNT].Value);
+			RsuUsrSetg = CreateDefaultSchemaList(DEFAULT_COUNT);
 		}
 
 		public void DefaultList(int quantity)
@@ -82,5 +82,7 @@ namespace AOTools.AppSettings.RevitSettings
 		{
 			RsuUsrSetg = new List<SchemaDictionaryUsr>(DEFAULT_COUNT);
 		}
+
+		public int Count => RsuUsrSetg.Count;
 	}
 }
