@@ -193,15 +193,25 @@ namespace AOTools.AppSettings.RevitSettings
 		// read setting routines
 		// ******************************
 
+		// return true if the app schema exists
+		// and is good
+		protected bool AppSchemaExist(out Schema schema)
+		{
+			schema = Lookup(RsuApp.SchemaGuid);
+
+			return schema != null && schema.IsValidObject;
+		}
+
 		// does the schema exist
-		private bool SettingsExist(out Schema schema, out Entity elemEntity)
+		protected bool GetAppSchemaAndElement(out Schema schema, out Entity elemEntity)
 		{
 			elemEntity = null;
 
-			schema = Lookup(RsuApp.SchemaGuid);
+			if (!AppSchemaExist(out schema)) { return false; }
 
-			if (schema == null ||
-				schema.IsValidObject == false) { return false; }
+			//			schema = Lookup(RsuApp.SchemaGuid);
+			//			if (schema == null ||
+			//				schema.IsValidObject == false) { return false; }
 
 			Element elem = Util.GetProjectBasepoint();
 
@@ -221,9 +231,9 @@ namespace AOTools.AppSettings.RevitSettings
 			Schema schema;
 			Entity elemEntity;
 
-			if (!SettingsExist(out schema, out elemEntity)) { return false; }
+			if (!GetAppSchemaAndElement(out schema, out elemEntity)) { return false; }
 
-			ReadBasicRevitSettings(elemEntity, schema);
+			ReadRevitAppSettings(elemEntity, schema);
 
 			if (!ReadRevitUnitStyles(elemEntity, schema))
 			{
@@ -235,7 +245,8 @@ namespace AOTools.AppSettings.RevitSettings
 			return true;
 		}
 
-		private void ReadBasicRevitSettings(Entity elemEntity, Schema schema)
+		// read and store the revit app settings
+		private void ReadRevitAppSettings(Entity elemEntity, Schema schema)
 		{
 			foreach (KeyValuePair<SchemaAppKey, SchemaFieldUnit> kvp in RsuApp.RsuAppSetg)
 			{
@@ -249,6 +260,7 @@ namespace AOTools.AppSettings.RevitSettings
 		// this reads through the fields associated with the unit style schema
 		// it passes these down to the readsubentity method that then reads
 		// through all of the fields in the subschema
+		// currently always returns true
 		private bool ReadRevitUnitStyles(Entity elemEntity, Schema schema)
 		{
 			// provide a default list to start with - this will be populated
@@ -271,8 +283,6 @@ namespace AOTools.AppSettings.RevitSettings
 
 				ReadSubSchema(subSchema, subSchema.Schema, RsuUsr.RsuUsrSetg[i++]);
 			}
-
-
 			return true;
 		}
 

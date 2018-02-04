@@ -1,5 +1,6 @@
 ﻿#region Using directives
 
+using System;
 using System.Collections.Generic;
 using System.Runtime.Serialization;
 using AOTools.AppSettings.RevitSettings;
@@ -20,13 +21,37 @@ namespace AOTools.AppSettings.ConfigSettings
 	{
 		public static readonly SettingsMgr<SettingsUsr> SmUsrSetg;
 
-		public static readonly SettingsUsr SmUsr;
+		private static SettingsUsr smUsr;
+
+		public static SettingsUsr SmUsr {
+			get
+			{
+				if (smUsr == null) { Initalize(); }
+				return smUsr;
+			}
+		}
 
 		static SettingsMgrUsr()
 		{
 			SmUsrSetg = new SettingsMgr<SettingsUsr>();
-			SmUsr = SmUsrSetg.Settings;
-			SmUsr.Header = new Header(SettingsUsr.USERSETTINGFILEVERSION);
+			Initalize();
+//			SmUsr = SmUsrSetg.Settings;
+//			SmUsr.Header = new Header(SettingsUsr.USERSETTINGFILEVERSION);
+		}
+
+		private static void Initalize()
+		{
+			try
+			{
+				smUsr = SmUsrSetg.Settings;
+				smUsr.Header = new Header(SettingsUsr.USERSETTINGFILEVERSION);
+
+			}
+			catch
+			{
+				smUsr = null;
+				throw;
+			}
 		}
 	}
 

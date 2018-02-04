@@ -89,7 +89,7 @@
       <Link>AppSettings\Settings\SettingsMgr.cs</Link>
     </Compile>
     <Compile Include="AppRibbon.cs" />
-    <Compile Include="DeleteUnitStyles.cs" />
+    <Compile Include="UnitStylesDelete.cs" />
     <Compile Include="DxMeasure.cs" />
     <Compile Include="Utility\Extensions.cs" />
     <Compile Include="FormMeasurePoints.cs">
@@ -110,7 +110,7 @@
     <Compile Include="AppSettings\SchemaSettings\SchemaFieldUnit.cs" />
     <Compile Include="AppSettings\SchemaSettings\SchemaBase.cs" />
     <Compile Include="AppSettings\RevitSettings\RevitSettingsUnit.cs" />
-    <Compile Include="StylesUnitsCommand.cs" />
+    <Compile Include="UnitStylesCommand.cs" />
     <Compile Include="ToggleAnnotationVisibility.cs" />
     <Compile Include="ToggleRefPlane.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

@@ -1,6 +1,8 @@
 ﻿#region Using directives
 
+using System;
 using AOTools.AppSettings;
+using AOTools.AppSettings.ConfigSettings;
 using AOTools.AppSettings.RevitSettings;
 using AOTools.AppSettings.SchemaSettings;
 using Autodesk.Revit.Attributes;
@@ -17,7 +19,7 @@ using static UtilityLibrary.MessageUtilities;
 
 #endregion
 
-// itemname:	StylesUnitsCommand
+// itemname:	UnitStylesCommand
 // username:	jeffs
 // created:		1/6/2018 3:55:08 PM
 
@@ -25,7 +27,7 @@ using static UtilityLibrary.MessageUtilities;
 namespace AOTools
 {
 	[Transaction(TransactionMode.Manual)]
-	class StylesUnitsCommand : IExternalCommand
+	class UnitStylesCommand : IExternalCommand
 	{
 		private const int testVal = 25;
 
@@ -33,7 +35,7 @@ namespace AOTools
 		{
 			output = outputLocation.debug;
 
-			test1();
+			test101();
 
 			return Result.Succeeded;
 		}
@@ -44,6 +46,9 @@ namespace AOTools
 			logMsgDbLn2("Settings", "before");
 			logMsg("");
 			logMsgDbLn2("user Settings", "before");
+
+			SettingsUsr x = SmUsr;
+
 			SchemaUnitUtil.ListUnitDictionary(SmUsr.UnitStylesList,4);
 			logMsg("");
 			logMsgDbLn2("revit Settings", "before");

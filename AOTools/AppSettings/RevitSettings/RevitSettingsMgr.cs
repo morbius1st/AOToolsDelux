@@ -8,6 +8,7 @@ using static Autodesk.Revit.DB.ExtensibleStorage.Schema;
 using AOTools.AppSettings.SchemaSettings;
 using static AOTools.AppSettings.RevitSettings.RevitSettingsUnitApp;
 using static AOTools.AppSettings.RevitSettings.RevitSettingsUnitUsr;
+using static AOTools.AppSettings.RevitSettings.RevitSettingsMgr.RevitSettingDeleteReturnCode;
 
 #endregion
 
@@ -47,39 +48,112 @@ namespace AOTools.AppSettings.RevitSettings
 		// delete schema from revit document
 		// ******************************
 		// delete thecurrent schema from the current model only
-		public bool DeleteSchema()
+//		public bool DeleteSchema2()
+//		{
+//			if (AppRibbon.App.Documents.Size != 1) { return false;}
+//
+//			// allocate subSchema and make sure not null
+//			List<Schema> subSchema = 
+//				new List<Schema>(RsuUsr.Count);
+//
+//			Schema schema = Lookup(RsuApp.SchemaGuid);
+//
+//			if (schema != null)
+//			{
+//				using (Transaction t = new Transaction(AppRibbon.Doc, "Delete old schema"))
+//				{
+//					t.Start();
+//				
+//					if (ReadAllRevitSettings() && subSchema.Count > 0)
+//					{
+//						for (int i = 0; i < RsuUsr.Count; i++)
+//						{
+//							EraseSchemaAndAllEntities(subSchema[i], false);
+//							subSchema[i].Dispose();
+//						}
+//					}
+//					EraseSchemaAndAllEntities(schema, false);
+//					t.Commit();
+//
+//				}
+//				schema.Dispose();
+//			}
+//
+//			return true;
+//		}
+
+		public enum RevitSettingDeleteReturnCode
 		{
-			if (AppRibbon.App.Documents.Size != 1) { return false;}
+			DELETE_SETTINGS_WORKED = 0,
+			TOO_MANY_DOCUMENTS = -1,
+			EXISTING_SCHEMA_NOT_FOUND = -2
+		}
 
-			// allocate subSchema and make sure not null
-			List<Schema> subSchema = 
-				new List<Schema>(RsuUsr.Count);
+		// delete thecurrent schema from the current model only
+		public RevitSettingDeleteReturnCode DeleteSchema()
+		{
+			// must be only one active document
+			if (AppRibbon.App.Documents.Size != 1) { return TOO_MANY_DOCUMENTS; }
 
-			Schema schema = Lookup(RsuApp.SchemaGuid);
+			List<Schema> schemas = GetSchemas();
 
-			if (schema != null)
+			if (schemas == null) { return EXISTING_SCHEMA_NOT_FOUND; }
+
+			using (Transaction t = new Transaction(AppRibbon.Doc, "Delete Unit Styles"))
 			{
-				using (Transaction t = new Transaction(AppRibbon.Doc, "Delete old schema"))
-				{
-					t.Start();
-				
-					if (ReadAllRevitSettings() && subSchema.Count > 0)
-					{
-						for (int i = 0; i < RsuUsr.Count; i++)
-						{
-							EraseSchemaAndAllEntities(subSchema[i], false);
-							subSchema[i].Dispose();
-						}
-					}
-					EraseSchemaAndAllEntities(schema, false);
-					t.Commit();
+				t.Start();
 
+				// remove the sub-schema's first
+				if (schemas.Count > 1)
+				{
+					for (int i = 1; i < schemas.Count; i++)
+					{ 
+						EraseSchemaAndAllEntities(schemas[i], false);
+						schemas[i].Dispose();
+					}
 				}
-				schema.Dispose();
+				// remove the root schema laast
+				EraseSchemaAndAllEntities(schemas[0], false);
+				schemas[0].Dispose();
+
+				t.Commit();
 			}
 
-			return true;
+			return DELETE_SETTINGS_WORKED;
 		}
+
+		private List<Schema> GetSchemas()
+		{
+			Schema schema;
+			Entity elemEntity;
+
+			if (!GetAppSchemaAndElement(out schema, out elemEntity)) { return null; }
+
+			return GetSubSchemas(elemEntity, schema);
+		}
+
+		private List<Schema> GetSubSchemas(Entity elemEntity, Schema schema)
+		{
+			List <Schema> schemaList = new List<Schema>(4);
+
+			// make the root schema element 0;
+			schemaList.Add(schema);
+
+			foreach (Field f in schema.ListFields())
+			{
+				if (f.SubSchema == null) { continue; }
+
+				Field field = schema.GetField(f.FieldName);
+				if (field == null || !field.IsValidObject) { break; }
+
+				Entity subSchema = elemEntity.Get<Entity>(field);
+				if (subSchema == null || !subSchema.IsValidObject) { break; }
+
+				schemaList.Add(subSchema.Schema);
+			}
+			return schemaList;
+		}
+
 
 		// ******************************
 		// update settings

@@ -8,7 +8,7 @@ using static AOTools.AppSettings.RevitSettings.RevitSettingsMgr;
 
 #endregion
 
-// itemname:	DeleteUnitStyles
+// itemname:	UnitStylesDelete
 // username:	jeffs
 // created:		1/14/2018 7:19:43 PM
 
@@ -16,7 +16,7 @@ using static AOTools.AppSettings.RevitSettings.RevitSettingsMgr;
 namespace AOTools
 {
 	[Transaction(TransactionMode.Manual)]
-	class DeleteUnitStyles : IExternalCommand
+	class UnitStylesDelete : IExternalCommand
 	{
 		public Result Execute(ExternalCommandData commandData, ref string message, ElementSet elements)
 		{

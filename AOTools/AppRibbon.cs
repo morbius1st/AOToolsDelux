@@ -98,7 +98,7 @@ namespace AOTools
 				if (!AddPushButton(m_RibbonPanel, "UnitStyles", BUTTON_NAME1,
 					"information16.png",
 					"information32.png",
-					Assembly.GetExecutingAssembly().Location, "AOTools.StylesUnitsCommand", 
+					Assembly.GetExecutingAssembly().Location, "AOTools.UnitStylesCommand", 
 						"Create and Modify Unit Styles"))
 
 				{
@@ -113,10 +113,10 @@ namespace AOTools
 				}
 
 				// create a button for the 'copy sheet' command
-				if (!AddPushButton(m_RibbonPanel, "DeleteUnitStyles", BUTTON_NAME2,
+				if (!AddPushButton(m_RibbonPanel, "UnitStylesDelete", BUTTON_NAME2,
 					"information16.png",
 					"information32.png",
-					Assembly.GetExecutingAssembly().Location, "AOTools.DeleteUnitStyles",
+					Assembly.GetExecutingAssembly().Location, "AOTools.UnitStylesDelete",
 						"Create and Modify Unit Styles"))
 
 				{
@@ -129,7 +129,7 @@ namespace AOTools
 					return Result.Failed;
 				}
 
-				//DeleteUnitStyles
+				//UnitStylesDelete
 
 				return Result.Succeeded;
 			}
