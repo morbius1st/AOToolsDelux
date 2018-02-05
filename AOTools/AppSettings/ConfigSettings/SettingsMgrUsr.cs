@@ -17,47 +17,29 @@ using Point = System.Drawing.Point;
 
 namespace AOTools.AppSettings.ConfigSettings
 {
+	[DataContract]
 	public static class SettingsMgrUsr
 	{
-		public static readonly SettingsMgr<SettingsUsr> SmUsrSetg;
+		public static SettingsMgr<SettingsUsr> SmUsrMgr { get; private set; }
 
-		private static SettingsUsr smUsr;
+		public static SettingsUsr SmUsrSetg { get; private set; }
 
-		public static SettingsUsr SmUsr {
-			get
-			{
-				if (smUsr == null) { Initalize(); }
-				return smUsr;
-			}
+		public static void SmUsrInit()
+		{
+			SmUsrMgr = new SettingsMgr<SettingsUsr>();
+			SmUsrSetg = SmUsrMgr.Settings;
+			SmUsrSetg.Header = new Header(SettingsUsr.USERSETTINGFILEVERSION);
 		}
 
-		static SettingsMgrUsr()
+		public static bool IsValid()
 		{
-			SmUsrSetg = new SettingsMgr<SettingsUsr>();
-			Initalize();
-//			SmUsr = SmUsrSetg.Settings;
-//			SmUsr.Header = new Header(SettingsUsr.USERSETTINGFILEVERSION);
-		}
-
-		private static void Initalize()
-		{
-			try
-			{
-				smUsr = SmUsrSetg.Settings;
-				smUsr.Header = new Header(SettingsUsr.USERSETTINGFILEVERSION);
-
-			}
-			catch
-			{
-				smUsr = null;
-				throw;
-			}
+			return SmUsrMgr != null;
 		}
 	}
 
 
 	// sample Settings User
-	[DataContract]
+	[DataContract(Namespace = "")]
 	public class SettingsUsr : SettingsPathFileUserBase
 	{
 		public int Count => UnitStylesList.Count;

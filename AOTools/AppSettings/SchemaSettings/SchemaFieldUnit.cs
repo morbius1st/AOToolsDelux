@@ -5,7 +5,7 @@ using Autodesk.Revit.DB.ExtensibleStorage;
 
 namespace AOTools.AppSettings.SchemaSettings
 {
-	[DataContract]
+	[DataContract(Namespace = "")]
 	public class SchemaFieldUnit
 	{
 		[DataMember(Order = 1)]

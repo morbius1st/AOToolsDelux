@@ -47,40 +47,6 @@ namespace AOTools.AppSettings.RevitSettings
 		// ******************************
 		// delete schema from revit document
 		// ******************************
-		// delete thecurrent schema from the current model only
-//		public bool DeleteSchema2()
-//		{
-//			if (AppRibbon.App.Documents.Size != 1) { return false;}
-//
-//			// allocate subSchema and make sure not null
-//			List<Schema> subSchema = 
-//				new List<Schema>(RsuUsr.Count);
-//
-//			Schema schema = Lookup(RsuApp.SchemaGuid);
-//
-//			if (schema != null)
-//			{
-//				using (Transaction t = new Transaction(AppRibbon.Doc, "Delete old schema"))
-//				{
-//					t.Start();
-//				
-//					if (ReadAllRevitSettings() && subSchema.Count > 0)
-//					{
-//						for (int i = 0; i < RsuUsr.Count; i++)
-//						{
-//							EraseSchemaAndAllEntities(subSchema[i], false);
-//							subSchema[i].Dispose();
-//						}
-//					}
-//					EraseSchemaAndAllEntities(schema, false);
-//					t.Commit();
-//
-//				}
-//				schema.Dispose();
-//			}
-//
-//			return true;
-//		}
 
 		public enum RevitSettingDeleteReturnCode
 		{

@@ -29,13 +29,15 @@ namespace AOTools
 	[Transaction(TransactionMode.Manual)]
 	class UnitStylesCommand : IExternalCommand
 	{
-		private const int testVal = 25;
+		private const int testVal = 31;
 
 		public Result Execute(ExternalCommandData commandData, ref string message, ElementSet elements)
 		{
+			SmUsrInit();
+
 			output = outputLocation.debug;
 
-			test101();
+			test21();
 
 			return Result.Succeeded;
 		}
@@ -46,10 +48,7 @@ namespace AOTools
 			logMsgDbLn2("Settings", "before");
 			logMsg("");
 			logMsgDbLn2("user Settings", "before");
-
-			SettingsUsr x = SmUsr;
-
-			SchemaUnitUtil.ListUnitDictionary(SmUsr.UnitStylesList,4);
+			SchemaUnitUtil.ListUnitDictionary(SmUsrSetg.UnitStylesList,4);
 			logMsg("");
 			logMsgDbLn2("revit Settings", "before");
 			RevitSettingsBase.ListRevitSettingInfo(4);
@@ -66,27 +65,29 @@ namespace AOTools
 			logMsgDbLn2("unit type", u.ToString());
 		}
 
-		// test user settings
+		// test user settings 
+		// read and list current values
+		// change the names of the current unit styles
 		private void test21()
 		{
 			logMsg("");
 			logMsgDbLn2("user settings file", "before");
 			logMsg("");
-			SchemaUnitUtil.ListUnitDictionary(SmUsr.UnitStylesList, 4);
+			SchemaUnitUtil.ListUnitDictionary(SmUsrSetg.UnitStylesList, 4);
 
-			SmUsr.FormMeasurePointsLocation = new System.Drawing.Point(100, 100);
-			SmUsr.MeasurePointsShowWorkplane = true;
+			SmUsrSetg.FormMeasurePointsLocation = new System.Drawing.Point(100, 100);
+			SmUsrSetg.MeasurePointsShowWorkplane = true;
 
-			for (int i = 0; i < SmUsr.Count; i++)
+			for (int i = 0; i < SmUsrSetg.Count; i++)
 			{
-				SmUsr.UnitStylesList[i][STYLE_NAME].Value = "Revised Style Name " + i;
+				SmUsrSetg.UnitStylesList[i][STYLE_NAME].Value = "Revised Style Name " + i;
 			}
 
-			SmUsrSetg.Save();
+			SmUsrMgr.Save();
 
 			logMsgDbLn2("user settings file", "after");
 			logMsg("");
-			SchemaUnitUtil.ListUnitDictionary(SmUsr.UnitStylesList, 4);
+			SchemaUnitUtil.ListUnitDictionary(SmUsrSetg.UnitStylesList, 4);
 		}
 
 		// test update settings

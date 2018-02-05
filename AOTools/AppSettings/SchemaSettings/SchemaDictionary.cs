@@ -3,8 +3,8 @@ using System.Runtime.Serialization;
 
 namespace AOTools.AppSettings.SchemaSettings
 {
-	[CollectionDataContract(Name = "SchemaFields", KeyName = "OrderKey", 
-		ValueName = "SchemaField", ItemName = "SchemaFieldItem")]
+//	[CollectionDataContract(Name = "SchemaFields", KeyName = "OrderKey", 
+//		ValueName = "SchemaField", ItemName = "SchemaFieldItem")]
 	public class SchemaDictionaryBase<T> : Dictionary<T, SchemaFieldUnit> 
 	{
 		public SchemaDictionaryBase() { }
@@ -23,8 +23,9 @@ namespace AOTools.AppSettings.SchemaSettings
 		}
 	}
 
-	[CollectionDataContract(Name = "SchemaFields", KeyName = "OrderKey",
-		ValueName = "SchemaField", ItemName = "SchemaFieldItem")]
+	[CollectionDataContract(Name = "AppData", KeyName = "OrderKey",
+		ValueName = "SchemaField", ItemName = "SchemaFieldItem", 
+		Namespace = "")]
 	public class SchemaDictionaryApp : SchemaDictionaryBase<SchemaAppKey>
 	{
 		public SchemaDictionaryApp() { }
@@ -35,8 +36,9 @@ namespace AOTools.AppSettings.SchemaSettings
 		}
 	}
 
-	[CollectionDataContract(Name = "SchemaFields", KeyName = "OrderKey",
-		ValueName = "SchemaField", ItemName = "SchemaFieldItem")]
+	[CollectionDataContract(Name = "UnitStyle", KeyName = "OrderKey",
+		ValueName = "SchemaField", ItemName = "SchemaFieldItem", 
+		Namespace = "")]
 	public class SchemaDictionaryUsr : SchemaDictionaryBase<SchemaUsrKey>
 	{
 		public SchemaDictionaryUsr() { }

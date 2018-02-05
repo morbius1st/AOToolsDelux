@@ -16,27 +16,32 @@ namespace AOTools.AppSettings.ConfigSettings
 	// no app settings yet.
 	public static class SettingsMgrApp
 	{
-				public static readonly SettingsMgr<SettingsApp> SmAppSetg;
-		
-				public static readonly SettingsApp SmApp;
-		
-				static SettingsMgrApp()
-				{
-					SmAppSetg = new SettingsMgr<SettingsApp>();
-					SmApp = SmAppSetg.Settings;
-					SmApp.Header = new Header(SettingsApp.APPSETTINGFILEVERSION);
-				}
-			}
-		
-			[DataContract]
-			public class SettingsApp : SettingsPathFileAppBase
-			{
-				public const string APPSETTINGFILEVERSION = "1.0";
-		
-				[DataMember]
-				public int[] AppIs { get; set; } = new[] {10, 20, 30 };
+		public static SettingsMgr<SettingsApp> SmAppMgr { get; private set; }
 
-				[DataMember] public SchemaDictionaryApp SettingsAppData = RsuApp.DefAppSchema;
+		public static SettingsApp SmAppSetg { get; private set; }
+
+		public static void SmAppInit()
+		{
+			SmAppMgr = new SettingsMgr<SettingsApp>();
+			SmAppSetg = SmAppMgr.Settings;
+			SmAppSetg.Header = new Header(SettingsApp.APPSETTINGFILEVERSION);
+		}
+
+		public static bool IsAppSetgValid()
+		{
+			return SmAppMgr != null;
+		}
+	}
+
+	[DataContract(Namespace = "")]
+	public class SettingsApp : SettingsPathFileAppBase
+	{
+		public const string APPSETTINGFILEVERSION = "1.0";
+		
+		[DataMember]
+		public int[] AppIs { get; set; } = new[] {10, 20, 30 };
+
+		[DataMember] public SchemaDictionaryApp SettingsAppData = RsuApp.DefAppSchema;
 //					SchemaUnitApp.SchemaUnitAppDefault.Clone();
 	}
 }

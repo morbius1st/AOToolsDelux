@@ -2,6 +2,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Runtime.Serialization;
 using AOTools.AppSettings.RevitSettings;
 using Autodesk.Revit.DB;
 using UtilityLibrary;
@@ -42,6 +43,7 @@ namespace AOTools.AppSettings.SchemaSettings
 
 
 	// basic schema is only saved in the Revitfile
+	[DataContract]
 	public class SchemaUnitApp
 	{
 		
@@ -58,12 +60,6 @@ namespace AOTools.AppSettings.SchemaSettings
 					new SchemaFieldUnit(SchemaAppKey.CURRENT, "CurrentUnitStyle",
 						"number of the current style", 0)
 				},
-//
-//				{
-//					(SchemaAppKey.COUNT),
-//					new SchemaFieldUnit(SchemaAppKey.COUNT, "Count",
-//						"number of unit styles", SchemaUnitUsr.DEFAULT_COUNT)
-//				},
 
 				{
 					(SchemaAppKey.USE_OFFICE),
@@ -110,11 +106,12 @@ namespace AOTools.AppSettings.SchemaSettings
 				null, RevitUnitType.UT_UNDEFINED, "B2788BC0-381E-4F4F-BE0B-93A93B9470{0:x2}");
 	}
 
+
 	// unit schema is saved in
 	// the app settings as a list of office standard unit styles
 	// the user settings for a list of their personal unit styles
 	// in the revit files as a list of custom unit styles
-	//	[DataContract]
+	[DataContract]
 	public class SchemaUnitUsr 
 	{
 		public const int DEFAULT_COUNT = 3;

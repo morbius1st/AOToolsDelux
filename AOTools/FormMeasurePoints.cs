@@ -24,9 +24,9 @@ namespace AOTools
 
 		private void FormQueryPoints_FormClosing(object sender, FormClosingEventArgs e)
 		{
-			SmUsr.FormMeasurePointsLocation = this.Location;
-			SmUsr.MeasurePointsShowWorkplane = this.ShowWorkplane;
-			SmUsrSetg.Save();
+			SmUsrSetg.FormMeasurePointsLocation = this.Location;
+			SmUsrSetg.MeasurePointsShowWorkplane = this.ShowWorkplane;
+			SmUsrMgr.Save();
 			
 		}
 
@@ -37,16 +37,16 @@ namespace AOTools
 
 		private void LoadSettings()
 		{
-			if (SmUsr.FormMeasurePointsLocation.Equals(new Point(0, 0)))
+			if (SmUsrSetg.FormMeasurePointsLocation.Equals(new Point(0, 0)))
 			{
 				CenterToParent();
 			}
 			else
 			{
-				this.Location = SmUsr.FormMeasurePointsLocation;
+				this.Location = SmUsrSetg.FormMeasurePointsLocation;
 			}
 
-			ShowWorkplane = SmUsr.MeasurePointsShowWorkplane;
+			ShowWorkplane = SmUsrSetg.MeasurePointsShowWorkplane;
 		}
 
 		
