@@ -9,7 +9,7 @@ using Autodesk.Revit.UI;
 using AOTools.AppSettings.RevitSettings;
 using AOTools.AppSettings.SchemaSettings;
 using UtilityLibrary;
-using static AOTools.AppSettings.ConfigSettings.SettingsMgrUsr;
+using static AOTools.AppSettings.ConfigSettings.SettingsUsr;
 using static AOTools.AppSettings.SchemaSettings.SchemaAppKey;
 using static AOTools.AppSettings.SchemaSettings.SchemaUsrKey;
 using static AOTools.AppSettings.SchemaSettings.SchemaUnitListing;
@@ -18,8 +18,8 @@ using static AOTools.AppSettings.RevitSettings.RevitSettingsMgr;
 using static AOTools.AppSettings.RevitSettings.RevitSettingsUnitUsr;
 using static AOTools.AppSettings.RevitSettings.RevitSettingsUnitApp;
 
-using static AOTools.AppSettings.ConfigSettings.SettingsMgrApp;
-using static AOTools.AppSettings.ConfigSettings.SettingsMgrUsr;
+using static AOTools.AppSettings.ConfigSettings.SettingsApp;
+using static AOTools.AppSettings.ConfigSettings.SettingsUsr;
 
 
 using static UtilityLibrary.MessageUtilities;
@@ -36,29 +36,30 @@ namespace AOTools
 	[Transaction(TransactionMode.Manual)]
 	class UnitStylesCommand : IExternalCommand
 	{
-		private const int testVal = 50;
+		private const int testVal = 45;
 
 		public Result Execute(ExternalCommandData commandData, ref string message, ElementSet elements)
 		{
+			SmAppInit();
 			SmUsrInit();
-//			SchemaUnitUtil.MakeDefaultUnitStyles();
 
 			output = outputLocation.debug;
 
 			RevitSettingsUnitApp a = RsuApp;
-			SchemaDictionaryApp b = a.RsuAppSetg;
+			SchemaDictionaryApp b = RsuAppSetg;
 
 			RevitSettingsUnitUsr c = RsuUsr;
-			List<SchemaDictionaryUsr> d = c.RsuUsrSetg;
+			List<SchemaDictionaryUsr> d = RsuUsrSetg;
 
-			SettingsMgr<SettingsApp> e = SmAppMgr;
-			SettingsApp g = SmAppSetg;
+			SettingsMgr<SettingsAppBase> e = SmApp;
+			SettingsAppBase g = SmAppSetg;
 
-			SettingsMgr<SettingsUsr> h = SmUsrMgr;
-			SettingsUsr j = SmUsrSetg;
+			SettingsMgr<SettingsUsrBase> h = SmUsr;
+			SettingsUsrBase j = SmUsrSetg;
+			List<SchemaDictionaryUsr> k = SmuUsrSetg;
 
 
-			test21();
+			test101();
 
 			return Result.Succeeded;
 		}
@@ -69,10 +70,12 @@ namespace AOTools
 			logMsgDbLn2("Settings", "before");
 			logMsg("");
 			logMsgDbLn2("user Settings", "before");
-			ListUnitDictionary<SchemaDictionaryUsr, SchemaUsrKey>(SmUsrSetg.UnitStylesList, 4);
+			ListUserAppSettings();
+			ListUnitDictionary<SchemaDictionaryUsr, SchemaUsrKey>(SmuUsrSetg, 4);
 			logMsg("");
 			logMsgDbLn2("revit Settings", "before");
-			RevitSettingsBase.ListRevitSettingInfo(4);
+			ListRevitAppSettings();
+			ListUnitDictionary<SchemaDictionaryUsr, SchemaUsrKey>(RsuUsrSetg, 4);
 		}
 
 		// enum test
@@ -104,7 +107,7 @@ namespace AOTools
 				SmUsrSetg.UnitStylesList[i][STYLE_NAME].Value = "Revised Style Name " + i;
 			}
 
-			SmUsrMgr.Save();
+			SmUsr.Save();
 
 			logMsgDbLn2("user settings file", "after");
 			logMsg("");
@@ -170,13 +173,13 @@ namespace AOTools
 			RevitSettingsBase.ListRevitSettingInfo();
 			logMsg("");
 			
-			RsuApp.RsuAppSetg[VERSION_BASIC].Value = (testVal * 10.00).ToString();
+			RsuAppSetg[VERSION_BASIC].Value = (testVal * 10.00).ToString();
 
-			RsuApp.RsuAppSetg[AUTO_RESTORE].Value = (testVal / 10) % 2 == 0;
+			RsuAppSetg[AUTO_RESTORE].Value = (testVal / 10) % 2 == 0;
 
 			int i = 0;
 
-			foreach (SchemaDictionaryUsr unitStyle in RsuUsr.RsuUsrSetg)
+			foreach (SchemaDictionaryUsr unitStyle in RsuUsrSetg)
 			{
 				unitStyle[VERSION_UNIT].Value = "sub version " + (testVal + i++ + 1);
 			}
@@ -204,21 +207,21 @@ namespace AOTools
 			RevitSettingsBase.ListRevitSettingInfo(4);
 			logMsg("");
 
-			RsuApp.RsuAppSetg[VERSION_BASIC].Value = (testVal * 10.00).ToString();
+			RsuAppSetg[VERSION_BASIC].Value = (testVal * 10.00).ToString();
 
-			RsuApp.RsuAppSetg[AUTO_RESTORE].Value = (testVal / 10) % 2 == 0;
+			RsuAppSetg[AUTO_RESTORE].Value = (testVal / 10) % 2 == 0;
 
-			RsuUsr.RsuUsrSetg[0][VERSION_UNIT].Value = "sub version " + (testVal + 1);
-			RsuUsr.RsuUsrSetg[0][STYLE_NAME].Value = "style name " + (testVal + 1);
-			RsuUsr.RsuUsrSetg[0][STYLE_DESC].Value = "style description " + (testVal + 1);
+			RsuUsrSetg[0][VERSION_UNIT].Value = "sub version " + (testVal + 1);
+			RsuUsrSetg[0][STYLE_NAME].Value = "style name " + (testVal + 1);
+			RsuUsrSetg[0][STYLE_DESC].Value = "style description " + (testVal + 1);
 
-			RsuUsr.RsuUsrSetg[1][VERSION_UNIT].Value = "sub version " + (testVal + 2);
-			RsuUsr.RsuUsrSetg[1][STYLE_NAME].Value = "style name " + (testVal + 2);
-			RsuUsr.RsuUsrSetg[1][STYLE_DESC].Value = "style description " + (testVal + 2);
+			RsuUsrSetg[1][VERSION_UNIT].Value = "sub version " + (testVal + 2);
+			RsuUsrSetg[1][STYLE_NAME].Value = "style name " + (testVal + 2);
+			RsuUsrSetg[1][STYLE_DESC].Value = "style description " + (testVal + 2);
 
-			RsuUsr.RsuUsrSetg[2][VERSION_UNIT].Value = "sub version " + (testVal + 3);
-			RsuUsr.RsuUsrSetg[2][STYLE_NAME].Value = "style name " + (testVal + 3);
-			RsuUsr.RsuUsrSetg[2][STYLE_DESC].Value = "style description " + (testVal + 3);
+			RsuUsrSetg[2][VERSION_UNIT].Value = "sub version " + (testVal + 3);
+			RsuUsrSetg[2][STYLE_NAME].Value = "style name " + (testVal + 3);
+			RsuUsrSetg[2][STYLE_DESC].Value = "style description " + (testVal + 3);
 
 			logMsg("");
 			if (!RsMgr.Save())

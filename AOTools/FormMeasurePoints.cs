@@ -7,7 +7,7 @@ using Point = System.Drawing.Point;
 
 using static AOTools.Utility.Util;
 
-using static AOTools.AppSettings.ConfigSettings.SettingsMgrUsr;
+using static AOTools.AppSettings.ConfigSettings.SettingsUsr;
 
 namespace AOTools
 {
@@ -26,7 +26,7 @@ namespace AOTools
 		{
 			SmUsrSetg.FormMeasurePointsLocation = this.Location;
 			SmUsrSetg.MeasurePointsShowWorkplane = this.ShowWorkplane;
-			SmUsrMgr.Save();
+			SmUsr.Save();
 			
 		}
 

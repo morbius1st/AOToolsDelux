@@ -27,7 +27,7 @@ namespace AOTools.AppSettings.SchemaSettings
 					SchemaDictionaryUsr unitStyle = DefaultSchemaUsr((i * 10) + j);
 					unitStyle[SchemaUsrKey.USER_NAME].Value = UserNames[i];
 
-					RsuUsr.RsuUsrSetg.Add(unitStyle);
+					RsuUsrSetg.Add(unitStyle);
 				}
 			}
 		}

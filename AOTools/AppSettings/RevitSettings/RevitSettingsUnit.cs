@@ -23,7 +23,7 @@ namespace AOTools.AppSettings.RevitSettings
 		public Guid SchemaGuid => Schemaguid;
 
 		public static readonly RevitSettingsUnitApp RsuApp = new RevitSettingsUnitApp();
-		public SchemaDictionaryApp RsuAppSetg { get; private set; }
+		public static SchemaDictionaryApp RsuAppSetg { get; private set; }
 
 		public SchemaDictionaryApp DefAppSchema => SchemaUnitAppDefault;
 
@@ -48,7 +48,7 @@ namespace AOTools.AppSettings.RevitSettings
 		public static string SchemaDesc => SCHEMA_DESC;
 
 		public static readonly RevitSettingsUnitUsr RsuUsr = new RevitSettingsUnitUsr();
-		public List<SchemaDictionaryUsr> RsuUsrSetg { get; private set; }
+		public static List<SchemaDictionaryUsr> RsuUsrSetg { get; private set; }
 
 		private RevitSettingsUnitUsr()
 		{

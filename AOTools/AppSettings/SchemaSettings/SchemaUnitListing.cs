@@ -6,6 +6,8 @@ using Autodesk.Revit.DB.ExtensibleStorage;
 using static AOTools.AppSettings.RevitSettings.RevitSettingsUnitApp;
 using static AOTools.AppSettings.RevitSettings.RevitSettingsUnitUsr;
 
+using static AOTools.AppSettings.ConfigSettings.SettingsApp;
+
 using UtilityLibrary;
 using static UtilityLibrary.MessageUtilities;
 
@@ -56,6 +58,38 @@ namespace AOTools.AppSettings.SchemaSettings
 			string keyDesc = key?.ToString() ?? "undefined";
 			string valueDesc = fi.Value.ToString().PadRight(len).Substring(0, len);
 			return $"key| {keyDesc,-20}  name| {fi.Name,-20} value| {valueDesc,-30} unit type| {fi.UnitType}";
+		}
+
+		public static void ListRevitAppSettings()
+		{
+			logMsg("");
+			logMsgDbLn2("revit app settings");
+
+			logMsgDbLn2("data in dictionary");
+			foreach (KeyValuePair<SchemaAppKey, SchemaFieldUnit> kvp in RsuAppSetg)
+			{
+				logMsgDbLn2("data", "key| " + kvp.Key + "  name| " + kvp.Value.Name + "  value| " + kvp.Value.Value);
+			}
+
+			logMsg("");
+		}
+
+		public static void ListUserAppSettings()
+		{
+			logMsg("");
+			logMsgDbLn2("user app settings");
+
+			logMsgDbLn2("app inits", SmAppSetg.AppIs[0].ToString()
+				+ "  " + SmAppSetg.AppIs[1].ToString() + "  " + SmAppSetg.AppIs[2].ToString());
+
+
+			logMsgDbLn2("data in dictionary");
+			foreach (KeyValuePair<SchemaAppKey, SchemaFieldUnit> kvp in SmAppSetg.SettingsAppData)
+			{
+				logMsgDbLn2("data", "key| " + kvp.Key + "  name| " + kvp.Value.Name + "  value| " + kvp.Value.Value);
+			}
+
+			logMsg("");
 		}
 
 

@@ -88,7 +88,7 @@ namespace AOTools.AppSettings.RevitSettings
 		// read and store the revit app settings
 		private static void ReadRevitAppSettings(Entity elemEntity, Schema schema)
 		{
-			foreach (KeyValuePair<SchemaAppKey, SchemaFieldUnit> kvp in RsuApp.RsuAppSetg)
+			foreach (KeyValuePair<SchemaAppKey, SchemaFieldUnit> kvp in RsuAppSetg)
 			{
 				Field field = schema.GetField(kvp.Value.Name);
 				if (field == null || !field.IsValidObject) { continue; }
@@ -140,8 +140,8 @@ namespace AOTools.AppSettings.RevitSettings
 
 			for (int i = 1; i < schemaList.Count; i++)
 			{
-				RsuUsr.RsuUsrSetg.Add(SchemaUnitUtil.DefaultSchemaUsr(i - 1));
-				ReadSubSchema(schemaList[i], schemaList[i].Schema, RsuUsr.RsuUsrSetg[i - 1]);
+				RsuUsrSetg.Add(SchemaUnitUtil.DefaultSchemaUsr(i - 1));
+				ReadSubSchema(schemaList[i], schemaList[i].Schema, RsuUsrSetg[i - 1]);
 			}
 			return true;
 		}
@@ -177,7 +177,7 @@ namespace AOTools.AppSettings.RevitSettings
 				SchemaBuilder sbld = CreateSchema(SchemaName, RevitSettingsUnitApp.SchemaDesc, RsuApp.SchemaGuid);
 
 				// this makes the basic setting fields
-				MakeFields(sbld, RsuApp.RsuAppSetg);
+				MakeFields(sbld, RsuAppSetg);
 
 				// create and get the unit style schema fields
 				// and then the sub-schemd (unit styles)
@@ -190,7 +190,7 @@ namespace AOTools.AppSettings.RevitSettings
 				Entity entity = new Entity(schema);
 
 				// set the basic fields
-				SaveFieldValues(entity, schema, RsuApp.RsuAppSetg);
+				SaveFieldValues(entity, schema, RsuAppSetg);
 
 				SaveUnitSettings(entity, schema, subSchemaFields);
 
@@ -292,7 +292,7 @@ namespace AOTools.AppSettings.RevitSettings
 				if (field == null || !field.IsValidObject) { continue; }
 
 				Entity subEntity =
-					MakeUnitSchema(kvp.Value, RsuUsr.RsuUsrSetg[j++]);
+					MakeUnitSchema(kvp.Value,RsuUsrSetg[j++]);
 				entity.Set(field, subEntity);
 			}
 		}
@@ -470,10 +470,10 @@ namespace AOTools.AppSettings.RevitSettings
 		{
 			logMsgDbLn2("basic", "settings");
 
-			SchemaUnitListing.ListFieldInfo(RsuApp.RsuAppSetg);
+			SchemaUnitListing.ListFieldInfo(RsuAppSetg);
 			logMsg("");
 
-			foreach (SchemaDictionaryUsr unitStyle in RsuUsr.RsuUsrSetg)
+			foreach (SchemaDictionaryUsr unitStyle in RsuUsrSetg)
 			{
 				logMsgDbLn2("unit", "settings");
 				SchemaUnitListing.ListFieldInfo(unitStyle, count);
