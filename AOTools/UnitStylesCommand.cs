@@ -40,10 +40,10 @@ namespace AOTools
 
 		public Result Execute(ExternalCommandData commandData, ref string message, ElementSet elements)
 		{
+			output = outputLocation.debug;
+
 			SmAppInit();
 			SmUsrInit();
-
-			output = outputLocation.debug;
 
 			RevitSettingsUnitApp a = RsuApp;
 			SchemaDictionaryApp b = RsuAppSetg;
@@ -69,12 +69,23 @@ namespace AOTools
 		{
 			logMsgDbLn2("Settings", "before");
 			logMsg("");
-			logMsgDbLn2("user Settings", "before");
+
+			logMsgDbLn2("config Settings", "before");
+			logMsg("");
+			logMsgDbLn2("config app settings");
 			ListUserAppSettings();
+			logMsg("");
+			logMsgDbLn2("config user settings");
 			ListUnitDictionary<SchemaDictionaryUsr, SchemaUsrKey>(SmuUsrSetg, 4);
 			logMsg("");
+
 			logMsgDbLn2("revit Settings", "before");
+			RsMgr.Read();
+			logMsg("");
+			logMsgDbLn2("revit app settings");
 			ListRevitAppSettings();
+			logMsg("");
+			logMsgDbLn2("revit usr settings");
 			ListUnitDictionary<SchemaDictionaryUsr, SchemaUsrKey>(RsuUsrSetg, 4);
 		}
 

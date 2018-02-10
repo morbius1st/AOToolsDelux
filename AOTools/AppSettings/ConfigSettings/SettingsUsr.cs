@@ -7,7 +7,7 @@ using Point = System.Drawing.Point;
 using UtilityLibrary;
 
 using AOTools.AppSettings.SchemaSettings;
-using static AOTools.AppSettings.RevitSettings.RevitSettingsUnitUsr;
+using static AOTools.AppSettings.SchemaSettings.SchemaUnitUtil;
 
 #endregion
 
@@ -32,7 +32,6 @@ namespace AOTools.AppSettings.ConfigSettings
 			SmuUsrSetg = SmUsrSetg.UnitStylesList;
 			SmUsrSetg.Header = new Header(SettingsUsrBase.USERSETTINGFILEVERSION);
 		}
-
 		public static bool IsValid()
 		{
 			return SmUsr != null;
@@ -53,8 +52,8 @@ namespace AOTools.AppSettings.ConfigSettings
 		public bool MeasurePointsShowWorkplane = false;
 
 		[DataMember]
-		public List<SchemaDictionaryUsr> UnitStylesList = RsuUsrSetg;
-		
+		public List<SchemaDictionaryUsr> UnitStylesList = DefaultSchemaListUsr(1);
+
 	}
 
 }

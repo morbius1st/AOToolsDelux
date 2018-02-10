@@ -62,9 +62,6 @@ namespace AOTools.AppSettings.SchemaSettings
 
 		public static void ListRevitAppSettings()
 		{
-			logMsg("");
-			logMsgDbLn2("revit app settings");
-
 			logMsgDbLn2("data in dictionary");
 			foreach (KeyValuePair<SchemaAppKey, SchemaFieldUnit> kvp in RsuAppSetg)
 			{
@@ -76,9 +73,6 @@ namespace AOTools.AppSettings.SchemaSettings
 
 		public static void ListUserAppSettings()
 		{
-			logMsg("");
-			logMsgDbLn2("user app settings");
-
 			logMsgDbLn2("app inits", SmAppSetg.AppIs[0].ToString()
 				+ "  " + SmAppSetg.AppIs[1].ToString() + "  " + SmAppSetg.AppIs[2].ToString());
 
