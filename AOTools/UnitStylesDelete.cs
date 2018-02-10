@@ -7,7 +7,7 @@ using Autodesk.Revit.UI;
 
 using static AOTools.AppSettings.RevitSettings.RevitSettingsMgr;
 using static AOTools.AppSettings.RevitSettings.RevitSettingsBase.RevitSetgDelRetnCode;
-using static AOTools.AppSettings.SchemaSettings.SchemaUnitListing;
+using static AOTools.AppSettings.Util.SettingsListings;
 
 using static UtilityLibrary.MessageUtilities;
 

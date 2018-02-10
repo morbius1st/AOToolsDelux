@@ -3,6 +3,7 @@
 using System;
 using System.Collections.Generic;
 using AOTools.AppSettings.SchemaSettings;
+using AOTools.AppSettings.Util;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.DB.ExtensibleStorage;
 using static Autodesk.Revit.DB.ExtensibleStorage.Schema;
@@ -470,13 +471,13 @@ namespace AOTools.AppSettings.RevitSettings
 		{
 			logMsgDbLn2("basic", "settings");
 
-			SchemaUnitListing.ListFieldInfo(RsuAppSetg);
+			SettingsListings.ListFieldInfo(RsuAppSetg);
 			logMsg("");
 
 			foreach (SchemaDictionaryUsr unitStyle in RsuUsrSetg)
 			{
 				logMsgDbLn2("unit", "settings");
-				SchemaUnitListing.ListFieldInfo(unitStyle, count);
+				SettingsListings.ListFieldInfo(unitStyle, count);
 				logMsg("");
 			}
 		}

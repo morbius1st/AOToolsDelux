@@ -12,7 +12,7 @@ using UtilityLibrary;
 using static AOTools.AppSettings.ConfigSettings.SettingsUsr;
 using static AOTools.AppSettings.SchemaSettings.SchemaAppKey;
 using static AOTools.AppSettings.SchemaSettings.SchemaUsrKey;
-using static AOTools.AppSettings.SchemaSettings.SchemaUnitListing;
+using static AOTools.AppSettings.Util.SettingsListings;
 
 using static AOTools.AppSettings.RevitSettings.RevitSettingsMgr;
 using static AOTools.AppSettings.RevitSettings.RevitSettingsUnitUsr;
@@ -72,21 +72,15 @@ namespace AOTools
 
 			logMsgDbLn2("config Settings", "before");
 			logMsg("");
-			logMsgDbLn2("config app settings");
-			ListUserAppSettings();
-			logMsg("");
-			logMsgDbLn2("config user settings");
-			ListUnitDictionary<SchemaDictionaryUsr, SchemaUsrKey>(SmuUsrSetg, 4);
-			logMsg("");
+
+			ListConfigSettings();
 
 			logMsgDbLn2("revit Settings", "before");
+			logMsg("");
+
 			RsMgr.Read();
-			logMsg("");
-			logMsgDbLn2("revit app settings");
-			ListRevitAppSettings();
-			logMsg("");
-			logMsgDbLn2("revit usr settings");
-			ListUnitDictionary<SchemaDictionaryUsr, SchemaUsrKey>(RsuUsrSetg, 4);
+
+			ListRevitSettings();
 		}
 
 		// enum test
@@ -103,6 +97,8 @@ namespace AOTools
 		// test user settings 
 		// read and list current values
 		// change the names of the current unit styles
+		// save
+
 		private void test21()
 		{
 			logMsg("");
