@@ -37,8 +37,8 @@ namespace AOTools.AppSettings.SchemaSettings
 	}
 
 	[CollectionDataContract(Name = "UnitStyle", KeyName = "OrderKey",
-		ValueName = "SchemaField", ItemName = "SchemaFieldItem", 
-		Namespace = "")]
+	ValueName = "SchemaField", ItemName = "SchemaFieldItem",
+	Namespace = "")]
 	public class SchemaDictionaryUsr : SchemaDictionaryBase<SchemaUsrKey>
 	{
 		public SchemaDictionaryUsr() { }

@@ -18,49 +18,41 @@ namespace AOTools.AppSettings.RevitSettings
 {
 	public class RevitSettingsUnitApp : SchemaUnitApp
 	{
-		public string SchemaName => SCHEMA_NAME;
-		public string SchemaDesc => SCHEMA_DESC;
+		public static string SchemaName => SCHEMA_NAME;
+		public static string SchemaDesc => SCHEMA_DESC;
 		public Guid SchemaGuid => Schemaguid;
 
-		public static RevitSettingsUnitApp RsuApp = new RevitSettingsUnitApp();
+		public static readonly RevitSettingsUnitApp RsuApp = new RevitSettingsUnitApp();
 		public SchemaDictionaryApp RsuAppSetg { get; private set; }
 
 		public SchemaDictionaryApp DefAppSchema => SchemaUnitAppDefault;
 
-		public bool Initalized { get; } = false;
+		public bool IsInitalized { get; }
 
 		private RevitSettingsUnitApp()
 		{
 			Initalize();
 
-			Initalized = true;
-
+			IsInitalized = true;
 		}
 
-		public void Initalize()
+		private void Initalize()
 		{
 			RsuAppSetg = GetSchemaUnitAppDefault();
 		}
 	}
 
-	// defined here as this file will be revit specific
-	public enum RevitUnitType
-	{
-		UT_UNDEFINED = (int) UnitType.UT_Undefined,
-		UT_NUMBER = (int) UnitType.UT_Number
-	}
-
 	public class RevitSettingsUnitUsr : SchemaUnitUsr
 	{
-		public string UnitSchemaName => SCHEMA_NAME;
-		public string SchemaDesc => SCHEMA_DESC;
+		public static string UnitSchemaName => SCHEMA_NAME;
+		public static string SchemaDesc => SCHEMA_DESC;
 
-		public static RevitSettingsUnitUsr RsuUsr = new RevitSettingsUnitUsr();
+		public static readonly RevitSettingsUnitUsr RsuUsr = new RevitSettingsUnitUsr();
 		public List<SchemaDictionaryUsr> RsuUsrSetg { get; private set; }
 
 		private RevitSettingsUnitUsr()
 		{
-			if (RsuApp.Initalized == false)
+			if (RsuApp.IsInitalized == false)
 			{
 				throw new Exception("Basic Manager Must be Initalized First");
 			}
@@ -70,19 +62,22 @@ namespace AOTools.AppSettings.RevitSettings
 
 		public void Initalize()
 		{
-			RsuUsrSetg = CreateDefaultSchemaList(DEFAULT_COUNT);
-		}
-
-		public void DefaultList(int quantity)
-		{
-			RsuUsrSetg = CreateDefaultSchemaList(quantity);
+			RsuUsrSetg = DefaultSchemaListUsr(1);
 		}
 
 		public void Clear()
 		{
-			RsuUsrSetg = new List<SchemaDictionaryUsr>(DEFAULT_COUNT);
+			RsuUsrSetg = new List<SchemaDictionaryUsr>(1);
 		}
 
 		public int Count => RsuUsrSetg.Count;
 	}
+
+	// defined here as this file will be revit specific
+	public enum RevitUnitType
+	{
+		UT_UNDEFINED = UnitType.UT_Undefined,
+		UT_NUMBER = UnitType.UT_Number
+	}
+
 }

@@ -1,14 +1,10 @@
 ﻿#region Using directives
 
-using System.Collections.Generic;
-using Autodesk.Revit.DB;
-using Autodesk.Revit.DB.ExtensibleStorage;
-using static Autodesk.Revit.DB.ExtensibleStorage.Schema;
+using static AOTools.AppSettings.RevitSettings.RevitSettingsBase.RevitSetgDelRetnCode;
+using static AOTools.AppSettings.RevitSettings.RevitSettingsBase;
+using static UtilityLibrary.MessageUtilities;
 
-using AOTools.AppSettings.SchemaSettings;
-using static AOTools.AppSettings.RevitSettings.RevitSettingsUnitApp;
 using static AOTools.AppSettings.RevitSettings.RevitSettingsUnitUsr;
-using static AOTools.AppSettings.RevitSettings.RevitSettingsMgr.RevitSettingDeleteReturnCode;
 
 #endregion
 
@@ -23,129 +19,120 @@ namespace AOTools.AppSettings.RevitSettings
 	{
 		public static readonly RevitSettingsMgr RsMgr = new RevitSettingsMgr();
 
+		private static bool _initalized = false;
+
+		#region Read Settings
+
 		// ******************************
 		// read setting
 		// ******************************
 		public bool Read()
 		{
+#if DEBUG
+			logMsgDbLn2("revit settings", "read");
+#endif
+
 			if (!ReadAllRevitSettings())
 			{
-				Save();
+				if (!Save()) { return false; }
+
+				return ReadAllRevitSettings();
 			}
 
-			return ReadAllRevitSettings();
+			return true;
 		}
+
+		#endregion
+
+		#region Save Settings
 
 		// ******************************
 		// save settings
 		// ******************************
+
+		// save the settings - if the active schema is
+		// is not valid, delete the current schema and
+		// then save
 		public bool Save()
 		{
-			return SaveAllRevitSettings();
+#if DEBUG
+			logMsgDbLn2("revit settings", "save");
+#endif
+			SaveRtnCodes code = SaveAllRevitSettings();
+
+			if (code == SaveRtnCodes.DUPLICATE)
+			{
+				code = SaveRtnCodes.GOOD;
+
+				Update();
+			}
+
+			return code == SaveRtnCodes.GOOD;
 		}
+
+		#endregion
+
+		#region Delete settings
 
 		// ******************************
 		// delete schema from revit document
 		// ******************************
 
-		public enum RevitSettingDeleteReturnCode
-		{
-			DELETE_SETTINGS_WORKED = 0,
-			TOO_MANY_DOCUMENTS = -1,
-			EXISTING_SCHEMA_NOT_FOUND = -2
-		}
-
 		// delete thecurrent schema from the current model only
-		public RevitSettingDeleteReturnCode DeleteSchema()
+		public bool DeleteSchema()
 		{
-			// must be only one active document
-			if (AppRibbon.App.Documents.Size != 1) { return TOO_MANY_DOCUMENTS; }
-
-			List<Schema> schemas = GetSchemas();
-
-			if (schemas == null) { return EXISTING_SCHEMA_NOT_FOUND; }
-
-			using (Transaction t = new Transaction(AppRibbon.Doc, "Delete Unit Styles"))
-			{
-				t.Start();
-
-				// remove the sub-schema's first
-				if (schemas.Count > 1)
-				{
-					for (int i = 1; i < schemas.Count; i++)
-					{ 
-						EraseSchemaAndAllEntities(schemas[i], false);
-						schemas[i].Dispose();
-					}
-				}
-				// remove the root schema laast
-				EraseSchemaAndAllEntities(schemas[0], false);
-				schemas[0].Dispose();
-
-				t.Commit();
-			}
-
-			return DELETE_SETTINGS_WORKED;
+#if DEBUG
+			logMsgDbLn2("revit settings", "delete schema");
+#endif
+			return !ChkDelRetnCode(DeleteAllSchemas(), "Delete Settings");
 		}
 
-		private List<Schema> GetSchemas()
-		{
-			Schema schema;
-			Entity elemEntity;
+		#endregion
 
-			if (!GetAppSchemaAndElement(out schema, out elemEntity)) { return null; }
-
-			return GetSubSchemas(elemEntity, schema);
-		}
-
-		private List<Schema> GetSubSchemas(Entity elemEntity, Schema schema)
-		{
-			List <Schema> schemaList = new List<Schema>(4);
-
-			// make the root schema element 0;
-			schemaList.Add(schema);
-
-			foreach (Field f in schema.ListFields())
-			{
-				if (f.SubSchema == null) { continue; }
-
-				Field field = schema.GetField(f.FieldName);
-				if (field == null || !field.IsValidObject) { break; }
-
-				Entity subSchema = elemEntity.Get<Entity>(field);
-				if (subSchema == null || !subSchema.IsValidObject) { break; }
-
-				schemaList.Add(subSchema.Schema);
-			}
-			return schemaList;
-		}
-
+		#region Update settings
 
 		// ******************************
 		// update settings
 		// ******************************
+
 		// update the schema with the current schema
-		public void Update()
+		public bool Update()
 		{
-			Read();
+#if DEBUG
+			logMsgDbLn2("revit settings", "update");
+#endif
+			if (!ChkDelRetnCode(DeleteAllSchemas(), 
+				"Updating Settings")) { return false;}
 
-			DeleteSchema();
-
-			Save();
+			return Save();
 		}
+
+		#endregion
+
+		#region Reset Settings
 
 		// ******************************
 		// reset settings
 		// ******************************
+
 		// reset the settings to their default values
 		public void Reset()
 		{
-			DeleteSchema();
+#if DEBUG
+			logMsgDbLn2("revit settings", "reset");
+#endif
+			if (!ChkDelRetnCode(DeleteAllSchemas(), 
+				"Reset Settings")) { return; }
+
+			// eliminate the current data and
+			// replace with a generic, default
+			// set of values
+			RsuUsr.Initalize();
 
 			Save();
 		}
 
-
+		#endregion
 
 	}
 }

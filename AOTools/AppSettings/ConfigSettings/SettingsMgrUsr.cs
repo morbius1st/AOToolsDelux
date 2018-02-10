@@ -1,19 +1,18 @@
 ﻿#region Using directives
 
-using System;
 using System.Collections.Generic;
 using System.Runtime.Serialization;
+using Point = System.Drawing.Point;
+
 using AOTools.AppSettings.RevitSettings;
 using AOTools.AppSettings.SchemaSettings;
 using UtilityLibrary;
-using Point = System.Drawing.Point;
 
 #endregion
 
 // itemname:	SettingsMgrUsr
 // username:	jeffs
 // created:		1/3/2018 8:04:40 PM
-
 
 namespace AOTools.AppSettings.ConfigSettings
 {
@@ -36,7 +35,6 @@ namespace AOTools.AppSettings.ConfigSettings
 			return SmUsrMgr != null;
 		}
 	}
-
 
 	// sample Settings User
 	[DataContract(Namespace = "")]

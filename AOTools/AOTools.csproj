@@ -89,6 +89,8 @@
       <Link>AppSettings\Settings\SettingsMgr.cs</Link>
     </Compile>
     <Compile Include="AppRibbon.cs" />
+    <Compile Include="AppSettings\SchemaSettings\SchemaUnitListing.cs" />
+    <Compile Include="AppSettings\SchemaSettings\SchemaUnitUtil.cs" />
     <Compile Include="UnitStylesDelete.cs" />
     <Compile Include="DxMeasure.cs" />
     <Compile Include="Utility\Extensions.cs" />

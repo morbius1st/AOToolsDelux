@@ -1,10 +1,15 @@
 ﻿#region Using directives
 
+using AOTools.AppSettings.RevitSettings;
 using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
 
 using static AOTools.AppSettings.RevitSettings.RevitSettingsMgr;
+using static AOTools.AppSettings.RevitSettings.RevitSettingsBase.RevitSetgDelRetnCode;
+using static AOTools.AppSettings.SchemaSettings.SchemaUnitListing;
+
+using static UtilityLibrary.MessageUtilities;
 
 #endregion
 
@@ -20,8 +25,21 @@ namespace AOTools
 	{
 		public Result Execute(ExternalCommandData commandData, ref string message, ElementSet elements)
 		{
-			RsMgr.DeleteSchema();
+			output = outputLocation.debug;
 
+			logMsgDbLn2("delete unit styles", "before");
+			RevitSettingsBase.ListRevitSchema();
+
+			if (!RsMgr.DeleteSchema())
+			{
+				return Result.Failed;
+			}
+
+			logMsg("");
+			logMsgDbLn2("delete unit styles", "after");
+			RevitSettingsBase.ListRevitSchema();
+
+			logMsg("");
 			return Result.Succeeded;
 		}
 	}

@@ -1,19 +1,26 @@
 ﻿#region Using directives
 
-using System;
-using AOTools.AppSettings;
+using System.Collections.Generic;
 using AOTools.AppSettings.ConfigSettings;
-using AOTools.AppSettings.RevitSettings;
-using AOTools.AppSettings.SchemaSettings;
 using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
+
+using AOTools.AppSettings.RevitSettings;
+using AOTools.AppSettings.SchemaSettings;
+using UtilityLibrary;
 using static AOTools.AppSettings.ConfigSettings.SettingsMgrUsr;
 using static AOTools.AppSettings.SchemaSettings.SchemaAppKey;
 using static AOTools.AppSettings.SchemaSettings.SchemaUsrKey;
+using static AOTools.AppSettings.SchemaSettings.SchemaUnitListing;
+
 using static AOTools.AppSettings.RevitSettings.RevitSettingsMgr;
 using static AOTools.AppSettings.RevitSettings.RevitSettingsUnitUsr;
 using static AOTools.AppSettings.RevitSettings.RevitSettingsUnitApp;
+
+using static AOTools.AppSettings.ConfigSettings.SettingsMgrApp;
+using static AOTools.AppSettings.ConfigSettings.SettingsMgrUsr;
+
 
 using static UtilityLibrary.MessageUtilities;
 
@@ -29,13 +36,27 @@ namespace AOTools
 	[Transaction(TransactionMode.Manual)]
 	class UnitStylesCommand : IExternalCommand
 	{
-		private const int testVal = 31;
+		private const int testVal = 50;
 
 		public Result Execute(ExternalCommandData commandData, ref string message, ElementSet elements)
 		{
 			SmUsrInit();
+//			SchemaUnitUtil.MakeDefaultUnitStyles();
 
 			output = outputLocation.debug;
+
+			RevitSettingsUnitApp a = RsuApp;
+			SchemaDictionaryApp b = a.RsuAppSetg;
+
+			RevitSettingsUnitUsr c = RsuUsr;
+			List<SchemaDictionaryUsr> d = c.RsuUsrSetg;
+
+			SettingsMgr<SettingsApp> e = SmAppMgr;
+			SettingsApp g = SmAppSetg;
+
+			SettingsMgr<SettingsUsr> h = SmUsrMgr;
+			SettingsUsr j = SmUsrSetg;
+
 
 			test21();
 
@@ -48,7 +69,7 @@ namespace AOTools
 			logMsgDbLn2("Settings", "before");
 			logMsg("");
 			logMsgDbLn2("user Settings", "before");
-			SchemaUnitUtil.ListUnitDictionary(SmUsrSetg.UnitStylesList,4);
+			ListUnitDictionary<SchemaDictionaryUsr, SchemaUsrKey>(SmUsrSetg.UnitStylesList, 4);
 			logMsg("");
 			logMsgDbLn2("revit Settings", "before");
 			RevitSettingsBase.ListRevitSettingInfo(4);
@@ -73,7 +94,7 @@ namespace AOTools
 			logMsg("");
 			logMsgDbLn2("user settings file", "before");
 			logMsg("");
-			SchemaUnitUtil.ListUnitDictionary(SmUsrSetg.UnitStylesList, 4);
+			ListUnitDictionary<SchemaDictionaryUsr, SchemaUsrKey>(SmUsrSetg.UnitStylesList, 4);
 
 			SmUsrSetg.FormMeasurePointsLocation = new System.Drawing.Point(100, 100);
 			SmUsrSetg.MeasurePointsShowWorkplane = true;
@@ -87,7 +108,34 @@ namespace AOTools
 
 			logMsgDbLn2("user settings file", "after");
 			logMsg("");
-			SchemaUnitUtil.ListUnitDictionary(SmUsrSetg.UnitStylesList, 4);
+			ListUnitDictionary<SchemaDictionaryUsr, SchemaUsrKey>(SmUsrSetg.UnitStylesList, 4);
+		}
+
+
+
+		// test set to the generic list with user names
+		private void test4()
+		{
+			// first read and display the current settings
+			RsMgr.Read();
+
+			logMsg("");
+			logMsgDbLn2("revit settings", "before");
+			RevitSettingsBase.ListRevitSettingInfo();
+			logMsg("");
+
+			SchemaUnitUtil.MakeDefaultUnitStyles();
+
+			if (!RsMgr.Save())
+			{
+				logMsgDbLn2("revit save settings", "failed");
+				return;
+			}
+
+			logMsg("");
+			logMsgDbLn2("revit settings", "after");
+			RevitSettingsBase.ListRevitSettingInfo();
+			logMsg("");
 		}
 
 		// test update settings
@@ -142,6 +190,7 @@ namespace AOTools
 		}
 
 		// this is just a basic read, modify, save, re-read test
+		// of revit settings
 		private void test1()
 		{
 			if (!RsMgr.Read())

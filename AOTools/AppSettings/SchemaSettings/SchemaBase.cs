@@ -1,11 +1,11 @@
 ﻿#region Using directives
 
 using System;
-using System.Collections.Generic;
 using System.Runtime.Serialization;
-using AOTools.AppSettings.RevitSettings;
+
 using Autodesk.Revit.DB;
-using UtilityLibrary;
+
+using AOTools.AppSettings.RevitSettings;
 
 //using Autodesk.Revit.DB;
 //using Autodesk.Revit.DB.ExtensibleStorage;
@@ -52,7 +52,7 @@ namespace AOTools.AppSettings.SchemaSettings
 
 		protected readonly Guid Schemaguid = new Guid("B1788BC0-381E-4F4F-BE0B-93A93B9470FF");
 
-		protected SchemaDictionaryApp SchemaUnitAppDefault { get; } =
+		public static SchemaDictionaryApp SchemaUnitAppDefault { get; } =
 			new SchemaDictionaryApp
 			{
 				{
@@ -80,30 +80,20 @@ namespace AOTools.AppSettings.SchemaSettings
 				}
 			};
 
-		protected SchemaDictionaryApp GetSchemaUnitAppDefault()
-		{
-			return SchemaUnitAppDefault.Clone();
-		}
-
-		public string GetSubSchemaName(int i)
-		{
-			return string.Format(SubSchemaFieldInfo.Name, i);
-		}
-
-		public static Guid GetSubSchemaGuid(int i)
-		{
-			return new Guid(string.Format(SubSchemaFieldInfo.Guid, i));
-		}
-
-		// the guid for each sub-schema and the 
-		// field that holds the sub-schema - both must match
-		// the guid here is missing the last (2) digits.
-		// fill in for each sub-schema 
-		// unit type is number is a filler
-		public static readonly SchemaFieldUnit SubSchemaFieldInfo =
-			new SchemaFieldUnit(SchemaAppKey.UNDEFINED, "LocalUnitStyle{0:D2}",
-				"subschema for the local unit style",
-				null, RevitUnitType.UT_UNDEFINED, "B2788BC0-381E-4F4F-BE0B-93A93B9470{0:x2}");
+//		public SchemaDictionaryApp GetSchemaUnitAppDefault()
+//		{
+//			return SchemaUnitAppDefault.Clone();
+//		}
+//
+//		// the guid for each sub-schema and the 
+//		// field that holds the sub-schema - both must match
+//		// the guid here is missing the last (2) digits.
+//		// fill in for each sub-schema 
+//		// unit type is number is a filler
+//		public static readonly SchemaFieldUnit SubSchemaFieldInfo =
+//			new SchemaFieldUnit(SchemaAppKey.UNDEFINED, "LocalUnitStyle{0:D2}",
+//				"subschema for the local unit style",
+//				null, RevitUnitType.UT_UNDEFINED, "B2788BC0-381E-4F4F-BE0B-93A93B9470{0:x2}");
 	}
 
 
@@ -114,8 +104,6 @@ namespace AOTools.AppSettings.SchemaSettings
 	[DataContract]
 	public class SchemaUnitUsr 
 	{
-		public const int DEFAULT_COUNT = 3;
-
 		protected const string SCHEMA_NAME = "UnitStyleSchema";
 		protected const string SCHEMA_DESC = "unit style sub schema";
 
@@ -125,7 +113,13 @@ namespace AOTools.AppSettings.SchemaSettings
 				{
 					(SchemaUsrKey.VERSION_UNIT),
 					new SchemaFieldUnit(SchemaUsrKey.VERSION_UNIT,
-						"version", "version", "1.0")
+						"version", "version", "1.1")
+				},
+
+				{
+					(SchemaUsrKey.USER_NAME),
+					new SchemaFieldUnit(SchemaUsrKey.USER_NAME,
+						"UserName", "owner of this unit style", "none")
 				},
 
 				{
@@ -205,73 +199,5 @@ namespace AOTools.AppSettings.SchemaSettings
 						"PlusPrefix", "plus prefix", (int) SchemaBoolOpts.NO)
 				}
 			};
-	}
-
-	public static class SchemaUnitUtil
-	{
-
-		public static List<SchemaDictionaryUsr> CreateDefaultSchemaList(int quantity)
-		{
-			List<SchemaDictionaryUsr> SettingList = new List<SchemaDictionaryUsr>(quantity);
-
-			for (int i = 0; i < quantity; i++)
-			{
-				SettingList.Add(CreateDefaultSchema(i));
-			}
-
-			return SettingList;
-		}
-
-		public static SchemaDictionaryUsr CreateDefaultSchema(int itemNumber)
-		{
-			SchemaDictionaryUsr def = SchemaUnitUsr.SchemaUnitUsrDefault.Clone();
-
-			def[SchemaUsrKey.STYLE_NAME].Value =
-				string.Format(SchemaUnitUsr.SchemaUnitUsrDefault[SchemaUsrKey.STYLE_NAME].Value, itemNumber);
-
-			def[SchemaUsrKey.UNIT_SYSTEM].Value = (int) UnitSystem.Imperial;
-			def[SchemaUsrKey.UNIT_TYPE].Value = (int) UnitType.UT_Length;
-			def[SchemaUsrKey.ACCURACY].Value = (1.0 / 12.0) / 16.0;
-			def[SchemaUsrKey.DUT].Value = (int) DisplayUnitType.DUT_FEET_FRACTIONAL_INCHES;
-			def[SchemaUsrKey.UST].Value = (int) UnitSymbolType.UST_NONE;
-
-			return def;
-		}
-
-
-
-		public static void ListUnitDictionary(List<SchemaDictionaryUsr> u, int count = -1)
-		{
-			int j = 0;
-			foreach (SchemaDictionaryUsr sd in u)
-			{
-				MessageUtilities.logMsgDbLn2("unit style #", j++.ToString());
-
-				ListFieldInfo(sd, count);
-
-				MessageUtilities.logMsg("");
-			}
-		}
-
-		public static void ListFieldInfo<T>(SchemaDictionaryBase<T> fieldList, int count = -1)
-		{
-			int i = 0;
-
-			foreach (KeyValuePair<T, SchemaFieldUnit> kvp in fieldList)
-			{
-				if (i == count) return;
-
-				MessageUtilities.logMsgDbLn2("field #" + i++,
-					FormatFieldInfo(kvp.Key as Enum, kvp.Value));
-			}
-		}
-
-		private static string FormatFieldInfo(Enum key, SchemaFieldUnit fi)
-		{
-			int len = 28;
-			string keyDesc = key?.ToString() ?? "undefined";
-			string valueDesc = fi.Value.ToString().PadRight(len).Substring(0, len);
-			return $"key| {keyDesc,-20}  name| {fi.Name,-20} value| {valueDesc,-30} unit type| {fi.UnitType}";
-		}
 	}
 }
