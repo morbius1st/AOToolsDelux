@@ -26,7 +26,7 @@ namespace AOToolsVue.Settings
 		{
 			USettings = new SettingsMgr<UserSettings>();
 			USet = USettings.Settings;
-			USet.Header = new Header(UserSettings.USERSETTINGFILEVERSION);
+//			USet.Header = new Header(UserSettings.USERSETTINGFILEVERSION);
 		}
 	}
 
@@ -35,7 +35,6 @@ namespace AOToolsVue.Settings
 	[DataContract]
 	public class UserSettings : SettingsPathFileUserBase
 	{
-		public const string USERSETTINGFILEVERSION = "1.0";
 
 		[DataMember]
 		public Point FormMeasurePointsLocation = new Point(0, 0);
@@ -50,6 +49,8 @@ namespace AOToolsVue.Settings
 				UnitSchema.Make("User Unit Style 02", "User unit style desc 02"),
 				UnitSchema.Make("User Unit Style 03", "User unit style desc 03")
 			};
+
+		public override string FileVersion { get; set; } = "1.0";
 	}
 
 }

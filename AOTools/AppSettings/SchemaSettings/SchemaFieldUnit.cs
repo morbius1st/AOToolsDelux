@@ -3,11 +3,12 @@ using Autodesk.Revit.DB;
 using Autodesk.Revit.DB.ExtensibleStorage;
 
 using AOTools.AppSettings.RevitSettings;
+using UtilityLibrary;
 
 
 namespace AOTools.AppSettings.SchemaSettings
 {
-	[DataContract(Namespace = "")]
+	[DataContract(Namespace = Header.NSpace)]
 	public class SchemaFieldUnit
 	{
 		[DataMember(Order = 1)]
@@ -104,7 +105,7 @@ namespace AOTools.AppSettings.SchemaSettings
 	}
 
 
-	[DataContract]
+	[DataContract(Namespace = Header.NSpace)]
 	public enum SchemaBoolOpts
 	{
 		NO				= 0,

@@ -1,14 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
-using static UtilityLibrary.MessageUtilities;
-
-using static AOTools.AppSettings.RevitSettings.RevitSettingsUnitUsr;
-using static AOTools.AppSettings.ConfigSettings.SettingsUsr;
 using AOTools.AppSettings.ConfigSettings;
 using AOTools.AppSettings.RevitSettings;
 using AOTools.AppSettings.SchemaSettings;
+using static UtilityLibrary.MessageUtilities;
 
-namespace AOTools.AppSettings.Util
+using static AOTools.AppSettings.ConfigSettings.SettingsApp;
+using static AOTools.AppSettings.ConfigSettings.SettingsUsr;
+using static AOTools.AppSettings.RevitSettings.RevitSettingsUnitApp;
+using static AOTools.AppSettings.RevitSettings.RevitSettingsUnitUsr;
+
+
+namespace AOTools.AppSettings.SettingUtil
 {
 	public static class SettingsListings
 	{
@@ -18,17 +21,18 @@ namespace AOTools.AppSettings.Util
 			ListRevitAppSettings();
 			logMsg("");
 			logMsgDbLn2("revit usr settings");
-			ListUnitDictionary<SchemaDictionaryUsr, SchemaUsrKey>(RsuUsrSetg, 4);
+			ListRevitUsrSettings();
+			
 			logMsg("");
 		}
 
 		public static void ListConfigSettings()
 		{
 			logMsgDbLn2("config app settings");
-			ListUserAppSettings();
+			ListConfigAppSettings();
 			logMsg("");
 			logMsgDbLn2("config user settings");
-			ListUnitDictionary<SchemaDictionaryUsr, SchemaUsrKey>(SmuUsrSetg, 4);
+			ListConfigUsrSettings();
 			logMsg("");
 		}
 
@@ -65,10 +69,15 @@ namespace AOTools.AppSettings.Util
 			return $"key| {keyDesc,-20}  name| {fi.Name,-20} value| {valueDesc,-30} unit type| {fi.UnitType}";
 		}
 
+		public static void ListRevitUsrSettings()
+		{
+			ListUnitDictionary<SchemaDictionaryUsr, SchemaUsrKey>(RsuUsrSetg, 4);
+		}
+
 		public static void ListRevitAppSettings()
 		{
 			logMsgDbLn2("data in dictionary");
-			foreach (KeyValuePair<SchemaAppKey, SchemaFieldUnit> kvp in RevitSettingsUnitApp.RsuAppSetg)
+			foreach (KeyValuePair<SchemaAppKey, SchemaFieldUnit> kvp in RsuAppSetg)
 			{
 				logMsgDbLn2("data", "key| " + kvp.Key + "  name| " + kvp.Value.Name + "  value| " + kvp.Value.Value);
 			}
@@ -76,14 +85,33 @@ namespace AOTools.AppSettings.Util
 			logMsg("");
 		}
 
-		public static void ListUserAppSettings()
+		public static void ListConfigUsrSettings()
 		{
-			logMsgDbLn2("app inits", SettingsApp.SmAppSetg.AppIs[0].ToString()
-				+ "  " + SettingsApp.SmAppSetg.AppIs[1].ToString() + "  " + SettingsApp.SmAppSetg.AppIs[2].ToString());
+			logMsgDbLn2("header");
+			logMsgDbLn2("assm version", SmUsrSetg.Heading.AssemblyVersion);
+			logMsgDbLn2("save date/time", SmUsrSetg.Heading.SaveDateTime);
+			logMsgDbLn2("setting file version", SmUsrSetg.Heading.SettingFileVersion);
+			logMsgDbLn2("setting system version", SmUsrSetg.Heading.SettingSystemVersion);
+
+			ListUnitDictionary<SchemaDictionaryUsr, SchemaUsrKey>(SmuUsrSetg, 4);
+		}
+
+
+		public static void ListConfigAppSettings()
+		{
+			logMsgDbLn2("header");
+			logMsgDbLn2("assm version", SmAppSetg.Heading.AssemblyVersion);
+			logMsgDbLn2("save date/time", SmAppSetg.Heading.SaveDateTime);
+			logMsgDbLn2("setting file version", SmAppSetg.Heading.SettingFileVersion);
+			logMsgDbLn2("setting system version", SmAppSetg.Heading.SettingSystemVersion);
+
+
+			logMsgDbLn2("app inits", SmAppSetg.AppIs[0].ToString()
+				+ "  " + SmAppSetg.AppIs[1].ToString() + "  " + SmAppSetg.AppIs[2].ToString());
 
 
 			logMsgDbLn2("data in dictionary");
-			foreach (KeyValuePair<SchemaAppKey, SchemaFieldUnit> kvp in SettingsApp.SmAppSetg.SettingsAppData)
+			foreach (KeyValuePair<SchemaAppKey, SchemaFieldUnit> kvp in SmAppSetg.SettingsAppData)
 			{
 				logMsgDbLn2("data", "key| " + kvp.Key + "  name| " + kvp.Value.Name + "  value| " + kvp.Value.Value);
 			}

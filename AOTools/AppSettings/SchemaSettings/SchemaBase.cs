@@ -6,6 +6,7 @@ using System.Runtime.Serialization;
 using Autodesk.Revit.DB;
 
 using AOTools.AppSettings.RevitSettings;
+using UtilityLibrary;
 
 //using Autodesk.Revit.DB;
 //using Autodesk.Revit.DB.ExtensibleStorage;
@@ -43,7 +44,7 @@ namespace AOTools.AppSettings.SchemaSettings
 
 
 	// basic schema is only saved in the Revitfile
-	[DataContract]
+	[DataContract(Namespace = Header.NSpace)]
 	public class SchemaUnitApp
 	{
 		
@@ -101,7 +102,7 @@ namespace AOTools.AppSettings.SchemaSettings
 	// the app settings as a list of office standard unit styles
 	// the user settings for a list of their personal unit styles
 	// in the revit files as a list of custom unit styles
-	[DataContract]
+	[DataContract(Namespace = Header.NSpace)]
 	public class SchemaUnitUsr 
 	{
 		protected const string SCHEMA_NAME = "UnitStyleSchema";

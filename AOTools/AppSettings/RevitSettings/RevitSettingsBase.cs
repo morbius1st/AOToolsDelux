@@ -3,7 +3,7 @@
 using System;
 using System.Collections.Generic;
 using AOTools.AppSettings.SchemaSettings;
-using AOTools.AppSettings.Util;
+using AOTools.AppSettings.SettingUtil;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.DB.ExtensibleStorage;
 using static Autodesk.Revit.DB.ExtensibleStorage.Schema;
@@ -221,7 +221,8 @@ namespace AOTools.AppSettings.RevitSettings
 		{
 			DUPLICATE = -1,
 			FAIL = 0,
-			GOOD = 1
+			GOOD = 1,
+			NOT_INIT = 2
 
 		}
 

@@ -1,6 +1,7 @@
 ﻿#region Using directives
 
 using System.Collections.Generic;
+using System.Xml;
 using AOTools.AppSettings.ConfigSettings;
 using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
@@ -12,7 +13,7 @@ using UtilityLibrary;
 using static AOTools.AppSettings.ConfigSettings.SettingsUsr;
 using static AOTools.AppSettings.SchemaSettings.SchemaAppKey;
 using static AOTools.AppSettings.SchemaSettings.SchemaUsrKey;
-using static AOTools.AppSettings.Util.SettingsListings;
+using static AOTools.AppSettings.SettingUtil.SettingsListings;
 
 using static AOTools.AppSettings.RevitSettings.RevitSettingsMgr;
 using static AOTools.AppSettings.RevitSettings.RevitSettingsUnitUsr;
@@ -44,6 +45,7 @@ namespace AOTools
 
 			SmAppInit();
 			SmUsrInit();
+			RsMgr.Read();
 
 			RevitSettingsUnitApp a = RsuApp;
 			SchemaDictionaryApp b = RsuAppSetg;
@@ -58,11 +60,58 @@ namespace AOTools
 			SettingsUsrBase j = SmUsrSetg;
 			List<SchemaDictionaryUsr> k = SmuUsrSetg;
 
-
-			test101();
+			test111();
+			logMsg("");
+			test112();
 
 			return Result.Succeeded;
 		}
+
+		// test config setting functions
+		private void test111()
+		{
+			logMsgDbLn2("config Settings", "before");
+			logMsg("");
+
+			ListConfigSettings();
+
+			logMsg("");
+			logMsgDbLn2("config Settings", "reset");
+			SmUsr.Reset();
+			SmApp.Reset();
+
+			ListConfigSettings();
+
+			logMsg("");
+			logMsgDbLn2("config Settings", "save");
+			SmUsr.Save();
+			SmApp.Save();
+
+			
+		}
+
+		// test revit setting functions
+		private void test112()
+		{
+			logMsgDbLn2("revit Settings", "before");
+			logMsg("");
+
+			logMsgDbLn2("revit setting initalized", RvtSetgInitalized.ToString());
+
+			ListRevitSettings();
+
+			logMsg("");
+			logMsgDbLn2("revit Settings", "reset");
+			RsMgr.Reset();
+			ListRevitSettings();
+
+			logMsg("");
+			logMsgDbLn2("revit Settings", "save");
+			RsMgr.Save();
+			ListRevitSettings();
+
+		}
+
 
 		// test transfer settings from user to revit and visa versa
 		private void test101()
@@ -78,7 +127,7 @@ namespace AOTools
 			logMsgDbLn2("revit Settings", "before");
 			logMsg("");
 
-			RsMgr.Read();
+			logMsgDbLn2("revit setting initalized", RvtSetgInitalized.ToString());
 
 			ListRevitSettings();
 		}
@@ -106,13 +155,7 @@ namespace AOTools
 			logMsg("");
 			ListUnitDictionary<SchemaDictionaryUsr, SchemaUsrKey>(SmUsrSetg.UnitStylesList, 4);
 
-			SmUsrSetg.FormMeasurePointsLocation = new System.Drawing.Point(100, 100);
-			SmUsrSetg.MeasurePointsShowWorkplane = true;
-
-			for (int i = 0; i < SmUsrSetg.Count; i++)
-			{
-				SmUsrSetg.UnitStylesList[i][STYLE_NAME].Value = "Revised Style Name " + i;
-			}
+			ModifyConfigSettings("test21");
 
 			SmUsr.Save();
 
@@ -214,21 +257,7 @@ namespace AOTools
 			RevitSettingsBase.ListRevitSettingInfo(4);
 			logMsg("");
 
-			RsuAppSetg[VERSION_BASIC].Value = (testVal * 10.00).ToString();
-
-			RsuAppSetg[AUTO_RESTORE].Value = (testVal / 10) % 2 == 0;
-
-			RsuUsrSetg[0][VERSION_UNIT].Value = "sub version " + (testVal + 1);
-			RsuUsrSetg[0][STYLE_NAME].Value = "style name " + (testVal + 1);
-			RsuUsrSetg[0][STYLE_DESC].Value = "style description " + (testVal + 1);
-
-			RsuUsrSetg[1][VERSION_UNIT].Value = "sub version " + (testVal + 2);
-			RsuUsrSetg[1][STYLE_NAME].Value = "style name " + (testVal + 2);
-			RsuUsrSetg[1][STYLE_DESC].Value = "style description " + (testVal + 2);
-
-			RsuUsrSetg[2][VERSION_UNIT].Value = "sub version " + (testVal + 3);
-			RsuUsrSetg[2][STYLE_NAME].Value = "style name " + (testVal + 3);
-			RsuUsrSetg[2][STYLE_DESC].Value = "style description " + (testVal + 3);
+			ModifyRevitSettings("test1");
 
 			logMsg("");
 			if (!RsMgr.Save())
@@ -255,6 +284,34 @@ namespace AOTools
 			logMsg("");
 			logMsgDbLn2("revit saved settings");
 			RevitSettingsBase.ListRevitSettingInfo();
+		}
+
+		private void ModifyRevitSettings(string msg, int count = 3)
+		{
+			RsuAppSetg[VERSION_BASIC].Value = (testVal * 11.00).ToString();
+
+			RsuAppSetg[AUTO_RESTORE].Value = false;
+
+			for (int i = 0; i < count; i++)
+			{
+				RsuUsrSetg[i][VERSION_UNIT].Value = "(" + msg + ") sub version " + (testVal + i + 1);
+				RsuUsrSetg[i][STYLE_NAME].Value = "(" + msg + ") style name " + (testVal + i + 1);
+				RsuUsrSetg[i][STYLE_DESC].Value = "(" + msg + ") style description " + (testVal + i + 1);
+			}
+
+		}
+
+		private void ModifyConfigSettings(string msg, int count = 3)
+		{
+			SmUsrSetg.FormMeasurePointsLocation = new System.Drawing.Point(100 + testVal, 100 + testVal);
+			SmUsrSetg.MeasurePointsShowWorkplane = false;
+
+			for (int i = 0; i < count; i++)
+			{
+				SmuUsrSetg[i][VERSION_UNIT].Value = "(" + msg + ") sub version " + (testVal + i + 1);
+				SmuUsrSetg[i][STYLE_NAME].Value = "(" + msg + ") Style Name " + i;
+				SmuUsrSetg[i][STYLE_DESC].Value = "(" + msg + ") style description " + (testVal + i + 1);
+			}
 		}
 
 	}

@@ -14,6 +14,8 @@ using UtilityLibrary;
 namespace AOTools.AppSettings.ConfigSettings
 {
 	// no app settings yet.
+	[DataContract(Namespace = Header.NSpace)]
+	//	[DataContract]
 	public static class SettingsApp
 	{
 		public static SettingsMgr<SettingsAppBase> SmApp { get; private set; }
@@ -24,7 +26,7 @@ namespace AOTools.AppSettings.ConfigSettings
 		{
 			SmApp = new SettingsMgr<SettingsAppBase>();
 			SmAppSetg = SmApp.Settings;
-			SmAppSetg.Header = new Header(SettingsAppBase.APPSETTINGFILEVERSION);
+//			SmAppSetg.Heading = new Header(SettingsAppBase.APPSETTINGFILEVERSION);
 		}
 
 		public static bool IsAppSetgValid()
@@ -33,15 +35,18 @@ namespace AOTools.AppSettings.ConfigSettings
 		}
 	}
 
-	[DataContract(Namespace = "")]
+	[DataContract(Namespace = Header.NSpace)]
+	//	[DataContract]
 	public class SettingsAppBase : SettingsPathFileAppBase
 	{
-		public const string APPSETTINGFILEVERSION = "1.0";
-		
+		public override string FileVersion { get; set; } = "1.1";
+
 		[DataMember]
 		public int[] AppIs { get; set; } = new[] {10, 20, 30 };
 
 		[DataMember]
 		public SchemaDictionaryApp SettingsAppData = RsuApp.DefAppSchema;
+
+		
 	}
 }

@@ -17,7 +17,8 @@ using static AOTools.AppSettings.SchemaSettings.SchemaUnitUtil;
 
 namespace AOTools.AppSettings.ConfigSettings
 {
-	[DataContract]
+	[DataContract(Namespace = Header.NSpace)]
+//	[DataContract]
 	public static class SettingsUsr
 	{
 		public static SettingsMgr<SettingsUsrBase> SmUsr { get; private set; }
@@ -30,7 +31,7 @@ namespace AOTools.AppSettings.ConfigSettings
 			SmUsr = new SettingsMgr<SettingsUsrBase>();
 			SmUsrSetg = SmUsr.Settings;
 			SmuUsrSetg = SmUsrSetg.UnitStylesList;
-			SmUsrSetg.Header = new Header(SettingsUsrBase.USERSETTINGFILEVERSION);
+//			SmUsrSetg.Heading = new Header(SettingsUsrBase.USERSETTINGFILEVERSION);
 		}
 		public static bool IsValid()
 		{
@@ -39,12 +40,12 @@ namespace AOTools.AppSettings.ConfigSettings
 	}
 
 	// sample Settings User
-	[DataContract(Namespace = "")]
+	[DataContract(Namespace = Header.NSpace)]
 	public class SettingsUsrBase : SettingsPathFileUserBase
 	{
 		public int Count => UnitStylesList.Count;
 
-		public const string USERSETTINGFILEVERSION = "1.0";
+		public override string FileVersion { get; set; } = "1.1";
 
 		[DataMember]
 		public Point FormMeasurePointsLocation = new Point(0, 0);

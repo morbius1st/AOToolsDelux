@@ -89,7 +89,7 @@
       <Link>AppSettings\Settings\SettingsMgr.cs</Link>
     </Compile>
     <Compile Include="AppRibbon.cs" />
-    <Compile Include="AppSettings\Util\SettingsListings.cs" />
+    <Compile Include="AppSettings\SettingUtil\SettingsListings.cs" />
     <Compile Include="AppSettings\SchemaSettings\SchemaUnitUtil.cs" />
     <Compile Include="UnitStylesDelete.cs" />
     <Compile Include="DxMeasure.cs" />
@@ -140,6 +140,7 @@
   <ItemGroup>
     <None Include="Other\ClassDiagram1.cd" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PostBuildEvent>if exist "$(AppData)\Autodesk\REVIT\Addins\2017" copy "$(ProjectDir)other\*.addin" "$(AppData)\Autodesk\REVIT\Addins\2017"
