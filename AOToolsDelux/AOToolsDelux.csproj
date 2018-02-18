@@ -125,6 +125,7 @@
     <Content Include="Other\AOTools.addin">
       <SubType>Designer</SubType>
     </Content>
+    <Content Include="Other\New Text Document.txt" />
     <EmbeddedResource Include="Resources\information16.png" />
     <EmbeddedResource Include="Resources\information32.png" />
   </ItemGroup>
