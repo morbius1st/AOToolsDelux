@@ -27,6 +27,16 @@
     <VendorId>pro.cyberstudio</VendorId>
     <VendorDescription>CyberStudio</VendorDescription>
   </AddIn>
+	<AddIn Type="Command">
+		<Text>RevCloud</Text>
+		<Description>Revision Cloud</Description>
+		<Assembly>AOTools.dll</Assembly>
+		<FullClassName>AOTools.RevCloud</FullClassName>
+		<ClientId>03AFD29B-87F5-4D29-8060-16E477D2FEE2</ClientId>
+		<VendorId>pro.cyberstudio</VendorId>
+		<VendorDescription>CyberStudio</VendorDescription>
+	</AddIn>
+
   <AddIn Type="Application">
     <Name>Application AOTools</Name>
     <Assembly>AOTools.dll</Assembly>

@@ -45,7 +45,7 @@ namespace AOTools.AppSettings.ConfigSettings
 	{
 		public int Count => UnitStylesList.Count;
 
-		public override string FileVersion { get; set; } = "1.1";
+		public override string FileVersion { get; } = "1.1";
 
 		[DataMember]
 		public Point FormMeasurePointsLocation = new Point(0, 0);

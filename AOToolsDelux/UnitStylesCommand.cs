@@ -10,7 +10,7 @@ using Autodesk.Revit.UI;
 using AOTools.AppSettings.RevitSettings;
 using AOTools.AppSettings.SchemaSettings;
 using UtilityLibrary;
-using static AOTools.AppSettings.ConfigSettings.SettingsUsr;
+
 using static AOTools.AppSettings.SchemaSettings.SchemaAppKey;
 using static AOTools.AppSettings.SchemaSettings.SchemaUsrKey;
 using static AOTools.AppSettings.SettingUtil.SettingsListings;
@@ -41,7 +41,7 @@ namespace AOTools
 
 		public Result Execute(ExternalCommandData commandData, ref string message, ElementSet elements)
 		{
-			output = outputLocation.debug;
+			OutLocation = OutputLocation.DEBUG;
 
 			SmAppInit();
 			SmUsrInit();

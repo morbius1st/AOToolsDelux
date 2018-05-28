@@ -25,7 +25,7 @@ namespace AOTools
 	{
 		public Result Execute(ExternalCommandData commandData, ref string message, ElementSet elements)
 		{
-			output = outputLocation.debug;
+			OutLocation = OutputLocation.DEBUG;
 
 			logMsgDbLn2("delete unit styles", "before");
 			RevitSettingsBase.ListRevitSchema();

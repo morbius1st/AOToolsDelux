@@ -39,7 +39,7 @@ namespace AOTools.AppSettings.ConfigSettings
 	//	[DataContract]
 	public class SettingsAppBase : SettingsPathFileAppBase
 	{
-		public override string FileVersion { get; set; } = "1.1";
+		public override string FileVersion { get; } = "1.1";
 
 		[DataMember]
 		public int[] AppIs { get; set; } = new[] {10, 20, 30 };

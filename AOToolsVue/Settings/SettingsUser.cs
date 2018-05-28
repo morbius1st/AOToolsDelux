@@ -50,7 +50,7 @@ namespace AOToolsVue.Settings
 				UnitSchema.Make("User Unit Style 03", "User unit style desc 03")
 			};
 
-		public override string FileVersion { get; set; } = "1.0";
+		public override string FileVersion { get;  } = "1.0";
 	}
 
 }

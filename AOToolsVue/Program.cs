@@ -13,9 +13,9 @@ namespace AOToolsVue
 	{
 		static void Main(string[] args)
 		{
-//			MessageUtilities.output = MessageUtilities.outputLocation.console;
+			//			MessageUtilities.output = MessageUtilities.outputLocation.console;
 
-			logMsgFmtln("settings test| ", "begin");
+			logMsgDbLn2("settings test| ", "begin");
 
 			ProcessUserSettings();
 
@@ -34,8 +34,8 @@ namespace AOToolsVue
 
 		private static void ProcessUserSettings()
 		{
-			logMsgFmtln("settings test user| ", "begin");
-			logMsgFmtln("file location| ", SettingsUser.USettings.SettingsPathAndFile);
+			logMsgDbLn2("settings test user| ", "begin");
+			logMsgDbLn2("file location| ", SettingsUser.USettings.SettingsPathAndFile);
 
 			SettingsUser.USet.UserUnitStyleSchemas[0][eSTYLE_NAME].Name = "Style0Name";
 
@@ -46,8 +46,8 @@ namespace AOToolsVue
 
 		private static void DisplayUserData()
 		{
-			logMsgFmtln("point| ", SettingsUser.USet.FormMeasurePointsLocation);
-			logMsgFmtln("name| ", SettingsUser.USet.UserUnitStyleSchemas[0][eSTYLE_NAME].Name);
+			logMsgDbLn2("point| ", SettingsUser.USet.FormMeasurePointsLocation);
+			logMsgDbLn2("name| ", SettingsUser.USet.UserUnitStyleSchemas[0][eSTYLE_NAME].Name);
 		}
 
 	}

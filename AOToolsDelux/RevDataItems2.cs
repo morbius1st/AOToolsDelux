@@ -1,0 +1,170 @@
+﻿using System;
+using System.Collections;
+using System.Collections.Generic;
+using System.Runtime.CompilerServices;
+using Autodesk.Revit.DB;
+using static AOTools.ERevDataItems2;
+using static AOTools.EDataType;
+using static AOTools.ERevSource;
+using static AOTools.EDataUsage;
+
+
+namespace AOTools
+{
+	// this represents a one tag / cloud
+	public class RevDataItems2 : IEnumerable
+	{
+		// these fields represent the data items - this represents their
+		// array position
+
+		private dynamic[] _revDataItems2;
+
+		public RevDataItems2()
+		{
+			_revDataItems2 = new dynamic[(int) REV_ITEMS_LEN];
+		}
+
+		public IEnumerator GetEnumerator()
+		{
+			return _revDataItems2.GetEnumerator();
+		}
+
+		public dynamic this[int idx]
+		{
+			get => _revDataItems2[idx];
+			set => _revDataItems2[idx] = value;
+		}
+
+		public dynamic this[ERevDataItems2 idx]
+		{
+			get => _revDataItems2[(int) idx];
+			set => _revDataItems2[(int) idx] = value;
+		}
+
+		public int? AsInt(ERevDataItems2 idx)
+		{
+			if (RevDataDescription.GetInstance[idx].Type != INT) return null;
+
+			return (int) _revDataItems2[(int) idx];
+		}
+
+		public bool? AsBool(ERevDataItems2 idx)
+		{
+			if (RevDataDescription.GetInstance[idx].Type != BOOL) return null;
+
+			return (bool) _revDataItems2[(int) idx];
+		}
+
+		public ElementId AsElementId(ERevDataItems2 idx)
+		{
+			if (RevDataDescription.GetInstance[idx].Type != ELEMENTID) return null;
+
+			return (ElementId) _revDataItems2[(int) idx];
+		}
+
+		public RevisionVisibility? AsRevVisibility(ERevDataItems2 idx)
+		{
+			if (RevDataDescription.GetInstance[idx].Type != VISIBILITY) return null;
+
+			return (RevisionVisibility) _revDataItems2[(int) idx];
+		}
+
+		public String AsString(ERevDataItems2 idx)
+		{
+			if (RevDataDescription.GetInstance[idx].Type != STRING) return null;
+
+			return (string) _revDataItems2[(int) idx];
+		}
+
+		public bool Selected
+		{
+			get => (bool) _revDataItems2[(int) REV_SELECTED];
+			set => _revDataItems2[(int) REV_SELECTED] = value;
+		}
+		// read only
+		public int Sequence
+		{
+			get => (int) _revDataItems2[(int) REV_SEQ];
+			set => _revDataItems2[(int) REV_SEQ] = value;
+		}
+
+		public string AltId
+		{
+			get => (string) _revDataItems2[(int) REV_KEY_ALTID];
+			set => _revDataItems2[(int) REV_KEY_ALTID] = value;
+		}
+
+		public string TypeCode
+		{
+			get => (string) _revDataItems2[(int) REV_KEY_TYPE_CODE];
+			set => _revDataItems2[(int) REV_KEY_TYPE_CODE] = value;
+		}
+
+		public string DisciplineCode
+		{
+			get => (string) _revDataItems2[(int) REV_KEY_DISCIPLINE_CODE];
+			set => _revDataItems2[(int) REV_KEY_DISCIPLINE_CODE] = value;
+		}
+
+		public string DeltaTitle
+		{
+			get => (string) _revDataItems2[(int) REV_KEY_DELTA_TITLE];
+			set => _revDataItems2[(int) REV_KEY_DELTA_TITLE] = value;
+		}
+
+		public string SheetNumber
+		{
+			get => (string) _revDataItems2[(int) REV_KEY_SHTNUM];
+			set => _revDataItems2[(int) REV_KEY_SHTNUM] = value;
+		}
+
+		public RevisionVisibility Visibility
+		{
+			get => (RevisionVisibility) _revDataItems2[(int) REV_ITEM_VISIBLE];
+			set => _revDataItems2[(int) REV_ITEM_VISIBLE] = value;
+		}
+
+		public string RevisionId
+		{
+			get => (string) _revDataItems2[(int) REV_ITEM_REVID];
+			set => _revDataItems2[(int) REV_ITEM_REVID] = value;
+		}
+
+		public  string BlockTitle
+		{
+			get => (string) _revDataItems2[(int) REV_ITEM_BLOCK_TITLE];
+			set => _revDataItems2[(int) REV_ITEM_BLOCK_TITLE] = value;
+		}
+
+		public  string RevisionDate
+		{
+			get => (string) _revDataItems2[(int) REV_ITEM_DATE];
+			set => _revDataItems2[(int) REV_ITEM_DATE] = value;
+		}
+
+		public  string Basis
+		{
+			get => (string) _revDataItems2[(int) REV_ITEM_BASIS];
+			set => _revDataItems2[(int) REV_ITEM_BASIS] = value;
+		}
+
+		public  ElementId TagElemId
+		{
+			get => (ElementId) _revDataItems2[(int) REV_TAG_ELEM_ID];
+			set => _revDataItems2[(int) REV_TAG_ELEM_ID] = value;
+		}
+
+		public  ElementId CloudElemId
+		{
+			get => (ElementId) _revDataItems2[(int) REV_CLOUD_ELEM_ID];
+			set => _revDataItems2[(int) REV_CLOUD_ELEM_ID] = value;
+		}
+		public  string Description
+		{
+			get => (string) _revDataItems2[(int) REV_ITEM_DESC];
+			set => _revDataItems2[(int) REV_ITEM_DESC] = value;
+		}
+
+
+	}
+}

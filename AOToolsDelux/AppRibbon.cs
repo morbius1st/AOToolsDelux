@@ -44,7 +44,7 @@ namespace AOTools
 		{
 			_uiCtrlApp = app;
 
-			clearConsole();
+//			clearConsole();
 
 			try
 			{
@@ -265,28 +265,28 @@ namespace AOTools
 		{
 			Doc = args.Document;
 
-			logMsgDbLn2("doc open event", "0");
+//			logMsgDbLn2("doc open event", "0");
 
 			SetUnits();
 
-			logMsgDbLn2("doc open event", "9");
+//			logMsgDbLn2("doc open event", "9");
 
 		}
 
 		private void DocCreatingEvent(object sender, DocumentCreatingEventArgs args)
 		{
-			logMsgDbLn2("doc creating event", "0");
+//			logMsgDbLn2("doc creating event", "0");
 
 			if (args.DocumentType == DocumentType.Family)
 			{
 				_familyDocumentCreated = true;
-				logMsgDbLn2("doc creating event", "got family");
+//				logMsgDbLn2("doc creating event", "got family");
 			}
 
 			SetUnits();
 
 
-			logMsgDbLn2("doc creating event", "9");
+//			logMsgDbLn2("doc creating event", "9");
 		}
 
 
@@ -305,7 +305,7 @@ namespace AOTools
 
 		private bool SetUnits()
 		{
-			logMsgDbLn2("set units", "0");
+//			logMsgDbLn2("set units", "0");
 
 			Units u = Doc.GetUnits();
 
@@ -338,7 +338,7 @@ namespace AOTools
 			}
 			_unitsConfigured = false;
 
-			logMsgDbLn2("set units", "9");
+//			logMsgDbLn2("set units", "9");
 
 			return _unitsConfigured;
 		}
