@@ -36,7 +36,10 @@
 		REV_ITEMS_LEN,            // the total number of items
 
 		// management items - these enums are not stored in the items collection
-		REV_MGMT_COLUMN = -1,     // (derived) the title for the column field 
+		REV_MGMT_COLUMN = -1,     // (derived) the title for the column field the
+		//                        // column is only stored with the data description
+		REV_KEY = -2,             // (derived) the list key for the items
+		//
 		REV_MGMT_LEN = 1,         // number of management items
 
 		// control items

@@ -44,7 +44,7 @@ namespace AOTools
 		private static void Read()
 		{
 			// initalize the master revision list
-			RevData.Init();
+			RevData2.Init();
 			RevCloudMasterList2 = RevData2.RevisionInfo;
 		}
 

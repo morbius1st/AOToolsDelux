@@ -1,0 +1,28 @@
+            
+
+     _RevCloud_ ________________ RevCloudData2 ____________________      _____________________________ RevData2 ________________________________
++---> RevCloud                                                          
+|           |                                                            
+|  +-----|  +-> RevCloudData2.GetInstance()                              
+|  |                |                                                    
+R  R                +--------> RevCloudData2.Read()                      
+e  e                .               |                                                             +-----------------------+
+v  v                .               |                                                             v                       |
+C  C                .               +------------------------------>     RevData2.Init() --> RevData2:GetRevClouds() --> RevData2:GetRevInfo()
+l  l                .               .                                                             |
+o  o                .               .                                                             v
+u  u                .               +-------------------------------     RevData2::[SortedList<string, RevDataItems2>]
+d  d                .               |                                    
+|  D                .               v                                    
+|  a                +--------- RevCloudData2::[RevCloudMasterList2] =    RevData2.RevisionInfo
+|  t                |          
+|  a                |            
+|  2                |            
+|  |                |
+|  +-----------------------|
+|                   v
+|                  rcd2  [RevCloudData2]
+         
+                       
+                       
+                  

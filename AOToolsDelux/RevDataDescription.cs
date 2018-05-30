@@ -182,13 +182,18 @@ namespace AOTools
 
 			// the below are "management" fields that may or may not
 			// exist in the data collection
-			// this is the
+			// this is the column assigned to this data item - only stored
+			// in the data descriptions
 			DataDesc.Add( REV_MGMT_COLUMN,
 				new DataDescription(REV_MGMT_COLUMN, REV_SOURCE_DERIVED,
 					INT, NONE, "Column", true,
 					new DataDescription.DataDisplay(5, "4", null)));
+			DataDesc.Add( REV_KEY,
+				new DataDescription(REV_KEY, REV_SOURCE_DERIVED,
+					INT, NONE, "Key", true,
+					new DataDescription.DataDisplay(32, "30", null)));
 		}
-
+		
 	}
 
 	public class DataDescription

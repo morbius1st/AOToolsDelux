@@ -77,9 +77,9 @@ namespace AOTools
 				item.Sequence        = rev.SequenceNumber;
 				item.DeltaTitle		 = revCloud.get_Parameter(BuiltInParameter.REVISION_CLOUD_REVISION_ISSUED_TO).AsString();
 				item.AltId           = revCloud.get_Parameter(BuiltInParameter.REVISION_CLOUD_REVISION_ISSUED_BY).AsString();
-				item.SheetNumber	 = GetSheetNumber(revCloud);
+				item.ShtNum	 = GetSheetNumber(revCloud);
 				item.TypeCode        = GetTypeSortCode(item.DeltaTitle);
-				item.DisciplineCode	 = GetDisciplineSortCode(item.SheetNumber);
+				item.DisciplineCode	 = GetDisciplineSortCode(item.ShtNum);
 				item.Visibility		 = rev.Visibility;
 				item.RevisionId		 = revCloud.get_Parameter(BuiltInParameter.REVISION_CLOUD_REVISION_NUM).AsString();
 				item.BlockTitle		 = revCloud.get_Parameter(BuiltInParameter.REVISION_CLOUD_REVISION_DESCRIPTION).AsString();
@@ -90,7 +90,7 @@ namespace AOTools
 				item.CloudElemId	 = cloudId??ElementId.InvalidElementId;
 
 				string key = GetSortKey(item.AltId, item.TypeCode,
-					item.DisciplineCode, item.DeltaTitle, item.SheetNumber);
+					item.DisciplineCode, item.DeltaTitle, item.ShtNum);
 
 				_revisionInfo2.Add(key, item);
 			}

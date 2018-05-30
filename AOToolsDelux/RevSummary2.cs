@@ -1,13 +1,13 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 
-using static AOTools.RevSummary.EListSubject;
+using static AOTools.RevSummary2.EListSubject;
 
 namespace AOTools
 {
 	// keep track of some of th columns to allow the 
 	// user to select what they want
-	public class RevSummary : IEnumerable<KeyValuePair<int,RevSummary.ListData>>
+	public class RevSummary2 : IEnumerable<KeyValuePair<int,RevSummary2.ListData>>
 	{
 		// need to be a bit complex as we need to present only
 		// true available choices - this means that most of the lists are blank
@@ -15,7 +15,6 @@ namespace AOTools
 		private const string ANY = "any";
 
 		// these are in order of precidence
-		// these are the items that can be searched
 		public enum EListSubject
 		{
 			LIST_SEQUENCE = 0,
@@ -36,9 +35,9 @@ namespace AOTools
 
 		private SortedList<int, ListData> _sumMastList = new SortedList<int, ListData>((int) LIST_COUNT);
 
-		private SortedList<RevDataKey, RevDataItems> revInfo;
+		private SortedList<string, RevDataItems2> revInfo;
 
-		public RevSummary(SortedList<RevDataKey, RevDataItems> revisionInfo)
+		public RevSummary2(SortedList<string, RevDataItems2> revisionInfo)
 		{
 			ListsCreate();
 
@@ -46,7 +45,7 @@ namespace AOTools
 		}
 
 		// reset all data to the default values
-		public void Reset(SortedList<RevDataKey, RevDataItems> revisionInfo)
+		public void Reset(SortedList<string, RevDataItems2> revisionInfo)
 		{
 			if (revisionInfo != null) revInfo = revisionInfo;
 
@@ -54,9 +53,9 @@ namespace AOTools
 			InitLists(true, true);
 			InitChoices(true, true);
 
-			foreach (KeyValuePair<RevDataKey, RevDataItems> kvp in revInfo)
+			foreach (KeyValuePair<string, RevDataItems2> kvp in revInfo)
 			{
-				AddToLists(kvp.Key, kvp.Value);
+				AddToLists(kvp.Value);
 			}
 
 			ListsSort();
@@ -80,16 +79,6 @@ namespace AOTools
 					Summary = new List<string>(10)
 				});
 			}
-			
-//			// create the empty lists for the first time
-//			for (int i = 0; i < (int) LIST_COUNT; i++)
-//			{
-//				_summarySelectedLists.Add(i, new ListData()
-//				{
-//					Choice = ANY,
-//					Summary = new List<string>(10)
-//				});
-//			}
 		}
 
 		private void InitChoices(bool master, bool selected)
@@ -118,15 +107,15 @@ namespace AOTools
 			}
 		}
 
-		private void AddToLists(RevDataKey Key, RevDataItems Value)
+		private void AddToLists(RevDataItems2 value)
 		{
-			AddToList(LIST_SEQUENCE, Value.Sequence);
-			AddToList(LIST_REVALTID, Key.RevAltId);
-			AddToList(LIST_DELTATITLE, Key.RevDeltaTitle);
-			AddToList(LIST_SHTNUM, Key.RevShtNumber);
-			AddToList(LIST_BLOCKTITLE, Value.RevBlockTitle);
-			AddToList(LIST_BASIS, Value.RevBasis);
-			AddToList(LIST_DESC, Value.RevDescription);
+			AddToList(LIST_SEQUENCE, value.Sequence.ToString());
+			AddToList(LIST_REVALTID, value.AltId);
+			AddToList(LIST_DELTATITLE, value.DeltaTitle);
+			AddToList(LIST_SHTNUM, value.ShtNum);
+			AddToList(LIST_BLOCKTITLE, value.BlockTitle);
+			AddToList(LIST_BASIS, value.Basis);
+			AddToList(LIST_DESC, value.Description);
 		}
 
 		private void AddToList(EListSubject Elist, string value)
@@ -186,15 +175,15 @@ namespace AOTools
 
 			// read through each item and create the lists based on the search criteria
 			// list is sorted and provided in sequence order
-			foreach (KeyValuePair<RevDataKey, RevDataItems> kvp in revInfo)
+			foreach (KeyValuePair<string, RevDataItems2> kvp in revInfo)
 			{
-				chkList[(int) LIST_SEQUENCE] = kvp.Value.Sequence;
-				chkList[(int) LIST_REVALTID] = kvp.Key.RevAltId.Trim();
-				chkList[(int) LIST_SHTNUM] = kvp.Key.RevShtNumber;
-				chkList[(int) LIST_DELTATITLE] = kvp.Key.RevDeltaTitle;
-				chkList[(int) LIST_BLOCKTITLE] = kvp.Value.RevBlockTitle;
-				chkList[(int) LIST_BASIS] = kvp.Value.RevBasis;
-				chkList[(int) LIST_DESC] = kvp.Value.RevDescription;
+				chkList[(int) LIST_SEQUENCE] = kvp.Value.Sequence.ToString();
+				chkList[(int) LIST_REVALTID] = kvp.Value.AltId.Trim();
+				chkList[(int) LIST_SHTNUM] = kvp.Value.ShtNum;
+				chkList[(int) LIST_DELTATITLE] = kvp.Value.DeltaTitle;
+				chkList[(int) LIST_BLOCKTITLE] = kvp.Value.BlockTitle;
+				chkList[(int) LIST_BASIS] = kvp.Value.Basis;
+				chkList[(int) LIST_DESC] = kvp.Value.Description;
 
 				bool result = true;
 
@@ -222,7 +211,7 @@ namespace AOTools
 			}
 		}
 
-		public IEnumerator<KeyValuePair<int,RevSummary.ListData>> GetEnumerator()
+		public IEnumerator<KeyValuePair<int,RevSummary2.ListData>> GetEnumerator()
 		{
 			return _sumMastList.GetEnumerator();
 		}

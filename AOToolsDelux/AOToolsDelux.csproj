@@ -109,8 +109,10 @@
     <Compile Include="RevDataKey.cs" />
     <Compile Include="RevEnums.cs" />
     <Compile Include="RevExport.cs" />
+    <Compile Include="RevSelectCriteria2.cs" />
     <Compile Include="RevSelectCriteria.cs" />
     <Compile Include="RevSort.cs" />
+    <Compile Include="RevSummary2.cs" />
     <Compile Include="RevSummary.cs" />
     <Compile Include="UnitStylesDelete.cs" />
     <Compile Include="DxMeasure.cs" />

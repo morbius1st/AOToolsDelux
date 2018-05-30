@@ -112,7 +112,7 @@ namespace AOTools
 			set => _revDataItems2[(int) REV_KEY_DELTA_TITLE] = value;
 		}
 
-		public string SheetNumber
+		public string ShtNum
 		{
 			get => (string) _revDataItems2[(int) REV_KEY_SHTNUM];
 			set => _revDataItems2[(int) REV_KEY_SHTNUM] = value;

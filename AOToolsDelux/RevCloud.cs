@@ -66,7 +66,8 @@ namespace AOTools
 
 			// initalize and read all of the revision data
 //			RevCloudData rcd = RevCloudData.GetInstance();
-			
+
+			#region + Original Tests
 
 //			ListRevInfo5(rcd.MasterList);
 
@@ -79,6 +80,7 @@ namespace AOTools
 //			test5(rcd.MasterList);
 //			test6(rcd.MasterList);
 
+			#endregion
 
 			// these are for the new system
 			RevCloudData2 rcd2 = RevCloudData2.GetInstance();
@@ -99,6 +101,30 @@ namespace AOTools
 			ListRevInfo2_1(rcd2.SelectedList);
 			logMsg2(nl);
 		}
+
+		private void ListSummary2(RevSummary rs)
+		{
+			string[] names = Enum.GetNames(typeof(RevSummary2.EListSubject));
+
+			int i = 0;
+
+			// scan through each of the lists and list its values
+			foreach (KeyValuePair<int, RevSummary.ListData> kvp in rs)
+			{
+				logMsgLn2("listing for", names[i++]);
+				logMsgLn2("choice is", ">" + kvp.Value.Choice + "<");
+				logMsgLn2("count", kvp.Value.Summary.Count);
+
+				int j = 0;
+
+				foreach (string s in kvp.Value.Summary)
+				{
+					logMsgLn2("item " + j, s);
+				}
+			}
+		}
+
+		#region + Original Tests
 
 		// these are for the old system
 		private void test5(SortedList<RevDataKey, RevDataItems> rcd)
@@ -201,5 +227,7 @@ namespace AOTools
 				}
 			}
 		}
+
+		#endregion
 	}
 }

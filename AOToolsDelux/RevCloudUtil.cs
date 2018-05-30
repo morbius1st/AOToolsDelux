@@ -168,9 +168,12 @@ namespace AOTools
 			{
 				logMsg2(nl);
 
+				logMsgLn2(desc[REV_KEY].Title, 
+					">" + kvp.Key +"<");
+
 				for (int i = 0; i < (int) REV_ITEMS_LEN; i++)
 				{
-					logMsgLn2(desc[i].Title, kvp.Value[i]);
+					logMsgLn2(desc[i].Title, kvp.Value[i]?? "");
 				}
 				
 			}
@@ -178,6 +181,7 @@ namespace AOTools
 
 		// these are for the new system
 
+		// this lists each data description
 		public static void ListDescriptions()
 		{
 			RevDataDescription dx = RevDataDescription.GetInstance;

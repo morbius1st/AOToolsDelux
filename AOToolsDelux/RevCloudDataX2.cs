@@ -12,7 +12,7 @@ namespace AOTools
 		#region + Select Sort Filter
 
 		// select records from the master list
-		public int Select(SelectCriteria sc)
+		public int Select(SelectCriteria2 sc2)
 		{
 			if (RevCloudMasterList2.Count == 0) return -1;
 
@@ -24,11 +24,11 @@ namespace AOTools
 
 			foreach (KeyValuePair<string, RevDataItems2> kvp in MasterList)
 			{
-//				if (sc.Match(kvp.Key, kvp.Value))
-//				{
+				if (sc2.Match(kvp.Key, kvp.Value))
+				{
 					i++;
 					RevCloudSelectedList2.Add(kvp.Key, kvp.Value);
-//				}
+				}
 			}
 			return i;
 		}

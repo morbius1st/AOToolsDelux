@@ -23,10 +23,10 @@
 
 		private static string[] SortStrings = new string[SortKeyQty];
 
-		private const string REVID_FMT_PATTERN = "{0,  7}"; 
-		private const string REVTL_FMT_PATTERN = "{0,-20}"; 
-		private const string REVSN_FMT_PATTERN = "{0,-20}"; 
-		private const string UNIQUE_CODE_PATTERN = "{0:D7}";
+		private const string REVID_FMT_PATTERN   = " >{0, D4}"; 
+		private const string REVTL_FMT_PATTERN   = "<>{0,-16}"; 
+		private const string REVSN_FMT_PATTERN   = "<>{0,-20}"; 
+		private const string UNIQUE_CODE_PATTERN = "<>{0:D4}<";
 
 		public static string GetSortKey (string revAltId, 
 			string revTypdCode, string revDispCode,
