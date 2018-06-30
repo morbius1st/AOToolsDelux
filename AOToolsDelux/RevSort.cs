@@ -23,7 +23,7 @@
 
 		private static string[] SortStrings = new string[SortKeyQty];
 
-		private const string REVID_FMT_PATTERN   = " >{0, D4}"; 
+		private const string REVID_FMT_PATTERN   = " >{0:D4}"; 
 		private const string REVTL_FMT_PATTERN   = "<>{0,-16}"; 
 		private const string REVSN_FMT_PATTERN   = "<>{0,-20}"; 
 		private const string UNIQUE_CODE_PATTERN = "<>{0:D4}<";

@@ -1,8 +1,18 @@
-﻿namespace AOTools
+﻿
+
+namespace AOTools
 {
-	public enum ERevDataItems2
+	
+
+
+	public static class RevisionEnumerations
 	{
-		// these enums are what is stored in the items collection
+	
+		
+	}
+
+	public enum EItem
+	{
 		REV_SELECTED = 0,         // (derived) flag that this data item has 
 		//                        // been selected
 		REV_SEQ,                  // (from sequence) revision sequence number
@@ -15,7 +25,7 @@
 		//                        // on the discipline
 		REV_KEY_DELTA_TITLE,      // (from issued to) (part of item key) 
 		//                        // simple name for this issuance (goes below the delta)
-		REV_KEY_SHTNUM,           // (calculated) (part of item key) sheet 
+		REV_KEY_SHEETNUM,         // (calculated) (part of item key) sheet 
 		//                        // number of this tag
 		REV_ITEM_VISIBLE,         // (from visibility)(calculated)) item 
 		//                        // visibility
@@ -44,17 +54,18 @@
 
 		// control items
 		REV_CTRL_INVALID = -100,  // (imaginary) flag that indicates this 
-		//                        // ERevDataItems2 is not valid
+		//                        // EItem is not valid
 	}
 
-	public enum EDataUsage
+	public enum EItemUsage
 	{
 		NONE,
 		KEY,
-		INFO
+		INFO,
+		MGMT
 	}
 
-	public enum EDataType
+	public enum EItemType
 	{
 		BOOL,
 		INT,
@@ -63,7 +74,7 @@
 		VISIBILITY
 	}
 
-	public enum ERevSource
+	public enum EItemSource
 	{
 		REV_SOURCE_DERIVED,
 		REV_SOURCE_TAG,

@@ -94,26 +94,18 @@
     <Compile Include="AppRibbon.cs" />
     <Compile Include="AppSettings\SettingUtil\SettingsListings.cs" />
     <Compile Include="AppSettings\SchemaSettings\SchemaUnitUtil.cs" />
-    <Compile Include="RevCloud.cs" />
+    <Compile Include="Revision.cs" />
     <Compile Include="RevCloudData2.cs" />
-    <Compile Include="RevCloudData.cs" />
     <Compile Include="RevCloudDataX2.cs" />
-    <Compile Include="RevCloudDataX.cs" />
-    <Compile Include="RevCloudUtil.cs" />
-    <Compile Include="RevColumns.cs" />
-    <Compile Include="RevData.cs" />
+    <Compile Include="RevisionUtility.cs" />
     <Compile Include="RevData2.cs" />
     <Compile Include="RevDataDescription.cs" />
-    <Compile Include="RevDataItems.cs" />
     <Compile Include="RevDataItems2.cs" />
-    <Compile Include="RevDataKey.cs" />
-    <Compile Include="RevEnums.cs" />
+    <Compile Include="RevisionEnums.cs" />
     <Compile Include="RevExport.cs" />
     <Compile Include="RevSelectCriteria2.cs" />
-    <Compile Include="RevSelectCriteria.cs" />
     <Compile Include="RevSort.cs" />
     <Compile Include="RevSummary2.cs" />
-    <Compile Include="RevSummary.cs" />
     <Compile Include="UnitStylesDelete.cs" />
     <Compile Include="DxMeasure.cs" />
     <Compile Include="Utility\Extensions.cs" />
@@ -162,6 +154,8 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
+    <None Include="ClassDiagram1.cd" />
+    <None Include="ClassDiagram2.cd" />
     <None Include="Other\ClassDiagram1.cd" />
   </ItemGroup>
   <ItemGroup />

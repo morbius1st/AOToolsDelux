@@ -3,9 +3,9 @@
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
 
-using static AOTools.SelectCriteria2.ECompare;
+using static AOTools.SelectCriteria2.ESelCompare;
+using static AOTools.SelectCriteria2.ESelVisibility;
 using static AOTools.SelectCriteria2.Filter;
-using static AOTools.SelectCriteria2.EVisibility;
 
 
 namespace AOTools
@@ -27,7 +27,7 @@ namespace AOTools
 
 	public class SelectCriteria2
 	{
-		public enum EVisibility
+		public enum ESelVisibility
 		{
 			VISIBILITY_ALL = -1,
 			VISIBILITY_HIDDEN = 0,
@@ -36,15 +36,21 @@ namespace AOTools
 			VISIBILITY_COUNT = VISIBILITY_TAGONLY + 2
 		}
 
-		public enum ECompare
+		public enum ESelCompare
 		{
+			DOES_NOT_CONTAIN = -13,
+			DOES_NOT_START_WITH = -12,
+			IS_NOT_EMPTY = -11,
 			LESS_THEN_OR_EQUAL = -3,
 			LESS_THEN = -2,
 			NOT_EQUAL= -1,
 			ANY	 = 0,
 			EQUAL = 1,
 			GREATER_THEN = 2,
-			GREATER_THEN_OR_EQUAL = 3
+			GREATER_THEN_OR_EQUAL = 3,
+			IS_EMPTY = 11,
+			STARTS_WITH = 12,
+			CONTAINS = 13,
 		}
 
 		// items to check
@@ -56,51 +62,57 @@ namespace AOTools
 			BLOCKTITLE,
 			DELTATITLE,
 			BASIS,
-			COUNT,
-			VISIBILITY = -1
+			VISIBILITY,
 		}
 
-		private const int TEST_COUNT = (int) COUNT + 1;
+		private const int COUNT = (int) BASIS + 1;
 
-		private RevisionVisibility[] _visCrossRef = new RevisionVisibility[(int) VISIBILITY_COUNT];
+		private const int TOTAL_COUNT = (int) COUNT + 1;
+
+		private RevisionVisibility[] _visCrossRef = 
+			new RevisionVisibility[(int) VISIBILITY_COUNT];
 
 
 		#region + Selection Criteria Class Elements
 
 		public SelectCriteria2() : this(VISIBILITY_ALL) { }
 
-		public SelectCriteria2(EVisibility visibility)
+		public SelectCriteria2(ESelVisibility visibility)
 		{
 			init();
 
 			Visible = visibility;
 		}
 
-		public EVisibility Visible { get; set; }
+		public ESelVisibility Visible { get; set; }
 
-		private ECompare[] _filterCompare;
+		private ESelCompare[] _filterSelCompare;
 		private string[] _filterValue;
 
 		private void init()
 		{
-			_visCrossRef[(int) VISIBILITY_HIDDEN] = RevisionVisibility.Hidden;
-			_visCrossRef[(int) VISIBILITY_CLOUDANDTAG] = RevisionVisibility.CloudAndTagVisible;
-			_visCrossRef[(int) VISIBILITY_TAGONLY] = RevisionVisibility.TagVisible;
+			_visCrossRef[(int) VISIBILITY_HIDDEN] = 
+				RevisionVisibility.Hidden;
+			_visCrossRef[(int) VISIBILITY_CLOUDANDTAG] = 
+				RevisionVisibility.CloudAndTagVisible;
+			_visCrossRef[(int) VISIBILITY_TAGONLY] = 
+				RevisionVisibility.TagVisible;
 
-			_filterCompare = new ECompare[(int) COUNT];
+			_filterSelCompare = new ESelCompare[(int) COUNT];
 			_filterValue = new string[(int) COUNT];
 
 			for (int i = 0; i < (int) COUNT; i++)
 			{
-				_filterCompare[i] = ANY;
+				_filterSelCompare[i] = ANY;
 				_filterValue[i] = "";
 			}
 		}
 		#endregion
 
+
 		#region + RevId
 		// setter
-		public void RevId(ECompare c, string value = "")
+		public void RevId(ESelCompare c, string value = "")
 		{
 			Setter(REVID, c, value);
 		}
@@ -112,13 +124,13 @@ namespace AOTools
 		// validate 
 		private bool CompareRevId(string test)
 		{
-			return CompareString( REVID, test);
+			return CompareString(REVID, test);
 		}
 		#endregion
 
 		#region + RevAltId
 		// setter
-		public void RevAltId(ECompare c, string value = "")
+		public void RevAltId(ESelCompare c, string value = "")
 		{
 			Setter(REVALTID, c, value);
 		}
@@ -136,7 +148,7 @@ namespace AOTools
 
 		#region + BlockTitle
 		// setter
-		public void BlockTitle(ECompare c, string value)
+		public void BlockTitle(ESelCompare c, string value)
 		{
 			Setter(BLOCKTITLE, c, value);
 		}
@@ -154,7 +166,7 @@ namespace AOTools
 
 		#region + DeltaTitle
 		// setter
-		public void DeltaTitle(ECompare c, string value)
+		public void DeltaTitle(ESelCompare c, string value)
 		{
 			Setter(DELTATITLE, c, value);
 		}
@@ -173,7 +185,7 @@ namespace AOTools
 
 		#region + Basis
 		// setter
-		public void Basis(ECompare c, string value)
+		public void Basis(ESelCompare c, string value)
 		{
 			Setter(BASIS, c, value);
 		}
@@ -190,27 +202,8 @@ namespace AOTools
 		
 		#endregion
 
-		#region + Utility
 
-		// utility - getter
-		private void Setter(Filter f, ECompare c, string value)
-		{
-			if ((int) f < 0) return;
-
-			_filterCompare[(int) f] = c;
-			_filterValue[(int) f] = "";
-
-			if (c != ANY)
-			{
-				if (string.IsNullOrWhiteSpace(value))
-				{
-					_filterCompare[(int) f] = ANY;
-				} else 
-				{
-					_filterValue[(int) f] = value;
-				}
-			}
-		}
+		#region + Comparisons
 
 		// check fields against criteria to determine if it
 		// matches / passes
@@ -268,6 +261,31 @@ namespace AOTools
 			return result;
 		}
 
+		#endregion
+
+
+		#region + Utility
+
+		// getter
+		private void Setter(Filter f, ESelCompare c, string value)
+		{
+			if ((int) f >= (int) COUNT) return;
+
+			_filterSelCompare[(int) f] = c;
+			_filterValue[(int) f] = "";
+
+			if (c != ANY)
+			{
+				if (string.IsNullOrWhiteSpace(value))
+				{
+					_filterSelCompare[(int) f] = ANY;
+				} else 
+				{
+					_filterValue[(int) f] = value;
+				}
+			}
+		}
+
 
 		// compare the test string to the stored test value
 		// if filterCompare is n/a, skip
@@ -275,29 +293,29 @@ namespace AOTools
 		{
 			int f = (int) filter;
 
-			if (f < 0) throw new ArgumentException();
+			if (f >= (int) COUNT) return false;
 
-			bool result = _filterCompare[f] == ANY;
+			bool result = _filterSelCompare[f] == ANY;
 
 			if (!result)
 			{
 				int compare = test.ToLower().CompareTo(_filterValue[f].ToLower());
 
-				if (compare == 0 && ( _filterCompare[f] == EQUAL ||
-						_filterCompare[f] == GREATER_THEN_OR_EQUAL ||
-						_filterCompare[f] == LESS_THEN_OR_EQUAL
+				if (compare == 0 && ( _filterSelCompare[f] == EQUAL ||
+						_filterSelCompare[f] == GREATER_THEN_OR_EQUAL ||
+						_filterSelCompare[f] == LESS_THEN_OR_EQUAL
 					))
 				{
 					result = true;
 				} 
 				else if (compare > 0 &&
-					(_filterCompare[f] == GREATER_THEN_OR_EQUAL ||
-						_filterCompare[f] == GREATER_THEN))
+					(_filterSelCompare[f] == GREATER_THEN_OR_EQUAL ||
+						_filterSelCompare[f] == GREATER_THEN))
 				{
 					result = true;
 
-				} else if (_filterCompare[f] == LESS_THEN_OR_EQUAL ||
-					_filterCompare[f] == LESS_THEN)
+				} else if (_filterSelCompare[f] == LESS_THEN_OR_EQUAL ||
+					_filterSelCompare[f] == LESS_THEN)
 				{
 					result = true;
 				}

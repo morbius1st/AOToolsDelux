@@ -3,18 +3,18 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Threading;
-using static AOTools.ERevDataItems2;
-using static AOTools.EDataType;
-using static AOTools.ERevSource;
-using static AOTools.EDataUsage;
+using static AOTools.EItem;
+using static AOTools.EItemType;
+using static AOTools.EItemSource;
+using static AOTools.EItemUsage;
 
 
 
 namespace AOTools
 {
-	public class RevDataDescription : IEnumerable<KeyValuePair<ERevDataItems2, DataDescription>>
+	public class RevDataDescription : IEnumerable<KeyValuePair<EItem, DataDescription>>
 	{
-		public SortedList<ERevDataItems2, DataDescription> DataDesc;
+		public SortedList<EItem, DataDescription> DataDesc;
 
 		private static RevDataDescription _revDataDesc;
 
@@ -28,7 +28,7 @@ namespace AOTools
 			_revDataDesc ?? (_revDataDesc = new RevDataDescription());
 
 
-		public IEnumerator<KeyValuePair<ERevDataItems2, DataDescription>> GetEnumerator()
+		public IEnumerator<KeyValuePair<EItem, DataDescription>> GetEnumerator()
 		{
 			return DataDesc.GetEnumerator();
 		}
@@ -41,7 +41,7 @@ namespace AOTools
 		// set everything back to detault
 		public void Reset()
 		{
-			DataDesc = new SortedList<ERevDataItems2, DataDescription>((int) REV_ITEMS_LEN);
+			DataDesc = new SortedList<EItem, DataDescription>((int) REV_ITEMS_LEN);
 			AssignDataDescriptions();
 		}
 
@@ -53,7 +53,7 @@ namespace AOTools
 			{
 				if (idx < 0 || idx > (int) REV_ITEMS_LEN) throw new IndexOutOfRangeException();
 
-				ERevDataItems2 result = FindByColumn(idx);
+				EItem result = FindByColumn(idx);
 
 				if (result == REV_CTRL_INVALID) return null;
 
@@ -64,20 +64,20 @@ namespace AOTools
 			{
 				if (idx < 0 || idx > (int) REV_ITEMS_LEN) throw new IndexOutOfRangeException();
 
-				ERevDataItems2 result = FindByColumn(idx);
+				EItem result = FindByColumn(idx);
 
 				if (result == REV_CTRL_INVALID) return;
 
 				DataDesc[result] = value;
 			}
 
-//			get => DataDesc[(ERevDataItems2) idx];
-//			set => DataDesc[(ERevDataItems2) idx] = value;
+//			get => DataDesc[(EItem) idx];
+//			set => DataDesc[(EItem) idx] = value;
 		}
 
-		private ERevDataItems2 FindByColumn(int column)
+		private EItem FindByColumn(int column)
 		{
-			foreach (KeyValuePair<ERevDataItems2, DataDescription> kvp in DataDesc)
+			foreach (KeyValuePair<EItem, DataDescription> kvp in DataDesc)
 				{
 					if (kvp.Value.Column == column)
 					{
@@ -89,7 +89,7 @@ namespace AOTools
 		}
 
 		// get the data description in the enum order
-		public DataDescription this[ERevDataItems2 idx]
+		public DataDescription this[EItem idx]
 		{
 			get => DataDesc[idx];
 			set => DataDesc[idx] = value;
@@ -134,8 +134,8 @@ namespace AOTools
 					STRING, KEY, "Delta Title", true,
 					new DataDescription.DataDisplay(16, "14", null)));
 			// the sheet number
-			DataDesc.Add( REV_KEY_SHTNUM,
-				new DataDescription(REV_KEY_SHTNUM, REV_SOURCE_DERIVED,
+			DataDesc.Add( REV_KEY_SHEETNUM,
+				new DataDescription(REV_KEY_SHEETNUM, REV_SOURCE_DERIVED,
 					STRING, KEY, "Sheet Number", true,
 					new DataDescription.DataDisplay(14, "12", null)));
 			// the cloud / tag visibility
@@ -199,9 +199,9 @@ namespace AOTools
 	public class DataDescription
 	{
 		public int Column { get; private set; }
-		public ERevSource Source { get; private set; }
-		public EDataType Type { get; private set; }
-		public EDataUsage Useage { get; private set; }
+		public EItemSource Source { get; private set; }
+		public EItemType Type { get; private set; }
+		public EItemUsage Useage { get; private set; }
 		public string Title  { get; set; }
 		public bool Visible  { get; set; }			// whether this column is displayed
 		public DataDisplay Display { get; set; }
@@ -211,8 +211,8 @@ namespace AOTools
 			Display = new DataDisplay();
 		}
 
-		public DataDescription(ERevDataItems2 column, ERevSource src,
-			EDataType type, EDataUsage usage, string title, bool visible,
+		public DataDescription(EItem column, EItemSource src,
+			EItemType type, EItemUsage usage, string title, bool visible,
 			DataDisplay disp)
 		{
 			Column = (int) column;

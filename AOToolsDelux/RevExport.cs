@@ -3,8 +3,6 @@ using System.Reflection;
 
 using X = Microsoft.Office.Interop.Excel;
 
-using static AOTools.RevColumns;
-
 
 namespace AOTools
 {

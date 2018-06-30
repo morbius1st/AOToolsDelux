@@ -3,8 +3,8 @@ using System.Collections;
 using System.Collections.Generic;
 using Autodesk.Revit.DB;
 
-using static AOTools.RevDataKey.ERevDataKey;
-using static AOTools.RevDataItems.ERevDataItems;
+//using static AOTools.RevDataKey.ERevDataKey;
+//using static AOTools.RevDataItems.ERevDataItems;
 
 using static AOTools.SortKey;
 
@@ -35,7 +35,7 @@ namespace AOTools
 			private static IList<Element> GetRevClouds()
 		{
 			ElementCategoryFilter filterRevClouds = new ElementCategoryFilter(BuiltInCategory.OST_RevisionClouds);
-			FilteredElementCollector collectClouds = new FilteredElementCollector(RevCloud.Doc);
+			FilteredElementCollector collectClouds = new FilteredElementCollector(Revision.Doc);
 
 			return collectClouds.WherePasses(filterRevClouds).
 				WhereElementIsNotElementType().ToElements();
@@ -64,7 +64,7 @@ namespace AOTools
 				ElementId cloudId = revCloud.get_Parameter(
 					BuiltInParameter.REVISION_CLOUD_REVISION).AsElementId();
 
-				if (!(RevCloud.Doc.GetElement(cloudId) is Revision rev))
+				if (!(Revision.Doc.GetElement(cloudId) is Autodesk.Revit.DB.Revision rev))
 				{
 					continue;
 				}
@@ -102,7 +102,7 @@ namespace AOTools
 
 			foreach (ElementId ex in s)
 			{
-				return ((ViewSheet) RevCloud.Doc.GetElement(ex)).SheetNumber;
+				return ((ViewSheet) Revision.Doc.GetElement(ex)).SheetNumber;
 			}
 			return null;
 		}

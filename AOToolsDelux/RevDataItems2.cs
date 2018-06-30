@@ -3,10 +3,10 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 using Autodesk.Revit.DB;
-using static AOTools.ERevDataItems2;
-using static AOTools.EDataType;
-using static AOTools.ERevSource;
-using static AOTools.EDataUsage;
+using static AOTools.EItem;
+using static AOTools.EItemType;
+using static AOTools.EItemSource;
+using static AOTools.EItemUsage;
 
 
 namespace AOTools
@@ -35,41 +35,41 @@ namespace AOTools
 			set => _revDataItems2[idx] = value;
 		}
 
-		public dynamic this[ERevDataItems2 idx]
+		public dynamic this[EItem idx]
 		{
 			get => _revDataItems2[(int) idx];
 			set => _revDataItems2[(int) idx] = value;
 		}
 
-		public int? AsInt(ERevDataItems2 idx)
+		public int? AsInt(EItem idx)
 		{
 			if (RevDataDescription.GetInstance[idx].Type != INT) return null;
 
 			return (int) _revDataItems2[(int) idx];
 		}
 
-		public bool? AsBool(ERevDataItems2 idx)
+		public bool? AsBool(EItem idx)
 		{
 			if (RevDataDescription.GetInstance[idx].Type != BOOL) return null;
 
 			return (bool) _revDataItems2[(int) idx];
 		}
 
-		public ElementId AsElementId(ERevDataItems2 idx)
+		public ElementId AsElementId(EItem idx)
 		{
 			if (RevDataDescription.GetInstance[idx].Type != ELEMENTID) return null;
 
 			return (ElementId) _revDataItems2[(int) idx];
 		}
 
-		public RevisionVisibility? AsRevVisibility(ERevDataItems2 idx)
+		public RevisionVisibility? AsRevVisibility(EItem idx)
 		{
 			if (RevDataDescription.GetInstance[idx].Type != VISIBILITY) return null;
 
 			return (RevisionVisibility) _revDataItems2[(int) idx];
 		}
 
-		public String AsString(ERevDataItems2 idx)
+		public String AsString(EItem idx)
 		{
 			if (RevDataDescription.GetInstance[idx].Type != STRING) return null;
 
@@ -114,8 +114,8 @@ namespace AOTools
 
 		public string ShtNum
 		{
-			get => (string) _revDataItems2[(int) REV_KEY_SHTNUM];
-			set => _revDataItems2[(int) REV_KEY_SHTNUM] = value;
+			get => (string) _revDataItems2[(int) REV_KEY_SHEETNUM];
+			set => _revDataItems2[(int) REV_KEY_SHEETNUM] = value;
 		}
 
 		public RevisionVisibility Visibility
