@@ -9,6 +9,8 @@ using UtilityLibrary;
 using AOTools.AppSettings.SchemaSettings;
 using static AOTools.AppSettings.SchemaSettings.SchemaUnitUtil;
 
+using AOTools.UnitStyles;
+
 #endregion
 
 // itemname:	SettingsUsr
@@ -28,14 +30,21 @@ namespace AOTools.AppSettings.ConfigSettings
 
 		public static void SmUsrInit()
 		{
-			SmUsr = new SettingsMgr<SettingsUsrBase>();
+			SmUsr = new SettingsMgr<SettingsUsrBase>(Reset);
 			SmUsrSetg = SmUsr.Settings;
-			SmuUsrSetg = SmUsrSetg.UnitStylesList;
+//			SmuUsrSetg = SmUsrSetg.UnitStylesList;
 //			SmUsrSetg.Heading = new Header(SettingsUsrBase.USERSETTINGFILEVERSION);
 		}
 		public static bool IsValid()
 		{
 			return SmUsr != null;
+		}
+
+		public static void Reset()
+		{
+			SmUsr = new SettingsMgr<SettingsUsrBase>(Reset);
+			SmUsrSetg = SmUsr.Settings;
+//			SmuUsrSetg = SmUsrSetg.UnitStylesList;
 		}
 	}
 
@@ -43,17 +52,20 @@ namespace AOTools.AppSettings.ConfigSettings
 	[DataContract(Namespace = Header.NSpace)]
 	public class SettingsUsrBase : SettingsPathFileUserBase
 	{
-		public int Count => UnitStylesList.Count;
+//		public int Count => UnitStylesList.Count;
 
-		public override string FileVersion { get; } = "1.1";
+		public sealed override string FileVersion { get; set; } = "1.1";
 
 		[DataMember]
 		public Point FormMeasurePointsLocation = new Point(0, 0);
 		[DataMember]
 		public bool MeasurePointsShowWorkplane = false;
 
+//		[DataMember]
+//		public List<SchemaDictionaryUsr> UnitStylesList = DefaultSchemaListUsr(1);
+
 		[DataMember]
-		public List<SchemaDictionaryUsr> UnitStylesList = DefaultSchemaListUsr(1);
+		public UnitStyleType DxMeasureUnitStyle { get; set; } = UnitStyleType.PROJECT;
 
 	}
 

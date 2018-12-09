@@ -38,19 +38,19 @@ namespace AOToolsVue.Settings
 	//	field 12= int    : fmt op: use plus prefix			// 0 = false; 1 = true; -1 = ignore
 
 
-	[CollectionDataContract(Name = "SchemaFields", KeyName = "SequenceKey", 
-		ValueName = "SchemaField", ItemName = "SchemaFieldItem")]
-	public class SchemaDictionary<T1, T2> : Dictionary<T1, T2>
-	{
-		public SchemaDictionary()
-		{
-		}
-
-		public SchemaDictionary(int capacity) : base(capacity)
-		{
-		}
-
-	}
+//	[CollectionDataContract(Name = "SchemaFields", KeyName = "SequenceKey", 
+//		ValueName = "SchemaField", ItemName = "SchemaFieldItem")]
+//	public class SchemaDictionary<T1, T2> : Dictionary<T1, T2>
+//	{
+//		public SchemaDictionary()
+//		{
+//		}
+//
+//		public SchemaDictionary(int capacity) : base(capacity)
+//		{
+//		}
+//
+//	}
 
 
 	[CollectionDataContract(Name = "SchemaFields", KeyName = "SequenceKey",

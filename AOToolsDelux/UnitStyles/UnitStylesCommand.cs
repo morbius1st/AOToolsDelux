@@ -148,21 +148,21 @@ namespace AOTools
 		// change the names of the current unit styles
 		// save
 
-		private void test21()
-		{
-			logMsg("");
-			logMsgDbLn2("user settings file", "before");
-			logMsg("");
-			ListUnitDictionary<SchemaDictionaryUsr, SchemaUsrKey>(SmUsrSetg.UnitStylesList, 4);
-
-			ModifyConfigSettings("test21");
-
-			SmUsr.Save();
-
-			logMsgDbLn2("user settings file", "after");
-			logMsg("");
-			ListUnitDictionary<SchemaDictionaryUsr, SchemaUsrKey>(SmUsrSetg.UnitStylesList, 4);
-		}
+//		private void test21()
+//		{
+//			logMsg("");
+//			logMsgDbLn2("user settings file", "before");
+//			logMsg("");
+//			ListUnitDictionary<SchemaDictionaryUsr, SchemaUsrKey>(SmUsrSetg.UnitStylesList, 4);
+//
+//			ModifyConfigSettings("test21");
+//
+//			SmUsr.Save();
+//
+//			logMsgDbLn2("user settings file", "after");
+//			logMsg("");
+//			ListUnitDictionary<SchemaDictionaryUsr, SchemaUsrKey>(SmUsrSetg.UnitStylesList, 4);
+//		}
 
 
 

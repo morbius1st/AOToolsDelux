@@ -18,15 +18,21 @@ namespace AOToolsVue.Settings
 {
 	public static class SettingsUser
 	{
-		public static readonly SettingsMgr<UserSettings> USettings;
+		public static SettingsMgr<UserSettings> USettings;
 
-		public static readonly UserSettings USet;
+		public static UserSettings USet;
 
 		static SettingsUser()
 		{
-			USettings = new SettingsMgr<UserSettings>();
+			USettings = new SettingsMgr<UserSettings>(ResetData);
 			USet = USettings.Settings;
 //			USet.Header = new Header(UserSettings.USERSETTINGFILEVERSION);
+		}
+
+		public static void ResetData()
+		{
+			USettings = new SettingsMgr<UserSettings>(ResetData);
+			USet = USettings.Settings;
 		}
 	}
 
@@ -35,6 +41,7 @@ namespace AOToolsVue.Settings
 	[DataContract]
 	public class UserSettings : SettingsPathFileUserBase
 	{
+		public sealed override string FileVersion { get; set; } = "2.0";
 
 		[DataMember]
 		public Point FormMeasurePointsLocation = new Point(0, 0);
@@ -50,7 +57,6 @@ namespace AOToolsVue.Settings
 				UnitSchema.Make("User Unit Style 03", "User unit style desc 03")
 			};
 
-		public override string FileVersion { get;  } = "1.0";
 	}
 
 }

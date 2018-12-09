@@ -8,6 +8,8 @@ using Autodesk.Revit.DB;
 
 using static AOTools.SortKey;
 
+using static  UtilityLibrary.MessageUtilities2;
+
 
 namespace AOTools
 {
@@ -51,6 +53,28 @@ namespace AOTools
 		{
 			return GetEnumerator();
 		}
+
+		public static void GetRevisions(Document Doc)
+		{
+			IList<ElementId> revIds = Autodesk.Revit.DB.Revision.GetAllRevisionIds(Doc);
+
+			foreach (ElementId e in revIds)
+			{
+				Autodesk.Revit.DB.Revision rev = Doc.GetElement(e) as Autodesk.Revit.DB.Revision;
+
+				logMsgLn2("SequenceNumber"              , rev.SequenceNumber);
+				logMsgLn2("Revision Id (RevisionNumber)", rev.RevisionNumber);
+				logMsgLn2("Alt Id (IssuedBy)"           , rev.IssuedBy);
+				logMsgLn2("Issued"                      , rev.Issued);
+				logMsgLn2("Block Title (Description)"   , rev.Description);
+				logMsgLn2("Delta Title (IssuedTo)"      , rev.IssuedTo);
+				logMsgLn2("RevisionDate"                , rev.RevisionDate);
+				logMsgLn2("NumberType"                  , rev.NumberType);
+				logMsgLn2("Visibility"                  , rev.Visibility);
+			}
+		}
+
+
 
 		private static void GetRevInfo(IList<Element> revClouds)
 		{

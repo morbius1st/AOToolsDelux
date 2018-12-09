@@ -18,7 +18,7 @@
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'DebugTools|AnyCPU' ">
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'DebugTools2017|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
@@ -44,6 +44,15 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'DebugVue|AnyCPU'">
     <DebugSymbols>true</DebugSymbols>
     <OutputPath>bin\DebugVue\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'DebugTools2018|AnyCPU'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\DebugTools2018\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <DebugType>full</DebugType>
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -82,8 +91,17 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="..\..\..\UtilityLibrary\UtilityLibrary\CsConversions.cs">
+      <Link>Utility\CsConversions.cs</Link>
+    </Compile>
+    <Compile Include="..\..\..\UtilityLibrary\UtilityLibrary\CsExtensions.cs">
+      <Link>Utility\CsExtensions.cs</Link>
+    </Compile>
     <Compile Include="..\..\..\UtilityLibrary\UtilityLibrary\CsUtilities.cs">
       <Link>Utility\CsUtilities.cs</Link>
+    </Compile>
+    <Compile Include="..\..\..\UtilityLibrary\UtilityLibrary\CsUtilitiesMedia.cs">
+      <Link>Utility\CsUtilitiesMedia.cs</Link>
     </Compile>
     <Compile Include="..\..\..\UtilityLibrary\UtilityLibrary\MessageUtilities.cs">
       <Link>Utility\MessageUtilities.cs</Link>
@@ -94,28 +112,29 @@
     <Compile Include="AppRibbon.cs" />
     <Compile Include="AppSettings\SettingUtil\SettingsListings.cs" />
     <Compile Include="AppSettings\SchemaSettings\SchemaUnitUtil.cs" />
-    <Compile Include="Revision.cs" />
-    <Compile Include="RevCloudData2.cs" />
-    <Compile Include="RevCloudDataX2.cs" />
-    <Compile Include="RevisionUtility.cs" />
-    <Compile Include="RevData2.cs" />
-    <Compile Include="RevDataDescription.cs" />
-    <Compile Include="RevDataItems2.cs" />
-    <Compile Include="RevisionEnums.cs" />
-    <Compile Include="RevExport.cs" />
-    <Compile Include="RevSelectCriteria2.cs" />
-    <Compile Include="RevSort.cs" />
-    <Compile Include="RevSummary2.cs" />
-    <Compile Include="UnitStylesDelete.cs" />
     <Compile Include="DxMeasure.cs" />
-    <Compile Include="Utility\Extensions.cs" />
-    <Compile Include="FormMeasurePoints.cs">
+    <Compile Include="FormDxMeasure.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="FormMeasurePoints.Designer.cs">
-      <DependentUpon>FormMeasurePoints.cs</DependentUpon>
+    <Compile Include="FormDxMeasure.Designer.cs">
+      <DependentUpon>FormDxMeasure.cs</DependentUpon>
     </Compile>
-    <Compile Include="PickedBox2.cs" />
+    <Compile Include="Revisions\Revision.cs" />
+    <Compile Include="Revisions\RevCloudData2.cs" />
+    <Compile Include="Revisions\RevCloudDataX2.cs" />
+    <Compile Include="Revisions\RevisionUtility.cs" />
+    <Compile Include="Revisions\RevData2.cs" />
+    <Compile Include="Revisions\RevDataDescription.cs" />
+    <Compile Include="Revisions\RevDataItems2.cs" />
+    <Compile Include="Revisions\RevisionEnums.cs" />
+    <Compile Include="Revisions\RevExport.cs" />
+    <Compile Include="Revisions\RevSelectCriteria2.cs" />
+    <Compile Include="Revisions\RevSort.cs" />
+    <Compile Include="Revisions\RevSummary2.cs" />
+    <Compile Include="UnitStyles\UnitStyleDefault.cs" />
+    <Compile Include="UnitStyles\UnitStylesDelete.cs" />
+    <Compile Include="Utility\Extensions.cs" />
+    <Compile Include="Utility\PickedBox2.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -127,7 +146,7 @@
     <Compile Include="AppSettings\SchemaSettings\SchemaFieldUnit.cs" />
     <Compile Include="AppSettings\SchemaSettings\SchemaBase.cs" />
     <Compile Include="AppSettings\RevitSettings\RevitSettingsUnit.cs" />
-    <Compile Include="UnitStylesCommand.cs" />
+    <Compile Include="UnitStyles\UnitStylesCommand.cs" />
     <Compile Include="ToggleAnnotationVisibility.cs" />
     <Compile Include="ToggleRefPlane.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -141,28 +160,33 @@
       <SubType>Designer</SubType>
     </Content>
     <Content Include="Other\New Text Document.txt" />
+    <EmbeddedResource Include="Resources\Delux Measure Dec-Ft 16.png" />
+    <EmbeddedResource Include="Resources\Delux Measure Dec-Ft 32.png" />
+    <EmbeddedResource Include="Resources\Delux Measure Dec-In 16.png" />
+    <EmbeddedResource Include="Resources\Delux Measure Dec-In 32.png" />
+    <EmbeddedResource Include="Resources\Delux Measure Frac-In 16.png" />
+    <EmbeddedResource Include="Resources\Delux Measure Frac-In 32.png" />
+    <EmbeddedResource Include="Resources\Delux Measure Ft-In 16.png" />
+    <EmbeddedResource Include="Resources\Delux Measure Ft-In 32.png" />
+    <EmbeddedResource Include="FormDxMeasure.resx">
+      <DependentUpon>FormDxMeasure.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Resources\information16.png" />
     <EmbeddedResource Include="Resources\information32.png" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="FormMeasurePoints.resx">
-      <DependentUpon>FormMeasurePoints.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
   </ItemGroup>
-  <ItemGroup>
-    <None Include="ClassDiagram1.cd" />
-    <None Include="ClassDiagram2.cd" />
-    <None Include="Other\ClassDiagram1.cd" />
-  </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PostBuildEvent>if exist "$(AppData)\Autodesk\REVIT\Addins\2017" copy "$(ProjectDir)other\*.addin" "$(AppData)\Autodesk\REVIT\Addins\2017"
-if exist "$(AppData)\Autodesk\REVIT\Addins\2017" copy "$(TargetPath)" "$(AppData)\Autodesk\REVIT\Addins\2017"</PostBuildEvent>
+    <PostBuildEvent>(copy /y "$(ProjectDir)Other\$(TargetName).addin" "$(AppData)\Autodesk\REVIT\Addins\2017")
+(copy /y "$(TargetPath)" "$(AppData)\Autodesk\REVIT\Addins\2017")
+(copy /y "$(ProjectDir)Other\$(TargetName).addin" "$(AppData)\Autodesk\REVIT\Addins\2018")
+(copy /y "$(TargetPath)" "$(AppData)\Autodesk\REVIT\Addins\2018")</PostBuildEvent>
   </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it.
        Other similar extension points exist, see Microsoft.Common.targets.

@@ -46,6 +46,8 @@ namespace AOTools
 			UiDoc = uiApp.ActiveUIDocument;
 			Doc = UiDoc.Document;
 
+			
+
 			using (Transaction t = new Transaction(Doc, "revision cloud"))
 			{
 				t.Start();
@@ -80,10 +82,12 @@ namespace AOTools
 //			test5(rcd.MasterList);
 //			test6(rcd.MasterList);
 
-			// these are for the new system
-			RevCloudData2 rcd2 = RevCloudData2.GetInstance();
-			ListDescriptions();
-			SelectAll2(rcd2);
+			RevData2.GetRevisions(Doc);
+
+//			// these are for the new system
+//			RevCloudData2 rcd2 = RevCloudData2.GetInstance();
+//			ListDescriptions();
+//			SelectAll2(rcd2);
 
 			return true;
 		}

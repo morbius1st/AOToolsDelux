@@ -1,4 +1,5 @@
-﻿#region + Using Directives
+#region Namespaces
+
 using System.Windows.Forms;
 using AOTools.Utility;
 using Autodesk.Revit.Attributes;
@@ -8,27 +9,16 @@ using View = Autodesk.Revit.DB.View;
 
 using static AOTools.Utility.Util;
 
-
 #endregion
-
-// projname: AOTools
-// itemname: DxMeasure
-// username: jeffs
-// created:  12/1/2018 6:51:01 PM
 
 namespace AOTools
 {
-
 	[Transaction(TransactionMode.Manual)]
-	public class DxMeasure : IExternalCommand
+	public class DxMeasure2 : IExternalCommand
 	{
-		private static FormDxMeasure _form;
+		private static FormMeasurePoints _form;
 		private static UIDocument _uiDoc;
-		internal static Document _doc;
-
-		private static bool _showWorkplane = false;
-
-		public static bool ShowWorkplane { get => _showWorkplane; set => _showWorkplane = value; }
+		private static Document _doc;
 
 		public Result Execute(
 			ExternalCommandData commandData,
@@ -38,11 +28,10 @@ namespace AOTools
 			_uiDoc = uiApp.ActiveUIDocument;
 			_doc = _uiDoc.Document;
 
-			
 			// this cleaned up the text display problem
-			//			Application.SetCompatibleTextRenderingDefault(false);
+//			Application.SetCompatibleTextRenderingDefault(false);
 
-			using (TransactionGroup tg = new TransactionGroup(_doc, "AO delux measure"))
+			using (TransactionGroup tg = new TransactionGroup(_doc, "measure points"))
 			{
 				tg.Start();
 				Process();
@@ -63,13 +52,13 @@ namespace AOTools
 
 		internal static bool Process()
 		{
-			_form = new FormDxMeasure();
+			_form = new FormMeasurePoints();
 
 			View av = _doc.ActiveView;
 
-			Util.VType vtype = GetViewType(av);
+			VType vtype = GetViewType(av);
 
-			if (vtype.VTCat == Util.VTtypeCat.OTHER)
+			if (vtype.VTCat == VTtypeCat.OTHER)
 			{
 				return false;
 			}
@@ -77,8 +66,8 @@ namespace AOTools
 			// get the current sketch / work plane
 			Plane p = av.SketchPlane?.GetPlane();
 
-			if (p == null && (vtype.VTCat == Util.VTtypeCat.D2_WITHPLANE ||
-				vtype.VTCat == Util.VTtypeCat.D3_WITHPLANE))
+			if (p == null && (vtype.VTCat == VTtypeCat.D2_WITHPLANE ||
+				vtype.VTCat == VTtypeCat.D3_WITHPLANE))
 			{
 				using (Transaction t = new Transaction(_doc, "measure points"))
 				{
@@ -100,7 +89,7 @@ namespace AOTools
 			return true;
 		}
 
-		private static bool MeasurePts(View av, Util.VType vtype)
+		private static bool MeasurePts(View av, VType vtype)
 		{
 			bool again = true;
 
@@ -116,23 +105,24 @@ namespace AOTools
 				normal = p.Normal;
 				actualOrigin = p.Origin;
 
-				if (vtype.VTSub != Util.VTypeSub.D3_VIEW)
+				if (vtype.VTSub != VTypeSub.D3_VIEW)
 				{
 					workingOrigin = p.Origin;
 				}
 			}
 
-//			ShowHideWorkplane(p, av);
+			ShowHideWorkplane(p, av);
 
 			PointMeasurements? pm = GetPts(workingOrigin);
 
 			while (again)
 			{
-				_form.UpdatePoints(pm, vtype, planeName);
+				_form.UpdatePoints(pm, vtype, normal, actualOrigin, 
+					planeName, _doc.GetUnits());
 
 				DialogResult result = _form.ShowDialog();
 
-//				ShowHideWorkplane(p, av);
+				ShowHideWorkplane(p, av);
 
 				switch (result)
 				{
@@ -146,30 +136,21 @@ namespace AOTools
 						break;
 				}
 			}
+
 			return true;
 		}
 
 		private static PointMeasurements? GetPts(XYZ workingOrigin)
 		{
-			_form.tbxMessage.ResetText();
+			_form.lblMessage.ResetText();
 
 			XYZ startPoint;
 			XYZ endPoint;
 
 			try
 			{
-				View avStart = _doc.ActiveView;
-
 				startPoint = _uiDoc.Selection.PickPoint(snaps, "Select Point");
 				if (startPoint == null) return null;
-
-				View avEnd = _doc.ActiveView;
-
-				// cannot change views between points
-				if (avStart.Id.IntegerValue != avEnd.Id.IntegerValue)
-				{
-					return null;
-				}
 
 				endPoint = _uiDoc.Selection.PickPoint(snaps, "Select Point");
 				if (endPoint == null) return null;
@@ -179,24 +160,6 @@ namespace AOTools
 				return null;
 			}
 			return new PointMeasurements(startPoint, endPoint, workingOrigin);
-		}
-
-		public static void ShowHideWorkplane()
-		{
-			View av = _doc.ActiveView;
-			Plane p = av.SketchPlane?.GetPlane();
-
-			if (p == null )
-			{
-				if (_form != null)
-				{
-					_form.Message = "No work plane to show";
-				}
-			}
-			else
-			{
-				ShowHideWorkplane(p, av);
-			}
 		}
 
 		private static void ShowHideWorkplane(Plane p, View av)
@@ -209,7 +172,7 @@ namespace AOTools
 				{
 					t.Start();
 
-					if (ShowWorkplane)
+					if (_form.ShowWorkplane)
 					{
 						av.ShowActiveWorkPlane();
 					}

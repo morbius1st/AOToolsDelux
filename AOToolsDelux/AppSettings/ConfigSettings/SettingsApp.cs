@@ -24,7 +24,7 @@ namespace AOTools.AppSettings.ConfigSettings
 
 		public static void SmAppInit()
 		{
-			SmApp = new SettingsMgr<SettingsAppBase>();
+			SmApp = new SettingsMgr<SettingsAppBase>(Reset);
 			SmAppSetg = SmApp.Settings;
 //			SmAppSetg.Heading = new Header(SettingsAppBase.APPSETTINGFILEVERSION);
 		}
@@ -33,13 +33,19 @@ namespace AOTools.AppSettings.ConfigSettings
 		{
 			return SmApp != null;
 		}
+
+		public static void Reset()
+		{
+			SmApp = new SettingsMgr<SettingsAppBase>(Reset);
+			SmAppSetg = SmApp.Settings;
+		}
 	}
 
 	[DataContract(Namespace = Header.NSpace)]
 	//	[DataContract]
 	public class SettingsAppBase : SettingsPathFileAppBase
 	{
-		public override string FileVersion { get; } = "1.1";
+		public sealed override string FileVersion { get; set; } = "1.1";
 
 		[DataMember]
 		public int[] AppIs { get; set; } = new[] {10, 20, 30 };

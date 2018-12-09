@@ -111,9 +111,18 @@ namespace AOTools.AppSettings.SettingUtil
 
 
 			logMsgDbLn2("data in dictionary");
-			foreach (KeyValuePair<SchemaAppKey, SchemaFieldUnit> kvp in SmAppSetg.SettingsAppData)
+
+			if (SmAppSetg.SettingsAppData.Count > 0)
+
 			{
-				logMsgDbLn2("data", "key| " + kvp.Key + "  name| " + kvp.Value.Name + "  value| " + kvp.Value.Value);
+				foreach (KeyValuePair<SchemaAppKey, SchemaFieldUnit> kvp in SmAppSetg.SettingsAppData)
+				{
+					logMsgDbLn2("data", "key| " + kvp.Key + "  name| " + kvp.Value.Name + "  value| " + kvp.Value.Value);
+				}
+			}
+			else
+			{
+				logMsgDbLn2("data", "no data in dictionary");
 			}
 
 			logMsg("");

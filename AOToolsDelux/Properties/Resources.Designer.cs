@@ -19,7 +19,7 @@ namespace AOTools.Properties {
     // class via a tool like ResGen or Visual Studio.
     // To add or remove a member, edit your .ResX file then rerun ResGen
     // with the /str option, or rebuild your VS project.
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "4.0.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "15.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     internal class Resources {
@@ -66,6 +66,42 @@ namespace AOTools.Properties {
         internal static string ButtonCreateFail {
             get {
                 return ResourceManager.GetString("ButtonCreateFail", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Decimal Feet Project Unit.
+        /// </summary>
+        internal static string R_ButtonStyleDecFeetName {
+            get {
+                return ResourceManager.GetString("R_ButtonStyleDecFeetName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Decimal Inches Project Unit.
+        /// </summary>
+        internal static string R_ButtonStyleDecInchName {
+            get {
+                return ResourceManager.GetString("R_ButtonStyleDecInchName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Fractional Inch Project Unit.
+        /// </summary>
+        internal static string R_ButtonStyleFracInName {
+            get {
+                return ResourceManager.GetString("R_ButtonStyleFracInName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Feet &amp; Inch Project Unit.
+        /// </summary>
+        internal static string R_ButtonStyleFtInName {
+            get {
+                return ResourceManager.GetString("R_ButtonStyleFtInName", resourceCulture);
             }
         }
         

@@ -32,6 +32,16 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'DebugTools2018|AnyCPU'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\DebugTools2018\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <Prefer32Bit>true</Prefer32Bit>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="envdte, Version=8.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
       <EmbedInteropTypes>True</EmbedInteropTypes>
@@ -54,11 +64,14 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="..\..\..\UtilityLibrary\UtilityLibrary\CsExtensions.cs">
+      <Link>Referenced\CsExtensions.cs</Link>
+    </Compile>
     <Compile Include="..\..\..\UtilityLibrary\UtilityLibrary\CsUtilities.cs">
-      <Link>CsUtilities.cs</Link>
+      <Link>Referenced\CsUtilities.cs</Link>
     </Compile>
     <Compile Include="..\..\..\UtilityLibrary\UtilityLibrary\MessageUtilities.cs">
-      <Link>MessageUtilities.cs</Link>
+      <Link>Referenced\MessageUtilities.cs</Link>
     </Compile>
     <Compile Include="..\..\..\UtilityLibrary\UtilityLibrary\SettingsMgr.cs">
       <Link>Settings\SettingsMgr.cs</Link>

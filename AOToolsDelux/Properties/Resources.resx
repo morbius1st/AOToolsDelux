@@ -123,4 +123,16 @@
   <data name="UnitStyleButtonText" xml:space="preserve">
     <value>Unit Styles</value>
   </data>
+  <data name="R_ButtonStyleFtInName" xml:space="preserve">
+    <value>Feet &amp; Inch Project Unit</value>
+  </data>
+  <data name="R_ButtonStyleDecInchName" xml:space="preserve">
+    <value>Decimal Inches Project Unit</value>
+  </data>
+  <data name="R_ButtonStyleDecFeetName" xml:space="preserve">
+    <value>Decimal Feet Project Unit</value>
+  </data>
+  <data name="R_ButtonStyleFracInName" xml:space="preserve">
+    <value>Fractional Inch Project Unit</value>
+  </data>
 </root>

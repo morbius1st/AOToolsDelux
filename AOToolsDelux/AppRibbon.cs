@@ -10,8 +10,8 @@ using Application = Autodesk.Revit.ApplicationServices.Application;
 using UtilityLibrary;
 using static UtilityLibrary.MessageUtilities;
 
-using static AOTools.AppSettings.ConfigSettings.SettingsApp;
-using static AOTools.AppSettings.SettingUtil.SettingsListings;
+using static AOTools.AppSettings.ConfigSettings.SettingsUsr;
+
 
 #endregion
 
@@ -23,15 +23,22 @@ namespace AOTools
 
 		private const string NAMESPACE_PREFIX = "AOTools.Resources";
 
-		private const string BUTTON_NAME1 = "Unit\nStyles";
-		private const string BUTTON_NAME2 = "Delete\nStyles";
-		private const string PANEL_NAME = "AO Tools";
 		private const string TAB_NAME = "AO Tools";
+		private const string AO_TOOLS_PANEL_NAME = "AO Tools";
+		private const string UNITS_PANEL_NAME = "Project Units";
 
-		private static bool _eventsRegistered = false;
-		private static bool _unitsConfigured = false;
+		private const string BUTTON_UNITSTYLES = "Unit\nStyles";
+		private const string BUTTON_UNITSTYLEDELETE = "Delete\nStyles";
 
-		private static bool _familyDocumentCreated = false;
+		private const string BUTTON_UNIT_FTIN_NAME   = "Units\nto Feet-In";
+		private const string BUTTON_UNIT_FRACIN_NAME = "Units\nto Frac In";
+		private const string BUTTON_UNIT_DECFT_NAME  = "Units\nto Dec Ft ";
+		private const string BUTTON_UNIT_DECIN_NAME  = "Units\nto Dec In ";
+
+//		private static bool _eventsRegistered = false;
+//		private static bool _unitsConfigured = false;
+//
+//		private static bool _familyDocumentCreated = false;
 
 		private static UIControlledApplication _uiCtrlApp;
 		internal static UIApplication UiApp;
@@ -71,9 +78,9 @@ namespace AOTools
 
 				// create the ribbon panel if needed
 				// give the panel a name
-				string m_panelName = PANEL_NAME;
+				string m_panelName = UNITS_PANEL_NAME;
 
-				RibbonPanel m_RibbonPanel = null;
+				RibbonPanel ribbonPanel = null;
 
 				// check to see if the panel alrady exists
 				// get the Panel within the tab by name
@@ -85,56 +92,25 @@ namespace AOTools
 				{
 					if (xRP.Name.ToUpper().Equals(m_panelName.ToUpper()))
 					{
-						m_RibbonPanel = xRP;
+						ribbonPanel = xRP;
 						break;
 					}
 				}
 
-				// if
 				// add the panel if it does not exist
-				if (m_RibbonPanel == null)
+				if (ribbonPanel == null)
 				{
 					// create the ribbon panel on the tab given the tab's name
 					// FYI - leave off the ribbon panel's name to put onto the "add-in" tab
-					m_RibbonPanel = app.CreateRibbonPanel(m_tabName, m_panelName);
+					ribbonPanel = app.CreateRibbonPanel(m_tabName, m_panelName);
 				}
 
-				// create a button for the 'copy sheet' command
-				if (!AddPushButton(m_RibbonPanel, "UnitStyles", BUTTON_NAME1,
-					"information16.png",
-					"information32.png",
-					Assembly.GetExecutingAssembly().Location, "AOTools.UnitStylesCommand", 
-						"Create and Modify Unit Styles"))
-
+				if (!AddSplitButtons(ribbonPanel))
 				{
-					// creating the pushbutton failed
-					TaskDialog td = new TaskDialog("AO Tools");
-					td.MainIcon = TaskDialogIcon.TaskDialogIconWarning;
-					td.MainContent = String.Format(Properties.Resources.ButtonCreateFail,
-						Properties.Resources.UnitStyleButtonText);
-					td.Show();
-
 					return Result.Failed;
 				}
 
-				// create a button for the 'copy sheet' command
-				if (!AddPushButton(m_RibbonPanel, "UnitStylesDelete", BUTTON_NAME2,
-					"information16.png",
-					"information32.png",
-					Assembly.GetExecutingAssembly().Location, "AOTools.UnitStylesDelete",
-						"Create and Modify Unit Styles"))
-
-				{
-					// creating the pushbutton failed
-					TaskDialog td = new TaskDialog("AO Tools");
-					td.MainIcon = TaskDialogIcon.TaskDialogIconWarning;
-					td.MainContent = "failed to create the delete unit styles button";
-					td.Show();
-
-					return Result.Failed;
-				}
-
-				SmAppInit();
+				SmUsrInit();
 
 				return Result.Succeeded;
 			}
@@ -145,7 +121,7 @@ namespace AOTools
 		} // end OnStartup
 
 
-
+		// required
 		public Result OnShutdown(UIControlledApplication a)
 		{
 			try
@@ -159,6 +135,234 @@ namespace AOTools
 			}
 		} // end OnShutdown
 
+
+		private bool AddSplitButtons(RibbonPanel ribbonPanel)
+		{ 
+			SplitButtonData sbData = new SplitButtonData("splitButton1", "Split");
+			SplitButton sb = ribbonPanel.AddItem(sbData) as SplitButton;
+
+			PushButtonData pbd;
+
+			pbd = CreateButton("UnitStyleFtIn", BUTTON_UNIT_FTIN_NAME,
+				"Delux Measure Ft-In 16.png",
+				"Delux Measure Ft-In 32.png",
+				Assembly.GetExecutingAssembly().Location, "AOTools.UnitStyles.UnitStyleFeetInchCmd",
+				"Set Project Units to Standard Feet & Inches");
+
+			if (pbd == null)
+			{
+				CreateButtonFail(Properties.Resources.R_ButtonStyleFtInName);
+				return false;
+			}
+
+			sb.AddPushButton(pbd);
+
+			pbd = CreateButton("UnitStyleFracIn", BUTTON_UNIT_FRACIN_NAME,
+				"Delux Measure Frac-In 16.png",
+				"Delux Measure Frac-In 32.png",
+				Assembly.GetExecutingAssembly().Location, "AOTools.UnitStyles.UnitStyleFracInchCmd",
+					"Set Project Units to Standard Fractional Inches");
+
+			if (pbd == null)
+			{
+				CreateButtonFail(Properties.Resources.R_ButtonStyleFracInName);
+				return false;
+			}
+
+			sb.AddPushButton(pbd);
+
+			pbd = CreateButton("UnitStyleDecInch", BUTTON_UNIT_DECIN_NAME,
+				"Delux Measure Dec-In 16.png",
+				"Delux Measure Dec-In 32.png",
+				Assembly.GetExecutingAssembly().Location, "AOTools.UnitStyles.UnitStyleDecInchCmd",
+					"Set Project Units to Standard Decimal Inches");
+
+			if (pbd == null)
+			{
+				CreateButtonFail(Properties.Resources.R_ButtonStyleDecInchName);
+				return false;
+			}
+
+			sb.AddPushButton(pbd);
+
+			pbd = CreateButton("UnitStyleDecFeet", BUTTON_UNIT_DECFT_NAME,
+				"Delux Measure Dec-Ft 16.png",
+				"Delux Measure Dec-Ft 32.png",
+				Assembly.GetExecutingAssembly().Location, "AOTools.UnitStyles.UnitStyleDecFeetCmd",
+					"Set Project Units to Standard Decimal Feet");
+
+			if (pbd == null)
+			{
+				CreateButtonFail(Properties.Resources.R_ButtonStyleDecFeetName);
+				return false;
+			}
+
+			sb.AddPushButton(pbd);
+
+			return true;
+		}
+
+		private void CreateButtonFail(string whichButton)
+		{
+			// creating the pushbutton failed
+			TaskDialog td = new TaskDialog("AO Tools");
+			td.MainIcon = TaskDialogIcon.TaskDialogIconWarning;
+			td.MainContent = String.Format(Properties.Resources.ButtonCreateFail,
+				whichButton);
+			td.Show();
+		}
+
+		private Result AddButtons(RibbonPanel ribbonPanel)
+		{
+//			if (AddUnitStylesButton(ribbonPanel) != Result.Succeeded) 
+//				return Result.Failed;
+//
+//			if (AddUnitStyleDeleteButton(ribbonPanel) != Result.Succeeded) 
+//				return Result.Failed;
+
+			if (AddUnitStyleFtInButton(ribbonPanel) != Result.Succeeded) 
+				return Result.Failed;
+
+			if (AddUnitStyleFracInButton(ribbonPanel) != Result.Succeeded) 
+				return Result.Failed;
+
+			if (AddUnitStyleDecInchButton(ribbonPanel) != Result.Succeeded) 
+				return Result.Failed;
+
+			if (AddUnitStyleDecFeetButton(ribbonPanel) != Result.Succeeded) 
+				return Result.Failed;
+
+			return Result.Succeeded;
+		}
+
+		private Result AddUnitStyleFtInButton(RibbonPanel ribbonPanel)
+		{
+			// create a button for the 'copy sheet' command
+			if (!AddPushButton(ribbonPanel, "UnitStyleFtIn", BUTTON_UNIT_FTIN_NAME,
+				"information16.png",
+				"information32.png",
+				Assembly.GetExecutingAssembly().Location, "AOTools.UnitStyles.UnitStyleFeetInchCmd",
+					"Set Project Units to Standard Feet & Inches"))
+			{
+				// creating the pushbutton failed
+				TaskDialog td = new TaskDialog("AO Tools");
+				td.MainIcon = TaskDialogIcon.TaskDialogIconWarning;
+				td.MainContent = String.Format(Properties.Resources.ButtonCreateFail,
+					Properties.Resources.R_ButtonStyleFtInName);
+				td.Show();
+
+				return Result.Failed;
+			}
+			return Result.Succeeded;
+		}
+		
+		private Result AddUnitStyleFracInButton(RibbonPanel ribbonPanel)
+		{
+			// create a button for the 'copy sheet' command
+			if (!AddPushButton(ribbonPanel, "UnitStyleFracIn", BUTTON_UNIT_FRACIN_NAME,
+				"information16.png",
+				"information32.png",
+				Assembly.GetExecutingAssembly().Location, "AOTools.UnitStyles.UnitStyleFracInchCmd",
+					"Set Project Units to Standard Fractional Inches"))
+			{
+				// creating the pushbutton failed
+				TaskDialog td = new TaskDialog("AO Tools");
+				td.MainIcon = TaskDialogIcon.TaskDialogIconWarning;
+				td.MainContent = String.Format(Properties.Resources.ButtonCreateFail,
+					Properties.Resources.R_ButtonStyleFracInName);
+				td.Show();
+
+				return Result.Failed;
+			}
+			return Result.Succeeded;
+		}
+		
+		private Result AddUnitStyleDecInchButton(RibbonPanel ribbonPanel)
+		{
+			// create a button for the 'copy sheet' command
+			if (!AddPushButton(ribbonPanel, "UnitStyleDecInch", BUTTON_UNIT_DECIN_NAME,
+				"information16.png",
+				"information32.png",
+				Assembly.GetExecutingAssembly().Location, "AOTools.UnitStyles.UnitStyleDecInchCmd",
+					"Set Project Units to Standard Decimal Inches"))
+			{
+				// creating the pushbutton failed
+				TaskDialog td = new TaskDialog("AO Tools");
+				td.MainIcon = TaskDialogIcon.TaskDialogIconWarning;
+				td.MainContent = String.Format(Properties.Resources.ButtonCreateFail,
+					Properties.Resources.R_ButtonStyleDecInchName);
+				td.Show();
+
+				return Result.Failed;
+			}
+			return Result.Succeeded;
+		}
+		
+		private Result AddUnitStyleDecFeetButton(RibbonPanel ribbonPanel)
+		{
+			// create a button for the 'copy sheet' command
+			if (!AddPushButton(ribbonPanel, "UnitStyleDecFeet", BUTTON_UNIT_DECFT_NAME,
+				"information16.png",
+				"information32.png",
+				Assembly.GetExecutingAssembly().Location, "AOTools.UnitStyles.UnitStyleDecFeetCmd",
+					"Set Project Units to Standard Decimal Feet"))
+			{
+				// creating the pushbutton failed
+				TaskDialog td = new TaskDialog("AO Tools");
+				td.MainIcon = TaskDialogIcon.TaskDialogIconWarning;
+				td.MainContent = String.Format(Properties.Resources.ButtonCreateFail,
+					Properties.Resources.R_ButtonStyleDecFeetName);
+				td.Show();
+
+				return Result.Failed;
+			}
+			return Result.Succeeded;
+		}
+
+
+		private Result AddUnitStylesButton(RibbonPanel ribbonPanel)
+		{
+			// create a button for the 'copy sheet' command
+			if (!AddPushButton(ribbonPanel, "UnitStyles", BUTTON_UNITSTYLES,
+				"information16.png",
+				"information32.png",
+				Assembly.GetExecutingAssembly().Location, "AOTools.UnitStylesCommand",
+					"Create and Modify Unit Styles"))
+
+			{
+				// creating the pushbutton failed
+				TaskDialog td = new TaskDialog("AO Tools");
+				td.MainIcon = TaskDialogIcon.TaskDialogIconWarning;
+				td.MainContent = String.Format(Properties.Resources.ButtonCreateFail,
+					Properties.Resources.UnitStyleButtonText);
+				td.Show();
+
+				return Result.Failed;
+			}
+			return Result.Succeeded;
+		}
+
+		private Result AddUnitStyleDeleteButton(RibbonPanel ribbonPanel)
+		{
+			// create a button for the 'copy sheet' command
+			if (!AddPushButton(ribbonPanel, "UnitStylesDelete", BUTTON_UNITSTYLEDELETE,
+				"information16.png",
+				"information32.png",
+				Assembly.GetExecutingAssembly().Location, "AOTools.UnitStylesDelete",
+					"Create and Modify Unit Styles"))
+
+			{
+				// creating the pushbutton failed
+				TaskDialog td = new TaskDialog("AO Tools");
+				td.MainIcon = TaskDialogIcon.TaskDialogIconWarning;
+				td.MainContent = "failed to create the delete unit styles button";
+				td.Show();
+
+				return Result.Failed;
+			}
+			return Result.Succeeded;
+		}
+
 		// method to add a pushbutton to the ribbon
 		private bool AddPushButton(RibbonPanel Panel, string ButtonName,
 			string ButtonText, string Image16, string Image32,
@@ -166,7 +370,33 @@ namespace AOTools
 		{
 			try
 			{
-				PushButtonData m_pdData = new PushButtonData(ButtonName,
+				PushButtonData m_pdData = CreateButton(ButtonName, ButtonText, Image16, Image32,
+					dllPath, dllClass, ToolTip);
+
+				// add it to the panel
+				PushButton m_pb = Panel.AddItem(m_pdData) as PushButton;
+
+				return true;
+			}
+			catch
+			{
+				return false;
+			}
+		}
+
+		private PushButtonData CreateButton(string ButtonName,
+			string ButtonText,
+			string Image16,
+			string Image32,
+			string dllPath,
+			string dllClass,
+			string ToolTip)
+		{
+			PushButtonData pdData;
+
+			try
+			{
+				pdData = new PushButtonData(ButtonName,
 					ButtonText, dllPath, dllClass);
 				// if we have a path for a small image, try to load the image
 				if (Image16.Length != 0)
@@ -174,7 +404,7 @@ namespace AOTools
 					try
 					{
 						// load the image
-						m_pdData.Image = CsUtilities.GetBitmapImage(Image16, NAMESPACE_PREFIX);
+						pdData.Image = CsUtilitiesMedia.GetBitmapImage(Image16, NAMESPACE_PREFIX);
 					}
 					catch
 					{
@@ -188,160 +418,142 @@ namespace AOTools
 					try
 					{
 						// load the image
-						m_pdData.LargeImage = CsUtilities.GetBitmapImage(Image32, NAMESPACE_PREFIX);
+						pdData.LargeImage = CsUtilitiesMedia.GetBitmapImage(Image32, NAMESPACE_PREFIX);
 					}
 					catch
 					{
 						// could not locate the image
 					}
 				}
+
 				// set the tooltip
-				m_pdData.ToolTip = ToolTip;
-
-				// add it to the panel
-				PushButton m_pb = Panel.AddItem(m_pdData) as PushButton;
-
-				return true;
+				pdData.ToolTip = ToolTip;
 			}
 			catch
 			{
-				return false;
+				return null;
 			}
+
+			return pdData;
 		}
 
-		private void AppClosing(object sender, ApplicationClosingEventArgs args)
-		{
-			//			UiApp.ViewActivated -= ViewActivated;
-
-			App.DocumentOpened -= DocOpenEvent;
-//			App.DocumentCreated += DocCreatedEvent;
-			App.DocumentCreating -= DocCreatingEvent;
-
-			UiApp.ApplicationClosing -= AppClosing;
-		}
-
-
-		private void OnIdling(object sender, IdlingEventArgs e)
+		private void OnIdling(object sender,
+			IdlingEventArgs e)
 		{
 			_uiCtrlApp.Idling -= OnIdling;
-			UiApp = sender as UIApplication;
-			Uidoc = UiApp.ActiveUIDocument;
-			App = UiApp.Application;
-
-			RegisterDocEvents();
-		}
-
-		private bool RegisterDocEvents()
-		{
-			logMsgDbLn2("registering events", "0");
-
-			if (_eventsRegistered) return true;
-			_eventsRegistered = true;
-
-			try
-			{
-//				UiApp.ViewActivated += ViewActivated;
-//				UiApp.ViewActivated += ViewActivated;
-				App.DocumentOpened += DocOpenEvent;
-//				App.DocumentCreated += new EventHandler<DocumentCreatedEventArgs>(DocCreatedEvent);
-				App.DocumentCreating += DocCreatingEvent;
-
-				UiApp.ApplicationClosing += AppClosing;
-			}
-			catch (Exception)
-			{
-				return false;
-			}
-
-			return true;
-		}
-
-		private void App_DocumentCreating(object sender, DocumentCreatingEventArgs e)
-		{
-			throw new NotImplementedException();
-		}
-
-		private void DocOpenEvent(object sender, DocumentOpenedEventArgs args)
-		{
-			Doc = args.Document;
-
-//			logMsgDbLn2("doc open event", "0");
-
-			SetUnits();
-
-//			logMsgDbLn2("doc open event", "9");
-
-		}
-
-		private void DocCreatingEvent(object sender, DocumentCreatingEventArgs args)
-		{
-//			logMsgDbLn2("doc creating event", "0");
-
-			if (args.DocumentType == DocumentType.Family)
-			{
-				_familyDocumentCreated = true;
-//				logMsgDbLn2("doc creating event", "got family");
-			}
-
-			SetUnits();
-
-
-//			logMsgDbLn2("doc creating event", "9");
+			UiApp             =  sender as UIApplication;
+			Uidoc             =  UiApp.ActiveUIDocument;
+			App               =  UiApp.Application;
+			Doc               =  Uidoc.Document;
 		}
 
 
-//		private void DocCreatedEvent(object sender, DocumentCreatedEventArgs args)
-//		{
-//			logMsgDbLn2("doc create event", "0");
-//
-//			Doc = args.Document;
-//
-//			SetUnits();
-//
-//			_familyDocumentCreated = false;
-//
-//			logMsgDbLn2("doc create event", "9");
-//		}
 
-		private bool SetUnits()
-		{
-//			logMsgDbLn2("set units", "0");
-
-			Units u = Doc.GetUnits();
-
-			double accuracy = (1.0 / 12.0) / 16.0;
-
-			try
-			{
-				Units units = new Units(UnitSystem.Imperial);
-				FormatOptions fmtOps = 
-					new FormatOptions(DisplayUnitType.DUT_FEET_FRACTIONAL_INCHES, 
-						UnitSymbolType.UST_NONE, accuracy);
-
-				fmtOps.SuppressSpaces = true;
-				fmtOps.SuppressLeadingZeros = false;
-				fmtOps.UseDigitGrouping = true;
-
-				units.SetFormatOptions(UnitType.UT_Length, fmtOps);
-
-				using (Transaction t = new Transaction(Doc, "Update Units"))
-				{
-					t.Start();
-					Doc.SetUnits(units);
-					t.Commit();
-				}
-			}
-			catch (Exception e)
-			{
-				logMsgDbLn2("set units: Exception|", e.Message);
-				throw;
-			}
-			_unitsConfigured = false;
-
-//			logMsgDbLn2("set units", "9");
-
-			return _unitsConfigured;
-		}
+		//		private void AppClosing(object sender, ApplicationClosingEventArgs args)
+		//		{
+		//			//			UiApp.ViewActivated -= ViewActivated;
+		//
+		//			App.DocumentOpened -= DocOpenEvent;
+		//
+		//			UiApp.ApplicationClosing -= AppClosing;
+		//		}
+		//
+		//
+		//		private void OnIdling(object sender, IdlingEventArgs e)
+		//		{
+		//			_uiCtrlApp.Idling -= OnIdling;
+		//			UiApp = sender as UIApplication;
+		//			Uidoc = UiApp.ActiveUIDocument;
+		//			App = UiApp.Application;
+		//
+		//			RegisterDocEvents();
+		//		}
+		//
+		//		private bool RegisterDocEvents()
+		//		{
+		////			logMsgDbLn2("registering events", "0");
+		//
+		//			if (_eventsRegistered) return true;
+		//			_eventsRegistered = true;
+		//
+		//			try
+		//			{
+		////				UiApp.ViewActivated += ViewActivated;
+		////				UiApp.ViewActivated += ViewActivated;
+		//				App.DocumentOpened += DocOpenEvent;
+		////				App.DocumentCreated += new EventHandler<DocumentCreatedEventArgs>(DocCreatedEvent);
+		//
+		//				App.DocumentCreated += DocumentCreated;
+		//
+		//				UiApp.ApplicationClosing += AppClosing;
+		//			}
+		//			catch (Exception)
+		//			{
+		//				return false;
+		//			}
+		//
+		//			return true;
+		//		}
+		//
+		//		private void DocumentCreated(object sender,
+		//			DocumentCreatedEventArgs args)
+		//		{
+		//			if (args.Document.IsFamilyDocument)
+		//			{
+		//				_familyDocumentCreated = true;
+		//			}
+		//
+		//			SetUnits();
+		//		}
+		//
+		//		private void DocOpenEvent(object sender, DocumentOpenedEventArgs args)
+		//		{
+		//			Doc = args.Document;
+		//
+		//			SetUnits();
+		//
+		//		}
+		//
+		//		private void ConfigNewDocUnits(Document doc)
+		//		{
+		//			
+		//		}
+		//
+		//		private bool SetUnits()
+		//		{
+		//			Units u = Doc.GetUnits();
+		//
+		//			double accuracy = (1.0 / 12.0) / 16.0;
+		//
+		//			try
+		//			{
+		//				Units units = new Units(UnitSystem.Imperial);
+		//				FormatOptions fmtOps = 
+		//					new FormatOptions(DisplayUnitType.DUT_FEET_FRACTIONAL_INCHES, 
+		//						UnitSymbolType.UST_NONE, accuracy);
+		//				
+		//				fmtOps.SuppressSpaces = true;
+		//				fmtOps.SuppressLeadingZeros = true;
+		//				fmtOps.UseDigitGrouping = true;
+		//
+		//				units.SetFormatOptions(UnitType.UT_Length, fmtOps);
+		//
+		//				using (Transaction t = new Transaction(Doc, "Update Units"))
+		//				{
+		//					t.Start();
+		//					Doc.SetUnits(units);
+		//					t.Commit();
+		//				}
+		//			}
+		//			catch (Exception e)
+		//			{
+		//				logMsgDbLn2("set units: Exception|", e.Message);
+		//				throw;
+		//			}
+		//			_unitsConfigured = false;
+		//
+		//			return _unitsConfigured;
+		//		}
 
 	}
 }
