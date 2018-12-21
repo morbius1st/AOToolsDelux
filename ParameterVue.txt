@@ -1,0 +1,77 @@
+
+Styles:
+
+operational notes:
+default sort is all columns
+column header worked out when first item is processed.
+
+
+general settings
+-- method to shorten long display items:
+	1.  truncate, none
+	2.	truncate with ...
+	3.  drop middle with ... and keep end
+	4.  drop begin with ... and keep end
+	5.  ok to truncate title
+	
+-- where to display:
+	1.  console window
+	2.	debug window
+	3.	both
+
+Data Structures and information therein.
+
+0. master table class
+-- this holds the column header and the data table classes
+-- this includes the routines to read and save (when applies) the header info
+-- this includes methods to provide the data to the data grid
+
+1. column header row class
+-- current intent is that the header is automatic based on
+	revit's information - to keep this generic - provide
+	a header information provider
+-- this contains a column header item for each column
+-- this class includes the routine to make the sort key
+-- composed of a dictionary<column (int), column header> 
+		this will allow column re-organization and is included
+		only to make this a generic system
+	-- where int is the column header order 
+		-- positive = show and position
+		-- negative = do not show
+	-- need routine to change column order
+	-- header item needs an index number that is independent
+		of the column number but matches on start
+	-- formatting information
+		-- titles: (1) row, (2) rows, as needed rows
+		
+2. column header item class
+-- this is the individual items in the column header row class
+-- this holds the information about the data in the column:
+	-- text
+	-- sort? + = yes, ascending, - = yes, descending, 0 = no
+	-- for column with an element, "holds" the list of options
+	-- format information
+		-- width - need to coordinate title versus actual items
+			-- actual width
+			-- min width
+			-- max width
+		-- header font
+		-- header text justification
+	-- item used to determine if the row matches (i.e. these columns must match in order
+		to be considered a matching column (hold - cannot implement unless header is not
+		automatic)
+
+3. data table class
+-- this holds all of the data rows
+-- stored as List<row data>
+-- includes method to sort (use linq)
+-- includes method to check if one row matches another
+-- includes methods to modify the table - add row(s), delete row(s), move row(s)
+
+4. data row class
+-- this holds all of the parameters for a single style
+-- 
+
+5. data item class
+-- this holds the individual data item
+	

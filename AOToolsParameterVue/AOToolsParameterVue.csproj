@@ -1,20 +1,21 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{907CEB89-DD00-47D1-9366-198207C325E7}</ProjectGuid>
-    <OutputType>Exe</OutputType>
+    <ProjectGuid>{D7C68906-6FC4-457F-9BA2-6AE89F32A408}</ProjectGuid>
+    <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>AOToolsVue</RootNamespace>
-    <AssemblyName>AOToolsVue</AssemblyName>
+    <RootNamespace>AOToolsParameterVue</RootNamespace>
+    <AssemblyName>AOToolsParameterVue</AssemblyName>
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
+    <ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <FileAlignment>512</FileAlignment>
+    <Deterministic>true</Deterministic>
     <TargetFrameworkProfile />
   </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'DebugVue|AnyCPU' ">
-    <PlatformTarget>AnyCPU</PlatformTarget>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
@@ -22,15 +23,18 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'ReleaseVue|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
     <OutputPath>bin\Release\</OutputPath>
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Dbg17PramVue|AnyCPU'">
+    <DefineConstants>TRACE;DEBUG</DefineConstants>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="envdte, Version=8.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
@@ -40,11 +44,17 @@
       <EmbedInteropTypes>True</EmbedInteropTypes>
     </Reference>
     <Reference Include="PresentationCore" />
+    <Reference Include="PresentationFramework" />
+    <Reference Include="RevitAPI">
+      <HintPath>C:\Program Files\Autodesk\Revit 2017\RevitAPI.dll</HintPath>
+    </Reference>
+    <Reference Include="RevitAPIUI">
+      <HintPath>C:\Program Files\Autodesk\Revit 2017\RevitAPIUI.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Drawing" />
-    <Reference Include="System.Runtime.Serialization" />
-    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xaml" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -57,31 +67,42 @@
     <Compile Include="..\..\..\UtilityLibrary\UtilityLibrary\CsExtensions.cs">
       <Link>Referenced\CsExtensions.cs</Link>
     </Compile>
-    <Compile Include="..\..\..\UtilityLibrary\UtilityLibrary\CsUtilities.cs">
-      <Link>Referenced\CsUtilities.cs</Link>
+    <Compile Include="..\..\..\UtilityLibrary\UtilityLibrary\CsUtilitiesMedia.cs">
+      <Link>Referenced\CsUtilitiesMedia.cs</Link>
     </Compile>
     <Compile Include="..\..\..\UtilityLibrary\UtilityLibrary\MessageUtilities.cs">
       <Link>Referenced\MessageUtilities.cs</Link>
     </Compile>
-    <Compile Include="..\..\..\UtilityLibrary\UtilityLibrary\SettingsMgr.cs">
-      <Link>Settings\SettingsMgr.cs</Link>
+    <Compile Include="..\..\LibraryRevit\LibraryRevit\RevitLibrary.cs">
+      <Link>Referenced\RevitLibrary.cs</Link>
     </Compile>
-    <Compile Include="Extensions.cs" />
-    <Compile Include="Settings\FieldInfo.cs" />
-    <Compile Include="Program.cs" />
+    <Compile Include="AppRibbonPV.cs" />
+    <Compile Include="ParamView.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Settings\SettingsUser.cs" />
-    <Compile Include="Settings\SchemaDefinitions.cs" />
+    <Compile Include="ParamViewMsg.xaml.cs">
+      <DependentUpon>ParamViewMsg.xaml</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
-    <None Include="App.config" />
+    <Page Include="ParamViewMsg.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Other\AOToolsParameterVue.addin">
+      <SubType>Designer</SubType>
+    </Content>
+    <EmbeddedResource Include="Resources\information16.png" />
+    <EmbeddedResource Include="Resources\information32.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
-  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
-       Other similar extension points exist, see Microsoft.Common.targets.
-  <Target Name="BeforeBuild">
-  </Target>
-  <Target Name="AfterBuild">
-  </Target>
-  -->
+  <PropertyGroup>
+    <PostBuildEvent>(copy /y "$(ProjectDir)Other\$(TargetName).addin" "$(AppData)\Autodesk\REVIT\Addins\2017")
+(copy /y "$(TargetPath)" "$(AppData)\Autodesk\REVIT\Addins\2017")
+</PostBuildEvent>
+  </PropertyGroup>
+  <PropertyGroup>
+    <PreBuildEvent>echo *** $(ConfigurationName) ***</PreBuildEvent>
+  </PropertyGroup>
 </Project>

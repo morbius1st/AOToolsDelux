@@ -7,28 +7,48 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AOToolsDelux", "AOToolsDelu
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AOToolsVue", "AOToolsVue\AOToolsVue.csproj", "{907CEB89-DD00-47D1-9366-198207C325E7}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AOToolsParameterVue", "AOToolsParameterVue\AOToolsParameterVue.csproj", "{D7C68906-6FC4-457F-9BA2-6AE89F32A408}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		DbgPramVue2017|Any CPU = DbgPramVue2017|Any CPU
+		Debug|Any CPU = Debug|Any CPU
 		DebugTools2017|Any CPU = DebugTools2017|Any CPU
 		DebugTools2018|Any CPU = DebugTools2018|Any CPU
-		DebugVue|Any CPU = DebugVue|Any CPU
+		DebugToolVue|Any CPU = DebugToolVue|Any CPU
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{DDC429DE-0FCC-45A7-A152-112E9AB46CC4}.DebugTools2017|Any CPU.ActiveCfg = DebugTools2017|Any CPU
-		{DDC429DE-0FCC-45A7-A152-112E9AB46CC4}.DebugTools2017|Any CPU.Build.0 = DebugTools2017|Any CPU
-		{DDC429DE-0FCC-45A7-A152-112E9AB46CC4}.DebugTools2018|Any CPU.ActiveCfg = DebugTools2018|Any CPU
-		{DDC429DE-0FCC-45A7-A152-112E9AB46CC4}.DebugTools2018|Any CPU.Build.0 = DebugTools2018|Any CPU
-		{DDC429DE-0FCC-45A7-A152-112E9AB46CC4}.DebugVue|Any CPU.ActiveCfg = DebugVue|Any CPU
-		{DDC429DE-0FCC-45A7-A152-112E9AB46CC4}.DebugVue|Any CPU.Build.0 = DebugVue|Any CPU
-		{DDC429DE-0FCC-45A7-A152-112E9AB46CC4}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{DDC429DE-0FCC-45A7-A152-112E9AB46CC4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DDC429DE-0FCC-45A7-A152-112E9AB46CC4}.DbgPramVue2017|Any CPU.ActiveCfg = Release2017|Any CPU
+		{DDC429DE-0FCC-45A7-A152-112E9AB46CC4}.Debug|Any CPU.ActiveCfg = Debug2017|Any CPU
+		{DDC429DE-0FCC-45A7-A152-112E9AB46CC4}.Debug|Any CPU.Build.0 = Debug2017|Any CPU
+		{DDC429DE-0FCC-45A7-A152-112E9AB46CC4}.DebugTools2017|Any CPU.ActiveCfg = Debug2017|Any CPU
+		{DDC429DE-0FCC-45A7-A152-112E9AB46CC4}.DebugTools2017|Any CPU.Build.0 = Debug2017|Any CPU
+		{DDC429DE-0FCC-45A7-A152-112E9AB46CC4}.DebugTools2018|Any CPU.ActiveCfg = Debug2017|Any CPU
+		{DDC429DE-0FCC-45A7-A152-112E9AB46CC4}.DebugTools2018|Any CPU.Build.0 = Debug2017|Any CPU
+		{DDC429DE-0FCC-45A7-A152-112E9AB46CC4}.DebugToolVue|Any CPU.ActiveCfg = Debug2017|Any CPU
+		{DDC429DE-0FCC-45A7-A152-112E9AB46CC4}.DebugToolVue|Any CPU.Build.0 = Debug2017|Any CPU
+		{DDC429DE-0FCC-45A7-A152-112E9AB46CC4}.Release|Any CPU.ActiveCfg = Release2017|Any CPU
+		{DDC429DE-0FCC-45A7-A152-112E9AB46CC4}.Release|Any CPU.Build.0 = Release2017|Any CPU
+		{907CEB89-DD00-47D1-9366-198207C325E7}.DbgPramVue2017|Any CPU.ActiveCfg = DebugVue|Any CPU
+		{907CEB89-DD00-47D1-9366-198207C325E7}.Debug|Any CPU.ActiveCfg = DebugVue|Any CPU
 		{907CEB89-DD00-47D1-9366-198207C325E7}.DebugTools2017|Any CPU.ActiveCfg = DebugVue|Any CPU
 		{907CEB89-DD00-47D1-9366-198207C325E7}.DebugTools2018|Any CPU.ActiveCfg = DebugVue|Any CPU
-		{907CEB89-DD00-47D1-9366-198207C325E7}.DebugVue|Any CPU.ActiveCfg = DebugVue|Any CPU
-		{907CEB89-DD00-47D1-9366-198207C325E7}.DebugVue|Any CPU.Build.0 = DebugVue|Any CPU
-		{907CEB89-DD00-47D1-9366-198207C325E7}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{907CEB89-DD00-47D1-9366-198207C325E7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{907CEB89-DD00-47D1-9366-198207C325E7}.DebugToolVue|Any CPU.ActiveCfg = DebugVue|Any CPU
+		{907CEB89-DD00-47D1-9366-198207C325E7}.DebugToolVue|Any CPU.Build.0 = DebugVue|Any CPU
+		{907CEB89-DD00-47D1-9366-198207C325E7}.Release|Any CPU.ActiveCfg = DebugVue|Any CPU
+		{D7C68906-6FC4-457F-9BA2-6AE89F32A408}.DbgPramVue2017|Any CPU.ActiveCfg = Debug|Any CPU
+		{D7C68906-6FC4-457F-9BA2-6AE89F32A408}.DbgPramVue2017|Any CPU.Build.0 = Debug|Any CPU
+		{D7C68906-6FC4-457F-9BA2-6AE89F32A408}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D7C68906-6FC4-457F-9BA2-6AE89F32A408}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D7C68906-6FC4-457F-9BA2-6AE89F32A408}.DebugTools2017|Any CPU.ActiveCfg = Debug|Any CPU
+		{D7C68906-6FC4-457F-9BA2-6AE89F32A408}.DebugTools2017|Any CPU.Build.0 = Debug|Any CPU
+		{D7C68906-6FC4-457F-9BA2-6AE89F32A408}.DebugTools2018|Any CPU.ActiveCfg = Debug|Any CPU
+		{D7C68906-6FC4-457F-9BA2-6AE89F32A408}.DebugTools2018|Any CPU.Build.0 = Debug|Any CPU
+		{D7C68906-6FC4-457F-9BA2-6AE89F32A408}.DebugToolVue|Any CPU.ActiveCfg = Debug|Any CPU
+		{D7C68906-6FC4-457F-9BA2-6AE89F32A408}.DebugToolVue|Any CPU.Build.0 = Debug|Any CPU
+		{D7C68906-6FC4-457F-9BA2-6AE89F32A408}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D7C68906-6FC4-457F-9BA2-6AE89F32A408}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -1,0 +1,12 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<RevitAddIns>
+  <AddIn Type="Application">
+    <Name>Application AOToolsParameterVue</Name>
+    <Assembly>AOToolsParameterVue.dll</Assembly>
+    <FullClassName>AOToolsParameterVue.AppRibbonPV</FullClassName>
+    <ClientId>FB9C028D-B801-464A-AA77-D92A7F385029</ClientId>
+    <VendorId>pro.cyberstudio</VendorId>
+    <VendorDescription>CyberStudio</VendorDescription>
+  </AddIn>
+</RevitAddIns>
+
