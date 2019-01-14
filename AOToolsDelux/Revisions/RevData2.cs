@@ -97,21 +97,21 @@ namespace AOTools
 				RevDataItems2 item = new RevDataItems2();
 
 				// start storing the information in the data list
-				item.Selected        = false;
-				item.Sequence        = rev.SequenceNumber;
-				item.DeltaTitle		 = revCloud.get_Parameter(BuiltInParameter.REVISION_CLOUD_REVISION_ISSUED_TO).AsString();
-				item.AltId           = revCloud.get_Parameter(BuiltInParameter.REVISION_CLOUD_REVISION_ISSUED_BY).AsString();
-				item.ShtNum	 = GetSheetNumber(revCloud);
-				item.TypeCode        = GetTypeSortCode(item.DeltaTitle);
-				item.DisciplineCode	 = GetDisciplineSortCode(item.ShtNum);
-				item.Visibility		 = rev.Visibility;
-				item.RevisionId		 = revCloud.get_Parameter(BuiltInParameter.REVISION_CLOUD_REVISION_NUM).AsString();
-				item.BlockTitle		 = revCloud.get_Parameter(BuiltInParameter.REVISION_CLOUD_REVISION_DESCRIPTION).AsString();
-				item.RevisionDate	 = revCloud.get_Parameter(BuiltInParameter.REVISION_CLOUD_REVISION_DATE).AsString();
-				item.Basis			 = revCloud.get_Parameter(BuiltInParameter.ALL_MODEL_INSTANCE_COMMENTS).AsString();
-				item.Description	 = revCloud.get_Parameter(BuiltInParameter.ALL_MODEL_MARK)?.AsString();
-				item.TagElemId		 = ElementId.InvalidElementId;
-				item.CloudElemId	 = cloudId??ElementId.InvalidElementId;
+				item.Selected       = false;
+				item.Sequence       = rev.SequenceNumber;
+				item.DeltaTitle     = revCloud.get_Parameter(BuiltInParameter.REVISION_CLOUD_REVISION_ISSUED_TO).AsString();
+				item.AltId          = revCloud.get_Parameter(BuiltInParameter.REVISION_CLOUD_REVISION_ISSUED_BY).AsString();
+				item.ShtNum         = GetSheetNumber(revCloud);
+				item.TypeCode       = GetTypeSortCode(item.DeltaTitle);
+				item.DisciplineCode = GetDisciplineSortCode(item.ShtNum);
+				item.Visibility     = rev.Visibility;
+				item.RevisionId     = revCloud.get_Parameter(BuiltInParameter.REVISION_CLOUD_REVISION_NUM).AsString();
+				item.BlockTitle     = revCloud.get_Parameter(BuiltInParameter.REVISION_CLOUD_REVISION_DESCRIPTION).AsString();
+				item.RevisionDate   = revCloud.get_Parameter(BuiltInParameter.REVISION_CLOUD_REVISION_DATE).AsString();
+				item.Basis          = revCloud.get_Parameter(BuiltInParameter.ALL_MODEL_INSTANCE_COMMENTS).AsString();
+				item.Description    = revCloud.get_Parameter(BuiltInParameter.ALL_MODEL_MARK)?.AsString();
+				item.TagElemId      = ElementId.InvalidElementId;
+				item.CloudElemId    = cloudId ?? ElementId.InvalidElementId;
 
 				string key = GetSortKey(item.AltId, item.TypeCode,
 					item.DisciplineCode, item.DeltaTitle, item.ShtNum);

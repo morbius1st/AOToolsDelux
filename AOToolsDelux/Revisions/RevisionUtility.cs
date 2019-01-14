@@ -132,86 +132,86 @@ namespace AOTools
 //				i++;
 //			}
 //		}
-//
-//		public static void ListRevInfo5(SortedList<RevDataKey, RevDataItems> revInfo)
-//		{
-//								   //k0  //k1  //k2  //k3  //k4
-//			int[] paddingk = new [] {0,    0,    0,    16,   9};
-//									//vis //alt  //title //basis  //desc
-//			int[] paddingv = new [] {20,    4,     16,      10,       0};
-//
-//			if (revInfo == null) return;
-//
-//			int i = 1;
-//
-//			// header
-//			logMsg2("ri count| " + revInfo.Count);
-//			logMsg2(nl);
-//			logMsg2("                        key                              key     key     key          key               key            item                item        item              item          item");
-//			logMsg2(nl);
-//			logMsg2("----  -- item --   ---- sort code --------------------  -alt    -type  - disc -  ---- delta -------  -- sheet --  ---- visibility ------  -rev -  ---- block -------  -- basis ---  -- description --------");
-//			logMsg2(nl);
-//			logMsg2("----  -- num ---   -----------------------------------  -num-   -code  - code -  ---- title -------  -- number -  ----------------------  -num--  ---- title -------  ------------  -----------------------");
-//			logMsg2(nl);
-//
-//			foreach (KeyValuePair<RevDataKey, RevDataItems> riKvp in revInfo)
-//			{
-//				int pv = 0;
-//				int pk = 0;
-//
-//				StringBuilder sb = new StringBuilder();
-//				StringBuilder sbk = new StringBuilder();
-//
-//				sb.Append("item --| ").Append($"{i:D3}").Append("|-- ");
-//				sbk.Append("item  ");
-//
-//				string SortOrderKey = GetSortOrderCode(
-//					riKvp.Key[ERevDataKey.REV_KEY_ALTID],
-//					riKvp.Key[ERevDataKey.REV_KEY_TYPE_CODE],
-//					riKvp.Key[ERevDataKey.REV_KEY_DISCIPLINE_CODE],
-//					riKvp.Key[ERevDataKey.REV_KEY_SHEETNUM]
-//				);
-//
-//				sb.Append(" :: ").Append(SortOrderKey);
-//				sbk.Append("sort key  ");
-//
-//
-//				foreach (KeyValuePair<int, RevCol> rcKvp in RevCols)
-//				{
-//					if (rcKvp.Key >= MAX_FIELDS) break;
-//
-//					sb.Append(" :: ");
-//
-//					switch (rcKvp.Value.Source)
-//					{
-//					case DERIVED:
-//						{
-//							int a = (int) (ERevDataDerived) rcKvp.Value.Index;
-//
-//							sb.Append("undefined");
-//							break;
-//						}
-//					case KEY:
-//						{
-//							ERevDataKey a = (ERevDataKey) rcKvp.Value.Index;
-//
-//							sb.Append(riKvp.Key[a].PadRight(paddingk[pk++]));
-//
-//							break;
-//						}
-//					case DATA:
-//						{
-//							ERevDataItems a = (ERevDataItems) rcKvp.Value.Index;
-//
-//							sb.Append(riKvp.Value[a].PadRight(paddingv[pv++]));
-//							break;
-//						}
-//					}
-//				}
-//
-//				logMsg2(sb.ToString() + nl);
-//				i++;
-//			}
-//		}
+
+		public static void ListRevInfo5(SortedList<RevDataKey, RevDataItems> revInfo)
+		{
+								   //k0  //k1  //k2  //k3  //k4
+			int[] paddingk = new [] {0,    0,    0,    16,   9};
+									//vis //alt  //title //basis  //desc
+			int[] paddingv = new [] {20,    4,     16,      10,       0};
+
+			if (revInfo == null) return;
+
+			int i = 1;
+
+			// header
+			logMsg2("ri count| " + revInfo.Count);
+			logMsg2(nl);
+			logMsg2("                        key                              key     key     key          key               key            item                item        item              item          item");
+			logMsg2(nl);
+			logMsg2("----  -- item --   ---- sort code --------------------  -alt    -type  - disc -  ---- delta -------  -- sheet --  ---- visibility ------  -rev -  ---- block -------  -- basis ---  -- description --------");
+			logMsg2(nl);
+			logMsg2("----  -- num ---   -----------------------------------  -num-   -code  - code -  ---- title -------  -- number -  ----------------------  -num--  ---- title -------  ------------  -----------------------");
+			logMsg2(nl);
+
+			foreach (KeyValuePair<RevDataKey, RevDataItems> riKvp in revInfo)
+			{
+				int pv = 0;
+				int pk = 0;
+
+				StringBuilder sb = new StringBuilder();
+				StringBuilder sbk = new StringBuilder();
+
+				sb.Append("item --| ").Append($"{i:D3}").Append("|-- ");
+				sbk.Append("item  ");
+
+				string SortOrderKey = GetSortOrderCode(
+					riKvp.Key[ERevDataKey.REV_KEY_ALTID],
+					riKvp.Key[ERevDataKey.REV_KEY_TYPE_CODE],
+					riKvp.Key[ERevDataKey.REV_KEY_DISCIPLINE_CODE],
+					riKvp.Key[ERevDataKey.REV_KEY_SHEETNUM]
+				);
+
+				sb.Append(" :: ").Append(SortOrderKey);
+				sbk.Append("sort key  ");
+
+
+				foreach (KeyValuePair<int, RevCol> rcKvp in RevCols)
+				{
+					if (rcKvp.Key >= MAX_FIELDS) break;
+
+					sb.Append(" :: ");
+
+					switch (rcKvp.Value.Source)
+					{
+					case DERIVED:
+						{
+							int a = (int) (ERevDataDerived) rcKvp.Value.Index;
+
+							sb.Append("undefined");
+							break;
+						}
+					case KEY:
+						{
+							ERevDataKey a = (ERevDataKey) rcKvp.Value.Index;
+
+							sb.Append(riKvp.Key[a].PadRight(paddingk[pk++]));
+
+							break;
+						}
+					case DATA:
+						{
+							ERevDataItems a = (ERevDataItems) rcKvp.Value.Index;
+
+							sb.Append(riKvp.Value[a].PadRight(paddingv[pv++]));
+							break;
+						}
+					}
+				}
+
+				logMsg2(sb.ToString() + nl);
+				i++;
+			}
+		}
 	}
 }
