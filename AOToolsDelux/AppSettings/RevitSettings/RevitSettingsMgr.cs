@@ -1,9 +1,10 @@
 ﻿#region Using directives
 
+using System.Collections.Generic;
+using AOTools.AppSettings.SchemaSettings;
 using static AOTools.AppSettings.RevitSettings.RevitSettingsBase.RevitSetgDelRetnCode;
 using static AOTools.AppSettings.RevitSettings.RevitSettingsBase;
 using static UtilityLibrary.MessageUtilities;
-
 using static AOTools.AppSettings.RevitSettings.RevitSettingsUnitUsr;
 
 #endregion
@@ -21,24 +22,28 @@ namespace AOTools.AppSettings.RevitSettings
 
 		public static bool RvtSetgInitalized { get; private set; } = false;
 
-		#region Read Settings
+	#region Read Settings
 
 		// ******************************
 		// read setting
 		// ******************************
 
-		public bool Read()
+		public SaveRtnCodes Read()
 		{
-#if DEBUG
+			if (!RvtSetgInitalized)
+			{
+				return SaveRtnCodes.NOT_INIT;
+			}
+		#if DEBUG
 			logMsgDbLn2("revit settings", "read");
-#endif
-			RvtSetgInitalized = ReadAllRevitSettings();
-			return RvtSetgInitalized;
+		#endif
+
+			return ReadAllRevitSettings() ? SaveRtnCodes.GOOD : SaveRtnCodes.FAIL;
 		}
 
-		#endregion
+	#endregion
 
-		#region Save Settings
+	#region Save Settings
 
 		// ******************************
 		// save settings
@@ -50,9 +55,9 @@ namespace AOTools.AppSettings.RevitSettings
 
 		private SaveRtnCodes Save(bool byPass)
 		{
-#if DEBUG
+		#if DEBUG
 			logMsgDbLn2("revit settings", "save");
-#endif
+		#endif
 			if (!byPass && !RvtSetgInitalized)
 			{
 				return SaveRtnCodes.NOT_INIT;
@@ -66,9 +71,9 @@ namespace AOTools.AppSettings.RevitSettings
 			return Save(false) == SaveRtnCodes.GOOD;
 		}
 
-		#endregion
+	#endregion
 
-		#region Delete settings
+	#region Delete settings
 
 		// ******************************
 		// delete schema from revit document
@@ -77,15 +82,15 @@ namespace AOTools.AppSettings.RevitSettings
 		// delete thecurrent schema from the current model only
 		public bool DeleteSchema()
 		{
-#if DEBUG
+		#if DEBUG
 			logMsgDbLn2("revit settings", "delete schema");
-#endif
-			return !ChkDelRetnCode(DeleteAllSchemas(), "Delete Settings");
+		#endif
+			return ChkDelRetnCode(DeleteAllSchemas(), "Delete Settings");
 		}
 
-		#endregion
+	#endregion
 
-		#region Update settings
+	#region Update settings
 
 		// ******************************
 		// update settings
@@ -94,9 +99,9 @@ namespace AOTools.AppSettings.RevitSettings
 		// update the schema with the current schema
 		public bool Update()
 		{
-#if DEBUG
+		#if DEBUG
 			logMsgDbLn2("revit settings", "update");
-#endif
+		#endif
 			if (!RvtSetgInitalized) return false;
 
 			if (!ChkDelRetnCode(DeleteAllSchemas(),
@@ -105,10 +110,9 @@ namespace AOTools.AppSettings.RevitSettings
 			return Save();
 		}
 
+	#endregion
 
-		#endregion
-
-		#region Reset Settings
+	#region Reset Settings
 
 		// ******************************
 		// reset settings
@@ -117,21 +121,39 @@ namespace AOTools.AppSettings.RevitSettings
 		// reset the settings to their default values
 		public bool Reset()
 		{
-#if DEBUG
+		#if DEBUG
 			logMsgDbLn2("revit settings", "reset");
-#endif
+		#endif
 			DeleteAllSchemas();
 
-			RsuUsr.Initalize();
+			RsuUsr.Initialize();
 
 			RvtSetgInitalized = true;
 
 			return Save();
-
 		}
 
+	#endregion
 
-		#endregion
+	#region Init Settings
 
+		// ******************************
+		// reset settings
+		// ******************************
+
+		// reset the settings to their default values
+		public void Init()
+		{
+		#if DEBUG
+			logMsgDbLn2("revit settings", "init");
+		#endif
+			// DeleteAllSchemas();
+
+			RsuUsr.Initialize();
+
+			RvtSetgInitalized = true;
+		}
+
+	#endregion
 	}
 }

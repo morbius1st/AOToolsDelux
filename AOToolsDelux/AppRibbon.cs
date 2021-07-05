@@ -20,20 +20,21 @@ namespace AOTools
 	class AppRibbon : IExternalApplication
 	{
 		internal const string APP_NAME = "AOTools";
+		private const string TAB_NAME = "AO Tools";
 
 		private const string NAMESPACE_PREFIX = "AOTools.Resources";
-
-		private const string TAB_NAME = "AO Tools";
 		private const string AO_TOOLS_PANEL_NAME = "AO Tools";
 		private const string UNITS_PANEL_NAME = "Project Units";
 
 		private const string BUTTON_UNITSTYLES = "Unit\nStyles";
 		private const string BUTTON_UNITSTYLEDELETE = "Delete\nStyles";
-
-		private const string BUTTON_UNIT_FTIN_NAME   = "Units\nto Feet-In";
-		private const string BUTTON_UNIT_FRACIN_NAME = "Units\nto Frac In";
-		private const string BUTTON_UNIT_DECFT_NAME  = "Units\nto Dec Ft ";
-		private const string BUTTON_UNIT_DECIN_NAME  = "Units\nto Dec In ";
+		private const string BUTTON_SELECT = "Select\nElement";
+		private const string BUTTON_DATA_STORAGE = "Data\nStorage";
+//
+//		private const string BUTTON_UNIT_FTIN_NAME   = "Units\nto Feet-In";
+//		private const string BUTTON_UNIT_FRACIN_NAME = "Units\nto Frac In";
+//		private const string BUTTON_UNIT_DECFT_NAME  = "Units\nto Dec Ft ";
+//		private const string BUTTON_UNIT_DECIN_NAME  = "Units\nto Dec In ";
 
 //		private static bool _eventsRegistered = false;
 //		private static bool _unitsConfigured = false;
@@ -51,11 +52,11 @@ namespace AOTools
 		{
 			_uiCtrlApp = app;
 
-//			clearConsole();
+			// clearConsole();
 
 			try
 			{
-				_uiCtrlApp.Idling += OnIdling;
+				// _uiCtrlApp.Idling += OnIdling;
 
 				// create the ribbon tab first - this is the top level
 				// UI item, below this will be the panel that is "on" the tab
@@ -105,7 +106,12 @@ namespace AOTools
 					ribbonPanel = app.CreateRibbonPanel(m_tabName, m_panelName);
 				}
 
-				if (!AddSplitButtons(ribbonPanel))
+				// if (!AddSplitButtons(ribbonPanel))
+				// {
+				// 	return Result.Failed;
+				// }
+
+				if (AddButtons(ribbonPanel) == Result.Failed)
 				{
 					return Result.Failed;
 				}
@@ -135,120 +141,231 @@ namespace AOTools
 			}
 		} // end OnShutdown
 
+		
 
-		private bool AddSplitButtons(RibbonPanel ribbonPanel)
-		{ 
-			SplitButtonData sbData = new SplitButtonData("splitButton1", "Split");
-			SplitButton sb = ribbonPanel.AddItem(sbData) as SplitButton;
-
-			PushButtonData pbd;
-
-			pbd = CreateButton("UnitStyleFtIn", BUTTON_UNIT_FTIN_NAME,
-				"Delux Measure Ft-In 16.png",
-				"Delux Measure Ft-In 32.png",
-				Assembly.GetExecutingAssembly().Location, "AOTools.UnitStyles.UnitStyleFeetInchCmd",
-				"Set Project Units to Standard Feet & Inches");
-
-			if (pbd == null)
-			{
-				CreateButtonFail(Properties.Resources.R_ButtonStyleFtInName);
-				return false;
-			}
-
-			sb.AddPushButton(pbd);
-
-			pbd = CreateButton("UnitStyleFracIn", BUTTON_UNIT_FRACIN_NAME,
-				"Delux Measure Frac-In 16.png",
-				"Delux Measure Frac-In 32.png",
-				Assembly.GetExecutingAssembly().Location, "AOTools.UnitStyles.UnitStyleFracInchCmd",
-					"Set Project Units to Standard Fractional Inches");
-
-			if (pbd == null)
-			{
-				CreateButtonFail(Properties.Resources.R_ButtonStyleFracInName);
-				return false;
-			}
-
-			sb.AddPushButton(pbd);
-
-			pbd = CreateButton("UnitStyleDecInch", BUTTON_UNIT_DECIN_NAME,
-				"Delux Measure Dec-In 16.png",
-				"Delux Measure Dec-In 32.png",
-				Assembly.GetExecutingAssembly().Location, "AOTools.UnitStyles.UnitStyleDecInchCmd",
-					"Set Project Units to Standard Decimal Inches");
-
-			if (pbd == null)
-			{
-				CreateButtonFail(Properties.Resources.R_ButtonStyleDecInchName);
-				return false;
-			}
-
-			sb.AddPushButton(pbd);
-
-			pbd = CreateButton("UnitStyleDecFeet", BUTTON_UNIT_DECFT_NAME,
-				"Delux Measure Dec-Ft 16.png",
-				"Delux Measure Dec-Ft 32.png",
-				Assembly.GetExecutingAssembly().Location, "AOTools.UnitStyles.UnitStyleDecFeetCmd",
-					"Set Project Units to Standard Decimal Feet");
-
-			if (pbd == null)
-			{
-				CreateButtonFail(Properties.Resources.R_ButtonStyleDecFeetName);
-				return false;
-			}
-
-			sb.AddPushButton(pbd);
-
-			return true;
-		}
-
-		private void CreateButtonFail(string whichButton)
+/*		private void OnIdling(object sender,
+			IdlingEventArgs e
+			)
 		{
-			// creating the pushbutton failed
-			TaskDialog td = new TaskDialog("AO Tools");
-			td.MainIcon = TaskDialogIcon.TaskDialogIconWarning;
-			td.MainContent = String.Format(Properties.Resources.ButtonCreateFail,
-				whichButton);
-			td.Show();
-		}
+			UiApp             =  sender as UIApplication;
+			Uidoc             =  UiApp.ActiveUIDocument;
 
+			if (Uidoc == null) return;
+
+			_uiCtrlApp.Idling -= OnIdling;
+
+			App               =  UiApp.Application;
+			Doc               =  Uidoc.Document;
+		}
+*/
+
+//		private bool AddSplitButtons(RibbonPanel ribbonPanel)
+//		{ 
+//			SplitButtonData sbData = new SplitButtonData("splitButton1", "Split");
+//			SplitButton sb = ribbonPanel.AddItem(sbData) as SplitButton;
+//
+//			PushButtonData pbd;
+//
+//			pbd = CreateButton("UnitStyleFtIn", BUTTON_UNIT_FTIN_NAME,
+//				"Delux Measure Ft-In 16.png",
+//				"Delux Measure Ft-In 32.png",
+//				Assembly.GetExecutingAssembly().Location, "AOTools.UnitStyles.UnitStyleFeetInchCmd",
+//				"Set Project Units to Standard Feet & Inches");
+//
+//			if (pbd == null)
+//			{
+//				CreateButtonFail(Properties.Resources.R_ButtonStyleFtInName);
+//				return false;
+//			}
+//
+//			sb.AddPushButton(pbd);
+//
+//			pbd = CreateButton("UnitStyleFracIn", BUTTON_UNIT_FRACIN_NAME,
+//				"Delux Measure Frac-In 16.png",
+//				"Delux Measure Frac-In 32.png",
+//				Assembly.GetExecutingAssembly().Location, "AOTools.UnitStyles.UnitStyleFracInchCmd",
+//					"Set Project Units to Standard Fractional Inches");
+//
+//			if (pbd == null)
+//			{
+//				CreateButtonFail(Properties.Resources.R_ButtonStyleFracInName);
+//				return false;
+//			}
+//
+//			sb.AddPushButton(pbd);
+//
+//			pbd = CreateButton("UnitStyleDecInch", BUTTON_UNIT_DECIN_NAME,
+//				"Delux Measure Dec-In 16.png",
+//				"Delux Measure Dec-In 32.png",
+//				Assembly.GetExecutingAssembly().Location, "AOTools.UnitStyles.UnitStyleDecInchCmd",
+//					"Set Project Units to Standard Decimal Inches");
+//
+//			if (pbd == null)
+//			{
+//				CreateButtonFail(Properties.Resources.R_ButtonStyleDecInchName);
+//				return false;
+//			}
+//
+//			sb.AddPushButton(pbd);
+//
+//			pbd = CreateButton("UnitStyleDecFeet", BUTTON_UNIT_DECFT_NAME,
+//				"Delux Measure Dec-Ft 16.png",
+//				"Delux Measure Dec-Ft 32.png",
+//				Assembly.GetExecutingAssembly().Location, "AOTools.UnitStyles.UnitStyleDecFeetCmd",
+//					"Set Project Units to Standard Decimal Feet");
+//
+//			if (pbd == null)
+//			{
+//				CreateButtonFail(Properties.Resources.R_ButtonStyleDecFeetName);
+//				return false;
+//			}
+//
+//			sb.AddPushButton(pbd);
+//
+//			return true;
+//		}
+//
+//		private void CreateButtonFail(string whichButton)
+//		{
+//			// creating the pushbutton failed
+//			TaskDialog td = new TaskDialog("AO Tools - " + whichButton);
+//			td.MainIcon = TaskDialogIcon.TaskDialogIconWarning;
+//			td.MainContent = String.Format(Properties.Resources.ButtonCreateFail,
+//				whichButton);
+//			td.Show();
+//		}
+//
 		private Result AddButtons(RibbonPanel ribbonPanel)
 		{
-//			if (AddUnitStylesButton(ribbonPanel) != Result.Succeeded) 
-//				return Result.Failed;
+			if (AddUnitStylesButton(ribbonPanel) != Result.Succeeded) 
+				return Result.Failed;
+
+			if (AddUnitStyleDeleteButton(ribbonPanel) != Result.Succeeded) 
+				return Result.Failed;
+
+			if (AddSelectButton(ribbonPanel) != Result.Succeeded) 
+				return Result.Failed;
+
+			if (AddDataStoreButton(ribbonPanel) != Result.Succeeded) 
+				return Result.Failed;
+
+
+
+			// if (AddUnitStyleFtInButton(ribbonPanel) != Result.Succeeded) 
+			// 	return Result.Failed;
+			//
+			// if (AddUnitStyleFracInButton(ribbonPanel) != Result.Succeeded) 
+			// 	return Result.Failed;
+			//
+			// if (AddUnitStyleDecInchButton(ribbonPanel) != Result.Succeeded) 
+			// 	return Result.Failed;
+			//
+			// if (AddUnitStyleDecFeetButton(ribbonPanel) != Result.Succeeded) 
+			// 	return Result.Failed;
+
+			return Result.Succeeded;
+		}
 //
-//			if (AddUnitStyleDeleteButton(ribbonPanel) != Result.Succeeded) 
+//		private Result AddUnitStyleFtInButton(RibbonPanel ribbonPanel)
+//		{
+//			// create a button for the 'copy sheet' command
+//			if (!AddPushButton(ribbonPanel, "UnitStyleFtIn", BUTTON_UNIT_FTIN_NAME,
+//				"information16.png",
+//				"information32.png",
+//				Assembly.GetExecutingAssembly().Location, "AOTools.UnitStyles.UnitStyleFeetInchCmd",
+//					"Set Project Units to Standard Feet & Inches"))
+//			{
+//				// creating the pushbutton failed
+//				TaskDialog td = new TaskDialog("AO Tools - Unit Style FtIn");
+//				td.MainIcon = TaskDialogIcon.TaskDialogIconWarning;
+//				td.MainContent = String.Format(Properties.Resources.ButtonCreateFail,
+//					Properties.Resources.R_ButtonStyleFtInName);
+//				td.Show();
+//
 //				return Result.Failed;
+//			}
+//			return Result.Succeeded;
+//		}
+//		
+//		private Result AddUnitStyleFracInButton(RibbonPanel ribbonPanel)
+//		{
+//			// create a button for the 'copy sheet' command
+//			if (!AddPushButton(ribbonPanel, "UnitStyleFracIn", BUTTON_UNIT_FRACIN_NAME,
+//				"information16.png",
+//				"information32.png",
+//				Assembly.GetExecutingAssembly().Location, "AOTools.UnitStyles.UnitStyleFracInchCmd",
+//					"Set Project Units to Standard Fractional Inches"))
+//			{
+//				// creating the pushbutton failed
+//				TaskDialog td = new TaskDialog("AO Tools - Unit Style Frac In");
+//				td.MainIcon = TaskDialogIcon.TaskDialogIconWarning;
+//				td.MainContent = String.Format(Properties.Resources.ButtonCreateFail,
+//					Properties.Resources.R_ButtonStyleFracInName);
+//				td.Show();
+//
+//				return Result.Failed;
+//			}
+//			return Result.Succeeded;
+//		}
+//		
+//		private Result AddUnitStyleDecInchButton(RibbonPanel ribbonPanel)
+//		{
+//			// create a button for the 'copy sheet' command
+//			if (!AddPushButton(ribbonPanel, "UnitStyleDecInch", BUTTON_UNIT_DECIN_NAME,
+//				"information16.png",
+//				"information32.png",
+//				Assembly.GetExecutingAssembly().Location, "AOTools.UnitStyles.UnitStyleDecInchCmd",
+//					"Set Project Units to Standard Decimal Inches"))
+//			{
+//				// creating the pushbutton failed
+//				TaskDialog td = new TaskDialog("AO Tools - Unit Style Dec In");
+//				td.MainIcon = TaskDialogIcon.TaskDialogIconWarning;
+//				td.MainContent = String.Format(Properties.Resources.ButtonCreateFail,
+//					Properties.Resources.R_ButtonStyleDecInchName);
+//				td.Show();
+//
+//				return Result.Failed;
+//			}
+//			return Result.Succeeded;
+//		}
+//		
+//		private Result AddUnitStyleDecFeetButton(RibbonPanel ribbonPanel)
+//		{
+//			// create a button for the 'copy sheet' command
+//			if (!AddPushButton(ribbonPanel, "UnitStyleDecFeet", BUTTON_UNIT_DECFT_NAME,
+//				"information16.png",
+//				"information32.png",
+//				Assembly.GetExecutingAssembly().Location, "AOTools.UnitStyles.UnitStyleDecFeetCmd",
+//					"Set Project Units to Standard Decimal Feet - Unit Style Dec Ft"))
+//			{
+//				// creating the pushbutton failed
+//				TaskDialog td = new TaskDialog("AO Tools");
+//				td.MainIcon = TaskDialogIcon.TaskDialogIconWarning;
+//				td.MainContent = String.Format(Properties.Resources.ButtonCreateFail,
+//					Properties.Resources.R_ButtonStyleDecFeetName);
+//				td.Show();
+//
+//				return Result.Failed;
+//			}
+//			return Result.Succeeded;
+//		}
 
-			if (AddUnitStyleFtInButton(ribbonPanel) != Result.Succeeded) 
-				return Result.Failed;
 
-			if (AddUnitStyleFracInButton(ribbonPanel) != Result.Succeeded) 
-				return Result.Failed;
-
-			if (AddUnitStyleDecInchButton(ribbonPanel) != Result.Succeeded) 
-				return Result.Failed;
-
-			if (AddUnitStyleDecFeetButton(ribbonPanel) != Result.Succeeded) 
-				return Result.Failed;
-
-			return Result.Succeeded;
-		}
-
-		private Result AddUnitStyleFtInButton(RibbonPanel ribbonPanel)
+		private Result AddDataStoreButton(RibbonPanel ribbonPanel)
 		{
 			// create a button for the 'copy sheet' command
-			if (!AddPushButton(ribbonPanel, "UnitStyleFtIn", BUTTON_UNIT_FTIN_NAME,
+			if (!AddPushButton(ribbonPanel, "DataStore", BUTTON_DATA_STORAGE,
 				"information16.png",
 				"information32.png",
-				Assembly.GetExecutingAssembly().Location, "AOTools.UnitStyles.UnitStyleFeetInchCmd",
-					"Set Project Units to Standard Feet & Inches"))
+				Assembly.GetExecutingAssembly().Location, "AOTools.DataStore",
+				"Data Storage"))
+
 			{
 				// creating the pushbutton failed
-				TaskDialog td = new TaskDialog("AO Tools");
+				TaskDialog td = new TaskDialog("AO Tools - Data Storage");
 				td.MainIcon = TaskDialogIcon.TaskDialogIconWarning;
 				td.MainContent = String.Format(Properties.Resources.ButtonCreateFail,
-					Properties.Resources.R_ButtonStyleFtInName);
+					"AOTools Data Storage");
 				td.Show();
 
 				return Result.Failed;
@@ -256,69 +373,27 @@ namespace AOTools
 			return Result.Succeeded;
 		}
 		
-		private Result AddUnitStyleFracInButton(RibbonPanel ribbonPanel)
+		private Result AddSelectButton(RibbonPanel ribbonPanel)
 		{
 			// create a button for the 'copy sheet' command
-			if (!AddPushButton(ribbonPanel, "UnitStyleFracIn", BUTTON_UNIT_FRACIN_NAME,
+			if (!AddPushButton(ribbonPanel, "Select", BUTTON_SELECT,
 				"information16.png",
 				"information32.png",
-				Assembly.GetExecutingAssembly().Location, "AOTools.UnitStyles.UnitStyleFracInchCmd",
-					"Set Project Units to Standard Fractional Inches"))
+				Assembly.GetExecutingAssembly().Location, "AOTools.SelectElement",
+				"Select Element"))
+
 			{
 				// creating the pushbutton failed
-				TaskDialog td = new TaskDialog("AO Tools");
+				TaskDialog td = new TaskDialog("AO Tools - Select Element");
 				td.MainIcon = TaskDialogIcon.TaskDialogIconWarning;
 				td.MainContent = String.Format(Properties.Resources.ButtonCreateFail,
-					Properties.Resources.R_ButtonStyleFracInName);
+					"AOTools Select");
 				td.Show();
 
 				return Result.Failed;
 			}
 			return Result.Succeeded;
 		}
-		
-		private Result AddUnitStyleDecInchButton(RibbonPanel ribbonPanel)
-		{
-			// create a button for the 'copy sheet' command
-			if (!AddPushButton(ribbonPanel, "UnitStyleDecInch", BUTTON_UNIT_DECIN_NAME,
-				"information16.png",
-				"information32.png",
-				Assembly.GetExecutingAssembly().Location, "AOTools.UnitStyles.UnitStyleDecInchCmd",
-					"Set Project Units to Standard Decimal Inches"))
-			{
-				// creating the pushbutton failed
-				TaskDialog td = new TaskDialog("AO Tools");
-				td.MainIcon = TaskDialogIcon.TaskDialogIconWarning;
-				td.MainContent = String.Format(Properties.Resources.ButtonCreateFail,
-					Properties.Resources.R_ButtonStyleDecInchName);
-				td.Show();
-
-				return Result.Failed;
-			}
-			return Result.Succeeded;
-		}
-		
-		private Result AddUnitStyleDecFeetButton(RibbonPanel ribbonPanel)
-		{
-			// create a button for the 'copy sheet' command
-			if (!AddPushButton(ribbonPanel, "UnitStyleDecFeet", BUTTON_UNIT_DECFT_NAME,
-				"information16.png",
-				"information32.png",
-				Assembly.GetExecutingAssembly().Location, "AOTools.UnitStyles.UnitStyleDecFeetCmd",
-					"Set Project Units to Standard Decimal Feet"))
-			{
-				// creating the pushbutton failed
-				TaskDialog td = new TaskDialog("AO Tools");
-				td.MainIcon = TaskDialogIcon.TaskDialogIconWarning;
-				td.MainContent = String.Format(Properties.Resources.ButtonCreateFail,
-					Properties.Resources.R_ButtonStyleDecFeetName);
-				td.Show();
-
-				return Result.Failed;
-			}
-			return Result.Succeeded;
-		}
-
 
 		private Result AddUnitStylesButton(RibbonPanel ribbonPanel)
 		{
@@ -331,7 +406,7 @@ namespace AOTools
 
 			{
 				// creating the pushbutton failed
-				TaskDialog td = new TaskDialog("AO Tools");
+				TaskDialog td = new TaskDialog("AO Tools - Unit Styles Create");
 				td.MainIcon = TaskDialogIcon.TaskDialogIconWarning;
 				td.MainContent = String.Format(Properties.Resources.ButtonCreateFail,
 					Properties.Resources.UnitStyleButtonText);
@@ -353,7 +428,7 @@ namespace AOTools
 
 			{
 				// creating the pushbutton failed
-				TaskDialog td = new TaskDialog("AO Tools");
+				TaskDialog td = new TaskDialog("AO Tools - Unit Styles Delete");
 				td.MainIcon = TaskDialogIcon.TaskDialogIconWarning;
 				td.MainContent = "failed to create the delete unit styles button";
 				td.Show();
@@ -437,15 +512,6 @@ namespace AOTools
 			return pdData;
 		}
 
-		private void OnIdling(object sender,
-			IdlingEventArgs e)
-		{
-			_uiCtrlApp.Idling -= OnIdling;
-			UiApp             =  sender as UIApplication;
-			Uidoc             =  UiApp.ActiveUIDocument;
-			App               =  UiApp.Application;
-			Doc               =  Uidoc.Document;
-		}
 
 
 

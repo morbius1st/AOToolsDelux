@@ -1,6 +1,7 @@
 ﻿#region Using directives
 
 using System;
+using System.Collections.Generic;
 using System.Runtime.Serialization;
 using AOTools.AppSettings.RevitSettings;
 using UtilityLibrary;
@@ -44,11 +45,24 @@ namespace AOTools.AppSettings.SchemaSettings
 	[DataContract(Namespace = Header.NSpace)]
 	public class SchemaUnitApp
 	{
-		
+		private List<Guid> past = new List<Guid>();
+
+
 		protected const string SCHEMA_NAME = "UnitStyleSettings";
 		protected const string SCHEMA_DESC = "unit style setings";
 
-		protected readonly Guid Schemaguid = new Guid("B1788BC0-381E-4F4F-BE0B-93A93B9470FF");
+		protected Guid Schemaguid
+		{
+			get
+			{
+				// past.Add(Guid.NewGuid());
+				//
+				// return past[past.Count - 1];
+				return new Guid("B1788BC0-381E-4F4F-BE0B-93A93B9470FF");
+				// return new Guid("601d6e97-03f0-4cad-9220-41d86366c345");
+				// return new Guid("11C902F2-5163-405C-BC0D-874E74083412");
+			}
+		}
 
 		public static SchemaDictionaryApp SchemaUnitAppDefault { get; } =
 			new SchemaDictionaryApp
@@ -100,7 +114,7 @@ namespace AOTools.AppSettings.SchemaSettings
 	// the user settings for a list of their personal unit styles
 	// in the revit files as a list of custom unit styles
 	[DataContract(Namespace = Header.NSpace)]
-	public class SchemaUnitUsr 
+	public class SchemaUnitUsr
 	{
 		protected const string SCHEMA_NAME = "UnitStyleSchema";
 		protected const string SCHEMA_DESC = "unit style sub schema";

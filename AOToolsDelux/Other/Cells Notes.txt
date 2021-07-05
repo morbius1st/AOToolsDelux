@@ -1,0 +1,41 @@
+﻿
+
+Extension Data Information
+
+App
+Version
+Company (i.e. "CyberStudio")
+Description (i.e. "Cells Root Data")
+
+Array of "Cell Data"
+
+
+Cell Data
+Name
+Version
+Description
+Sequence
+Update Rule
+Cell Family Name
+Skip
+Excel File Name
+Excel Worksheet Name
+
+
+
+Family Data / Parameters
+Identiy Data
+	Name
+	Sequence
+	Description
+	HasError
+Data
+	Param
+	Name				Contents
+	Label #1			Arbitrary name / Description / nothing
+	#1 Formula			Label Formula
+	#1 Data Type		The type of data for the final value
+	#1 Formatting Info	How to format the Data
+	#1 Skip				Switch to not update the label
+Visibility
+	Cell Data Vilibility	Turn on / off the visibility of the cell Identiy labels

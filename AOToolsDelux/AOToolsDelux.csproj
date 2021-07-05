@@ -6,6 +6,7 @@
       None
     </ResolveAssemblyWarnOrErrorOnTargetArchitectureMismatch>
     <TargetFrameworkProfile />
+    <ProjectTypeGuids>{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
   </PropertyGroup>
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
@@ -15,10 +16,10 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>AOTools</RootNamespace>
     <AssemblyName>AOTools</AssemblyName>
-    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug2017|AnyCPU' ">
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'ToolsDbg2017|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
@@ -28,14 +29,122 @@
     <WarningLevel>4</WarningLevel>
     <StartAction>Program</StartAction>
     <StartProgram>$(ProgramW6432)\Autodesk\Revit 2017\Revit.exe</StartProgram>
-    <Prefer32Bit>false</Prefer32Bit>
+    <Prefer32Bit>
+    </Prefer32Bit>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
+    <PreBuildEvent>echo *** Configuration: $(ConfigurationName) ***</PreBuildEvent>
+    <PostBuildEvent>(copy /y "$(ProjectDir)Other\$(TargetName).addin" "$(AppData)\Autodesk\REVIT\Addins\2017")
+(copy /y "$(TargetPath)" "$(AppData)\Autodesk\REVIT\Addins\2017")</PostBuildEvent>
   </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release2017|AnyCPU' ">
-    <DebugSymbols>true</DebugSymbols>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'ToolsRel2018|AnyCPU' ">
+    <DebugSymbols>
+    </DebugSymbols>
     <OutputPath>bin\Release\</OutputPath>
-    <DefineConstants>TRACE</DefineConstants>
+    <DefineConstants>
+    </DefineConstants>
+    <DebugType>none</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
+    <WarningLevel>4</WarningLevel>
+    <Optimize>true</Optimize>
+    <PreBuildEvent>echo *** Configuration: $(ConfigurationName) ***</PreBuildEvent>
+    <PostBuildEvent>(copy /y "$(ProjectDir)Other\$(TargetName).addin" "$(AppData)\Autodesk\REVIT\Addins\2017")
+(copy /y "$(TargetPath)" "$(AppData)\Autodesk\REVIT\Addins\2017")</PostBuildEvent>
+    <StartAction>Program</StartAction>
+    <StartProgram>$(ProgramW6432)\Autodesk\Revit 2017\Revit.exe</StartProgram>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'ToolsDbg2019|AnyCPU' ">
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <DebugSymbols>true</DebugSymbols>
+    <WarningLevel>4</WarningLevel>
+    <ErrorReport>prompt</ErrorReport>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
+    <Optimize>false</Optimize>
+    <PreBuildEvent>echo *** Configuration: $(ConfigurationName) ***</PreBuildEvent>
+    <PostBuildEvent>(copy /y "$(ProjectDir)Other\$(TargetName).addin" "$(AppData)\Autodesk\REVIT\Addins\2019")
+(copy /y "$(TargetPath)" "$(AppData)\Autodesk\REVIT\Addins\2019")</PostBuildEvent>
+    <StartAction>Program</StartAction>
+    <StartProgram>$(ProgramW6432)\Autodesk\Revit 2019\Revit.exe</StartProgram>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'ToolsDbg2018|AnyCPU' ">
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <DebugSymbols>true</DebugSymbols>
+    <WarningLevel>4</WarningLevel>
+    <ErrorReport>prompt</ErrorReport>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
+    <Optimize>false</Optimize>
+    <PreBuildEvent>echo *** Configuration: $(ConfigurationName) ***</PreBuildEvent>
+    <PostBuildEvent>(copy /y "$(ProjectDir)Other\$(TargetName).addin" "$(AppData)\Autodesk\REVIT\Addins\2018")
+(copy /y "$(TargetPath)" "$(AppData)\Autodesk\REVIT\Addins\2018")</PostBuildEvent>
+    <StartProgram>$(ProgramW6432)\Autodesk\Revit 2018\Revit.exe</StartProgram>
+    <StartAction>Program</StartAction>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'ToolsDbg2020|AnyCPU'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
     <DebugType>full</DebugType>
     <PlatformTarget>AnyCPU</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <WarningLevel>4</WarningLevel>
+    <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
+    <Optimize>false</Optimize>
+    <PreBuildEvent>echo *** Configuration: $(ConfigurationName) ***</PreBuildEvent>
+    <PostBuildEvent>(copy /y "$(ProjectDir)Other\$(TargetName).addin" "$(AppData)\Autodesk\REVIT\Addins\2020")
+(copy /y "$(TargetPath)" "$(AppData)\Autodesk\REVIT\Addins\2020")</PostBuildEvent>
+    <StartAction>Program</StartAction>
+    <StartProgram>$(ProgramW6432)\Autodesk\Revit 2020\Revit.exe</StartProgram>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'ToolsDbg2017|x64'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\x64\ToolsDbg2017\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'ToolsRel2018|x64'">
+    <OutputPath>bin\x64\ToolsRel2018\</OutputPath>
+    <Optimize>true</Optimize>
+    <PlatformTarget>x64</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'ToolsDbg2019|x64'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\x64\ToolsDbg2019\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'ToolsDbg2018|x64'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\x64\ToolsDbg2018\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'ToolsDbg2020|x64'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\x64\ToolsDbg2020\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
     <ErrorReport>prompt</ErrorReport>
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
@@ -87,32 +196,27 @@
     <Compile Include="..\..\..\UtilityLibrary\UtilityLibrary\MessageUtilities.cs">
       <Link>Utility\MessageUtilities.cs</Link>
     </Compile>
-    <Compile Include="..\..\..\UtilityLibrary\UtilityLibrary\SettingsMgr.cs">
-      <Link>AppSettings\Settings\SettingsMgr.cs</Link>
-    </Compile>
     <Compile Include="AppRibbon.cs" />
+    <Compile Include="AppSettings\SchemaSettings\SchemaDictionaryBase.cs" />
+    <Compile Include="AppSettings\Settings\SettingsMgr-v26.cs" />
     <Compile Include="AppSettings\SettingUtil\SettingsListings.cs" />
     <Compile Include="AppSettings\SchemaSettings\SchemaUnitUtil.cs" />
-    <Compile Include="DxMeasure.cs" />
-    <Compile Include="FormDxMeasure.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="FormDxMeasure.Designer.cs">
-      <DependentUpon>FormDxMeasure.cs</DependentUpon>
-    </Compile>
+    <Compile Include="Cells\ExStorage\ExStoreHelper.cs" />
+    <Compile Include="Cells\ExStorage\ExStoreApp.cs" />
+    <Compile Include="Cells\ExStorage\ExStoreCell.cs" />
+    <Compile Include="Cells\ExStorage\ExStoreMgr.cs" />
+    <Compile Include="Cells\ExStorage\IExStoreData.cs" />
+    <Compile Include="Cells\SchemaCells\SchemaDefCells.cs" />
+    <Compile Include="Cells\SchemaCells\SchemaDefApp.cs" />
+    <Compile Include="Cells\SchemaCells\SchemaCellDictionaries.cs" />
+    <Compile Include="Cells\SchemaDefinition\SchemaDictionaryBase.cs" />
+    <Compile Include="Cells\SchemaDefinition\SchemaFieldDef.cs" />
+    <Compile Include="Cells\SchemaDefinition\SchemaFieldEnums.cs" />
+    <Compile Include="Cells\SchemaDefinition\SchemaGuidManager.cs" />
     <Compile Include="Revisions\Revision.cs" />
-    <Compile Include="Revisions\RevCloudData2.cs" />
-    <Compile Include="Revisions\RevCloudDataX2.cs" />
-    <Compile Include="Revisions\RevisionUtility.cs" />
-    <Compile Include="Revisions\RevData2.cs" />
-    <Compile Include="Revisions\RevDataDescription.cs" />
-    <Compile Include="Revisions\RevDataItems2.cs" />
-    <Compile Include="Revisions\RevisionEnums.cs" />
-    <Compile Include="Revisions\RevExport.cs" />
-    <Compile Include="Revisions\RevSelectCriteria2.cs" />
-    <Compile Include="Revisions\RevSort.cs" />
-    <Compile Include="Revisions\RevSummary2.cs" />
+    <Compile Include="UnitStyles\DataStore.cs" />
     <Compile Include="UnitStyles\UnitStyleDefault.cs" />
+    <Compile Include="UnitStyles\SelectElement.cs" />
     <Compile Include="UnitStyles\UnitStylesDelete.cs" />
     <Compile Include="Utility\Extensions.cs" />
     <Compile Include="Utility\PickedBox2.cs" />
@@ -140,7 +244,8 @@
     <Content Include="Other\AOTools.addin">
       <SubType>Designer</SubType>
     </Content>
-    <Content Include="Other\New Text Document.txt" />
+    <Content Include="Other\Cells Notes.txt" />
+    <Content Include="Other\Notes.txt" />
     <EmbeddedResource Include="Resources\Delux Measure Dec-Ft 16.png" />
     <EmbeddedResource Include="Resources\Delux Measure Dec-Ft 32.png" />
     <EmbeddedResource Include="Resources\Delux Measure Dec-In 16.png" />
@@ -149,9 +254,6 @@
     <EmbeddedResource Include="Resources\Delux Measure Frac-In 32.png" />
     <EmbeddedResource Include="Resources\Delux Measure Ft-In 16.png" />
     <EmbeddedResource Include="Resources\Delux Measure Ft-In 32.png" />
-    <EmbeddedResource Include="FormDxMeasure.resx">
-      <DependentUpon>FormDxMeasure.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="Resources\information16.png" />
     <EmbeddedResource Include="Resources\information32.png" />
   </ItemGroup>
@@ -165,15 +267,16 @@
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PostBuildEvent>(copy /y "$(ProjectDir)Other\$(TargetName).addin" "$(AppData)\Autodesk\REVIT\Addins\2017")
-(copy /y "$(TargetPath)" "$(AppData)\Autodesk\REVIT\Addins\2017")
 (copy /y "$(ProjectDir)Other\$(TargetName).addin" "$(AppData)\Autodesk\REVIT\Addins\2018")
-(copy /y "$(TargetPath)" "$(AppData)\Autodesk\REVIT\Addins\2018")
 (copy /y "$(ProjectDir)Other\$(TargetName).addin" "$(AppData)\Autodesk\REVIT\Addins\2019")
-(copy /y "$(TargetPath)" "$(AppData)\Autodesk\REVIT\Addins\2019")</PostBuildEvent>
+(copy /y "$(ProjectDir)Other\$(TargetName).addin" "$(AppData)\Autodesk\REVIT\Addins\2020")
+(copy /y "$(TargetPath)" "$(AppData)\Autodesk\REVIT\Addins\2017")
+(copy /y "$(TargetPath)" "$(AppData)\Autodesk\REVIT\Addins\2018")
+(copy /y "$(TargetPath)" "$(AppData)\Autodesk\REVIT\Addins\2019")
+(copy /y "$(TargetPath)" "$(AppData)\Autodesk\REVIT\Addins\2020")</PostBuildEvent>
   </PropertyGroup>
   <PropertyGroup>
-    <PreBuildEvent>if $(ConfigurationName) == Release2017 (echo "*** Release ***")
-if $(ConfigurationName) == Debug2017 (echo "*** Debug ***")</PreBuildEvent>
+    <PreBuildEvent>echo *** Configuration: $(ConfigurationName) ***</PreBuildEvent>
   </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it.
        Other similar extension points exist, see Microsoft.Common.targets.

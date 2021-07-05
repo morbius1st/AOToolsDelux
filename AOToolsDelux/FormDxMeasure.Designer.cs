@@ -67,17 +67,20 @@ namespace AOTools
 			this.lblXZ1 = new System.Windows.Forms.Label();
 			this.lblXY1 = new System.Windows.Forms.Label();
 			this.lblXYZ = new System.Windows.Forms.Label();
-			this.rbUnitFtFracIn = new System.Windows.Forms.RadioButton();
-			this.rbUnitFracIn = new System.Windows.Forms.RadioButton();
-			this.rbUnitDecFt = new System.Windows.Forms.RadioButton();
-			this.rbUnitDecIn = new System.Windows.Forms.RadioButton();
 			this.label5 = new System.Windows.Forms.Label();
 			this.label9 = new System.Windows.Forms.Label();
 			this.label11 = new System.Windows.Forms.Label();
-			this.rbUnitsProj = new System.Windows.Forms.RadioButton();
 			this.tbxMessage = new System.Windows.Forms.TextBox();
-			this.rbUnitFtDecIn = new System.Windows.Forms.RadioButton();
-			this.rbUnitFractFt = new System.Windows.Forms.RadioButton();
+			this.lbxPrimeUnits = new System.Windows.Forms.ListBox();
+			this.lblPrimaryUnits = new System.Windows.Forms.Label();
+			this.lblSecondaryUnits = new System.Windows.Forms.Label();
+			this.lbxSecondUnits = new System.Windows.Forms.ListBox();
+			this.tbxDistZ2 = new System.Windows.Forms.TextBox();
+			this.tbxDistY2 = new System.Windows.Forms.TextBox();
+			this.tbxDistX2 = new System.Windows.Forms.TextBox();
+			this.lblZ2 = new System.Windows.Forms.Label();
+			this.lblY2 = new System.Windows.Forms.Label();
+			this.lblX2 = new System.Windows.Forms.Label();
 			lblBar1 = new System.Windows.Forms.Label();
 			lblBar2 = new System.Windows.Forms.Label();
 			lblBar3 = new System.Windows.Forms.Label();
@@ -85,6 +88,8 @@ namespace AOTools
 			// 
 			// lblBar1
 			// 
+			lblBar1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
 			lblBar1.BackColor = System.Drawing.Color.Silver;
 			lblBar1.Enabled = false;
 			lblBar1.Font = new System.Drawing.Font("Tahoma", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -97,10 +102,12 @@ namespace AOTools
 			// 
 			// lblBar2
 			// 
+			lblBar2.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
 			lblBar2.BackColor = System.Drawing.Color.Silver;
 			lblBar2.Enabled = false;
 			lblBar2.Font = new System.Drawing.Font("Tahoma", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			lblBar2.Location = new System.Drawing.Point(112, 154);
+			lblBar2.Location = new System.Drawing.Point(113, 186);
 			lblBar2.MaximumSize = new System.Drawing.Size(0, 4);
 			lblBar2.MinimumSize = new System.Drawing.Size(464, 0);
 			lblBar2.Name = "lblBar2";
@@ -109,10 +116,12 @@ namespace AOTools
 			// 
 			// lblBar3
 			// 
+			lblBar3.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
 			lblBar3.BackColor = System.Drawing.Color.Silver;
 			lblBar3.Enabled = false;
 			lblBar3.Font = new System.Drawing.Font("Tahoma", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			lblBar3.Location = new System.Drawing.Point(112, 232);
+			lblBar3.Location = new System.Drawing.Point(113, 264);
 			lblBar3.MaximumSize = new System.Drawing.Size(0, 4);
 			lblBar3.MinimumSize = new System.Drawing.Size(464, 0);
 			lblBar3.Name = "lblBar3";
@@ -122,7 +131,7 @@ namespace AOTools
 			// lblNote
 			// 
 			this.lblNote.AutoSize = true;
-			this.lblNote.Location = new System.Drawing.Point(13, 14);
+			this.lblNote.Location = new System.Drawing.Point(11, 13);
 			this.lblNote.Margin = new System.Windows.Forms.Padding(5, 4, 5, 4);
 			this.lblNote.Name = "lblNote";
 			this.lblNote.Size = new System.Drawing.Size(399, 18);
@@ -131,8 +140,9 @@ namespace AOTools
 			// 
 			// cbxWpOnOff
 			// 
+			this.cbxWpOnOff.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
 			this.cbxWpOnOff.AutoSize = true;
-			this.cbxWpOnOff.Location = new System.Drawing.Point(424, 12);
+			this.cbxWpOnOff.Location = new System.Drawing.Point(14, 464);
 			this.cbxWpOnOff.Margin = new System.Windows.Forms.Padding(5, 4, 5, 4);
 			this.cbxWpOnOff.Name = "cbxWpOnOff";
 			this.cbxWpOnOff.Size = new System.Drawing.Size(153, 22);
@@ -158,7 +168,7 @@ namespace AOTools
 			// 
 			this.lblDistXY.BackColor = System.Drawing.SystemColors.ControlLight;
 			this.lblDistXY.BorderStyle = System.Windows.Forms.BorderStyle.None;
-			this.lblDistXY.Location = new System.Drawing.Point(110, 91);
+			this.lblDistXY.Location = new System.Drawing.Point(110, 119);
 			this.lblDistXY.Margin = new System.Windows.Forms.Padding(5, 4, 5, 4);
 			this.lblDistXY.Name = "lblDistXY";
 			this.lblDistXY.ReadOnly = true;
@@ -170,7 +180,7 @@ namespace AOTools
 			// 
 			this.lblDistYZ.BackColor = System.Drawing.SystemColors.ControlLight;
 			this.lblDistYZ.BorderStyle = System.Windows.Forms.BorderStyle.None;
-			this.lblDistYZ.Location = new System.Drawing.Point(450, 91);
+			this.lblDistYZ.Location = new System.Drawing.Point(450, 119);
 			this.lblDistYZ.Margin = new System.Windows.Forms.Padding(5, 4, 5, 4);
 			this.lblDistYZ.Name = "lblDistYZ";
 			this.lblDistYZ.ReadOnly = true;
@@ -182,7 +192,7 @@ namespace AOTools
 			// 
 			this.lblDistXYZ.BackColor = System.Drawing.SystemColors.ControlLight;
 			this.lblDistXYZ.BorderStyle = System.Windows.Forms.BorderStyle.None;
-			this.lblDistXYZ.Location = new System.Drawing.Point(110, 116);
+			this.lblDistXYZ.Location = new System.Drawing.Point(110, 148);
 			this.lblDistXYZ.Margin = new System.Windows.Forms.Padding(5, 4, 5, 4);
 			this.lblDistXYZ.Name = "lblDistXYZ";
 			this.lblDistXYZ.ReadOnly = true;
@@ -194,7 +204,7 @@ namespace AOTools
 			// 
 			this.lblDistXZ.BackColor = System.Drawing.SystemColors.ControlLight;
 			this.lblDistXZ.BorderStyle = System.Windows.Forms.BorderStyle.None;
-			this.lblDistXZ.Location = new System.Drawing.Point(280, 91);
+			this.lblDistXZ.Location = new System.Drawing.Point(280, 119);
 			this.lblDistXZ.Margin = new System.Windows.Forms.Padding(5, 4, 5, 4);
 			this.lblDistXZ.Name = "lblDistXZ";
 			this.lblDistXZ.ReadOnly = true;
@@ -230,7 +240,7 @@ namespace AOTools
 			// 
 			this.lblAlongXaxis.AutoSize = true;
 			this.lblAlongXaxis.Font = new System.Drawing.Font("Tahoma", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.lblAlongXaxis.Location = new System.Drawing.Point(11, 223);
+			this.lblAlongXaxis.Location = new System.Drawing.Point(12, 255);
 			this.lblAlongXaxis.Margin = new System.Windows.Forms.Padding(5, 8, 5, 4);
 			this.lblAlongXaxis.Name = "lblAlongXaxis";
 			this.lblAlongXaxis.Size = new System.Drawing.Size(99, 18);
@@ -251,7 +261,7 @@ namespace AOTools
 			// lblP2Z
 			// 
 			this.lblP2Z.BackColor = System.Drawing.SystemColors.Control;
-			this.lblP2Z.Location = new System.Drawing.Point(450, 195);
+			this.lblP2Z.Location = new System.Drawing.Point(451, 227);
 			this.lblP2Z.Margin = new System.Windows.Forms.Padding(5, 4, 5, 4);
 			this.lblP2Z.Name = "lblP2Z";
 			this.lblP2Z.Size = new System.Drawing.Size(128, 19);
@@ -261,7 +271,7 @@ namespace AOTools
 			// lblP2Y
 			// 
 			this.lblP2Y.BackColor = System.Drawing.SystemColors.Control;
-			this.lblP2Y.Location = new System.Drawing.Point(280, 195);
+			this.lblP2Y.Location = new System.Drawing.Point(281, 227);
 			this.lblP2Y.Margin = new System.Windows.Forms.Padding(5, 4, 5, 4);
 			this.lblP2Y.Name = "lblP2Y";
 			this.lblP2Y.Size = new System.Drawing.Size(128, 19);
@@ -271,7 +281,7 @@ namespace AOTools
 			// lblP2X
 			// 
 			this.lblP2X.BackColor = System.Drawing.SystemColors.Control;
-			this.lblP2X.Location = new System.Drawing.Point(110, 195);
+			this.lblP2X.Location = new System.Drawing.Point(111, 227);
 			this.lblP2X.Margin = new System.Windows.Forms.Padding(5, 4, 5, 4);
 			this.lblP2X.Name = "lblP2X";
 			this.lblP2X.Size = new System.Drawing.Size(128, 19);
@@ -281,7 +291,7 @@ namespace AOTools
 			// lblP1Z
 			// 
 			this.lblP1Z.BackColor = System.Drawing.SystemColors.Control;
-			this.lblP1Z.Location = new System.Drawing.Point(450, 169);
+			this.lblP1Z.Location = new System.Drawing.Point(451, 201);
 			this.lblP1Z.Margin = new System.Windows.Forms.Padding(5, 4, 5, 4);
 			this.lblP1Z.Name = "lblP1Z";
 			this.lblP1Z.Size = new System.Drawing.Size(128, 19);
@@ -291,7 +301,7 @@ namespace AOTools
 			// lblP1Y
 			// 
 			this.lblP1Y.BackColor = System.Drawing.SystemColors.Control;
-			this.lblP1Y.Location = new System.Drawing.Point(280, 169);
+			this.lblP1Y.Location = new System.Drawing.Point(281, 201);
 			this.lblP1Y.Margin = new System.Windows.Forms.Padding(5, 4, 5, 4);
 			this.lblP1Y.Name = "lblP1Y";
 			this.lblP1Y.Size = new System.Drawing.Size(128, 19);
@@ -301,7 +311,7 @@ namespace AOTools
 			// lblP1X
 			// 
 			this.lblP1X.BackColor = System.Drawing.SystemColors.Control;
-			this.lblP1X.Location = new System.Drawing.Point(110, 169);
+			this.lblP1X.Location = new System.Drawing.Point(111, 201);
 			this.lblP1X.Margin = new System.Windows.Forms.Padding(5, 4, 5, 4);
 			this.lblP1X.Name = "lblP1X";
 			this.lblP1X.Size = new System.Drawing.Size(128, 19);
@@ -311,7 +321,7 @@ namespace AOTools
 			// lblPoint2
 			// 
 			this.lblPoint2.AutoSize = true;
-			this.lblPoint2.Location = new System.Drawing.Point(21, 195);
+			this.lblPoint2.Location = new System.Drawing.Point(22, 227);
 			this.lblPoint2.Margin = new System.Windows.Forms.Padding(5, 8, 5, 4);
 			this.lblPoint2.Name = "lblPoint2";
 			this.lblPoint2.Size = new System.Drawing.Size(52, 18);
@@ -341,7 +351,7 @@ namespace AOTools
 			// lblPoint1
 			// 
 			this.lblPoint1.AutoSize = true;
-			this.lblPoint1.Location = new System.Drawing.Point(21, 169);
+			this.lblPoint1.Location = new System.Drawing.Point(22, 201);
 			this.lblPoint1.Margin = new System.Windows.Forms.Padding(5, 8, 5, 4);
 			this.lblPoint1.Name = "lblPoint1";
 			this.lblPoint1.Size = new System.Drawing.Size(52, 18);
@@ -352,7 +362,7 @@ namespace AOTools
 			// 
 			this.lblCoordinates.AutoSize = true;
 			this.lblCoordinates.Font = new System.Drawing.Font("Tahoma", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.lblCoordinates.Location = new System.Drawing.Point(11, 145);
+			this.lblCoordinates.Location = new System.Drawing.Point(12, 177);
 			this.lblCoordinates.Margin = new System.Windows.Forms.Padding(5, 4, 5, 4);
 			this.lblCoordinates.Name = "lblCoordinates";
 			this.lblCoordinates.Size = new System.Drawing.Size(98, 18);
@@ -374,7 +384,7 @@ namespace AOTools
 			this.btnSelect.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
 			this.btnSelect.DialogResult = System.Windows.Forms.DialogResult.OK;
 			this.btnSelect.Font = new System.Drawing.Font("Tahoma", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.btnSelect.Location = new System.Drawing.Point(356, 352);
+			this.btnSelect.Location = new System.Drawing.Point(355, 504);
 			this.btnSelect.Margin = new System.Windows.Forms.Padding(11, 4, 11, 4);
 			this.btnSelect.Name = "btnSelect";
 			this.btnSelect.Size = new System.Drawing.Size(110, 40);
@@ -387,7 +397,7 @@ namespace AOTools
 			this.btnDone.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
 			this.btnDone.DialogResult = System.Windows.Forms.DialogResult.Cancel;
 			this.btnDone.Font = new System.Drawing.Font("Tahoma", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.btnDone.Location = new System.Drawing.Point(477, 352);
+			this.btnDone.Location = new System.Drawing.Point(476, 504);
 			this.btnDone.Margin = new System.Windows.Forms.Padding(0);
 			this.btnDone.Name = "btnDone";
 			this.btnDone.Size = new System.Drawing.Size(110, 40);
@@ -398,7 +408,7 @@ namespace AOTools
 			// label1
 			// 
 			this.label1.AutoSize = true;
-			this.label1.Location = new System.Drawing.Point(424, 169);
+			this.label1.Location = new System.Drawing.Point(425, 201);
 			this.label1.Margin = new System.Windows.Forms.Padding(5, 4, 5, 4);
 			this.label1.Name = "label1";
 			this.label1.Size = new System.Drawing.Size(16, 18);
@@ -408,7 +418,7 @@ namespace AOTools
 			// label2
 			// 
 			this.label2.AutoSize = true;
-			this.label2.Location = new System.Drawing.Point(255, 169);
+			this.label2.Location = new System.Drawing.Point(256, 201);
 			this.label2.Margin = new System.Windows.Forms.Padding(5, 4, 5, 4);
 			this.label2.Name = "label2";
 			this.label2.Size = new System.Drawing.Size(18, 18);
@@ -418,7 +428,7 @@ namespace AOTools
 			// label3
 			// 
 			this.label3.AutoSize = true;
-			this.label3.Location = new System.Drawing.Point(85, 169);
+			this.label3.Location = new System.Drawing.Point(86, 201);
 			this.label3.Margin = new System.Windows.Forms.Padding(5, 4, 5, 4);
 			this.label3.Name = "label3";
 			this.label3.Size = new System.Drawing.Size(17, 18);
@@ -438,7 +448,7 @@ namespace AOTools
 			// lblYZ1
 			// 
 			this.lblYZ1.AutoSize = true;
-			this.lblYZ1.Location = new System.Drawing.Point(416, 91);
+			this.lblYZ1.Location = new System.Drawing.Point(416, 119);
 			this.lblYZ1.Margin = new System.Windows.Forms.Padding(5, 4, 5, 4);
 			this.lblYZ1.Name = "lblYZ1";
 			this.lblYZ1.Size = new System.Drawing.Size(26, 18);
@@ -448,7 +458,7 @@ namespace AOTools
 			// lblXZ1
 			// 
 			this.lblXZ1.AutoSize = true;
-			this.lblXZ1.Location = new System.Drawing.Point(244, 91);
+			this.lblXZ1.Location = new System.Drawing.Point(244, 119);
 			this.lblXZ1.Margin = new System.Windows.Forms.Padding(5, 4, 5, 4);
 			this.lblXZ1.Name = "lblXZ1";
 			this.lblXZ1.Size = new System.Drawing.Size(25, 18);
@@ -458,7 +468,7 @@ namespace AOTools
 			// lblXY1
 			// 
 			this.lblXY1.AutoSize = true;
-			this.lblXY1.Location = new System.Drawing.Point(75, 91);
+			this.lblXY1.Location = new System.Drawing.Point(75, 119);
 			this.lblXY1.Margin = new System.Windows.Forms.Padding(5, 4, 5, 4);
 			this.lblXY1.Name = "lblXY1";
 			this.lblXY1.Size = new System.Drawing.Size(27, 18);
@@ -468,61 +478,17 @@ namespace AOTools
 			// lblXYZ
 			// 
 			this.lblXYZ.AutoSize = true;
-			this.lblXYZ.Location = new System.Drawing.Point(67, 116);
+			this.lblXYZ.Location = new System.Drawing.Point(67, 148);
 			this.lblXYZ.Margin = new System.Windows.Forms.Padding(5, 4, 5, 4);
 			this.lblXYZ.Name = "lblXYZ";
 			this.lblXYZ.Size = new System.Drawing.Size(35, 18);
 			this.lblXYZ.TabIndex = 104;
 			this.lblXYZ.Text = "XYZ";
 			// 
-			// rbUnitFtFracIn
-			// 
-			this.rbUnitFtFracIn.AutoSize = true;
-			this.rbUnitFtFracIn.Location = new System.Drawing.Point(23, 277);
-			this.rbUnitFtFracIn.Name = "rbUnitFtFracIn";
-			this.rbUnitFtFracIn.Size = new System.Drawing.Size(202, 22);
-			this.rbUnitFtFracIn.TabIndex = 106;
-			this.rbUnitFtFracIn.Text = "Feet and Fractional Inches";
-			this.rbUnitFtFracIn.UseVisualStyleBackColor = true;
-			this.rbUnitFtFracIn.Click += new System.EventHandler(this.rbUnit_Click);
-			// 
-			// rbUnitFracIn
-			// 
-			this.rbUnitFracIn.AutoSize = true;
-			this.rbUnitFracIn.Location = new System.Drawing.Point(424, 248);
-			this.rbUnitFracIn.Name = "rbUnitFracIn";
-			this.rbUnitFracIn.Size = new System.Drawing.Size(139, 22);
-			this.rbUnitFracIn.TabIndex = 107;
-			this.rbUnitFracIn.Text = "Fractional Inches";
-			this.rbUnitFracIn.UseVisualStyleBackColor = true;
-			this.rbUnitFracIn.Click += new System.EventHandler(this.rbUnit_Click);
-			// 
-			// rbUnitDecFt
-			// 
-			this.rbUnitDecFt.AutoSize = true;
-			this.rbUnitDecFt.Location = new System.Drawing.Point(255, 277);
-			this.rbUnitDecFt.Name = "rbUnitDecFt";
-			this.rbUnitDecFt.Size = new System.Drawing.Size(113, 22);
-			this.rbUnitDecFt.TabIndex = 108;
-			this.rbUnitDecFt.Text = "Decimal Feet";
-			this.rbUnitDecFt.UseVisualStyleBackColor = true;
-			this.rbUnitDecFt.Click += new System.EventHandler(this.rbUnit_Click);
-			// 
-			// rbUnitDecIn
-			// 
-			this.rbUnitDecIn.AutoSize = true;
-			this.rbUnitDecIn.Location = new System.Drawing.Point(424, 277);
-			this.rbUnitDecIn.Name = "rbUnitDecIn";
-			this.rbUnitDecIn.Size = new System.Drawing.Size(128, 22);
-			this.rbUnitDecIn.TabIndex = 109;
-			this.rbUnitDecIn.Text = "Decimal Inches";
-			this.rbUnitDecIn.UseVisualStyleBackColor = true;
-			this.rbUnitDecIn.Click += new System.EventHandler(this.rbUnit_Click);
-			// 
 			// label5
 			// 
 			this.label5.AutoSize = true;
-			this.label5.Location = new System.Drawing.Point(424, 195);
+			this.label5.Location = new System.Drawing.Point(425, 227);
 			this.label5.Margin = new System.Windows.Forms.Padding(5, 4, 5, 4);
 			this.label5.Name = "label5";
 			this.label5.Size = new System.Drawing.Size(16, 18);
@@ -532,7 +498,7 @@ namespace AOTools
 			// label9
 			// 
 			this.label9.AutoSize = true;
-			this.label9.Location = new System.Drawing.Point(255, 195);
+			this.label9.Location = new System.Drawing.Point(256, 227);
 			this.label9.Margin = new System.Windows.Forms.Padding(5, 4, 5, 4);
 			this.label9.Name = "label9";
 			this.label9.Size = new System.Drawing.Size(18, 18);
@@ -542,59 +508,143 @@ namespace AOTools
 			// label11
 			// 
 			this.label11.AutoSize = true;
-			this.label11.Location = new System.Drawing.Point(85, 195);
+			this.label11.Location = new System.Drawing.Point(86, 227);
 			this.label11.Margin = new System.Windows.Forms.Padding(5, 4, 5, 4);
 			this.label11.Name = "label11";
 			this.label11.Size = new System.Drawing.Size(17, 18);
 			this.label11.TabIndex = 110;
 			this.label11.Text = "X";
 			// 
-			// rbUnitsProj
-			// 
-			this.rbUnitsProj.AutoSize = true;
-			this.rbUnitsProj.Checked = true;
-			this.rbUnitsProj.Location = new System.Drawing.Point(23, 248);
-			this.rbUnitsProj.Name = "rbUnitsProj";
-			this.rbUnitsProj.Size = new System.Drawing.Size(156, 22);
-			this.rbUnitsProj.TabIndex = 113;
-			this.rbUnitsProj.TabStop = true;
-			this.rbUnitsProj.Text = "Per Project Settings";
-			this.rbUnitsProj.UseVisualStyleBackColor = true;
-			this.rbUnitsProj.Click += new System.EventHandler(this.rbUnit_Click);
-			// 
 			// tbxMessage
 			// 
+			this.tbxMessage.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
 			this.tbxMessage.BackColor = System.Drawing.SystemColors.Control;
 			this.tbxMessage.BorderStyle = System.Windows.Forms.BorderStyle.None;
-			this.tbxMessage.Location = new System.Drawing.Point(11, 338);
+			this.tbxMessage.Location = new System.Drawing.Point(11, 490);
 			this.tbxMessage.Margin = new System.Windows.Forms.Padding(0);
 			this.tbxMessage.Multiline = true;
 			this.tbxMessage.Name = "tbxMessage";
-			this.tbxMessage.Size = new System.Drawing.Size(270, 54);
+			this.tbxMessage.Size = new System.Drawing.Size(333, 54);
 			this.tbxMessage.TabIndex = 116;
 			this.tbxMessage.Text = "x\r\nx\r\nx";
 			// 
-			// rbUnitFtDecIn
+			// lbxPrimeUnits
 			// 
-			this.rbUnitFtDecIn.AutoSize = true;
-			this.rbUnitFtDecIn.Location = new System.Drawing.Point(23, 307);
-			this.rbUnitFtDecIn.Name = "rbUnitFtDecIn";
-			this.rbUnitFtDecIn.Size = new System.Drawing.Size(191, 22);
-			this.rbUnitFtDecIn.TabIndex = 118;
-			this.rbUnitFtDecIn.Text = "Feet and Decimal Inches";
-			this.rbUnitFtDecIn.UseVisualStyleBackColor = true;
-			this.rbUnitFtDecIn.Click += new System.EventHandler(this.rbUnit_Click);
+			this.lbxPrimeUnits.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+			this.lbxPrimeUnits.BackColor = System.Drawing.SystemColors.ControlLightLight;
+			this.lbxPrimeUnits.BorderStyle = System.Windows.Forms.BorderStyle.None;
+			this.lbxPrimeUnits.FormattingEnabled = true;
+			this.lbxPrimeUnits.ItemHeight = 18;
+			this.lbxPrimeUnits.Location = new System.Drawing.Point(24, 312);
+			this.lbxPrimeUnits.Name = "lbxPrimeUnits";
+			this.lbxPrimeUnits.Size = new System.Drawing.Size(255, 126);
+			this.lbxPrimeUnits.TabIndex = 120;
+			this.lbxPrimeUnits.Tag = "prime";
 			// 
-			// rbUnitFractFt
+			// lblPrimaryUnits
 			// 
-			this.rbUnitFractFt.AutoSize = true;
-			this.rbUnitFractFt.Location = new System.Drawing.Point(255, 248);
-			this.rbUnitFractFt.Name = "rbUnitFractFt";
-			this.rbUnitFractFt.Size = new System.Drawing.Size(124, 22);
-			this.rbUnitFractFt.TabIndex = 119;
-			this.rbUnitFractFt.Text = "Fractional Feet";
-			this.rbUnitFractFt.UseVisualStyleBackColor = true;
-			this.rbUnitFractFt.Click += new System.EventHandler(this.rbUnit_Click);
+			this.lblPrimaryUnits.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+			this.lblPrimaryUnits.AutoSize = true;
+			this.lblPrimaryUnits.Location = new System.Drawing.Point(22, 282);
+			this.lblPrimaryUnits.Name = "lblPrimaryUnits";
+			this.lblPrimaryUnits.Size = new System.Drawing.Size(94, 18);
+			this.lblPrimaryUnits.TabIndex = 121;
+			this.lblPrimaryUnits.Text = "Primary Units";
+			// 
+			// lblSecondaryUnits
+			// 
+			this.lblSecondaryUnits.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+			this.lblSecondaryUnits.AutoSize = true;
+			this.lblSecondaryUnits.Location = new System.Drawing.Point(315, 282);
+			this.lblSecondaryUnits.Name = "lblSecondaryUnits";
+			this.lblSecondaryUnits.Size = new System.Drawing.Size(113, 18);
+			this.lblSecondaryUnits.TabIndex = 122;
+			this.lblSecondaryUnits.Text = "Secondary Units";
+			// 
+			// lbxSecondUnits
+			// 
+			this.lbxSecondUnits.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+			this.lbxSecondUnits.BackColor = System.Drawing.SystemColors.ControlLightLight;
+			this.lbxSecondUnits.BorderStyle = System.Windows.Forms.BorderStyle.None;
+			this.lbxSecondUnits.FormattingEnabled = true;
+			this.lbxSecondUnits.ItemHeight = 18;
+			this.lbxSecondUnits.Location = new System.Drawing.Point(318, 312);
+			this.lbxSecondUnits.Name = "lbxSecondUnits";
+			this.lbxSecondUnits.Size = new System.Drawing.Size(255, 126);
+			this.lbxSecondUnits.TabIndex = 123;
+			this.lbxSecondUnits.Tag = "second";
+			// 
+			// tbxDistZ2
+			// 
+			this.tbxDistZ2.BackColor = System.Drawing.SystemColors.ControlLight;
+			this.tbxDistZ2.BorderStyle = System.Windows.Forms.BorderStyle.None;
+			this.tbxDistZ2.Location = new System.Drawing.Point(450, 86);
+			this.tbxDistZ2.Margin = new System.Windows.Forms.Padding(5, 4, 5, 4);
+			this.tbxDistZ2.Name = "tbxDistZ2";
+			this.tbxDistZ2.ReadOnly = true;
+			this.tbxDistZ2.Size = new System.Drawing.Size(128, 19);
+			this.tbxDistZ2.TabIndex = 129;
+			this.tbxDistZ2.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+			// 
+			// tbxDistY2
+			// 
+			this.tbxDistY2.BackColor = System.Drawing.SystemColors.ControlLight;
+			this.tbxDistY2.BorderStyle = System.Windows.Forms.BorderStyle.None;
+			this.tbxDistY2.Location = new System.Drawing.Point(280, 86);
+			this.tbxDistY2.Margin = new System.Windows.Forms.Padding(5, 4, 5, 4);
+			this.tbxDistY2.Name = "tbxDistY2";
+			this.tbxDistY2.ReadOnly = true;
+			this.tbxDistY2.Size = new System.Drawing.Size(128, 19);
+			this.tbxDistY2.TabIndex = 128;
+			this.tbxDistY2.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+			// 
+			// tbxDistX2
+			// 
+			this.tbxDistX2.BackColor = System.Drawing.SystemColors.ControlLight;
+			this.tbxDistX2.BorderStyle = System.Windows.Forms.BorderStyle.None;
+			this.tbxDistX2.Location = new System.Drawing.Point(110, 86);
+			this.tbxDistX2.Margin = new System.Windows.Forms.Padding(5, 4, 5, 4);
+			this.tbxDistX2.Name = "tbxDistX2";
+			this.tbxDistX2.ReadOnly = true;
+			this.tbxDistX2.Size = new System.Drawing.Size(128, 19);
+			this.tbxDistX2.TabIndex = 127;
+			this.tbxDistX2.Text = "99,999\'-11.99999\"";
+			this.tbxDistX2.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+			// 
+			// lblZ2
+			// 
+			this.lblZ2.AutoSize = true;
+			this.lblZ2.Location = new System.Drawing.Point(424, 85);
+			this.lblZ2.Margin = new System.Windows.Forms.Padding(5, 4, 5, 4);
+			this.lblZ2.Name = "lblZ2";
+			this.lblZ2.Size = new System.Drawing.Size(16, 18);
+			this.lblZ2.TabIndex = 126;
+			this.lblZ2.Text = "Z";
+			// 
+			// lblY2
+			// 
+			this.lblY2.AutoSize = true;
+			this.lblY2.Location = new System.Drawing.Point(255, 86);
+			this.lblY2.Margin = new System.Windows.Forms.Padding(5, 4, 5, 4);
+			this.lblY2.Name = "lblY2";
+			this.lblY2.Size = new System.Drawing.Size(18, 18);
+			this.lblY2.TabIndex = 125;
+			this.lblY2.Text = "Y";
+			// 
+			// lblX2
+			// 
+			this.lblX2.AutoSize = true;
+			this.lblX2.Location = new System.Drawing.Point(85, 86);
+			this.lblX2.Margin = new System.Windows.Forms.Padding(5, 4, 5, 4);
+			this.lblX2.Name = "lblX2";
+			this.lblX2.Size = new System.Drawing.Size(17, 18);
+			this.lblX2.TabIndex = 124;
+			this.lblX2.Text = "X";
 			// 
 			// FormDxMeasure
 			// 
@@ -602,21 +652,24 @@ namespace AOTools
 			this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 18F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.CancelButton = this.btnDone;
-			this.ClientSize = new System.Drawing.Size(596, 401);
-			this.Controls.Add(this.rbUnitFractFt);
-			this.Controls.Add(this.rbUnitFtDecIn);
+			this.ClientSize = new System.Drawing.Size(608, 553);
+			this.Controls.Add(this.tbxDistZ2);
+			this.Controls.Add(this.tbxDistY2);
+			this.Controls.Add(this.tbxDistX2);
+			this.Controls.Add(this.lblZ2);
+			this.Controls.Add(this.lblY2);
+			this.Controls.Add(this.lblX2);
+			this.Controls.Add(this.lbxSecondUnits);
+			this.Controls.Add(this.lblSecondaryUnits);
+			this.Controls.Add(this.lblPrimaryUnits);
+			this.Controls.Add(this.lbxPrimeUnits);
 			this.Controls.Add(lblBar3);
 			this.Controls.Add(this.tbxMessage);
 			this.Controls.Add(lblBar2);
 			this.Controls.Add(lblBar1);
-			this.Controls.Add(this.rbUnitsProj);
 			this.Controls.Add(this.label5);
 			this.Controls.Add(this.label9);
 			this.Controls.Add(this.label11);
-			this.Controls.Add(this.rbUnitDecIn);
-			this.Controls.Add(this.rbUnitDecFt);
-			this.Controls.Add(this.rbUnitFracIn);
-			this.Controls.Add(this.rbUnitFtFracIn);
 			this.Controls.Add(this.lblXYZ);
 			this.Controls.Add(this.lblYZ1);
 			this.Controls.Add(this.lblXZ1);
@@ -654,6 +707,7 @@ namespace AOTools
 			this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
 			this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
 			this.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+			this.MinimumSize = new System.Drawing.Size(626, 600);
 			this.Name = "FormDxMeasure";
 			this.ShowInTaskbar = false;
 			this.Text = "Delux Measure";
@@ -701,17 +755,19 @@ namespace AOTools
 		private System.Windows.Forms.Label lblXZ1;
 		private System.Windows.Forms.Label lblXY1;
 		private System.Windows.Forms.Label lblXYZ;
-		private System.Windows.Forms.RadioButton rbUnitFtFracIn;
-		private System.Windows.Forms.RadioButton rbUnitFracIn;
-		private System.Windows.Forms.RadioButton rbUnitDecFt;
-		private System.Windows.Forms.RadioButton rbUnitDecIn;
 		private System.Windows.Forms.Label label5;
 		private System.Windows.Forms.Label label9;
 		private System.Windows.Forms.Label label11;
-		private System.Windows.Forms.RadioButton rbUnitsProj;
 		public System.Windows.Forms.TextBox tbxMessage;
-		private System.Windows.Forms.RadioButton rbUnitFtDecIn;
-		private System.Windows.Forms.RadioButton rbUnitFractFt;
-		
+		private System.Windows.Forms.ListBox lbxPrimeUnits;
+		private System.Windows.Forms.Label lblPrimaryUnits;
+		private System.Windows.Forms.Label lblSecondaryUnits;
+		private System.Windows.Forms.ListBox lbxSecondUnits;
+		internal System.Windows.Forms.TextBox tbxDistZ2;
+		internal System.Windows.Forms.TextBox tbxDistY2;
+		private System.Windows.Forms.TextBox tbxDistX2;
+		private System.Windows.Forms.Label lblZ2;
+		private System.Windows.Forms.Label lblY2;
+		private System.Windows.Forms.Label lblX2;
 	}
 }

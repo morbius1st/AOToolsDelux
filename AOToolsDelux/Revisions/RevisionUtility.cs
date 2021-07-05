@@ -4,12 +4,12 @@ using System.Text;
 using Autodesk.Revit.DB;
 using UtilityLibrary;
 
-using static AOTools.EItem;
+using static AOTools.Revisions.EItem;
 
 //using static UtilityLibrary.MessageUtilities;
 using static UtilityLibrary.MessageUtilities2;
 
-namespace AOTools
+namespace AOTools.Revisions
 {
 
 	public static class RevisionUtility

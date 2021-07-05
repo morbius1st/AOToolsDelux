@@ -8,14 +8,12 @@ using Autodesk.Revit.DB;
 using Autodesk.Revit.DB.ExtensibleStorage;
 using static Autodesk.Revit.DB.ExtensibleStorage.Schema;
 using InvalidOperationException = Autodesk.Revit.Exceptions.InvalidOperationException;
-
 using static AOTools.AppSettings.RevitSettings.RevitSettingsUnitApp;
 using static AOTools.AppSettings.RevitSettings.RevitSettingsUnitUsr;
 using AOTools.Utility;
 using Autodesk.Revit.ApplicationServices;
 using Autodesk.Revit.UI;
 using static UtilityLibrary.MessageUtilities;
-
 using static AOTools.AppSettings.RevitSettings.RevitSettingsBase.RevitSetgDelRetnCode;
 
 #endregion
@@ -29,14 +27,44 @@ namespace AOTools.AppSettings.RevitSettings
 {
 	class RevitSettingsBase
 	{
-		#region Read settings routines
+		private Element elem;
+
+		public Element element {
+			get
+			{
+				if (elem == null) SetElementBasePoint();
+					
+				return elem;
+				
+			}
+			private set => elem = value;
+		} 
+
+		public void SetElementBasePoint()
+		{
+			element = Util.GetProjectBasepoint();
+		}
+
+		public void SetElementBrowserOrg()
+		{
+			element = BrowserOrganization.GetCurrentBrowserOrganizationForViews(AppRibbon.Doc);
+		}
+
+		public void SetElement(Element e)
+		{
+			element = e;
+		}
+
+
+	#region Read settings routines
+
 		// ******************************
 		// read setting routines
 		// ******************************
 
 		// return true if the app schema exists
 		// and is good
-		private static bool AppSchemaExist(out Schema schema)
+		private bool AppSchemaExist(out Schema schema)
 		{
 			schema = Lookup(RsuApp.SchemaGuid);
 
@@ -44,17 +72,24 @@ namespace AOTools.AppSettings.RevitSettings
 		}
 
 		// does the schema exist
-		private static bool GetAppSchemaAndElement(out Entity elemEntity, out Schema schema)
+		private bool GetAppSchemaAndElement(out Entity elemEntity, out Schema schema)
 		{
 			elemEntity = null;
 
-			if (!AppSchemaExist(out schema)) { return false; }
+			if (!AppSchemaExist(out schema))
+			{
+				// schema = makeSchema();
+				return false;
+			}
 
-			//			schema = Lookup(RsuApp.SchemaGuid);
-			//			if (schema == null ||
-			//				schema.IsValidObject == false) { return false; }
+			schema = Lookup(RsuApp.SchemaGuid);
+			if (schema == null ||
+				schema.IsValidObject == false) { return false; }
 
-			Element elem = Util.GetProjectBasepoint();
+			Element elem = element;
+
+			// Element elem = Util.GetProjectBasepoint();
+			// BrowserOrganization elem = BrowserOrganization.GetCurrentBrowserOrganizationForViews(AppRibbon.Doc);
 
 			elemEntity = elem.GetEntity(schema);
 
@@ -62,7 +97,6 @@ namespace AOTools.AppSettings.RevitSettings
 
 			return true;
 		}
-
 
 		// general routine to read through a saved schema and 
 		// get the value from each field 
@@ -119,6 +153,7 @@ namespace AOTools.AppSettings.RevitSettings
 
 				entityList.Add(subSchema);
 			}
+
 			return entityList;
 		}
 
@@ -137,13 +172,14 @@ namespace AOTools.AppSettings.RevitSettings
 			// subschema's start at 1
 			List<Entity> schemaList = GetSchemaEntities(elemEntity, schema);
 
-			if (schemaList.Count <= 1) { return false;}
+			if (schemaList.Count <= 1) { return false; }
 
 			for (int i = 1; i < schemaList.Count; i++)
 			{
 				RsuUsrSetg.Add(SchemaUnitUtil.DefaultSchemaUsr(i - 1));
 				ReadSubSchema(schemaList[i], schemaList[i].Schema, RsuUsrSetg[i - 1]);
 			}
+
 			return true;
 		}
 
@@ -160,9 +196,11 @@ namespace AOTools.AppSettings.RevitSettings
 					kvp.Value.ExtractValue(subSchemaEntity, field);
 			}
 		}
-		#endregion
 
-		#region Save Settings routines
+	#endregion
+
+	#region Save Settings routines
+
 		// ******************************
 		// save settings routines
 		// ******************************
@@ -171,9 +209,14 @@ namespace AOTools.AppSettings.RevitSettings
 		// this saves both the basic and the unit styles
 		protected SaveRtnCodes SaveAllRevitSettings()
 		{
+			Transaction t = null;
+
 			try
 			{
-				Element elem = Util.GetProjectBasepoint();
+				Element elem = element;
+
+				// Element elem = Util.GetProjectBasepoint();
+				// BrowserOrganization elem = BrowserOrganization.GetCurrentBrowserOrganizationForViews(AppRibbon.Doc);
 
 				SchemaBuilder sbld = CreateSchema(SchemaName, RevitSettingsUnitApp.SchemaDesc, RsuApp.SchemaGuid);
 
@@ -188,6 +231,7 @@ namespace AOTools.AppSettings.RevitSettings
 				// all fields created and added
 				Schema schema = sbld.Finish();
 
+				
 				Entity entity = new Entity(schema);
 
 				// set the basic fields
@@ -195,10 +239,14 @@ namespace AOTools.AppSettings.RevitSettings
 
 				SaveUnitSettings(entity, schema, subSchemaFields);
 
-				using (Transaction t = new Transaction(AppRibbon.Doc, "Unit Style Settings"))
+				
+				// IList<Field> f = schema.ListFields();
+
+				using (t = new Transaction(AppRibbon.Doc, "Unit Style Settings"))
 				{
 					t.Start();
 					elem.SetEntity(entity);
+					
 					t.Commit();
 				}
 
@@ -206,6 +254,12 @@ namespace AOTools.AppSettings.RevitSettings
 			}
 			catch (InvalidOperationException ex)
 			{
+				if (t != null && t.HasStarted())
+				{
+					t.RollBack();
+					t.Dispose();
+				}
+
 				if (ex.HResult == -2146233088)
 				{
 					logMsgDbLn2("schema", "duplicate - not saved");
@@ -214,6 +268,7 @@ namespace AOTools.AppSettings.RevitSettings
 
 				return SaveRtnCodes.FAIL;
 			}
+
 			return SaveRtnCodes.GOOD;
 		}
 
@@ -223,7 +278,6 @@ namespace AOTools.AppSettings.RevitSettings
 			FAIL = 0,
 			GOOD = 1,
 			NOT_INIT = 2
-
 		}
 
 		// create the schema builder opject
@@ -250,7 +304,7 @@ namespace AOTools.AppSettings.RevitSettings
 			// temp - test making ) unit subschemas
 			for (int i = 0; i < RsuUsr.Count; i++)
 			{
-				string guid = String.Format(SchemaUnitUtil.SubSchemaFieldInfo.Guid, i);   // + suffix;
+				string guid = String.Format(SchemaUnitUtil.SubSchemaFieldInfo.Guid, i); // + suffix;
 				string fieldName =
 					String.Format(SchemaUnitUtil.SubSchemaFieldInfo.Name, i);
 				FieldBuilder fbld =
@@ -260,6 +314,7 @@ namespace AOTools.AppSettings.RevitSettings
 
 				subSchemaFields.Add(fieldName, guid);
 			}
+
 			return subSchemaFields;
 		}
 
@@ -286,6 +341,8 @@ namespace AOTools.AppSettings.RevitSettings
 		private void SaveUnitSettings(Entity entity, Schema schema,
 			Dictionary<string, string> subSchemaFields)
 		{
+			// List<SchemaDictionaryUsr> d = RsuUsrSetg;
+
 			int j = 0;
 
 			foreach (KeyValuePair<string, string> kvp in subSchemaFields)
@@ -294,30 +351,8 @@ namespace AOTools.AppSettings.RevitSettings
 				if (field == null || !field.IsValidObject) { continue; }
 
 				Entity subEntity =
-					MakeUnitSchema(kvp.Value,RsuUsrSetg[j++]);
+					MakeUnitSchema(kvp.Value, RsuUsrSetg[j++]);
 				entity.Set(field, subEntity);
-			}
-		}
-
-		private void MakeFields<T>(SchemaBuilder sbld,
-			SchemaDictionaryBase<T> fieldList)
-		{
-			foreach (KeyValuePair<T, SchemaFieldUnit> kvp in fieldList)
-			{
-				MakeField(sbld, kvp.Value);
-			}
-		}
-
-		private void MakeField(SchemaBuilder sbld, SchemaFieldUnit schemaFieldUnit)
-		{
-			FieldBuilder fbld = sbld.AddSimpleField(
-					schemaFieldUnit.Name, schemaFieldUnit.Value.GetType());
-
-			fbld.SetDocumentation(schemaFieldUnit.Desc);
-
-			if (schemaFieldUnit.UnitType != RevitUnitType.UT_UNDEFINED)
-			{
-				fbld.SetUnitType((UnitType) (int) schemaFieldUnit.UnitType);
 			}
 		}
 
@@ -337,9 +372,35 @@ namespace AOTools.AppSettings.RevitSettings
 
 			return entity;
 		}
-		#endregion
 
-		#region Delete settings routines
+
+		private void MakeFields<T>(SchemaBuilder sbld,
+			SchemaDictionaryBase<T> fieldList)
+		{
+			foreach (KeyValuePair<T, SchemaFieldUnit> kvp in fieldList)
+			{
+				MakeField(sbld, kvp.Value);
+			}
+		}
+
+		private void MakeField(SchemaBuilder sbld, SchemaFieldUnit schemaFieldUnit)
+		{
+			FieldBuilder fbld = sbld.AddSimpleField(
+				schemaFieldUnit.Name, schemaFieldUnit.Value.GetType());
+
+			fbld.SetDocumentation(schemaFieldUnit.Desc);
+
+			if (schemaFieldUnit.UnitType != RevitUnitType.UT_UNDEFINED)
+			{
+				fbld.SetUnitType((UnitType) (int) schemaFieldUnit.UnitType);
+			}
+		}
+
+
+	#endregion
+
+	#region Delete settings routines
+
 		// ******************************
 		// delete routines
 		// ******************************
@@ -375,19 +436,21 @@ namespace AOTools.AppSettings.RevitSettings
 						Entities[i].Dispose();
 					}
 				}
+
 				// remove the root schema laast
 				EraseSchemaAndAllEntities(Entities[0].Schema, false);
 				Entities[0].Dispose();
 
 				t.Commit();
 			}
+
 			return DELETE_SETTINGS_WORKED;
 		}
 
 		public void DeleteTooManyDocumentsMsg(string from)
 		{
 			TaskDialog td = new TaskDialog("AO Tools");
-			td.MainInstruction = "Cannot perform operation: " + nl 
+			td.MainInstruction = "Cannot perform operation: " + nl
 				+ from + nl
 				+ "There are other documents open." + nl
 				+ "Please close all other documents and" + nl
@@ -427,7 +490,7 @@ namespace AOTools.AppSettings.RevitSettings
 
 		// get a list of revit schema's that 
 		// are subschemas
-		public static List<Schema> GetSchemas()
+		public List<Schema> GetSchemas()
 		{
 			Schema schema;
 			Entity elemEntity;
@@ -458,12 +521,14 @@ namespace AOTools.AppSettings.RevitSettings
 
 				schemaList.Add(subSchema.Schema);
 			}
+
 			return schemaList;
 		}
 
-		#endregion
+	#endregion
 
-		#region Listing Routines
+	#region Listing Routines
+
 		// ******************************
 		// listing routines
 		// ******************************
@@ -494,6 +559,6 @@ namespace AOTools.AppSettings.RevitSettings
 			}
 		}
 
-		#endregion
+	#endregion
 	}
 }

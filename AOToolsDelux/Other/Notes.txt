@@ -1,0 +1,58 @@
+﻿
+
+
+
+
+
+
+SchemaUnitApp
+	+-> RevitSettingsUnitApp
+		+-> [RsuApp] (static RevitSettingsUnitApp)
+		+-> [RsuAppSetg] (static SchemaDictionaryApp)
+
+
+SchemaUnitUsr
+	+-> RevitSettingsUnitUsr
+		+-> [RsuUsr] (static RevitSettingsUnitUsr)
+		+-> [RsuUsrSetg] (static List<SchemaDictionaryUsr>)
+
+
+SchemaUnitApp
+* has the dictionary that describes the app scheme fields
+* dictionary is: SchemaDictionaryApp
+
+
+
+RevitSettingsUnitApp <- SchemaUnitApp
+* has properties
+* includes static access to class [RsuApp]
+* includes the dictionary of the fields and values [RsuAppSetg] (static SchemaDictionaryApp)
+
+
+
+SchemaUnitUsr
+* has the dictionary that describes the app scheme fields
+* dictionary is: SchemaDictionaryUsr
+
+RevitSettingsUnitUsr <- SchemaUnitUsr
+* has properties
+* includes static access to class [RsuUsr]
+* includes the list of the Dictionaries and values [RsuUsrSetg] (static List<SchemaDictionaryUsr>)
+
+
+
+** generic **
+SchemaFieldUnit
+* class that defines the a scheme field (one data item - does not include all schema field properties)
+
+** generic ** (but rename)
+SchemaDictionaryApp
+* a dictionary of schema fields (Dictionary<T, SchemaFieldUnit>) where T: SchemaAppKey
+* [SchemaAppKey] is just an int enum list
+
+** generic ** (but rename)
+SchemaDictionaryUsr
+* a dictionary of schema fields (Dictionary<T, SchemaFieldUnit>) where T: SchemaUsrKey
+* [SchemaUsrKey] is just an int enum list
+
+

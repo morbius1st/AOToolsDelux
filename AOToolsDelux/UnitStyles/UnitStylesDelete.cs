@@ -1,6 +1,7 @@
 ﻿#region Using directives
 
 using AOTools.AppSettings.RevitSettings;
+using AOTools.Utility;
 using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
@@ -25,10 +26,18 @@ namespace AOTools
 	{
 		public Result Execute(ExternalCommandData commandData, ref string message, ElementSet elements)
 		{
+			AppRibbon.UiApp = commandData.Application;
+			AppRibbon.Uidoc = AppRibbon.UiApp.ActiveUIDocument;
+			AppRibbon.App =  AppRibbon.UiApp.Application;
+			AppRibbon.Doc =  AppRibbon.Uidoc.Document;
+
 			OutLocation = OutputLocation.DEBUG;
 
 			logMsgDbLn2("delete unit styles", "before");
 			RevitSettingsBase.ListRevitSchema();
+
+			RsMgr.Init();
+			RsMgr.SetElementBasePoint();
 
 			if (!RsMgr.DeleteSchema())
 			{

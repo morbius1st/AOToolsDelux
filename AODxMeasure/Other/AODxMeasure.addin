@@ -1,0 +1,20 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<RevitAddIns>
+	<AddIn Type="Application">
+		<Name>Application DxMeasure Ribbon</Name>
+		<Assembly>AODxMeasure.dll</Assembly>
+		<FullClassName>DluxMeasure.AppRibbon</FullClassName>
+		<ClientId>39E2982B-30C6-4941-BE6A-82EF24ECB9D6</ClientId>
+		<VendorId>pro.cyberstudio</VendorId>
+		<VendorDescription>CyberStudio</VendorDescription>
+	</AddIn>
+	<AddIn Type="Command">
+    <Text>Delux Measure</Text>
+    <Description>Enhanced Measuring Tool</Description>
+    <Assembly>AODxMeasure.dll</Assembly>
+    <FullClassName>DluxMeasure.DxMeasure</FullClassName>
+    <ClientId>A74AA29F-A920-4D6A-B502-988E0BD49C36</ClientId>
+    <VendorId>pro.cyberstudio</VendorId>
+    <VendorDescription>CyberStudio</VendorDescription>
+  </AddIn>
+</RevitAddIns>

@@ -3,12 +3,12 @@
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
 
-using static AOTools.SelectCriteria2.ESelCompare;
-using static AOTools.SelectCriteria2.ESelVisibility;
-using static AOTools.SelectCriteria2.Filter;
+using static AOTools.Revisions.SelectCriteria2.ESelCompare;
+using static AOTools.Revisions.SelectCriteria2.ESelVisibility;
+using static AOTools.Revisions.SelectCriteria2.Filter;
 
 
-namespace AOTools
+namespace AOTools.Revisions
 {
 	// selection method:
 	//	this item

@@ -1,4 +1,4 @@
-﻿namespace AOTools
+﻿namespace AOTools.Revisions
 {
 	public static class SortKey
 	{

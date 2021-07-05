@@ -18,15 +18,7 @@
     <VendorId>pro.cyberstudio</VendorId>
     <VendorDescription>CyberStudio</VendorDescription>
   </AddIn>
-  <AddIn Type="Command">
-    <Text>Delux Measure</Text>
-    <Description>Enhanced Measuring Tool</Description>
-    <Assembly>AOTools.dll</Assembly>
-    <FullClassName>AOTools.DxMeasure</FullClassName>
-    <ClientId>03AFD29B-87F5-4D29-8060-16E477D2FEE1</ClientId>
-    <VendorId>pro.cyberstudio</VendorId>
-    <VendorDescription>CyberStudio</VendorDescription>
-  </AddIn>
+
 	<AddIn Type="Command">
 		<Text>Revision</Text>
 		<Description>Revision Cloud</Description>
@@ -38,7 +30,7 @@
 	</AddIn>
 
   <AddIn Type="Application">
-    <Name>Application AOTools</Name>
+    <Name>Application AOTools Ribbon</Name>
     <Assembly>AOTools.dll</Assembly>
     <FullClassName>AOTools.AppRibbon</FullClassName>
     <ClientId>290e5dfb-f4b4-4c0d-83ef-ab20e75d3c42</ClientId>
@@ -46,5 +38,15 @@
     <VendorDescription>CyberStudio</VendorDescription>
   </AddIn>
 </RevitAddIns>
+
+<!-- <AddIn Type="Command"> -->
+<!-- 	<Text>Delux Measure</Text> -->
+<!-- 	<Description>Enhanced Measuring Tool</Description> -->
+<!-- 	<Assembly>AOTools.dll</Assembly> -->
+<!-- 	<FullClassName>AOTools.DxMeasure</FullClassName> -->
+<!-- 	<ClientId>03AFD29B-87F5-4D29-8060-16E477D2FEE1</ClientId> -->
+<!-- 	<VendorId>pro.cyberstudio</VendorId> -->
+<!-- 	<VendorDescription>CyberStudio</VendorDescription> -->
+<!-- </AddIn> -->
 
 

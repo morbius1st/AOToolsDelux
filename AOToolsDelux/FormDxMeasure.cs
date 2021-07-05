@@ -15,17 +15,49 @@ using AOTools.UnitStyles;
 namespace AOTools
 {
 
+
 	public partial class FormDxMeasure : Form
 	{
+		private const string primeUnitsName = "PrimeUnits";
+		private const string secondUnitsName = "SecondUnits";
+
+
 		private UnitStyleType _utStyle = UnitStyleType.PROJECT;
 
+		private UnitStyleType _utStyleAlt = UnitStyleType.PROJECT;
+
 		private Units units;
+		private Units unitsAlt;
+
+		private UnitDisplay[] utPrime = new UnitDisplay[7];
+		
+		private UnitDisplay[] utSecond = new UnitDisplay[7];
+
+
 
 		private PointMeasurements? _pm;
+
+		public string Message
+		{
+			get => tbxMessage.Text;
+
+			set
+			{
+				if (value == null)
+				{
+					tbxMessage.Text = string.Empty;
+				}
+				else
+				{
+					tbxMessage.Text = value;
+				}
+			}
+		}
 
 		public FormDxMeasure()
 		{
 			InitializeComponent();
+			configureUnitLists();
 			LoadSettings();
 			tbxMessage.Text = "";
 		}
@@ -36,6 +68,7 @@ namespace AOTools
 			SmUsrSetg.FormMeasurePointsLocation  = this.Location;
 			SmUsrSetg.MeasurePointsShowWorkplane = DxMeasure.ShowWorkplane;
 			SmUsrSetg.DxMeasureUnitStyle = _utStyle;
+			SmUsrSetg.DxMeasureUnitStyleAlt = _utStyleAlt;
 			SmUsr.Save();
 		}
 
@@ -59,10 +92,13 @@ namespace AOTools
 			cbxWpOnOff.Checked = SmUsrSetg.MeasurePointsShowWorkplane;
 
 			_utStyle = SmUsrSetg.DxMeasureUnitStyle;
+			_utStyleAlt = SmUsrSetg.DxMeasureUnitStyleAlt;
 
-			ConfigUnitRadioButtons();
+			lbxPrimeUnits.SelectedIndex = (int) _utStyle;
+			lbxSecondUnits.SelectedIndex = (int) _utStyleAlt;
 
 			SetUnits(_utStyle);
+			SetUnitsAlt(_utStyleAlt);
 		}
 
 
@@ -74,12 +110,25 @@ namespace AOTools
 			DxMeasure.ShowHideWorkplane();
 		}
 
-
-		private void rbUnit_Click(object sender, EventArgs e)
+		private void lbxSelectedIndexChanged(object sender, EventArgs e)
 		{
-			RadioButton rb = (RadioButton) sender;
+			string a;
+			ListBox lb = (ListBox) sender;
 
-			SetUnits((UnitStyleType) rb.Tag);
+			UnitDisplay ud = (UnitDisplay) lb.SelectedItem;
+
+			if (lb.Tag.Equals(primeUnitsName))
+			{
+				_utStyle = ud.unitType;
+				SetUnits(ud.unitType);
+			}
+			else
+			{
+				_utStyleAlt = ud.unitType;
+				SetUnitsAlt(ud.unitType);
+			}
+
+			UpdatePoints();
 		}
 
 		private void SetUnits(UnitStyleType utStyle)
@@ -93,22 +142,17 @@ namespace AOTools
 
 			UpdatePoints();
 		}
-
-		public string Message
+		
+		private void SetUnitsAlt(UnitStyleType utStyle)
 		{
-			get => tbxMessage.Text;
+			_utStyleAlt = utStyle;
 
-			set
+			if (_utStyleAlt != UnitStyleType.FEET_DEC_IN)
 			{
-				if (value == null)
-				{
-					tbxMessage.Text = string.Empty;
-				}
-				else
-				{
-					tbxMessage.Text = value;
-				}
+				unitsAlt = UnitStylesDefault.StandardUnitStyle(DxMeasure._doc, _utStyleAlt);
 			}
+
+			UpdatePoints();
 		}
 
 		internal void UpdatePoints(PointMeasurements? pm,
@@ -152,6 +196,10 @@ namespace AOTools
 			lblDistY.Text = FormatLength(_pm.Value.delta.Y);
 			lblDistZ.Text = FormatLength(_pm.Value.delta.Z);
 
+			tbxDistX2.Text = FormatLengthAlt(_pm.Value.delta.X);
+			tbxDistY2.Text = FormatLengthAlt(_pm.Value.delta.Y);
+			tbxDistZ2.Text = FormatLengthAlt(_pm.Value.delta.Z);
+
 			lblDistXY.Text = FormatLength(_pm.Value.distanceXY);
 			lblDistXZ.Text = FormatLength(_pm.Value.distanceXZ);
 			lblDistYZ.Text = FormatLength(_pm.Value.distanceYZ);
@@ -191,6 +239,21 @@ namespace AOTools
 			return UnitFormatUtils.Format(units, UnitType.UT_Length, length, false, false);
 		}
 
+		private string FormatLengthAlt(double length)
+		{
+			if (_utStyleAlt == UnitStyleType.FEET_DEC_IN)
+			{
+				return UtilityLibrary.CsConversions.FromDoubleFeet.ToFeetAndDecimalInches(length, 0.0001, false);
+			}
+			else if (_utStyleAlt == UnitStyleType.FRACT_FT)
+			{
+
+				return UnitFormatUtils.Format(unitsAlt, UnitType.UT_Length, length / 12, false, false).Replace('\"', '\'');
+			}
+
+			return UnitFormatUtils.Format(unitsAlt, UnitType.UT_Length, length, false, false);
+		}
+
 
 		internal void ClearText()
 		{
@@ -209,6 +272,10 @@ namespace AOTools
 			lblDistY.Text = "";
 			lblDistZ.Text = "";
 
+			tbxDistX2.Text = "";
+			tbxDistY2.Text = "";
+			tbxDistZ2.Text = "";
+
 			lblDistXY.Text = "";
 			lblDistXZ.Text = "";
 			lblDistYZ.Text = "";
@@ -216,28 +283,52 @@ namespace AOTools
 			lblDistXYZ.Text = "";
 		}
 
-		private void ConfigUnitRadioButtons()
+		class UnitDisplay
 		{
-			rbUnitsProj.Tag = UnitStyleType.PROJECT;
-			rbUnitsProj.Checked = _utStyle == UnitStyleType.PROJECT;
+			public string description;
+			public UnitStyleType unitType;
 
-			rbUnitDecFt.Tag = UnitStyleType.DEC_FT;
-			rbUnitDecFt.Checked = _utStyle == UnitStyleType.DEC_FT;
+			public UnitDisplay(string desc,
+				UnitStyleType ut)
+			{
+				description = desc;
+				unitType = ut;
+			}
 
-			rbUnitDecIn.Tag = UnitStyleType.DEC_IN;
-			rbUnitDecIn.Checked = _utStyle == UnitStyleType.DEC_IN;
+			public override string ToString()
+			{
+				return description;
+			}
+		}
 
-			rbUnitFracIn.Tag = UnitStyleType.FRAC_IN;
-			rbUnitFracIn.Checked = _utStyle == UnitStyleType.FRAC_IN;
 
-			rbUnitFtFracIn.Tag = UnitStyleType.FEET_FRAC_IN;
-			rbUnitFtFracIn.Checked = _utStyle == UnitStyleType.FEET_FRAC_IN;
 
-			rbUnitFractFt.Tag = UnitStyleType.FRACT_FT;
-			rbUnitFractFt.Checked = _utStyle == UnitStyleType.FRACT_FT;
+		private void configureUnitLists()
+		{
+			configUnitListItem("Per Project Units"          , UnitStyleType.PROJECT);
+			configUnitListItem("Feet and Fractional Inches" , UnitStyleType.FEET_FRAC_IN);
+			configUnitListItem("Feet and Decimal Inches"    , UnitStyleType.FEET_DEC_IN);
+			configUnitListItem("Fractional Feet"            , UnitStyleType.FRACT_FT);
+			configUnitListItem("Decimal Feet"               , UnitStyleType.DEC_FT);
+			configUnitListItem("Fractional Inches"          , UnitStyleType.FRAC_IN);
+			configUnitListItem("Decimal Inches"			    , UnitStyleType.DEC_IN);
 
-			rbUnitFtDecIn.Tag = UnitStyleType.FEET_DEC_IN;
-			rbUnitFtDecIn.Checked = _utStyle == UnitStyleType.FEET_DEC_IN;
+
+			lbxPrimeUnits.Tag = primeUnitsName;
+			lbxPrimeUnits.SelectedIndexChanged += lbxSelectedIndexChanged;
+
+			lbxSecondUnits.Tag = secondUnitsName;
+			lbxSecondUnits.SelectedIndexChanged += lbxSelectedIndexChanged;
+		}
+
+		private void configUnitListItem(string desc,
+			UnitStyleType ut)
+		{
+			utPrime[(int) ut] = new UnitDisplay(desc, ut);
+			lbxPrimeUnits.Items.Add(utPrime[(int) ut]);
+
+			utSecond[(int) ut] = new UnitDisplay(desc, ut);
+			lbxSecondUnits.Items.Add(utPrime[(int) ut]);
 		}
 
 	}

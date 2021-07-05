@@ -135,7 +135,7 @@ namespace AOTools.Utility
 			{
 				return null;
 			}
-			
+
 			return siteElements[0];
 		}
 

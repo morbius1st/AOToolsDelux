@@ -3,13 +3,13 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 using Autodesk.Revit.DB;
-using static AOTools.EItem;
-using static AOTools.EItemType;
-using static AOTools.EItemSource;
-using static AOTools.EItemUsage;
+using static AOTools.Revisions.EItem;
+using static AOTools.Revisions.EItemType;
+using static AOTools.Revisions.EItemSource;
+using static AOTools.Revisions.EItemUsage;
 
 
-namespace AOTools
+namespace AOTools.Revisions
 {
 	// this represents a one tag / cloud
 	public class RevDataItems2 : IEnumerable

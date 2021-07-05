@@ -35,7 +35,7 @@ namespace AOTools.AppSettings.SchemaSettings
 		public static List<SchemaDictionaryUsr> DefaultSchemaListUsr(int quantity)
 		{
 			List<SchemaDictionaryUsr> SettingList = new List<SchemaDictionaryUsr>(quantity);
-
+		
 			for (int i = 0; i < quantity; i++)
 			{
 				SettingList.Add(DefaultSchemaUsr(i));
@@ -47,16 +47,16 @@ namespace AOTools.AppSettings.SchemaSettings
 		public static SchemaDictionaryUsr DefaultSchemaUsr(int itemNumber)
 		{
 			SchemaDictionaryUsr def = SchemaUnitUsr.SchemaUnitUsrDefault.Clone();
-
+		
 			def[SchemaUsrKey.STYLE_NAME].Value =
 				string.Format(SchemaUnitUsr.SchemaUnitUsrDefault[SchemaUsrKey.STYLE_NAME].Value, itemNumber);
-
+		
 			def[SchemaUsrKey.UNIT_SYSTEM].Value = (int) UnitSystem.Imperial;
 			def[SchemaUsrKey.UNIT_TYPE].Value = (int) UnitType.UT_Length;
 			def[SchemaUsrKey.ACCURACY].Value = (1.0 / 12.0) / 16.0;
 			def[SchemaUsrKey.DUT].Value = (int) DisplayUnitType.DUT_FEET_FRACTIONAL_INCHES;
 			def[SchemaUsrKey.UST].Value = (int) UnitSymbolType.UST_NONE;
-
+		
 			return def;
 		}
 

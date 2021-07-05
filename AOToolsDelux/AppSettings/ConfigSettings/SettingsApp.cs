@@ -2,10 +2,10 @@
 
 using System.Runtime.Serialization;
 using static AOTools.AppSettings.RevitSettings.RevitSettingsUnitApp;
-#endregion
-
 using AOTools.AppSettings.SchemaSettings;
 using UtilityLibrary;
+#endregion
+
 
 // itemname:	SettingsFileApp
 // username:	jeffs

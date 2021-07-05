@@ -39,6 +39,12 @@ namespace AOTools.AppSettings.SettingUtil
 
 		public static void ListUnitDictionary<TU, T>(List<TU> u, int count = -1) where TU : SchemaDictionaryBase<T>
 		{
+			if (u == null)
+			{
+				logMsgDbLn2("ListUnitDictionary", "is null");
+				return;
+			}
+
 			int j = 0;
 			foreach (TU sd in u)
 			{
@@ -71,7 +77,7 @@ namespace AOTools.AppSettings.SettingUtil
 
 		public static void ListRevitUsrSettings()
 		{
-			ListUnitDictionary<SchemaDictionaryUsr, SchemaUsrKey>(RsuUsrSetg, 4);
+			ListUnitDictionary<SchemaDictionaryUsr, SchemaUsrKey>(RsuUsrSetg, 6);
 		}
 
 		public static void ListRevitAppSettings()

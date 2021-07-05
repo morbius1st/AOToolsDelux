@@ -67,6 +67,10 @@ namespace AOTools.AppSettings.ConfigSettings
 		[DataMember]
 		public UnitStyleType DxMeasureUnitStyle { get; set; } = UnitStyleType.PROJECT;
 
+
+		[DataMember]
+		public UnitStyleType DxMeasureUnitStyleAlt { get; set; } = UnitStyleType.PROJECT;
+
 	}
 
 }

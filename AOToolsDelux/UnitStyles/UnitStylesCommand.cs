@@ -41,27 +41,33 @@ namespace AOTools
 
 		public Result Execute(ExternalCommandData commandData, ref string message, ElementSet elements)
 		{
+			AppRibbon.UiApp = commandData.Application;
+			AppRibbon.Uidoc = AppRibbon.UiApp.ActiveUIDocument;
+			AppRibbon.App =  AppRibbon.UiApp.Application;
+			AppRibbon.Doc =  AppRibbon.Uidoc.Document;
+
 			OutLocation = OutputLocation.DEBUG;
 
-			SmAppInit();
-			SmUsrInit();
-			RsMgr.Read();
+			// SmAppInit();
+			// SmUsrInit();
 
-			RevitSettingsUnitApp a = RsuApp;
-			SchemaDictionaryApp b = RsuAppSetg;
+			// RsMgr.Read();
 
-			RevitSettingsUnitUsr c = RsuUsr;
-			List<SchemaDictionaryUsr> d = RsuUsrSetg;
-
+			// RevitSettingsUnitApp a = RsuApp;
+			// SchemaDictionaryApp b = RsuAppSetg;
+			//
+			// RevitSettingsUnitUsr c = RsuUsr;
+			// List<SchemaDictionaryUsr> d = RsuUsrSetg;
+/*
 			SettingsMgr<SettingsAppBase> e = SmApp;
 			SettingsAppBase g = SmAppSetg;
 
 			SettingsMgr<SettingsUsrBase> h = SmUsr;
 			SettingsUsrBase j = SmUsrSetg;
 			List<SchemaDictionaryUsr> k = SmuUsrSetg;
-
-			test111();
-			logMsg("");
+*/
+			// test111();
+			// logMsg("");
 			test112();
 
 			return Result.Succeeded;
@@ -70,19 +76,20 @@ namespace AOTools
 		// test config setting functions
 		private void test111()
 		{
+			logMsg("\n");
 			logMsgDbLn2("config Settings", "before");
-			logMsg("");
+			logMsg("\n");
 
 			ListConfigSettings();
 
-			logMsg("");
+			logMsg("\n");
 			logMsgDbLn2("config Settings", "reset");
 			SmUsr.Reset();
 			SmApp.Reset();
 
 			ListConfigSettings();
 
-			logMsg("");
+			logMsg("\n");
 			logMsgDbLn2("config Settings", "save");
 			SmUsr.Save();
 			SmApp.Save();
@@ -93,21 +100,55 @@ namespace AOTools
 		// test revit setting functions
 		private void test112()
 		{
+			RevitSettingsUnitApp a = RsuApp;
+			SchemaDictionaryApp b = RsuAppSetg;
+
+			RevitSettingsUnitUsr c = RsuUsr;
+			List<SchemaDictionaryUsr> d = RsuUsrSetg;
+
+			bool init = RvtSetgInitalized;
+
+			logMsg("\n");
 			logMsgDbLn2("revit Settings", "before");
-			logMsg("");
+			logMsg("\n");
 
 			logMsgDbLn2("revit setting initalized", RvtSetgInitalized.ToString());
 
+			// reset must be first in order to initialize system - yes?
+			logMsg("\n");
+			logMsgDbLn2("revit Settings", "init");
+			RsMgr.Init();
 			ListRevitSettings();
 
-			logMsg("");
-			logMsgDbLn2("revit Settings", "reset");
-			RsMgr.Reset();
+			init = RvtSetgInitalized;
+
+			logMsg("\n");
+			logMsgDbLn2("revit Settings", "read");
+			RsMgr.Read();
 			ListRevitSettings();
 
-			logMsg("");
+			logMsg("\n");
+			logMsgDbLn2("revit Settings", "revise values & save");
+
+			RsuUsrSetg[0][VERSION_UNIT].Value = "10.0";
+			RsuUsrSetg[0][USER_NAME].Value = "jeffs";
+
+			logMsg("\n");
 			logMsgDbLn2("revit Settings", "save");
 			RsMgr.Save();
+			ListRevitSettings();
+
+			return;
+
+			logMsg("\n");
+			logMsgDbLn2("revit Settings", "revise values & don't save");
+
+			RsuUsrSetg[0][VERSION_UNIT].Value = "1.1";
+			RsuUsrSetg[0][USER_NAME].Value = "none";
+
+			logMsg("\n");
+			logMsgDbLn2("revit Settings", "read");
+			RsMgr.Read();
 			ListRevitSettings();
 
 		}
@@ -246,7 +287,7 @@ namespace AOTools
 		// of revit settings
 		private void test1()
 		{
-			if (!RsMgr.Read())
+			if (RsMgr.Read() != RevitSettingsBase.SaveRtnCodes.GOOD)
 			{
 				TaskDialog.Show("AO Tools", "Could not read Revit Settings or " + nl + "is not Initalized");
 				return;
@@ -275,7 +316,7 @@ namespace AOTools
 		// simple test - read and list revit settings
 		private void test0()
 		{
-			if (!RsMgr.Read())
+			if (RsMgr.Read() != RevitSettingsBase.SaveRtnCodes.GOOD)
 			{
 				TaskDialog.Show("AO Tools", "Could not read Revit Settings or " + nl + "is not Initalized");
 				return;

@@ -57,12 +57,12 @@ namespace AOTools.AppSettings.RevitSettings
 				throw new Exception("Basic Manager Must be Initalized First");
 			}
 
-			Initalize();
+			Initialize();
 		}
 
-		public void Initalize()
+		public void Initialize()
 		{
-			RsuUsrSetg = DefaultSchemaListUsr(1);
+			RsuUsrSetg = DefaultSchemaListUsr(2);
 		}
 
 		public void Clear()

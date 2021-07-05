@@ -35,7 +35,7 @@ namespace AOToolsParameterVue
 		private static  UIDocument    _uiDoc;
 		internal static Document      _doc;
 
-		private readonly ParamViewMsg _form = new ParamViewMsg(); 
+		private readonly ParamViewMsg _formPvMsg = new ParamViewMsg(); 
 
 		public Result Execute(
 			ExternalCommandData commandData,
@@ -46,7 +46,7 @@ namespace AOToolsParameterVue
 			_uiDoc = uiApp.ActiveUIDocument;
 			_doc   = _uiDoc.Document;
 
-			_form.message.HorizontalScrollBarVisibility = ScrollBarVisibility.Visible;
+			_formPvMsg.message.HorizontalScrollBarVisibility = ScrollBarVisibility.Visible;
 
 
 			// this cleaned up the text display problem
@@ -68,6 +68,7 @@ namespace AOToolsParameterVue
 		{
 			logMsgDbLn2("@ParamView|", "Process");
 
+
 //			GetAllFamilies();
 
 //			GetAllElements1();
@@ -75,6 +76,8 @@ namespace AOToolsParameterVue
 //			GetAllElements2();
 
 			GetAllElements3();
+
+			string t = test.p.Definition.Name;
 
 		}
 
@@ -96,17 +99,22 @@ namespace AOToolsParameterVue
 				sb.AppendLine(ListParameters(el).ToString());
 			}
 
-			_form.message.Text = sb.ToString();
+			_formPvMsg.message.Text = sb.ToString();
 
-			_form.ShowDialog();
+			_formPvMsg.ShowDialog();
 
+		}
+
+		private static class test
+		{
+			public static Parameter p { get; set; }
 		}
 
 		private StringBuilder ListParameters(Element el)
 		{
 			StringBuilder sb = new StringBuilder();
 
-			// this provies some extra and un-needed parameters
+			// this provides some extra and un-needed parameters dd
 			ParameterSet ps = el.Parameters;
 
 			// both are basically the same
@@ -120,13 +128,15 @@ namespace AOToolsParameterVue
 //			sb.AppendLine(logMsgDbS("category", el.Category.Name));
 
 			string header = "value".PadRight(PAD_RIGHT);
-			header = "storage type".PadRight(PAD_RIGHT);
-//			header += " :: " + "read-only".PadRight(PAD_RIGHT);
+			header += " :: " + "storage type".PadRight(PAD_RIGHT);
+			header += " :: " + "read-only".PadRight(PAD_RIGHT);
 //			header += " :: " + "user-modifiable".PadRight(PAD_RIGHT);
 //			header += " :: " + "has value".PadRight(PAD_RIGHT);
 			header += " :: " + "param type".PadRight(PAD_RIGHT);
 			header += " :: " + "unit type".PadRight(PAD_RIGHT);
-			header += " :: " + "disp unit type".PadRight(PAD_RIGHT);
+			header += " :: " + "disp unit type".PadRight(PAD_RIGHT+6);
+			header += " :: " + "param group".PadRight(PAD_RIGHT);
+
 
 			sb.AppendLine(logMsgDbS("definition name", header));
 
@@ -134,10 +144,8 @@ namespace AOToolsParameterVue
 			{
 				sb.AppendLine(logMsgDbS(p.Definition.Name, ParameterValue(p)));
 
-//				if (p.Definition.Name.Equals("Text Size"))
-//				{
-//					p.Set(UnitUtils.ConvertToInternalUnits(0.25, p.DisplayUnitType));
-//				}
+				Parameter px;
+
 			}
 
 			return sb;
@@ -146,6 +154,8 @@ namespace AOToolsParameterVue
 
 		private string ParameterValue(Parameter p)
 		{
+			test.p = p;
+
 			string storageType = p.StorageType.ToString();
 			string result = (p.AsValueString() ?? "").Trim();
 
@@ -192,7 +202,6 @@ namespace AOToolsParameterVue
 
 			if (p.StorageType == StorageType.ElementId && !firstPass[firstPassItem])
 			{
-
 				ElementArray ea = GetSimilarForElement(p.AsElementId());
 
 				ElementType et = _doc.GetElement(p.AsElementId()) as ElementType;
@@ -210,14 +219,16 @@ namespace AOToolsParameterVue
 				}
 			}
 
+			UnitType u = UnitType.UT_Undefined;
+			ParameterType pt = ParameterType.Acceleration;
 
 
 			result = result.PadRight(18);
 			result += " :: " + storageType.ToString().PadRight(PAD_RIGHT);
 
 
-			// not valid info
-			//			result += " :: " + p.IsReadOnly.ToString().PadRight(PAD_RIGHT);
+			 //not valid info
+			result += " :: " + p.IsReadOnly.ToString().PadRight(PAD_RIGHT);
 
 			// not valid info
 			//			result += " :: " + p.UserModifiable.ToString().PadRight(PAD_RIGHT);
@@ -228,18 +239,18 @@ namespace AOToolsParameterVue
 			result += " :: " + p.Definition.ParameterType.ToString().PadRight(PAD_RIGHT);
 			result += " :: " + p.Definition.UnitType.ToString().PadRight(PAD_RIGHT);
 
-			// does not provide much useful info
-//			result += " :: " + p.Definition.ParameterGroup.ToString().PadRight(18);
-
 
 			try
 			{
-				result += " :: " + p.DisplayUnitType.ToString().PadRight(PAD_RIGHT);
+				result += " :: " + p.DisplayUnitType.ToString().PadRight(PAD_RIGHT+6);
 			}
 			catch
 			{
-				result += " :: (no unit type)".PadRight(PAD_RIGHT);
+				result += " :: " + "(no unit type)".PadRight(PAD_RIGHT+6);
 			}
+
+			result += " :: " + p.Definition.ParameterGroup.ToString().PadRight(PAD_RIGHT);
+
 
 			return result;
 		}
@@ -303,9 +314,9 @@ namespace AOToolsParameterVue
 				sb.AppendLine(name);
 			}
 
-			_form.message.Text = sb.ToString();
+			_formPvMsg.message.Text = sb.ToString();
 
-			_form.ShowDialog();
+			_formPvMsg.ShowDialog();
 
 		}
 

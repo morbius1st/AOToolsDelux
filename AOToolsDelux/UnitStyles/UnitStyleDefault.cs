@@ -1,9 +1,9 @@
 ﻿#region + Using Directives
+
 using System;
 using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
-
 using static UtilityLibrary.MessageUtilities;
 
 #endregion
@@ -26,6 +26,7 @@ namespace AOTools.UnitStyles
 		DEC_IN,
 		FRACT_FT,
 		DEC_FT,
+		Count
 	}
 
 	[Transaction(TransactionMode.Manual)]
@@ -34,11 +35,13 @@ namespace AOTools.UnitStyles
 		private UIDocument        _uiDoc;
 		private Document          _doc;
 
-		public Result Execute(
-			ExternalCommandData commandData,
-			ref string message,
-			ElementSet elements)
+		public Result Execute(ExternalCommandData commandData, ref string message, ElementSet elements)
 		{
+			AppRibbon.UiApp = commandData.Application;
+			AppRibbon.Uidoc = AppRibbon.UiApp.ActiveUIDocument;
+			AppRibbon.App =  AppRibbon.UiApp.Application;
+			AppRibbon.Doc =  AppRibbon.Uidoc.Document;
+
 			UIApplication uiApp = commandData.Application;
 			_uiDoc = uiApp.ActiveUIDocument;
 			_doc   = _uiDoc.Document;
@@ -59,9 +62,8 @@ namespace AOTools.UnitStyles
 
 			return Result.Succeeded;
 		}
-
 	}
-	
+
 	[Transaction(TransactionMode.Manual)]
 	public class UnitStyleFracInchCmd : IExternalCommand
 	{
@@ -93,7 +95,6 @@ namespace AOTools.UnitStyles
 
 			return Result.Succeeded;
 		}
-
 	}
 
 	[Transaction(TransactionMode.Manual)]
@@ -206,7 +207,7 @@ namespace AOTools.UnitStyles
 			case UnitStyleType.FEET_FRAC_IN:
 				{
 					fmtOpts = new FormatOptions(DisplayUnitType.DUT_FEET_FRACTIONAL_INCHES,
-						 UnitSymbolType.UST_NONE, (1.0 / 64.0) / 12.0);
+						UnitSymbolType.UST_NONE, (1.0 / 64.0) / 12.0);
 					fmtOpts.SuppressSpaces = true;
 					fmtOpts.SuppressLeadingZeros = true;
 
@@ -215,27 +216,27 @@ namespace AOTools.UnitStyles
 			case UnitStyleType.FRAC_IN:
 				{
 					fmtOpts = new FormatOptions(DisplayUnitType.DUT_FRACTIONAL_INCHES,
-						 UnitSymbolType.UST_NONE, 1.0/ 64.0);
+						UnitSymbolType.UST_NONE, 1.0 / 64.0);
 					break;
 				}
 			case UnitStyleType.DEC_FT:
 				{
 					fmtOpts = new FormatOptions(DisplayUnitType.DUT_DECIMAL_FEET,
-						 UnitSymbolType.UST_FOOT_SINGLE_QUOTE, 0.001);
+						UnitSymbolType.UST_FOOT_SINGLE_QUOTE, 0.001);
 					fmtOpts.SuppressTrailingZeros = true;
 					break;
 				}
 			case UnitStyleType.DEC_IN:
 				{
 					fmtOpts = new FormatOptions(DisplayUnitType.DUT_DECIMAL_INCHES,
-						 UnitSymbolType.UST_INCH_DOUBLE_QUOTE, 0.0001);
+						UnitSymbolType.UST_INCH_DOUBLE_QUOTE, 0.0001);
 					fmtOpts.SuppressTrailingZeros = true;
 					break;
 				}
-				case UnitStyleType.FRACT_FT:
+			case UnitStyleType.FRACT_FT:
 				{
 					fmtOpts = new FormatOptions(DisplayUnitType.DUT_FRACTIONAL_INCHES,
-						 UnitSymbolType.UST_NONE, 1.0 / 64.0);
+						UnitSymbolType.UST_NONE, 1.0 / 64.0);
 					break;
 				}
 			}
@@ -250,7 +251,5 @@ namespace AOTools.UnitStyles
 
 			return units;
 		}
-
 	}
-
 }

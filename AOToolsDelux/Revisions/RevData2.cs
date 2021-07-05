@@ -6,12 +6,12 @@ using Autodesk.Revit.DB;
 //using static AOTools.RevDataKey.ERevDataKey;
 //using static AOTools.RevDataItems.ERevDataItems;
 
-using static AOTools.SortKey;
+using static AOTools.Revisions.SortKey;
 
 using static  UtilityLibrary.MessageUtilities2;
 
 
-namespace AOTools
+namespace AOTools.Revisions
 {
 	// this represents a collection of tag / clouds
 	public class RevData2 : IEnumerable<KeyValuePair<string, RevDataItems2>>

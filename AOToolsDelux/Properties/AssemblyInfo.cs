@@ -5,11 +5,11 @@ using System.Runtime.InteropServices;
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
 [assembly: AssemblyTitle("AOTools")]
-[assembly: AssemblyDescription("Revit Add-In Description for AOTools")]
-[assembly: AssemblyConfiguration("")]
+[assembly: AssemblyDescription("AO Tools")]
+[assembly: AssemblyConfiguration("Release")]
 [assembly: AssemblyCompany("CyberStudio")]
-[assembly: AssemblyProduct("AOTools Revit C# .NET Add-In")]
-[assembly: AssemblyCopyright("Copyright 2018 (C) Jeff Stuyvesant, CyberStudio")]
+[assembly: AssemblyProduct("AOTools")]
+[assembly: AssemblyCopyright("Copyright 2019 © CyberStudio, Jeff Stuyvesant")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
@@ -32,4 +32,4 @@ using System.Runtime.InteropServices;
 // by using the '*' as shown below:
 // [assembly: AssemblyVersion("1.0.*")]
 [assembly: AssemblyVersion("1.0.*")]
-[assembly: AssemblyFileVersion("1.0.2.0")]
+[assembly: AssemblyFileVersion("1.0.2.1")]
