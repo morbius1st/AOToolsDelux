@@ -201,11 +201,15 @@
     <Compile Include="AppSettings\Settings\SettingsMgr-v26.cs" />
     <Compile Include="AppSettings\SettingUtil\SettingsListings.cs" />
     <Compile Include="AppSettings\SchemaSettings\SchemaUnitUtil.cs" />
+    <Compile Include="Cells\ExStorage\ExStoreRoot.cs" />
     <Compile Include="Cells\ExStorage\ExStoreHelper.cs" />
     <Compile Include="Cells\ExStorage\ExStoreApp.cs" />
     <Compile Include="Cells\ExStorage\ExStoreCell.cs" />
     <Compile Include="Cells\ExStorage\ExStoreMgr.cs" />
     <Compile Include="Cells\ExStorage\IExStoreData.cs" />
+    <Compile Include="Cells\SchemaDefinition\ISchemaDef.cs" />
+    <Compile Include="Cells\SchemaDefinition\SchemaDictionaryRoot.cs" />
+    <Compile Include="Cells\SchemaDefinition\SchemaDefRoot.cs" />
     <Compile Include="Cells\SchemaCells\SchemaDefCells.cs" />
     <Compile Include="Cells\SchemaCells\SchemaDefApp.cs" />
     <Compile Include="Cells\SchemaCells\SchemaCellDictionaries.cs" />
@@ -214,7 +218,11 @@
     <Compile Include="Cells\SchemaDefinition\SchemaFieldEnums.cs" />
     <Compile Include="Cells\SchemaDefinition\SchemaGuidManager.cs" />
     <Compile Include="Revisions\Revision.cs" />
+    <Compile Include="UnitStyles\TestExStore.cs" />
     <Compile Include="UnitStyles\DataStore.cs" />
+    <Compile Include="UnitStyles\ReadRootExStore.cs" />
+    <Compile Include="UnitStyles\RootExStore.cs" />
+    <Compile Include="UnitStyles\DelExStore.cs" />
     <Compile Include="UnitStyles\UnitStyleDefault.cs" />
     <Compile Include="UnitStyles\SelectElement.cs" />
     <Compile Include="UnitStyles\UnitStylesDelete.cs" />
@@ -266,13 +274,7 @@
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PostBuildEvent>(copy /y "$(ProjectDir)Other\$(TargetName).addin" "$(AppData)\Autodesk\REVIT\Addins\2017")
-(copy /y "$(ProjectDir)Other\$(TargetName).addin" "$(AppData)\Autodesk\REVIT\Addins\2018")
-(copy /y "$(ProjectDir)Other\$(TargetName).addin" "$(AppData)\Autodesk\REVIT\Addins\2019")
-(copy /y "$(ProjectDir)Other\$(TargetName).addin" "$(AppData)\Autodesk\REVIT\Addins\2020")
-(copy /y "$(TargetPath)" "$(AppData)\Autodesk\REVIT\Addins\2017")
-(copy /y "$(TargetPath)" "$(AppData)\Autodesk\REVIT\Addins\2018")
-(copy /y "$(TargetPath)" "$(AppData)\Autodesk\REVIT\Addins\2019")
+    <PostBuildEvent>(copy /y "$(ProjectDir)Other\$(TargetName).addin" "$(AppData)\Autodesk\REVIT\Addins\2020")
 (copy /y "$(TargetPath)" "$(AppData)\Autodesk\REVIT\Addins\2020")</PostBuildEvent>
   </PropertyGroup>
   <PropertyGroup>

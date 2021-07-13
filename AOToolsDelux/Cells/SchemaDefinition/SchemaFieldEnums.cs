@@ -14,6 +14,16 @@ using Autodesk.Revit.DB;
 namespace AOTools.Cells.SchemaDefinition
 {
 
+	public enum SchemaRootKey
+	{
+		UNDEFINED		  = -10,
+		NAME              = 10,
+		DESCRIPTION       = 20,
+		VERSION           = 30,
+		DEVELOPER         = 40,
+		APP_GUID          = 50,
+	}
+
 	// primary scheme element 
 	// defines the basic information
 	public enum SchemaAppKey
@@ -22,7 +32,7 @@ namespace AOTools.Cells.SchemaDefinition
 		NAME              = 10,
 		DESCRIPTION       = 20,
 		VERSION           = 30,
-		DEVELOPER         = 40,
+		// DEVELOPER         = 40,
 	}
 
 	public enum SchemaCellKey
@@ -58,6 +68,7 @@ namespace AOTools.Cells.SchemaDefinition
 	// defined here as this file will be revit specific
 	public enum RevitUnitType
 	{
+		UT_CUSTOM = UnitType.UT_Custom,
 		UT_UNDEFINED = UnitType.UT_Undefined,
 		UT_NUMBER = UnitType.UT_Number
 	}

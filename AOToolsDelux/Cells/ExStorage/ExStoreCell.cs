@@ -9,6 +9,7 @@ using System.Text;
 using System.Threading.Tasks;
 using AOTools.Cells.SchemaCells;
 using AOTools.Cells.SchemaDefinition;
+using Autodesk.Revit.DB.ExtensibleStorage;
 
 #endregion
 
@@ -17,8 +18,7 @@ using AOTools.Cells.SchemaDefinition;
 
 namespace AOTools.Cells.ExStorage
 {
-	public class ExStoreCell : SchemaDefCells, IExStoreData<SchemaCellKey, 
-		List<SchemaDictionaryCell>>
+	public class ExStoreCell : IExStore, IExStoreData<SchemaDictionaryCell, List<SchemaDictionaryCell>> //: SchemaDefCells, 
 	{
 	#region private fields
 
@@ -26,25 +26,32 @@ namespace AOTools.Cells.ExStorage
 
 	#region ctor
 
-		private ExStoreCell()
+		private ExStoreCell(int count)
 		{
-			Initialize();
+			Initialize(count);
 		}
 
 	#endregion
 
 	#region public properties
 
-		public static ExStoreCell CellConfig { get; } = new ExStoreCell();
-
-		public string Name => SCHEMA_NAME;
-		public string Description => SCHEMA_DESC;
-
-		public SchemaDictionaryBase<SchemaCellKey> SchemaFields => DefaultFields;
 		public List<SchemaDictionaryCell> Data { get; private set; }
+
+		public Guid ExStoreGuid => Guid.Empty;
+
+		public string Name => SchemaDefCells.SCHEMA_NAME;
+		public string Description => SchemaDefCells.SCHEMA_DESC;
 
 		public bool IsInitialized { get; private set; }
 
+		public Dictionary<string, string> SubSchemaFields { get; set; }
+
+
+		public static SchemaDefCells SchemaDef { get; } = new SchemaDefCells();
+
+		public SchemaDictionaryCell FieldDefs => SchemaDef.DefaultFields;
+
+		public Enum[] KeyOrder => SchemaDef.KeyOrderX;
 
 	#endregion
 
@@ -54,10 +61,16 @@ namespace AOTools.Cells.ExStorage
 
 	#region public methods
 
-		public void Initialize()
+		public static ExStoreCell Instance(int count)
 		{
-			Data = new List<SchemaDictionaryCell>();
-			Data.Add(DefaultValues());
+			return new ExStoreCell(count);
+		}
+
+		public void Initialize(int count)
+		{
+			if (IsInitialized) return;
+
+			initData(count);
 
 			IsInitialized = true;
 		}
@@ -67,12 +80,27 @@ namespace AOTools.Cells.ExStorage
 		// definition so only need to clone the schema field def
 		public SchemaDictionaryCell DefaultValues()
 		{
-			return (SchemaDictionaryCell) SchemaFields.Clone();
+			return FieldDefs.Clone();
+		}
+
+		public void AddDefault()
+		{
+			Data.Add(DefaultValues());
 		}
 
 	#endregion
 
 	#region private methods
+
+		private void initData(int count)
+		{
+			Data = new List<SchemaDictionaryCell>();
+
+			for (int i = 0; i < count; i++)
+			{
+				AddDefault();
+			}
+		}
 
 	#endregion
 

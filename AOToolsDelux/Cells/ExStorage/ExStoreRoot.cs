@@ -2,6 +2,7 @@
 
 using System;
 using AOTools.Cells.SchemaCells;
+using AOTools.Cells.ExStorage;
 using AOTools.Cells.SchemaDefinition;
 
 #endregion
@@ -11,7 +12,7 @@ using AOTools.Cells.SchemaDefinition;
 
 namespace AOTools.Cells.ExStorage
 {
-	public class ExStoreApp : IExStore, IExStoreData<SchemaDictionaryApp, SchemaDictionaryApp> //: SchemaDefApp, 
+	public class ExStoreRoot : IExStore, IExStoreData<SchemaDictionaryRoot, SchemaDictionaryRoot>
 	{
 	#region private fields
 
@@ -19,7 +20,7 @@ namespace AOTools.Cells.ExStorage
 
 	#region ctor
 
-		private ExStoreApp()
+		private ExStoreRoot()
 		{
 			Initialize();
 		}
@@ -28,20 +29,19 @@ namespace AOTools.Cells.ExStorage
 
 	#region public properties
 
-		public SchemaDictionaryApp Data { get; private set; }
+		public SchemaDictionaryRoot Data { get; private set; }
 
-		public Guid ExStoreGuid => SchemaGuidManager.AppGuid;
+		public Guid ExStoreGuid => SchemaGuidManager.RootGuid;
 
-		public string Name => SchemaDefApp.SCHEMA_NAME;
-		public string Description => SchemaDefApp.SCHEMA_DESC;
-		public string Developer => SchemaDefApp.DEVELOPER_NAME;
+		public string Name => SchemaDefRoot.ROOT_SCHEMA_NAME;
+		public string Description => SchemaDefRoot.ROOT_SCHEMA_DESC;
+		public string Developer => SchemaDefRoot.ROOT_DEVELOPER_NAME;
 
 		public bool IsInitialized { get; private set; }
 
+		public static SchemaDefRoot SchemaDef { get; }  = new SchemaDefRoot();
 
-		public static SchemaDefApp SchemaDef { get; }  = new SchemaDefApp();
-
-		public SchemaDictionaryApp FieldDefs => SchemaDef.DefaultFields;
+		public SchemaDictionaryRoot FieldDefs => SchemaDef.DefaultFields;
 
 		public Enum[] KeyOrder => SchemaDef.KeyOrderX;
 
@@ -53,9 +53,9 @@ namespace AOTools.Cells.ExStorage
 
 	#region public methods
 
-		public static ExStoreApp Instance()
+		public static ExStoreRoot Instance()
 		{
-			return new ExStoreApp();
+			return new ExStoreRoot();
 		}
 
 		public void Initialize()
@@ -68,7 +68,7 @@ namespace AOTools.Cells.ExStorage
 		// set the default values
 		// the default values are those used in the schema field
 		// definition so only need to clone the schema field def
-		public SchemaDictionaryApp DefaultValues()
+		public SchemaDictionaryRoot DefaultValues()
 		{
 			return SchemaDef.DefaultFields.Clone();
 		}
@@ -91,7 +91,7 @@ namespace AOTools.Cells.ExStorage
 
 		public override string ToString()
 		{
-			return "this is ExStoreApp";
+			return "this is ExStoreRoot";
 		}
 
 	#endregion

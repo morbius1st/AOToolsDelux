@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Reflection;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.DB.Events;
+using Autodesk.Revit.DB.ExtensibleStorage;
 using Autodesk.Revit.UI;
 using Autodesk.Revit.UI.Events;
 using Application = Autodesk.Revit.ApplicationServices.Application;
@@ -25,11 +26,16 @@ namespace AOTools
 		private const string NAMESPACE_PREFIX = "AOTools.Resources";
 		private const string AO_TOOLS_PANEL_NAME = "AO Tools";
 		private const string UNITS_PANEL_NAME = "Project Units";
+		private const string EX_STORE_PANEL_NAME = "Ex Store";
 
 		private const string BUTTON_UNITSTYLES = "Unit\nStyles";
 		private const string BUTTON_UNITSTYLEDELETE = "Delete\nStyles";
 		private const string BUTTON_SELECT = "Select\nElement";
 		private const string BUTTON_DATA_STORAGE = "Data\nStorage";
+		private const string BUTTON_DEL_EX_STORAGE = "Del Ex\nStorage";
+		private const string BUTTON_ROOT_EX_STORE = "Root Ex\nStorage";
+		private const string BUTTON_READ_ROOT_EX_STORE = "Read Root\nEx Storage";
+		private const string BUTTON_TEST = "TEST";
 //
 //		private const string BUTTON_UNIT_FTIN_NAME   = "Units\nto Feet-In";
 //		private const string BUTTON_UNIT_FRACIN_NAME = "Units\nto Frac In";
@@ -77,6 +83,8 @@ namespace AOTools
 
 				// got the tab now
 
+
+/*
 				// create the ribbon panel if needed
 				// give the panel a name
 				string m_panelName = UNITS_PANEL_NAME;
@@ -115,6 +123,26 @@ namespace AOTools
 				{
 					return Result.Failed;
 				}
+*/
+
+				RibbonPanel ribbonPanel =
+					AddRibbonPanel(UNITS_PANEL_NAME, m_tabName);
+
+				if (AddButtons1(ribbonPanel) == Result.Failed)
+				{
+					return Result.Failed;
+				}
+
+				
+				ribbonPanel =
+					AddRibbonPanel(EX_STORE_PANEL_NAME, m_tabName);
+
+				if (AddButtons2(ribbonPanel) == Result.Failed)
+				{
+					return Result.Failed;
+				}
+
+
 
 				SmUsrInit();
 
@@ -141,7 +169,47 @@ namespace AOTools
 			}
 		} // end OnShutdown
 
-		
+
+
+		private RibbonPanel AddRibbonPanel(string panelName, string m_tabName)
+		{
+			string m_panelName = panelName;
+
+			RibbonPanel ribbonPanel = null;
+
+			// check to see if the panel alrady exists
+			// get the Panel within the tab by name
+			List<RibbonPanel> m_RP = new List<RibbonPanel>();
+
+			m_RP = _uiCtrlApp.GetRibbonPanels(m_tabName);
+
+			foreach (RibbonPanel xRP in m_RP)
+			{
+				if (xRP.Name.ToUpper().Equals(m_panelName.ToUpper()))
+				{
+					ribbonPanel = xRP;
+					break;
+				}
+			}
+
+			// add the panel if it does not exist
+			if (ribbonPanel == null)
+			{
+				// create the ribbon panel on the tab given the tab's name
+				// FYI - leave off the ribbon panel's name to put onto the "add-in" tab
+				ribbonPanel = _uiCtrlApp.CreateRibbonPanel(m_tabName, m_panelName);
+			}
+
+			// if (!AddSplitButtons(ribbonPanel))
+			// {
+			// 	return Result.Failed;
+			// }
+
+			return ribbonPanel;
+		}
+
+
+
 
 /*		private void OnIdling(object sender,
 			IdlingEventArgs e
@@ -235,21 +303,13 @@ namespace AOTools
 //			td.Show();
 //		}
 //
-		private Result AddButtons(RibbonPanel ribbonPanel)
+		private Result AddButtons1(RibbonPanel ribbonPanel)
 		{
 			if (AddUnitStylesButton(ribbonPanel) != Result.Succeeded) 
 				return Result.Failed;
 
 			if (AddUnitStyleDeleteButton(ribbonPanel) != Result.Succeeded) 
 				return Result.Failed;
-
-			if (AddSelectButton(ribbonPanel) != Result.Succeeded) 
-				return Result.Failed;
-
-			if (AddDataStoreButton(ribbonPanel) != Result.Succeeded) 
-				return Result.Failed;
-
-
 
 			// if (AddUnitStyleFtInButton(ribbonPanel) != Result.Succeeded) 
 			// 	return Result.Failed;
@@ -265,7 +325,34 @@ namespace AOTools
 
 			return Result.Succeeded;
 		}
-//
+
+
+		
+		private Result AddButtons2(RibbonPanel ribbonPanel)
+		{
+			if (AddSelectButton(ribbonPanel) != Result.Succeeded) 
+				return Result.Failed;
+
+			if (AddDataStoreButton(ribbonPanel) != Result.Succeeded) 
+				return Result.Failed;
+			
+			if (DeleteDataStoreButton(ribbonPanel) != Result.Succeeded) 
+				return Result.Failed;
+						
+			if (RootDataStoreButton(ribbonPanel) != Result.Succeeded) 
+				return Result.Failed;
+			
+			if (ReadRootDataStoreButton(ribbonPanel) != Result.Succeeded) 
+				return Result.Failed;
+			
+			if (TestButton(ribbonPanel) != Result.Succeeded) 
+				return Result.Failed;
+
+			return Result.Succeeded;
+		}
+
+
+
 //		private Result AddUnitStyleFtInButton(RibbonPanel ribbonPanel)
 //		{
 //			// create a button for the 'copy sheet' command
@@ -350,6 +437,95 @@ namespace AOTools
 //			return Result.Succeeded;
 //		}
 
+		private Result TestButton(RibbonPanel ribbonPanel)
+		{
+			// create a button for the 'copy sheet' command
+			if (!AddPushButton(ribbonPanel, "TestExStore", BUTTON_TEST,
+				"information16.png",
+				"information32.png",
+				Assembly.GetExecutingAssembly().Location, "AOTools.TestExStore",
+				"Test Extension Storage"))
+
+			{
+				// creating the pushbutton failed
+				TaskDialog td = new TaskDialog("AO Tools - Test Ex Storage");
+				td.MainIcon = TaskDialogIcon.TaskDialogIconWarning;
+				td.MainContent = String.Format(Properties.Resources.ButtonCreateFail,
+					"AOTools Test Ex Storage");
+				td.Show();
+
+				return Result.Failed;
+			}
+			return Result.Succeeded;
+		}
+		
+		private Result ReadRootDataStoreButton(RibbonPanel ribbonPanel)
+		{
+			// create a button for the 'copy sheet' command
+			if (!AddPushButton(ribbonPanel, "ReadRootExStore", BUTTON_READ_ROOT_EX_STORE,
+				"information16.png",
+				"information32.png",
+				Assembly.GetExecutingAssembly().Location, "AOTools.ReadRootExStore",
+				"Read Root Extension Storage"))
+
+			{
+				// creating the pushbutton failed
+				TaskDialog td = new TaskDialog("AO Tools - Read Root Ex Storage");
+				td.MainIcon = TaskDialogIcon.TaskDialogIconWarning;
+				td.MainContent = String.Format(Properties.Resources.ButtonCreateFail,
+					"AOTools Read Root Ex Storage");
+				td.Show();
+
+				return Result.Failed;
+			}
+			return Result.Succeeded;
+		}
+		
+		private Result RootDataStoreButton(RibbonPanel ribbonPanel)
+		{
+			// create a button for the 'copy sheet' command
+			if (!AddPushButton(ribbonPanel, "RootExStore", BUTTON_ROOT_EX_STORE,
+				"information16.png",
+				"information32.png",
+				Assembly.GetExecutingAssembly().Location, "AOTools.RootExStore",
+				"Make Root Extension Storage"))
+
+			{
+				// creating the pushbutton failed
+				TaskDialog td = new TaskDialog("AO Tools - Root Ex Storage");
+				td.MainIcon = TaskDialogIcon.TaskDialogIconWarning;
+				td.MainContent = String.Format(Properties.Resources.ButtonCreateFail,
+					"AOTools Root Ex Storage");
+				td.Show();
+
+				return Result.Failed;
+			}
+			return Result.Succeeded;
+		}
+
+
+		private Result DeleteDataStoreButton(RibbonPanel ribbonPanel)
+		{
+			// create a button for the 'copy sheet' command
+			if (!AddPushButton(ribbonPanel, "DelExStore", BUTTON_DEL_EX_STORAGE,
+				"information16.png",
+				"information32.png",
+				Assembly.GetExecutingAssembly().Location, "AOTools.DelExStore",
+				"Delete Extension Storage"))
+
+			{
+				// creating the pushbutton failed
+				TaskDialog td = new TaskDialog("AO Tools - Delete Ex Storage");
+				td.MainIcon = TaskDialogIcon.TaskDialogIconWarning;
+				td.MainContent = String.Format(Properties.Resources.ButtonCreateFail,
+					"AOTools Del Ex Storage");
+				td.Show();
+
+				return Result.Failed;
+			}
+			return Result.Succeeded;
+		}
+
 
 		private Result AddDataStoreButton(RibbonPanel ribbonPanel)
 		{
@@ -358,7 +534,7 @@ namespace AOTools
 				"information16.png",
 				"information32.png",
 				Assembly.GetExecutingAssembly().Location, "AOTools.DataStore",
-				"Data Storage"))
+				"Add Data Storage"))
 
 			{
 				// creating the pushbutton failed

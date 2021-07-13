@@ -3,12 +3,13 @@
 // File:             SchemaDictionaryBase.cs
 // Created:      2021-07-03 (11:28 PM)
 
+using System;
 using System.Collections.Generic;
 using System.Windows.Controls;
 
 namespace AOTools.Cells.SchemaDefinition
 {
-	public class SchemaDictionaryBase<TU> : Dictionary<TU, SchemaFieldDef>
+	public class SchemaDictionaryBase<TU> : Dictionary<TU, SchemaFieldDef<TU>>  where TU : Enum
 	{
 		public SchemaDictionaryBase() { }
 
@@ -18,24 +19,31 @@ namespace AOTools.Cells.SchemaDefinition
 		{
 			TC copy = new TC();
 
-			foreach (KeyValuePair<TU, SchemaFieldDef> kvp in original)
+			foreach (KeyValuePair<TU, SchemaFieldDef<TU>> kvp in original)
 			{
-				copy.Add(kvp.Key, new SchemaFieldDef{Value = kvp.Value });
+				// kvp.Value.Clone();
+				//
+				// copy.Add(kvp.Key, new SchemaFieldDef{Value = kvp.Value });
+
+				copy.Add(kvp.Key, kvp.Value.Clone());
 			}
 			return copy;
 		}
 
-		public Dictionary<TU, SchemaFieldDef> Clone()
-		{
-			Dictionary<TU, SchemaFieldDef> copy = new Dictionary<TU, SchemaFieldDef>();
-
-			foreach (KeyValuePair<TU, SchemaFieldDef> kvp in this)
-			{
-				copy.Add(kvp.Key, new SchemaFieldDef{Value = kvp.Value });
-			}
-
-			return copy;
-		}
+		// public Dictionary<TU, SchemaFieldDef> Clone()
+		// {
+		// 	Dictionary<TU, SchemaFieldDef> copy = new Dictionary<TU, SchemaFieldDef>();
+		//
+		// 	foreach (KeyValuePair<TU, SchemaFieldDef> kvp in this)
+		// 	{
+		// 		// SchemaFieldDef field = kvp.Value.Clone();
+		// 		// copy.Add(kvp.Key, new SchemaFieldDef{Value = kvp.Value });
+		//
+		// 		copy.Add(kvp.Key, kvp.Value.Clone());
+		// 	}
+		//
+		// 	return copy;
+		// }
 
 
 	}

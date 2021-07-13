@@ -17,7 +17,7 @@ namespace AOTools.Cells.SchemaDefinition
 		dynamic Value { get; set; }
 	}
 	
-	public class SchemaFieldDef : ISchemaFieldDef
+	public class SchemaFieldDef<T> : ISchemaFieldDef  where T: Enum 
 	{
 		// [DataMember(Order = 1)]
 		public int Sequence { get; set; }
@@ -47,10 +47,33 @@ namespace AOTools.Cells.SchemaDefinition
 			Guid = null;
 		}
 
-		public SchemaFieldDef(SchemaAppKey sequence, string name, string desc, dynamic val,
+		// public SchemaFieldDef(SchemaAppKey sequence, string name, string desc, dynamic val,
+		// 	RevitUnitType unitType = RevitUnitType.UT_UNDEFINED, string guid = "")
+		// {
+		// 	Sequence = (int) sequence;
+		// 	Name = name;
+		// 	Desc = desc;
+		// 	Value = val;
+		// 	UnitType = unitType;
+		// 	Guid = guid;
+		// }
+		//
+		// public SchemaFieldDef(SchemaCellKey sequence, string name, string desc, dynamic val,
+		// 	RevitUnitType unitType = RevitUnitType.UT_UNDEFINED, string guid = "")
+		// {
+		// 	Sequence = (int) sequence;
+		// 	Name = name;
+		// 	Desc = desc;
+		// 	Value = val;
+		// 	UnitType = unitType;
+		// 	Guid = guid;
+		// }
+
+		
+		public SchemaFieldDef(T sequence, string name, string desc, dynamic val,
 			RevitUnitType unitType = RevitUnitType.UT_UNDEFINED, string guid = "")
 		{
-			Sequence = (int) sequence;
+			Sequence = (int)(object) sequence;
 			Name = name;
 			Desc = desc;
 			Value = val;
@@ -58,18 +81,8 @@ namespace AOTools.Cells.SchemaDefinition
 			Guid = guid;
 		}
 
-		public SchemaFieldDef(SchemaCellKey sequence, string name, string desc, dynamic val,
-			RevitUnitType unitType = RevitUnitType.UT_UNDEFINED, string guid = "")
-		{
-			Sequence = (int) sequence;
-			Name = name;
-			Desc = desc;
-			Value = val;
-			UnitType = unitType;
-			Guid = guid;
-		}
 
-		public SchemaFieldDef(SchemaFieldDef fi)
+		public SchemaFieldDef(SchemaFieldDef<T> fi)
 		{
 			Sequence = fi.Sequence;
 			Name = fi.Name;
@@ -110,7 +123,11 @@ namespace AOTools.Cells.SchemaDefinition
 		{
 			return e.Get<double>(f, DisplayUnitType.DUT_GENERAL);
 		}
+
+		public SchemaFieldDef<T> Clone()
+		{
+			// SchemaFieldDef copy = new SchemaFieldDef(Sequence, Name, Desc, Value, UnitType, Guid);
+			return new SchemaFieldDef<T>(this);
+		}
 	}
-
-
 }

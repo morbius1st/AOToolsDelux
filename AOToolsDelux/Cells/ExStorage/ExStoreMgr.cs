@@ -1,5 +1,6 @@
 ﻿#region + Using Directives
 
+using AOTools.Cells.SchemaCells;
 using static AOTools.Cells.ExStorage.ExStoreApp;
 using static AOTools.Cells.ExStorage.ExStoreCell;
 
@@ -12,32 +13,40 @@ namespace AOTools.Cells.ExStorage
 {
 	public class ExStoreMgr
 	{
-		public static ExStoreMgr XsMgr { get; private set; }
+		public static ExStoreMgr XsMgr { get; private set; } = new ExStoreMgr();
 		public static bool Initialized { get; private set; }
 
 		private ExStoreHelper XsHlpr;
 
-		public void Init()
+		public ExStoreRtnCodes Save(ExStoreHelper XsHlpr, 
+			ExStoreApp xApp, ExStoreCell xCell)
 		{
-			if (Initialized) return;
-			XsMgr = new ExStoreMgr();
-			XsHlpr = new ExStoreHelper();
+			ExStoreRtnCodes result = XsHlpr.SaveExStorageData(xApp, xCell);
 
-			Initialized = true;
+			return result;
 		}
 
-		public void Reset()
+
+		public ExStoreRtnCodes UpdateCell(ExStoreHelper XsHlpr, ExStoreCell xCell)
 		{
-			Initialized = false;
-			Init();
+			ExStoreRtnCodes result = XsHlpr.UpdateExStorageCellData(xCell);
+
+			return result;
 		}
 
-		public SaveRtnCodes Save(ExStoreApp xApp, ExStoreCell xCell)
-		{
-			if (!Initialized) return SaveRtnCodes.NOT_INIT;
 
-			return XsHlpr.SaveExStorageData(xApp, xCell);
-		}
+		// public void Reset()
+		// {
+		// 	Initialized = false;
+		// 	Init();
+		// }
+
+		// public ExStoreRtnCodes Save(ExStoreApp xApp, ExStoreCell xCell)
+		// {
+		// 	if (!Initialized) return ExStoreRtnCodes.NOT_INIT;
+		//
+		// 	return XsHlpr.SaveExStorageData2(xApp, xCell);
+		// }
 
 
 	}

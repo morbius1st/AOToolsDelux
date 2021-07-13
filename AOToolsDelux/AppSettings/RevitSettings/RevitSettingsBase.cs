@@ -2,6 +2,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using AOTools.AppSettings.SchemaSettings;
 using AOTools.AppSettings.SettingUtil;
 using Autodesk.Revit.DB;
@@ -231,8 +232,10 @@ namespace AOTools.AppSettings.RevitSettings
 				// all fields created and added
 				Schema schema = sbld.Finish();
 
-				
 				Entity entity = new Entity(schema);
+
+				// DataStore.SchemaUnit = schema;
+				// DataStore.EntityUnit = entity;
 
 				// set the basic fields
 				SaveFieldValues(entity, schema, RsuAppSetg);
@@ -250,7 +253,7 @@ namespace AOTools.AppSettings.RevitSettings
 					t.Commit();
 				}
 
-				schema.Dispose();
+				// schema.Dispose();
 			}
 			catch (InvalidOperationException ex)
 			{
@@ -345,13 +348,29 @@ namespace AOTools.AppSettings.RevitSettings
 
 			int j = 0;
 
+			Debug.WriteLine("@SaveUnitSettings");
+			Debug.WriteLine($"entity| {entity.SchemaGUID}");
+			Debug.WriteLine($"entity| {entity.Schema.GUID}");
+			Debug.WriteLine($"entity| {entity.Schema.SchemaName}");
+
 			foreach (KeyValuePair<string, string> kvp in subSchemaFields)
 			{
+				Debug.WriteLine($"kvp| {kvp.Key} | {kvp.Value}");
+
 				Field field = schema.GetField(kvp.Key);
 				if (field == null || !field.IsValidObject) { continue; }
 
+				Debug.WriteLine($"field| {field.Schema.GUID}");
+				Debug.WriteLine($"field| {field.FieldName}");
+				Debug.WriteLine($"field| {field.UnitType}");
+
 				Entity subEntity =
 					MakeUnitSchema(kvp.Value, RsuUsrSetg[j++]);
+
+				Debug.WriteLine($"subentity| {subEntity.SchemaGUID}");
+				Debug.WriteLine($"subentity| {subEntity.Schema.GUID}");
+				Debug.WriteLine($"subentity| {subEntity.Schema.SchemaName}");
+
 				entity.Set(field, subEntity);
 			}
 		}
@@ -365,6 +384,9 @@ namespace AOTools.AppSettings.RevitSettings
 			MakeFields(sbld, usrSchemaFields);
 
 			Schema schema = sbld.Finish();
+
+			Debug.WriteLine($"subschema| {schema.GUID}");
+			Debug.WriteLine($"subschema| {schema.SchemaName}");
 
 			Entity entity = new Entity(schema);
 

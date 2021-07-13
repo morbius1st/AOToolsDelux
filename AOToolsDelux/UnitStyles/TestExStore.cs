@@ -22,7 +22,7 @@ using static AOTools.Cells.ExStorage.ExStoreMgr;
 namespace AOTools
 {
 	[Transaction(TransactionMode.Manual)]
-	class DataStore : IExternalCommand
+	class TestExStore : IExternalCommand
 	{
 		// public static Schema SchemaUnit;
 		// public static Entity EntityUnit;
@@ -51,68 +51,17 @@ namespace AOTools
 
 			try
 			{
-				// DataStorage ds;
-				//
-				// using (Transaction t = new Transaction(AppRibbon.Doc, "Create Unit Storage"))
-				// {
-				// 	t.Start();
-				//
-				// 	ds = DataStorage.Create(AppRibbon.Doc);
-				// 	t.Commit();
-				// }
 
-				ExStoreApp xApp = ExStoreApp.Instance();
-
-				xApp.Data[SchemaAppKey.NAME].Value = "Special Name 01";
-
-				ExStoreCell xCell = ExStoreCell.Instance(3);
-
-				for (int i = 0; i < 3; i++)
-				{
-					SampleCellData(xCell, i);
-				}
-
-				ExStoreRtnCodes result = XsMgr.Save(xsHlpr, xApp, xCell);
-
-				if (result != ExStoreRtnCodes.GOOD)
-				{
-					Debug.WriteLine("initial save failed");
-					return Result.Failed;
-				}
+				// 1. make a root ex store
+				// 2. using the configured app guid, save the app data, save the cell data
+				// 3. reset all to default values or null
+				// 4. read the root ex store
+				// 5. set the app guid
+				// 6. read the app ex store
+				// 7. read the cell ex store
 
 
-				if (false)
-				{
 
-					xApp.Data[SchemaAppKey.NAME].Value = "new name";
-
-					xCell = ExStoreCell.Instance(4);
-
-					for (int i = 0; i < 4; i++)
-					{
-						SampleCellDataRevised(xCell, i);
-					}
-
-					// result = XsMgr.UpdateCell(xsHlpr, xCell);
-					result = XsMgr.Save(xsHlpr, xApp, xCell);
-
-					if (result != ExStoreRtnCodes.GOOD)
-					{
-						Debug.WriteLine("update failed");
-						return Result.Failed;
-					}
-
-					
-				}
-
-				// SaveRtnCodes result = XsMgr.Save(xApp, xCell);
-
-				// if (ds != null && ds.IsValidObject)
-				// {
-				// 	RsMgr.SetElement(ds);
-				// 	RsMgr.Init();
-				// 	RsMgr.Save();
-				// }
 			}
 			catch (OperationCanceledException)
 			{
