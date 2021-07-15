@@ -9,23 +9,25 @@ using AOTools.Cells.SchemaDefinition;
 
 namespace AOTools.Cells.SchemaCells
 {
-	public class SchemaDictionaryApp : SchemaDictionaryBase<SchemaAppKey>
+	public class SchemaDictionaryApp : SchemaDictionaryBase<string>
 	{
 		public SchemaDictionaryApp() { }
 		public SchemaDictionaryApp(int capacity) :base(capacity) { }
-		public SchemaDictionaryApp Clone()
-		{
-			return Clone(this);
-		}
+		// public SchemaDictionaryApp Clone()
+		// {
+		// 	return Clone();
+		// 	// return Clone(this);
+		// }
 	}
 
-	public class SchemaDictionaryCell : SchemaDictionaryBase<SchemaCellKey>
+	public class SchemaDictionaryCell : SchemaDictionaryBase<string>
 	{
 		public SchemaDictionaryCell() { }
 		public SchemaDictionaryCell(int capacity) :base(capacity) { }
-		public SchemaDictionaryCell Clone()
-		{
-			return Clone(this);
-		}
+		// public SchemaDictionaryCell Clone()
+		// {
+		// 	return Clone();
+		// 	// return Clone(this);
+		// }
 	}
 }

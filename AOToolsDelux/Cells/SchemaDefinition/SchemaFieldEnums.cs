@@ -16,36 +16,33 @@ namespace AOTools.Cells.SchemaDefinition
 
 	public enum SchemaRootKey
 	{
-		UNDEFINED		  = -10,
-		NAME              = 10,
-		DESCRIPTION       = 20,
-		VERSION           = 30,
-		DEVELOPER         = 40,
-		APP_GUID          = 50,
+		RK_NAME           = 0,
+		RK_DESCRIPTION    = 1,
+		RK_VERSION        = 2,
+		RK_DEVELOPER      = 3,
+		RK_APP_GUID       = 4,
 	}
 
 	// primary scheme element 
 	// defines the basic information
 	public enum SchemaAppKey
 	{
-		UNDEFINED		  = -10,
-		NAME              = 10,
-		DESCRIPTION       = 20,
-		VERSION           = 30,
-		// DEVELOPER         = 40,
+		AK_NAME              = 10,
+		AK_DESCRIPTION       = 20,
+		AK_VERSION           = 30,
 	}
 
 	public enum SchemaCellKey
 	{
-		NAME              = 10,
-		VERSION           = 20,
-		DESCRIPTION       = 30,
-		SEQUENCE          = 40,
-		UPDATE_RULE       = 50,
-		CELL_FAMILY_NAME  = 60,
-		SKIP              = 70,
-		XL_FILE_PATH      = 80,
-		XL_WORKSHEET_NAME = 90
+		CK_NAME              = 0,
+		CK_VERSION           = 1,
+		CK_DESCRIPTION       = 2,
+		CK_SEQUENCE          = 3,
+		CK_UPDATE_RULE       = 4,
+		CK_CELL_FAMILY_NAME  = 5,
+		CK_SKIP              = 6,
+		CK_XL_FILE_PATH      = 7,
+		CK_XL_WORKSHEET_NAME = 8,
 
 	}
 

@@ -9,14 +9,14 @@ using AOTools.Cells.SchemaDefinition;
 
 namespace AOTools.Cells.SchemaDefinition
 {
-	public class SchemaDictionaryRoot : SchemaDictionaryBase<SchemaRootKey>
+	public class SchemaDictionaryRoot : SchemaDictionaryBase<string>
 	{
 		public SchemaDictionaryRoot() { }
 		public SchemaDictionaryRoot(int capacity) :base(capacity) { }
-		public SchemaDictionaryRoot Clone()
-		{
-			return Clone(this);
-		}
+		// public SchemaDictionaryRoot Clone()
+		// {
+		// 	return Clone();
+		// }
 	}
 
 }

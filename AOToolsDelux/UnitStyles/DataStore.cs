@@ -9,8 +9,13 @@ using AOTools.Cells.SchemaDefinition;
 using static UtilityLibrary.MessageUtilities;
 
 using AOTools.Cells.ExStorage;
+using AOTools.Cells.SchemaCells;
 using Autodesk.Revit.DB.ExtensibleStorage;
 using static AOTools.Cells.ExStorage.ExStoreMgr;
+using static AOTools.Cells.SchemaDefinition.SchemaAppKey;
+using static AOTools.Cells.SchemaDefinition.SchemaCellKey;
+
+using static AOTools.Cells.SchemaCells.SchemaDefCells;
 
 #endregion
 
@@ -63,7 +68,7 @@ namespace AOTools
 
 				ExStoreApp xApp = ExStoreApp.Instance();
 
-				xApp.Data[SchemaAppKey.NAME].Value = "Special Name 01";
+				xApp.Data[SchemaDefApp.Inst[AK_NAME]].Value = "Special Name 01";
 
 				ExStoreCell xCell = ExStoreCell.Instance(3);
 
@@ -84,7 +89,7 @@ namespace AOTools
 				if (false)
 				{
 
-					xApp.Data[SchemaAppKey.NAME].Value = "new name";
+					xApp.Data[SchemaDefApp.Inst[AK_NAME]].Value = "new name";
 
 					xCell = ExStoreCell.Instance(4);
 
@@ -133,14 +138,14 @@ namespace AOTools
 
 			// xCell.Data.Add(xCell.DefaultValues().Clone());
 
-			xCell.Data[id][SchemaCellKey.NAME].Value = "Alpha";
-			xCell.Data[id][SchemaCellKey.VERSION].Value = $"beta {id:D3}";
-			xCell.Data[id][SchemaCellKey.SEQUENCE].Value = (double) id;
-			xCell.Data[id][SchemaCellKey.UPDATE_RULE].Value = (int) UpdateRules.UPON_REQUEST;
-			xCell.Data[id][SchemaCellKey.CELL_FAMILY_NAME].Value = $"CoolCell{id:D3}";
-			xCell.Data[id][SchemaCellKey.SKIP].Value = false;
-			xCell.Data[id][SchemaCellKey.XL_FILE_PATH].Value = $"c:\\file path\\filename{id:D3}.xls";
-			xCell.Data[id][SchemaCellKey.XL_WORKSHEET_NAME].Value = $"worksheet {id:d3}";
+			xCell.Data[id][Inst[CK_NAME]].Value = "Alpha";
+			xCell.Data[id][Inst[CK_VERSION]].Value = $"beta {id:D3}";
+			xCell.Data[id][Inst[CK_SEQUENCE]].Value = (double) id;
+			xCell.Data[id][Inst[CK_UPDATE_RULE]].Value = (int) UpdateRules.UPON_REQUEST;
+			xCell.Data[id][Inst[CK_CELL_FAMILY_NAME]].Value = $"CoolCell{id:D3}";
+			xCell.Data[id][Inst[CK_SKIP]].Value = false;
+			xCell.Data[id][Inst[CK_XL_FILE_PATH]].Value = $"c:\\file path\\filename{id:D3}.xls";
+			xCell.Data[id][Inst[CK_XL_WORKSHEET_NAME]].Value = $"worksheet {id:d3}";
 		}
 
 		
@@ -149,14 +154,14 @@ namespace AOTools
 
 			// xCell.Data.Add(xCell.DefaultValues().Clone());
 
-			xCell.Data[id][SchemaCellKey.NAME].Value = "Zeta";
-			xCell.Data[id][SchemaCellKey.VERSION].Value = $"Delta {id:D3}";
-			xCell.Data[id][SchemaCellKey.SEQUENCE].Value = (double) id;
-			xCell.Data[id][SchemaCellKey.UPDATE_RULE].Value = (int) UpdateRules.AS_NEEDED;
-			xCell.Data[id][SchemaCellKey.CELL_FAMILY_NAME].Value = $"CoolCell{id:D3}";
-			xCell.Data[id][SchemaCellKey.SKIP].Value = false;
-			xCell.Data[id][SchemaCellKey.XL_FILE_PATH].Value = $"c:\\file path\\filename{id:D3}.xls";
-			xCell.Data[id][SchemaCellKey.XL_WORKSHEET_NAME].Value = $"worksheet {id:d3}";
+			xCell.Data[id][Inst[CK_NAME]].Value = "Zeta";
+			xCell.Data[id][Inst[CK_VERSION]].Value = $"Delta {id:D3}";
+			xCell.Data[id][Inst[CK_SEQUENCE]].Value = (double) id;
+			xCell.Data[id][Inst[CK_UPDATE_RULE]].Value = (int) UpdateRules.AS_NEEDED;
+			xCell.Data[id][Inst[CK_CELL_FAMILY_NAME]].Value = $"CoolCell{id:D3}";
+			xCell.Data[id][Inst[CK_SKIP]].Value = false;
+			xCell.Data[id][Inst[CK_XL_FILE_PATH]].Value = $"c:\\file path\\filename{id:D3}.xls";
+			xCell.Data[id][Inst[CK_XL_WORKSHEET_NAME]].Value = $"worksheet {id:d3}";
 		}
 
 	}

@@ -86,7 +86,7 @@ namespace AOTools
 			{
 				SchemaRootKey key = (SchemaRootKey) xRoot.KeyOrder[i];
 
-				string name = xRoot.FieldDefs[key].Name;
+				string name = xRoot.FieldDefs[key].FieldName;
 				string value = xRoot.Data[key].Value;
 
 				sb.Append(name).Append("| ").AppendLine(value);

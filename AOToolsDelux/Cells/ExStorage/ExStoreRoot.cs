@@ -39,11 +39,9 @@ namespace AOTools.Cells.ExStorage
 
 		public bool IsInitialized { get; private set; }
 
-		public static SchemaDefRoot SchemaDef { get; }  = new SchemaDefRoot();
+		public static SchemaDefRoot SchemaDef { get; }  = SchemaDefRoot.Inst;
 
-		public SchemaDictionaryRoot FieldDefs => SchemaDef.DefaultFields;
-
-		public Enum[] KeyOrder => SchemaDef.KeyOrderX;
+		public SchemaDictionaryRoot FieldDefs => (SchemaDictionaryRoot) SchemaDef.DefaultFields;
 
 	#endregion
 
@@ -70,7 +68,7 @@ namespace AOTools.Cells.ExStorage
 		// definition so only need to clone the schema field def
 		public SchemaDictionaryRoot DefaultValues()
 		{
-			return SchemaDef.DefaultFields.Clone();
+			return FieldDefs.Clone<SchemaDictionaryRoot>();
 		}
 
 	#endregion

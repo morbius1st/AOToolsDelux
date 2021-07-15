@@ -18,7 +18,8 @@ using Autodesk.Revit.DB.ExtensibleStorage;
 
 namespace AOTools.Cells.ExStorage
 {
-	public class ExStoreCell : IExStore, IExStoreData<SchemaDictionaryCell, List<SchemaDictionaryCell>> //: SchemaDefCells, 
+	public class ExStoreCell : IExStore, 
+		IExStoreData<SchemaDictionaryCell, List<SchemaDictionaryCell>> //: SchemaDefCells, 
 	{
 	#region private fields
 
@@ -47,11 +48,10 @@ namespace AOTools.Cells.ExStorage
 		public Dictionary<string, string> SubSchemaFields { get; set; }
 
 
-		public static SchemaDefCells SchemaDef { get; } = new SchemaDefCells();
+		public static SchemaDefCells SchemaDef { get; } = SchemaDefCells.Inst;
 
-		public SchemaDictionaryCell FieldDefs => SchemaDef.DefaultFields;
+		public SchemaDictionaryCell FieldDefs => (SchemaDictionaryCell) SchemaDef.DefaultFields;
 
-		public Enum[] KeyOrder => SchemaDef.KeyOrderX;
 
 	#endregion
 
@@ -80,13 +80,27 @@ namespace AOTools.Cells.ExStorage
 		// definition so only need to clone the schema field def
 		public SchemaDictionaryCell DefaultValues()
 		{
-			return FieldDefs.Clone();
+			return FieldDefs.Clone<SchemaDictionaryCell>();
 		}
 
 		public void AddDefault()
 		{
 			Data.Add(DefaultValues());
 		}
+
+		
+		public string[] GetSubSchemaFieldInfo(int i)
+		{
+			string[] info =
+			{
+				$"RootCellsDefinition{i:D3}",
+				SchemaGuidManager.GetCellGuidString(i),
+				"subschema for a cells definition"
+			};
+
+			return info;
+		}
+
 
 	#endregion
 

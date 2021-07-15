@@ -8,45 +8,29 @@ using System.Collections.Generic;
 
 namespace AOTools.Cells.SchemaDefinition
 {
-	public interface ISchemaDef<TE, TD> // where TE : Enum  where TD : SchemaDictionaryBase<TE>
+	public interface ISchemaDef<TD> // where TE : Enum  where TD : SchemaDictionaryBase<TE>
 	{
-		TE[] KeyOrder { get; }
+		// TE[] KeyOrder { get; }
 
 		TD DefaultFields { get; }
 	}
 
-	public abstract class ASchemaDef<TE, TD> : ISchemaDef<TE, TD> 
-		where TE : Enum  where TD : SchemaDictionaryBase<TE>, new()
+	public abstract class ASchemaDef<TE> where TE : Enum
 	{
-		public ASchemaDef()
+		public abstract SchemaDictionaryBase<string> DefaultFields { get; }
+
+		public string[] FIELD_NAMES;
+
+		public SchemaFieldDef this[string key]
 		{
-			Init();
-		}
-
-		public abstract TE[] KeyOrder { get; set; }
-		public Enum[] KeyOrderX { get; set; }
-		public abstract TD DefaultFields { get;}
-
-		public void Init()
-		{
-			KeyOrder = new TE[DefaultFields.Count];
-
-			int j = 0;
-
-			foreach (KeyValuePair<TE, SchemaFieldDef<TE>> kvp in DefaultFields)
+			get
 			{
-				KeyOrder[j++] = kvp.Key;
-			}
-
-			j = 0;
-
-			KeyOrderX = new Enum[DefaultFields.Count];
-
-			foreach (KeyValuePair<TE, SchemaFieldDef<TE>> kvp in DefaultFields)
-			{
-				KeyOrderX[j++] = kvp.Key;
+				return DefaultFields[key];
 			}
 		}
+
+		public abstract string this[TE key] { get; }
+
 	}
 
 }

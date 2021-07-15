@@ -17,13 +17,13 @@ namespace AOTools.Cells.SchemaDefinition
 		dynamic Value { get; set; }
 	}
 	
-	public class SchemaFieldDef<T> : ISchemaFieldDef  where T: Enum 
+	public class SchemaFieldDef : ISchemaFieldDef  /*where T: Enum */
 	{
-		// [DataMember(Order = 1)]
-		public int Sequence { get; set; }
+		// // [DataMember(Order = 1)]
+		// public int Sequence { get; set; }
 
 		// [DataMember(Order = 2)]
-		public string Name { get; set; }
+		public string FieldName { get; set; }
 
 		// [DataMember(Order = 3)]
 		public string Desc { get; set; }
@@ -39,8 +39,8 @@ namespace AOTools.Cells.SchemaDefinition
 
 		public SchemaFieldDef()
 		{
-			Sequence = -1;
-			Name = null;
+			// Sequence = -1;
+			FieldName = null;
 			Desc = null;
 			Value = null;
 			UnitType = RevitUnitType.UT_UNDEFINED;
@@ -70,11 +70,12 @@ namespace AOTools.Cells.SchemaDefinition
 		// }
 
 		
-		public SchemaFieldDef(T sequence, string name, string desc, dynamic val,
-			RevitUnitType unitType = RevitUnitType.UT_UNDEFINED, string guid = "")
+		public SchemaFieldDef( /*T sequence,*/ string fieldName, string desc, 
+			dynamic val, RevitUnitType unitType = RevitUnitType.UT_UNDEFINED, 
+			string guid = "")
 		{
-			Sequence = (int)(object) sequence;
-			Name = name;
+			// Sequence = (int)(object) sequence;
+			FieldName = fieldName;
 			Desc = desc;
 			Value = val;
 			UnitType = unitType;
@@ -82,10 +83,10 @@ namespace AOTools.Cells.SchemaDefinition
 		}
 
 
-		public SchemaFieldDef(SchemaFieldDef<T> fi)
+		public SchemaFieldDef(SchemaFieldDef fi)
 		{
-			Sequence = fi.Sequence;
-			Name = fi.Name;
+			// Sequence = fi.Sequence;
+			FieldName = fi.FieldName;
 			Desc = fi.Desc;
 			Value = fi.Value;
 			UnitType = fi.UnitType;
@@ -124,10 +125,10 @@ namespace AOTools.Cells.SchemaDefinition
 			return e.Get<double>(f, DisplayUnitType.DUT_GENERAL);
 		}
 
-		public SchemaFieldDef<T> Clone()
+		public SchemaFieldDef Clone()
 		{
 			// SchemaFieldDef copy = new SchemaFieldDef(Sequence, Name, Desc, Value, UnitType, Guid);
-			return new SchemaFieldDef<T>(this);
+			return new SchemaFieldDef(this);
 		}
 	}
 }

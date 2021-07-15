@@ -27,8 +27,6 @@ namespace AOTools.Cells.ExStorage
 		//
 		// bool IsInitialized { get; }
 
-		Enum[] KeyOrder { get; }
-
 		TT FieldDefs { get; }
 		TD Data { get; }
 	}

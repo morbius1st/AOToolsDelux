@@ -64,61 +64,67 @@ namespace AOTools.Cells.ExStorage
 
 			if (result != ExStoreRtnCodes.GOOD) return result;
 
-			ReadData<SchemaRootKey, SchemaDictionaryRoot, SchemaDictionaryRoot>(e, s, xRoot);
+			ReadData(e, s, xRoot);
 
 			return ExStoreRtnCodes.GOOD;
 		}
 
 
-		private void ReadData<TE, TT, TD>(Entity e, Schema s, IExStoreData<TT, TD> xStoreData)  
-			where TE : Enum where TT : SchemaDictionaryBase<TE> where TD : SchemaDictionaryBase<TE>
+		private void ReadData<TT, TD>(Entity e, Schema s, IExStoreData<TT, TD> xStoreData)  
+			where TT : SchemaDictionaryBase<string> where TD : SchemaDictionaryBase<string>
 		{
 			int j = 0;
 
-			foreach (KeyValuePair<TE, SchemaFieldDef<TE>> kvp in xStoreData.FieldDefs)
+			foreach (KeyValuePair<string, SchemaFieldDef> kvp in xStoreData.FieldDefs)
 			{
-				string fieldName = kvp.Value.Name;
+				string fieldName = kvp.Value.FieldName;
 				Field f = s.GetField(fieldName);
 				Type t = f.ValueType;
 				
 				if (t?.Equals(typeof(string)) ?? false)
 				{
-					xStoreData.Data[(TE) xStoreData.KeyOrder[j++]].Value =
+					// xStoreData.Data[(TE) xStoreData.KeyOrder[j++]].Value =
+					// 	e.Get<string>(fieldName);
+
+					xStoreData.Data[fieldName].Value =
 						e.Get<string>(fieldName);
 				} 
 				else if (t?.Equals(typeof(double)) ?? false)
 				{
-					xStoreData.Data[(TE) xStoreData.KeyOrder[j++]].Value =
+					// xStoreData.Data[(TE) xStoreData.KeyOrder[j++]].Value =
+					// 	e.Get<double>(fieldName);
+
+					xStoreData.Data[fieldName].Value =
 						e.Get<double>(fieldName);
 				}
 			}
 		}
 
 		
-		private void ReadData2<TE, TT, TD>(Entity e, Schema s, IExStoreData<TT, TD> xStoreData)  
-			where TE : Enum where TT : SchemaDictionaryBase<TE> where TD : SchemaDictionaryBase<TE>
-		{
-			int j = 0;
-
-			foreach (KeyValuePair<TE, SchemaFieldDef<TE>> kvp in xStoreData.FieldDefs)
-			{
-				string fieldName = kvp.Value.Name;
-				Field f = s.GetField(fieldName);
-				Type t = f.ValueType;
-
-
-				if (t?.Equals(typeof(string)) ?? false)
-				{
-					xStoreData.Data[(TE) xStoreData.KeyOrder[j++]].Value =
-						e.Get<string>(fieldName);
-				} 
-				else if (t?.Equals(typeof(double)) ?? false)
-				{
-					xStoreData.Data[(TE) xStoreData.KeyOrder[j++]].Value =
-						e.Get<double>(fieldName);
-				}
-			}
-		}
+		// private void ReadData2<TE, TT, TD>(Entity e, Schema s, IExStoreData<TT, TD> xStoreData)  
+		// 	where TE : Enum where TT : SchemaDictionaryBase<TE> where TD : SchemaDictionaryBase<TE>
+		// {
+		// 	int j = 0;
+		//
+		// 	foreach (KeyValuePair<TE, SchemaFieldDef> kvp in xStoreData.FieldDefs)
+		// 	{
+		// 		string fieldName = kvp.Value.FieldName;
+		// 		Field f = s.GetField(fieldName);
+		// 		Type t = f.ValueType;
+		//
+		//
+		// 		if (t?.Equals(typeof(string)) ?? false)
+		// 		{
+		// 			xStoreData.Data[(TE) xStoreData.KeyOrder[j++]].Value =
+		// 				e.Get<string>(fieldName);
+		// 		} 
+		// 		else if (t?.Equals(typeof(double)) ?? false)
+		// 		{
+		// 			xStoreData.Data[(TE) xStoreData.KeyOrder[j++]].Value =
+		// 				e.Get<double>(fieldName);
+		// 		}
+		// 	}
+		// }
 
 
 
@@ -209,7 +215,8 @@ namespace AOTools.Cells.ExStorage
 		public ExStoreRtnCodes WriteRootExStorageData(ExStoreRoot xRoot)
 		{
 			SchemaGuidManager.SetUniqueAppGuidSubStr();
-			xRoot.Data[SchemaRootKey.APP_GUID].Value = SchemaGuidManager.AppGuidUniqueString;
+			// xRoot.Data[SchemaDefApp.Inst.AK_APP_GUID].Value = SchemaGuidManager.AppGuidUniqueString;
+			string guid = SchemaGuidManager.AppGuidUniqueString;
 
 			Transaction t = null;
 
@@ -336,13 +343,13 @@ namespace AOTools.Cells.ExStorage
 		}
 
 
-		private void SaveData2<T>(Entity entity, Schema schema, 
-			SchemaDictionaryBase<T> data) where T: Enum
+		private void SaveData2(Entity entity, Schema schema, 
+			SchemaDictionaryBase<string> data)
 		{
 			// for (int i = 0; i < keyOrder.Length; i++)
 			// {
 			// 	T key = keyOrder[i];
-			// 	SchemaFieldDef<T> val = data[key];
+			// 	SchemaFieldDef< val = data[key];
 			//
 			// 	Field f = schema.GetField(val.Name);
 			// 	if (f == null || !f.IsValidObject) continue;
@@ -358,9 +365,9 @@ namespace AOTools.Cells.ExStorage
 			// }
 
 
-			foreach (KeyValuePair<T, SchemaFieldDef<T>> kvp in data)
+			foreach (KeyValuePair<string, SchemaFieldDef> kvp in data)
 			{
-				Field f = schema.GetField(kvp.Value.Name);
+				Field f = schema.GetField(kvp.Value.FieldName);
 				if (f == null || !f.IsValidObject) continue;
 			
 				if (kvp.Value.UnitType != RevitUnitType.UT_UNDEFINED)
@@ -393,20 +400,20 @@ namespace AOTools.Cells.ExStorage
 			sb.SetDocumentation(description);
 		}
 
-		private void MakeSchemaFields2<T>(SchemaBuilder sbld, SchemaDictionaryBase<T> fieldList) where T : Enum
+		private void MakeSchemaFields2(SchemaBuilder sbld, SchemaDictionaryBase<string> fieldList) 
 		{
-			foreach (KeyValuePair<T, SchemaFieldDef<T>> kvp in fieldList)
+			foreach (KeyValuePair<string, SchemaFieldDef> kvp in fieldList)
 			{
 				MakeSchemaField2(sbld, kvp.Value);
 			}
 		}
 
-		private void MakeSchemaField2<T>(SchemaBuilder sbld, SchemaFieldDef<T> fieldDef) where T: Enum
+		private void MakeSchemaField2(SchemaBuilder sbld, SchemaFieldDef fieldDef)
 		{
 			Type t = fieldDef.Value.GetType();
 
 			FieldBuilder fbld = sbld.AddSimpleField(
-				fieldDef.Name, fieldDef.Value.GetType());
+				fieldDef.FieldName, fieldDef.Value.GetType());
 
 			fbld.SetDocumentation(fieldDef.Desc);
 
@@ -422,17 +429,14 @@ namespace AOTools.Cells.ExStorage
 
 			for (int i = 0; i < xCell.Data.Count; i++)
 			{
-				SchemaFieldDef<SchemaAppKey> subS = SchemaDefApp.GetSubSchemaDef(i);
+				string[] info = xCell.GetSubSchemaFieldInfo(i);
 
-				string guid = subS.Guid;
-				string name = subS.Name;
+				FieldBuilder fb = sb.AddSimpleField(info[0], typeof(Entity));
 
-				FieldBuilder fb = sb.AddSimpleField(name, typeof(Entity));
+				fb.SetDocumentation(info[2]);
+				fb.SetSubSchemaGUID(new Guid(info[1]));
 
-				fb.SetDocumentation(subS.Desc);
-				fb.SetSubSchemaGUID(new Guid(guid));
-
-				xCell.SubSchemaFields.Add(name, guid);
+				xCell.SubSchemaFields.Add(info[0], info[1]);
 			}
 		}
 

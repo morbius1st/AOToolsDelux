@@ -11,7 +11,8 @@ using AOTools.Cells.SchemaDefinition;
 
 namespace AOTools.Cells.ExStorage
 {
-	public class ExStoreApp : IExStore, IExStoreData<SchemaDictionaryApp, SchemaDictionaryApp> //: SchemaDefApp, 
+	public class ExStoreApp : IExStore, 
+		IExStoreData<SchemaDictionaryApp, SchemaDictionaryApp> //: SchemaDefApp, 
 	{
 	#region private fields
 
@@ -38,12 +39,9 @@ namespace AOTools.Cells.ExStorage
 
 		public bool IsInitialized { get; private set; }
 
+		public static SchemaDefApp SchemaDef { get; }  = SchemaDefApp.Inst;
 
-		public static SchemaDefApp SchemaDef { get; }  = new SchemaDefApp();
-
-		public SchemaDictionaryApp FieldDefs => SchemaDef.DefaultFields;
-
-		public Enum[] KeyOrder => SchemaDef.KeyOrderX;
+		public SchemaDictionaryApp FieldDefs => (SchemaDictionaryApp) SchemaDef.DefaultFields;
 
 	#endregion
 
@@ -70,8 +68,9 @@ namespace AOTools.Cells.ExStorage
 		// definition so only need to clone the schema field def
 		public SchemaDictionaryApp DefaultValues()
 		{
-			return SchemaDef.DefaultFields.Clone();
+			return SchemaDef.DefaultFields.Clone<SchemaDictionaryApp>();
 		}
+
 
 	#endregion
 
