@@ -5,17 +5,17 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using AOTools.Cells.SchemaDefinition;
+using AOTools.Cells2.SchemaDefinition;
 using Autodesk.Revit.DB;
-using static AOTools.Cells.SchemaDefinition.SchemaCellKey;
-using static AOTools.Cells.SchemaDefinition.UpdateRules;
+using static AOTools.Cells2.SchemaDefinition.SchemaCellKey;
+using static AOTools.Cells2.SchemaDefinition.UpdateRules;
 
 #endregion
 
 // user name: jeffs
 // created:   7/3/2021 10:48:37 PM
 
-namespace AOTools.Cells.SchemaCells
+namespace AOTools.Cells2.SchemaCells
 {
 	public class SchemaDefCells : ASchemaDef<SchemaCellKey, SchemaDictionaryCell>
 	{

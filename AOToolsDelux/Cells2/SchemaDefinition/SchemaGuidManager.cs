@@ -1,6 +1,12 @@
 ﻿#region using directives
 
 using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Linq;
+using System.Runtime.CompilerServices;
+using System.Text;
+using System.Threading.Tasks;
 
 #endregion
 
@@ -10,7 +16,7 @@ using System;
 // username: jeffs
 // created:  7/4/2021 7:38:10 AM
 
-namespace AOTools.Cells.SchemaDefinition
+namespace AOTools.Cells2.SchemaDefinition
 {
 	// concepts here:
 	/*

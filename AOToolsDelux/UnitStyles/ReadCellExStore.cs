@@ -25,16 +25,8 @@ namespace AOTools
 {
 /*
 	[Transaction(TransactionMode.Manual)]
-	class ReadRootExStore : IExternalCommand
+	class ReadCellExStore : IExternalCommand
 	{
-		// public static Schema SchemaUnit;
-		// public static Entity EntityUnit;
-		//
-		// public static Schema SchemaDS;
-		// public static Entity EntityDS;
-
-
-
 		public Result Execute(ExternalCommandData commandData, ref string message, ElementSet elements)
 		{
 
@@ -50,53 +42,52 @@ namespace AOTools
 
 		private Result Test01()
 		{
-			ExStoreHelper xsHlpr = new ExStoreHelper();
+			// ExStoreCell xCell = ExStoreCell.Instance(3);
 
-			ExStoreRoot xRoot = ExStoreRoot.Instance();
+			ExStoreCell xCell = null;
 
-			try
+			ExStoreRtnCodes result = XsMgr.ReadCells(ref xCell);
+
+			if (result != ExStoreRtnCodes.GOOD)
 			{
-				ExStoreRtnCodes result = XsMgr.ReadRoot(ref xRoot);
-
-				if (result != ExStoreRtnCodes.GOOD)
-				{
-					Debug.WriteLine("initial save failed");
-					return Result.Failed;
-				}
-
-				// SchemaGuidManager.AppGuidUniqueString = xRoot.Data[SchemaRootKey.APP_GUID].Value;
-			}
-			catch (OperationCanceledException)
-			{
+				XsMgr.ReadSchemaFail(XsMgr.OpDescription);
 				return Result.Failed;
 			}
 
-			ShowData(xRoot);
+			ShowData(XsMgr.XCell);
 
 			return Result.Succeeded;
 		}
 
-		private void ShowData(ExStoreRoot xRoot)
+		private void ShowData(ExStoreCell xCell)
 		{
-			TaskDialog td = new TaskDialog("Ex Storage Root Data");
+			TaskDialog td = new TaskDialog("Ex Storage App Data");
 
-			td.MainInstruction = "Root Schema was read successfully\ncontents:";
+			td.MainInstruction = "Cell Schema was read successfully\ncontents:";
 
 			StringBuilder sb = new StringBuilder();
 
-			foreach (KeyValuePair<SchemaRootKey, SchemaFieldDef<SchemaRootKey>> kvp in xRoot.FieldDefs)
+			for (int i = 0; i < xCell.Data.Count; i++)
 			{
-				string name = xRoot.FieldDefs[kvp.Key].Name;
-				string value = xRoot.Data[kvp.Key].Value;
+				sb.AppendLine($"date group| {i:D}");
 
-				sb.Append(name).Append("| ").AppendLine(value);
+
+				foreach (KeyValuePair<SchemaCellKey, 
+					SchemaFieldDef<SchemaCellKey>> kvp in xCell.FieldDefs)
+				{
+					string name = xCell.FieldDefs[kvp.Key].Name;
+					string value = xCell.Data[i][kvp.Key].Value.ToString();
+
+					sb.Append(name).Append("| ").AppendLine(value);	
+				}
+
+				sb.Append("\n");
 			}
 
 			td.MainContent = sb.ToString();
 			td.MainIcon = TaskDialogIcon.TaskDialogIconNone;
 
 			td.Show();
-
 		}
 		
 

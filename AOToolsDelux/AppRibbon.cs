@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Reflection;
+using AOTools.Cells2.ExStorage;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.DB.Events;
 using Autodesk.Revit.DB.ExtensibleStorage;
@@ -30,12 +31,22 @@ namespace AOTools
 
 		private const string BUTTON_UNITSTYLES = "Unit\nStyles";
 		private const string BUTTON_UNITSTYLEDELETE = "Delete\nStyles";
+
 		private const string BUTTON_SELECT = "Select\nElement";
-		private const string BUTTON_DATA_STORAGE = "Data\nStorage";
-		private const string BUTTON_DEL_EX_STORAGE = "Del Ex\nStorage";
-		private const string BUTTON_ROOT_EX_STORE = "Root Ex\nStorage";
+
+		private const string BUTTON_ROOT_EX_STORE = "Make Root\nEx Storage";
+		private const string BUTTON_DATA_STORAGE = "Make App\n& Cell";
 		private const string BUTTON_READ_ROOT_EX_STORE = "Read Root\nEx Storage";
+		private const string BUTTON_READ_APP_EX_STORE = "Read App\nEx Storage";
+		private const string BUTTON_READ_CELL_EX_STORE = "Read Cell\nEx Storage";
 		private const string BUTTON_TEST = "TEST";
+
+		private const string BTN_EX_STOR_DEL_ROOT = "Delete\nRoot Schema";
+		private const string BTN_EX_STOR_DEL_APP = "Delete\nApp Schema";
+		private const string BTN_EX_STOR_MOD_CELLS = "Modify\nCells";
+		private const string BTN_EX_STOR_MOD_APP = "Modify\nApp";
+
+
 //
 //		private const string BUTTON_UNIT_FTIN_NAME   = "Units\nto Feet-In";
 //		private const string BUTTON_UNIT_FRACIN_NAME = "Units\nto Frac In";
@@ -52,7 +63,6 @@ namespace AOTools
 		internal static UIDocument Uidoc;
 		internal static Application App;
 		internal static Document Doc;
-
 
 		public Result OnStartup(UIControlledApplication app)
 		{
@@ -114,10 +124,6 @@ namespace AOTools
 					ribbonPanel = app.CreateRibbonPanel(m_tabName, m_panelName);
 				}
 
-				// if (!AddSplitButtons(ribbonPanel))
-				// {
-				// 	return Result.Failed;
-				// }
 
 				if (AddButtons(ribbonPanel) == Result.Failed)
 				{
@@ -133,7 +139,6 @@ namespace AOTools
 					return Result.Failed;
 				}
 
-				
 				ribbonPanel =
 					AddRibbonPanel(EX_STORE_PANEL_NAME, m_tabName);
 
@@ -142,9 +147,25 @@ namespace AOTools
 					return Result.Failed;
 				}
 
+				if (!AddSplitButtonRead(ribbonPanel))
+				{
+					return Result.Failed;
+				}
+				
 
+				if (!AddSplitButtonDelete(ribbonPanel))
+				{
+					return Result.Failed;
+				}
+				
+				if (!AddSplitButtonModify(ribbonPanel))
+				{
+					return Result.Failed;
+				}
 
 				SmUsrInit();
+
+				// ExStoreMgr.XsMgr.Initialize();
 
 				return Result.Succeeded;
 			}
@@ -227,82 +248,96 @@ namespace AOTools
 		}
 */
 
-//		private bool AddSplitButtons(RibbonPanel ribbonPanel)
-//		{ 
-//			SplitButtonData sbData = new SplitButtonData("splitButton1", "Split");
-//			SplitButton sb = ribbonPanel.AddItem(sbData) as SplitButton;
-//
-//			PushButtonData pbd;
-//
-//			pbd = CreateButton("UnitStyleFtIn", BUTTON_UNIT_FTIN_NAME,
-//				"Delux Measure Ft-In 16.png",
-//				"Delux Measure Ft-In 32.png",
-//				Assembly.GetExecutingAssembly().Location, "AOTools.UnitStyles.UnitStyleFeetInchCmd",
-//				"Set Project Units to Standard Feet & Inches");
-//
-//			if (pbd == null)
-//			{
-//				CreateButtonFail(Properties.Resources.R_ButtonStyleFtInName);
-//				return false;
-//			}
-//
-//			sb.AddPushButton(pbd);
-//
-//			pbd = CreateButton("UnitStyleFracIn", BUTTON_UNIT_FRACIN_NAME,
-//				"Delux Measure Frac-In 16.png",
-//				"Delux Measure Frac-In 32.png",
-//				Assembly.GetExecutingAssembly().Location, "AOTools.UnitStyles.UnitStyleFracInchCmd",
-//					"Set Project Units to Standard Fractional Inches");
-//
-//			if (pbd == null)
-//			{
-//				CreateButtonFail(Properties.Resources.R_ButtonStyleFracInName);
-//				return false;
-//			}
-//
-//			sb.AddPushButton(pbd);
-//
-//			pbd = CreateButton("UnitStyleDecInch", BUTTON_UNIT_DECIN_NAME,
-//				"Delux Measure Dec-In 16.png",
-//				"Delux Measure Dec-In 32.png",
-//				Assembly.GetExecutingAssembly().Location, "AOTools.UnitStyles.UnitStyleDecInchCmd",
-//					"Set Project Units to Standard Decimal Inches");
-//
-//			if (pbd == null)
-//			{
-//				CreateButtonFail(Properties.Resources.R_ButtonStyleDecInchName);
-//				return false;
-//			}
-//
-//			sb.AddPushButton(pbd);
-//
-//			pbd = CreateButton("UnitStyleDecFeet", BUTTON_UNIT_DECFT_NAME,
-//				"Delux Measure Dec-Ft 16.png",
-//				"Delux Measure Dec-Ft 32.png",
-//				Assembly.GetExecutingAssembly().Location, "AOTools.UnitStyles.UnitStyleDecFeetCmd",
-//					"Set Project Units to Standard Decimal Feet");
-//
-//			if (pbd == null)
-//			{
-//				CreateButtonFail(Properties.Resources.R_ButtonStyleDecFeetName);
-//				return false;
-//			}
-//
-//			sb.AddPushButton(pbd);
-//
-//			return true;
-//		}
-//
-//		private void CreateButtonFail(string whichButton)
-//		{
-//			// creating the pushbutton failed
-//			TaskDialog td = new TaskDialog("AO Tools - " + whichButton);
-//			td.MainIcon = TaskDialogIcon.TaskDialogIconWarning;
-//			td.MainContent = String.Format(Properties.Resources.ButtonCreateFail,
-//				whichButton);
-//			td.Show();
-//		}
-//
+		private bool AddSplitButtonRead(RibbonPanel ribbonPanel)
+		{ 
+			SplitButtonData sbData = new SplitButtonData("splitButton2", "Split");
+			SplitButton sb = ribbonPanel.AddItem(sbData) as SplitButton;
+
+			bool result;
+
+			result = CreateSplitButton(sb, "ReadCellExStore",
+				BUTTON_READ_CELL_EX_STORE, "Read Ex Storage Cell Data");
+
+			result = CreateSplitButton(sb, "ReadAppExStore",
+				BUTTON_READ_APP_EX_STORE, "Read Ex Storage App Data");
+
+			result = CreateSplitButton(sb, "ReadRootExStore",
+				BUTTON_READ_ROOT_EX_STORE, "Read Ex Storage Root Data");
+
+			return true;
+		}
+
+
+		private bool AddSplitButtonDelete(RibbonPanel ribbonPanel)
+		{ 
+			SplitButtonData sbData = new SplitButtonData("splitButton1", "Split");
+			SplitButton sb = ribbonPanel.AddItem(sbData) as SplitButton;
+
+			bool result;
+
+			result = CreateSplitButton(sb, "DelRootExStore",
+				BTN_EX_STOR_DEL_ROOT, "Delete Ex Storage Root Entity");
+
+			result = CreateSplitButton(sb, "DelAppExStore",
+				BTN_EX_STOR_DEL_APP, "Delete Ex Storage App Entity");
+
+			// result = CreateSplitButton(sb, "DelSubExStor",
+			// 	BTN_EX_STOR_DEL_SUB, "Delete Ex Storage Sub-Entities");
+
+			return true;
+		}
+		
+
+		private bool AddSplitButtonModify(RibbonPanel ribbonPanel)
+		{ 
+			SplitButtonData sbData = new SplitButtonData("splitButton3", "Split");
+			SplitButton sb = ribbonPanel.AddItem(sbData) as SplitButton;
+
+			bool result;
+
+			result = CreateSplitButton(sb, "ModCellExData",
+				BTN_EX_STOR_MOD_CELLS, "Modify Cells Entity");
+
+			result = CreateSplitButton(sb, "ModAppExData",
+				BTN_EX_STOR_MOD_APP, "Modify App Entity");
+
+			// result = CreateSplitButton(sb, "DelSubExStor",
+			// 	BTN_EX_STOR_DEL_SUB, "Delete Ex Storage Sub-Entities");
+
+			return true;
+		}
+
+		private bool CreateSplitButton(SplitButton sb,
+			string identifier, string title, string tootTip)
+		{
+			PushButtonData pbd;
+
+			pbd = CreateButton(identifier, title,
+				"information16.png", "information16.png",
+				Assembly.GetExecutingAssembly().Location, 
+				"AOTools."+identifier, tootTip);
+
+			if (pbd == null)
+			{
+				CreateButtonFail(identifier);
+				return false;
+			}
+
+			sb.AddPushButton(pbd);
+
+			return true;
+		}
+
+		private void CreateButtonFail(string whichButton)
+		{
+			// creating the pushbutton failed
+			TaskDialog td = new TaskDialog("AO Tools - " + whichButton);
+			td.MainIcon = TaskDialogIcon.TaskDialogIconWarning;
+			td.MainContent = String.Format(Properties.Resources.ButtonCreateFail,
+				whichButton);
+			td.Show();
+		}
+
 		private Result AddButtons1(RibbonPanel ribbonPanel)
 		{
 			if (AddUnitStylesButton(ribbonPanel) != Result.Succeeded) 
@@ -333,22 +368,278 @@ namespace AOTools
 			if (AddSelectButton(ribbonPanel) != Result.Succeeded) 
 				return Result.Failed;
 
-			if (AddDataStoreButton(ribbonPanel) != Result.Succeeded) 
+			if (MakeRootDataStoreButton(ribbonPanel) != Result.Succeeded) 
 				return Result.Failed;
-			
-			if (DeleteDataStoreButton(ribbonPanel) != Result.Succeeded) 
+
+			if (MakeAppAndCellsStoreButton(ribbonPanel) != Result.Succeeded) 
 				return Result.Failed;
-						
-			if (RootDataStoreButton(ribbonPanel) != Result.Succeeded) 
-				return Result.Failed;
-			
-			if (ReadRootDataStoreButton(ribbonPanel) != Result.Succeeded) 
-				return Result.Failed;
-			
+				
 			if (TestButton(ribbonPanel) != Result.Succeeded) 
 				return Result.Failed;
 
+						
+			// if (ReadRootDataStoreButton(ribbonPanel) != Result.Succeeded) 
+			// 	return Result.Failed;
+			// 			
+			// if (ReadAppDataStoreButton(ribbonPanel) != Result.Succeeded) 
+			// 	return Result.Failed;
+
+
 			return Result.Succeeded;
+		}
+
+	private Result TestButton(RibbonPanel ribbonPanel)
+		{
+			// create a button for the 'copy sheet' command
+			if (!AddPushButton(ribbonPanel, "TestExStore", BUTTON_TEST,
+				"information16.png",
+				"information32.png",
+				Assembly.GetExecutingAssembly().Location, "AOTools.TestExStore",
+				"Test Extension Storage"))
+
+			{
+				// creating the pushbutton failed
+				TaskDialog td = new TaskDialog("AO Tools - Test Ex Storage");
+				td.MainIcon = TaskDialogIcon.TaskDialogIconWarning;
+				td.MainInstruction = String.Format(Properties.Resources.ButtonCreateFail,
+					"AOTools Test Ex Storage");
+				td.Show();
+
+				return Result.Failed;
+			}
+			return Result.Succeeded;
+		}
+		
+		private Result ReadAppDataStoreButton(RibbonPanel ribbonPanel)
+		{
+			// create a button for the 'copy sheet' command
+			if (!AddPushButton(ribbonPanel, "ReadAppExStore", BUTTON_READ_APP_EX_STORE,
+				"information16.png",
+				"information32.png",
+				Assembly.GetExecutingAssembly().Location, "AOTools.ReadAppExStore",
+				"Read App Extension Storage"))
+
+			{
+				// creating the pushbutton failed
+				TaskDialog td = new TaskDialog("AO Tools - Read App Ex Storage");
+				td.MainIcon = TaskDialogIcon.TaskDialogIconWarning;
+				td.MainInstruction = String.Format(Properties.Resources.ButtonCreateFail,
+					"AOTools Read App Ex Storage");
+				td.Show();
+
+				return Result.Failed;
+			}
+			return Result.Succeeded;
+		}
+				
+		private Result ReadRootDataStoreButton(RibbonPanel ribbonPanel)
+		{
+			// create a button for the 'copy sheet' command
+			if (!AddPushButton(ribbonPanel, "ReadRootExStore", BUTTON_READ_ROOT_EX_STORE,
+				"information16.png",
+				"information32.png",
+				Assembly.GetExecutingAssembly().Location, "AOTools.ReadRootExStore",
+				"Read Root Extension Storage"))
+
+			{
+				// creating the pushbutton failed
+				TaskDialog td = new TaskDialog("AO Tools - Read Root Ex Storage");
+				td.MainIcon = TaskDialogIcon.TaskDialogIconWarning;
+				td.MainInstruction = String.Format(Properties.Resources.ButtonCreateFail,
+					"AOTools Read Root Ex Storage");
+				td.Show();
+
+				return Result.Failed;
+			}
+			return Result.Succeeded;
+		}
+		
+		private Result MakeRootDataStoreButton(RibbonPanel ribbonPanel)
+		{
+			string name = /*nameof(MakeRootExStore);*/ "empty01";
+
+
+			// create a button for the 'copy sheet' command
+			if (!AddPushButton(ribbonPanel, name, BUTTON_ROOT_EX_STORE,
+				"information16.png",
+				"information32.png",
+				Assembly.GetExecutingAssembly().Location, $"AOTools.{name}",
+				"Write Root Extension Storage"))
+
+			{
+				// creating the pushbutton failed
+				TaskDialog td = new TaskDialog("AO Tools - Write Root Ex Storage");
+				td.MainIcon = TaskDialogIcon.TaskDialogIconWarning;
+				td.MainInstruction = String.Format(Properties.Resources.ButtonCreateFail,
+					"AOTools Write Root Ex Storage");
+				td.Show();
+
+				return Result.Failed;
+			}
+			return Result.Succeeded;
+		}
+
+		private Result MakeAppAndCellsStoreButton(RibbonPanel ribbonPanel)
+		{
+			string name = /*nameof(MakeAppAndDataStore);*/ "empty02";
+
+			// create a button for the 'copy sheet' command
+			if (!AddPushButton(ribbonPanel, name, BUTTON_DATA_STORAGE,
+				"information16.png",
+				"information32.png",
+				Assembly.GetExecutingAssembly().Location, $"AOTools.{name}",
+				"Add Data Storage"))
+
+			{
+				// creating the pushbutton failed
+				TaskDialog td = new TaskDialog("AO Tools - Make Data Storage");
+				td.MainIcon = TaskDialogIcon.TaskDialogIconWarning;
+				td.MainInstruction = String.Format(Properties.Resources.ButtonCreateFail,
+					"AOTools Make Data Storage");
+				td.Show();
+
+				return Result.Failed;
+			}
+			return Result.Succeeded;
+		}
+		
+		private Result AddSelectButton(RibbonPanel ribbonPanel)
+		{
+			// create a button for the 'copy sheet' command
+			if (!AddPushButton(ribbonPanel, "Select", BUTTON_SELECT,
+				"information16.png",
+				"information32.png",
+				Assembly.GetExecutingAssembly().Location, "AOTools.SelectElement",
+				"Select Element"))
+
+			{
+				// creating the pushbutton failed
+				TaskDialog td = new TaskDialog("AO Tools - Select Element");
+				td.MainIcon = TaskDialogIcon.TaskDialogIconWarning;
+				td.MainInstruction = String.Format(Properties.Resources.ButtonCreateFail,
+					"AOTools Select");
+				td.Show();
+
+				return Result.Failed;
+			}
+			return Result.Succeeded;
+		}
+
+		private Result AddUnitStylesButton(RibbonPanel ribbonPanel)
+		{
+			// create a button for the 'copy sheet' command
+			if (!AddPushButton(ribbonPanel, "UnitStyles", BUTTON_UNITSTYLES,
+				"information16.png",
+				"information32.png",
+				Assembly.GetExecutingAssembly().Location, "AOTools.UnitStylesCommand",
+					"Create and Modify Unit Styles"))
+
+			{
+				// creating the pushbutton failed
+				TaskDialog td = new TaskDialog("AO Tools - Unit Styles Create");
+				td.MainIcon = TaskDialogIcon.TaskDialogIconWarning;
+				td.MainInstruction = String.Format(Properties.Resources.ButtonCreateFail,
+					Properties.Resources.UnitStyleButtonText);
+				td.Show();
+
+				return Result.Failed;
+			}
+			return Result.Succeeded;
+		}
+
+		private Result AddUnitStyleDeleteButton(RibbonPanel ribbonPanel)
+		{
+			// create a button for the 'copy sheet' command
+			if (!AddPushButton(ribbonPanel, "UnitStylesDelete", BUTTON_UNITSTYLEDELETE,
+				"information16.png",
+				"information32.png",
+				Assembly.GetExecutingAssembly().Location, "AOTools.UnitStylesDelete",
+					"Create and Modify Unit Styles"))
+
+			{
+				// creating the pushbutton failed
+				TaskDialog td = new TaskDialog("AO Tools - Unit Styles Delete");
+				td.MainIcon = TaskDialogIcon.TaskDialogIconWarning;
+				td.MainInstruction = "failed to create the delete unit styles button";
+				td.Show();
+
+				return Result.Failed;
+			}
+			return Result.Succeeded;
+		}
+
+		// method to add a pushbutton to the ribbon
+		private bool AddPushButton(RibbonPanel Panel, string ButtonName,
+			string ButtonText, string Image16, string Image32,
+			string dllPath, string dllClass, string ToolTip)
+		{
+			try
+			{
+				PushButtonData m_pdData = CreateButton(ButtonName, ButtonText, Image16, Image32,
+					dllPath, dllClass, ToolTip);
+
+				// add it to the panel
+				PushButton m_pb = Panel.AddItem(m_pdData) as PushButton;
+
+				return true;
+			}
+			catch
+			{
+				return false;
+			}
+		}
+
+		private PushButtonData CreateButton(string ButtonName,
+			string ButtonText,
+			string Image16,
+			string Image32,
+			string dllPath,
+			string dllClass,
+			string ToolTip)
+		{
+			PushButtonData pdData;
+
+			try
+			{
+				pdData = new PushButtonData(ButtonName,
+					ButtonText, dllPath, dllClass);
+				// if we have a path for a small image, try to load the image
+				if (Image16.Length != 0)
+				{
+					try
+					{
+						// load the image
+						pdData.Image = CsUtilitiesMedia.GetBitmapImage(Image16, NAMESPACE_PREFIX);
+					}
+					catch
+					{
+						// could not locate the image
+					}
+				}
+
+				// if have a path for a large image, try to load the image
+				if (Image32.Length != 0)
+				{
+					try
+					{
+						// load the image
+						pdData.LargeImage = CsUtilitiesMedia.GetBitmapImage(Image32, NAMESPACE_PREFIX);
+					}
+					catch
+					{
+						// could not locate the image
+					}
+				}
+
+				// set the tooltip
+				pdData.ToolTip = ToolTip;
+			}
+			catch
+			{
+				return null;
+			}
+
+			return pdData;
 		}
 
 
@@ -437,258 +728,7 @@ namespace AOTools
 //			return Result.Succeeded;
 //		}
 
-		private Result TestButton(RibbonPanel ribbonPanel)
-		{
-			// create a button for the 'copy sheet' command
-			if (!AddPushButton(ribbonPanel, "TestExStore", BUTTON_TEST,
-				"information16.png",
-				"information32.png",
-				Assembly.GetExecutingAssembly().Location, "AOTools.TestExStore",
-				"Test Extension Storage"))
-
-			{
-				// creating the pushbutton failed
-				TaskDialog td = new TaskDialog("AO Tools - Test Ex Storage");
-				td.MainIcon = TaskDialogIcon.TaskDialogIconWarning;
-				td.MainContent = String.Format(Properties.Resources.ButtonCreateFail,
-					"AOTools Test Ex Storage");
-				td.Show();
-
-				return Result.Failed;
-			}
-			return Result.Succeeded;
-		}
-		
-		private Result ReadRootDataStoreButton(RibbonPanel ribbonPanel)
-		{
-			// create a button for the 'copy sheet' command
-			if (!AddPushButton(ribbonPanel, "ReadRootExStore", BUTTON_READ_ROOT_EX_STORE,
-				"information16.png",
-				"information32.png",
-				Assembly.GetExecutingAssembly().Location, "AOTools.ReadRootExStore",
-				"Read Root Extension Storage"))
-
-			{
-				// creating the pushbutton failed
-				TaskDialog td = new TaskDialog("AO Tools - Read Root Ex Storage");
-				td.MainIcon = TaskDialogIcon.TaskDialogIconWarning;
-				td.MainContent = String.Format(Properties.Resources.ButtonCreateFail,
-					"AOTools Read Root Ex Storage");
-				td.Show();
-
-				return Result.Failed;
-			}
-			return Result.Succeeded;
-		}
-		
-		private Result RootDataStoreButton(RibbonPanel ribbonPanel)
-		{
-			// create a button for the 'copy sheet' command
-			if (!AddPushButton(ribbonPanel, "RootExStore", BUTTON_ROOT_EX_STORE,
-				"information16.png",
-				"information32.png",
-				Assembly.GetExecutingAssembly().Location, "AOTools.RootExStore",
-				"Make Root Extension Storage"))
-
-			{
-				// creating the pushbutton failed
-				TaskDialog td = new TaskDialog("AO Tools - Root Ex Storage");
-				td.MainIcon = TaskDialogIcon.TaskDialogIconWarning;
-				td.MainContent = String.Format(Properties.Resources.ButtonCreateFail,
-					"AOTools Root Ex Storage");
-				td.Show();
-
-				return Result.Failed;
-			}
-			return Result.Succeeded;
-		}
-
-
-		private Result DeleteDataStoreButton(RibbonPanel ribbonPanel)
-		{
-			// create a button for the 'copy sheet' command
-			if (!AddPushButton(ribbonPanel, "DelExStore", BUTTON_DEL_EX_STORAGE,
-				"information16.png",
-				"information32.png",
-				Assembly.GetExecutingAssembly().Location, "AOTools.DelExStore",
-				"Delete Extension Storage"))
-
-			{
-				// creating the pushbutton failed
-				TaskDialog td = new TaskDialog("AO Tools - Delete Ex Storage");
-				td.MainIcon = TaskDialogIcon.TaskDialogIconWarning;
-				td.MainContent = String.Format(Properties.Resources.ButtonCreateFail,
-					"AOTools Del Ex Storage");
-				td.Show();
-
-				return Result.Failed;
-			}
-			return Result.Succeeded;
-		}
-
-
-		private Result AddDataStoreButton(RibbonPanel ribbonPanel)
-		{
-			// create a button for the 'copy sheet' command
-			if (!AddPushButton(ribbonPanel, "DataStore", BUTTON_DATA_STORAGE,
-				"information16.png",
-				"information32.png",
-				Assembly.GetExecutingAssembly().Location, "AOTools.DataStore",
-				"Add Data Storage"))
-
-			{
-				// creating the pushbutton failed
-				TaskDialog td = new TaskDialog("AO Tools - Data Storage");
-				td.MainIcon = TaskDialogIcon.TaskDialogIconWarning;
-				td.MainContent = String.Format(Properties.Resources.ButtonCreateFail,
-					"AOTools Data Storage");
-				td.Show();
-
-				return Result.Failed;
-			}
-			return Result.Succeeded;
-		}
-		
-		private Result AddSelectButton(RibbonPanel ribbonPanel)
-		{
-			// create a button for the 'copy sheet' command
-			if (!AddPushButton(ribbonPanel, "Select", BUTTON_SELECT,
-				"information16.png",
-				"information32.png",
-				Assembly.GetExecutingAssembly().Location, "AOTools.SelectElement",
-				"Select Element"))
-
-			{
-				// creating the pushbutton failed
-				TaskDialog td = new TaskDialog("AO Tools - Select Element");
-				td.MainIcon = TaskDialogIcon.TaskDialogIconWarning;
-				td.MainContent = String.Format(Properties.Resources.ButtonCreateFail,
-					"AOTools Select");
-				td.Show();
-
-				return Result.Failed;
-			}
-			return Result.Succeeded;
-		}
-
-		private Result AddUnitStylesButton(RibbonPanel ribbonPanel)
-		{
-			// create a button for the 'copy sheet' command
-			if (!AddPushButton(ribbonPanel, "UnitStyles", BUTTON_UNITSTYLES,
-				"information16.png",
-				"information32.png",
-				Assembly.GetExecutingAssembly().Location, "AOTools.UnitStylesCommand",
-					"Create and Modify Unit Styles"))
-
-			{
-				// creating the pushbutton failed
-				TaskDialog td = new TaskDialog("AO Tools - Unit Styles Create");
-				td.MainIcon = TaskDialogIcon.TaskDialogIconWarning;
-				td.MainContent = String.Format(Properties.Resources.ButtonCreateFail,
-					Properties.Resources.UnitStyleButtonText);
-				td.Show();
-
-				return Result.Failed;
-			}
-			return Result.Succeeded;
-		}
-
-		private Result AddUnitStyleDeleteButton(RibbonPanel ribbonPanel)
-		{
-			// create a button for the 'copy sheet' command
-			if (!AddPushButton(ribbonPanel, "UnitStylesDelete", BUTTON_UNITSTYLEDELETE,
-				"information16.png",
-				"information32.png",
-				Assembly.GetExecutingAssembly().Location, "AOTools.UnitStylesDelete",
-					"Create and Modify Unit Styles"))
-
-			{
-				// creating the pushbutton failed
-				TaskDialog td = new TaskDialog("AO Tools - Unit Styles Delete");
-				td.MainIcon = TaskDialogIcon.TaskDialogIconWarning;
-				td.MainContent = "failed to create the delete unit styles button";
-				td.Show();
-
-				return Result.Failed;
-			}
-			return Result.Succeeded;
-		}
-
-		// method to add a pushbutton to the ribbon
-		private bool AddPushButton(RibbonPanel Panel, string ButtonName,
-			string ButtonText, string Image16, string Image32,
-			string dllPath, string dllClass, string ToolTip)
-		{
-			try
-			{
-				PushButtonData m_pdData = CreateButton(ButtonName, ButtonText, Image16, Image32,
-					dllPath, dllClass, ToolTip);
-
-				// add it to the panel
-				PushButton m_pb = Panel.AddItem(m_pdData) as PushButton;
-
-				return true;
-			}
-			catch
-			{
-				return false;
-			}
-		}
-
-		private PushButtonData CreateButton(string ButtonName,
-			string ButtonText,
-			string Image16,
-			string Image32,
-			string dllPath,
-			string dllClass,
-			string ToolTip)
-		{
-			PushButtonData pdData;
-
-			try
-			{
-				pdData = new PushButtonData(ButtonName,
-					ButtonText, dllPath, dllClass);
-				// if we have a path for a small image, try to load the image
-				if (Image16.Length != 0)
-				{
-					try
-					{
-						// load the image
-						pdData.Image = CsUtilitiesMedia.GetBitmapImage(Image16, NAMESPACE_PREFIX);
-					}
-					catch
-					{
-						// could not locate the image
-					}
-				}
-
-				// if have a path for a large image, try to load the image
-				if (Image32.Length != 0)
-				{
-					try
-					{
-						// load the image
-						pdData.LargeImage = CsUtilitiesMedia.GetBitmapImage(Image32, NAMESPACE_PREFIX);
-					}
-					catch
-					{
-						// could not locate the image
-					}
-				}
-
-				// set the tooltip
-				pdData.ToolTip = ToolTip;
-			}
-			catch
-			{
-				return null;
-			}
-
-			return pdData;
-		}
-
-
+	
 
 
 		//		private void AppClosing(object sender, ApplicationClosingEventArgs args)

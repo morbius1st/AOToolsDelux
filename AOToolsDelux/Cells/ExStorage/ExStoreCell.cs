@@ -2,14 +2,8 @@
 
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Linq;
-using System.Runtime.CompilerServices;
-using System.Text;
-using System.Threading.Tasks;
 using AOTools.Cells.SchemaCells;
 using AOTools.Cells.SchemaDefinition;
-using Autodesk.Revit.DB.ExtensibleStorage;
 
 #endregion
 
@@ -18,40 +12,50 @@ using Autodesk.Revit.DB.ExtensibleStorage;
 
 namespace AOTools.Cells.ExStorage
 {
-	public class ExStoreCell : IExStore, IExStoreData<SchemaDictionaryCell, List<SchemaDictionaryCell>> //: SchemaDefCells, 
+
+	public class ExStoreCell : IExStore<SchemaCellKey, SchemaDictionaryCell>
 	{
 	#region private fields
+
+		private static readonly Lazy<ExStoreCell> instance =
+			new Lazy<ExStoreCell>(() => new ExStoreCell());
+
+		public const string SCHEMA_NAME = "CellDefaultDefinition";
+		public const string SCHEMA_DESC = "Default Root Cells Definition";
+		public const string NOTDEFINED = "<not defined>";
 
 	#endregion
 
 	#region ctor
 
-		private ExStoreCell(int count)
+		private ExStoreCell()
 		{
-			Initialize(count);
+			IsInitialized = true;
+			// Initialize();
 		}
 
 	#endregion
 
 	#region public properties
 
-		public List<SchemaDictionaryCell> Data { get; private set; }
+		public static ExStoreCell Instance => instance.Value;
+
+		public string Name => SCHEMA_NAME;
+		public string Description => SCHEMA_DESC;
+
+		// this is the schema definition and fields
+		public SchemaDefinitionCell SchemaDefinition { get; }  = SchemaDefinitionCell.Instance;
+
+		// // this is the list of cell data
+		// public List<SchemaDictionaryCell> Data { get; private set; }
+
+		// public Dictionary<string, string> SubSchemaFields { get; set; }
+
+		public SchemaDictionaryCell FieldDefs => SchemaDefinition.Fields;
 
 		public Guid ExStoreGuid => Guid.Empty;
 
-		public string Name => SchemaDefCells.SCHEMA_NAME;
-		public string Description => SchemaDefCells.SCHEMA_DESC;
-
 		public bool IsInitialized { get; private set; }
-
-		public Dictionary<string, string> SubSchemaFields { get; set; }
-
-
-		public static SchemaDefCells SchemaDef { get; } = new SchemaDefCells();
-
-		public SchemaDictionaryCell FieldDefs => SchemaDef.DefaultFields;
-
-		public Enum[] KeyOrder => SchemaDef.KeyOrderX;
 
 	#endregion
 
@@ -61,16 +65,11 @@ namespace AOTools.Cells.ExStorage
 
 	#region public methods
 
-		public static ExStoreCell Instance(int count)
-		{
-			return new ExStoreCell(count);
-		}
-
 		public void Initialize(int count)
 		{
 			if (IsInitialized) return;
 
-			initData(count);
+			// initData(count);
 
 			IsInitialized = true;
 		}
@@ -78,29 +77,29 @@ namespace AOTools.Cells.ExStorage
 		// set the default values
 		// the default values are those used in the schema field
 		// definition so only need to clone the schema field def
-		public SchemaDictionaryCell DefaultValues()
-		{
-			return FieldDefs.Clone();
-		}
-
-		public void AddDefault()
-		{
-			Data.Add(DefaultValues());
-		}
+		// public SchemaDictionaryCell DefaultValues()
+		// {
+		// 	return FieldDefs.Clone();
+		// }
+		//
+		// public void AddDefault()
+		// {
+		// 	Data.Add(DefaultValues());
+		// }
 
 	#endregion
 
 	#region private methods
 
-		private void initData(int count)
-		{
-			Data = new List<SchemaDictionaryCell>();
-
-			for (int i = 0; i < count; i++)
-			{
-				AddDefault();
-			}
-		}
+		// private void initData(int count)
+		// {
+		// 	Data = new List<SchemaDictionaryCell>();
+		//
+		// 	for (int i = 0; i < count; i++)
+		// 	{
+		// 		AddDefault();
+		// 	}
+		// }
 
 	#endregion
 

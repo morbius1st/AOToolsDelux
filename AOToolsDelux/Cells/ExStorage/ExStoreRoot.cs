@@ -1,8 +1,7 @@
 ﻿#region using
 
 using System;
-using AOTools.Cells.SchemaCells;
-using AOTools.Cells.ExStorage;
+using System.Linq.Expressions;
 using AOTools.Cells.SchemaDefinition;
 
 #endregion
@@ -12,38 +11,39 @@ using AOTools.Cells.SchemaDefinition;
 
 namespace AOTools.Cells.ExStorage
 {
-	public class ExStoreRoot : IExStore, IExStoreData<SchemaDictionaryRoot, SchemaDictionaryRoot>
+	public class ExStoreRoot :
+			IExStore<SchemaRootKey, SchemaDictionaryRoot>
 	{
 	#region private fields
+
+		private static readonly Lazy<ExStoreRoot> instance =
+			new Lazy<ExStoreRoot>(() => new ExStoreRoot());
+
+		public const string ROOT_SCHEMA_NAME = "CellsAppRoot";
+		public const string ROOT_SCHEMA_DESC = "Excel Cells to Revit Exchange";
+		public const string ROOT_DEVELOPER_NAME = "CyberStudio";
 
 	#endregion
 
 	#region ctor
 
-		private ExStoreRoot()
-		{
-			Initialize();
-		}
+		private ExStoreRoot() { }
 
 	#endregion
 
 	#region public properties
 
-		public SchemaDictionaryRoot Data { get; private set; }
+		public static ExStoreRoot Instance => instance.Value;
 
+		public string Name => ROOT_SCHEMA_NAME;
+		public string Description => ROOT_SCHEMA_DESC;
+		public string Developer => ROOT_DEVELOPER_NAME;
 		public Guid ExStoreGuid => SchemaGuidManager.RootGuid;
 
-		public string Name => SchemaDefRoot.ROOT_SCHEMA_NAME;
-		public string Description => SchemaDefRoot.ROOT_SCHEMA_DESC;
-		public string Developer => SchemaDefRoot.ROOT_DEVELOPER_NAME;
+		// the schema fields
+		public  SchemaDefinitionRoot SchemaDefinition { get; }  = SchemaDefinitionRoot.Instance;
 
-		public bool IsInitialized { get; private set; }
-
-		public static SchemaDefRoot SchemaDef { get; }  = new SchemaDefRoot();
-
-		public SchemaDictionaryRoot FieldDefs => SchemaDef.DefaultFields;
-
-		public Enum[] KeyOrder => SchemaDef.KeyOrderX;
+		public SchemaDictionaryRoot FieldDefs => SchemaDefinition.Fields;
 
 	#endregion
 
@@ -52,26 +52,6 @@ namespace AOTools.Cells.ExStorage
 	#endregion
 
 	#region public methods
-
-		public static ExStoreRoot Instance()
-		{
-			return new ExStoreRoot();
-		}
-
-		public void Initialize()
-		{
-			Data = DefaultValues();
-
-			IsInitialized = true;
-		}
-
-		// set the default values
-		// the default values are those used in the schema field
-		// definition so only need to clone the schema field def
-		public SchemaDictionaryRoot DefaultValues()
-		{
-			return SchemaDef.DefaultFields.Clone();
-		}
 
 	#endregion
 

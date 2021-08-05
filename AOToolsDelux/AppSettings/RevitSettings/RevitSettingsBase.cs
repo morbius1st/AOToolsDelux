@@ -7,8 +7,8 @@ using AOTools.AppSettings.SchemaSettings;
 using AOTools.AppSettings.SettingUtil;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.DB.ExtensibleStorage;
-using static Autodesk.Revit.DB.ExtensibleStorage.Schema;
 using InvalidOperationException = Autodesk.Revit.Exceptions.InvalidOperationException;
+using static Autodesk.Revit.DB.ExtensibleStorage.Schema;
 using static AOTools.AppSettings.RevitSettings.RevitSettingsUnitApp;
 using static AOTools.AppSettings.RevitSettings.RevitSettingsUnitUsr;
 using AOTools.Utility;
@@ -459,7 +459,7 @@ namespace AOTools.AppSettings.RevitSettings
 					}
 				}
 
-				// remove the root schema laast
+				// remove the root schema last
 				EraseSchemaAndAllEntities(Entities[0].Schema, false);
 				Entities[0].Dispose();
 

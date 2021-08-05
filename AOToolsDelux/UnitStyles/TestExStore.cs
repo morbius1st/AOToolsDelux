@@ -6,9 +6,11 @@ using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
 using AOTools.Cells.SchemaDefinition;
+using AOTools.Cells.SchemaCells;
 using static UtilityLibrary.MessageUtilities;
 
 using AOTools.Cells.ExStorage;
+using AOTools.Cells.Tests;
 using Autodesk.Revit.DB.ExtensibleStorage;
 using static AOTools.Cells.ExStorage.ExStoreMgr;
 
@@ -21,6 +23,7 @@ using static AOTools.Cells.ExStorage.ExStoreMgr;
 
 namespace AOTools
 {
+
 	[Transaction(TransactionMode.Manual)]
 	class TestExStore : IExternalCommand
 	{
@@ -47,10 +50,11 @@ namespace AOTools
 
 		private Result Test01()
 		{
-			ExStoreHelper xsHlpr = new ExStoreHelper();
+			
 
 			try
 			{
+				if (AppRibbon.Doc.IsDetached) return Result.Cancelled;
 
 				// 1. make a root ex store
 				// 2. using the configured app guid, save the app data, save the cell data
@@ -60,7 +64,42 @@ namespace AOTools
 				// 6. read the app ex store
 				// 7. read the cell ex store
 
+				ExStoreRtnCodes result;
 
+				SchemaDefinitionRoot s = SchemaDefinitionRoot.Instance;
+
+				SchemaDictionaryRoot f1 = s.Fields;
+
+				ExStoreRoot r1 = ExStoreRoot.Instance;
+				
+				SchemaDefinitionApp a = SchemaDefinitionApp.Instance;
+
+				SchemaDictionaryApp f2 = a.Fields;
+
+				ExStoreApp r2 = ExStoreApp.Instance;
+
+
+
+
+
+
+				int b = 1;
+/*
+				ExStoreMgr a = XsMgr;
+
+				// result = XsMgr.Initialize();
+				// if (result != ExStoreRtnCodes.GOOD) return Result.Failed;
+				//
+				// result = XsMgr.Configure();
+				// if (result != ExStoreRtnCodes.GOOD) return Result.Failed;
+
+				result = ExStorageTests.MakeRootExStorage();
+				if (result != ExStoreRtnCodes.GOOD) return Result.Failed;
+
+				result = ExStorageTests.MakeAppAndCellsExStorage();
+				if (result != ExStoreRtnCodes.GOOD) return Result.Failed;
+
+*/
 
 			}
 			catch (OperationCanceledException)
@@ -76,7 +115,7 @@ namespace AOTools
 
 			return Result.Succeeded;
 		}
-
+/*
 		private void SampleCellData(ExStoreCell xCell, int id)
 		{
 
@@ -107,7 +146,7 @@ namespace AOTools
 			xCell.Data[id][SchemaCellKey.XL_FILE_PATH].Value = $"c:\\file path\\filename{id:D3}.xls";
 			xCell.Data[id][SchemaCellKey.XL_WORKSHEET_NAME].Value = $"worksheet {id:d3}";
 		}
-
+*/
 	}
 
 }

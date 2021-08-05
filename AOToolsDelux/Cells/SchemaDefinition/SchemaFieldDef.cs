@@ -1,6 +1,7 @@
 ﻿#region + Using Directives
 
 using System;
+using AOTools.Cells.ExStorage;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.DB.ExtensibleStorage;
 
@@ -12,13 +13,23 @@ using Autodesk.Revit.DB.ExtensibleStorage;
 namespace AOTools.Cells.SchemaDefinition
 {
 
-	public interface ISchemaFieldDef
+	// public interface ISchemaFieldDef
+	// {
+	// 	dynamic Value { get; set; }
+	// }
+
+	public interface  ISchemaFieldDef<TE> where TE : Enum
 	{
-		dynamic Value { get; set; }
+		TE Key { get; }
+
+		Type ValueType { get; }
+
+		ISchemaFieldDef<TE> Clone();
 	}
 	
-	public class SchemaFieldDef<T> : ISchemaFieldDef  where T: Enum 
+	public class SchemaFieldDef<TE, TD> : ISchemaFieldDef<TE> where TE: Enum 
 	{
+		public TE Key { get; private set; }
 		// [DataMember(Order = 1)]
 		public int Sequence { get; set; }
 
@@ -34,100 +45,65 @@ namespace AOTools.Cells.SchemaDefinition
 		// [DataMember(Order = 5)]
 		public string Guid { get; set; }
 
-		// [DataMember(Name = "RevitFieldValue", Order = 6)]
-		public dynamic Value { get; set; }
+		public Type ValueType { get; set; }
+
+		// public ExData<TD> DefaultValue { get; set; }
+
+		// // [DataMember(Name = "RevitFieldValue", Order = 6)]
+		// public dynamic Value { get; set; }
 
 		public SchemaFieldDef()
 		{
 			Sequence = -1;
 			Name = null;
 			Desc = null;
-			Value = null;
+			ValueType = typeof(object);
 			UnitType = RevitUnitType.UT_UNDEFINED;
 			Guid = null;
 		}
 
-		// public SchemaFieldDef(SchemaAppKey sequence, string name, string desc, dynamic val,
-		// 	RevitUnitType unitType = RevitUnitType.UT_UNDEFINED, string guid = "")
-		// {
-		// 	Sequence = (int) sequence;
-		// 	Name = name;
-		// 	Desc = desc;
-		// 	Value = val;
-		// 	UnitType = unitType;
-		// 	Guid = guid;
-		// }
-		//
-		// public SchemaFieldDef(SchemaCellKey sequence, string name, string desc, dynamic val,
-		// 	RevitUnitType unitType = RevitUnitType.UT_UNDEFINED, string guid = "")
-		// {
-		// 	Sequence = (int) sequence;
-		// 	Name = name;
-		// 	Desc = desc;
-		// 	Value = val;
-		// 	UnitType = unitType;
-		// 	Guid = guid;
-		// }
-
-		
-		public SchemaFieldDef(T sequence, string name, string desc, dynamic val,
+		public SchemaFieldDef(TE sequence, string name, string desc, /*ExData<TD> value,*/
 			RevitUnitType unitType = RevitUnitType.UT_UNDEFINED, string guid = "")
 		{
+			Key = sequence;
 			Sequence = (int)(object) sequence;
 			Name = name;
 			Desc = desc;
-			Value = val;
+			ValueType = typeof(TD);
 			UnitType = unitType;
 			Guid = guid;
 		}
 
 
-		public SchemaFieldDef(SchemaFieldDef<T> fi)
+		public SchemaFieldDef(SchemaFieldDef<TE, TD> fi)
 		{
+			Key = fi.Key;
 			Sequence = fi.Sequence;
 			Name = fi.Name;
 			Desc = fi.Desc;
-			Value = fi.Value;
+			ValueType = fi.ValueType;
 			UnitType = fi.UnitType;
 			Guid = fi.Guid;
 		}
 
-		// master switch routine
-		public dynamic ExtractValue(Entity e, Field f)
+		public ISchemaFieldDef<TE> Clone()
 		{
-			return ExtractValue(Value, e, f);
+			return Copy();
 		}
 
-		// sub-routine
-		private Entity ExtractValue(Entity key, Entity e, Field f)
+		public SchemaFieldDef<TE, TD> Copy()
 		{
-			return e.Get<Entity>(f);
-		}
+			SchemaFieldDef<TE, TD> copy = new SchemaFieldDef<TE, TD>();
 
-		private string ExtractValue(string key, Entity e, Field f)
-		{
-			return e.Get<string>(f);
-		}
+			Key = copy.Key;
+			Sequence = copy.Sequence;
+			Name = copy.Name;
+			Desc = copy.Desc;
+			ValueType = copy.ValueType;
+			UnitType = copy.UnitType;
+			Guid = copy.Guid;
 
-		private int ExtractValue(int key, Entity e, Field f)
-		{
-			return e.Get<int>(f);
-		}
-
-		private bool ExtractValue(bool key, Entity e, Field f)
-		{
-			return e.Get<bool>(f);
-		}
-
-		private double ExtractValue(double key, Entity e, Field f)
-		{
-			return e.Get<double>(f, DisplayUnitType.DUT_GENERAL);
-		}
-
-		public SchemaFieldDef<T> Clone()
-		{
-			// SchemaFieldDef copy = new SchemaFieldDef(Sequence, Name, Desc, Value, UnitType, Guid);
-			return new SchemaFieldDef<T>(this);
+			return copy;
 		}
 	}
 }

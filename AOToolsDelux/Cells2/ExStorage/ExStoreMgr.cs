@@ -1,6 +1,9 @@
 ﻿#region + Using Directives
 
-using AOTools.Cells.SchemaDefinition;
+using AOTools.Cells2.SchemaCells;
+using AOTools.Cells2.SchemaDefinition;
+using Autodesk.Revit.DB;
+using Autodesk.Revit.DB.ExtensibleStorage;
 using Autodesk.Revit.UI;
 
 // using static AOTools.Cells.ExStorage.ExStoreApp;
@@ -48,12 +51,10 @@ using Autodesk.Revit.UI;
  */
 
 
-namespace AOTools.Cells.ExStorage
+namespace AOTools.Cells2.ExStorage
 {
-
 	public class ExStoreMgr
 	{
-/*
 		private ExStoreRoot xRoot;
 		private ExStoreApp xApp;
 		private ExStoreCell xCell;
@@ -333,6 +334,6 @@ namespace AOTools.Cells.ExStorage
 			td.Show();
 		}
 
-	#endregion*/
+	#endregion
 	}
 }

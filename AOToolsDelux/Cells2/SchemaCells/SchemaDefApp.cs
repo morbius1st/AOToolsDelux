@@ -4,15 +4,15 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using AOTools.Cells.SchemaDefinition;
-using static AOTools.Cells.SchemaDefinition.SchemaAppKey;
+using AOTools.Cells2.SchemaDefinition;
+using static AOTools.Cells2.SchemaDefinition.SchemaAppKey;
 
 #endregion
 
 // user name: jeffs
 // created:   7/3/2021 10:48:37 PM
 
-namespace AOTools.Cells.SchemaCells
+namespace AOTools.Cells2.SchemaCells
 {
 	public class SchemaDefApp : ASchemaDef<SchemaAppKey, SchemaDictionaryApp>
 	{

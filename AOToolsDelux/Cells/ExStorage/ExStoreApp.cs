@@ -11,39 +11,38 @@ using AOTools.Cells.SchemaDefinition;
 
 namespace AOTools.Cells.ExStorage
 {
-	public class ExStoreApp : IExStore, IExStoreData<SchemaDictionaryApp, SchemaDictionaryApp> //: SchemaDefApp, 
+	public class ExStoreApp : IExStore<SchemaAppKey, SchemaDictionaryApp>
 	{
 	#region private fields
+
+		private static readonly Lazy<ExStoreApp> instance =
+			new Lazy<ExStoreApp>(() => new ExStoreApp());
+
+		public const string SCHEMA_NAME = "CellsAppData";
+		public const string SCHEMA_DESC = "Excel Cells to Revit Exchange";
+		public const string DEVELOPER_NAME = "CyberStudio";
 
 	#endregion
 
 	#region ctor
 
-		private ExStoreApp()
-		{
-			Initialize();
-		}
+		private ExStoreApp() { }
 
 	#endregion
 
 	#region public properties
 
-		public SchemaDictionaryApp Data { get; private set; }
+		public static ExStoreApp Instance => instance.Value;
 
+		public string Name => SCHEMA_NAME;
+		public string Description => SCHEMA_DESC;
+		public string Developer => DEVELOPER_NAME;
 		public Guid ExStoreGuid => SchemaGuidManager.AppGuid;
 
-		public string Name => SchemaDefApp.SCHEMA_NAME;
-		public string Description => SchemaDefApp.SCHEMA_DESC;
-		public string Developer => SchemaDefApp.DEVELOPER_NAME;
+		// the schema fields
+		public  SchemaDefinitionApp SchemaDefinition { get; }  = SchemaDefinitionApp.Instance;
 
-		public bool IsInitialized { get; private set; }
-
-
-		public static SchemaDefApp SchemaDef { get; }  = new SchemaDefApp();
-
-		public SchemaDictionaryApp FieldDefs => SchemaDef.DefaultFields;
-
-		public Enum[] KeyOrder => SchemaDef.KeyOrderX;
+		public SchemaDictionaryApp FieldDefs => SchemaDefinition.Fields;
 
 	#endregion
 
@@ -52,26 +51,6 @@ namespace AOTools.Cells.ExStorage
 	#endregion
 
 	#region public methods
-
-		public static ExStoreApp Instance()
-		{
-			return new ExStoreApp();
-		}
-
-		public void Initialize()
-		{
-			Data = DefaultValues();
-
-			IsInitialized = true;
-		}
-
-		// set the default values
-		// the default values are those used in the schema field
-		// definition so only need to clone the schema field def
-		public SchemaDictionaryApp DefaultValues()
-		{
-			return SchemaDef.DefaultFields.Clone();
-		}
 
 	#endregion
 

@@ -5,12 +5,13 @@ using System.Diagnostics;
 using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
-using AOTools.Cells.SchemaDefinition;
+using AOTools.Cells2.SchemaDefinition;
 using static UtilityLibrary.MessageUtilities;
 
 using AOTools.Cells.ExStorage;
 using Autodesk.Revit.DB.ExtensibleStorage;
-using static AOTools.Cells.ExStorage.ExStoreMgr;
+using InvalidOperationException = Autodesk.Revit.Exceptions.InvalidOperationException;
+// using static AOTools.Cells.ExStorage.ExStoreMgr;
 
 #endregion
 
@@ -21,20 +22,13 @@ using static AOTools.Cells.ExStorage.ExStoreMgr;
 
 namespace AOTools
 {
+/*
 	[Transaction(TransactionMode.Manual)]
-	class DelExStore : IExternalCommand
+	class DelRootExStore : IExternalCommand
 	{
-		// public static Schema SchemaUnit;
-		// public static Entity EntityUnit;
-		//
-		// public static Schema SchemaDS;
-		// public static Entity EntityDS;
-
-
-
-		public Result Execute(ExternalCommandData commandData, ref string message, ElementSet elements)
+		public Result Execute(ExternalCommandData commandData, 
+			ref string message, ElementSet elements)
 		{
-
 			AppRibbon.UiApp = commandData.Application;
 			AppRibbon.Uidoc = AppRibbon.UiApp.ActiveUIDocument;
 			AppRibbon.App =  AppRibbon.UiApp.Application;
@@ -47,26 +41,78 @@ namespace AOTools
 
 		private Result Test01()
 		{
-			ExStoreHelper xsHlpr = new ExStoreHelper();
+			// XsMgr.Initialize();
 
-			try
+			ExStoreRtnCodes result = XsMgr.DeleteRoot();
+
+			if (result != ExStoreRtnCodes.GOOD)
 			{
-			}
-			catch (OperationCanceledException)
-			{
+				XsMgr.DeleteSchemaFail(XsMgr.OpDescription);
 				return Result.Failed;
 			}
 
-			// Schema schemaUnit= SchemaUnit;
-			// Entity entityUnit= EntityUnit;
-			// 				   
-			// Schema schemaDS =  SchemaDS;
-			// Entity entityDS =  EntityDS;
+			return Result.Succeeded;
+		}
+	}
+
+	[Transaction(TransactionMode.Manual)]
+	class DelAppExStore : IExternalCommand
+	{
+		public Result Execute(ExternalCommandData commandData, 
+			ref string message, ElementSet elements)
+		{
+			AppRibbon.UiApp = commandData.Application;
+			AppRibbon.Uidoc = AppRibbon.UiApp.ActiveUIDocument;
+			AppRibbon.App =  AppRibbon.UiApp.Application;
+			AppRibbon.Doc =  AppRibbon.Uidoc.Document;
+
+			OutLocation = OutputLocation.DEBUG;
+
+			return Test01();
+		}
+
+		private Result Test01()
+		{
+			ExStoreRtnCodes result = XsMgr.DeleteApp();
+
+			if (result != ExStoreRtnCodes.GOOD)
+			{
+				XsMgr.DeleteSchemaFail(XsMgr.OpDescription);
+				return Result.Failed;
+			}
 
 			return Result.Succeeded;
 		}
-		
-
 	}
-
+	
+	// [Transaction(TransactionMode.Manual)]
+	// class DelSubExStor : IExternalCommand
+	// {
+	// 	public Result Execute(ExternalCommandData commandData, 
+	// 		ref string message, ElementSet elements)
+	// 	{
+	// 		AppRibbon.UiApp = commandData.Application;
+	// 		AppRibbon.Uidoc = AppRibbon.UiApp.ActiveUIDocument;
+	// 		AppRibbon.App =  AppRibbon.UiApp.Application;
+	// 		AppRibbon.Doc =  AppRibbon.Uidoc.Document;
+	//
+	// 		OutLocation = OutputLocation.DEBUG;
+	//
+	// 		return Test01();
+	// 	}
+	//
+	// 	private Result Test01()
+	// 	{
+	// 		ExStoreRtnCodes result = XsMgr.DeleteCells();
+	//
+	// 		if (result != ExStoreRtnCodes.GOOD)
+	// 		{
+	// 			XsMgr.DeleteSchemaFail(XsMgr.OpDescription);
+	// 			return Result.Failed;
+	// 		}
+	//
+	// 		return Result.Succeeded;
+	// 	}
+	// }
+*/
 }

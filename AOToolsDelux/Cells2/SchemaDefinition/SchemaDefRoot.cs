@@ -5,15 +5,15 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using AOTools.Cells.SchemaDefinition;
-using static AOTools.Cells.SchemaDefinition.SchemaRootKey;
+using AOTools.Cells2.SchemaDefinition;
+using static AOTools.Cells2.SchemaDefinition.SchemaRootKey;
 
 #endregion
 
 // user name: jeffs
 // created:   7/3/2021 10:48:37 PM
 
-namespace AOTools.Cells.SchemaDefinition
+namespace AOTools.Cells2.SchemaDefinition
 {
 	public class SchemaDefRoot : ASchemaDef<SchemaRootKey, SchemaDictionaryRoot>
 	{

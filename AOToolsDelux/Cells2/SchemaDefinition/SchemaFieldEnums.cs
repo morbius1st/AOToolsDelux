@@ -1,5 +1,9 @@
 ﻿#region + Using Directives
-
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 using Autodesk.Revit.DB;
 
 #endregion
@@ -7,7 +11,7 @@ using Autodesk.Revit.DB;
 // user name: jeffs
 // created:   7/3/2021 7:21:09 AM
 
-namespace AOTools.Cells.SchemaDefinition
+namespace AOTools.Cells2.SchemaDefinition
 {
 
 	public enum SchemaRootKey

@@ -201,27 +201,48 @@
     <Compile Include="AppSettings\Settings\SettingsMgr-v26.cs" />
     <Compile Include="AppSettings\SettingUtil\SettingsListings.cs" />
     <Compile Include="AppSettings\SchemaSettings\SchemaUnitUtil.cs" />
-    <Compile Include="Cells\ExStorage\ExStoreRoot.cs" />
-    <Compile Include="Cells\ExStorage\ExStoreHelper.cs" />
+    <Compile Include="Cells2\ExStorage\ExStoreRoot.cs" />
+    <Compile Include="Cells2\ExStorage\ExStoreHelper.cs" />
+    <Compile Include="Cells2\ExStorage\ExStoreApp.cs" />
+    <Compile Include="Cells2\ExStorage\ExStoreCell.cs" />
+    <Compile Include="Cells2\ExStorage\ExStoreMgr.cs" />
+    <Compile Include="Cells2\ExStorage\IExStoreData.cs" />
+    <Compile Include="Cells2\SchemaDefinition\ISchemaDef.cs" />
+    <Compile Include="Cells2\SchemaDefinition\SchemaDictionaryRoot.cs" />
+    <Compile Include="Cells2\SchemaDefinition\SchemaDefRoot.cs" />
+    <Compile Include="Cells2\SchemaCells\SchemaDefCells.cs" />
+    <Compile Include="Cells2\SchemaCells\SchemaDefApp.cs" />
+    <Compile Include="Cells2\SchemaCells\SchemaCellDictionaries.cs" />
+    <Compile Include="Cells2\SchemaDefinition\SchemaDictionaryBase.cs" />
+    <Compile Include="Cells2\SchemaDefinition\SchemaFieldDef.cs" />
+    <Compile Include="Cells2\SchemaDefinition\SchemaFieldEnums.cs" />
+    <Compile Include="Cells2\SchemaDefinition\SchemaGuidManager.cs" />
+    <Compile Include="Cells2\Tests\ExStorageTests.cs" />
     <Compile Include="Cells\ExStorage\ExStoreApp.cs" />
     <Compile Include="Cells\ExStorage\ExStoreCell.cs" />
+    <Compile Include="Cells\ExStorage\ExStoreDictionaries.cs" />
+    <Compile Include="Cells\ExStorage\ExStoreHelper.cs" />
     <Compile Include="Cells\ExStorage\ExStoreMgr.cs" />
+    <Compile Include="Cells\ExStorage\ExStoreRoot.cs" />
     <Compile Include="Cells\ExStorage\IExStoreData.cs" />
-    <Compile Include="Cells\SchemaDefinition\ISchemaDef.cs" />
-    <Compile Include="Cells\SchemaDefinition\SchemaDictionaryRoot.cs" />
-    <Compile Include="Cells\SchemaDefinition\SchemaDefRoot.cs" />
-    <Compile Include="Cells\SchemaCells\SchemaDefCells.cs" />
-    <Compile Include="Cells\SchemaCells\SchemaDefApp.cs" />
     <Compile Include="Cells\SchemaCells\SchemaCellDictionaries.cs" />
+    <Compile Include="Cells\SchemaCells\SchemaDefinitionApp.cs" />
+    <Compile Include="Cells\SchemaCells\SchemaDefinitionCell.cs" />
+    <Compile Include="Cells\SchemaDefinition\ISchemaDef.cs" />
+    <Compile Include="Cells\SchemaDefinition\SchemaDefinitionRoot.cs" />
     <Compile Include="Cells\SchemaDefinition\SchemaDictionaryBase.cs" />
+    <Compile Include="Cells\SchemaDefinition\SchemaDictionaryRoot.cs" />
     <Compile Include="Cells\SchemaDefinition\SchemaFieldDef.cs" />
     <Compile Include="Cells\SchemaDefinition\SchemaFieldEnums.cs" />
     <Compile Include="Cells\SchemaDefinition\SchemaGuidManager.cs" />
+    <Compile Include="Cells\Tests\ExStorageTests.cs" />
     <Compile Include="Revisions\Revision.cs" />
+    <Compile Include="UnitStyles\ModExStore.cs" />
+    <Compile Include="UnitStyles\ReadCellExStore.cs" />
+    <Compile Include="UnitStyles\ReadAppExStore.cs" />
     <Compile Include="UnitStyles\TestExStore.cs" />
-    <Compile Include="UnitStyles\DataStore.cs" />
+    <Compile Include="UnitStyles\MakeExStore.cs" />
     <Compile Include="UnitStyles\ReadRootExStore.cs" />
-    <Compile Include="UnitStyles\RootExStore.cs" />
     <Compile Include="UnitStyles\DelExStore.cs" />
     <Compile Include="UnitStyles\UnitStyleDefault.cs" />
     <Compile Include="UnitStyles\SelectElement.cs" />
@@ -249,6 +270,7 @@
     <Compile Include="Utility\AddinClasses.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Cells\Data Organization.txt" />
     <Content Include="Other\AOTools.addin">
       <SubType>Designer</SubType>
     </Content>

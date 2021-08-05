@@ -12,7 +12,7 @@ using static UtilityLibrary.MessageUtilities;
 
 using AOTools.Cells.ExStorage;
 using Autodesk.Revit.DB.ExtensibleStorage;
-using static AOTools.Cells.ExStorage.ExStoreMgr;
+// using static AOTools.Cells.ExStorage.ExStoreMgr;
 
 #endregion
 
@@ -25,7 +25,7 @@ namespace AOTools
 {
 /*
 	[Transaction(TransactionMode.Manual)]
-	class ReadRootExStore : IExternalCommand
+	class ReadAppExStore : IExternalCommand
 	{
 		// public static Schema SchemaUnit;
 		// public static Entity EntityUnit;
@@ -52,6 +52,40 @@ namespace AOTools
 		{
 			ExStoreHelper xsHlpr = new ExStoreHelper();
 
+			ExStoreRtnCodes result = ReadRootExStore(xsHlpr);
+
+			if (result != ExStoreRtnCodes.GOOD)
+			{
+				Debug.WriteLine("read root failed");
+				return Result.Failed;
+			}
+
+			ExStoreApp xApp = ExStoreApp.Instance();
+
+			try
+			{
+				result = XsMgr.ReadApp(ref xApp);
+
+				// result = xsHlpr.ReadAppData(xApp);
+
+				if (result != ExStoreRtnCodes.GOOD)
+				{
+					Debug.WriteLine("read app failed");
+					return Result.Failed;
+				}
+			}
+			catch (OperationCanceledException)
+			{
+				return Result.Failed;
+			}
+
+			ShowData(xApp);
+
+			return Result.Succeeded;
+		}
+
+		private ExStoreRtnCodes ReadRootExStore(ExStoreHelper xsHlpr)
+		{
 			ExStoreRoot xRoot = ExStoreRoot.Instance();
 
 			try
@@ -61,33 +95,29 @@ namespace AOTools
 				if (result != ExStoreRtnCodes.GOOD)
 				{
 					Debug.WriteLine("initial save failed");
-					return Result.Failed;
+					return ExStoreRtnCodes.FAIL;
 				}
-
-				// SchemaGuidManager.AppGuidUniqueString = xRoot.Data[SchemaRootKey.APP_GUID].Value;
 			}
 			catch (OperationCanceledException)
 			{
-				return Result.Failed;
+				return ExStoreRtnCodes.FAIL;
 			}
 
-			ShowData(xRoot);
-
-			return Result.Succeeded;
+			return ExStoreRtnCodes.GOOD;
 		}
 
-		private void ShowData(ExStoreRoot xRoot)
+		private void ShowData(ExStoreApp xApp)
 		{
-			TaskDialog td = new TaskDialog("Ex Storage Root Data");
+			TaskDialog td = new TaskDialog("Ex Storage App Data");
 
-			td.MainInstruction = "Root Schema was read successfully\ncontents:";
+			td.MainInstruction = "App Schema was read successfully\ncontents:";
 
 			StringBuilder sb = new StringBuilder();
 
-			foreach (KeyValuePair<SchemaRootKey, SchemaFieldDef<SchemaRootKey>> kvp in xRoot.FieldDefs)
+			foreach (KeyValuePair<SchemaAppKey, SchemaFieldDef<SchemaAppKey>> kvp in xApp.FieldDefs)
 			{
-				string name = xRoot.FieldDefs[kvp.Key].Name;
-				string value = xRoot.Data[kvp.Key].Value;
+				string name = xApp.FieldDefs[kvp.Key].Name;
+				string value = xApp.Data[kvp.Key].Value;
 
 				sb.Append(name).Append("| ").AppendLine(value);
 			}
@@ -99,6 +129,7 @@ namespace AOTools
 
 		}
 		
+
 
 	}
 */
