@@ -1,7 +1,6 @@
 ﻿#region + Using Directives
 
 using System;
-using AOTools.Cells.ExStorage;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.DB.ExtensibleStorage;
 
@@ -13,23 +12,14 @@ using Autodesk.Revit.DB.ExtensibleStorage;
 namespace AOTools.Cells.SchemaDefinition
 {
 
-	// public interface ISchemaFieldDef
-	// {
-	// 	dynamic Value { get; set; }
-	// }
-
-	public interface  ISchemaFieldDef<TE> where TE : Enum
+	public interface ISchemaFieldDef
 	{
-		TE Key { get; }
-
-		Type ValueType { get; }
-
-		ISchemaFieldDef<TE> Clone();
+		dynamic Value { get; set; }
 	}
 	
-	public class SchemaFieldDef<TE, TD> : ISchemaFieldDef<TE> where TE: Enum 
+	public class SchemaFieldDef<T> : ISchemaFieldDef  where T: Enum 
 	{
-		public TE Key { get; private set; }
+		public T Key { get; private set; }
 		// [DataMember(Order = 1)]
 		public int Sequence { get; set; }
 
@@ -45,65 +35,102 @@ namespace AOTools.Cells.SchemaDefinition
 		// [DataMember(Order = 5)]
 		public string Guid { get; set; }
 
-		public Type ValueType { get; set; }
-
-		// public ExData<TD> DefaultValue { get; set; }
-
-		// // [DataMember(Name = "RevitFieldValue", Order = 6)]
-		// public dynamic Value { get; set; }
+		// [DataMember(Name = "RevitFieldValue", Order = 6)]
+		public dynamic Value { get; set; }
 
 		public SchemaFieldDef()
 		{
 			Sequence = -1;
 			Name = null;
 			Desc = null;
-			ValueType = typeof(object);
+			Value = null;
 			UnitType = RevitUnitType.UT_UNDEFINED;
 			Guid = null;
 		}
 
-		public SchemaFieldDef(TE sequence, string name, string desc, /*ExData<TD> value,*/
+		// public SchemaFieldDef(SchemaAppKey sequence, string name, string desc, dynamic val,
+		// 	RevitUnitType unitType = RevitUnitType.UT_UNDEFINED, string guid = "")
+		// {
+		// 	Sequence = (int) sequence;
+		// 	Name = name;
+		// 	Desc = desc;
+		// 	Value = val;
+		// 	UnitType = unitType;
+		// 	Guid = guid;
+		// }
+		//
+		// public SchemaFieldDef(SchemaCellKey sequence, string name, string desc, dynamic val,
+		// 	RevitUnitType unitType = RevitUnitType.UT_UNDEFINED, string guid = "")
+		// {
+		// 	Sequence = (int) sequence;
+		// 	Name = name;
+		// 	Desc = desc;
+		// 	Value = val;
+		// 	UnitType = unitType;
+		// 	Guid = guid;
+		// }
+
+		
+		public SchemaFieldDef(T sequence, string name, string desc, dynamic val,
 			RevitUnitType unitType = RevitUnitType.UT_UNDEFINED, string guid = "")
 		{
 			Key = sequence;
 			Sequence = (int)(object) sequence;
 			Name = name;
 			Desc = desc;
-			ValueType = typeof(TD);
+			Value = val;
 			UnitType = unitType;
 			Guid = guid;
 		}
 
 
-		public SchemaFieldDef(SchemaFieldDef<TE, TD> fi)
+		public SchemaFieldDef(SchemaFieldDef<T> fi)
 		{
 			Key = fi.Key;
 			Sequence = fi.Sequence;
 			Name = fi.Name;
 			Desc = fi.Desc;
-			ValueType = fi.ValueType;
+			Value = fi.Value;
 			UnitType = fi.UnitType;
 			Guid = fi.Guid;
 		}
 
-		public ISchemaFieldDef<TE> Clone()
+		// master switch routine
+		public dynamic ExtractValue(Entity e, Field f)
 		{
-			return Copy();
+			return ExtractValue(Value, e, f);
 		}
 
-		public SchemaFieldDef<TE, TD> Copy()
+		// sub-routine
+		private Entity ExtractValue(Entity key, Entity e, Field f)
 		{
-			SchemaFieldDef<TE, TD> copy = new SchemaFieldDef<TE, TD>();
+			return e.Get<Entity>(f);
+		}
 
-			Key = copy.Key;
-			Sequence = copy.Sequence;
-			Name = copy.Name;
-			Desc = copy.Desc;
-			ValueType = copy.ValueType;
-			UnitType = copy.UnitType;
-			Guid = copy.Guid;
+		private string ExtractValue(string key, Entity e, Field f)
+		{
+			return e.Get<string>(f);
+		}
 
-			return copy;
+		private int ExtractValue(int key, Entity e, Field f)
+		{
+			return e.Get<int>(f);
+		}
+
+		private bool ExtractValue(bool key, Entity e, Field f)
+		{
+			return e.Get<bool>(f);
+		}
+
+		private double ExtractValue(double key, Entity e, Field f)
+		{
+			return e.Get<double>(f, DisplayUnitType.DUT_GENERAL);
+		}
+
+		public SchemaFieldDef<T> Clone()
+		{
+			// SchemaFieldDef copy = new SchemaFieldDef(Sequence, Name, Desc, Value, UnitType, Guid);
+			return new SchemaFieldDef<T>(this);
 		}
 	}
 }

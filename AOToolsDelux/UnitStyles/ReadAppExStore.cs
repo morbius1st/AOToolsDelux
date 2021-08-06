@@ -12,7 +12,7 @@ using static UtilityLibrary.MessageUtilities;
 
 using AOTools.Cells.ExStorage;
 using Autodesk.Revit.DB.ExtensibleStorage;
-// using static AOTools.Cells.ExStorage.ExStoreMgr;
+using static AOTools.Cells.ExStorage.ExStoreMgr;
 
 #endregion
 
@@ -23,7 +23,7 @@ using Autodesk.Revit.DB.ExtensibleStorage;
 
 namespace AOTools
 {
-/*
+
 	[Transaction(TransactionMode.Manual)]
 	class ReadAppExStore : IExternalCommand
 	{
@@ -132,5 +132,5 @@ namespace AOTools
 
 
 	}
-*/
+
 }

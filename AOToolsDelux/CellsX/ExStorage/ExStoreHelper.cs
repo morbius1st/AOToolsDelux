@@ -1,15 +1,9 @@
 ﻿#region + Using Directives
 
 using System;
-using System.CodeDom;
-using System.Collections;
 using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using AOTools.Cells2.SchemaCells;
-using AOTools.Cells2.SchemaDefinition;
+using AOTools.Cells.SchemaCells;
+using AOTools.Cells.SchemaDefinition;
 using AOTools.Utility;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.DB.ExtensibleStorage;
@@ -20,8 +14,9 @@ using static Autodesk.Revit.DB.ExtensibleStorage.Schema;
 // user name: jeffs
 // created:   7/4/2021 3:07:57 PM
 
-namespace AOTools.Cells2.ExStorage
+namespace AOTools.Cells.ExStorage
 {
+
 	public enum ExStoreRtnCodes
 	{
 		APP_NOT_EXIST = -8,
@@ -36,7 +31,7 @@ namespace AOTools.Cells2.ExStorage
 		FAIL      = 0,
 		GOOD      = 1,
 	}
-
+/*
 	public class ExStoreHelper
 	{
 		public string OpDescription { get; private set; }
@@ -200,12 +195,12 @@ namespace AOTools.Cells2.ExStorage
 
 	#region update methods
 
-		/*
+		*//*
 		 * update method
 		 * get new data
 		 * erase schema
 		 * save new data
-		 */
+		 *//*
 
 		public ExStoreRtnCodes UpdateCellData(ExStoreApp xApp, ExStoreCell xCell)
 		{
@@ -720,7 +715,7 @@ namespace AOTools.Cells2.ExStorage
 		// 	return true;
 		// }
 
-		/*
+		*//*
 		 * delete types
 		 * delete root schema
 		 * delete app schema
@@ -731,7 +726,7 @@ namespace AOTools.Cells2.ExStorage
 		 * to delete app schema, cannot have any cell schema
 		 *
 		 * to delete cell schema, get a list of associated entities
-		 */
+		 *//*
 
 		// public ExStoreRtnCodes DeleteSchema(Entity e, Schema s,
 		// 	DelExStoreOpCode op, string desc)
@@ -1278,5 +1273,5 @@ namespace AOTools.Cells2.ExStorage
 		// 	}
 		// }
 		//
-	}
+	}*/
 }

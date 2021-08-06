@@ -23,7 +23,7 @@ using static AOTools.Cells.ExStorage.ExStoreMgr;
 
 namespace AOTools
 {
-/*
+
 	[Transaction(TransactionMode.Manual)]
 	class ReadRootExStore : IExternalCommand
 	{
@@ -101,5 +101,5 @@ namespace AOTools
 		
 
 	}
-*/
+
 }

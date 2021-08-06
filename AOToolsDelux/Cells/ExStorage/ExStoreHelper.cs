@@ -16,7 +16,6 @@ using static Autodesk.Revit.DB.ExtensibleStorage.Schema;
 
 namespace AOTools.Cells.ExStorage
 {
-
 	public enum ExStoreRtnCodes
 	{
 		APP_NOT_EXIST = -8,
@@ -31,7 +30,7 @@ namespace AOTools.Cells.ExStorage
 		FAIL      = 0,
 		GOOD      = 1,
 	}
-/*
+
 	public class ExStoreHelper
 	{
 		public string OpDescription { get; private set; }
@@ -195,12 +194,12 @@ namespace AOTools.Cells.ExStorage
 
 	#region update methods
 
-		*//*
+		/*
 		 * update method
 		 * get new data
 		 * erase schema
 		 * save new data
-		 *//*
+		 */
 
 		public ExStoreRtnCodes UpdateCellData(ExStoreApp xApp, ExStoreCell xCell)
 		{
@@ -395,7 +394,7 @@ namespace AOTools.Cells.ExStorage
 
 			for (int i = 0; i < xCell.Data.Count; i++)
 			{
-				SchemaFieldDef<SchemaAppKey> subS = SchemaDefApp.GetSubSchemaDef(i);
+				SchemaFieldDef<SchemaAppKey> subS = SchemaDefinitionApp.GetSubSchemaDef(i);
 
 				string guid = subS.Guid;
 				string name = subS.Name;
@@ -715,7 +714,7 @@ namespace AOTools.Cells.ExStorage
 		// 	return true;
 		// }
 
-		*//*
+		/*
 		 * delete types
 		 * delete root schema
 		 * delete app schema
@@ -726,7 +725,7 @@ namespace AOTools.Cells.ExStorage
 		 * to delete app schema, cannot have any cell schema
 		 *
 		 * to delete cell schema, get a list of associated entities
-		 *//*
+		 */
 
 		// public ExStoreRtnCodes DeleteSchema(Entity e, Schema s,
 		// 	DelExStoreOpCode op, string desc)
@@ -1273,5 +1272,5 @@ namespace AOTools.Cells.ExStorage
 		// 	}
 		// }
 		//
-	}*/
+	}
 }

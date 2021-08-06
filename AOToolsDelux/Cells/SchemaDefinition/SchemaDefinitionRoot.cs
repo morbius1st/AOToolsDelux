@@ -1,9 +1,5 @@
 ﻿#region + Using Directives
-
-using System;
-using AOTools.Cells.ExStorage;
 using static AOTools.Cells.SchemaDefinition.SchemaRootKey;
-
 #endregion
 
 // user name: jeffs
@@ -13,47 +9,44 @@ namespace AOTools.Cells.SchemaDefinition
 {
 	public class SchemaDefinitionRoot : ASchemaDef<SchemaRootKey, SchemaDictionaryRoot>
 	{
-		private static readonly Lazy<SchemaDefinitionRoot> instance =
-			new Lazy<SchemaDefinitionRoot>(() => new SchemaDefinitionRoot());
+		public const string ROOT_SCHEMA_NAME = "CellsAppRoot";
+		public const string ROOT_SCHEMA_DESC = "Excel Cells to Revit Exchange";
+		public const string ROOT_DEVELOPER_NAME = "CyberStudio";
 
-		private SchemaDefinitionRoot()
-		{
-			DefineFields();
-		}
+		public override SchemaRootKey[] KeyOrder { get; set; }
 
-		public static SchemaDefinitionRoot Instance => instance.Value;
+		public override SchemaDictionaryRoot DefaultFields { get; } =
+			new SchemaDictionaryRoot
+			{
+				{
+					NAME,
+					new SchemaFieldDef<SchemaRootKey>(NAME, "Name",
+						"Name", ROOT_SCHEMA_NAME)
+				},
 
-		private void DefineFields()
-		{
-			Fields = new SchemaDictionaryRoot();
+				{
+					DESCRIPTION,
+					new SchemaFieldDef<SchemaRootKey>(DESCRIPTION, "Description",
+						"Description", ROOT_SCHEMA_DESC)
+				},
 
-			KeyOrder = new SchemaRootKey[Enum.GetNames(typeof(SchemaRootKey)).Length];
-			int idx = 0;
+				{
+					VERSION,
+					new SchemaFieldDef<SchemaRootKey>(VERSION, "Version",
+						"Cells Version", "1.0")
+				},
 
-			KeyOrder[idx++] =
-				defineField<string>(NAME, "Name", "Name");
-			
-			KeyOrder[idx++] =
-				defineField<string>(DESCRIPTION, "Description", "Description");
-			
-			KeyOrder[idx++] =
-				defineField<string>(VERSION, "Version", "Cells Version");
-			
-			KeyOrder[idx++] =
-				defineField<string>(DEVELOPER,"Developer", "Developer");
-			
-			KeyOrder[idx++] =
-				defineField<string>(APP_GUID, "UniqueAppGuidString", 
-					"Unique App Guid String" );
-		}
+				{
+					DEVELOPER,
+					new SchemaFieldDef<SchemaRootKey>(DEVELOPER, "Developer",
+						"Developer", ROOT_DEVELOPER_NAME)
+				},
 
-		// private SchemaRootKey defineField<TD>(SchemaRootKey key, 
-		// 	string name, string desc)
-		// {
-		// 	Fields.Add(key, 
-		// 		new SchemaFieldDef<SchemaRootKey, TD>(key, name, desc));
-		//
-		// 	return key;
-		// }
+				{
+					APP_GUID,
+					new SchemaFieldDef<SchemaRootKey>(APP_GUID, "UniqueAppGuidString",
+						"Unique App Guid String", SchemaGuidManager.AppGuidUniqueString)
+				},
+			};
 	}
 }

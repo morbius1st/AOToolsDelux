@@ -11,7 +11,7 @@ using static UtilityLibrary.MessageUtilities;
 using AOTools.Cells.ExStorage;
 using AOTools.Cells.Tests;
 using Autodesk.Revit.DB.ExtensibleStorage;
-// using static AOTools.Cells.ExStorage.ExStoreMgr;
+using static AOTools.Cells.ExStorage.ExStoreMgr;
 using InvalidOperationException = Autodesk.Revit.Exceptions.InvalidOperationException;
 
 #endregion
@@ -23,7 +23,7 @@ using InvalidOperationException = Autodesk.Revit.Exceptions.InvalidOperationExce
 
 namespace AOTools
 {
-/*
+
 	[Transaction(TransactionMode.Manual)]
 	class ModCellExData : IExternalCommand
 	{
@@ -234,5 +234,5 @@ namespace AOTools
 	// 		return Result.Succeeded;
 	// 	}
 	// }
-*/
+
 }

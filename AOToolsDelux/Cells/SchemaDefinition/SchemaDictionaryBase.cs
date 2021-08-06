@@ -1,33 +1,49 @@
-﻿using System;
-using System.Collections.Generic;
-
-// Solution:     AOToolsDelux
+﻿// Solution:     AOToolsDelux
 // Project:       AOToolsDelux
 // File:             SchemaDictionaryBase.cs
 // Created:      2021-07-03 (11:28 PM)
 
+using System;
+using System.Collections.Generic;
+
 namespace AOTools.Cells.SchemaDefinition
 {
-	public abstract class XsDictionaryBase<TE, TD> : Dictionary<TE, TD> 
-		// where TD : ICloneable
-		where  TE : Enum { } 
-
-	// public abstract class SchemaDictionaryBase<TE> : Dictionary<TE, SchemaFieldDef<TE>>  where TE : Enum
-	public abstract class SchemaDictionaryBase<TE> : XsDictionaryBase<TE, ISchemaFieldDef<TE>>  where TE : Enum
+	public class SchemaDictionaryBase<TU> : Dictionary<TU, SchemaFieldDef<TU>>  where TU : Enum
 	{
-		// public SchemaDictionaryBase() { }
-		//
-		// public SchemaDictionaryBase(int capacity) : base(capacity) { }
+		public SchemaDictionaryBase() { }
 
-		public TC Clone<TC>(TC original) where TC : SchemaDictionaryBase<TE>, new()
+		public SchemaDictionaryBase(int capacity) : base(capacity) { }
+
+		public TC Clone<TC>(TC original) where TC : SchemaDictionaryBase<TU>, new()
 		{
 			TC copy = new TC();
-		
-			foreach (KeyValuePair<TE, ISchemaFieldDef<TE>> kvp in original)
+
+			foreach (KeyValuePair<TU, SchemaFieldDef<TU>> kvp in original)
 			{
+				// kvp.Value.Clone();
+				//
+				// copy.Add(kvp.Key, new SchemaFieldDef{Value = kvp.Value });
+
 				copy.Add(kvp.Key, kvp.Value.Clone());
 			}
 			return copy;
 		}
+
+		// public Dictionary<TU, SchemaFieldDef> Clone()
+		// {
+		// 	Dictionary<TU, SchemaFieldDef> copy = new Dictionary<TU, SchemaFieldDef>();
+		//
+		// 	foreach (KeyValuePair<TU, SchemaFieldDef> kvp in this)
+		// 	{
+		// 		// SchemaFieldDef field = kvp.Value.Clone();
+		// 		// copy.Add(kvp.Key, new SchemaFieldDef{Value = kvp.Value });
+		//
+		// 		copy.Add(kvp.Key, kvp.Value.Clone());
+		// 	}
+		//
+		// 	return copy;
+		// }
+
+
 	}
 }

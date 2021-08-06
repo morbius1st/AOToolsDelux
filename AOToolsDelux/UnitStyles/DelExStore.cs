@@ -5,13 +5,12 @@ using System.Diagnostics;
 using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
-using AOTools.Cells2.SchemaDefinition;
 using static UtilityLibrary.MessageUtilities;
 
 using AOTools.Cells.ExStorage;
 using Autodesk.Revit.DB.ExtensibleStorage;
 using InvalidOperationException = Autodesk.Revit.Exceptions.InvalidOperationException;
-// using static AOTools.Cells.ExStorage.ExStoreMgr;
+using static AOTools.Cells.ExStorage.ExStoreMgr;
 
 #endregion
 
@@ -22,7 +21,7 @@ using InvalidOperationException = Autodesk.Revit.Exceptions.InvalidOperationExce
 
 namespace AOTools
 {
-/*
+
 	[Transaction(TransactionMode.Manual)]
 	class DelRootExStore : IExternalCommand
 	{
@@ -114,5 +113,5 @@ namespace AOTools
 	// 		return Result.Succeeded;
 	// 	}
 	// }
-*/
+
 }

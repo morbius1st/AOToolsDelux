@@ -10,7 +10,7 @@ using static UtilityLibrary.MessageUtilities;
 using AOTools.Cells.ExStorage;
 using AOTools.Cells.Tests;
 using Autodesk.Revit.DB.ExtensibleStorage;
-// using static AOTools.Cells.ExStorage.ExStoreMgr;
+using static AOTools.Cells.ExStorage.ExStoreMgr;
 
 #endregion
 
@@ -21,7 +21,7 @@ using Autodesk.Revit.DB.ExtensibleStorage;
 
 namespace AOTools
 {
-/*
+
 	[Transaction(TransactionMode.Manual)]
 	class MakeRootExStore : IExternalCommand
 	{
@@ -225,5 +225,5 @@ namespace AOTools
 			xCell.Data[id][SchemaCellKey.XL_FILE_PATH].Value = $"c:\\file path\\filename{id:D3}.xls";
 			xCell.Data[id][SchemaCellKey.XL_WORKSHEET_NAME].Value = $"worksheet {id:d3}";
 		}
-	}*/
+	}
 }

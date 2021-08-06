@@ -1,55 +1,55 @@
 ﻿#region using
 
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Text;
-using static AOTools.Cells2.ExStorage.ExStoreMgr;
-using AOTools.Cells2.ExStorage;
-using AOTools.Cells2.SchemaDefinition;
+using AOTools.Cells.ExStorage;
+using AOTools.Cells.SchemaDefinition;
 using Autodesk.Revit.UI;
+// using static AOTools.Cells.ExStorage.ExStoreMgr;
 
 #endregion
 
 // username: jeffs
 // created:  7/19/2021 11:09:28 PM
 
-namespace AOTools.Cells2.Tests
+namespace AOTools.Cells.Tests
 {
+/*
 	public class ExStorageTests
 	{
 
 	#region public methods
 
-		// public static void ShowData(ExStoreCell xCell)
-		// {
-		// 	TaskDialog td = new TaskDialog("Ex Storage App Data");
-		//
-		// 	td.MainInstruction = "Cell Schema was read successfully\ncontents:";
-		//
-		// 	StringBuilder sb = new StringBuilder();
-		//
-		// 	for (int i = 0; i < xCell.Data.Count; i++)
-		// 	{
-		// 		sb.AppendLine($"date group| {i:D}");
-		//
-		//
-		// 		foreach (KeyValuePair<SchemaCellKey, 
-		// 			SchemaFieldDef<SchemaCellKey>> kvp in xCell.FieldDefs)
-		// 		{
-		// 			string name = xCell.FieldDefs[kvp.Key].Name;
-		// 			string value = xCell.Data[i][kvp.Key].Value.ToString();
-		//
-		// 			sb.Append(name).Append("| ").AppendLine(value);	
-		// 		}
-		//
-		// 		sb.Append("\n");
-		// 	}
-		//
-		// 	td.MainContent = sb.ToString();
-		// 	td.MainIcon = TaskDialogIcon.TaskDialogIconNone;
-		//
-		// 	td.Show();
-		// }
+		public static void ShowData(ExStoreCell xCell)
+		{
+			TaskDialog td = new TaskDialog("Ex Storage App Data");
+
+			td.MainInstruction = "Cell Schema was read successfully\ncontents:";
+
+			StringBuilder sb = new StringBuilder();
+
+			for (int i = 0; i < xCell.Data.Count; i++)
+			{
+				sb.AppendLine($"date group| {i:D}");
+
+
+				foreach (KeyValuePair<SchemaCellKey, 
+					SchemaFieldDef<SchemaCellKey>> kvp in xCell.FieldDefs)
+				{
+					string name = xCell.FieldDefs[kvp.Key].Name;
+					string value = xCell.Data[i][kvp.Key].Value.ToString();
+
+					sb.Append(name).Append("| ").AppendLine(value);	
+				}
+
+				sb.Append("\n");
+			}
+
+			td.MainContent = sb.ToString();
+			td.MainIcon = TaskDialogIcon.TaskDialogIconNone;
+
+			td.Show();
+		}
 
 		public static ExStoreRtnCodes MakeRootExStorage()
 		{
@@ -138,5 +138,5 @@ namespace AOTools.Cells2.Tests
 		}
 
 	#endregion
-	}
+	}*/
 }
