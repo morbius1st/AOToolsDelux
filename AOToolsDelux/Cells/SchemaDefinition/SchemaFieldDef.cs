@@ -48,29 +48,6 @@ namespace AOTools.Cells.SchemaDefinition
 			Guid = null;
 		}
 
-		// public SchemaFieldDef(SchemaAppKey sequence, string name, string desc, dynamic val,
-		// 	RevitUnitType unitType = RevitUnitType.UT_UNDEFINED, string guid = "")
-		// {
-		// 	Sequence = (int) sequence;
-		// 	Name = name;
-		// 	Desc = desc;
-		// 	Value = val;
-		// 	UnitType = unitType;
-		// 	Guid = guid;
-		// }
-		//
-		// public SchemaFieldDef(SchemaCellKey sequence, string name, string desc, dynamic val,
-		// 	RevitUnitType unitType = RevitUnitType.UT_UNDEFINED, string guid = "")
-		// {
-		// 	Sequence = (int) sequence;
-		// 	Name = name;
-		// 	Desc = desc;
-		// 	Value = val;
-		// 	UnitType = unitType;
-		// 	Guid = guid;
-		// }
-
-		
 		public SchemaFieldDef(T sequence, string name, string desc, dynamic val,
 			RevitUnitType unitType = RevitUnitType.UT_UNDEFINED, string guid = "")
 		{

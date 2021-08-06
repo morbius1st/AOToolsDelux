@@ -9,7 +9,6 @@ using Autodesk.Revit.DB;
 
 namespace AOTools.Cells.SchemaDefinition
 {
-
 	public enum SchemaRootKey
 	{
 		UNDEFINED		  = -10,

@@ -1,5 +1,4 @@
 ﻿#region using
-
 using System;
 using System.Collections.Generic;
 using AOTools.Cells.SchemaCells;
@@ -42,8 +41,6 @@ namespace AOTools.Cells.ExStorage
 		public SchemaDictionaryCell FieldDefs => SchemaDefinition.DefaultFields;
 
 		public Guid ExStoreGuid => Guid.Empty;
-
-		// public Enum[] KeyOrder => SchemaDef.KeyOrderX;
 
 		public bool IsInitialized { get; private set; }
 

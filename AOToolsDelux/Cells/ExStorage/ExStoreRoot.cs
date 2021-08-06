@@ -1,5 +1,4 @@
 ﻿#region using
-
 using System;
 using AOTools.Cells.SchemaDefinition;
 
@@ -39,8 +38,6 @@ namespace AOTools.Cells.ExStorage
 		public static SchemaDefinitionRoot SchemaDefinition { get; }  = new SchemaDefinitionRoot();
 
 		public SchemaDictionaryRoot FieldDefs => SchemaDefinition.DefaultFields;
-
-		public Enum[] KeyOrder => SchemaDefinition.KeyOrderX;
 
 	#endregion
 

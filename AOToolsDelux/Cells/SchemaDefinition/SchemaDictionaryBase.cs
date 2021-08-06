@@ -28,22 +28,5 @@ namespace AOTools.Cells.SchemaDefinition
 			}
 			return copy;
 		}
-
-		// public Dictionary<TU, SchemaFieldDef> Clone()
-		// {
-		// 	Dictionary<TU, SchemaFieldDef> copy = new Dictionary<TU, SchemaFieldDef>();
-		//
-		// 	foreach (KeyValuePair<TU, SchemaFieldDef> kvp in this)
-		// 	{
-		// 		// SchemaFieldDef field = kvp.Value.Clone();
-		// 		// copy.Add(kvp.Key, new SchemaFieldDef{Value = kvp.Value });
-		//
-		// 		copy.Add(kvp.Key, kvp.Value.Clone());
-		// 	}
-		//
-		// 	return copy;
-		// }
-
-
 	}
 }

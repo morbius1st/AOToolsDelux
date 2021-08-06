@@ -1,5 +1,4 @@
 ﻿#region using
-
 using System;
 using AOTools.Cells.SchemaCells;
 using AOTools.Cells.SchemaDefinition;

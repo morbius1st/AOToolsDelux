@@ -12,22 +12,12 @@ namespace AOTools.Cells.ExStorage
 	{
 		string Name { get; } 
 		string Description { get; }
-
-		bool IsInitialized { get; }
-
 		Guid ExStoreGuid { get; }
 	}
 
 
 	public interface IExStoreData<TT, TD>
 	{
-		// string Name { get; } 
-		// string Description { get; }
-		//
-		// bool IsInitialized { get; }
-
-		// Enum[] KeyOrder { get; }
-
 		TT FieldDefs { get; }
 		TD Data { get; }
 	}

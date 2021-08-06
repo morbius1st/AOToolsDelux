@@ -8,7 +8,7 @@ using System.Collections.Generic;
 
 namespace AOTools.Cells.SchemaDefinition
 {
-	public interface ISchemaDef<TE, TD> // where TE : Enum  where TD : SchemaDictionaryBase<TE>
+	public interface ISchemaDef<TE, TD>
 	{
 		TE[] KeyOrder { get; }
 

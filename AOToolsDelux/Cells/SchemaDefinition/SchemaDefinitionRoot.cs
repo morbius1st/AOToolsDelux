@@ -48,5 +48,6 @@ namespace AOTools.Cells.SchemaDefinition
 						"Unique App Guid String", SchemaGuidManager.AppGuidUniqueString)
 				},
 			};
+
 	}
 }

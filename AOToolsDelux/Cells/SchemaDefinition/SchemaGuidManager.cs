@@ -39,7 +39,6 @@ namespace AOTools.Cells.SchemaDefinition
 	 * xxxxxxxx-xxxx-xxxx-xxxx-bbbbbaaaasss
 	 */
 
-
 	public class SchemaGuidManager
 	{
 	#region private fields

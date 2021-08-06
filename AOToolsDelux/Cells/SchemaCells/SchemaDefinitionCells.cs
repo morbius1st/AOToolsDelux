@@ -1,5 +1,4 @@
 ﻿#region + Using Directives
-
 using System;
 using AOTools.Cells.SchemaDefinition;
 using static AOTools.Cells.SchemaDefinition.SchemaCellKey;

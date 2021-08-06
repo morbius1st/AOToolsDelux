@@ -9,8 +9,6 @@ namespace AOTools.Cells.SchemaDefinition
 {
 	public class SchemaDictionaryRoot : SchemaDictionaryBase<SchemaRootKey>
 	{
-		public SchemaDictionaryRoot() { }
-		public SchemaDictionaryRoot(int capacity) :base(capacity) { }
 		public SchemaDictionaryRoot Clone()
 		{
 			return Clone(this);

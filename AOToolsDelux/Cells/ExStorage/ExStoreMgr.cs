@@ -1,16 +1,11 @@
 ﻿#region + Using Directives
-
 using AOTools.Cells.SchemaDefinition;
 using Autodesk.Revit.UI;
-
-// using static AOTools.Cells.ExStorage.ExStoreApp;
-// using static AOTools.Cells.ExStorage.ExStoreCell;
 
 #endregion
 
 // user name: jeffs
 // created:   7/5/2021 6:55:42 AM
-
 
 /*
  *

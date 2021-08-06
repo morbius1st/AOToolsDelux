@@ -11,8 +11,6 @@ namespace AOTools.Cells.SchemaCells
 {
 	public class SchemaDictionaryApp : SchemaDictionaryBase<SchemaAppKey>
 	{
-		public SchemaDictionaryApp() { }
-		public SchemaDictionaryApp(int capacity) :base(capacity) { }
 		public SchemaDictionaryApp Clone()
 		{
 			return Clone(this);
@@ -21,8 +19,6 @@ namespace AOTools.Cells.SchemaCells
 
 	public class SchemaDictionaryCell : SchemaDictionaryBase<SchemaCellKey>
 	{
-		public SchemaDictionaryCell() { }
-		public SchemaDictionaryCell(int capacity) :base(capacity) { }
 		public SchemaDictionaryCell Clone()
 		{
 			return Clone(this);

@@ -6,8 +6,6 @@ using static AOTools.Cells.SchemaDefinition.SchemaAppKey;
 // user name: jeffs
 // created:   7/3/2021 10:48:37 PM
 
-
-
 namespace AOTools.Cells.SchemaCells
 {
 	public class SchemaDefinitionApp : ASchemaDef<SchemaAppKey, SchemaDictionaryApp>
