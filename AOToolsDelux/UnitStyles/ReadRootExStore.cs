@@ -45,9 +45,11 @@ namespace AOTools
 
 			OutLocation = OutputLocation.DEBUG;
 
-			return Test01();
+			// return Test01();
+			return Result.Succeeded;
 		}
 
+/*
 		private Result Test01()
 		{
 			ExStoreHelper xsHlpr = new ExStoreHelper();
@@ -99,7 +101,7 @@ namespace AOTools
 
 		}
 		
-
+*/
 	}
 
 }

@@ -10,6 +10,7 @@ using AOTools.Cells.SchemaDefinition;
 
 namespace AOTools.Cells.ExStorage
 {
+/*
 	public class ExStoreApp : IExStore, IExStoreData<SchemaDictionaryApp, SchemaDictionaryApp> //: SchemaDefApp, 
 	{
 	#region private fields
@@ -92,5 +93,5 @@ namespace AOTools.Cells.ExStorage
 		}
 
 	#endregion
-	}
+	}*/
 }

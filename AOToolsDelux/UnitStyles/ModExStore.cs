@@ -23,7 +23,7 @@ using InvalidOperationException = Autodesk.Revit.Exceptions.InvalidOperationExce
 
 namespace AOTools
 {
-
+/*
 	[Transaction(TransactionMode.Manual)]
 	class ModCellExData : IExternalCommand
 	{
@@ -234,5 +234,5 @@ namespace AOTools
 	// 		return Result.Succeeded;
 	// 	}
 	// }
-
+*/
 }

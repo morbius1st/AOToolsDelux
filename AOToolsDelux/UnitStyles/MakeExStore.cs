@@ -35,9 +35,12 @@ namespace AOTools
 
 			OutLocation = OutputLocation.DEBUG;
 
-			return Test01();
+			// return Test01();
+			return Result.Succeeded;
 		}
 
+
+/*
 		private Result Test01()
 		{
 			if (AppRibbon.Doc.IsDetached) return Result.Cancelled;
@@ -56,6 +59,7 @@ namespace AOTools
 
 			return Result.Succeeded;
 		}
+*/
 	}
 
 
@@ -78,9 +82,11 @@ namespace AOTools
 
 			OutLocation = OutputLocation.DEBUG;
 
-			return Test02();
+			// return Test02();
+			return Result.Succeeded;
 		}
 
+/*
 		private Result Test02()
 		{
 			try
@@ -225,5 +231,6 @@ namespace AOTools
 			xCell.Data[id][SchemaCellKey.XL_FILE_PATH].Value = $"c:\\file path\\filename{id:D3}.xls";
 			xCell.Data[id][SchemaCellKey.XL_WORKSHEET_NAME].Value = $"worksheet {id:d3}";
 		}
+*/
 	}
 }

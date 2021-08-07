@@ -27,6 +27,7 @@ namespace AOTools
 	[Transaction(TransactionMode.Manual)]
 	class TestExStore : IExternalCommand
 	{
+
 		// public static Schema SchemaUnit;
 		// public static Entity EntityUnit;
 		//
@@ -46,6 +47,8 @@ namespace AOTools
 			OutLocation = OutputLocation.DEBUG;
 
 			return Test01();
+
+			// return Result.Succeeded;
 		}
 
 		private Result Test01()
@@ -65,15 +68,26 @@ namespace AOTools
 
 				ExStoreRtnCodes result;
 
+				SchemaDefinitionRoot dRoot = SchemaDefinitionRoot.Instance;
+				ExStoreRoot2 xRoot2 = ExStoreRoot2.Instance;
+
+				string s1 = xRoot2.GetVal<string>(SchemaRootKey.NAME).Value;
+				int i1 = xRoot2.GetVal<int>(SchemaRootKey.UNDEFINED).Value;
+
+				ISchemaFieldDef<SchemaRootKey> x = dRoot.Fields[SchemaRootKey.NAME];
+				SchemaFieldDef<SchemaRootKey> x1 =
+					(SchemaFieldDef<SchemaRootKey>) x;
+
+
 				int b = 1;
 
-				ExStoreMgr a = XsMgr;
-
-				result = ExStorageTests.MakeRootExStorage();
-				if (result != ExStoreRtnCodes.GOOD) return Result.Failed;
-
-				result = ExStorageTests.MakeAppAndCellsExStorage();
-				if (result != ExStoreRtnCodes.GOOD) return Result.Failed;
+				// ExStoreMgr a = XsMgr;
+				//
+				// result = ExStorageTests.MakeRootExStorage();
+				// if (result != ExStoreRtnCodes.GOOD) return Result.Failed;
+				//
+				// result = ExStorageTests.MakeAppAndCellsExStorage();
+				// if (result != ExStoreRtnCodes.GOOD) return Result.Failed;
 
 			}
 			catch (OperationCanceledException)
@@ -89,6 +103,9 @@ namespace AOTools
 
 			return Result.Succeeded;
 		}
+
+
+
 /*
 		private void SampleCellData(ExStoreCell xCell, int id)
 		{

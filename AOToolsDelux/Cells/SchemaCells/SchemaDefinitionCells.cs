@@ -10,8 +10,9 @@ using static AOTools.Cells.SchemaDefinition.UpdateRules;
 
 namespace AOTools.Cells.SchemaCells
 {
-	public class SchemaDefinitionCells : ASchemaDef<SchemaCellKey, SchemaDictionaryCell>
-	{
+	// public class SchemaDefinitionCells : ASchemaDef<SchemaCellKey, SchemaDictionaryCell>
+	// {
+/*
 		public const string SCHEMA_NAME = "CellDefaultDefinition";
 		public const string SCHEMA_DESC = "Default Root Cells Definition";
 		public const string NOTDEFINED = "<not defined>";
@@ -77,6 +78,7 @@ namespace AOTools.Cells.SchemaCells
 						"Name of the Excel Worksheet", NOTDEFINED)
 				},
 			};
+*/
 
-	}
+	// }
 }

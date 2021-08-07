@@ -8,13 +8,14 @@ using static AOTools.Cells.SchemaDefinition.SchemaAppKey;
 
 namespace AOTools.Cells.SchemaCells
 {
-	public class SchemaDefinitionApp : ASchemaDef<SchemaAppKey, SchemaDictionaryApp>
-	{
+	// public class SchemaDefinitionApp : ASchemaDef<SchemaAppKey, SchemaDictionaryApp>
+	// {
+/*
 		public const string SCHEMA_NAME = "CellsAppData";
 		public const string SCHEMA_DESC = "Excel Cells to Revit Exchange";
 		public const string DEVELOPER_NAME = "CyberStudio";
 
-		public override SchemaAppKey[] KeyOrder { get; set; }
+		// public SchemaAppKey[] KeyOrder { get; set; }
 
 		// the guid for each sub-schema and the 
 		// field that holds the sub-schema - both must match
@@ -57,5 +58,6 @@ namespace AOTools.Cells.SchemaCells
 						"Cells Version", "1.0")
 				}
 			};
-	}
+*/
+	// }
 }

@@ -5,28 +5,52 @@
 
 using System;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 
 namespace AOTools.Cells.SchemaDefinition
 {
-	public class SchemaDictionaryBase<TU> : Dictionary<TU, SchemaFieldDef<TU>>  where TU : Enum
-	{
-		public SchemaDictionaryBase() { }
+	// public abstract class XsDictionaryBase<TE, TD> : Dictionary<TE, TD>
+	// 	// where TD : ICloneable
+	// 	where  TE : Enum { } 
+	//
+	// // public abstract class SchemaDictionaryBase<TE> : Dictionary<TE, SchemaFieldDef<TE>>  where TE : Enum
+	// public abstract class SchemaDictionaryBase<TE> : XsDictionaryBase<TE, ISchemaFieldDef<TE>>  where TE : Enum
+	// {
+	// 	// public SchemaDictionaryBase() { }
+	// 	//
+	// 	// public SchemaDictionaryBase(int capacity) : base(capacity) { }
+	//
+	// 	public TC Clone<TC>(TC original) where TC : SchemaDictionaryBase<TE>, new()
+	// 	{
+	// 		TC copy = new TC();
+	// 	
+	// 		foreach (KeyValuePair<TE, ISchemaFieldDef<TE>> kvp in original)
+	// 		{
+	// 			copy.Add(kvp.Key, kvp.Value.Clone());
+	// 		}
+	// 		return copy;
+	// 	}
+	// }
 
-		public SchemaDictionaryBase(int capacity) : base(capacity) { }
-
-		public TC Clone<TC>(TC original) where TC : SchemaDictionaryBase<TU>, new()
-		{
-			TC copy = new TC();
-
-			foreach (KeyValuePair<TU, SchemaFieldDef<TU>> kvp in original)
-			{
-				// kvp.Value.Clone();
-				//
-				// copy.Add(kvp.Key, new SchemaFieldDef{Value = kvp.Value });
-
-				copy.Add(kvp.Key, kvp.Value.Clone());
-			}
-			return copy;
-		}
-	}
+	// public class SchemaDictionaryBase<TU> : Dictionary<TU, SchemaFieldDef<TU>>  where TU : Enum
+	// {
+	// 	public SchemaDictionaryBase() { }
+	//
+	// 	public SchemaDictionaryBase(int capacity) : base(capacity) { }
+	//
+	// 	public TC Clone<TC>(TC original) where TC : SchemaDictionaryBase<TU>, new()
+	// 	{
+	// 		TC copy = new TC();
+	//
+	// 		foreach (KeyValuePair<TU, SchemaFieldDef<TU>> kvp in original)
+	// 		{
+	// 			// kvp.Value.Clone();
+	// 			//
+	// 			// copy.Add(kvp.Key, new SchemaFieldDef{Value = kvp.Value });
+	//
+	// 			copy.Add(kvp.Key, kvp.Value.Clone());
+	// 		}
+	// 		return copy;
+	// 	}
+	// }
 }

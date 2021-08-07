@@ -47,6 +47,7 @@ namespace AOTools.Cells.ExStorage
 {
 	public class ExStoreMgr
 	{
+/*
 		private ExStoreRoot xRoot;
 		private ExStoreApp xApp;
 		private ExStoreCell xCell;
@@ -327,5 +328,6 @@ namespace AOTools.Cells.ExStorage
 		}
 
 	#endregion
+*/
 	}
 }

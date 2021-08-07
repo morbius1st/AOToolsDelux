@@ -14,7 +14,7 @@ namespace AOTools.Cells.Tests
 {
 	public class ExStorageTests
 	{
-
+/*
 	#region public methods
 
 		public static ExStoreRtnCodes MakeRootExStorage()
@@ -22,10 +22,12 @@ namespace AOTools.Cells.Tests
 			ExStoreRoot xRoot = ExStoreRoot.Instance();
 			ExStoreRtnCodes result;
 
-			xRoot.Data[SchemaRootKey.NAME].Value
+			string a = xRoot.GetVal<string>(SchemaRootKey.NAME).Value;
+
+			xRoot.GetVal<string>(SchemaRootKey.NAME).Value
 				= "RootEx4"+AppRibbon.Doc.Title;
 
-			xRoot.Data[SchemaRootKey.DESCRIPTION].Value
+			xRoot.GetVal<string>(SchemaRootKey.DESCRIPTION).Value
 				= "Root Ex Storage Data for| "+AppRibbon.Doc.Title;
 
 			result = XsMgr.WriteRoot(xRoot);
@@ -135,5 +137,6 @@ namespace AOTools.Cells.Tests
 		}
 
 	#endregion
+*/
 	}
 }

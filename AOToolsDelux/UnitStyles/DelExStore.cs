@@ -21,10 +21,11 @@ using static AOTools.Cells.ExStorage.ExStoreMgr;
 
 namespace AOTools
 {
-
+/*
 	[Transaction(TransactionMode.Manual)]
 	class DelRootExStore : IExternalCommand
 	{
+
 		public Result Execute(ExternalCommandData commandData, 
 			ref string message, ElementSet elements)
 		{
@@ -52,6 +53,7 @@ namespace AOTools
 
 			return Result.Succeeded;
 		}
+
 	}
 
 	[Transaction(TransactionMode.Manual)]
@@ -83,7 +85,7 @@ namespace AOTools
 			return Result.Succeeded;
 		}
 	}
-	
+	*/
 	// [Transaction(TransactionMode.Manual)]
 	// class DelSubExStor : IExternalCommand
 	// {

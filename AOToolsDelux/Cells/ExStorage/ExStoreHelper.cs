@@ -32,6 +32,7 @@ namespace AOTools.Cells.ExStorage
 
 	public class ExStoreHelper
 	{
+/*
 		public string OpDescription { get; private set; }
 
 	#region root element
@@ -193,12 +194,17 @@ namespace AOTools.Cells.ExStorage
 
 	#region update methods
 
-		/*
+		*/
+
+
+
+
+		   /*
 		 * update method
 		 * get new data
 		 * erase schema
 		 * save new data
-		 */
+		 *//*
 
 		public ExStoreRtnCodes UpdateCellData(ExStoreApp xApp, ExStoreCell xCell)
 		{
@@ -324,11 +330,11 @@ namespace AOTools.Cells.ExStorage
 
 				if (kvp.Value.UnitType != RevitUnitType.UT_UNDEFINED)
 				{
-					entity.Set(f, kvp.Value.Value, DisplayUnitType.DUT_GENERAL);
+					entity.Set(f, kvp.Value.ExValue, DisplayUnitType.DUT_GENERAL);
 				}
 				else
 				{
-					entity.Set(f, kvp.Value.Value);
+					entity.Set(f, kvp.Value.ExValue);
 				}
 			}
 		}
@@ -374,10 +380,10 @@ namespace AOTools.Cells.ExStorage
 
 		private void makeSchemaField<T>(SchemaBuilder sbld, SchemaFieldDef<T> fieldDef) where T : Enum
 		{
-			Type t = fieldDef.Value.GetType();
+			Type t = fieldDef.ExValue.GetType();
 
 			FieldBuilder fbld = sbld.AddSimpleField(
-				fieldDef.Name, fieldDef.Value.GetType());
+				fieldDef.Name, fieldDef.ExValue.GetType());
 
 			fbld.SetDocumentation(fieldDef.Desc);
 
@@ -596,7 +602,7 @@ namespace AOTools.Cells.ExStorage
 		}
 
 	#endregion
-
+*/
 		// public ExStoreRtnCodes UpdateExStorageCellData(ExStoreCell xCell)
 		// {
 		// 	Transaction t = null;

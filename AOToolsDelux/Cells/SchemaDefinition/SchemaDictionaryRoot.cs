@@ -7,12 +7,12 @@
 
 namespace AOTools.Cells.SchemaDefinition
 {
-	public class SchemaDictionaryRoot : SchemaDictionaryBase<SchemaRootKey>
-	{
-		public SchemaDictionaryRoot Clone()
-		{
-			return Clone(this);
-		}
-	}
+	// public class SchemaDictionaryRoot : SchemaDictionaryBase<SchemaRootKey>
+	// {
+	// 	public SchemaDictionaryRoot Clone()
+	// 	{
+	// 		return Clone(this);
+	// 	}
+	// }
 
 }
