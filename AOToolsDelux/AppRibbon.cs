@@ -17,6 +17,8 @@ using static AOTools.AppSettings.ConfigSettings.SettingsUsr;
 
 namespace AOTools
 {
+
+
 	class AppRibbon : IExternalApplication
 	{
 		internal const string APP_NAME = "AOTools";
