@@ -17,6 +17,12 @@ namespace AOTools.Cells.ExStorage
 
 	#region ctor
 
+
+		static  ExStoreRoot()
+		{
+			// SchemaDefinition = new SchemaDefinitionRoot();
+		}
+
 		private ExStoreRoot()
 		{
 			Initialize();
@@ -35,9 +41,9 @@ namespace AOTools.Cells.ExStorage
 
 		public bool IsInitialized { get; private set; }
 
-		public static SchemaDefinitionRoot SchemaDefinition { get; }  = new SchemaDefinitionRoot();
+		public SchemaDefinitionRoot SchemaDefinition => SchemaDefinitionRoot.Instance;
 
-		public SchemaDictionaryRoot FieldDefs => SchemaDefinition.DefaultFields;
+		public SchemaDictionaryRoot FieldDefs => SchemaDefinition.Fields;
 
 	#endregion
 
@@ -64,7 +70,7 @@ namespace AOTools.Cells.ExStorage
 		// definition so only need to clone the schema field def
 		public SchemaDictionaryRoot DefaultValues()
 		{
-			return SchemaDefinition.DefaultFields.Clone();
+			return SchemaDefinition.Fields.Clone();
 		}
 
 	#endregion

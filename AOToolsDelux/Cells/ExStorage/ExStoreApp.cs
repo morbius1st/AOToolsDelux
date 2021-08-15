@@ -29,18 +29,17 @@ namespace AOTools.Cells.ExStorage
 
 		public string Name => SchemaDefinitionApp.SCHEMA_NAME;
 		public string Description => SchemaDefinitionApp.SCHEMA_DESC;
-		public string Developer => SchemaDefinitionApp.DEVELOPER_NAME;
 		public Guid ExStoreGuid => SchemaGuidManager.AppGuid;
 
 		public SchemaDictionaryApp Data { get; private set; }
 
 		public bool IsInitialized { get; private set; }
 
-		public static SchemaDefinitionApp SchemaDefinition { get; }  = new SchemaDefinitionApp();
+		public SchemaDefinitionApp SchemaDefinition => SchemaDefinitionApp.Instance;
 
-		public SchemaDictionaryApp FieldDefs => SchemaDefinition.DefaultFields;
+		public SchemaDictionaryApp FieldDefs => SchemaDefinition.Fields;
 
-		public Enum[] KeyOrder => SchemaDefinition.KeyOrderX;
+		public SchemaAppKey[] KeyOrder => SchemaDefinition.KeyOrder;
 
 	#endregion
 
@@ -67,7 +66,7 @@ namespace AOTools.Cells.ExStorage
 		// definition so only need to clone the schema field def
 		public SchemaDictionaryApp DefaultValues()
 		{
-			return SchemaDefinition.DefaultFields.Clone();
+			return SchemaDefinition.Fields.Clone();
 		}
 
 	#endregion

@@ -47,14 +47,10 @@ namespace AOTools.Cells.ExStorage
 {
 	public class ExStoreMgr
 	{
-		private ExStoreRoot xRoot;
-		private ExStoreApp xApp;
-		private ExStoreCell xCell;
-
 		private ExStoreMgr()
 		{
-			xRoot = ExStoreRoot.Instance();
-			xApp = ExStoreApp.Instance();
+			XRoot = ExStoreRoot.Instance();
+			XApp = ExStoreApp.Instance();
 
 			Initialize();
 			Configure();
@@ -71,9 +67,28 @@ namespace AOTools.Cells.ExStorage
 
 		public string OpDescription  { get; private set; }
 
-		public ExStoreRoot XRoot => xRoot;
-		public ExStoreApp XApp => xApp;
-		public ExStoreCell XCell => xCell;
+		private ExStoreRoot xRoot;
+		private ExStoreApp xApp;
+		private ExStoreCell xCell;
+
+		public ExStoreRoot XRoot
+		{
+			get => xRoot;
+			set => xRoot = value;
+		}
+
+		public ExStoreApp XApp
+		{
+			get => xApp;
+			set => xApp = value;
+		}
+
+		public ExStoreCell XCell
+		{
+			get => xCell;
+			set => xCell = value;
+		}
+
 
 	#region initialize
 
@@ -138,7 +153,7 @@ namespace AOTools.Cells.ExStorage
 
 			ExStoreRtnCodes result;
 
-			result = xsHlpr.UpdateCellData(xApp, xCell);
+			result = xsHlpr.UpdateCellData(XApp, xCell);
 
 			return result;
 		}
@@ -154,7 +169,7 @@ namespace AOTools.Cells.ExStorage
 			ExStoreRtnCodes result = readRoot();
 			if (result != ExStoreRtnCodes.GOOD) return result;
 
-			xRoot = this.xRoot;
+			xRoot = this.XRoot;
 
 			return ExStoreRtnCodes.GOOD;
 		}
@@ -167,7 +182,7 @@ namespace AOTools.Cells.ExStorage
 			ExStoreRtnCodes result = readApp();
 			if (result != ExStoreRtnCodes.GOOD) return result;
 
-			xApp = this.xApp;
+			xApp = this.XApp;
 
 			return ExStoreRtnCodes.GOOD;
 		}
@@ -183,7 +198,7 @@ namespace AOTools.Cells.ExStorage
 			ExStoreRtnCodes result = xsHlpr.ReadCellData(ref this.xCell);
 			if (result != ExStoreRtnCodes.GOOD) return result;
 
-			xCell = this.xCell;
+			xCell = XCell;
 
 			return ExStoreRtnCodes.GOOD;
 		}
@@ -261,7 +276,7 @@ namespace AOTools.Cells.ExStorage
 			ExStoreRtnCodes result = xsHlpr.ReadRootData(ref this.xRoot);
 			if (result != ExStoreRtnCodes.GOOD) return result;
 
-			SchemaGuidManager.AppGuidUniqueString = xRoot.Data[SchemaRootKey.APP_GUID].Value;
+			SchemaGuidManager.AppGuidUniqueString = XRoot.Data[SchemaRootKey.APP_GUID].Value;
 
 			return ExStoreRtnCodes.GOOD;
 		}

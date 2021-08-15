@@ -31,14 +31,14 @@ namespace AOTools.Cells.ExStorage
 		public string Description => SchemaDefinitionCells.SCHEMA_DESC;
 
 		// this is the schema definition and fields
-		public static SchemaDefinitionCells SchemaDefinition { get; } = new SchemaDefinitionCells();
+		public SchemaDefinitionCells SchemaDefinition => SchemaDefinitionCells.Instance;
 
 		// this is the list of cell data
 		public List<SchemaDictionaryCell> Data { get; private set; }
 
 		public Dictionary<string, string> SubSchemaFields { get; set; }
 
-		public SchemaDictionaryCell FieldDefs => SchemaDefinition.DefaultFields;
+		public SchemaDictionaryCell FieldDefs => SchemaDefinition.Fields;
 
 		public Guid ExStoreGuid => Guid.Empty;
 

@@ -19,16 +19,16 @@ namespace AOTools.Cells.Tests
 
 		public static ExStoreRtnCodes MakeRootExStorage()
 		{
-			ExStoreRoot xRoot = ExStoreRoot.Instance();
+			XsMgr.XRoot = ExStoreRoot.Instance();
 			ExStoreRtnCodes result;
 
-			xRoot.Data[SchemaRootKey.NAME].Value
+			XsMgr.XRoot.Data[SchemaRootKey.NAME].Value
 				= "RootEx4"+AppRibbon.Doc.Title;
 
-			xRoot.Data[SchemaRootKey.DESCRIPTION].Value
+			XsMgr.XRoot.Data[SchemaRootKey.DESCRIPTION].Value
 				= "Root Ex Storage Data for| "+AppRibbon.Doc.Title;
 
-			result = XsMgr.WriteRoot(xRoot);
+			result = XsMgr.WriteRoot(XsMgr.XRoot);
 			if (result != ExStoreRtnCodes.GOOD) return result;
 
 			return ExStoreRtnCodes.GOOD;
@@ -36,20 +36,21 @@ namespace AOTools.Cells.Tests
 
 		public static ExStoreRtnCodes MakeAppAndCellsExStorage()
 		{
-			ExStoreApp xApp = ExStoreApp.Instance();
+			XsMgr.XApp = ExStoreApp.Instance();
+
 			ExStoreRtnCodes result;
 
-			xApp.Data[SchemaAppKey.NAME].Value = "Special Name 01";
-			xApp.Data[SchemaAppKey.DESCRIPTION].Value = "Special Description 01";
+			XsMgr.XApp.Data[SchemaAppKey.NAME].Value = "Special Name 01";
+			XsMgr.XApp.Data[SchemaAppKey.DESCRIPTION].Value = "Special Description 01";
 
-			ExStoreCell xCell = ExStoreCell.Instance(3);
+			XsMgr.XCell = ExStoreCell.Instance(3);
 
 			for (int i = 0; i < 3; i++)
 			{
-				SampleCellData(xCell, i);
+				SampleCellData(XsMgr.XCell, i);
 			}
 
-			result = XsMgr.WriteAppAndCells(xApp, xCell);
+			result = XsMgr.WriteAppAndCells(XsMgr.XApp, XsMgr.XCell);
 
 			if (result != ExStoreRtnCodes.GOOD) return result;
 
@@ -86,7 +87,6 @@ namespace AOTools.Cells.Tests
 
 			td.Show();
 		}
-
 
 	#endregion
 

@@ -1,7 +1,9 @@
 ﻿#region Using directives
 
 using System;
+using System.Collections.Generic;
 using System.Diagnostics;
+using System.Windows.Input;
 using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
@@ -50,6 +52,7 @@ namespace AOTools
 
 		private Result Test01()
 		{
+			ExStoreMgr a = XsMgr;
 
 			try
 			{
@@ -65,10 +68,6 @@ namespace AOTools
 
 				ExStoreRtnCodes result;
 
-				int b = 1;
-
-				ExStoreMgr a = XsMgr;
-
 				result = ExStorageTests.MakeRootExStorage();
 				if (result != ExStoreRtnCodes.GOOD) return Result.Failed;
 
@@ -81,14 +80,37 @@ namespace AOTools
 				return Result.Failed;
 			}
 
-			// Schema schemaUnit= SchemaUnit;
-			// Entity entityUnit= EntityUnit;
-			// 				   
-			// Schema schemaDS =  SchemaDS;
-			// Entity entityDS =  EntityDS;
+			info();
 
 			return Result.Succeeded;
 		}
+
+		private void info()
+		{
+			ExStoreMgr x = XsMgr;
+
+			ExStoreRoot xrc = XsMgr.XRoot;
+			SchemaDictionaryRoot xrf = xrc.FieldDefs;
+			SchemaDictionaryRoot xrl = xrc.Data;
+			SchemaDictionaryRoot xrv = xrc.DefaultValues();
+
+			ExStoreApp xac = XsMgr.XApp;
+			SchemaDictionaryApp xaf = xac.FieldDefs;
+			SchemaDictionaryApp xal = xac.Data;
+			SchemaDictionaryApp xav = xac.DefaultValues();
+
+			ExStoreCell xcc = XsMgr.XCell;
+			SchemaDictionaryCell xcf = xcc.FieldDefs;
+			List<SchemaDictionaryCell> xcl = xcc.Data;
+			Dictionary<string, string> xcd = xcc.SubSchemaFields;
+			SchemaDictionaryCell xcv = xcc.DefaultValues();
+
+		}
+
+
+
+
+
 /*
 		private void SampleCellData(ExStoreCell xCell, int id)
 		{

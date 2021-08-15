@@ -12,14 +12,18 @@ using Autodesk.Revit.DB.ExtensibleStorage;
 namespace AOTools.Cells.SchemaDefinition
 {
 
-	public interface ISchemaFieldDef
+	public interface ISchemaFieldDef<TE> where TE : Enum
 	{
+		TE Key { get; }
+		Type ValueType { get; }
 		dynamic Value { get; set; }
+
+		ISchemaFieldDef<TE> Clone();
 	}
 	
-	public class SchemaFieldDef<T> : ISchemaFieldDef  where T: Enum 
+	public class SchemaFieldDef<TE> : ISchemaFieldDef<TE>  where TE: Enum 
 	{
-		public T Key { get; private set; }
+		public TE Key { get; private set; }
 		// [DataMember(Order = 1)]
 		public int Sequence { get; set; }
 
@@ -35,6 +39,8 @@ namespace AOTools.Cells.SchemaDefinition
 		// [DataMember(Order = 5)]
 		public string Guid { get; set; }
 
+		public Type ValueType { get; set; }
+
 		// [DataMember(Name = "RevitFieldValue", Order = 6)]
 		public dynamic Value { get; set; }
 
@@ -48,7 +54,7 @@ namespace AOTools.Cells.SchemaDefinition
 			Guid = null;
 		}
 
-		public SchemaFieldDef(T sequence, string name, string desc, dynamic val,
+		public SchemaFieldDef(TE sequence, string name, string desc, dynamic val,
 			RevitUnitType unitType = RevitUnitType.UT_UNDEFINED, string guid = "")
 		{
 			Key = sequence;
@@ -56,58 +62,30 @@ namespace AOTools.Cells.SchemaDefinition
 			Name = name;
 			Desc = desc;
 			Value = val;
+			ValueType = val.GetType();
 			UnitType = unitType;
 			Guid = guid;
 		}
 
-
-		public SchemaFieldDef(SchemaFieldDef<T> fi)
+		public ISchemaFieldDef<TE> Clone()
 		{
-			Key = fi.Key;
-			Sequence = fi.Sequence;
-			Name = fi.Name;
-			Desc = fi.Desc;
-			Value = fi.Value;
-			UnitType = fi.UnitType;
-			Guid = fi.Guid;
+			SchemaFieldDef<TE> copy = new SchemaFieldDef<TE>();
+
+			copy.Key        = Key;
+			copy.Sequence	= Sequence;
+			copy.Name		= Name;
+			copy.Desc		= Desc;
+			copy.ValueType	= ValueType;
+			copy.UnitType	= UnitType;
+			copy.Guid		= Guid;
+			copy.Value		= Value;
+
+			return copy;
 		}
 
-		// master switch routine
-		public dynamic ExtractValue(Entity e, Field f)
+		public override string ToString()
 		{
-			return ExtractValue(Value, e, f);
-		}
-
-		// sub-routine
-		private Entity ExtractValue(Entity key, Entity e, Field f)
-		{
-			return e.Get<Entity>(f);
-		}
-
-		private string ExtractValue(string key, Entity e, Field f)
-		{
-			return e.Get<string>(f);
-		}
-
-		private int ExtractValue(int key, Entity e, Field f)
-		{
-			return e.Get<int>(f);
-		}
-
-		private bool ExtractValue(bool key, Entity e, Field f)
-		{
-			return e.Get<bool>(f);
-		}
-
-		private double ExtractValue(double key, Entity e, Field f)
-		{
-			return e.Get<double>(f, DisplayUnitType.DUT_GENERAL);
-		}
-
-		public SchemaFieldDef<T> Clone()
-		{
-			// SchemaFieldDef copy = new SchemaFieldDef(Sequence, Name, Desc, Value, UnitType, Guid);
-			return new SchemaFieldDef<T>(this);
+			return $"(field def) name| {Name}  type| {ValueType}  value| {Value}";
 		}
 	}
 }

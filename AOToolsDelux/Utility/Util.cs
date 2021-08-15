@@ -131,7 +131,7 @@ namespace AOTools.Utility
 			IList<Element> siteElements =
 				collector.WherePasses(sitElementCategoryFilter).ToElements();
 
-			if (siteElements.Count > 1)
+			if (siteElements.Count != 1)
 			{
 				return null;
 			}

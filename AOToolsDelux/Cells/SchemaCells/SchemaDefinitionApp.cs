@@ -1,6 +1,9 @@
 ﻿#region + Using Directives
+
+using System;
 using AOTools.Cells.SchemaDefinition;
 using static AOTools.Cells.SchemaDefinition.SchemaAppKey;
+
 #endregion
 
 // user name: jeffs
@@ -10,11 +13,38 @@ namespace AOTools.Cells.SchemaCells
 {
 	public class SchemaDefinitionApp : ASchemaDef<SchemaAppKey, SchemaDictionaryApp>
 	{
+		private static readonly Lazy<SchemaDefinitionApp> instance =
+			new Lazy<SchemaDefinitionApp>(() => new SchemaDefinitionApp());
+
 		public const string SCHEMA_NAME = "CellsAppData";
 		public const string SCHEMA_DESC = "Excel Cells to Revit Exchange";
-		public const string DEVELOPER_NAME = "CyberStudio";
+
+		private SchemaDefinitionApp()
+		{
+			defineFields();
+		}
+
+		public static SchemaDefinitionApp Instance => instance.Value;
 
 		public override SchemaAppKey[] KeyOrder { get; set; }
+
+		private void defineFields()
+		{
+			Fields = new SchemaDictionaryApp();
+
+			KeyOrder = new SchemaAppKey[Enum.GetNames(typeof(SchemaAppKey)).Length];
+			int idx = 0;
+
+			KeyOrder[idx++] =
+				defineField<string>(NAME, "Name", "Name", SCHEMA_NAME );
+
+			KeyOrder[idx++] =
+				defineField<string>(DESCRIPTION, "Description", "Description", SCHEMA_DESC );
+
+			KeyOrder[idx++] =
+				defineField<string>(VERSION, "Version", "Cells Version", "0.1" );
+		}
+
 
 		// the guid for each sub-schema and the 
 		// field that holds the sub-schema - both must match
@@ -36,26 +66,26 @@ namespace AOTools.Cells.SchemaCells
 			return subDef;
 		}
 
-		public override SchemaDictionaryApp DefaultFields { get; } =
-			new SchemaDictionaryApp
-			{
-				{
-					NAME,
-					new SchemaFieldDef<SchemaAppKey>(NAME, "Name",
-						"Name", SCHEMA_NAME)
-				},
-
-				{
-					DESCRIPTION,
-					new SchemaFieldDef<SchemaAppKey>(DESCRIPTION, "Description",
-						"Description", SCHEMA_DESC)
-				},
-
-				{
-					VERSION,
-					new SchemaFieldDef<SchemaAppKey>(VERSION, "Version",
-						"Cells Version", "1.0")
-				}
-			};
+		// public SchemaDictionaryApp Fields { get; } =
+		// 	new SchemaDictionaryApp
+		// 	{
+		// 		{
+		// 			NAME,
+		// 			new SchemaFieldDef<SchemaAppKey>(NAME, "Name",
+		// 				"Name", SCHEMA_NAME)
+		// 		},
+		//
+		// 		{
+		// 			DESCRIPTION,
+		// 			new SchemaFieldDef<SchemaAppKey>(DESCRIPTION, "Description",
+		// 				"Description", SCHEMA_DESC)
+		// 		},
+		//
+		// 		{
+		// 			VERSION,
+		// 			new SchemaFieldDef<SchemaAppKey>(VERSION, "Version",
+		// 				"Cells Version", "1.0")
+		// 		}
+		// 	};
 	}
 }
