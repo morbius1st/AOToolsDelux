@@ -34,7 +34,7 @@ namespace AOTools.Cells.Tests
 			return ExStoreRtnCodes.GOOD;
 		}
 
-		public static ExStoreRtnCodes MakeAppAndCellsExStorage()
+		public static ExStoreRtnCodes MakeAppAndCellsExStorage(int qty = 3)
 		{
 			XsMgr.XApp = ExStoreApp.Instance();
 
@@ -45,7 +45,7 @@ namespace AOTools.Cells.Tests
 
 			XsMgr.XCell = ExStoreCell.Instance(3);
 
-			for (int i = 0; i < 3; i++)
+			for (int i = 0; i < qty; i++)
 			{
 				SampleCellData(XsMgr.XCell, i);
 			}
@@ -57,7 +57,7 @@ namespace AOTools.Cells.Tests
 			return ExStoreRtnCodes.GOOD;
 		}
 
-		public static void ShowData(ExStoreCell xCell)
+		public static void ShowDataCell(ExStoreCell xCell)
 		{
 			TaskDialog td = new TaskDialog("Ex Storage App Data");
 
@@ -65,15 +65,17 @@ namespace AOTools.Cells.Tests
 
 			StringBuilder sb = new StringBuilder();
 
+			sb.AppendLine($"guid| {xCell.ExStoreGuid.ToString()}\n");
+
 			for (int i = 0; i < xCell.Data.Count; i++)
 			{
 				sb.AppendLine($"date group| {i:D}");
 
 
 				foreach (KeyValuePair<SchemaCellKey, 
-					SchemaFieldDef<SchemaCellKey>> kvp in xCell.FieldDefs)
+					SchemaFieldDef<SchemaCellKey>> kvp in xCell.Fields)
 				{
-					string name = xCell.FieldDefs[kvp.Key].Name;
+					string name = xCell.Fields[kvp.Key].Name;
 					string value = xCell.Data[i][kvp.Key].Value.ToString();
 
 					sb.Append(name).Append("| ").AppendLine(value);	
@@ -88,13 +90,38 @@ namespace AOTools.Cells.Tests
 			td.Show();
 		}
 
+		
+		public static void ShowDataApp(ExStoreApp xApp)
+		{
+			TaskDialog td = new TaskDialog("Ex Storage App Data");
+
+			td.MainInstruction = "App Schema was read successfully\ncontents:";
+
+			StringBuilder sb = new StringBuilder();
+
+			foreach (KeyValuePair<SchemaAppKey, SchemaFieldDef<SchemaAppKey>> kvp in xApp.Data)
+			{
+				string name = xApp.Data[kvp.Key].Name;
+				string value = xApp.Data[kvp.Key].Value;
+
+				sb.Append(name).Append("| ").AppendLine(value);
+			}
+
+			td.MainContent = sb.ToString();
+			td.MainIcon = TaskDialogIcon.TaskDialogIconNone;
+
+			td.Show();
+
+		}
+
+
 	#endregion
 
 	#region private methods
 
 		private static void SampleCellData(ExStoreCell xCell, int id)
 		{
-			xCell.Data[id][SchemaCellKey.NAME].Value = "Alpha";
+			xCell.Data[id][SchemaCellKey.NAME].Value = $"Alpha {id:D2}";
 			xCell.Data[id][SchemaCellKey.VERSION].Value = $"beta {id:D3}";
 			xCell.Data[id][SchemaCellKey.SEQUENCE].Value = (double) id;
 			xCell.Data[id][SchemaCellKey.UPDATE_RULE].Value = (int) UpdateRules.UPON_REQUEST;

@@ -126,7 +126,7 @@ namespace AOTools.Cells.ExStorage
 				// xCell.Data[i] = xCell.DefaultValues();
 				xCell.AddDefault();
 
-				foreach (KeyValuePair<SchemaCellKey, SchemaFieldDef<SchemaCellKey>> kvp in xCell.FieldDefs)
+				foreach (KeyValuePair<SchemaCellKey, SchemaFieldDef<SchemaCellKey>> kvp in xCell.Fields)
 				{
 					SchemaCellKey key = kvp.Value.Key;
 					string fieldName = kvp.Value.Name;
@@ -161,7 +161,7 @@ namespace AOTools.Cells.ExStorage
 		private ExStoreRtnCodes ReadData<TE, TT, TD>(Entity e, Schema s, IExStoreData<TT, TD> xStoreData)
 			where TE : Enum where TT : SchemaDictionaryBase<TE>  where TD : SchemaDictionaryBase<TE>
 		{
-			foreach (KeyValuePair<TE, SchemaFieldDef<TE>> kvp in xStoreData.FieldDefs)
+			foreach (KeyValuePair<TE, SchemaFieldDef<TE>> kvp in xStoreData.Data)
 			{
 				TE key = kvp.Value.Key;
 				string fieldName = kvp.Value.Name;
@@ -221,8 +221,8 @@ namespace AOTools.Cells.ExStorage
 
 		public ExStoreRtnCodes WriteRootData(ExStoreRoot xRoot)
 		{
-			SchemaGuidManager.SetUniqueAppGuidSubStr();
-			xRoot.Data[SchemaRootKey.APP_GUID].Value = SchemaGuidManager.AppGuidUniqueString;
+			// SchemaGuidManager.SetUniqueAppGuidSubStr();
+			xRoot.Data[SchemaRootKey.APP_GUID].Value = SchemaGuidManager.AppGuidString;
 
 			Transaction t = null;
 
@@ -232,7 +232,7 @@ namespace AOTools.Cells.ExStorage
 
 				makeSchemaDef(sb, xRoot.Name, xRoot.Description);
 
-				makeSchemaFields(sb, xRoot.FieldDefs);
+				makeSchemaFields(sb, xRoot.Data);
 
 				Schema schema = sb.Finish();
 
@@ -276,7 +276,7 @@ namespace AOTools.Cells.ExStorage
 
 				makeSchemaDef(sb, xApp.Name, xApp.Description);
 
-				makeSchemaFields(sb, xApp.FieldDefs);
+				makeSchemaFields(sb, xApp.Data);
 
 				makeSchemaSubSchemaFields(sb, xCell);
 
@@ -427,7 +427,7 @@ namespace AOTools.Cells.ExStorage
 
 			makeSchemaDef(sb, xCell.Name, xCell.Description);
 
-			makeSchemaFields(sb, xCell.FieldDefs);
+			makeSchemaFields(sb, xCell.Fields);
 
 			return sb.Finish();
 		}

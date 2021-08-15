@@ -44,9 +44,9 @@ namespace AOTools
 		{
 			// ExStoreCell xCell = ExStoreCell.Instance(3);
 
-			ExStoreCell xCell = null;
+			// ExStoreCell xCell = null;
 
-			ExStoreRtnCodes result = XsMgr.ReadCells(ref xCell);
+			ExStoreRtnCodes result = XsMgr.ReadCells();
 
 			if (result != ExStoreRtnCodes.GOOD)
 			{
@@ -73,9 +73,9 @@ namespace AOTools
 
 
 				foreach (KeyValuePair<SchemaCellKey, 
-					SchemaFieldDef<SchemaCellKey>> kvp in xCell.FieldDefs)
+					SchemaFieldDef<SchemaCellKey>> kvp in xCell.Fields)
 				{
-					string name = xCell.FieldDefs[kvp.Key].Name;
+					string name = xCell.Fields[kvp.Key].Name;
 					string value = xCell.Data[i][kvp.Key].Value.ToString();
 
 					sb.Append(name).Append("| ").AppendLine(value);	

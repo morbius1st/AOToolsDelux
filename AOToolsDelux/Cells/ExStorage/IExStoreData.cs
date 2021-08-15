@@ -18,7 +18,7 @@ namespace AOTools.Cells.ExStorage
 
 	public interface IExStoreData<TT, TD>
 	{
-		TT FieldDefs { get; }
+		// TT Fields { get; }
 		TD Data { get; }
 	}
 }

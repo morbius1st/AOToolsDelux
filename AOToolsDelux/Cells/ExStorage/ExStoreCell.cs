@@ -38,7 +38,7 @@ namespace AOTools.Cells.ExStorage
 
 		public Dictionary<string, string> SubSchemaFields { get; set; }
 
-		public SchemaDictionaryCell FieldDefs => SchemaDefinition.Fields;
+		public SchemaDictionaryCell Fields => SchemaDefinition.Fields;
 
 		public Guid ExStoreGuid => Guid.Empty;
 
@@ -71,12 +71,22 @@ namespace AOTools.Cells.ExStorage
 		// definition so only need to clone the schema field def
 		public SchemaDictionaryCell DefaultValues()
 		{
-			return FieldDefs.Clone();
+			return Fields.Clone();
 		}
 
 		public void AddDefault()
 		{
 			Data.Add(DefaultValues());
+		}
+
+		public ExStoreCell Clone()
+		{
+			ExStoreCell copy = new ExStoreCell(Data.Count);
+
+			copy.Data = cloneData();
+			copy.IsInitialized = IsInitialized;
+
+			return copy;
 		}
 
 	#endregion
@@ -93,6 +103,19 @@ namespace AOTools.Cells.ExStorage
 			}
 		}
 
+		private List<SchemaDictionaryCell> cloneData()
+		{
+			List<SchemaDictionaryCell> copy = 
+				new List<SchemaDictionaryCell>(Data.Count);
+
+			foreach (SchemaDictionaryCell data in Data)
+			{
+				copy.Add(data.Clone());
+			}
+
+			return copy;
+		}
+	
 	#endregion
 
 	#region event consuming

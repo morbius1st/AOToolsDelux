@@ -11,6 +11,7 @@ using static UtilityLibrary.MessageUtilities;
 using AOTools.Cells.ExStorage;
 using AOTools.Cells.Tests;
 using Autodesk.Revit.DB.ExtensibleStorage;
+using Microsoft.Office.Interop.Excel;
 using static AOTools.Cells.ExStorage.ExStoreMgr;
 using InvalidOperationException = Autodesk.Revit.Exceptions.InvalidOperationException;
 
@@ -42,32 +43,32 @@ namespace AOTools
 
 		private Result Test01()
 		{
-			string title = "Modify Ex Storage";
+			string title = "Modify Cell Ex Storage";
 			ExStoreRtnCodes result;
 			Result r;
 
-			// ExStoreRtnCodes result = XsMgr.Initialize();
-			// if (result != ExStoreRtnCodes.GOOD) 
-			// 	return test01Fail(title, "Initialize", result);
-
-			ExStoreCell xCell = null;
-
-			result = XsMgr.ReadCells(ref xCell);
+			result = XsMgr.ReadCells();
 			if (result != ExStoreRtnCodes.GOOD) 
 				return test01Fail(title, "Read Cells", result);
 
-			ExStorageTests.ShowData(xCell);
+			ExStorageTests.ShowDataCell(XsMgr.XCell);
 
+			ExStoreCell xCell = null;
+			ExStoreCell xCell2 = null;
+			xCell = XsMgr.XCell.Clone();
+			xCell2 = XsMgr.XCell;
 
-			result = modifyData01(ref xCell);
+			result = modifyData01(xCell);
 			if (result != ExStoreRtnCodes.GOOD) 
 				return test01Fail(title, "Modify Cells 1", result);
 
 			r = updateCellData(xCell, title);
 			if (r != Result.Succeeded) return r;
 
+
+			xCell = XsMgr.XCell.Clone();
 			
-			result = modifyData02(ref xCell);
+			result = modifyData02(xCell);
 			if (result != ExStoreRtnCodes.GOOD) 
 				return test01Fail(title, "Modify Cells 2", result);
 
@@ -75,29 +76,18 @@ namespace AOTools
 			if (r != Result.Succeeded) return r;
 			
 			
-			result = modifyData03(ref xCell);
+			xCell = XsMgr.XCell.Clone();
+
+			result = modifyData03(xCell);
 			if (result != ExStoreRtnCodes.GOOD) 
 				return test01Fail(title, "Modify Cells 3", result);
 
 			r = updateCellData(xCell, title);
 			if (r != Result.Succeeded) return r;
 			
-
-			// result = XsMgr.UpdateCells(xCell);
-			// if (result != ExStoreRtnCodes.GOOD) 
-			// 	return test01Fail(title, "update Cells", result);
-			//
-			// ExStoreCell xCell2 = null;
-			//
-			// result = XsMgr.ReadCells(ref xCell2);
-			// if (result != ExStoreRtnCodes.GOOD)
-			// 	return test01Fail(title, "Read Cells", result);
-			//
-			// ExStorageTests.ShowData(xCell2);
-
-
 			return Result.Succeeded;
 		}
+
 
 		private Result updateCellData(ExStoreCell xCell, string title)
 		{
@@ -107,13 +97,7 @@ namespace AOTools
 			if (result != ExStoreRtnCodes.GOOD) 
 				return test01Fail(title, "update Cells", result);
 
-			ExStoreCell xCell2 = null; // = ExStoreCell.Instance(xCell.Data.Count);
-
-			result = XsMgr.ReadCells(ref xCell2);
-			if (result != ExStoreRtnCodes.GOOD)
-				return test01Fail(title, "Read Cells", result);
-
-			ExStorageTests.ShowData(xCell2);
+			ExStorageTests.ShowDataCell(XsMgr.XCell);
 
 			return Result.Succeeded;
 		}
@@ -126,7 +110,7 @@ namespace AOTools
 			return Result.Failed;
 		}
 
-		private ExStoreRtnCodes modifyData01(ref ExStoreCell xCell)
+		private ExStoreRtnCodes modifyData01(ExStoreCell xCell)
 		{
 
 			// ExStoreRtnCodes result = XsMgr.ReadCells();
@@ -149,7 +133,7 @@ namespace AOTools
 			return ExStoreRtnCodes.GOOD;
 		}
 
-		private ExStoreRtnCodes modifyData02(ref ExStoreCell xCell)
+		private ExStoreRtnCodes modifyData02(ExStoreCell xCell)
 		{
 			// ExStoreRtnCodes result;
 
@@ -166,7 +150,7 @@ namespace AOTools
 			return ExStoreRtnCodes.GOOD;
 		}
 
-		private ExStoreRtnCodes modifyData03(ref ExStoreCell xCell)
+		private ExStoreRtnCodes modifyData03(ExStoreCell xCell)
 		{
 			xCell.Data.RemoveAt(0);
 			xCell.Data.RemoveAt(0);
@@ -178,7 +162,7 @@ namespace AOTools
 	[Transaction(TransactionMode.Manual)]
 	class ModAppExData : IExternalCommand
 	{
-		public Result Execute(ExternalCommandData commandData, 
+		public Result Execute(ExternalCommandData commandData,
 			ref string message, ElementSet elements)
 		{
 			AppRibbon.UiApp = commandData.Application;
@@ -193,46 +177,57 @@ namespace AOTools
 
 		private Result Test01()
 		{
-			ExStoreRtnCodes result = XsMgr.DeleteApp();
+			string title = "Modify App Ex Storage";
+			ExStoreRtnCodes result;
+			Result r;
+			
+			result = XsMgr.ReadApp();
+			if (result != ExStoreRtnCodes.GOOD) 
+				return test01Fail(title, "Read App", result);
 
-			if (result != ExStoreRtnCodes.GOOD)
-			{
-				XsMgr.DeleteSchemaFail(XsMgr.OpDescription);
-				return Result.Failed;
-			}
+			ExStorageTests.ShowDataApp(XsMgr.XApp);
+			ExStorageTests.ShowDataCell(XsMgr.XCell);
+
+			ExStoreApp xApp = XsMgr.XApp;
+
+			modifyData(xApp);
+
+			r = updateAppData(xApp, title);
+			if (r != Result.Succeeded) return r;
 
 			return Result.Succeeded;
 		}
-	}
-	
-	// [Transaction(TransactionMode.Manual)]
-	// class DelSubExStor : IExternalCommand
-	// {
-	// 	public Result Execute(ExternalCommandData commandData, 
-	// 		ref string message, ElementSet elements)
-	// 	{
-	// 		AppRibbon.UiApp = commandData.Application;
-	// 		AppRibbon.Uidoc = AppRibbon.UiApp.ActiveUIDocument;
-	// 		AppRibbon.App =  AppRibbon.UiApp.Application;
-	// 		AppRibbon.Doc =  AppRibbon.Uidoc.Document;
-	//
-	// 		OutLocation = OutputLocation.DEBUG;
-	//
-	// 		return Test01();
-	// 	}
-	//
-	// 	private Result Test01()
-	// 	{
-	// 		ExStoreRtnCodes result = XsMgr.DeleteCells();
-	//
-	// 		if (result != ExStoreRtnCodes.GOOD)
-	// 		{
-	// 			XsMgr.DeleteSchemaFail(XsMgr.OpDescription);
-	// 			return Result.Failed;
-	// 		}
-	//
-	// 		return Result.Succeeded;
-	// 	}
-	// }
 
+		private Result updateAppData(ExStoreApp xApp, string title)
+		{
+			ExStoreRtnCodes result;
+
+			result = XsMgr.UpdateApp(xApp);
+			if (result != ExStoreRtnCodes.GOOD)
+				return test01Fail(title, "update App", result);
+
+			ExStorageTests.ShowDataApp(XsMgr.XApp);
+			ExStorageTests.ShowDataCell(XsMgr.XCell);
+
+			return Result.Succeeded;
+		}
+
+
+		private ExStoreRtnCodes modifyData(ExStoreApp xApp)
+		{
+			xApp.Data[SchemaAppKey.NAME].Value = "Blinken 01";
+			xApp.Data[SchemaAppKey.DESCRIPTION].Value = "Blinken Description";
+			xApp.Data[SchemaAppKey.VERSION].Value = "0.2";
+			return ExStoreRtnCodes.GOOD;
+		}
+
+
+		private Result test01Fail(string title, string desc,
+			ExStoreRtnCodes result)
+		{
+			XsMgr.ExStoreFail(title, desc, result.ToString());
+
+			return Result.Failed;
+		}
+	}
 }

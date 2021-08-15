@@ -11,6 +11,7 @@ using AOTools.Cells.SchemaDefinition;
 using static UtilityLibrary.MessageUtilities;
 
 using AOTools.Cells.ExStorage;
+using AOTools.Cells.Tests;
 using Autodesk.Revit.DB.ExtensibleStorage;
 using static AOTools.Cells.ExStorage.ExStoreMgr;
 
@@ -60,11 +61,11 @@ namespace AOTools
 				return Result.Failed;
 			}
 
-			ExStoreApp xApp = ExStoreApp.Instance();
+			// ExStoreApp xApp = ExStoreApp.Instance();
 
 			try
 			{
-				result = XsMgr.ReadApp(ref xApp);
+				result = XsMgr.ReadApp();
 
 				// result = xsHlpr.ReadAppData(xApp);
 
@@ -79,18 +80,18 @@ namespace AOTools
 				return Result.Failed;
 			}
 
-			ShowData(xApp);
+			ExStorageTests.ShowDataApp(XsMgr.XApp);
 
 			return Result.Succeeded;
 		}
 
 		private ExStoreRtnCodes ReadRootExStore(ExStoreHelper xsHlpr)
 		{
-			ExStoreRoot xRoot = ExStoreRoot.Instance();
+			// ExStoreRoot xRoot = ExStoreRoot.Instance();
 
 			try
 			{
-				ExStoreRtnCodes result = XsMgr.ReadRoot(ref xRoot);
+				ExStoreRtnCodes result = XsMgr.ReadRoot(/*ref xRoot*/);
 
 				if (result != ExStoreRtnCodes.GOOD)
 				{
@@ -106,29 +107,29 @@ namespace AOTools
 			return ExStoreRtnCodes.GOOD;
 		}
 
-		private void ShowData(ExStoreApp xApp)
-		{
-			TaskDialog td = new TaskDialog("Ex Storage App Data");
-
-			td.MainInstruction = "App Schema was read successfully\ncontents:";
-
-			StringBuilder sb = new StringBuilder();
-
-			foreach (KeyValuePair<SchemaAppKey, SchemaFieldDef<SchemaAppKey>> kvp in xApp.FieldDefs)
-			{
-				string name = xApp.FieldDefs[kvp.Key].Name;
-				string value = xApp.Data[kvp.Key].Value;
-
-				sb.Append(name).Append("| ").AppendLine(value);
-			}
-
-			td.MainContent = sb.ToString();
-			td.MainIcon = TaskDialogIcon.TaskDialogIconNone;
-
-			td.Show();
-
-		}
-		
+		// private void ShowDataApp(ExStoreApp xApp)
+		// {
+		// 	TaskDialog td = new TaskDialog("Ex Storage App Data");
+		//
+		// 	td.MainInstruction = "App Schema was read successfully\ncontents:";
+		//
+		// 	StringBuilder sb = new StringBuilder();
+		//
+		// 	foreach (KeyValuePair<SchemaAppKey, SchemaFieldDef<SchemaAppKey>> kvp in xApp.Data)
+		// 	{
+		// 		string name = xApp.Data[kvp.Key].Name;
+		// 		string value = xApp.Data[kvp.Key].Value;
+		//
+		// 		sb.Append(name).Append("| ").AppendLine(value);
+		// 	}
+		//
+		// 	td.MainContent = sb.ToString();
+		// 	td.MainIcon = TaskDialogIcon.TaskDialogIconNone;
+		//
+		// 	td.Show();
+		//
+		// }
+		//
 
 
 	}

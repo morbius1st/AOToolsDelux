@@ -31,13 +31,13 @@ namespace AOTools.Cells.ExStorage
 		public string Description => SchemaDefinitionApp.SCHEMA_DESC;
 		public Guid ExStoreGuid => SchemaGuidManager.AppGuid;
 
-		public SchemaDictionaryApp Data { get; private set; }
+		// public SchemaDictionaryApp Data { get; private set; }
 
 		public bool IsInitialized { get; private set; }
 
 		public SchemaDefinitionApp SchemaDefinition => SchemaDefinitionApp.Instance;
 
-		public SchemaDictionaryApp FieldDefs => SchemaDefinition.Fields;
+		public SchemaDictionaryApp Data => SchemaDefinition.Fields;
 
 		public SchemaAppKey[] KeyOrder => SchemaDefinition.KeyOrder;
 
@@ -56,7 +56,7 @@ namespace AOTools.Cells.ExStorage
 
 		public void Initialize()
 		{
-			Data = DefaultValues();
+			// Data = DefaultValues();
 
 			IsInitialized = true;
 		}

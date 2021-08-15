@@ -17,12 +17,6 @@ namespace AOTools.Cells.ExStorage
 
 	#region ctor
 
-
-		static  ExStoreRoot()
-		{
-			// SchemaDefinition = new SchemaDefinitionRoot();
-		}
-
 		private ExStoreRoot()
 		{
 			Initialize();
@@ -37,13 +31,16 @@ namespace AOTools.Cells.ExStorage
 		public string Developer => SchemaDefinitionRoot.ROOT_DEVELOPER_NAME;
 		public Guid ExStoreGuid => SchemaGuidManager.RootGuid;
 
-		public SchemaDictionaryRoot Data { get; private set; }
+		public SchemaDictionaryRoot Data { 
+			get => SchemaDefinition.Fields;
+			// private set => SchemaDefinition.Fields = value;
+		}
 
 		public bool IsInitialized { get; private set; }
 
 		public SchemaDefinitionRoot SchemaDefinition => SchemaDefinitionRoot.Instance;
 
-		public SchemaDictionaryRoot FieldDefs => SchemaDefinition.Fields;
+		// public SchemaDictionaryRoot Data => SchemaDefinition.Fields;
 
 	#endregion
 
@@ -60,7 +57,7 @@ namespace AOTools.Cells.ExStorage
 
 		public void Initialize()
 		{
-			Data = DefaultValues();
+			// Data = DefaultValues();
 
 			IsInitialized = true;
 		}

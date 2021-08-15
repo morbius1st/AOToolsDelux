@@ -52,11 +52,11 @@ namespace AOTools
 		{
 			ExStoreHelper xsHlpr = new ExStoreHelper();
 
-			ExStoreRoot xRoot = ExStoreRoot.Instance();
+			// ExStoreRoot xRoot = ExStoreRoot.Instance();
 
 			try
 			{
-				ExStoreRtnCodes result = XsMgr.ReadRoot(ref xRoot);
+				ExStoreRtnCodes result = XsMgr.ReadRoot(/*ref xRoot*/);
 
 				if (result != ExStoreRtnCodes.GOOD)
 				{
@@ -71,7 +71,7 @@ namespace AOTools
 				return Result.Failed;
 			}
 
-			ShowData(xRoot);
+			ShowData(XsMgr.XRoot);
 
 			return Result.Succeeded;
 		}
@@ -84,9 +84,9 @@ namespace AOTools
 
 			StringBuilder sb = new StringBuilder();
 
-			foreach (KeyValuePair<SchemaRootKey, SchemaFieldDef<SchemaRootKey>> kvp in xRoot.FieldDefs)
+			foreach (KeyValuePair<SchemaRootKey, SchemaFieldDef<SchemaRootKey>> kvp in xRoot.Data)
 			{
-				string name = xRoot.FieldDefs[kvp.Key].Name;
+				string name = xRoot.Data[kvp.Key].Name;
 				string value = xRoot.Data[kvp.Key].Value;
 
 				sb.Append(name).Append("| ").AppendLine(value);

@@ -86,13 +86,7 @@ namespace AOTools
 			try
 			{
 				ExStoreRtnCodes result;
-				//
-				// result = XsMgr.Initialize();
-				// if (result != ExStoreRtnCodes.GOOD) return Result.Failed;
-				//
-				// result = XsMgr.Configure();
-				// if (result != ExStoreRtnCodes.GOOD) return Result.Failed;
-
+	
 				result = ExStorageTests.MakeAppAndCellsExStorage();
 				if (result != ExStoreRtnCodes.GOOD) return Result.Failed;
 
@@ -101,12 +95,6 @@ namespace AOTools
 			{
 				return Result.Failed;
 			}
-
-			// Schema schemaUnit= SchemaUnit;
-			// Entity entityUnit= EntityUnit;
-			// 				   
-			// Schema schemaDS =  SchemaDS;
-			// Entity entityDS =  EntityDS;
 
 			return Result.Succeeded;
 		}

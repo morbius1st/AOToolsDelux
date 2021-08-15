@@ -42,7 +42,6 @@ using Autodesk.Revit.UI;
  * **	cell(s) exist	n/a		n/a			true	** probably do not need
  */
 
-
 namespace AOTools.Cells.ExStorage
 {
 	public class ExStoreMgr
@@ -147,6 +146,20 @@ namespace AOTools.Cells.ExStorage
 
 	#endregion
 
+		public ExStoreRtnCodes UpdateApp(ExStoreApp xApp)
+		{
+			ExStoreRtnCodes result;
+			if (!AppExStorExists) return ExStoreRtnCodes.APP_NOT_EXIST;
+
+			result = DeleteApp();
+			if (result != ExStoreRtnCodes.GOOD) return result;
+
+			// write the modified app info and the current cell info
+			WriteAppAndCells(xApp, XCell);
+
+			return result;
+		}
+
 		public ExStoreRtnCodes UpdateCells(ExStoreCell xCell)
 		{
 			if (!AppExStorExists) return ExStoreRtnCodes.APP_NOT_EXIST;
@@ -155,12 +168,14 @@ namespace AOTools.Cells.ExStorage
 
 			result = xsHlpr.UpdateCellData(XApp, xCell);
 
+			this.xCell = xCell;
+
 			return result;
 		}
 
 	#region read
 
-		public ExStoreRtnCodes ReadRoot(ref ExStoreRoot xRoot)
+		public ExStoreRtnCodes ReadRoot()
 		{
 			OpDescription = "Read Root Data";
 			if (!IsInit("Read Root Data"))  return ExStoreRtnCodes.NOT_INIT;
@@ -169,12 +184,12 @@ namespace AOTools.Cells.ExStorage
 			ExStoreRtnCodes result = readRoot();
 			if (result != ExStoreRtnCodes.GOOD) return result;
 
-			xRoot = this.XRoot;
+			// xRoot = this.XRoot;
 
 			return ExStoreRtnCodes.GOOD;
 		}
 
-		public ExStoreRtnCodes ReadApp(ref ExStoreApp xApp)
+		public ExStoreRtnCodes ReadApp()
 		{
 			OpDescription = "Read App Data";
 			if (!RootExStorExists) return ExStoreRtnCodes.ROOT_NOT_EXIST;
@@ -187,7 +202,7 @@ namespace AOTools.Cells.ExStorage
 			return ExStoreRtnCodes.GOOD;
 		}
 
-		public ExStoreRtnCodes ReadCells(ref ExStoreCell xCell)
+		public ExStoreRtnCodes ReadCells()
 		{
 			OpDescription = "Read Cells Data";
 			if (!RootExStorExists) return ExStoreRtnCodes.ROOT_NOT_EXIST;
@@ -217,9 +232,10 @@ namespace AOTools.Cells.ExStorage
 
 			RootExStorExists = true;
 
+			this.xRoot = xRoot;
+
 			return result;
 		}
-
 
 		public ExStoreRtnCodes WriteAppAndCells(ExStoreApp xApp, ExStoreCell xCell)
 		{
@@ -229,6 +245,9 @@ namespace AOTools.Cells.ExStorage
 			ExStoreRtnCodes result = xsHlpr.WriteAppAndCellsData(xApp, xCell);
 
 			AppExStorExists = true;
+
+			this.xApp = xApp;
+			this.xCell = xCell;
 
 			return result;
 		}
@@ -276,7 +295,7 @@ namespace AOTools.Cells.ExStorage
 			ExStoreRtnCodes result = xsHlpr.ReadRootData(ref this.xRoot);
 			if (result != ExStoreRtnCodes.GOOD) return result;
 
-			SchemaGuidManager.AppGuidUniqueString = XRoot.Data[SchemaRootKey.APP_GUID].Value;
+			SchemaGuidManager.AppGuidString = XRoot.Data[SchemaRootKey.APP_GUID].Value;
 
 			return ExStoreRtnCodes.GOOD;
 		}

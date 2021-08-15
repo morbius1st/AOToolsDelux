@@ -90,17 +90,17 @@ namespace AOTools
 			ExStoreMgr x = XsMgr;
 
 			ExStoreRoot xrc = XsMgr.XRoot;
-			SchemaDictionaryRoot xrf = xrc.FieldDefs;
+			// SchemaDictionaryRoot xrf = xrc.Fields;
 			SchemaDictionaryRoot xrl = xrc.Data;
 			SchemaDictionaryRoot xrv = xrc.DefaultValues();
 
 			ExStoreApp xac = XsMgr.XApp;
-			SchemaDictionaryApp xaf = xac.FieldDefs;
+			// SchemaDictionaryApp xaf = xac.Fields;
 			SchemaDictionaryApp xal = xac.Data;
 			SchemaDictionaryApp xav = xac.DefaultValues();
 
 			ExStoreCell xcc = XsMgr.XCell;
-			SchemaDictionaryCell xcf = xcc.FieldDefs;
+			SchemaDictionaryCell xcf = xcc.Fields;
 			List<SchemaDictionaryCell> xcl = xcc.Data;
 			Dictionary<string, string> xcd = xcc.SubSchemaFields;
 			SchemaDictionaryCell xcv = xcc.DefaultValues();
