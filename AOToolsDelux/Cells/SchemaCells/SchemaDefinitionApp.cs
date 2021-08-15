@@ -18,6 +18,7 @@ namespace AOTools.Cells.SchemaCells
 
 		public const string SCHEMA_NAME = "CellsAppData";
 		public const string SCHEMA_DESC = "Excel Cells to Revit Exchange";
+		public const string SCHEMA_VER = "0.1";
 
 		private SchemaDefinitionApp()
 		{
@@ -42,7 +43,7 @@ namespace AOTools.Cells.SchemaCells
 				defineField<string>(DESCRIPTION, "Description", "Description", SCHEMA_DESC );
 
 			KeyOrder[idx++] =
-				defineField<string>(VERSION, "Version", "Cells Version", "0.1" );
+				defineField<string>(VERSION, "Version", "Cells Version", SCHEMA_VER );
 		}
 
 

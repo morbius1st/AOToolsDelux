@@ -17,6 +17,7 @@ namespace AOTools.Cells.SchemaDefinition
 		public const string ROOT_SCHEMA_NAME = "CellsAppRoot";
 		public const string ROOT_SCHEMA_DESC = "Excel Cells to Revit Exchange";
 		public const string ROOT_DEVELOPER_NAME = "CyberStudio";
+		public const string ROOT_SCHEMA_VER = "0.1";
 
 		private SchemaDefinitionRoot()
 		{
@@ -41,7 +42,7 @@ namespace AOTools.Cells.SchemaDefinition
 				defineField<string>(DESCRIPTION, "Description", "Description", ROOT_SCHEMA_DESC);
 			
 			KeyOrder[idx++] =
-				defineField<string>(VERSION, "Version", "Cells Version", "0.1");
+				defineField<string>(VERSION, "Version", "Cells Version", ROOT_SCHEMA_VER);
 			
 			KeyOrder[idx++] =
 				defineField<string>(DEVELOPER,"Developer", "Developer", ROOT_DEVELOPER_NAME);

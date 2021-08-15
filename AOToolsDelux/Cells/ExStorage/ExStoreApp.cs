@@ -26,9 +26,10 @@ namespace AOTools.Cells.ExStorage
 	#endregion
 
 	#region public properties
-
-		public string Name => SchemaDefinitionApp.SCHEMA_NAME;
-		public string Description => SchemaDefinitionApp.SCHEMA_DESC;
+		
+		public string Name => Data?[SchemaAppKey.NAME]?.Value ?? SchemaDefinitionApp.SCHEMA_NAME;
+		public string Description => Data?[SchemaAppKey.DESCRIPTION]?.Value ?? SchemaDefinitionApp.SCHEMA_DESC;
+		public string Version => Data?[SchemaAppKey.VERSION]?.Value ?? SchemaDefinitionApp.SCHEMA_VER;
 		public Guid ExStoreGuid => SchemaGuidManager.AppGuid;
 
 		// public SchemaDictionaryApp Data { get; private set; }

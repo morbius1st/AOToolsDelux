@@ -26,21 +26,18 @@ namespace AOTools.Cells.ExStorage
 
 	#region public properties
 
-		public string Name => SchemaDefinitionRoot.ROOT_SCHEMA_NAME;
-		public string Description => SchemaDefinitionRoot.ROOT_SCHEMA_DESC;
-		public string Developer => SchemaDefinitionRoot.ROOT_DEVELOPER_NAME;
+		public string Name => Data?[SchemaRootKey.NAME]?.Value ?? SchemaDefinitionRoot.ROOT_SCHEMA_NAME;
+		public string Description => Data?[SchemaRootKey.DESCRIPTION]?.Value ??SchemaDefinitionRoot.ROOT_SCHEMA_DESC;
+		public string Developer => Data?[SchemaRootKey.DEVELOPER]?.Value ??SchemaDefinitionRoot.ROOT_DEVELOPER_NAME;
+		public string Version => Data?[SchemaRootKey.VERSION]?.Value ??SchemaDefinitionRoot.ROOT_SCHEMA_VER;
 		public Guid ExStoreGuid => SchemaGuidManager.RootGuid;
 
-		public SchemaDictionaryRoot Data { 
-			get => SchemaDefinition.Fields;
-			// private set => SchemaDefinition.Fields = value;
-		}
+		public SchemaDictionaryRoot Data => SchemaDefinition.Fields;
 
 		public bool IsInitialized { get; private set; }
 
 		public SchemaDefinitionRoot SchemaDefinition => SchemaDefinitionRoot.Instance;
 
-		// public SchemaDictionaryRoot Data => SchemaDefinition.Fields;
 
 	#endregion
 
