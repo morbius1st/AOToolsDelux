@@ -8,21 +8,22 @@ using System.Collections.Generic;
 using System.Windows.Forms;
 using AOTools.Cells.SchemaDefinition;
 
-namespace AOTools.Cells.SchemaDefinition
+
+namespace AOTools.Cells.SchemaDefinition2
 {
-	public abstract class ASchemaDef<TE, TD>
-		where TE : Enum  where TD : SchemaDictionaryBase<TE>, new()
+	public abstract class ASchemaDef2<TE, TD>
+		where TE : Enum  where TD : SchemaDictionaryBase2<TE>, new()
 	{
-		public abstract TE[] KeyOrder { get; set; }
+		public TE[] KeyOrder { get; set; }
 
 		public TD Fields { get; protected set; }
 
 		protected TE defineField<TD>(TE key, string name,
-			string desc, dynamic val,
+			string desc, TD val,
 			RevitUnitType unittype = RevitUnitType.UT_UNDEFINED)
 		{
 			Fields.Add(key, 
-				new SchemaFieldDef<TE>(key, name, desc, val, unittype));
+				new SchemaFieldDef2<TE, TD>(key, name, desc, val, unittype));
 
 			return key;
 		}

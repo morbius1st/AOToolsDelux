@@ -2,15 +2,16 @@
 
 using System;
 using AOTools.Cells.SchemaDefinition;
+using AOTools.Cells.SchemaDefinition2;
 using static AOTools.Cells.SchemaDefinition.SchemaRootKey;
 #endregion
 
 // user name: jeffs
 // created:   7/3/2021 10:48:37 PM
 
-namespace AOTools.Cells.SchemaDefinition
+namespace AOTools.Cells.SchemaDefinition2
 {
-	public class SchemaDefinitionRoot : ASchemaDef<SchemaRootKey, SchemaDictionaryRoot>
+	public class SchemaDefinitionRoot : ASchemaDef2<SchemaRootKey, SchemaDictionaryRoot2>
 	{
 		private static readonly Lazy<SchemaDefinitionRoot> instance =
 			new Lazy<SchemaDefinitionRoot>(() => new SchemaDefinitionRoot());
@@ -27,29 +28,29 @@ namespace AOTools.Cells.SchemaDefinition
 
 		public static SchemaDefinitionRoot Instance => instance.Value;
 
-		public override SchemaRootKey[] KeyOrder { get; set; }
+		// public override SchemaRootKey[] KeyOrder { get; set; }
 
 		private void defineFields()
 		{
-			Fields = new SchemaDictionaryRoot();
+			Fields = new SchemaDictionaryRoot2();
 
 			KeyOrder = new SchemaRootKey[Enum.GetNames(typeof(SchemaRootKey)).Length];
 			int idx = 0;
 
 			KeyOrder[idx++] =
-				defineField<string>(NAME, "Name", "Name", ROOT_SCHEMA_NAME);
+				defineField(NAME, "Name", "Name", ROOT_SCHEMA_NAME);
 			
 			KeyOrder[idx++] =
-				defineField<string>(DESCRIPTION, "Description", "Description", ROOT_SCHEMA_DESC);
+				defineField(DESCRIPTION, "Description", "Description", ROOT_SCHEMA_DESC);
 			
 			KeyOrder[idx++] =
-				defineField<string>(VERSION, "Version", "Cells Version", ROOT_SCHEMA_VER);
+				defineField(VERSION, "Version", "Cells Version", ROOT_SCHEMA_VER);
 			
 			KeyOrder[idx++] =
-				defineField<string>(DEVELOPER,"Developer", "Developer", ROOT_DEVELOPER_NAME);
+				defineField(DEVELOPER,"Developer", "Developer", ROOT_DEVELOPER_NAME);
 			
 			KeyOrder[idx++] =
-				defineField<string>(APP_GUID, "UniqueAppGuidString", "Unique App Guid String", "" );
+				defineField(APP_GUID, "UniqueAppGuidString", "Unique App Guid String", "" );
 		}
 		
 	}

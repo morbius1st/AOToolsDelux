@@ -295,7 +295,7 @@ namespace AOTools.Cells.ExStorage
 			ExStoreRtnCodes result = xsHlpr.ReadRootData(ref this.xRoot);
 			if (result != ExStoreRtnCodes.GOOD) return result;
 
-			SchemaGuidManager.AppGuidString = XRoot.Data[SchemaRootKey.APP_GUID].Value;
+			SchemaGuidManager.AppGuidString = XRoot.Data[SchemaRootKey.APP_GUID].AsString();
 
 			return ExStoreRtnCodes.GOOD;
 		}

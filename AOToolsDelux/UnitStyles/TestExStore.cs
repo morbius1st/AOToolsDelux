@@ -7,7 +7,6 @@ using System.Windows.Input;
 using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
-using AOTools.Cells.SchemaDefinition;
 using AOTools.Cells.SchemaCells;
 using static UtilityLibrary.MessageUtilities;
 
@@ -15,6 +14,9 @@ using AOTools.Cells.ExStorage;
 using AOTools.Cells.Tests;
 using Autodesk.Revit.DB.ExtensibleStorage;
 using static AOTools.Cells.ExStorage.ExStoreMgr;
+using AOTools.Cells.SchemaDefinition;
+using AOTools.Cells.SchemaDefinition2;
+using SchemaDictionaryRoot = AOTools.Cells.SchemaDefinition.SchemaDictionaryRoot;
 
 #endregion
 
@@ -54,17 +56,11 @@ namespace AOTools
 		{
 			ExStoreMgr a = XsMgr;
 
+			// test01();
+
 			try
 			{
 				if (AppRibbon.Doc.IsDetached) return Result.Cancelled;
-
-				// 1. make a root ex store
-				// 2. using the configured app guid, save the app data, save the cell data
-				// 3. reset all to default values or null
-				// 4. read the root ex store
-				// 5. set the app guid
-				// 6. read the app ex store
-				// 7. read the cell ex store
 
 				ExStoreRtnCodes result;
 
@@ -85,14 +81,30 @@ namespace AOTools
 			return Result.Succeeded;
 		}
 
+		// private void test01()
+		// {
+		// 	Cells.SchemaDefinition2.SchemaDefinitionRoot sRoot2 =
+		// 		Cells.SchemaDefinition2.SchemaDefinitionRoot.Instance;
+		//
+		// 	Cells.SchemaDefinition2.SchemaDictionaryRoot sd = sRoot2.Fields;
+		//
+		// 	// SchemaFieldDef<SchemaRootKey, string> ss = ((SchemaFieldDef<SchemaRootKey, string>) sd[0]);
+		//
+		// 	string s = sd[SchemaRootKey.NAME].AsString();
+		// 	int i = sd[SchemaRootKey.NAME].AsInt();
+		//
+		// }
+
+
+
 		private void info()
 		{
 			ExStoreMgr x = XsMgr;
 
 			ExStoreRoot xrc = XsMgr.XRoot;
 			// SchemaDictionaryRoot xrf = xrc.Fields;
-			SchemaDictionaryRoot xrl = xrc.Data;
-			SchemaDictionaryRoot xrv = xrc.DefaultValues();
+			SchemaDictionaryRoot2 xrl = xrc.Data;
+			SchemaDictionaryRoot2 xrv = xrc.DefaultValues();
 
 			ExStoreApp xac = XsMgr.XApp;
 			// SchemaDictionaryApp xaf = xac.Fields;

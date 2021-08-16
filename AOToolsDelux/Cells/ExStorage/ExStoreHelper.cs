@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using AOTools.Cells.SchemaCells;
 using AOTools.Cells.SchemaDefinition;
+using AOTools.Cells.SchemaDefinition2;
 using AOTools.Utility;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.DB.ExtensibleStorage;
@@ -66,7 +67,7 @@ namespace AOTools.Cells.ExStorage
 
 			if (result != ExStoreRtnCodes.GOOD) return result;
 
-			result = ReadData<SchemaRootKey, SchemaDictionaryRoot, SchemaDictionaryRoot>(e, s, xRoot);
+			result = ReadData2<SchemaRootKey, SchemaDictionaryRoot2, SchemaDictionaryRoot2>(e, s, xRoot);
 
 			if (result != ExStoreRtnCodes.GOOD) return result;
 
@@ -158,6 +159,37 @@ namespace AOTools.Cells.ExStorage
 			return ExStoreRtnCodes.GOOD;
 		}
 
+		private ExStoreRtnCodes ReadData2<TE, TT, TD>(Entity e, Schema s, IExStoreData<TT, TD> xStoreData)
+			where TE : Enum where TT : SchemaDictionaryBase2<TE>  where TD : SchemaDictionaryBase2<TE>
+		{
+			foreach (KeyValuePair<TE, ISchemaFieldDef2<TE>> kvp in xStoreData.Data)
+			{
+				TE key = kvp.Value.Key;
+				string fieldName = kvp.Value.AsString();
+				Field f = s.GetField(fieldName);
+				if (f == null) return ExStoreRtnCodes.FAIL;
+
+				Type t = f.ValueType;
+				if (t == null) return ExStoreRtnCodes.FAIL;
+
+
+				if (t?.Equals(typeof(string)) ?? false)
+				{
+					xStoreData.Data[key].Set(e.Get<string>(fieldName));
+				}
+				else if (t?.Equals(typeof(double)) ?? false)
+				{
+					xStoreData.Data[key].Set(e.Get<double>(fieldName));
+				}
+				else if (t?.Equals(typeof(bool)) ?? false)
+				{
+					xStoreData.Data[key].Set(e.Get<bool>(fieldName));
+				}
+			}
+
+			return ExStoreRtnCodes.GOOD;
+		}
+		
 		private ExStoreRtnCodes ReadData<TE, TT, TD>(Entity e, Schema s, IExStoreData<TT, TD> xStoreData)
 			where TE : Enum where TT : SchemaDictionaryBase<TE>  where TD : SchemaDictionaryBase<TE>
 		{
@@ -222,7 +254,7 @@ namespace AOTools.Cells.ExStorage
 		public ExStoreRtnCodes WriteRootData(ExStoreRoot xRoot)
 		{
 			// SchemaGuidManager.SetUniqueAppGuidSubStr();
-			xRoot.Data[SchemaRootKey.APP_GUID].Value = SchemaGuidManager.AppGuidString;
+			xRoot.Data[SchemaRootKey.APP_GUID].Set(SchemaGuidManager.AppGuidString);
 
 			Transaction t = null;
 
@@ -232,7 +264,7 @@ namespace AOTools.Cells.ExStorage
 
 				makeSchemaDef(sb, xRoot.Name, xRoot.Description);
 
-				makeSchemaFields(sb, xRoot.Data);
+				makeSchemaFields2(sb, xRoot.Data);
 
 				Schema schema = sb.Finish();
 
@@ -364,6 +396,14 @@ namespace AOTools.Cells.ExStorage
 			sb.SetDocumentation(description);
 		}
 
+		private void makeSchemaFields2<T>(SchemaBuilder sbld, SchemaDictionaryBase2<T> fieldList) where T : Enum
+		{
+			foreach (KeyValuePair<T, ISchemaFieldDef2<T>> kvp in fieldList)
+			{
+				makeSchemaField2(sbld, kvp.Value);
+			}
+		}
+		
 		private void makeSchemaFields<T>(SchemaBuilder sbld, SchemaDictionaryBase<T> fieldList) where T : Enum
 		{
 			foreach (KeyValuePair<T, SchemaFieldDef<T>> kvp in fieldList)
@@ -372,6 +412,21 @@ namespace AOTools.Cells.ExStorage
 			}
 		}
 
+		private void makeSchemaField2<T>(SchemaBuilder sbld, ISchemaFieldDef2<T> fieldDef) where T : Enum
+		{
+			Type t = fieldDef.Type;
+
+			FieldBuilder fbld = sbld.AddSimpleField(
+				fieldDef.Name, fieldDef.Type);
+
+			fbld.SetDocumentation(fieldDef.Desc);
+
+			if (fieldDef.UnitType != RevitUnitType.UT_UNDEFINED)
+			{
+				fbld.SetUnitType((UnitType) (int) fieldDef.UnitType);
+			}
+		}
+		
 		private void makeSchemaField<T>(SchemaBuilder sbld, SchemaFieldDef<T> fieldDef) where T : Enum
 		{
 			Type t = fieldDef.Value.GetType();

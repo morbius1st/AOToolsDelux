@@ -117,7 +117,7 @@ namespace AOTools
 				ExStoreApp xApp = ExStoreApp.Instance();
 				ExStoreRtnCodes result;
 
-				xApp.Data[SchemaAppKey.NAME].Value = "Special Name 01";
+				xApp.Data[SchemaAppKey.NAME].Value = "Special_Name_01";
 				xApp.Data[SchemaAppKey.DESCRIPTION].Value = "Special Description 01";
 
 				ExStoreCell xCell = ExStoreCell.Instance(3);
@@ -144,7 +144,7 @@ namespace AOTools
 
 				if (false)
 				{
-					xApp.Data[SchemaAppKey.NAME].Value = "new name";
+					xApp.Data[SchemaAppKey.NAME].Value = "new_name";
 
 					xCell = ExStoreCell.Instance(4);
 

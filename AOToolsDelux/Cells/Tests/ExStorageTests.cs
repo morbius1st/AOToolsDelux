@@ -1,6 +1,7 @@
 ﻿#region using
 using static AOTools.Cells.ExStorage.ExStoreMgr;
 using System.Collections.Generic;
+using System.Reflection;
 using System.Text;
 using AOTools.Cells.ExStorage;
 using AOTools.Cells.SchemaDefinition;
@@ -22,10 +23,10 @@ namespace AOTools.Cells.Tests
 			XsMgr.XRoot = ExStoreRoot.Instance();
 			ExStoreRtnCodes result;
 
-			XsMgr.XRoot.Data[SchemaRootKey.NAME].Value
-				= "RootEx4"+AppRibbon.Doc.Title;
+			XsMgr.XRoot.Name 
+				= "RootEx4" /*+ AppRibbon.Doc.Title*/ + Assembly.GetExecutingAssembly().GetName().Name;
 
-			XsMgr.XRoot.Data[SchemaRootKey.DESCRIPTION].Value
+			XsMgr.XRoot.Description
 				= "Root Ex Storage Data for| "+AppRibbon.Doc.Title;
 
 			result = XsMgr.WriteRoot(XsMgr.XRoot);
@@ -40,7 +41,7 @@ namespace AOTools.Cells.Tests
 
 			ExStoreRtnCodes result;
 
-			XsMgr.XApp.Data[SchemaAppKey.NAME].Value = "Special Name 01";
+			XsMgr.XApp.Data[SchemaAppKey.NAME].Value = "Special_Name_01";
 			XsMgr.XApp.Data[SchemaAppKey.DESCRIPTION].Value = "Special Description 01";
 
 			XsMgr.XCell = ExStoreCell.Instance(3);
@@ -121,7 +122,7 @@ namespace AOTools.Cells.Tests
 
 		private static void SampleCellData(ExStoreCell xCell, int id)
 		{
-			xCell.Data[id][SchemaCellKey.NAME].Value = $"Alpha {id:D2}";
+			xCell.Data[id][SchemaCellKey.NAME].Value = $"Alpha_{id:D2}";
 			xCell.Data[id][SchemaCellKey.VERSION].Value = $"beta {id:D3}";
 			xCell.Data[id][SchemaCellKey.SEQUENCE].Value = (double) id;
 			xCell.Data[id][SchemaCellKey.UPDATE_RULE].Value = (int) UpdateRules.UPON_REQUEST;

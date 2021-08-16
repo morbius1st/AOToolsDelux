@@ -11,6 +11,7 @@ using AOTools.Cells.SchemaDefinition;
 using static UtilityLibrary.MessageUtilities;
 
 using AOTools.Cells.ExStorage;
+using AOTools.Cells.SchemaDefinition2;
 using Autodesk.Revit.DB.ExtensibleStorage;
 using static AOTools.Cells.ExStorage.ExStoreMgr;
 
@@ -84,10 +85,10 @@ namespace AOTools
 
 			StringBuilder sb = new StringBuilder();
 
-			foreach (KeyValuePair<SchemaRootKey, SchemaFieldDef<SchemaRootKey>> kvp in xRoot.Data)
+			foreach (KeyValuePair<SchemaRootKey, ISchemaFieldDef2<SchemaRootKey>> kvp in xRoot.Data)
 			{
-				string name = xRoot.Data[kvp.Key].Name;
-				string value = xRoot.Data[kvp.Key].Value;
+				string name = xRoot.Name;
+				string value = xRoot.Data[kvp.Key].AsString();
 
 				sb.Append(name).Append("| ").AppendLine(value);
 			}

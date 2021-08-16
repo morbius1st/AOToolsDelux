@@ -7,11 +7,11 @@
 
 using AOTools.Cells.SchemaDefinition;
 
-namespace AOTools.Cells.SchemaDefinition
+namespace AOTools.Cells.SchemaDefinition2
 {
-	public class SchemaDictionaryRoot : SchemaDictionaryBase<SchemaRootKey>
+	public class SchemaDictionaryRoot2 : SchemaDictionaryBase2<SchemaRootKey>
 	{
-		public SchemaDictionaryRoot Clone()
+		public SchemaDictionaryRoot2 Clone()
 		{
 			return Clone(this);
 		}

@@ -118,15 +118,15 @@ namespace AOTools
 			//
 			// xCell = XsMgr.XCell;
 
-			xCell.Data[0][SchemaCellKey.NAME].Value = "Shasta 01";
+			xCell.Data[0][SchemaCellKey.NAME].Value = "Shasta_01";
 			xCell.Data[0][SchemaCellKey.DESCRIPTION].Value = "One tall mountain";
 			xCell.Data[0][SchemaCellKey.UPDATE_RULE].Value = (int) UpdateRules.UPON_REQUEST;
 
-			xCell.Data[1][SchemaCellKey.NAME].Value = "Palomar 01";
+			xCell.Data[1][SchemaCellKey.NAME].Value = "Palomar_01";
 			xCell.Data[1][SchemaCellKey.DESCRIPTION].Value = "Another tall mountain";
 			xCell.Data[1][SchemaCellKey.UPDATE_RULE].Value = (int) UpdateRules.NEVER;
 
-			xCell.Data[2][SchemaCellKey.NAME].Value = "K2 01";
+			xCell.Data[2][SchemaCellKey.NAME].Value = "K2_01";
 			xCell.Data[2][SchemaCellKey.DESCRIPTION].Value = "A very tall mountain";
 			xCell.Data[2][SchemaCellKey.UPDATE_RULE].Value = (int) UpdateRules.AS_NEEDED;
 
@@ -142,10 +142,10 @@ namespace AOTools
 			int id = xCell.Data.Count;
 
 			xCell.AddDefault();
-			ExStorageTests.SampleCellDataRevised(xCell, "Whitney 01", id++);
+			ExStorageTests.SampleCellDataRevised(xCell, "Whitney_01", id++);
 
 			xCell.AddDefault();
-			ExStorageTests.SampleCellDataRevised(xCell, "Everest 01", id++);
+			ExStorageTests.SampleCellDataRevised(xCell, "Everest_01", id++);
 
 			return ExStoreRtnCodes.GOOD;
 		}
@@ -215,7 +215,7 @@ namespace AOTools
 
 		private ExStoreRtnCodes modifyData(ExStoreApp xApp)
 		{
-			xApp.Data[SchemaAppKey.NAME].Value = "Blinken 01";
+			xApp.Data[SchemaAppKey.NAME].Value = "Blinken_01";
 			xApp.Data[SchemaAppKey.DESCRIPTION].Value = "Blinken Description";
 			xApp.Data[SchemaAppKey.VERSION].Value = "0.2";
 			return ExStoreRtnCodes.GOOD;

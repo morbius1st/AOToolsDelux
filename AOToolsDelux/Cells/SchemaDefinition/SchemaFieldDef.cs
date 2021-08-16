@@ -1,6 +1,7 @@
 ﻿#region + Using Directives
 
 using System;
+using AOTools.Cells.SchemaDefinition;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.DB.ExtensibleStorage;
 
