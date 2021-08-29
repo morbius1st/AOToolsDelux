@@ -1,0 +1,69 @@
+﻿
+Todo.
+
+Use DataStorage element
+* find the element
+* make the element
+* delete the element
+
+
+
+
+
+
+
+
+the below may have changed.
+
+
+** the following define the schema fields format / structures
+	SchemaFieldDef<T> T is enum
+		the data me
+
+	SchemaDictionaryBase<TU> <-  Dictionary<TU, SchemaFieldDef<TU>>
+
+	SchemaDictionaryRoot <- SchemaDictionaryBase<SchemaRootKey>
+
+	ISchemaDef<TE, TD>
+		TE -> KeyOrder / array of enums 
+		TD -> DefaultFields / collection of fields
+
+
+	ASchemaDef<TE, TD> <- ISchemaDef<TE, TD>
+		see above
+
+
+** the following define the schema fields
+
+	SchemaDefRoot <- ASchemaDef<SchemaRootKey, SchemaDictionaryRoot> | SchemaDictionaryRoot <- Dictionary<TU, SchemaFieldDef<TU>>
+		TE <- SchemaRootKey
+		TD <- SchemaDictionaryRoot
+		* the list of root schema fields
+
+
+	SchemaDefApp : ASchemaDef<SchemaAppKey, SchemaDictionaryApp> | SchemaDictionaryRoot <- Dictionary<TU, SchemaFieldDef<TU>>
+		TE <- SchemaAppKey
+		TD <- SchemaDictionaryApp
+		* the list of root schema fields
+
+
+	SchemaDefCells : ASchemaDef<SchemaCellKey, SchemaDictionaryCell> | SchemaDictionaryRoot <- Dictionary<TU, SchemaFieldDef<TU>>
+		TE <- SchemaCellKey
+		TD <- SchemaDictionaryCell
+		* the list of root schema fields
+
+
+** the following define the storage class structures
+
+	IExStore
+
+	IExStoreData<TT, TD>
+		TT -> fielddefs
+		TD -> data
+
+
+** the following define the storage classes
+
+	(to static) ExStoreRoot : IExStore, IExStoreData<SchemaDictionaryRoot, SchemaDictionaryRoot>
+	** needs to be the holder of the field definitions
+	** needs to be the holder of the ex storage data (based on the field definitions)

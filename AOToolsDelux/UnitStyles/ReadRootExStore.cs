@@ -56,11 +56,13 @@ namespace AOTools
 
 			try
 			{
-				ExStoreRtnCodes result = XsMgr.ReadRoot(/*ref xRoot*/);
+				// ExStoreRtnCodes result = XsMgr.ReadRoot(/*ref xRoot*/);
+				ExStoreRtnCodes result = XsMgr.RootExStorExists ? 
+					ExStoreRtnCodes.XRC_GOOD : ExStoreRtnCodes.XRC_ROOT_NOT_EXIST;
 
-				if (result != ExStoreRtnCodes.GOOD)
+				if (result != ExStoreRtnCodes.XRC_GOOD)
 				{
-					Debug.WriteLine("initial save failed");
+					XsMgr.ReadSchemaFail(XsMgr.OpDescription);
 					return Result.Failed;
 				}
 

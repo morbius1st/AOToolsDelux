@@ -30,16 +30,16 @@ namespace AOTools.AppSettings.RevitSettings
 	{
 		private Element elem;
 
-		public Element element {
+		public Element element
+		{
 			get
 			{
 				if (elem == null) SetElementBasePoint();
-					
+
 				return elem;
-				
 			}
 			private set => elem = value;
-		} 
+		}
 
 		public void SetElementBasePoint()
 		{
@@ -242,14 +242,14 @@ namespace AOTools.AppSettings.RevitSettings
 
 				SaveUnitSettings(entity, schema, subSchemaFields);
 
-				
+
 				// IList<Field> f = schema.ListFields();
 
 				using (t = new Transaction(AppRibbon.Doc, "Unit Style Settings"))
 				{
 					t.Start();
 					elem.SetEntity(entity);
-					
+
 					t.Commit();
 				}
 
@@ -418,7 +418,6 @@ namespace AOTools.AppSettings.RevitSettings
 			}
 		}
 
-
 	#endregion
 
 	#region Delete settings routines
@@ -445,26 +444,21 @@ namespace AOTools.AppSettings.RevitSettings
 
 			if (Entities == null) { return EXISTING_SCHEMA_NOT_FOUND; }
 
-			using (Transaction t = new Transaction(AppRibbon.Doc, "Delete Unit Styles"))
+
+			// remove the sub-schema's first
+			if (Entities.Count > 1)
 			{
-				t.Start();
-
-				// remove the sub-schema's first
-				if (Entities.Count > 1)
+				for (int i = 1; i < Entities.Count; i++)
 				{
-					for (int i = 1; i < Entities.Count; i++)
-					{
-						EraseSchemaAndAllEntities(Entities[i].Schema, false);
-						Entities[i].Dispose();
-					}
+					EraseSchemaAndAllEntities(Entities[i].Schema, false);
+					Entities[i].Dispose();
 				}
-
-				// remove the root schema last
-				EraseSchemaAndAllEntities(Entities[0].Schema, false);
-				Entities[0].Dispose();
-
-				t.Commit();
 			}
+
+			// remove the root schema last
+			EraseSchemaAndAllEntities(Entities[0].Schema, false);
+			Entities[0].Dispose();
+
 
 			return DELETE_SETTINGS_WORKED;
 		}

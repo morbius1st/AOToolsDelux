@@ -27,20 +27,19 @@ namespace AOTools.Cells.ExStorage
 
 	#region public properties
 		
-		public string Name => Data?[SchemaAppKey.NAME]?.Value ?? SchemaDefinitionApp.SCHEMA_NAME;
-		public string Description => Data?[SchemaAppKey.DESCRIPTION]?.Value ?? SchemaDefinitionApp.SCHEMA_DESC;
-		public string Version => Data?[SchemaAppKey.VERSION]?.Value ?? SchemaDefinitionApp.SCHEMA_VER;
+		public string Name => Data?[SchemaAppKey.AK_NAME]?.Value ?? SchemaDefinitionApp.SCHEMA_NAME;
+		public string Description => Data?[SchemaAppKey.AK_DESCRIPTION]?.Value ?? SchemaDefinitionApp.SCHEMA_DESC;
+		public string Version => Data?[SchemaAppKey.AK_VERSION]?.Value ?? SchemaDefinitionApp.SCHEMA_VER;
 		public Guid ExStoreGuid => SchemaGuidManager.AppGuid;
-
-		// public SchemaDictionaryApp Data { get; private set; }
-
-		public bool IsInitialized { get; private set; }
-
 		public SchemaDefinitionApp SchemaDefinition => SchemaDefinitionApp.Instance;
 
 		public SchemaDictionaryApp Data => SchemaDefinition.Fields;
 
 		public SchemaAppKey[] KeyOrder => SchemaDefinition.KeyOrder;
+
+		public bool IsDefault { get; set; }
+		public bool IsInitialized { get; private set; }
+
 
 	#endregion
 
@@ -57,8 +56,7 @@ namespace AOTools.Cells.ExStorage
 
 		public void Initialize()
 		{
-			// Data = DefaultValues();
-
+			IsDefault = true;
 			IsInitialized = true;
 		}
 

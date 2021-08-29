@@ -201,6 +201,7 @@
     <Compile Include="AppSettings\SchemaSettings\SchemaUnitUtil.cs" />
     <Compile Include="AppSettings\Settings\SettingsMgr-v26.cs" />
     <Compile Include="AppSettings\SettingUtil\SettingsListings.cs" />
+    <Compile Include="Cells\ExDataStorage\DataStorageManager.cs" />
     <Compile Include="Cells\ExStorage\ExStoreApp.cs" />
     <Compile Include="Cells\ExStorage\ExStoreCell.cs" />
     <Compile Include="Cells\ExStorage\ExStoreHelper.cs" />
@@ -224,9 +225,11 @@
     <Compile Include="UnitStyles\ModExStore.cs" />
     <Compile Include="UnitStyles\ReadAppExStore.cs" />
     <Compile Include="UnitStyles\ReadCellExStore.cs" />
+    <Compile Include="UnitStyles\ReadAppRibbonInfo.cs" />
+    <Compile Include="UnitStyles\ReadSchema.cs" />
     <Compile Include="UnitStyles\ReadRootExStore.cs" />
     <Compile Include="UnitStyles\SelectElement.cs" />
-    <Compile Include="UnitStyles\TestExStore.cs" />
+    <Compile Include="UnitStyles\TestExStore1.cs" />
     <Compile Include="UnitStyles\UnitStyleDefault.cs" />
     <Compile Include="UnitStyles\UnitStylesDelete.cs" />
     <Compile Include="Utility\Extensions.cs" />
@@ -252,7 +255,7 @@
     <Compile Include="Utility\AddinClasses.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Cells\Data Organization.txt" />
+    <Content Include="Cells\Info and Data Organization.txt" />
     <Content Include="Other\AOTools.addin">
       <SubType>Designer</SubType>
     </Content>

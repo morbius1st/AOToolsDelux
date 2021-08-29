@@ -18,9 +18,9 @@ namespace AOTools.Cells.ExStorage
 
 	#region ctor
 
-		private ExStoreCell(int count)
+		private ExStoreCell(/*int count*/)
 		{
-			Initialize(count);
+			Initialize(/*count*/);
 		}
 
 	#endregion
@@ -42,6 +42,7 @@ namespace AOTools.Cells.ExStorage
 
 		public Guid ExStoreGuid => Guid.Empty;
 
+		public bool IsDefault { get; set; }
 		public bool IsInitialized { get; private set; }
 
 	#endregion
@@ -52,17 +53,20 @@ namespace AOTools.Cells.ExStorage
 
 	#region public methods
 
-		public static ExStoreCell Instance(int count)
+		public static ExStoreCell Instance(/*int count*/)
 		{
-			return new ExStoreCell(count);
+			return new ExStoreCell(/*count*/);
 		}
 
-		public void Initialize(int count)
+		public void Initialize(/*int count*/)
 		{
 			if (IsInitialized) return;
 
-			initData(count);
+			// initData(/*count*/);
 
+			Data = new List<SchemaDictionaryCell>();
+
+			IsDefault = true;
 			IsInitialized = true;
 		}
 
@@ -79,9 +83,17 @@ namespace AOTools.Cells.ExStorage
 			Data.Add(DefaultValues());
 		}
 
+		public void Add(int qty)
+		{
+			for (int i = 0; i < qty; i++)
+			{
+				AddDefault();
+			}
+		}
+
 		public ExStoreCell Clone()
 		{
-			ExStoreCell copy = new ExStoreCell(Data.Count);
+			ExStoreCell copy = new ExStoreCell(/*Data.Count*/);
 
 			copy.Data = cloneData();
 			copy.IsInitialized = IsInitialized;
@@ -93,7 +105,8 @@ namespace AOTools.Cells.ExStorage
 
 	#region private methods
 
-		private void initData(int count)
+/*
+		private void initData(*//*int count*//*)
 		{
 			Data = new List<SchemaDictionaryCell>();
 
@@ -102,7 +115,7 @@ namespace AOTools.Cells.ExStorage
 				AddDefault();
 			}
 		}
-
+*/
 		private List<SchemaDictionaryCell> cloneData()
 		{
 			List<SchemaDictionaryCell> copy = 

@@ -11,36 +11,35 @@ namespace AOTools.Cells.SchemaDefinition
 {
 	public enum SchemaRootKey
 	{
-		UNDEFINED		  = -10,
-		NAME              = 10,
-		DESCRIPTION       = 20,
-		VERSION           = 30,
-		DEVELOPER         = 40,
-		APP_GUID          = 50,
+		RK_UNDEFINED		  = -10,
+		RK_NAME              = 10,
+		RK_DESCRIPTION       = 20,
+		RK_VERSION           = 30,
+		RK_DEVELOPER         = 40,
+		RK_APP_GUID          = 50,
 	}
 
 	// primary scheme element 
 	// defines the basic information
 	public enum SchemaAppKey
 	{
-		UNDEFINED		  = -10,
-		NAME              = 10,
-		DESCRIPTION       = 20,
-		VERSION           = 30,
-		// DEVELOPER         = 40,
+		AK_UNDEFINED		  = -10,
+		AK_NAME              = 10,
+		AK_DESCRIPTION       = 20,
+		AK_VERSION           = 30,
 	}
 
 	public enum SchemaCellKey
 	{
-		NAME              = 10,
-		VERSION           = 20,
-		DESCRIPTION       = 30,
-		SEQUENCE          = 40,
-		UPDATE_RULE       = 50,
-		CELL_FAMILY_NAME  = 60,
-		SKIP              = 70,
-		XL_FILE_PATH      = 80,
-		XL_WORKSHEET_NAME = 90
+		CK_NAME              = 10,
+		CK_VERSION           = 20,
+		CK_DESCRIPTION       = 30,
+		CK_SEQUENCE          = 40,
+		CK_UPDATE_RULE       = 50,
+		CK_CELL_FAMILY_NAME  = 60,
+		CK_SKIP              = 70,
+		CK_XL_FILE_PATH      = 80,
+		CK_XL_WORKSHEET_NAME = 90
 
 	}
 
@@ -53,9 +52,9 @@ namespace AOTools.Cells.SchemaDefinition
 
 	public enum UpdateRules
 	{
-		NEVER,
-		AS_NEEDED,
-		UPON_REQUEST,
+		UR_NEVER,
+		UR_AS_NEEDED,
+		UR_UPON_REQUEST,
 	}
 
 

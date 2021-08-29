@@ -63,7 +63,6 @@ namespace AOTools.Cells.SchemaDefinition
 
 		static SchemaGuidManager()
 		{
-			RootGuidString = ROOT_GUID;
 			appGuidUniqueStr = GetAppGuidString();
 		}
 
@@ -73,7 +72,7 @@ namespace AOTools.Cells.SchemaDefinition
 
 		public static SchemaGuidManager Instance => instance.Value;
 
-		public static string RootGuidString { get;}
+		public static string RootGuidString => ROOT_GUID;
 		public static Guid RootGuid => new Guid(RootGuidString);
 
 		public static string AppGuidString {

@@ -1,10 +1,18 @@
 ﻿#region using
+
+using System;
 using static AOTools.Cells.ExStorage.ExStoreMgr;
 using System.Collections.Generic;
+using System.Reflection;
 using System.Text;
+using System.Windows.Forms;
+using AOTools.Cells.ExDataStorage;
 using AOTools.Cells.ExStorage;
 using AOTools.Cells.SchemaDefinition;
+using Autodesk.Revit.DB.ExtensibleStorage;
 using Autodesk.Revit.UI;
+using static AOTools.Cells.ExDataStorage.DataStorageManager;
+
 #endregion
 
 // username: jeffs
@@ -17,21 +25,46 @@ namespace AOTools.Cells.Tests
 
 	#region public methods
 
+		public bool Reset()
+		{
+			if (!XsMgr.Reset()) return false;
+
+			deleteSchema(XsMgr?.XRoot.ExStoreGuid ?? Guid.Empty);
+			deleteSchema(XsMgr?.XApp.ExStoreGuid ?? Guid.Empty);
+
+			XsMgr.makeSchema();
+
+			return true;
+
+		}
+
+		private void deleteSchema(Guid g)
+		{
+			if (g == Guid.Empty) return;
+
+			Schema s = Schema.Lookup(g);
+
+			if (s == null) return;
+
+			Schema.EraseSchemaAndAllEntities(s, false);
+		}
+
 		public static ExStoreRtnCodes MakeRootExStorage()
 		{
 			XsMgr.XRoot = ExStoreRoot.Instance();
+
 			ExStoreRtnCodes result;
 
-			XsMgr.XRoot.Data[SchemaRootKey.NAME].Value
-				= "RootEx4"+AppRibbon.Doc.Title;
+			XsMgr.XRoot.Data[SchemaRootKey.RK_NAME].Value
+				= "RootEx4"+Assembly.GetExecutingAssembly().GetName().Name;
 
-			XsMgr.XRoot.Data[SchemaRootKey.DESCRIPTION].Value
+			XsMgr.XRoot.Data[SchemaRootKey.RK_DESCRIPTION].Value
 				= "Root Ex Storage Data for| "+AppRibbon.Doc.Title;
 
-			result = XsMgr.WriteRoot(XsMgr.XRoot);
-			if (result != ExStoreRtnCodes.GOOD) return result;
+			result = XsMgr.WriteRoot();
+			if (result != ExStoreRtnCodes.XRC_GOOD) return result;
 
-			return ExStoreRtnCodes.GOOD;
+			return ExStoreRtnCodes.XRC_GOOD;
 		}
 
 		public static ExStoreRtnCodes MakeAppAndCellsExStorage(int qty = 3)
@@ -40,22 +73,42 @@ namespace AOTools.Cells.Tests
 
 			ExStoreRtnCodes result;
 
-			XsMgr.XApp.Data[SchemaAppKey.NAME].Value = "Special Name 01";
-			XsMgr.XApp.Data[SchemaAppKey.DESCRIPTION].Value = "Special Description 01";
+			XsMgr.XApp.Data[SchemaAppKey.AK_NAME].Value = "Special_Name_01";
+			XsMgr.XApp.Data[SchemaAppKey.AK_DESCRIPTION].Value = "Special Description 01";
 
-			XsMgr.XCell = ExStoreCell.Instance(3);
+			XsMgr.XCell = ExStoreCell.Instance();
+			XsMgr.XCell.Add(3);
 
 			for (int i = 0; i < qty; i++)
 			{
 				SampleCellData(XsMgr.XCell, i);
 			}
 
-			result = XsMgr.WriteAppAndCells(XsMgr.XApp, XsMgr.XCell);
+			result = XsMgr.WriteAppAndCells(/*XsMgr.XApp, XsMgr.XCell*/);
 
-			if (result != ExStoreRtnCodes.GOOD) return result;
+			if (result != ExStoreRtnCodes.XRC_GOOD) return result;
 
-			return ExStoreRtnCodes.GOOD;
+			return ExStoreRtnCodes.XRC_GOOD;
 		}
+
+		public void makeSampleDataAppAndCell()
+		{
+			XsMgr.XApp = ExStoreApp.Instance();
+
+			XsMgr.XApp.Data[SchemaAppKey.AK_NAME].Value = "Special_Name_01";
+			XsMgr.XApp.Data[SchemaAppKey.AK_DESCRIPTION].Value = "Special Description 01";
+
+			XsMgr.XCell = ExStoreCell.Instance();
+			XsMgr.XCell.Add(3);
+
+			for (int i = 0; i < 3; i++)
+			{
+				ExStorageTests.SampleCellData(XsMgr.XCell, i);
+			}
+
+			XsMgr.XApp.IsDefault = false;
+		}
+
 
 		public static void ShowDataCell(ExStoreCell xCell)
 		{
@@ -90,7 +143,6 @@ namespace AOTools.Cells.Tests
 			td.Show();
 		}
 
-		
 		public static void ShowDataApp(ExStoreApp xApp)
 		{
 			TaskDialog td = new TaskDialog("Ex Storage App Data");
@@ -114,34 +166,74 @@ namespace AOTools.Cells.Tests
 
 		}
 
+		public void showStat(string mainMsg, ExStoreRtnCodes result, int step,
+			string contentMsg = "status|")
+		{
+			bool init = XsMgr.Initialized;
+			bool cfg = XsMgr.Configured;
+			bool exr = !XsMgr.XRoot.IsDefault;
+			bool exa = !XsMgr.XApp.IsDefault;
+			bool exc = XsMgr.XCell != null;
+			bool dsr = DsMgr?[DataStoreIdx.ROOT_DATA_STORE].GotDataStorage ?? false;
+			bool dsa = DsMgr?[DataStoreIdx.APP_DATA_STORE_CURR].GotDataStorage ?? false;
+
+			string status =
+					$"{contentMsg}\n"
+					+ $"result| {result}\n"
+					+ $"Init| {init}\n"
+					+ $"config| {cfg}\n"
+					+ $"root data exists| {exr}\n"
+					+ $"app data exists| {exa}\n"
+					+ $"cell data exists| {exc}\n"
+					+ $"root datastorage exists| {dsr}\n"
+					+ $"app  datastorage exists| {dsa}\n"
+				;
+
+			TaskDialog td = new TaskDialog("Test Status");
+			td.MainInstruction = $"{mainMsg}\nStep {step} status";
+			td.MainContent = status;
+			td.MainIcon = TaskDialogIcon.TaskDialogIconWarning;
+			td.Show();
+
+		}
+
+		public void taskDialogWarning_Ok(string title, string main, string desc)
+		{
+			TaskDialog td = new TaskDialog(title);
+			td.MainInstruction = main;
+			td.MainContent = desc;
+			td.MainIcon = TaskDialogIcon.TaskDialogIconWarning;
+			td.CommonButtons = TaskDialogCommonButtons.Ok;
+			td.Show();
+		}
 
 	#endregion
 
 	#region private methods
 
-		private static void SampleCellData(ExStoreCell xCell, int id)
+		public static void SampleCellData(ExStoreCell xCell, int id)
 		{
-			xCell.Data[id][SchemaCellKey.NAME].Value = $"Alpha {id:D2}";
-			xCell.Data[id][SchemaCellKey.VERSION].Value = $"beta {id:D3}";
-			xCell.Data[id][SchemaCellKey.SEQUENCE].Value = (double) id;
-			xCell.Data[id][SchemaCellKey.UPDATE_RULE].Value = (int) UpdateRules.UPON_REQUEST;
-			xCell.Data[id][SchemaCellKey.CELL_FAMILY_NAME].Value = $"CoolCell{id:D3}";
-			xCell.Data[id][SchemaCellKey.SKIP].Value = false;
-			xCell.Data[id][SchemaCellKey.XL_FILE_PATH].Value = $"c:\\file path\\filename{id:D3}.xls";
-			xCell.Data[id][SchemaCellKey.XL_WORKSHEET_NAME].Value = $"worksheet {id:d3}";
+			xCell.Data[id][SchemaCellKey.CK_NAME].Value = $"Alpha_{id:D2}";
+			xCell.Data[id][SchemaCellKey.CK_VERSION].Value = $"beta {id:D3}";
+			xCell.Data[id][SchemaCellKey.CK_SEQUENCE].Value = (double) id;
+			xCell.Data[id][SchemaCellKey.CK_UPDATE_RULE].Value = (int) UpdateRules.UR_UPON_REQUEST;
+			xCell.Data[id][SchemaCellKey.CK_CELL_FAMILY_NAME].Value = $"CoolCell{id:D3}";
+			xCell.Data[id][SchemaCellKey.CK_SKIP].Value = false;
+			xCell.Data[id][SchemaCellKey.CK_XL_FILE_PATH].Value = $"c:\\file path\\filename{id:D3}.xls";
+			xCell.Data[id][SchemaCellKey.CK_XL_WORKSHEET_NAME].Value = $"worksheet {id:d3}";
 		}
 
 		
 		public static void SampleCellDataRevised(ExStoreCell xCell, string name, int id)
 		{
-			xCell.Data[id][SchemaCellKey.NAME].Value = name;
-			xCell.Data[id][SchemaCellKey.VERSION].Value = $"Delta {id:D3}";
-			xCell.Data[id][SchemaCellKey.SEQUENCE].Value = (double) id;
-			xCell.Data[id][SchemaCellKey.UPDATE_RULE].Value = (int) UpdateRules.AS_NEEDED;
-			xCell.Data[id][SchemaCellKey.CELL_FAMILY_NAME].Value = $"CoolCell{id:D3}";
-			xCell.Data[id][SchemaCellKey.SKIP].Value = false;
-			xCell.Data[id][SchemaCellKey.XL_FILE_PATH].Value = $"c:\\file path\\filename{id:D3}.xls";
-			xCell.Data[id][SchemaCellKey.XL_WORKSHEET_NAME].Value = $"worksheet {id:d3}";
+			xCell.Data[id][SchemaCellKey.CK_NAME].Value = name;
+			xCell.Data[id][SchemaCellKey.CK_VERSION].Value = $"Delta {id:D3}";
+			xCell.Data[id][SchemaCellKey.CK_SEQUENCE].Value = (double) id;
+			xCell.Data[id][SchemaCellKey.CK_UPDATE_RULE].Value = (int) UpdateRules.UR_AS_NEEDED;
+			xCell.Data[id][SchemaCellKey.CK_CELL_FAMILY_NAME].Value = $"CoolCell{id:D3}";
+			xCell.Data[id][SchemaCellKey.CK_SKIP].Value = false;
+			xCell.Data[id][SchemaCellKey.CK_XL_FILE_PATH].Value = $"c:\\file path\\filename{id:D3}.xls";
+			xCell.Data[id][SchemaCellKey.CK_XL_WORKSHEET_NAME].Value = $"worksheet {id:d3}";
 		}
 
 	#endregion

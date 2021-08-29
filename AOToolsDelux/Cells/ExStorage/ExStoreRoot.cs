@@ -13,6 +13,8 @@ namespace AOTools.Cells.ExStorage
 	{
 	#region private fields
 
+		private Guid exStoreGuid = SchemaGuidManager.RootGuid;
+
 	#endregion
 
 	#region ctor
@@ -26,18 +28,24 @@ namespace AOTools.Cells.ExStorage
 
 	#region public properties
 
-		public string Name => Data?[SchemaRootKey.NAME]?.Value ?? SchemaDefinitionRoot.ROOT_SCHEMA_NAME;
-		public string Description => Data?[SchemaRootKey.DESCRIPTION]?.Value ??SchemaDefinitionRoot.ROOT_SCHEMA_DESC;
-		public string Developer => Data?[SchemaRootKey.DEVELOPER]?.Value ??SchemaDefinitionRoot.ROOT_DEVELOPER_NAME;
-		public string Version => Data?[SchemaRootKey.VERSION]?.Value ??SchemaDefinitionRoot.ROOT_SCHEMA_VER;
-		public Guid ExStoreGuid => SchemaGuidManager.RootGuid;
+		public string Name => Data?[SchemaRootKey.RK_NAME]?.Value ?? SchemaDefinitionRoot.ROOT_SCHEMA_NAME;
+		public string Description => Data?[SchemaRootKey.RK_DESCRIPTION]?.Value ??SchemaDefinitionRoot.ROOT_SCHEMA_DESC;
+		public string Developer => Data?[SchemaRootKey.RK_DEVELOPER]?.Value ??SchemaDefinitionRoot.ROOT_DEVELOPER_NAME;
+		public string Version => Data?[SchemaRootKey.RK_VERSION]?.Value ??SchemaDefinitionRoot.ROOT_SCHEMA_VER;
+		public Guid AppExStoreGuid => Data[SchemaRootKey.RK_APP_GUID].Value;
+		public Guid ExStoreGuid
+		{
+			get => exStoreGuid;
+			private set => exStoreGuid = value;
+		}
 
 		public SchemaDictionaryRoot Data => SchemaDefinition.Fields;
 
-		public bool IsInitialized { get; private set; }
-
 		public SchemaDefinitionRoot SchemaDefinition => SchemaDefinitionRoot.Instance;
 
+
+		public bool IsDefault { get; set; }
+		public bool IsInitialized { get; private set; }
 
 	#endregion
 
@@ -54,8 +62,9 @@ namespace AOTools.Cells.ExStorage
 
 		public void Initialize()
 		{
-			// Data = DefaultValues();
+			Data[SchemaRootKey.RK_APP_GUID].Value = SchemaGuidManager.AppGuidString;
 
+			IsDefault = true;
 			IsInitialized = true;
 		}
 

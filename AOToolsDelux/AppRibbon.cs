@@ -3,6 +3,8 @@
 using System;
 using System.Collections.Generic;
 using System.Reflection;
+using AOTools.Cells.ExDataStorage;
+using AOTools.Cells.ExStorage;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.DB.Events;
 using Autodesk.Revit.DB.ExtensibleStorage;
@@ -21,6 +23,24 @@ namespace AOTools
 
 	class AppRibbon : IExternalApplication
 	{
+		public static ExStoreMgr xm; // = ExStoreMgr.XsMgr;
+		public static DataStorageManager dm;// = DataStorageManager.DsMgr;
+		public static ExStoreRoot xr => xm?.XRoot ?? null;
+		public static ExStoreApp xa => xm?.XApp ?? null;
+		public static ExStoreCell xc  => xm?.XCell ?? null;
+
+		public static bool xr_isdefault => xr?.IsDefault ?? true;
+		public static bool xa_isdefault => xa?.IsDefault ?? true;
+
+		public static bool xmInit => xm?.Initialized ?? false;
+		public static bool xmCfg => xm?.Configured ?? false;
+
+		public static DataStorage ds0 => dm?[DataStoreIdx.ROOT_DATA_STORE].DataStorage ?? null;
+		public static DataStorage ds1 => dm?[DataStoreIdx.APP_DATA_STORE_CURR].DataStorage ?? null;
+
+		public static string msg { get; set; }
+
+
 		internal const string APP_NAME = "AOTools";
 		private const string TAB_NAME = "AO Tools";
 
@@ -39,7 +59,13 @@ namespace AOTools
 		private const string BUTTON_READ_ROOT_EX_STORE = "Read Root\nEx Storage";
 		private const string BUTTON_READ_APP_EX_STORE = "Read App\nEx Storage";
 		private const string BUTTON_READ_CELL_EX_STORE = "Read Cell\nEx Storage";
-		private const string BUTTON_TEST = "TEST";
+		private const string BUTTON_READ_SCHEMA = "Read\nSchema";
+		private const string BUTTON_READ_APPRIBBON_INFO = "Read App-\nRibbon Info";
+
+		private const string BUTTON_TEST0 = "RESET";
+		private const string BUTTON_TEST1 = "TEST 1";
+		private const string BUTTON_TEST2 = "TEST 2";
+		private const string BUTTON_TEST3 = "TEST 3";
 
 		private const string BTN_EX_STOR_DEL_ROOT = "Delete\nRoot Schema";
 		private const string BTN_EX_STOR_DEL_APP = "Delete\nApp Schema";
@@ -64,8 +90,40 @@ namespace AOTools
 		internal static Application App;
 		internal static Document Doc;
 
+		private static int idx1 = 0;
+
+		public static int idx
+		{
+			get
+			{
+				idx1 = (idx1 + 1) % 4;
+				return idx1;
+			}
+
+		}
+
+		private static string[] names = new [] {"alpha", "beta", "delta", "omega"};
+
+		public string testMessage1 => names[idx];
+		public static string testMessageS  => names[idx];
+
+		public static AppRibbon appR { get; set; }
+
+		public static string getTestMsg1s()
+		{
+			return appR.testMessage1;
+		}
+
+		public string getTestMsg1()
+		{
+			return appR.testMessage1;
+		}
+
+
 		public Result OnStartup(UIControlledApplication app)
 		{
+			appR = this;
+
 			_uiCtrlApp = app;
 
 			// clearConsole();
@@ -146,22 +204,22 @@ namespace AOTools
 				{
 					return Result.Failed;
 				}
-
+				
 				if (!AddSplitButtonRead(ribbonPanel))
 				{
 					return Result.Failed;
 				}
-
-
-				if (!AddSplitButtonDelete(ribbonPanel))
-				{
-					return Result.Failed;
-				}
-
-				if (!AddSplitButtonModify(ribbonPanel))
-				{
-					return Result.Failed;
-				}
+				//
+				//
+				// if (!AddSplitButtonDelete(ribbonPanel))
+				// {
+				// 	return Result.Failed;
+				// }
+				//
+				// if (!AddSplitButtonModify(ribbonPanel))
+				// {
+				// 	return Result.Failed;
+				// }
 
 				SmUsrInit();
 
@@ -249,60 +307,66 @@ namespace AOTools
 		{
 			SplitButtonData sbData = new SplitButtonData("splitButton2", "Split");
 			SplitButton sb = ribbonPanel.AddItem(sbData) as SplitButton;
-
+		
 			bool result;
-
+		
 			result = CreateSplitButton(sb, "ReadCellExStore",
 				BUTTON_READ_CELL_EX_STORE, "Read Ex Storage Cell Data");
-
+		
 			result = CreateSplitButton(sb, "ReadAppExStore",
 				BUTTON_READ_APP_EX_STORE, "Read Ex Storage App Data");
-
+		
 			result = CreateSplitButton(sb, "ReadRootExStore",
 				BUTTON_READ_ROOT_EX_STORE, "Read Ex Storage Root Data");
 
+			result = CreateSplitButton(sb, "ReadSchema",
+				BUTTON_READ_SCHEMA, "Read Schema");
+
+			result = CreateSplitButton(sb, "ReadAppRibbonInfo",
+				BUTTON_READ_APPRIBBON_INFO, "Read App-Ribbon Info");
+		
 			return true;
 		}
 
 
-		private bool AddSplitButtonDelete(RibbonPanel ribbonPanel)
-		{
-			SplitButtonData sbData = new SplitButtonData("splitButton1", "Split");
-			SplitButton sb = ribbonPanel.AddItem(sbData) as SplitButton;
+		// private bool AddSplitButtonDelete(RibbonPanel ribbonPanel)
+		// {
+		// 	SplitButtonData sbData = new SplitButtonData("splitButton1", "Split");
+		// 	SplitButton sb = ribbonPanel.AddItem(sbData) as SplitButton;
+		//
+		// 	bool result;
+		//
+		// 	result = CreateSplitButton(sb, "DelRootExStore",
+		// 		BTN_EX_STOR_DEL_ROOT, "Delete Ex Storage Root Entity");
+		//
+		// 	result = CreateSplitButton(sb, "DelAppExStore",
+		// 		BTN_EX_STOR_DEL_APP, "Delete Ex Storage App Entity");
+		//
+		// 	// result = CreateSplitButton(sb, "DelSubExStor",
+		// 	// 	BTN_EX_STOR_DEL_SUB, "Delete Ex Storage Sub-Entities");
+		//
+		// 	return true;
+		// }
 
-			bool result;
 
-			result = CreateSplitButton(sb, "DelRootExStore",
-				BTN_EX_STOR_DEL_ROOT, "Delete Ex Storage Root Entity");
-
-			result = CreateSplitButton(sb, "DelAppExStore",
-				BTN_EX_STOR_DEL_APP, "Delete Ex Storage App Entity");
-
-			// result = CreateSplitButton(sb, "DelSubExStor",
-			// 	BTN_EX_STOR_DEL_SUB, "Delete Ex Storage Sub-Entities");
-
-			return true;
-		}
-
-
-		private bool AddSplitButtonModify(RibbonPanel ribbonPanel)
-		{
-			SplitButtonData sbData = new SplitButtonData("splitButton3", "Split");
-			SplitButton sb = ribbonPanel.AddItem(sbData) as SplitButton;
-
-			bool result;
-
-			result = CreateSplitButton(sb, "ModCellExData",
-				BTN_EX_STOR_MOD_CELLS, "Modify Cells Entity");
-
-			result = CreateSplitButton(sb, "ModAppExData",
-				BTN_EX_STOR_MOD_APP, "Modify App Entity");
-
-			// result = CreateSplitButton(sb, "DelSubExStor",
-			// 	BTN_EX_STOR_DEL_SUB, "Delete Ex Storage Sub-Entities");
-
-			return true;
-		}
+		// private bool AddSplitButtonModify(RibbonPanel ribbonPanel)
+		// {
+		// 	SplitButtonData sbData = new SplitButtonData("splitButton3", "Split");
+		// 	SplitButton sb = ribbonPanel.AddItem(sbData) as SplitButton;
+		//
+		// 	bool result;
+		//
+		// 	result = CreateSplitButton(sb, "ModCellExData",
+		// 		BTN_EX_STOR_MOD_CELLS, "Modify Cells Entity");
+		//
+		// 	result = CreateSplitButton(sb, "ModAppExData",
+		// 		BTN_EX_STOR_MOD_APP, "Modify App Entity");
+		//
+		// 	// result = CreateSplitButton(sb, "DelSubExStor",
+		// 	// 	BTN_EX_STOR_DEL_SUB, "Delete Ex Storage Sub-Entities");
+		//
+		// 	return true;
+		// }
 
 		private bool CreateSplitButton(SplitButton sb,
 			string identifier, string title, string tootTip)
@@ -335,6 +399,8 @@ namespace AOTools
 			td.Show();
 		}
 
+
+
 		private Result AddButtons1(RibbonPanel ribbonPanel)
 		{
 			if (AddUnitStylesButton(ribbonPanel) != Result.Succeeded)
@@ -349,20 +415,61 @@ namespace AOTools
 
 		private Result AddButtons2(RibbonPanel ribbonPanel)
 		{
-			if (AddSelectButton(ribbonPanel) != Result.Succeeded)
+			if (TestButton0(ribbonPanel) != Result.Succeeded)
+				return Result.Failed;
+			
+			if (TestButton1(ribbonPanel) != Result.Succeeded)
+				return Result.Failed;
+			
+			if (TestButton2(ribbonPanel) != Result.Succeeded)
+				return Result.Failed;
+			
+			if (TestButton3(ribbonPanel) != Result.Succeeded)
 				return Result.Failed;
 
-			if (MakeRootDataStoreButton(ribbonPanel) != Result.Succeeded)
-				return Result.Failed;
 
-			if (MakeAppAndCellsStoreButton(ribbonPanel) != Result.Succeeded)
-				return Result.Failed;
+			// if (AddSelectButton(ribbonPanel) != Result.Succeeded)
+			// 	return Result.Failed;
+			//
+			// if (MakeRootDataStoreButton(ribbonPanel) != Result.Succeeded)
+			// 	return Result.Failed;
+			//
+			// if (MakeAppAndCellsStoreButton(ribbonPanel) != Result.Succeeded)
+			// 	return Result.Failed;
 
-			if (TestButton(ribbonPanel) != Result.Succeeded)
-				return Result.Failed;
+
 
 			return Result.Succeeded;
 		}
+
+		private Result TestButton0(RibbonPanel ribbonPanel)
+		{
+			return makePushButton(ribbonPanel, BUTTON_TEST0, nameof(TestExStore0), 
+				"Test Reset", 
+				"Test Ex Storage");
+		}
+		
+		private Result TestButton1(RibbonPanel ribbonPanel)
+		{
+			return makePushButton(ribbonPanel, BUTTON_TEST1, nameof(TestExStore1), 
+				"Test 1", 
+				"Test Ex Storage 1");
+		}
+		
+		private Result TestButton2(RibbonPanel ribbonPanel)
+		{
+			return makePushButton(ribbonPanel, BUTTON_TEST2, nameof(TestExStore2), 
+				"Test 2", 
+				"Test Ex Storage 2");
+		}
+		
+		private Result TestButton3(RibbonPanel ribbonPanel)
+		{
+			return makePushButton(ribbonPanel, BUTTON_TEST3, nameof(TestExStore3), 
+				"Test 3", 
+				"Test Ex Storage 3");
+		}
+
 
 		private string exCmdName;
 
@@ -389,198 +496,11 @@ namespace AOTools
 		}
 
 
-		private Result TestButton(RibbonPanel ribbonPanel)
-		{
-			// exCmdName = nameof(TestExStore);
-			// // create a button for the 'copy sheet' command
-			// if (!AddPushButton(ribbonPanel, "TestExStore", BUTTON_TEST,
-			// 	"information16.png",
-			// 	"information32.png",
-			// 	Assembly.GetExecutingAssembly().Location, "AOTools.TestExStore",
-			// 	"Test Extension Storage"))
-			//
-			// {
-			// 	// creating the pushbutton failed
-			// 	TaskDialog td = new TaskDialog("AO Tools - Test Ex Storage");
-			// 	td.MainIcon = TaskDialogIcon.TaskDialogIconWarning;
-			// 	td.MainInstruction = String.Format(Properties.Resources.ButtonCreateFail,
-			// 		"AOTools Test Ex Storage");
-			// 	td.Show();
-			//
-			// 	return Result.Failed;
-			// }
-
-			return makePushButton(ribbonPanel, BUTTON_TEST, nameof(TestExStore), 
-				"Test Extension Storage", 
-				"Test Ex Storage");
-		}
-
-		private Result ReadAppDataStoreButton(RibbonPanel ribbonPanel)
-		{
-			
-			return makePushButton(ribbonPanel, BUTTON_READ_APP_EX_STORE, nameof(ReadAppExStore), 
-				"Read App Extension Storage", 
-				"Read App Ex Storage");
-
-			// // create a button for the 'copy sheet' command
-			// if (!AddPushButton(ribbonPanel, "ReadAppExStore", BUTTON_READ_APP_EX_STORE,
-			// 	"information16.png",
-			// 	"information32.png",
-			// 	Assembly.GetExecutingAssembly().Location, "AOTools.ReadAppExStore",
-			// 	"Read App Extension Storage"))
-			//
-			// {
-			// 	// creating the pushbutton failed
-			// 	TaskDialog td = new TaskDialog("AO Tools - Read App Ex Storage");
-			// 	td.MainIcon = TaskDialogIcon.TaskDialogIconWarning;
-			// 	td.MainInstruction = String.Format(Properties.Resources.ButtonCreateFail,
-			// 		"AOTools Read App Ex Storage");
-			// 	td.Show();
-			//
-			// 	return Result.Failed;
-			// }
-			//
-			// return Result.Succeeded;
-		}
-
-		private Result ReadRootDataStoreButton(RibbonPanel ribbonPanel)
-		{
-			return makePushButton(ribbonPanel, BUTTON_READ_ROOT_EX_STORE, nameof(ReadRootExStore),
-				"Read Root Extension Storage", 
-				"Read Root Ex Storage");
-
-			// // create a button for the 'copy sheet' command
-			// if (!AddPushButton(ribbonPanel, "ReadRootExStore", BUTTON_READ_ROOT_EX_STORE,
-			// 	"information16.png",
-			// 	"information32.png",
-			// 	Assembly.GetExecutingAssembly().Location, "AOTools.ReadRootExStore",
-			// 	"Read Root Extension Storage"))
-			//
-			// {
-			// 	// creating the pushbutton failed
-			// 	TaskDialog td = new TaskDialog("AO Tools - Read Root Ex Storage");
-			// 	td.MainIcon = TaskDialogIcon.TaskDialogIconWarning;
-			// 	td.MainInstruction = String.Format(Properties.Resources.ButtonCreateFail,
-			// 		"AOTools Read Root Ex Storage");
-			// 	td.Show();
-			//
-			// 	return Result.Failed;
-			// }
-			//
-			// return Result.Succeeded;
-		}
-
-		private Result MakeRootDataStoreButton(RibbonPanel ribbonPanel)
-		{
-			return makePushButton(ribbonPanel, BUTTON_ROOT_EX_STORE, nameof(MakeRootExStore),
-				"Write Root Extension Storage", 
-				"Write Root Ex Storage");
-
-			// string name = /*nameof(MakeRootExStore);*/ "empty01";
-			//
-			//
-			// // create a button for the 'copy sheet' command
-			// if (!AddPushButton(ribbonPanel, name, BUTTON_ROOT_EX_STORE,
-			// 	"information16.png",
-			// 	"information32.png",
-			// 	Assembly.GetExecutingAssembly().Location, $"AOTools.{name}",
-			// 	"Write Root Extension Storage"))
-			//
-			// {
-			// 	// creating the pushbutton failed
-			// 	TaskDialog td = new TaskDialog("AO Tools - Write Root Ex Storage");
-			// 	td.MainIcon = TaskDialogIcon.TaskDialogIconWarning;
-			// 	td.MainInstruction = String.Format(Properties.Resources.ButtonCreateFail,
-			// 		"AOTools Write Root Ex Storage");
-			// 	td.Show();
-			//
-			// 	return Result.Failed;
-			// }
-			//
-			// return Result.Succeeded;
-		}
-
-		private Result MakeAppAndCellsStoreButton(RibbonPanel ribbonPanel)
-		{
-			return makePushButton(ribbonPanel, BUTTON_DATA_STORAGE, nameof(MakeAppAndDataStore),
-				"Add Data Storage", 
-				"Make Data Storage");
-
-			// string name = /*nameof(MakeAppAndDataStore);*/ "empty02";
-			//
-			// // create a button for the 'copy sheet' command
-			// if (!AddPushButton(ribbonPanel, name, BUTTON_DATA_STORAGE,
-			// 	"information16.png",
-			// 	"information32.png",
-			// 	Assembly.GetExecutingAssembly().Location, $"AOTools.{name}",
-			// 	"Add Data Storage"))
-			//
-			// {
-			// 	// creating the pushbutton failed
-			// 	TaskDialog td = new TaskDialog("AO Tools - Make Data Storage");
-			// 	td.MainIcon = TaskDialogIcon.TaskDialogIconWarning;
-			// 	td.MainInstruction = String.Format(Properties.Resources.ButtonCreateFail,
-			// 		"AOTools Make Data Storage");
-			// 	td.Show();
-			//
-			// 	return Result.Failed;
-			// }
-			//
-			// return Result.Succeeded;
-		}
-
-		private Result AddSelectButton(RibbonPanel ribbonPanel)
-		{
-			return makePushButton(ribbonPanel, BUTTON_SELECT, nameof(SelectElement),
-				"Select Element", 
-				"Select Element");
-
-			// // create a button for the 'copy sheet' command
-			// if (!AddPushButton(ribbonPanel, "Select", BUTTON_SELECT,
-			// 	"information16.png",
-			// 	"information32.png",
-			// 	Assembly.GetExecutingAssembly().Location, "AOTools.SelectElement",
-			// 	"Select Element"))
-			//
-			// {
-			// 	// creating the pushbutton failed
-			// 	TaskDialog td = new TaskDialog("AO Tools - Select Element");
-			// 	td.MainIcon = TaskDialogIcon.TaskDialogIconWarning;
-			// 	td.MainInstruction = String.Format(Properties.Resources.ButtonCreateFail,
-			// 		"AOTools Select");
-			// 	td.Show();
-			//
-			// 	return Result.Failed;
-			// }
-			//
-			// return Result.Succeeded;
-		}
-
 		private Result AddUnitStylesButton(RibbonPanel ribbonPanel)
 		{
 			return makePushButton(ribbonPanel, BUTTON_UNITSTYLES, nameof(UnitStylesCommand),
 				"Create and Modify Unit Styles", 
 				"Create and Modify Unit Styles");
-
-			// // create a button for the 'copy sheet' command
-			// if (!AddPushButton(ribbonPanel, "UnitStyles", BUTTON_UNITSTYLES,
-			// 	"information16.png",
-			// 	"information32.png",
-			// 	Assembly.GetExecutingAssembly().Location, "AOTools.UnitStylesCommand",
-			// 	"Create and Modify Unit Styles"))
-			//
-			// {
-			// 	// creating the pushbutton failed
-			// 	TaskDialog td = new TaskDialog("AO Tools - Unit Styles Create");
-			// 	td.MainIcon = TaskDialogIcon.TaskDialogIconWarning;
-			// 	td.MainInstruction = String.Format(Properties.Resources.ButtonCreateFail,
-			// 		Properties.Resources.UnitStyleButtonText);
-			// 	td.Show();
-			//
-			// 	return Result.Failed;
-			// }
-			//
-			// return Result.Succeeded;
 		}
 
 		private Result AddUnitStyleDeleteButton(RibbonPanel ribbonPanel)
@@ -588,26 +508,51 @@ namespace AOTools
 			return makePushButton(ribbonPanel, BUTTON_UNITSTYLEDELETE, nameof(UnitStylesDelete),
 				"Unit Styles Delete", 
 				"Unit Styles Delete");
-
-			// // create a button for the 'copy sheet' command
-			// if (!AddPushButton(ribbonPanel, "UnitStylesDelete", BUTTON_UNITSTYLEDELETE,
-			// 	"information16.png",
-			// 	"information32.png",
-			// 	Assembly.GetExecutingAssembly().Location, "AOTools.UnitStylesDelete",
-			// 	"Create and Modify Unit Styles"))
-			//
-			// {
-			// 	// creating the pushbutton failed
-			// 	TaskDialog td = new TaskDialog("AO Tools - Unit Styles Delete");
-			// 	td.MainIcon = TaskDialogIcon.TaskDialogIconWarning;
-			// 	td.MainInstruction = "failed to create the delete unit styles button";
-			// 	td.Show();
-			//
-			// 	return Result.Failed;
-			// }
-			//
-			// return Result.Succeeded;
 		}
+
+
+
+
+
+
+
+
+
+		// private Result ReadAppDataStoreButton(RibbonPanel ribbonPanel)
+		// {
+		// 	
+		// 	return makePushButton(ribbonPanel, BUTTON_READ_APP_EX_STORE, nameof(ReadAppExStore), 
+		// 		"Read App Extension Storage", 
+		// 		"Read App Ex Storage");
+		// }
+		//
+		// private Result ReadRootDataStoreButton(RibbonPanel ribbonPanel)
+		// {
+		// 	return makePushButton(ribbonPanel, BUTTON_READ_ROOT_EX_STORE, nameof(ReadRootExStore),
+		// 		"Read Root Extension Storage", 
+		// 		"Read Root Ex Storage");
+		// }
+		//
+		// private Result MakeRootDataStoreButton(RibbonPanel ribbonPanel)
+		// {
+		// 	return makePushButton(ribbonPanel, BUTTON_ROOT_EX_STORE, nameof(MakeRootExStore),
+		// 		"Write Root Extension Storage", 
+		// 		"Write Root Ex Storage");
+		// }
+		//
+		// private Result MakeAppAndCellsStoreButton(RibbonPanel ribbonPanel)
+		// {
+		// 	return makePushButton(ribbonPanel, BUTTON_DATA_STORAGE, nameof(MakeAppAndDataStore),
+		// 		"Add Data Storage", 
+		// 		"Make Data Storage");
+		// }
+		//
+		// private Result AddSelectButton(RibbonPanel ribbonPanel)
+		// {
+		// 	return makePushButton(ribbonPanel, BUTTON_SELECT, nameof(SelectElement),
+		// 		"Select Element", 
+		// 		"Select Element");
+		// }
 
 		// method to add a pushbutton to the ribbon
 		private bool AddPushButton(RibbonPanel Panel, string ButtonName,
@@ -682,6 +627,8 @@ namespace AOTools
 
 			return pdData;
 		}
+
+
 
 
 //		private Result AddUnitStyleFtInButton(RibbonPanel ribbonPanel)

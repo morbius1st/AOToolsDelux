@@ -36,19 +36,20 @@ namespace AOTools.Cells.SchemaDefinition
 			int idx = 0;
 
 			KeyOrder[idx++] =
-				defineField<string>(NAME, "Name", "Name", ROOT_SCHEMA_NAME);
+				defineField<string>(RK_NAME, "Name", "Name", ROOT_SCHEMA_NAME);
 			
 			KeyOrder[idx++] =
-				defineField<string>(DESCRIPTION, "Description", "Description", ROOT_SCHEMA_DESC);
+				defineField<string>(RK_DESCRIPTION, "Description", "Description", ROOT_SCHEMA_DESC);
 			
 			KeyOrder[idx++] =
-				defineField<string>(VERSION, "Version", "Cells Version", ROOT_SCHEMA_VER);
+				defineField<string>(RK_VERSION, "Version", "Cells Version", ROOT_SCHEMA_VER);
 			
 			KeyOrder[idx++] =
-				defineField<string>(DEVELOPER,"Developer", "Developer", ROOT_DEVELOPER_NAME);
-			
+				defineField<string>(RK_DEVELOPER,"Developer", "Developer", ROOT_DEVELOPER_NAME);
+
 			KeyOrder[idx++] =
-				defineField<string>(APP_GUID, "UniqueAppGuidString", "Unique App Guid String", "" );
+				defineField<string>(RK_APP_GUID, "UniqueAppGuidString", "Unique App Guid String", "" );
+
 		}
 		
 	}

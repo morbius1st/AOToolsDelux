@@ -43,47 +43,47 @@ namespace AOTools
 
 		private Result Test01()
 		{
-			string title = "Modify Cell Ex Storage";
-			ExStoreRtnCodes result;
-			Result r;
-
-			result = XsMgr.ReadCells();
-			if (result != ExStoreRtnCodes.GOOD) 
-				return test01Fail(title, "Read Cells", result);
-
-			ExStorageTests.ShowDataCell(XsMgr.XCell);
-
-			ExStoreCell xCell = null;
-			ExStoreCell xCell2 = null;
-			xCell = XsMgr.XCell.Clone();
-			xCell2 = XsMgr.XCell;
-
-			result = modifyData01(xCell);
-			if (result != ExStoreRtnCodes.GOOD) 
-				return test01Fail(title, "Modify Cells 1", result);
-
-			r = updateCellData(xCell, title);
-			if (r != Result.Succeeded) return r;
-
-
-			xCell = XsMgr.XCell.Clone();
-			
-			result = modifyData02(xCell);
-			if (result != ExStoreRtnCodes.GOOD) 
-				return test01Fail(title, "Modify Cells 2", result);
-
-			r = updateCellData(xCell, title);
-			if (r != Result.Succeeded) return r;
-			
-			
-			xCell = XsMgr.XCell.Clone();
-
-			result = modifyData03(xCell);
-			if (result != ExStoreRtnCodes.GOOD) 
-				return test01Fail(title, "Modify Cells 3", result);
-
-			r = updateCellData(xCell, title);
-			if (r != Result.Succeeded) return r;
+			// string title = "Modify Cell Ex Storage";
+			// ExStoreRtnCodes result;
+			// Result r;
+			//
+			// result = XsMgr.ReadCells();
+			// if (result != ExStoreRtnCodes.XRC_GOOD) 
+			// 	return test01Fail(title, "Read Cells", result);
+			//
+			// ExStorageTests.ShowDataCell(XsMgr.XCell);
+			//
+			// ExStoreCell xCell = null;
+			// ExStoreCell xCell2 = null;
+			// xCell = XsMgr.XCell.Clone();
+			// xCell2 = XsMgr.XCell;
+			//
+			// result = modifyData01(xCell);
+			// if (result != ExStoreRtnCodes.XRC_GOOD) 
+			// 	return test01Fail(title, "Modify Cells 1", result);
+			//
+			// r = updateCellData(xCell, title);
+			// if (r != Result.Succeeded) return r;
+			//
+			//
+			// xCell = XsMgr.XCell.Clone();
+			//
+			// result = modifyData02(xCell);
+			// if (result != ExStoreRtnCodes.XRC_GOOD) 
+			// 	return test01Fail(title, "Modify Cells 2", result);
+			//
+			// r = updateCellData(xCell, title);
+			// if (r != Result.Succeeded) return r;
+			//
+			//
+			// xCell = XsMgr.XCell.Clone();
+			//
+			// result = modifyData03(xCell);
+			// if (result != ExStoreRtnCodes.XRC_GOOD) 
+			// 	return test01Fail(title, "Modify Cells 3", result);
+			//
+			// r = updateCellData(xCell, title);
+			// if (r != Result.Succeeded) return r;
 			
 			return Result.Succeeded;
 		}
@@ -93,8 +93,12 @@ namespace AOTools
 		{
 			ExStoreRtnCodes result;
 
-			result = XsMgr.UpdateCells(xCell);
-			if (result != ExStoreRtnCodes.GOOD) 
+			// todo fix how to update cells
+
+			XsMgr.XCell = xCell;
+
+			result = XsMgr.UpdateCells(/*xCell*/);
+			if (result != ExStoreRtnCodes.XRC_GOOD) 
 				return test01Fail(title, "update Cells", result);
 
 			ExStorageTests.ShowDataCell(XsMgr.XCell);
@@ -118,19 +122,19 @@ namespace AOTools
 			//
 			// xCell = XsMgr.XCell;
 
-			xCell.Data[0][SchemaCellKey.NAME].Value = "Shasta 01";
-			xCell.Data[0][SchemaCellKey.DESCRIPTION].Value = "One tall mountain";
-			xCell.Data[0][SchemaCellKey.UPDATE_RULE].Value = (int) UpdateRules.UPON_REQUEST;
+			xCell.Data[0][SchemaCellKey.CK_NAME].Value = "Shasta_01";
+			xCell.Data[0][SchemaCellKey.CK_DESCRIPTION].Value = "One tall mountain";
+			xCell.Data[0][SchemaCellKey.CK_UPDATE_RULE].Value = (int) UpdateRules.UR_UPON_REQUEST;
 
-			xCell.Data[1][SchemaCellKey.NAME].Value = "Palomar 01";
-			xCell.Data[1][SchemaCellKey.DESCRIPTION].Value = "Another tall mountain";
-			xCell.Data[1][SchemaCellKey.UPDATE_RULE].Value = (int) UpdateRules.NEVER;
+			xCell.Data[1][SchemaCellKey.CK_NAME].Value = "Palomar_01";
+			xCell.Data[1][SchemaCellKey.CK_DESCRIPTION].Value = "Another tall mountain";
+			xCell.Data[1][SchemaCellKey.CK_UPDATE_RULE].Value = (int) UpdateRules.UR_NEVER;
 
-			xCell.Data[2][SchemaCellKey.NAME].Value = "K2 01";
-			xCell.Data[2][SchemaCellKey.DESCRIPTION].Value = "A very tall mountain";
-			xCell.Data[2][SchemaCellKey.UPDATE_RULE].Value = (int) UpdateRules.AS_NEEDED;
+			xCell.Data[2][SchemaCellKey.CK_NAME].Value = "K2_01";
+			xCell.Data[2][SchemaCellKey.CK_DESCRIPTION].Value = "A very tall mountain";
+			xCell.Data[2][SchemaCellKey.CK_UPDATE_RULE].Value = (int) UpdateRules.UR_AS_NEEDED;
 
-			return ExStoreRtnCodes.GOOD;
+			return ExStoreRtnCodes.XRC_GOOD;
 		}
 
 		private ExStoreRtnCodes modifyData02(ExStoreCell xCell)
@@ -142,19 +146,19 @@ namespace AOTools
 			int id = xCell.Data.Count;
 
 			xCell.AddDefault();
-			ExStorageTests.SampleCellDataRevised(xCell, "Whitney 01", id++);
+			ExStorageTests.SampleCellDataRevised(xCell, "Whitney_01", id++);
 
 			xCell.AddDefault();
-			ExStorageTests.SampleCellDataRevised(xCell, "Everest 01", id++);
+			ExStorageTests.SampleCellDataRevised(xCell, "Everest_01", id++);
 
-			return ExStoreRtnCodes.GOOD;
+			return ExStoreRtnCodes.XRC_GOOD;
 		}
 
 		private ExStoreRtnCodes modifyData03(ExStoreCell xCell)
 		{
 			xCell.Data.RemoveAt(0);
 			xCell.Data.RemoveAt(0);
-			return ExStoreRtnCodes.GOOD;
+			return ExStoreRtnCodes.XRC_GOOD;
 		}
 
 	}
@@ -177,23 +181,23 @@ namespace AOTools
 
 		private Result Test01()
 		{
-			string title = "Modify App Ex Storage";
-			ExStoreRtnCodes result;
-			Result r;
-			
-			result = XsMgr.ReadApp();
-			if (result != ExStoreRtnCodes.GOOD) 
-				return test01Fail(title, "Read App", result);
-
-			ExStorageTests.ShowDataApp(XsMgr.XApp);
-			ExStorageTests.ShowDataCell(XsMgr.XCell);
-
-			ExStoreApp xApp = XsMgr.XApp;
-
-			modifyData(xApp);
-
-			r = updateAppData(xApp, title);
-			if (r != Result.Succeeded) return r;
+			// string title = "Modify App Ex Storage";
+			// ExStoreRtnCodes result;
+			// Result r;
+			//
+			// result = XsMgr.ReadApp();
+			// if (result != ExStoreRtnCodes.XRC_GOOD) 
+			// 	return test01Fail(title, "Read App", result);
+			//
+			// ExStorageTests.ShowDataApp(XsMgr.XApp);
+			// ExStorageTests.ShowDataCell(XsMgr.XCell);
+			//
+			// ExStoreApp xApp = XsMgr.XApp;
+			//
+			// modifyData(xApp);
+			//
+			// r = updateAppData(xApp, title);
+			// if (r != Result.Succeeded) return r;
 
 			return Result.Succeeded;
 		}
@@ -202,8 +206,12 @@ namespace AOTools
 		{
 			ExStoreRtnCodes result;
 
-			result = XsMgr.UpdateApp(xApp);
-			if (result != ExStoreRtnCodes.GOOD)
+			// todo fix update method
+
+			XsMgr.XApp = xApp;
+
+			result = XsMgr.UpdateApp(/*xApp*/);
+			if (result != ExStoreRtnCodes.XRC_GOOD)
 				return test01Fail(title, "update App", result);
 
 			ExStorageTests.ShowDataApp(XsMgr.XApp);
@@ -215,10 +223,10 @@ namespace AOTools
 
 		private ExStoreRtnCodes modifyData(ExStoreApp xApp)
 		{
-			xApp.Data[SchemaAppKey.NAME].Value = "Blinken 01";
-			xApp.Data[SchemaAppKey.DESCRIPTION].Value = "Blinken Description";
-			xApp.Data[SchemaAppKey.VERSION].Value = "0.2";
-			return ExStoreRtnCodes.GOOD;
+			xApp.Data[SchemaAppKey.AK_NAME].Value = "Blinken_01";
+			xApp.Data[SchemaAppKey.AK_DESCRIPTION].Value = "Blinken Description";
+			xApp.Data[SchemaAppKey.AK_VERSION].Value = "0.2";
+			return ExStoreRtnCodes.XRC_GOOD;
 		}
 
 

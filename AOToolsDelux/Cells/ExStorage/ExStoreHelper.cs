@@ -1,13 +1,14 @@
 ﻿#region + Using Directives
 using System;
 using System.Collections.Generic;
+using AOTools.Cells.ExDataStorage;
 using AOTools.Cells.SchemaCells;
 using AOTools.Cells.SchemaDefinition;
 using AOTools.Utility;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.DB.ExtensibleStorage;
 using static Autodesk.Revit.DB.ExtensibleStorage.Schema;
-
+using static AOTools.Cells.ExDataStorage.DataStorageManager;
 #endregion
 
 // user name: jeffs
@@ -17,41 +18,65 @@ namespace AOTools.Cells.ExStorage
 {
 	public enum ExStoreRtnCodes
 	{
-		APP_NOT_EXIST = -8,
-		ROOT_NOT_EXIST = -7,
-		EX_STORE_NOT_EXISTS	= -6,
-		EX_STORE_EXISTS	= -5,
-		NOT_FOUND = -4,
-		TOO_MANY_OPEN_DOCS  = -3,
-		DUPLICATE = -2,
-		NOT_INIT  = -1,
-		NOT_CONFIG = -7,
-		FAIL      = 0,
-		GOOD      = 1,
+		XRC_NOT_CONFIG       = -17,
+		XRC_IS_CONFIG           = -16,
+		XRC_DS_NOT_EXIST		= -15,
+		XRC_DS_EXISTS           = -10,
+		XRC_APP_NOT_EXIST       = -9,
+		XRC_ROOT_NOT_EXIST      = -8,
+		XRC_EX_STORE_NOT_EXISTS	= -7,
+		XRC_EX_STORE_EXISTS	    = -6,
+		XRC_NOT_FOUND           = -5,
+		XRC_TOO_MANY_OPEN_DOCS  = -4,
+		XRC_DUPLICATE           = -3,
+		XRC_NOT_INIT            = -2,
+		XRC_FAIL                = -1,
+		XRC_UNDEFINED			= 0,
+		XRC_GOOD                = 1,
 	}
 
 	public class ExStoreHelper
 	{
+
 		public string OpDescription { get; private set; }
 
 	#region root element
 
-		public Element AppRootElement { get; private set; }
+		// public Element AppRootElement { get; private set; }
 
 		public ExStoreHelper()
 		{
-			SetExStorageRootToBasePt();
+			// SetExStorageRootToBasePt();
 		}
 
-		public void SetExStorageRootToElement(Element e)
+		// public void SetExStorageRootToElement(Element e)
+		// {
+		// 	AppRootElement = e;
+		// }
+
+		// public void SetExStorageRootToBasePt()
+		// {
+		// 	SetExStorageRootToElement(Util.GetProjectBasepoint());
+		// }
+
+		public bool GetRootEntity(ExStoreRoot xRoot, out Entity e, out DataStorage ds)
 		{
-			AppRootElement = e;
+			Schema schema = GetRootSchema();
+				// makeRootSchema(xRoot);
+
+			return DsMgr.GetDataStorage(schema, out e, out ds);
 		}
 
-		public void SetExStorageRootToBasePt()
+		public bool GetAppEntity(ExStoreApp xApp, ExStoreCell xCell, out Entity e, out DataStorage ds)
 		{
-			SetExStorageRootToElement(Util.GetProjectBasepoint());
+			Schema schema =
+				MakeAppSchema(xApp, xCell);
+				// GetAppSchemaCurr();
+
+			return DsMgr.GetDataStorage(schema, out e, out ds);
 		}
+
+
 
 	#endregion
 
@@ -64,14 +89,13 @@ namespace AOTools.Cells.ExStorage
 
 			ExStoreRtnCodes result = getRootSchemaAndEntity(out e, out s);
 
-			if (result != ExStoreRtnCodes.GOOD) return result;
+			if (result != ExStoreRtnCodes.XRC_GOOD) return result;
 
 			result = ReadData<SchemaRootKey, SchemaDictionaryRoot, SchemaDictionaryRoot>(e, s, xRoot);
 
-			if (result != ExStoreRtnCodes.GOOD) return result;
+			if (result != ExStoreRtnCodes.XRC_GOOD) return result;
 
-
-			return ExStoreRtnCodes.GOOD;
+			return ExStoreRtnCodes.XRC_GOOD;
 		}
 
 		public ExStoreRtnCodes ReadAppData(ref ExStoreApp xApp)
@@ -81,13 +105,13 @@ namespace AOTools.Cells.ExStorage
 
 			ExStoreRtnCodes result = getAppSchemaAndEntity(out e, out s);
 
-			if (result != ExStoreRtnCodes.GOOD) return result;
+			if (result != ExStoreRtnCodes.XRC_GOOD) return result;
 
 			result = ReadData<SchemaAppKey, SchemaDictionaryApp, SchemaDictionaryApp>(e, s, xApp);
 
-			if (result != ExStoreRtnCodes.GOOD) return result;
+			if (result != ExStoreRtnCodes.XRC_GOOD) return result;
 
-			return ExStoreRtnCodes.GOOD;
+			return ExStoreRtnCodes.XRC_GOOD;
 		}
 
 		public ExStoreRtnCodes ReadCellData(ref ExStoreCell xCell)
@@ -101,7 +125,7 @@ namespace AOTools.Cells.ExStorage
 
 			result = getAppSchemaAndEntity(out eApp, out sApp);
 
-			if (result != ExStoreRtnCodes.GOOD) return result;
+			if (result != ExStoreRtnCodes.XRC_GOOD) return result;
 
 			result = getSubEntities(eApp, sApp, out subEntities);
 
@@ -109,17 +133,17 @@ namespace AOTools.Cells.ExStorage
 			{
 				result = readCellData(ref xCell, subEntities);
 
-				if (result != ExStoreRtnCodes.GOOD) return ExStoreRtnCodes.FAIL;
+				if (result != ExStoreRtnCodes.XRC_GOOD) return ExStoreRtnCodes.XRC_FAIL;
 			}
 
-			return ExStoreRtnCodes.GOOD;
+			return ExStoreRtnCodes.XRC_GOOD;
 		}
 
 		private ExStoreRtnCodes readCellData(ref ExStoreCell xCell, List<Entity> subE)
 		{
 			ExStoreRtnCodes result;
 
-			xCell = ExStoreCell.Instance(0);
+			xCell = ExStoreCell.Instance();
 
 			for (var i = 0; i < subE.Count; i++)
 			{
@@ -131,10 +155,10 @@ namespace AOTools.Cells.ExStorage
 					SchemaCellKey key = kvp.Value.Key;
 					string fieldName = kvp.Value.Name;
 					Field f = subE[i].Schema.GetField(fieldName);
-					if (f == null) return ExStoreRtnCodes.FAIL;
+					if (f == null) return ExStoreRtnCodes.XRC_FAIL;
 
 					Type t = f.ValueType;
-					if (t == null) return ExStoreRtnCodes.FAIL;
+					if (t == null) return ExStoreRtnCodes.XRC_FAIL;
 
 
 					if (t?.Equals(typeof(string)) ?? false)
@@ -155,7 +179,7 @@ namespace AOTools.Cells.ExStorage
 				}
 			}
 
-			return ExStoreRtnCodes.GOOD;
+			return ExStoreRtnCodes.XRC_GOOD;
 		}
 
 		private ExStoreRtnCodes ReadData<TE, TT, TD>(Entity e, Schema s, IExStoreData<TT, TD> xStoreData)
@@ -166,11 +190,10 @@ namespace AOTools.Cells.ExStorage
 				TE key = kvp.Value.Key;
 				string fieldName = kvp.Value.Name;
 				Field f = s.GetField(fieldName);
-				if (f == null) return ExStoreRtnCodes.FAIL;
+				if (f == null) return ExStoreRtnCodes.XRC_FAIL;
 
 				Type t = f.ValueType;
-				if (t == null) return ExStoreRtnCodes.FAIL;
-
+				if (t == null) return ExStoreRtnCodes.XRC_FAIL;
 
 				if (t?.Equals(typeof(string)) ?? false)
 				{
@@ -186,7 +209,9 @@ namespace AOTools.Cells.ExStorage
 				}
 			}
 
-			return ExStoreRtnCodes.GOOD;
+			xStoreData.IsDefault = false;
+
+			return ExStoreRtnCodes.XRC_GOOD;
 		}
 
 	#endregion
@@ -200,52 +225,62 @@ namespace AOTools.Cells.ExStorage
 		 * save new data
 		 */
 
-		public ExStoreRtnCodes UpdateCellData(ExStoreApp xApp, ExStoreCell xCell)
+		public ExStoreRtnCodes UpdateCellData(ExStoreApp xApp, ExStoreCell xCell, DataStorage ds)
 		{
 			ExStoreRtnCodes result;
 
 			result = DeleteAppSchema();
 
-			if (result != ExStoreRtnCodes.GOOD) return result;
+			if (result != ExStoreRtnCodes.XRC_GOOD) return result;
 
-			result = WriteAppAndCellsData(xApp, xCell);
+			result = WriteAppAndCellsData(xApp, xCell, ds);
 
-			if (result != ExStoreRtnCodes.GOOD) return result;
+			if (result != ExStoreRtnCodes.XRC_GOOD) return result;
 
-			return ExStoreRtnCodes.GOOD;
+			return ExStoreRtnCodes.XRC_GOOD;
 		}
 
 	#endregion
 
 	#region save methods
 
-		public ExStoreRtnCodes WriteRootData(ExStoreRoot xRoot)
+		/// <summary>
+		/// Write the data into the entity per the schema <br/>
+		/// 
+		/// </summary>
+		/// <param name="xRoot"></param>
+		/// <returns></returns>
+		// public ExStoreRtnCodes WriteRootData(ExStoreRoot xRoot, Entity e)
+		public ExStoreRtnCodes WriteRootData(ExStoreRoot xRoot, DataStorage ds)
 		{
 			// SchemaGuidManager.SetUniqueAppGuidSubStr();
-			xRoot.Data[SchemaRootKey.APP_GUID].Value = SchemaGuidManager.AppGuidString;
+			// xRoot.Data[SchemaRootKey.APP_GUID].Value = SchemaGuidManager.AppGuidString;
 
 			Transaction t = null;
 
 			try
 			{
-				SchemaBuilder sb = new SchemaBuilder(xRoot.ExStoreGuid);
+				// SchemaBuilder sb = new SchemaBuilder(xRoot.ExStoreGuid);
+				//
+				// makeSchemaDef(sb, xRoot.Name, xRoot.Description);
+				//
+				// makeSchemaFields(sb, xRoot.Data);
+				//
+				// Schema schema = sb.Finish();
 
-				makeSchemaDef(sb, xRoot.Name, xRoot.Description);
-
-				makeSchemaFields(sb, xRoot.Data);
-
-				Schema schema = sb.Finish();
-
+				Schema schema = GetRootSchema();
+					// makeRootSchema(xRoot);
+				
 				Entity e = new Entity(schema);
 
-				writeData(e, schema, xRoot.Data);
+				writeData(e, e.Schema, xRoot.Data);
 
-				using (t = new Transaction(AppRibbon.Doc, "Save Cells Default Config Info"))
-				{
-					t.Start();
-					AppRootElement.SetEntity(e);
-					t.Commit();
-				}
+				// using (t = new Transaction(AppRibbon.Doc, "Save Cells Default Config Info"))
+				// {
+				// 	t.Start();
+					ds.SetEntity(e);
+				// 	t.Commit();
+				// }
 			}
 			catch (InvalidOperationException ex)
 			{
@@ -257,30 +292,33 @@ namespace AOTools.Cells.ExStorage
 
 				if (ex.HResult == -2146233088)
 				{
-					return ExStoreRtnCodes.DUPLICATE;
+					return ExStoreRtnCodes.XRC_DUPLICATE;
 				}
 
-				return ExStoreRtnCodes.FAIL;
+				return ExStoreRtnCodes.XRC_FAIL;
 			}
 
-			return ExStoreRtnCodes.GOOD;
+			return ExStoreRtnCodes.XRC_GOOD;
 		}
 
-		public ExStoreRtnCodes WriteAppAndCellsData(ExStoreApp xApp, ExStoreCell xCell)
+		public ExStoreRtnCodes WriteAppAndCellsData(ExStoreApp xApp, ExStoreCell xCell,  DataStorage ds)
 		{
 			Transaction t = null;
 
 			try
 			{
-				SchemaBuilder sb = new SchemaBuilder(xApp.ExStoreGuid);
+				// SchemaBuilder sb = new SchemaBuilder(xApp.ExStoreGuid);
+				//
+				// makeSchemaDef(sb, xApp.Name, xApp.Description);
+				//
+				// makeSchemaFields(sb, xApp.Data);
+				//
+				// makeSchemaSubSchemaFields(sb, xCell);
 
-				makeSchemaDef(sb, xApp.Name, xApp.Description);
-
-				makeSchemaFields(sb, xApp.Data);
-
-				makeSchemaSubSchemaFields(sb, xCell);
-
-				Schema schema = sb.Finish();
+				// Schema schema = sb.Finish();
+				Schema schema = 
+					MakeAppSchema(xApp, xCell);
+					// GetAppSchemaCurr();
 
 				Entity e = new Entity(schema);
 
@@ -289,12 +327,12 @@ namespace AOTools.Cells.ExStorage
 				writeData(e, schema, xApp.Data);
 				writeCellData(e, schema, xCell);
 
-				using (t = new Transaction(AppRibbon.Doc, "Save Cells Default Config Info"))
-				{
-					t.Start();
-					AppRootElement.SetEntity(e);
-					t.Commit();
-				}
+				// using (t = new Transaction(AppRibbon.Doc, "Save Cells Default Config Info"))
+				// {
+				// 	t.Start();
+					ds.SetEntity(e);
+				// 	t.Commit();
+				// }
 			}
 			catch (InvalidOperationException ex)
 			{
@@ -306,15 +344,23 @@ namespace AOTools.Cells.ExStorage
 
 				if (ex.HResult == -2146233088)
 				{
-					return ExStoreRtnCodes.DUPLICATE;
+					return ExStoreRtnCodes.XRC_DUPLICATE;
 				}
 
-				return ExStoreRtnCodes.FAIL;
+				return ExStoreRtnCodes.XRC_FAIL;
 			}
 
-			return ExStoreRtnCodes.GOOD;
+			return ExStoreRtnCodes.XRC_GOOD;
 		}
 
+		/// <summary>
+		/// write the data into the entity based on the schema <br/>
+		/// the schema has already been added to the entity
+		/// </summary>
+		/// <typeparam name="T"></typeparam>
+		/// <param name="entity"></param>
+		/// <param name="schema"></param>
+		/// <param name="data"></param>
 		private void writeData<T>(Entity entity, Schema schema, SchemaDictionaryBase<T> data) where T : Enum
 		{
 			foreach (KeyValuePair<T, SchemaFieldDef<T>> kvp in data)
@@ -349,13 +395,59 @@ namespace AOTools.Cells.ExStorage
 			}
 		}
 
+		public Schema MakeRootSchema(ExStoreRoot xRoot)
+		{
+			SchemaBuilder sb = new SchemaBuilder(xRoot.ExStoreGuid);
+
+			makeSchemaDef(ref sb, xRoot.Name, xRoot.Description);
+
+			makeSchemaFields(ref sb, xRoot.Data);
+
+			Schema schema = sb.Finish();
+
+			return schema;
+		}
+
+		public Schema MakeAppSchema(ExStoreApp xApp, ExStoreCell xCell)
+		{
+			Schema schema;
+
+			// schema = Schema.Lookup(xApp.ExStoreGuid);
+			//
+			// if (schema != null) return schema;
+
+			SchemaBuilder sb = new SchemaBuilder(xApp.ExStoreGuid);
+
+			makeSchemaDef(ref sb, xApp.Name, xApp.Description);
+
+			makeSchemaFields(ref sb, xApp.Data);
+
+			if (xCell != null)
+			{
+				makeSchemaSubSchemaFields(ref sb, xCell);
+			}
+
+			schema = sb.Finish();
+
+			return schema;
+		}
+
+		public Schema GetRootSchema()
+		{
+			return DsMgr[DataStoreIdx.ROOT_DATA_STORE].Schema;
+		}
+
+		// public Schema GetAppSchemaCurr()
+		// {
+		// 	return DsMgr[DataStoreIdx.APP_DATA_STORE_CURR].Schema;
+		// }
 
 	#endregion
 
 
 	#region make schema
 
-		private void makeSchemaDef(SchemaBuilder sb, string name, string description)
+		private void makeSchemaDef(ref SchemaBuilder sb, string name, string description)
 		{
 			sb.SetReadAccessLevel(AccessLevel.Public);
 			sb.SetWriteAccessLevel(AccessLevel.Public);
@@ -364,15 +456,15 @@ namespace AOTools.Cells.ExStorage
 			sb.SetDocumentation(description);
 		}
 
-		private void makeSchemaFields<T>(SchemaBuilder sbld, SchemaDictionaryBase<T> fieldList) where T : Enum
+		private void makeSchemaFields<T>(ref SchemaBuilder sbld, SchemaDictionaryBase<T> fieldList) where T : Enum
 		{
 			foreach (KeyValuePair<T, SchemaFieldDef<T>> kvp in fieldList)
 			{
-				makeSchemaField(sbld, kvp.Value);
+				makeSchemaField(ref sbld, kvp.Value);
 			}
 		}
 
-		private void makeSchemaField<T>(SchemaBuilder sbld, SchemaFieldDef<T> fieldDef) where T : Enum
+		private void makeSchemaField<T>(ref SchemaBuilder sbld, SchemaFieldDef<T> fieldDef) where T : Enum
 		{
 			Type t = fieldDef.Value.GetType();
 
@@ -387,9 +479,13 @@ namespace AOTools.Cells.ExStorage
 			}
 		}
 
-		private void makeSchemaSubSchemaFields(SchemaBuilder sb,  ExStoreCell xCell)
+		private void makeSchemaSubSchemaFields(ref SchemaBuilder sb,  ExStoreCell xCell)
 		{
 			xCell.SubSchemaFields = new Dictionary<string, string>();
+
+			int count = xCell.Data.Count;
+			count = count == 0 ? 3 : count;
+
 
 			for (int i = 0; i < xCell.Data.Count; i++)
 			{
@@ -425,9 +521,9 @@ namespace AOTools.Cells.ExStorage
 		{
 			SchemaBuilder sb = new SchemaBuilder(new Guid(guid));
 
-			makeSchemaDef(sb, xCell.Name, xCell.Description);
+			makeSchemaDef(ref sb, xCell.Name, xCell.Description);
 
-			makeSchemaFields(sb, xCell.Fields);
+			makeSchemaFields(ref sb, xCell.Fields);
 
 			return sb.Finish();
 		}
@@ -447,7 +543,7 @@ namespace AOTools.Cells.ExStorage
 		/// <returns></returns>
 		public ExStoreRtnCodes DeleteRootSchema()
 		{
-			if (AppRibbon.App.Documents.Size != 1) return ExStoreRtnCodes.TOO_MANY_OPEN_DOCS;
+			if (AppRibbon.App.Documents.Size != 1) return ExStoreRtnCodes.XRC_TOO_MANY_OPEN_DOCS;
 
 			OpDescription = "Delete Cells Root Schema";
 			Entity eRoot;
@@ -456,7 +552,7 @@ namespace AOTools.Cells.ExStorage
 
 			result = getRootSchemaAndEntity(out eRoot, out sRoot);
 
-			if (result != ExStoreRtnCodes.GOOD) return result;
+			if (result != ExStoreRtnCodes.XRC_GOOD) return result;
 
 			// removed the check for existence of
 			// app entity / schema - check before using
@@ -492,7 +588,7 @@ namespace AOTools.Cells.ExStorage
 
 			result = getAppSchemaAndEntity(out eApp, out sApp);
 
-			if (result != ExStoreRtnCodes.GOOD) return result;
+			if (result != ExStoreRtnCodes.XRC_GOOD) return result;
 
 			List<Entity> subEntities;
 
@@ -511,27 +607,27 @@ namespace AOTools.Cells.ExStorage
 
 			try
 			{
-				using (t = new Transaction(AppRibbon.Doc, OpDescription))
-				{
-					t.Start();
+				// using (t = new Transaction(AppRibbon.Doc, OpDescription))
+				// {
+				// 	t.Start();
 
 					EraseSchemaAndAllEntities(s, false);
 
 					e.Dispose();
-				}
+				// }
 			}
 			catch
 			{
-				if (t != null && t.HasStarted())
-				{
-					t.RollBack();
-					t.Dispose();
-				}
+				// if (t != null && t.HasStarted())
+				// {
+				// 	t.RollBack();
+				// 	t.Dispose();
+				// }
 
-				return ExStoreRtnCodes.FAIL;
+				return ExStoreRtnCodes.XRC_FAIL;
 			}
 
-			return ExStoreRtnCodes.GOOD;
+			return ExStoreRtnCodes.XRC_GOOD;
 		}
 
 	#endregion
@@ -543,15 +639,15 @@ namespace AOTools.Cells.ExStorage
 			eRoot = null;
 			sRoot = Schema.Lookup(SchemaGuidManager.RootGuid);
 
-			if (!sRoot?.IsValidObject ?? true) return ExStoreRtnCodes.NOT_FOUND;
+			// if (!sRoot?.IsValidObject ?? true) return ExStoreRtnCodes.XRC_NOT_FOUND;
+			//
+			// if (!DsMgr[DataStoreIdx.ROOT_DATA_STORE].GotDataStorage) return ExStoreRtnCodes.XRC_NOT_INIT;
 
-			if (!AppRootElement?.IsValidObject ?? true) return ExStoreRtnCodes.NOT_INIT;
+			eRoot = DsMgr[DataStoreIdx.ROOT_DATA_STORE].DataStorage.GetEntity(sRoot);
 
-			eRoot = AppRootElement.GetEntity(sRoot);
+			if (!eRoot?.IsValidObject ?? true) return ExStoreRtnCodes.XRC_FAIL;
 
-			if (!eRoot?.IsValidObject ?? true) return ExStoreRtnCodes.FAIL;
-
-			return ExStoreRtnCodes.GOOD;
+			return ExStoreRtnCodes.XRC_GOOD;
 		}
 
 		private ExStoreRtnCodes getAppSchemaAndEntity(out Entity eApp, out Schema sApp)
@@ -559,15 +655,15 @@ namespace AOTools.Cells.ExStorage
 			eApp = null;
 			sApp = Schema.Lookup(SchemaGuidManager.AppGuid);
 
-			if (!sApp?.IsValidObject ?? true) return ExStoreRtnCodes.NOT_FOUND;
+			// if (!(sApp?.IsValidObject ?? false)) return ExStoreRtnCodes.XRC_NOT_FOUND;
+			//
+			// if (!DsMgr[DataStoreIdx.APP_DATA_STORE].GotDataStorage) return ExStoreRtnCodes.XRC_NOT_INIT;
 
-			if (!AppRootElement?.IsValidObject ?? true) return ExStoreRtnCodes.NOT_INIT;
+			eApp = DsMgr[DataStoreIdx.APP_DATA_STORE_CURR].DataStorage.GetEntity(sApp);
 
-			eApp = AppRootElement.GetEntity(sApp);
+			if (!(eApp?.IsValidObject ?? false)) return ExStoreRtnCodes.XRC_FAIL;
 
-			if (!eApp?.IsValidObject ?? true) return ExStoreRtnCodes.FAIL;
-
-			return ExStoreRtnCodes.GOOD;
+			return ExStoreRtnCodes.XRC_GOOD;
 		}
 
 		// get a list of entities that are associated to the provided entity based 
@@ -576,7 +672,7 @@ namespace AOTools.Cells.ExStorage
 		{
 			list = new List<Entity>();
 
-			if (eApp == null || sApp == null) return ExStoreRtnCodes.FAIL;
+			if (eApp == null || sApp == null) return ExStoreRtnCodes.XRC_FAIL;
 
 			foreach (Field field in sApp.ListFields())
 			{
@@ -592,7 +688,7 @@ namespace AOTools.Cells.ExStorage
 				list.Add(ent);
 			}
 
-			return ExStoreRtnCodes.GOOD;
+			return ExStoreRtnCodes.XRC_GOOD;
 		}
 
 	#endregion

@@ -37,13 +37,13 @@ namespace AOTools.Cells.SchemaCells
 			int idx = 0;
 
 			KeyOrder[idx++] =
-				defineField<string>(NAME, "Name", "Name", SCHEMA_NAME );
+				defineField<string>(AK_NAME, "Name", "Name", SCHEMA_NAME );
 
 			KeyOrder[idx++] =
-				defineField<string>(DESCRIPTION, "Description", "Description", SCHEMA_DESC );
+				defineField<string>(AK_DESCRIPTION, "Description", "Description", SCHEMA_DESC );
 
 			KeyOrder[idx++] =
-				defineField<string>(VERSION, "Version", "Cells Version", SCHEMA_VER );
+				defineField<string>(AK_VERSION, "Version", "Cells Version", SCHEMA_VER );
 		}
 
 
@@ -53,7 +53,7 @@ namespace AOTools.Cells.SchemaCells
 		// fill in for each sub-schema 
 		// unit type is number is a filler
 		private static SchemaFieldDef<SchemaAppKey> SubSchemaFieldInfo { get; } =
-			new SchemaFieldDef<SchemaAppKey>(UNDEFINED, "RootCellsDefinition{0:D2}",
+			new SchemaFieldDef<SchemaAppKey>(AK_UNDEFINED, "RootCellsDefinition{0:D2}",
 				"subschema for a cells definition", "");
 
 		public static SchemaFieldDef<SchemaAppKey> GetSubSchemaDef(int id)

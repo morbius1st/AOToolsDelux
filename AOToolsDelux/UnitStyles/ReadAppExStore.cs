@@ -53,11 +53,13 @@ namespace AOTools
 		{
 			ExStoreHelper xsHlpr = new ExStoreHelper();
 
-			ExStoreRtnCodes result = ReadRootExStore(xsHlpr);
+			// ExStoreRtnCodes result = ReadRootExStore(xsHlpr);
+			ExStoreRtnCodes result = XsMgr.RootExStorExists ? 
+				ExStoreRtnCodes.XRC_GOOD : ExStoreRtnCodes.XRC_ROOT_NOT_EXIST;
 
-			if (result != ExStoreRtnCodes.GOOD)
+			if (result != ExStoreRtnCodes.XRC_GOOD)
 			{
-				Debug.WriteLine("read root failed");
+				XsMgr.ReadSchemaFail(XsMgr.OpDescription);
 				return Result.Failed;
 			}
 
@@ -65,13 +67,15 @@ namespace AOTools
 
 			try
 			{
-				result = XsMgr.ReadApp();
+				// result = XsMgr.ReadApp();
+				result = XsMgr.AppExStorExists ? 
+					ExStoreRtnCodes.XRC_GOOD : ExStoreRtnCodes.XRC_APP_NOT_EXIST;
 
 				// result = xsHlpr.ReadAppData(xApp);
 
-				if (result != ExStoreRtnCodes.GOOD)
+				if (result != ExStoreRtnCodes.XRC_GOOD)
 				{
-					Debug.WriteLine("read app failed");
+					XsMgr.ReadSchemaFail(XsMgr.OpDescription);
 					return Result.Failed;
 				}
 			}
@@ -85,27 +89,27 @@ namespace AOTools
 			return Result.Succeeded;
 		}
 
-		private ExStoreRtnCodes ReadRootExStore(ExStoreHelper xsHlpr)
-		{
-			// ExStoreRoot xRoot = ExStoreRoot.Instance();
-
-			try
-			{
-				ExStoreRtnCodes result = XsMgr.ReadRoot(/*ref xRoot*/);
-
-				if (result != ExStoreRtnCodes.GOOD)
-				{
-					Debug.WriteLine("initial save failed");
-					return ExStoreRtnCodes.FAIL;
-				}
-			}
-			catch (OperationCanceledException)
-			{
-				return ExStoreRtnCodes.FAIL;
-			}
-
-			return ExStoreRtnCodes.GOOD;
-		}
+		// private ExStoreRtnCodes ReadRootExStore(ExStoreHelper xsHlpr)
+		// {
+		// 	// ExStoreRoot xRoot = ExStoreRoot.Instance();
+		//
+		// 	try
+		// 	{
+		// 		ExStoreRtnCodes result = XsMgr.ReadRoot(/*ref xRoot*/);
+		//
+		// 		if (result != ExStoreRtnCodes.XRC_GOOD)
+		// 		{
+		// 			Debug.WriteLine("initial save failed");
+		// 			return ExStoreRtnCodes.XRC_FAIL;
+		// 		}
+		// 	}
+		// 	catch (OperationCanceledException)
+		// 	{
+		// 		return ExStoreRtnCodes.XRC_FAIL;
+		// 	}
+		//
+		// 	return ExStoreRtnCodes.XRC_GOOD;
+		// }
 
 		// private void ShowDataApp(ExStoreApp xApp)
 		// {

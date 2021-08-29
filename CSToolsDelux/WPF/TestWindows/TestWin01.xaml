@@ -1,0 +1,119 @@
+﻿<Window Name="testWin01"
+		x:Class="CSToolsDelux.WPF.TestWindows.TestWin01"
+		xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+		xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+		xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+		xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+		xmlns:local="clr-namespace:CSToolsDelux.WPF.TestWindows"
+		Title="Test Window 01"
+		Width="600"
+		Height="750"
+		DataContext="{Binding ElementName=testWin01}"
+		mc:Ignorable="d"
+		>
+		<!-- SnapsToDevicePixels="True" -->
+	<!--  Background="#222222"  -->
+
+	<Grid>
+
+		<Grid.ColumnDefinitions>
+			<ColumnDefinition Width="*" />
+			<ColumnDefinition Width="120" />
+		</Grid.ColumnDefinitions>
+
+		<Grid.RowDefinitions>
+			<RowDefinition Height="*" />
+			<RowDefinition Height="60" />
+		</Grid.RowDefinitions>
+
+		<!--  <TextBox Name="Tbx_01"  -->
+		<!--  Grid.Column="0"  -->
+		<!--  Grid.Row="0"  -->
+		<!--  Background="Transparent"  -->
+		<!--  Foreground="White"  -->
+		<!--  Text="{Binding TextMsg01,  -->
+		<!--  FallbackValue='hello world'}"  -->
+		<!--  />  -->
+
+		<Border
+				Grid.Column="0"
+				Grid.Row="0"
+				BorderThickness="1"
+				BorderBrush="Black"
+				>
+			<Border>
+				<Canvas x:Name="Pad">
+
+							<!-- StrokeThickness="0" -->
+					<Rectangle
+							Canvas.Left="10"
+							Width="100"
+							Height="100"
+							Canvas.Top="10"
+							Fill="Red"
+							ClipToBounds="false"
+							>
+							<!-- UseLayoutRounding="true" -->
+					</Rectangle>
+							<!-- StrokeThickness="0" -->
+					<Rectangle
+							Canvas.Left="10"
+							Width="100"
+							Height="100"
+							Canvas.Top="10"
+							Fill="White"
+							ClipToBounds="false"
+							>
+							<!-- UseLayoutRounding="true" -->
+
+					</Rectangle>
+
+				</Canvas>
+			</Border>
+		</Border>
+
+		<Button x:Name="BtnClr"
+				Content="Clear"
+				Grid.Column="0"
+				Grid.Row="1"
+				Margin="5,0,5,5"
+				Width="90"
+				Height="30"
+				HorizontalAlignment="Right"
+				VerticalAlignment="Bottom"
+				Background="#333333"
+				Foreground="White"
+				Click="BtnClr_OnClick"
+				/>
+
+		<StackPanel
+				Grid.Column="1"
+				Grid.Row="0"
+				Grid.RowSpan="2"
+				VerticalAlignment="Bottom"
+				Orientation="Vertical"
+				>
+
+			<Button x:Name="BtnQ2"
+					Content="Qty=2"
+					Margin="5,0,5,5"
+					Height="30"
+					Background="#333333"
+					Foreground="White"
+					Click="BtnQ2_OnClick"
+					/>
+
+			<Button x:Name="BtnQ3"
+					Content="Qty=1"
+					Margin="5,0,5,5"
+					Height="30"
+					Background="#333333"
+					Foreground="White"
+					Click="BtnQ1_OnClick"
+					/>
+
+
+		</StackPanel>
+
+	</Grid>
+</Window>

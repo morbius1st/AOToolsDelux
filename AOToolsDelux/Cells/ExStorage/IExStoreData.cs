@@ -13,6 +13,7 @@ namespace AOTools.Cells.ExStorage
 		string Name { get; } 
 		string Description { get; }
 		Guid ExStoreGuid { get; }
+		
 	}
 
 
@@ -20,5 +21,6 @@ namespace AOTools.Cells.ExStorage
 	{
 		// TT Fields { get; }
 		TD Data { get; }
+		bool IsDefault { get; set; }
 	}
 }

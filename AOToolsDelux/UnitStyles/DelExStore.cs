@@ -44,7 +44,7 @@ namespace AOTools
 
 			ExStoreRtnCodes result = XsMgr.DeleteRoot();
 
-			if (result != ExStoreRtnCodes.GOOD)
+			if (result != ExStoreRtnCodes.XRC_GOOD)
 			{
 				XsMgr.DeleteSchemaFail(XsMgr.OpDescription);
 				return Result.Failed;
@@ -74,7 +74,7 @@ namespace AOTools
 		{
 			ExStoreRtnCodes result = XsMgr.DeleteApp();
 
-			if (result != ExStoreRtnCodes.GOOD)
+			if (result != ExStoreRtnCodes.XRC_GOOD)
 			{
 				XsMgr.DeleteSchemaFail(XsMgr.OpDescription);
 				return Result.Failed;

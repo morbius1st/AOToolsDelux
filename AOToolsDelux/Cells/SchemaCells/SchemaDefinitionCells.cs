@@ -36,32 +36,32 @@ namespace AOTools.Cells.SchemaCells
 			int idx = 0;
 
 			KeyOrder[idx++] =
-				defineField<string>(NAME, "Name", "Name" , SCHEMA_NAME);
+				defineField<string>(CK_NAME, "Name", "Name" , SCHEMA_NAME);
 
 			KeyOrder[idx++] =
-				defineField<string>(DESCRIPTION, "Description", "Description", SCHEMA_DESC );
+				defineField<string>(CK_DESCRIPTION, "Description", "Description", SCHEMA_DESC );
 
 			KeyOrder[idx++] =
-				defineField<string>(VERSION, "Version", "Cells Version", "0.1" );
+				defineField<string>(CK_VERSION, "Version", "Cells Version", "0.1" );
 
 			KeyOrder[idx++] =
-				defineField<int>(SEQUENCE, "Sequence", "Evaluation Sequence",  1.0,
+				defineField<int>(CK_SEQUENCE, "Sequence", "Evaluation Sequence",  1.0,
 					RevitUnitType.UT_NUMBER );
 
 			KeyOrder[idx++] =
-				defineField<int>(UPDATE_RULE, "UpdateRule", "Update Rule",  (int) UPON_REQUEST);
+				defineField<int>(CK_UPDATE_RULE, "UpdateRule", "Update Rule",  (int) UR_UPON_REQUEST);
 
 			KeyOrder[idx++] =
-				defineField<string>(CELL_FAMILY_NAME, "CellFamilyName", "Name of the Cells Family", NOTDEFINED);
+				defineField<string>(CK_CELL_FAMILY_NAME, "CellFamilyName", "Name of the Cells Family", NOTDEFINED);
 			
 			KeyOrder[idx++] =
-				defineField<bool>(SKIP, "Skip", "Skip Updating", false);
+				defineField<bool>(CK_SKIP, "Skip", "Skip Updating", false);
 
 			KeyOrder[idx++] =
-				defineField<string>(XL_FILE_PATH, "XlFilePath", "File Path to the Excel File", NOTDEFINED);
+				defineField<string>(CK_XL_FILE_PATH, "XlFilePath", "File Path to the Excel File", NOTDEFINED);
 			
 			KeyOrder[idx++] =
-				defineField<string>(XL_WORKSHEET_NAME, "XlWorksheet", "Name of the Excel Worksheet", NOTDEFINED);
+				defineField<string>(CK_XL_WORKSHEET_NAME, "XlWorksheet", "Name of the Excel Worksheet", NOTDEFINED);
 		}
 
 		// public Enum[] k { get; } = { NAME, VERSION};

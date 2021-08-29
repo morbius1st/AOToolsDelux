@@ -46,9 +46,11 @@ namespace AOTools
 
 			// ExStoreCell xCell = null;
 
-			ExStoreRtnCodes result = XsMgr.ReadCells();
+			// ExStoreRtnCodes result = XsMgr.ReadCells();
+			ExStoreRtnCodes result = XsMgr.AppExStorExists ? 
+				ExStoreRtnCodes.XRC_GOOD : ExStoreRtnCodes.XRC_EX_STORE_NOT_EXISTS;
 
-			if (result != ExStoreRtnCodes.GOOD)
+			if (result != ExStoreRtnCodes.XRC_GOOD)
 			{
 				XsMgr.ReadSchemaFail(XsMgr.OpDescription);
 				return Result.Failed;
