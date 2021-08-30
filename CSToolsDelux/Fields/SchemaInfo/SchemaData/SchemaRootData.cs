@@ -25,7 +25,7 @@ namespace CSToolsDelux.Fields.SchemaInfo.SchemaData
 	#region private fields
 
 		private SchemaDataDictRoot rootDict;
-		private SchemaFieldsRoot fields;
+		private SchemaRootFields rootFields;
 
 	#endregion
 
@@ -34,7 +34,7 @@ namespace CSToolsDelux.Fields.SchemaInfo.SchemaData
 		public SchemaRootData()
 		{
 			rootDict = new SchemaDataDictRoot();
-			fields = new SchemaFieldsRoot();
+			rootFields = new SchemaRootFields();
 		}
 
 	#endregion
@@ -43,18 +43,30 @@ namespace CSToolsDelux.Fields.SchemaInfo.SchemaData
 
 		public SchemaDataDictRoot RootDict => rootDict;
 
+		public ASchemaDataFieldDef<SchemaRootKey> this[SchemaRootKey key] => rootDict[key];
+
+		public TD GetValue<TD>(SchemaRootKey key)
+		{
+			return ((SchemaRootDataField<TD>) rootDict[key]).Value;
+		}
+
+		public void SetValue<TD>(SchemaRootKey key, TD value)
+		{
+			((SchemaRootDataField<TD>) rootDict[key]).Value = value;
+		}
+
 		public void Add<TD>(SchemaRootKey key, TD value)
 		{
 			rootDict.Add(key, 
-				new SchemaRootField<TD>(value, fields.GetField<TD>(key)));
+				new SchemaRootDataField<TD>(value, rootFields.GetField<TD>(key)));
 		}
 
 		public void AddDefault<TD>(SchemaRootKey key)
 		{
-			SchemaFieldDef<TD, SchemaRootKey> f = fields.GetField<TD>(key);
+			SchemaFieldDef<TD, SchemaRootKey> f = rootFields.GetField<TD>(key);
 
 			rootDict.Add(key, 
-				new SchemaRootField<TD>(f.Value, f));
+				new SchemaRootDataField<TD>(f.Value, f));
 		}
 
 	#endregion
@@ -65,9 +77,14 @@ namespace CSToolsDelux.Fields.SchemaInfo.SchemaData
 
 	#region public methods
 
-		public void Configure()
+		public void Configure(string appGuidStr)
 		{
-			SampleData.SampleData01(this, SchemaGuidManager.RootGuidString);
+			AddDefault<string>(RK_NAME);
+			AddDefault<string>(RK_DESCRIPTION);
+			AddDefault<string>(RK_DEVELOPER);
+			AddDefault<string>(RK_VERSION);
+			Add(RK_APP_GUID, appGuidStr);
+			Add(RK_CREATION, DateTime.UtcNow.ToString());
 		}
 
 	#endregion

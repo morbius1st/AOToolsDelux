@@ -10,6 +10,20 @@ using System;
 namespace CSToolsDelux.Fields.SchemaInfo.SchemaDefinitions
 {
 
+	public class SchemaFieldApp<TD> : SchemaFieldDef<TD, SchemaAppKey>
+	{
+		public SchemaFieldApp(SchemaAppKey sequence, string name, string desc, TD val,
+			RevitUnitType unitType = RevitUnitType.UT_UNDEFINED, string guid = "") :
+			base(sequence, name, desc, val, unitType, guid) {}
+	}
+
+	public class SchemaFieldRoot<TD> : SchemaFieldDef<TD, SchemaRootKey>
+	{
+		public SchemaFieldRoot(SchemaRootKey sequence, string name, string desc, TD val,
+			RevitUnitType unitType = RevitUnitType.UT_UNDEFINED, string guid = "") :
+			base(sequence, name, desc, val, unitType, guid) {}
+	}
+
 	public interface ISchemaFieldDef<TE> where TE : Enum
 	{
 		TE Key { get; }
@@ -22,13 +36,6 @@ namespace CSToolsDelux.Fields.SchemaInfo.SchemaDefinitions
 		Type ValueType { get; }
 
 		ISchemaFieldDef<TE> Clone();
-	}
-
-	public class SchemaFieldRoot<TD> : SchemaFieldDef<TD, SchemaRootKey>
-	{
-		public SchemaFieldRoot(SchemaRootKey sequence, string name, string desc, TD val,
-			RevitUnitType unitType = RevitUnitType.UT_UNDEFINED, string guid = "") :
-			base(sequence, name, desc, val, unitType, guid) {}
 	}
 
 	public class SchemaFieldDef<TD, TE> : ISchemaFieldDef<TE> where TE: Enum 

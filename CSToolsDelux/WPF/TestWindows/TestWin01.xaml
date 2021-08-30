@@ -10,8 +10,8 @@
 		Height="750"
 		DataContext="{Binding ElementName=testWin01}"
 		mc:Ignorable="d"
+		SnapsToDevicePixels="True"
 		>
-		<!-- SnapsToDevicePixels="True" -->
 	<!--  Background="#222222"  -->
 
 	<Grid>
@@ -44,29 +44,57 @@
 			<Border>
 				<Canvas x:Name="Pad">
 
-							<!-- StrokeThickness="0" -->
 					<Rectangle
+							x:Name="r1"
 							Canvas.Left="10"
+							Margin="0"
 							Width="100"
 							Height="100"
 							Canvas.Top="10"
 							Fill="Red"
-							ClipToBounds="false"
+							ClipToBounds="true"
+							StrokeThickness="1"
+							Stroke="White"
+							SnapsToDevicePixels="True"
+							ScrollViewer.VerticalScrollBarVisibility="Disabled"
 							>
-							<!-- UseLayoutRounding="true" -->
+
 					</Rectangle>
-							<!-- StrokeThickness="0" -->
+
 					<Rectangle
+							x:Name="r2"
+							Margin="0"
 							Canvas.Left="10"
 							Width="100"
 							Height="100"
 							Canvas.Top="10"
 							Fill="White"
-							ClipToBounds="false"
+							StrokeThickness="1"
+							ScrollViewer.VerticalScrollBarVisibility="Disabled"
+							Stroke="White"
+							SnapsToDevicePixels="True"
+							ClipToBounds="True"
 							>
-							<!-- UseLayoutRounding="true" -->
-
 					</Rectangle>
+
+					<!--  <Button Height="100"  -->
+					<!--  Width="100"  -->
+					<!--  BorderThickness="0"  -->
+					<!--  Background="Red"  -->
+					<!--  Canvas.Left="10"  -->
+					<!--  ClipToBounds="True"  -->
+					<!--  Canvas.Top="10"  -->
+					<!--  >  -->
+					<!-- </Button> -->
+					<!--    -->
+					<!--  <Button Height="100"  -->
+					<!--  Width="100"  -->
+					<!--  Background="White"  -->
+					<!--  BorderThickness="0"  -->
+					<!--  Canvas.Left="10"  -->
+					<!--  Canvas.Top="10">  -->
+					<!-- </Button> -->
+
 
 				</Canvas>
 			</Border>

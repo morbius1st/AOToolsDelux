@@ -57,12 +57,12 @@ namespace CSToolsDelux.Fields.SchemaInfo.SchemaDefinitions
 
 	#region public methods
 
-		public static string GetCellGuidString (int id)
+		public static string GetNewCellGuidString (int id)
 		{
 			return Guid.NewGuid().ToString();
 		}
 
-		private static string GetAppGuidString()
+		public static string GetNewAppGuidString()
 		{
 			return Guid.NewGuid().ToString();
 		}

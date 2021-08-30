@@ -10,6 +10,23 @@ using CSToolsDelux.Fields.SchemaInfo.SchemaDefinitions;
 
 namespace CSToolsDelux.Fields.SchemaInfo.SchemaFields
 {
+
+	public class SchemaDictionaryCell : SchemaDictionaryBase<SchemaCellKey>
+	{
+		public SchemaDictionaryCell Clone()
+		{
+			return Clone(this);
+		}
+	}
+
+	public class SchemaDictionaryApp : SchemaDictionaryBase<SchemaAppKey>
+	{
+		public SchemaDictionaryApp Clone()
+		{
+			return Clone(this);
+		}
+	}
+
 	public class SchemaDictionaryRoot : SchemaDictionaryBase<SchemaRootKey>
 	{
 		public SchemaDictionaryRoot Clone()

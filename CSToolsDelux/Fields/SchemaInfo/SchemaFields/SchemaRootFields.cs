@@ -7,14 +7,14 @@ using static CSToolsDelux.Fields.SchemaInfo.SchemaDefinitions.SchemaRootKey;
 
 namespace CSToolsDelux.Fields.SchemaInfo.SchemaFields
 {
-	public class SchemaFieldsRoot : ASchemaFieldsRoot
+	public class SchemaRootFields : ASchemaFieldsRoot
 	{
 		public const string ROOT_SCHEMA_NAME = "CellsAppRoot";
 		public const string ROOT_SCHEMA_DESC = "Excel Cells to Revit Exchange";
 		public const string ROOT_DEVELOPER_NAME = "CyberStudio";
 		public const string ROOT_SCHEMA_VER = "0.1";
 
-		public SchemaFieldsRoot()
+		public SchemaRootFields()
 		{
 			defineFields();
 
@@ -30,7 +30,27 @@ namespace CSToolsDelux.Fields.SchemaInfo.SchemaFields
 			return (SchemaFieldRoot<TD>) Fields[key];
 		}
 
-		public SchemaFieldRoot<string> NameField => GetField<string>(RK_NAME);
+		public TD GetValue<TD>(SchemaRootKey key)
+		{
+			return ((SchemaFieldRoot<TD>) Fields[key]).Value;
+		}
+
+		public void SetValue<TD>(SchemaRootKey key, TD value)
+		{
+			((SchemaFieldRoot<TD>) Fields[key]).Value = value;
+		}
+
+		public string AppGuidField
+		{
+			get => GetField<string>(RK_APP_GUID).Value;
+			set { ((SchemaFieldRoot<string>) Fields[RK_APP_GUID]).Value = value; }
+		}
+
+		public string CreationField
+		{
+			get => GetField<string>(RK_CREATION).Value;
+			set { ((SchemaFieldRoot<string>) Fields[RK_CREATION]).Value = value; }
+		}
 
 		private void defineFields()
 		{
@@ -53,10 +73,10 @@ namespace CSToolsDelux.Fields.SchemaInfo.SchemaFields
 				defineField<string>(RK_DEVELOPER, "Developer", "Developer", ROOT_DEVELOPER_NAME);
 
 			KeyOrder[idx++] =
-				defineField<string>(RK_APP_GUID, "UniqueAppGuidString", "Unique App Guid String", "");
+				defineField<string>(RK_APP_GUID, "UniqueAppGuidString", "Unique App Guid String", Guid.Empty.ToString());
 
 			KeyOrder[idx++] =
-				defineField<string>(RK_CREATION, "CreationData", "Date and Time Created", "");
+				defineField<string>(RK_CREATION, "CreationData", "Date and Time Created", DateTime.UtcNow.ToString());
 		}
 	}
 }

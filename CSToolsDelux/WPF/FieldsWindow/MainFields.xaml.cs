@@ -14,6 +14,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using CSToolsDelux.Fields.FieldsManagement;
+using CSToolsDelux.Revit.Commands;
 using UtilityLibrary;
 
 namespace CSToolsDelux.WPF.FieldsWindow
@@ -21,7 +22,7 @@ namespace CSToolsDelux.WPF.FieldsWindow
 	/// <summary>
 	/// Interaction logic for MainFields.xaml
 	/// </summary>
-	public partial class MainFields : Window, INotifyPropertyChanged
+	public partial class MainFields : AWindow, INotifyPropertyChanged
 	{
 	#region private fields
 
@@ -43,13 +44,13 @@ namespace CSToolsDelux.WPF.FieldsWindow
 		{
 			InitializeComponent();
 
-			fm = new FieldsManager(this);
+			fm = new FieldsManager(this, Test01.doc.Title);
 		}
 
 	#endregion
 
 	#region public properties
-
+/*
 		public string MessageBoxText
 		{
 			get => textMsg01;
@@ -59,7 +60,7 @@ namespace CSToolsDelux.WPF.FieldsWindow
 				OnPropertyChanged();
 			}
 		}
-
+*/
 	#endregion
 
 	#region private properties
@@ -67,7 +68,7 @@ namespace CSToolsDelux.WPF.FieldsWindow
 	#endregion
 
 	#region public methods
-
+/*
 		public void MsgClr()
 		{
 			textMsg01 = "";
@@ -105,11 +106,11 @@ namespace CSToolsDelux.WPF.FieldsWindow
 		{
 			OnPropertyChanged("MessageBoxText");
 		}
-
+*/
 	#endregion
 
 	#region private methods
-
+/*
 		private string margin(string spacer)
 		{
 			if (marginSize == 0) return "";
@@ -123,7 +124,7 @@ namespace CSToolsDelux.WPF.FieldsWindow
 
 			textMsg01 += margin(spacer) + msg1 + " " + msg2;
 		}
-
+*/
 	#endregion
 
 	#region event consuming
@@ -134,7 +135,7 @@ namespace CSToolsDelux.WPF.FieldsWindow
 
 		public event PropertyChangedEventHandler PropertyChanged;
 
-		private void OnPropertyChanged([CallerMemberName] string memberName = "")
+		protected override void OnPropertyChanged([CallerMemberName] string memberName = "")
 		{
 			PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(memberName));
 		}
@@ -143,16 +144,37 @@ namespace CSToolsDelux.WPF.FieldsWindow
 
 	#region system overrides
 
-		public override string ToString()
+		public string ToString()
 		{
 			return $"this is| {myName}" ;
 		}
 
 	#endregion
 
+
+		private void BtnExit_OnClick(object sender, RoutedEventArgs e)
+		{
+			Close();
+		}
+
 		private void BtnShowRootFields_OnClick(object sender, RoutedEventArgs e)
 		{
-			fm.ShowFields();
+			fm.ShowRootFields();
+		}
+
+		private void BtnRootData_OnClick(object sender, RoutedEventArgs e)
+		{
+			fm.ShowRootData();
+		}
+
+		private void BtnAppFields_OnClick(object sender, RoutedEventArgs e)
+		{
+			fm.ShowAppFields();
+		}
+
+		private void BtnAppData_OnClick(object sender, RoutedEventArgs e)
+		{
+			fm.ShowAppData();
 		}
 	}
 }

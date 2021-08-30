@@ -78,11 +78,15 @@
     <Compile Include="Fields\FieldsManagement\FieldsManager.cs" />
     <Compile Include="Fields\SchemaInfo\SchemaData\SchemaDataDefinitions\SchemaDataField.cs" />
     <Compile Include="Fields\SchemaInfo\SchemaData\SchemaDataDefinitions\SchemaDataDictionaries.cs" />
+    <Compile Include="Fields\SchemaInfo\SchemaData\SchemaAppData.cs" />
     <Compile Include="Fields\SchemaInfo\SchemaData\SchemaRootData.cs" />
     <Compile Include="Fields\SchemaInfo\SchemaDefinitions\ASchemaFields.cs" />
     <Compile Include="Fields\SchemaInfo\SchemaDefinitions\SchemaDictionaryBase.cs" />
-    <Compile Include="Fields\SchemaInfo\SchemaFields\SchemaFieldsRoot.cs" />
-    <Compile Include="Fields\SchemaInfo\SchemaFields\SchemaDictionaryRoot.cs" />
+    <Compile Include="Fields\SchemaInfo\SchemaFields\SchemaAppFields.cs" />
+    <Compile Include="Fields\SchemaInfo\SchemaFields\SchemaDictionaryCell.cs" />
+    <Compile Include="Fields\SchemaInfo\SchemaFields\SchemaDictionaries.cs" />
+    <Compile Include="Fields\SchemaInfo\SchemaFields\SchemaRootFields.cs" />
+    <Compile Include="Fields\SchemaInfo\SchemaFields\SchemaDictionaryApp.cs" />
     <Compile Include="Fields\SchemaInfo\SchemaDefinitions\SchemaFieldDef.cs" />
     <Compile Include="Fields\SchemaInfo\SchemaDefinitions\SchemaFieldEnums.cs" />
     <Compile Include="Fields\SchemaInfo\SchemaDefinitions\SchemaGuidManager.cs" />
@@ -93,6 +97,7 @@
     <Compile Include="Revit\Tests\SubClass02.cs" />
     <Compile Include="Revit\Tests\SubClass01.cs" />
     <Compile Include="Revit\Tests\SubClassS.cs" />
+    <Compile Include="WPF\AWindow.cs" />
     <Compile Include="WPF\FieldsWindow\MainFields.xaml.cs">
       <DependentUpon>MainFields.xaml</DependentUpon>
     </Compile>

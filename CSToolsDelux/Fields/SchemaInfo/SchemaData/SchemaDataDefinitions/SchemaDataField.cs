@@ -13,6 +13,53 @@ using CSToolsDelux.Fields.SchemaInfo.SchemaDefinitions;
 
 namespace CSToolsDelux.Fields.SchemaInfo.SchemaData.SchemaDataDefinitions
 {
+	
+	public class SchemaAppDataField<TD> : SchemaDataFieldDef<SchemaAppKey, TD>
+	{
+		public SchemaAppDataField(TD value, ISchemaFieldDef<SchemaAppKey> fieldDef)
+		{
+			Value = value;
+			FieldDef = fieldDef;
+			ValueType = typeof(TD);
+		}
+	}
+
+		
+	public class SchemaRootDataField<TD> : SchemaDataFieldDef<SchemaRootKey, TD>
+	{
+		public SchemaRootDataField(TD value, ISchemaFieldDef<SchemaRootKey> fieldDef)
+		{
+			Value = value;
+			FieldDef = fieldDef;
+			ValueType = typeof(TD);
+		}
+	}
+
+
+	public class SchemaDataFieldDef<TE, TD> : ASchemaDataFieldDef<TE> where TE : Enum
+	{
+		public override TE Key { get; protected set; }
+
+		public TD Value { get; set; }
+
+		public override ISchemaFieldDef<TE> FieldDef { get; protected set; }
+
+		public override string ValueString => Value.ToString();
+
+		public override Type ValueType { get; protected set; }
+
+		public override ASchemaDataFieldDef<TE> Clone()
+		{
+			SchemaDataFieldDef<TE, TD> copy = new SchemaDataFieldDef<TE, TD>();
+
+			copy.Key = Key;
+			copy.FieldDef = FieldDef;
+			copy.Value = Value;
+
+			return copy;
+		}
+
+	}
 
 	public abstract class ASchemaDataFieldDef<TE> where TE : Enum
 	{
@@ -74,43 +121,6 @@ namespace CSToolsDelux.Fields.SchemaInfo.SchemaData.SchemaDataDefinitions
 		{
 			return ((SchemaDataFieldDef<TE, bool>) id).Value;
 		}
-
-	}
-
-	public class SchemaRootField<TD> : SchemaDataFieldDef<SchemaRootKey, TD>
-	{
-		public SchemaRootField(TD value, ISchemaFieldDef<SchemaRootKey> fieldDef)
-		{
-			Value = value;
-			FieldDef = fieldDef;
-			ValueType = typeof(TD);
-		}
-	}
-
-
-	public class SchemaDataFieldDef<TE, TD> : ASchemaDataFieldDef<TE> where TE : Enum
-	{
-		public override TE Key { get; protected set; }
-
-		public TD Value { get; set; }
-
-		public override ISchemaFieldDef<TE> FieldDef { get; protected set; }
-
-		public override string ValueString { get; }
-
-		public override Type ValueType { get; protected set; }
-
-		public override ASchemaDataFieldDef<TE> Clone()
-		{
-			SchemaDataFieldDef<TE, TD> copy = new SchemaDataFieldDef<TE, TD>();
-
-			copy.Key = Key;
-			copy.FieldDef = FieldDef;
-			copy.Value = Value;
-
-			return copy;
-		}
-
 
 	}
 

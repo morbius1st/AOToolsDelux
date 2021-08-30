@@ -22,14 +22,27 @@ namespace CSToolsDelux.Fields.Testing
 	{
 		static SampleData() { }
 
-		public static void SampleData01(SchemaRootData rootData, string appGuidStr)
-		{
-			rootData.AddDefault<string>(RK_NAME);
-			rootData.AddDefault<string>(RK_DESCRIPTION);
-			rootData.AddDefault<string>(RK_DEVELOPER);
-			rootData.AddDefault<string>(RK_VERSION);
-			rootData.Add(RK_APP_GUID, appGuidStr);
-			rootData.Add(RK_CREATION, DateTime.UtcNow.ToString());
-		}
+		// public static void SampleAppData(SchemaAppData aData) 
+		// {
+		// 	aData.Add(SchemaAppKey.AK_NAME, "App Data Name");
+		// 	aData.Add(SchemaAppKey.AK_DESCRIPTION, "App Data Description");
+		// 	aData.AddDefault<string>(SchemaAppKey.AK_VERSION);
+		// }
+		//
+		// public static void SampleFieldData01(SchemaRootFields rootFields, string appGuidStr)
+		// {
+		// 	rootFields.AppGuidField = appGuidStr;
+		// 	rootFields.CreationField = DateTime.UtcNow.ToString();
+		// }
+
+		// public static void SampleData01(SchemaRootData rootData, string appGuidStr)
+		// {
+		// 	rootData.AddDefault<string>(RK_NAME);
+		// 	rootData.AddDefault<string>(RK_DESCRIPTION);
+		// 	rootData.AddDefault<string>(RK_DEVELOPER);
+		// 	rootData.AddDefault<string>(RK_VERSION);
+		// 	rootData.Add(RK_APP_GUID, appGuidStr);
+		// 	rootData.Add(RK_CREATION, DateTime.UtcNow.ToString());
+		// }
 	}
 }

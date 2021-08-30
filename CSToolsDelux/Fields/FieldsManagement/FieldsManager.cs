@@ -5,30 +5,23 @@
 // username: jeffs
 // created:  8/28/2021 8:58:30 PM
 
+using System;
 using CSToolsDelux.Fields.SchemaInfo.SchemaData;
-using CSToolsDelux.Fields.SchemaInfo.SchemaData.SchemaDataDefinitions;
 using CSToolsDelux.Fields.SchemaInfo.SchemaDefinitions;
 using CSToolsDelux.Fields.SchemaInfo.SchemaFields;
 using CSToolsDelux.Fields.Testing;
+using CSToolsDelux.WPF;
 using CSToolsDelux.WPF.FieldsWindow;
 
 namespace CSToolsDelux.Fields.FieldsManagement
 {
 	public class FieldsManager
 	{
-	#region static properties
-
-		public static SchemaFieldsRoot fRoot { get; }
-		public SchemaRootData rData { get; private set; }
-
-
-	#endregion
-
 	#region private fields
 
 		private ShowInfo show;
 
-		private MainFields W;
+		private AWindow W;
 
 	#endregion
 
@@ -36,23 +29,32 @@ namespace CSToolsDelux.Fields.FieldsManagement
 
 		static FieldsManager()
 		{
-			fRoot = new SchemaFieldsRoot();
+			rFields = new SchemaRootFields();
 		}
 
-		public FieldsManager(MainFields w)
+		public FieldsManager(AWindow w, string documentName)
 		{
 			W = w;
-			show = new ShowInfo(w);
-			rData = new SchemaRootData();
-			rData.Configure();
-		}
+			show = new ShowInfo(w, documentName);
 
+			rData = new SchemaRootData();
+			rData.Configure(SchemaGuidManager.GetNewAppGuidString());
+
+			aData = new SchemaAppData();
+			aData.Configure("App Data Name", "App Data Description");
+		}
 
 	#endregion
 
 	#region public properties
 
-		public SchemaFieldsRoot SchemaFieldsRoot => fRoot;
+		public SchemaRootFields SchemaRootFields => rFields;
+
+		public SchemaRootData rData { get; private set; }
+		public SchemaAppData aData { get; private set; }
+
+		public static SchemaRootFields rFields { get; }
+		public static SchemaAppFields aFields { get; }
 
 	#endregion
 
@@ -62,9 +64,24 @@ namespace CSToolsDelux.Fields.FieldsManagement
 
 	#region public methods
 
-		public void ShowFields()
+		public void ShowRootFields()
 		{
-			show.ShowRootFields(fRoot);
+			show.ShowRootFields(rFields);
+		}
+
+		public void ShowRootData()
+		{
+			show.ShowRootData(rFields, rData);
+		}
+		
+		public void ShowAppFields()
+		{
+			show.ShowAppFields(aFields);
+		}
+
+		public void ShowAppData()
+		{
+			show.ShowAppData(aFields, aData);
 		}
 
 	#endregion
