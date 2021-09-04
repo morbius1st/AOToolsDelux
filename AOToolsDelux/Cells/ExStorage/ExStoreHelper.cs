@@ -1,14 +1,20 @@
 ﻿#region + Using Directives
-using System;
-using System.Collections.Generic;
+
 using AOTools.Cells.ExDataStorage;
 using AOTools.Cells.SchemaCells;
 using AOTools.Cells.SchemaDefinition;
+using AOTools.Cells.Tests;
 using AOTools.Utility;
+
 using Autodesk.Revit.DB;
 using Autodesk.Revit.DB.ExtensibleStorage;
-using static Autodesk.Revit.DB.ExtensibleStorage.Schema;
+
+using System;
+using System.Collections.Generic;
+
 using static AOTools.Cells.ExDataStorage.DataStorageManager;
+using static Autodesk.Revit.DB.ExtensibleStorage.Schema;
+
 #endregion
 
 // user name: jeffs
@@ -37,7 +43,6 @@ namespace AOTools.Cells.ExStorage
 
 	public class ExStoreHelper
 	{
-
 		public string OpDescription { get; private set; }
 
 	#region root element
@@ -62,21 +67,25 @@ namespace AOTools.Cells.ExStorage
 		public bool GetRootEntity(ExStoreRoot xRoot, out Entity e, out DataStorage ds)
 		{
 			Schema schema = GetRootSchema();
-				// makeRootSchema(xRoot);
+			// makeRootSchema(xRoot);
 
 			return DsMgr.GetDataStorage(schema, out e, out ds);
 		}
 
 		public bool GetAppEntity(ExStoreApp xApp, ExStoreCell xCell, out Entity e, out DataStorage ds)
 		{
+			ExStorageTests.location = 260;
+			e = null;
+			ds = null;
+
 			Schema schema =
 				MakeAppSchema(xApp, xCell);
-				// GetAppSchemaCurr();
 
+			if (schema == null) return false;
+
+			ExStorageTests.location = 265;
 			return DsMgr.GetDataStorage(schema, out e, out ds);
 		}
-
-
 
 	#endregion
 
@@ -269,8 +278,8 @@ namespace AOTools.Cells.ExStorage
 				// Schema schema = sb.Finish();
 
 				Schema schema = GetRootSchema();
-					// makeRootSchema(xRoot);
-				
+				// makeRootSchema(xRoot);
+
 				Entity e = new Entity(schema);
 
 				writeData(e, e.Schema, xRoot.Data);
@@ -278,7 +287,7 @@ namespace AOTools.Cells.ExStorage
 				// using (t = new Transaction(AppRibbon.Doc, "Save Cells Default Config Info"))
 				// {
 				// 	t.Start();
-					ds.SetEntity(e);
+				ds.SetEntity(e);
 				// 	t.Commit();
 				// }
 			}
@@ -316,9 +325,9 @@ namespace AOTools.Cells.ExStorage
 				// makeSchemaSubSchemaFields(sb, xCell);
 
 				// Schema schema = sb.Finish();
-				Schema schema = 
+				Schema schema =
 					MakeAppSchema(xApp, xCell);
-					// GetAppSchemaCurr();
+				// GetAppSchemaCurr();
 
 				Entity e = new Entity(schema);
 
@@ -330,7 +339,7 @@ namespace AOTools.Cells.ExStorage
 				// using (t = new Transaction(AppRibbon.Doc, "Save Cells Default Config Info"))
 				// {
 				// 	t.Start();
-					ds.SetEntity(e);
+				ds.SetEntity(e);
 				// 	t.Commit();
 				// }
 			}
@@ -410,25 +419,43 @@ namespace AOTools.Cells.ExStorage
 
 		public Schema MakeAppSchema(ExStoreApp xApp, ExStoreCell xCell)
 		{
-			Schema schema;
 
-			// schema = Schema.Lookup(xApp.ExStoreGuid);
-			//
-			// if (schema != null) return schema;
+			ExStorageTests.location = 270;
+			Schema schema = null;
 
-			SchemaBuilder sb = new SchemaBuilder(xApp.ExStoreGuid);
-
-			makeSchemaDef(ref sb, xApp.Name, xApp.Description);
-
-			makeSchemaFields(ref sb, xApp.Data);
-
-			if (xCell != null)
+			try
 			{
-				makeSchemaSubSchemaFields(ref sb, xCell);
+				// schema = Schema.Lookup(xApp.ExStoreGuid);
+				//
+				// if (schema != null) return schema;
+
+				SchemaBuilder sb = new SchemaBuilder(xApp.ExStoreGuid);
+
+				ExStorageTests.location = 273;
+				makeSchemaDef(ref sb, xApp.Name, xApp.Description);
+
+				ExStorageTests.location = 275;
+				makeSchemaFields(ref sb, xApp.Data);
+
+				if (xCell != null)
+				{
+					ExStorageTests.location = 277;
+					makeSchemaSubSchemaFields(ref sb, xCell);
+				}
+
+				ExStorageTests.location = 278;
+				schema = sb.Finish();
+
+			}
+			catch (Exception e)
+			{
+				string ex = e.Message;
+				string iex = e?.InnerException.Message ?? "none";
+				
+				return null;
 			}
 
-			schema = sb.Finish();
-
+			ExStorageTests.location = 279;
 			return schema;
 		}
 
@@ -456,7 +483,8 @@ namespace AOTools.Cells.ExStorage
 			sb.SetDocumentation(description);
 		}
 
-		private void makeSchemaFields<T>(ref SchemaBuilder sbld, SchemaDictionaryBase<T> fieldList) where T : Enum
+		private void makeSchemaFields<T>(ref SchemaBuilder sbld, 
+			SchemaDictionaryBase<T> fieldList) where T : Enum
 		{
 			foreach (KeyValuePair<T, SchemaFieldDef<T>> kvp in fieldList)
 			{
@@ -532,6 +560,26 @@ namespace AOTools.Cells.ExStorage
 
 	#region delete methods
 
+		public Tuple<int, int> DeleteSchemaPerVendorId(string vendorId)
+		{
+			IList<Schema> schemas = Schema.ListSchemas();
+
+			int found = schemas.Count;
+			int erased = 0;
+
+			foreach (Schema s in schemas)
+			{
+				if (s.VendorId.Equals(vendorId))
+				{
+					EraseSchemaAndAllEntities(s, false);
+					erased++;
+				}
+			}
+
+			return new Tuple<int, int>(found, erased);
+
+		}
+
 
 		// app entity / schema is unique per model
 		/// <summary>
@@ -597,7 +645,7 @@ namespace AOTools.Cells.ExStorage
 			return result;
 		}
 
-		
+
 		// common method to remove a schema using
 		// a transaction
 		private ExStoreRtnCodes EraseSchema(Entity e, Schema s)
@@ -611,9 +659,9 @@ namespace AOTools.Cells.ExStorage
 				// {
 				// 	t.Start();
 
-					EraseSchemaAndAllEntities(s, false);
+				EraseSchemaAndAllEntities(s, false);
 
-					e.Dispose();
+				e.Dispose();
 				// }
 			}
 			catch
@@ -676,12 +724,11 @@ namespace AOTools.Cells.ExStorage
 
 			foreach (Field field in sApp.ListFields())
 			{
-				
 				if (field.SubSchema == null) continue;
 
 				Field f = sApp.GetField(field.FieldName);
 				if (!f?.IsValidObject ?? true) continue;
-				
+
 				Entity ent = eApp.Get<Entity>(f);
 				if (!ent?.IsValidObject ?? true) continue;
 
@@ -766,7 +813,6 @@ namespace AOTools.Cells.ExStorage
 		// }
 
 
-
 		// since cannot delete cell schema independent of the app schema
 		// don't need to get subschema fields
 
@@ -792,7 +838,6 @@ namespace AOTools.Cells.ExStorage
 		//
 		// 	return ExStoreRtnCodes.GOOD;
 		// }
-
 
 
 		// private bool GetAppSchema(out Schema schema)
@@ -871,7 +916,6 @@ namespace AOTools.Cells.ExStorage
 		// }
 
 
-
 		// cannot delete subscheme independant of the app schema
 
 		// /// <summary>
@@ -932,7 +976,6 @@ namespace AOTools.Cells.ExStorage
 		//
 		// 	return ExStoreRtnCodes.GOOD;
 		// }
-
 
 
 		//

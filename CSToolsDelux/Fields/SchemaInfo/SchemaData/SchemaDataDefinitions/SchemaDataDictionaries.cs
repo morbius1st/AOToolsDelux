@@ -10,7 +10,11 @@ using CSToolsDelux.Fields.SchemaInfo.SchemaDefinitions;
 namespace CSToolsDelux.Fields.SchemaInfo.SchemaData.SchemaDataDefinitions
 {
 
+	public class SchemaDataDictCell : SchemaDataDictionaryBase<SchemaCellKey> { }
+
 	public class SchemaDataDictApp : SchemaDataDictionaryBase<SchemaAppKey> { }
+
+	public class SchemaDataDictRootApp : SchemaDataDictionaryBase<SchemaRootAppKey> { }
 
 	public class SchemaDataDictRoot : SchemaDataDictionaryBase<SchemaRootKey> { }
 

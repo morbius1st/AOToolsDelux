@@ -10,6 +10,8 @@ namespace CSToolsDelux.Fields.SchemaInfo.SchemaDefinitions
 {
 	public class SchemaDictionaryBase<TE> : Dictionary<TE, ISchemaFieldDef<TE>>  where TE : Enum
 	{
+		public SchemaDictionaryBase() {}
+
 		public TC Clone<TC>(TC original) where TC : SchemaDictionaryBase<TE>, new()
 		{
 			TC copy = new TC();

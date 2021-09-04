@@ -16,7 +16,7 @@ using System.Windows;
 
 namespace CSToolsStudies
 {
-	public partial class App : Application
+	public partial class AppRibbon : Application
 	{
 
 

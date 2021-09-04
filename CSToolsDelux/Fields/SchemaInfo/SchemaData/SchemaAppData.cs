@@ -79,8 +79,8 @@ namespace CSToolsDelux.Fields.SchemaInfo.SchemaData
 
 		public void Configure(string name, string desc)
 		{
-			Add(AK_NAME, name);
-			Add(AK_DESCRIPTION, desc);
+			Add<string>(AK_NAME, name);
+			Add<string>(AK_DESCRIPTION, desc);
 			AddDefault<string>(AK_VERSION);
 		}
 

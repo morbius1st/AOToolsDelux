@@ -21,7 +21,7 @@ using UtilityLibrary;
 
 namespace CSToolsDelux
 {
-	class App : IExternalApplication
+	class AppRibbon : IExternalApplication
 	{
 		public Result OnShutdown(UIControlledApplication a)
 		{
@@ -42,18 +42,20 @@ namespace CSToolsDelux
 		private const string COMMAND_CLASS_NAME_01 = nameof(Test01);
 
 
-		private static string AddInPath = typeof(App).Assembly.Location;
+		private static string AddInPath = typeof(AppRibbon).Assembly.Location;
 		private const string CLASSPATH = "CSToolsDelux.Revit.Commands.";
 
 		private const string SMALLICON = "information16.png";
 		private const string LARGEICON = "information32.png";
 
-		internal UIApplication uiApp;
+		private static UIControlledApplication _uiCtrlApp;
+		internal static UIApplication UiApp;
+		internal static UIDocument Uidoc;
+		internal static Application App;
+		internal static Document Doc;
 
-		//		internal UIControlledApplication uiCtrlApp;
 
-		//		public static PulldownButton pb;
-		//		public static SplitButton sb;
+
 
 
 		public Result OnStartup(UIControlledApplication app)
@@ -165,7 +167,7 @@ namespace CSToolsDelux
 		{
 			Application app = sender as Application;
 
-			uiApp = new UIApplication(app);
+			UiApp = new UIApplication(app);
 		}
 
 		private PushButtonData createButton(string ButtonName, string ButtonText,

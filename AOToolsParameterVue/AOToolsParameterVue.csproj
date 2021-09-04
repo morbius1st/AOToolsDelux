@@ -129,6 +129,11 @@
     <EmbeddedResource Include="Resources\information16.png" />
     <EmbeddedResource Include="Resources\information32.png" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="..\.editorconfig">
+      <Link>.editorconfig</Link>
+    </None>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PostBuildEvent>(copy /y "$(ProjectDir)Other\$(TargetName).addin" "$(AppData)\Autodesk\REVIT\Addins\2017")

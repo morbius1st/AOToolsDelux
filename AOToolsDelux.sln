@@ -15,7 +15,17 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CSToolsDelux", "CSToolsDelu
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CSToolsStudies", "CSToolsStudies\CSToolsStudies.csproj", "{BC068B64-B232-4A08-82B6-2889EC04E345}"
 EndProject
+Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "SharedCode", "SharedCode\SharedCode.shproj", "{B822992C-8E9F-4073-A9B5-7A9B87961745}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{DA222F1A-E5DA-431E-AB20-1C2E6C211AD3}"
+	ProjectSection(SolutionItems) = preProject
+		.editorconfig = .editorconfig
+	EndProjectSection
+EndProject
 Global
+	GlobalSection(SharedMSBuildProjectFiles) = preSolution
+		SharedCode\SharedCode.projitems*{b822992c-8e9f-4073-a9b5-7a9b87961745}*SharedItemsImports = 13
+	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		AOPvDbg|Any CPU = AOPvDbg|Any CPU
 		AOPvDbg|x64 = AOPvDbg|x64

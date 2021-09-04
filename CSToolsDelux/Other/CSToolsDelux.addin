@@ -12,7 +12,7 @@
   <AddIn Type="Application">
     <Name>Application CSToolsDelux</Name>
     <Assembly>CSToolsDelux.dll</Assembly>
-    <FullClassName>CSToolsDelux.App</FullClassName>
+    <FullClassName>CSToolsDelux.AppRibbon</FullClassName>
     <ClientId>c773f8b1-bb68-4214-92dd-d5febcdff3cf</ClientId>
     <VendorId>pro.cyberstudio</VendorId>
     <VendorDescription>CyberStudio</VendorDescription>

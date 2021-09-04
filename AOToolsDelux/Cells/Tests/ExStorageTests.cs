@@ -11,6 +11,7 @@ using AOTools.Cells.ExStorage;
 using AOTools.Cells.SchemaDefinition;
 using Autodesk.Revit.DB.ExtensibleStorage;
 using Autodesk.Revit.UI;
+using static Autodesk.Revit.DB.ExtensibleStorage.Schema;
 using static AOTools.Cells.ExDataStorage.DataStorageManager;
 
 #endregion
@@ -22,8 +23,104 @@ namespace AOTools.Cells.Tests
 {
 	public class ExStorageTests
 	{
+		private static int lx;
+		public static string loc { get; set; }
+
+		public static int location
+		{
+			get => lx;
+
+			set
+			{
+				lx = value;
+				loc += value.ToString() + "\n";
+			}
+		}
+
+		public string guid { get; set; }
+
+		public static StaticTest01 staticTest01 { get; } = new StaticTest01(Guid.NewGuid().ToString());
+
+
+		public ExStorageTests(string guid)
+		{
+			this.guid = guid;
+		}
 
 	#region public methods
+
+		public string ReadAll(string vendorId)
+		{
+			Schema schema;
+			Entity entity;
+			DataStorage dataStorage;
+			bool result;
+			string answer = null;
+
+			IList<Schema> schemas = Schema.ListSchemas();
+
+			foreach (Schema s in schemas)
+			{
+				if (s.VendorId.Equals(vendorId))
+				{
+					entity = null;
+					
+					try
+					{
+						answer += $"got| {s.SchemaName}\n";
+
+						result = DsMgr.GetDataStorage(s, out entity, out dataStorage);
+					}
+					catch
+					{
+						answer += "failed to read\n";
+						result = false;
+					}
+
+					if (result)
+					{
+						answer += readAll(s, entity);
+					}
+				}
+			}
+			return answer;
+		}
+
+		private string readAll(Schema s, Entity e)
+		{
+			if (s == null || e == null) return null;
+
+			string result = null;
+			string fieldName = null;
+
+			IList<Field> f = s.ListFields();
+
+			foreach (Field field in f)
+			{
+				Type t = field.ValueType;
+				fieldName = field.FieldName;
+				result += $"field| {fieldName}| type| {t.Name} |";
+
+				if (t?.Equals(typeof(string)) ?? false)
+				{
+					result += $" value (str)| {e.Get<string>(fieldName)}";
+				}
+				else if (t?.Equals(typeof(double)) ?? false)
+				{
+					result += $" value (dbl)| {e.Get<double>(fieldName).ToString()}";
+				}
+				else if (t?.Equals(typeof(bool)) ?? false)
+				{
+					result += $" value (bool)| {e.Get<bool>(fieldName).ToString()}";
+				}
+
+				result += "\n";
+			}
+
+			return result + "\n";
+		}
+
+
 
 		public bool Reset()
 		{
@@ -35,7 +132,6 @@ namespace AOTools.Cells.Tests
 			XsMgr.makeSchema();
 
 			return true;
-
 		}
 
 		private void deleteSchema(Guid g)
@@ -56,10 +152,10 @@ namespace AOTools.Cells.Tests
 			ExStoreRtnCodes result;
 
 			XsMgr.XRoot.Data[SchemaRootKey.RK_NAME].Value
-				= "RootEx4"+Assembly.GetExecutingAssembly().GetName().Name;
+				= "RootEx4" + Assembly.GetExecutingAssembly().GetName().Name;
 
 			XsMgr.XRoot.Data[SchemaRootKey.RK_DESCRIPTION].Value
-				= "Root Ex Storage Data for| "+AppRibbon.Doc.Title;
+				= "Root Ex Storage Data for| " + AppRibbon.Doc.Title;
 
 			result = XsMgr.WriteRoot();
 			if (result != ExStoreRtnCodes.XRC_GOOD) return result;
@@ -84,7 +180,7 @@ namespace AOTools.Cells.Tests
 				SampleCellData(XsMgr.XCell, i);
 			}
 
-			result = XsMgr.WriteAppAndCells(/*XsMgr.XApp, XsMgr.XCell*/);
+			result = XsMgr.WriteAppAndCells( /*XsMgr.XApp, XsMgr.XCell*/);
 
 			if (result != ExStoreRtnCodes.XRC_GOOD) return result;
 
@@ -125,13 +221,13 @@ namespace AOTools.Cells.Tests
 				sb.AppendLine($"date group| {i:D}");
 
 
-				foreach (KeyValuePair<SchemaCellKey, 
+				foreach (KeyValuePair<SchemaCellKey,
 					SchemaFieldDef<SchemaCellKey>> kvp in xCell.Fields)
 				{
 					string name = xCell.Fields[kvp.Key].Name;
 					string value = xCell.Data[i][kvp.Key].Value.ToString();
 
-					sb.Append(name).Append("| ").AppendLine(value);	
+					sb.Append(name).Append("| ").AppendLine(value);
 				}
 
 				sb.Append("\n");
@@ -163,7 +259,6 @@ namespace AOTools.Cells.Tests
 			td.MainIcon = TaskDialogIcon.TaskDialogIconNone;
 
 			td.Show();
-
 		}
 
 		public void showStat(string mainMsg, ExStoreRtnCodes result, int step,
@@ -194,7 +289,6 @@ namespace AOTools.Cells.Tests
 			td.MainContent = status;
 			td.MainIcon = TaskDialogIcon.TaskDialogIconWarning;
 			td.Show();
-
 		}
 
 		public void taskDialogWarning_Ok(string title, string main, string desc)
@@ -223,7 +317,7 @@ namespace AOTools.Cells.Tests
 			xCell.Data[id][SchemaCellKey.CK_XL_WORKSHEET_NAME].Value = $"worksheet {id:d3}";
 		}
 
-		
+
 		public static void SampleCellDataRevised(ExStoreCell xCell, string name, int id)
 		{
 			xCell.Data[id][SchemaCellKey.CK_NAME].Value = name;

@@ -66,6 +66,7 @@ namespace AOTools
 		private const string BUTTON_TEST1 = "TEST 1";
 		private const string BUTTON_TEST2 = "TEST 2";
 		private const string BUTTON_TEST3 = "TEST 3";
+		private const string BUTTON_ERASE1 = "ERASE 1";
 
 		private const string BTN_EX_STOR_DEL_ROOT = "Delete\nRoot Schema";
 		private const string BTN_EX_STOR_DEL_APP = "Delete\nApp Schema";
@@ -426,6 +427,9 @@ namespace AOTools
 			
 			if (TestButton3(ribbonPanel) != Result.Succeeded)
 				return Result.Failed;
+			
+			if (Button4(ribbonPanel) != Result.Succeeded)
+				return Result.Failed;
 
 
 			// if (AddSelectButton(ribbonPanel) != Result.Succeeded)
@@ -468,6 +472,13 @@ namespace AOTools
 			return makePushButton(ribbonPanel, BUTTON_TEST3, nameof(TestExStore3), 
 				"Test 3", 
 				"Test Ex Storage 3");
+		}
+				
+		private Result Button4(RibbonPanel ribbonPanel)
+		{
+			return makePushButton(ribbonPanel, BUTTON_ERASE1, nameof(EraseExStore1), 
+				"Erase 1", 
+				"Erase Ex Storage 1");
 		}
 
 

@@ -219,6 +219,7 @@
     <Compile Include="Cells\SchemaDefinition\SchemaFieldEnums.cs" />
     <Compile Include="Cells\SchemaDefinition\SchemaGuidManager.cs" />
     <Compile Include="Cells\Tests\ExStorageTests.cs" />
+    <Compile Include="Cells\Tests\StaticTest01.cs" />
     <Compile Include="Revisions\Revision.cs" />
     <Compile Include="UnitStyles\DelExStore.cs" />
     <Compile Include="UnitStyles\MakeExStore.cs" />

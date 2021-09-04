@@ -23,7 +23,7 @@ namespace CSToolsDelux.WPF
 
 	#region public methods
 
-		public int ColumnWidth { get; set; } = 24;
+		public int ColumnWidth { get; set; } = 30;
 
 		public string MessageBoxText
 		{
@@ -58,14 +58,25 @@ namespace CSToolsDelux.WPF
 			if (marginSize < 0) marginSize = 0;
 		}
 
-		public void WriteMsg(string msg1, string msg2 = "", string loc = "", string spacer = " ")
+		public void WriteAligned(string msg1, string msg2 = "", string loc = "", string spacer = " ")
 		{
 			writeMsg(msg1, msg2, loc, spacer);
 		}
 
-		public void WriteLineMsg(string msg1, string msg2 = "", string loc = "", string spacer = " ")
+		public void WriteLineAligned(string msg1, string msg2 = "", string loc = "", string spacer = " ")
 		{
 			writeMsg(msg1, msg2 + "\n", loc, spacer);
+		}
+
+		public void WriteMsg(string msg1, string msg2 = "", string loc = "")
+		{
+			writeMsg(msg1, msg2, loc);
+
+		}
+		
+		public void WriteLineMsg(string msg1, string msg2 = "", string loc = "")
+		{
+			writeMsg(msg1, msg2 + "\n", loc);
 		}
 
 		public void ShowMsg()
@@ -84,14 +95,26 @@ namespace CSToolsDelux.WPF
 			return spacer.Repeat(marginSize);
 		}
 
+		private string fmtMsg(string msg1, string msg2)
+		{
+			string partA = msg1.IsVoid() ? msg1 : msg1.PadRight(ColumnWidth);
+			string partB = msg2.IsVoid() ? msg2 : " " + msg2;
+
+			return partA + partB;
+		}
+
 		private void writeMsg(string msg1, string msg2, string loc, string spacer)
 		{
 			location = loc;
 
-			string partA = msg1.IsVoid() ? msg1 : msg1.PadRight(ColumnWidth);
-			string partB = msg2.IsVoid() ? "" : " " + msg2;
+			textMsg01 += margin(spacer) + fmtMsg(msg1, msg2);
+		}
 
-			textMsg01 += margin(spacer) + partA + partB;
+		private void writeMsg(string msg1, string msg2, string loc)
+		{
+			location = loc;
+
+			textMsg01 += fmtMsg(msg1, msg2);
 		}
 
 	#endregion

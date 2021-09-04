@@ -1,5 +1,6 @@
 ﻿#region + Using Directives
 
+using System;
 using AOTools.Cells.ExDataStorage;
 using AOTools.Cells.SchemaDefinition;
 using AOTools.Cells.Tests;
@@ -144,6 +145,8 @@ namespace AOTools.Cells.ExStorage
 
 		public ExStoreMgr()
 		{
+			ExStorageTests.location = 100;
+
 			XRoot = ExStoreRoot.Instance();
 			XApp = ExStoreApp.Instance();
 
@@ -168,7 +171,7 @@ namespace AOTools.Cells.ExStorage
 
 		public string OpDescription  { get; private set; }
 
-		ExStorageTests xsTest = new ExStorageTests();
+		ExStorageTests xsTest = new ExStorageTests(null);
 		private ExStoreHelper xsHlpr;
 
 		// todo - move data stores to the datastoragemanager
@@ -202,6 +205,7 @@ namespace AOTools.Cells.ExStorage
 
 		private void Initialize()
 		{
+			ExStorageTests.location = 110;
 			OpDescription = "Initialize ExStorage Manager";
 			if (Initialized) return;
 
@@ -211,6 +215,7 @@ namespace AOTools.Cells.ExStorage
 			makeSchema();
 
 			Initialized = true;
+			ExStorageTests.location = 119;
 		}
 
 		private void resetExStore()
@@ -264,6 +269,7 @@ namespace AOTools.Cells.ExStorage
 
 		public void Configure()
 		{
+			ExStorageTests.location = 120;
 			OpDescription = "Configure ExStorage Manager";
 
 			if (Configured) return;
@@ -273,8 +279,10 @@ namespace AOTools.Cells.ExStorage
 			// check if the root datastorage element exists
 			// in the database
 			// if not, create one using the default information
+			ExStorageTests.location = 121;
 			if (!DsMgr[ROOT_DATA_STORE].GotDataStorage)
 			{
+				ExStorageTests.location = 122;
 				AppRibbon.msg += "don't got xroot\n";
 				CheckRootDataStorExists();
 				if (!DsMgr[ROOT_DATA_STORE].GotDataStorage) return;
@@ -282,28 +290,34 @@ namespace AOTools.Cells.ExStorage
 
 			AppRibbon.msg += "checking that root ex data exists\n";
 
+			ExStorageTests.location = 123;
 			CheckRootExStorExists();
 
 			if (!RootExStorExists) return;
 
 			// check if the app datastorage element exists
 			// in the database
+			ExStorageTests.location = 124;
 			if (!DsMgr[APP_DATA_STORE_CURR].GotDataStorage)
 			{
+				ExStorageTests.location = 125;
 				AppRibbon.msg += "don't got xapp\n";
 				CheckAppDataStorExists();
 			}
 
+			ExStorageTests.location = 126;
 			AppRibbon.msg += "checking that app ex data exists\n";
 			CheckAppExStorExists();
 
 			if (!AppExStorExists) return;
 
 			Configured = true;
+			ExStorageTests.location = 129;
 		}
 
 		private void CheckRootExStorExists()
 		{
+			ExStorageTests.location = 130;
 			if (RootExStorExists) return;
 			if (!DsMgr[ROOT_DATA_STORE].GotDataStorage) return;
 
@@ -311,11 +325,12 @@ namespace AOTools.Cells.ExStorage
 
 			if (result != ExStoreRtnCodes.XRC_GOOD) return;
 
-			// RootExStorExists = true;
+			ExStorageTests.location = 139;
 		}
 
 		private void CheckAppExStorExists()
 		{
+			ExStorageTests.location = 140;
 			if (!RootExStorExists) return;
 			if (AppExStorExists) return;
 			if (!DsMgr[ROOT_DATA_STORE].GotDataStorage) return;
@@ -324,11 +339,12 @@ namespace AOTools.Cells.ExStorage
 
 			if (result != ExStoreRtnCodes.XRC_GOOD) return;
 
-			// AppExStorExists = true;
+			ExStorageTests.location = 149;
 		}
 
 		public void CheckRootDataStorExists()
 		{
+			ExStorageTests.location = 150;
 			if (!IsInit("Check data Store exists"))  return;
 			if (Configured)  return;
 			if (DsMgr[ROOT_DATA_STORE].GotDataStorage) return;
@@ -344,10 +360,12 @@ namespace AOTools.Cells.ExStorage
 				// DsMgr[ROOT_DATA_STORE].Entity = e;
 				// DsMgr[ROOT_DATA_STORE].Schema = s;
 			}
+			ExStorageTests.location = 159;
 		}
 
 		public void CheckAppDataStorExists()
 		{
+			ExStorageTests.location = 160;
 			if (DsMgr[APP_DATA_STORE_CURR].GotDataStorage) return;
 
 			// ExStoreApp xApp = ExStoreApp.Instance();
@@ -362,6 +380,7 @@ namespace AOTools.Cells.ExStorage
 				DsMgr[APP_DATA_STORE_CURR].DataStorage = ds;
 				// DsMgr[APP_DATA_STORE].Entity = e;
 			}
+			ExStorageTests.location = 169;
 		}
 
 		private ExStoreRtnCodes CreateRootDataStore()
@@ -613,6 +632,12 @@ namespace AOTools.Cells.ExStorage
 	#endregion
 
 	#region delete
+
+		public Tuple<int, int> DeleteByVendorId(string vendorId)
+		{
+			xsHlpr = new ExStoreHelper();
+			return xsHlpr.DeleteSchemaPerVendorId(vendorId);
+		}
 
 		public ExStoreRtnCodes DeleteDs()
 		{

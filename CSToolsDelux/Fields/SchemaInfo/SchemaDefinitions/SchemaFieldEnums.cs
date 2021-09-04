@@ -9,6 +9,17 @@ using Autodesk.Revit.DB;
 
 namespace CSToolsDelux.Fields.SchemaInfo.SchemaDefinitions
 {
+	public enum SchemaRootAppKey
+	{
+		RAK_NAME              = 10,
+		RAK_DESCRIPTION       = 20,
+		RAK_VERSION           = 30,
+		RAK_DEVELOPER         = 40,
+		RAK_CREATE_DATE       = 60,
+		// RAK_APP_GUID          = 70,
+	}
+
+
 	public enum SchemaRootKey
 	{
 		RK_UNDEFINED		 = -10,
@@ -43,8 +54,6 @@ namespace CSToolsDelux.Fields.SchemaInfo.SchemaDefinitions
 		CK_SKIP              = 70,
 		CK_XL_FILE_PATH      = 80,
 		CK_XL_WORKSHEET_NAME = 90,
-		CK_COUNT             = 9
-
 	}
 
 	public enum SchemaBoolOpts

@@ -27,20 +27,20 @@ namespace CSToolsDelux.Revit.Commands
 
 	#endregion
 
-		public static UIApplication uiapp;
-		public static UIDocument uidoc;
-		public static Application app;
-		public static Document doc;
+		// public static UIApplication uiapp;
+		// public static UIDocument uidoc;
+		// public static Application app;
+		// public static Document doc;
 
 	#region entry point: Execute
 
 		public Result Execute(
 			ExternalCommandData commandData, ref string message, ElementSet elements)
 		{
-			uiapp = commandData.Application;
-			uidoc = uiapp.ActiveUIDocument;
-			app = uiapp.Application;
-			doc = uidoc.Document;
+			AppRibbon.UiApp = commandData.Application;
+			AppRibbon.Uidoc = AppRibbon.UiApp.ActiveUIDocument;
+			AppRibbon.App = AppRibbon.UiApp.Application;
+			AppRibbon.Doc = AppRibbon.Uidoc.Document;
 
 			showMainFields();
 
@@ -49,7 +49,7 @@ namespace CSToolsDelux.Revit.Commands
 
 		private void showMainFields()
 		{
-			MainFields mf = new MainFields();
+			MainFields mf = new MainFields(AppRibbon.Doc);
 
 			mf.Show();
 		}
@@ -76,11 +76,11 @@ namespace CSToolsDelux.Revit.Commands
 		private void getSelected()
 		{
 			// Access current selection
-			Selection sel = uidoc.Selection;
+			Selection sel = AppRibbon.Uidoc.Selection;
 
 			// Retrieve elements from database
 			FilteredElementCollector col
-				= new FilteredElementCollector(doc)
+				= new FilteredElementCollector(AppRibbon.Doc)
 				.WhereElementIsNotElementType()
 				.OfCategory(BuiltInCategory.INVALID)
 				.OfClass(typeof(Wall));
@@ -92,7 +92,7 @@ namespace CSToolsDelux.Revit.Commands
 			}
 
 			// Modify document within a transaction
-			using (Transaction tx = new Transaction(doc))
+			using (Transaction tx = new Transaction(AppRibbon.Doc))
 			{
 				tx.Start(ROOT_TRANSACTION_NAME);
 				tx.Commit();

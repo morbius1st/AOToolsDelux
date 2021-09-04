@@ -8,6 +8,7 @@ using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 using AOTools.Cells.ExStorage;
+using AOTools.Cells.Tests;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.DB.ExtensibleStorage;
 using static AOTools.Cells.ExDataStorage.DataStoreIdx;
@@ -37,7 +38,8 @@ namespace AOTools.Cells.ExDataStorage
 		public class DataStor
 		{
 			public Entity Entity { get; set; }
-			public Schema Schema { get; set; }
+			public Schema Schema { get; 
+				set; }
 			public DataStorage DataStorage { get; set; }
 			public string Name { get; }
 
@@ -199,10 +201,11 @@ namespace AOTools.Cells.ExDataStorage
 		/// <returns></returns>
 		public bool GetDataStorage(Schema schema, out Entity ex, out DataStorage dx)
 		{
+			ExStorageTests.location = 360;
 			ex = null;
 			dx = null;
 
-			FilteredElementCollector collector = new FilteredElementCollector(doc);
+			FilteredElementCollector collector = new FilteredElementCollector(AppRibbon.Doc);
 
 			FilteredElementCollector dataStorages =
 				collector.OfClass(typeof(DataStorage));
@@ -217,10 +220,11 @@ namespace AOTools.Cells.ExDataStorage
 
 				ex = e;
 				dx = ds;
-
+				ExStorageTests.location = 367;
 				return true;
 			}
 
+			ExStorageTests.location = 369;
 			return false;
 		}
 

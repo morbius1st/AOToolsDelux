@@ -68,28 +68,40 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="..\..\..\UtilityLibrary\UtilityLibrary\CsUtilities.cs">
+      <Link>.External\CsUtilities.cs</Link>
+    </Compile>
+    <Compile Include=".Utility\AddinClasses.cs" />
+    <Compile Include=".Utility\Util.cs" />
     <Compile Include="D:\Users\Jeff\Documents\Programming\VisualStudioProjects\UtilityLibrary\UtilityLibrary\CsExtensions.cs">
       <Link>.External\CsExtensions.cs</Link>
     </Compile>
     <Compile Include="D:\Users\Jeff\Documents\Programming\VisualStudioProjects\UtilityLibrary\UtilityLibrary\CsUtilitiesMedia.cs">
       <Link>.External\CsUtilitiesMedia.cs</Link>
     </Compile>
-    <Compile Include="App.cs" />
+    <Compile Include="AppRibbon.cs" />
+    <Compile Include="Fields\ExStorage\ExDataStorage\DataStorageManager.cs" />
+    <Compile Include="Fields\ExStorage\ExStorManagement\ExStoreMgrSupport.cs" />
+    <Compile Include="Fields\ExStorage\ExStorManagement\ExStoreMgr.cs" />
     <Compile Include="Fields\FieldsManagement\FieldsManager.cs" />
+    <Compile Include="Fields\SchemaInfo\SchemaData\SchemaRootAppData.cs" />
+    <Compile Include="Fields\SchemaInfo\SchemaData\SchemaCellData.cs" />
     <Compile Include="Fields\SchemaInfo\SchemaData\SchemaDataDefinitions\SchemaDataField.cs" />
     <Compile Include="Fields\SchemaInfo\SchemaData\SchemaDataDefinitions\SchemaDataDictionaries.cs" />
     <Compile Include="Fields\SchemaInfo\SchemaData\SchemaAppData.cs" />
     <Compile Include="Fields\SchemaInfo\SchemaData\SchemaRootData.cs" />
     <Compile Include="Fields\SchemaInfo\SchemaDefinitions\ASchemaFields.cs" />
     <Compile Include="Fields\SchemaInfo\SchemaDefinitions\SchemaDictionaryBase.cs" />
+    <Compile Include="Fields\SchemaInfo\SchemaFields\SchemaRootAppFields.cs" />
     <Compile Include="Fields\SchemaInfo\SchemaFields\SchemaAppFields.cs" />
-    <Compile Include="Fields\SchemaInfo\SchemaFields\SchemaDictionaryCell.cs" />
+    <Compile Include="Fields\SchemaInfo\SchemaFields\SchemaCellFields.cs" />
     <Compile Include="Fields\SchemaInfo\SchemaFields\SchemaDictionaries.cs" />
     <Compile Include="Fields\SchemaInfo\SchemaFields\SchemaRootFields.cs" />
-    <Compile Include="Fields\SchemaInfo\SchemaFields\SchemaDictionaryApp.cs" />
     <Compile Include="Fields\SchemaInfo\SchemaDefinitions\SchemaFieldDef.cs" />
     <Compile Include="Fields\SchemaInfo\SchemaDefinitions\SchemaFieldEnums.cs" />
     <Compile Include="Fields\SchemaInfo\SchemaDefinitions\SchemaGuidManager.cs" />
+    <Compile Include="Fields\SchemaInfo\SchemaManagement\SchemaManager.cs" />
+		<Compile Include="Fields\Testing\ExTests01.cs" />
     <Compile Include="Fields\Testing\SampleData.cs" />
     <Compile Include="Fields\Testing\ShowInfo.cs" />
     <Compile Include="Revit\Commands\Test01.cs" />
@@ -114,13 +126,12 @@
     <Content Include="Other\CSToolsDelux.addin" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Fields\ExStorage\" />
     <Folder Include="Fields\FieldsData\" />
   </ItemGroup>
   <ItemGroup>
     <Page Include="WPF\FieldsWindow\MainFields.xaml">
-      <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="WPF\TestWindows\TestWin01.xaml">
       <SubType>Designer</SubType>

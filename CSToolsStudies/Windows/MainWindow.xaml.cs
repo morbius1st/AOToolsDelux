@@ -3,9 +3,11 @@
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Windows;
-using CSToolsDelux.Fields.FieldsManagement;
+
+using CSToolsStudies.FieldsManagement;
 using CSToolsDelux.WPF;
 using UtilityLibrary;
+using Autodesk.Revit.DB;
 
 #endregion
 
@@ -24,6 +26,8 @@ namespace CSToolsStudies.Windows
 
 	#region private fields
 
+		public string VendorId = "PRO.CYBERSTUDIO";
+
 		private string myName = nameof(MainWindow);
 		private string textMsg01;
 
@@ -32,7 +36,7 @@ namespace CSToolsStudies.Windows
 
 		private string location;
 
-		private FieldsManager sMgr;
+		private FieldsManager fmMgr;
 
 	#endregion
 
@@ -42,7 +46,7 @@ namespace CSToolsStudies.Windows
 		{
 			InitializeComponent();
 
-			sMgr = new FieldsManager(this, null);
+			fmMgr = new FieldsManager(this, "CSToolsStudies");
 		}
 
 	#endregion
@@ -86,12 +90,43 @@ namespace CSToolsStudies.Windows
 
 		private void BtnShowRootFields_OnClick(object sender, RoutedEventArgs e)
 		{
-			sMgr.ShowRootFields();
+			fmMgr.ShowRootFields();
 		}
 
 		private void BtnRootData_OnClick(object sender, RoutedEventArgs e)
 		{
-			sMgr.ShowRootData();
+			fmMgr.ShowRootData();
 		}
+
+		private void BtnAppFields_OnClick(object sender, RoutedEventArgs e)
+		{
+			fmMgr.ShowAppFields();
+		}
+
+		private void BtnAppData_OnClick(object sender, RoutedEventArgs e)
+		{
+			fmMgr.ShowAppData();
+		}
+
+		private void BtnCellFields_OnClick(object sender, RoutedEventArgs e)
+		{
+			fmMgr.ShowCellFields();
+		}
+
+		private void BtnCellData_OnClick(object sender, RoutedEventArgs e)
+		{
+			fmMgr.ShowCellData();
+		}
+
+		private void BtnRootAppFields_OnClick(object sender, RoutedEventArgs e)
+		{
+			fmMgr.ShowRootAppFields();
+		}
+
+		private void BtnRootAppData_OnClick(object sender, RoutedEventArgs e)
+		{
+			fmMgr.ShowRootAppData();
+		}
+
 	}
 }

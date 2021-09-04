@@ -9,6 +9,22 @@ using System;
 
 namespace CSToolsDelux.Fields.SchemaInfo.SchemaDefinitions
 {
+	
+	public class SchemaFieldRootApp<TD> : SchemaFieldDef<TD, SchemaRootAppKey>
+	{
+		public SchemaFieldRootApp(SchemaRootAppKey sequence, string name, string desc, TD val,
+			RevitUnitType unitType = RevitUnitType.UT_UNDEFINED, string guid = "") :
+			base(sequence, name, desc, val, unitType, guid) {}
+	}
+
+	
+	public class SchemaFieldCell<TD> : SchemaFieldDef<TD, SchemaCellKey>
+	{
+		public SchemaFieldCell(SchemaCellKey sequence, string name, string desc, TD val,
+			RevitUnitType unitType = RevitUnitType.UT_UNDEFINED, string guid = "") :
+			base(sequence, name, desc, val, unitType, guid) {}
+	}
+
 
 	public class SchemaFieldApp<TD> : SchemaFieldDef<TD, SchemaAppKey>
 	{

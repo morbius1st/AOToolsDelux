@@ -30,7 +30,7 @@ namespace AOTools
 	[Transaction(TransactionMode.Manual)]
 	class TestExStore0 : IExternalCommand
 	{
-		ExStorageTests xsTest = new ExStorageTests();
+		ExStorageTests xsTest = new ExStorageTests(null);
 
 		public Result Execute(ExternalCommandData commandData, ref string message, ElementSet elements)
 		{
@@ -111,7 +111,7 @@ namespace AOTools
 	[Transaction(TransactionMode.Manual)]
 	class TestExStore1 : IExternalCommand
 	{
-		ExStorageTests xsTest = new ExStorageTests();
+		ExStorageTests xsTest = new ExStorageTests(null);
 
 		public Result Execute(ExternalCommandData commandData, ref string message, ElementSet elements)
 		{
@@ -209,7 +209,7 @@ namespace AOTools
 	[Transaction(TransactionMode.Manual)]
 	class TestExStore2 : IExternalCommand
 	{
-		ExStorageTests xsTest = new ExStorageTests();
+		ExStorageTests xsTest = new ExStorageTests(null);
 
 		public Result Execute(ExternalCommandData commandData, ref string message, ElementSet elements)
 		{
@@ -270,7 +270,10 @@ namespace AOTools
 	[Transaction(TransactionMode.Manual)]
 	class TestExStore3 : IExternalCommand
 	{
-		ExStorageTests xsTest = new ExStorageTests();
+		ExStorageTests xsTest = new ExStorageTests(Guid.NewGuid().ToString());
+
+		private int location;
+		private string loc;
 
 		public Result Execute(ExternalCommandData commandData, ref string message, ElementSet elements)
 		{
@@ -280,6 +283,10 @@ namespace AOTools
 			AppRibbon.Doc =  AppRibbon.Uidoc.Document;
 
 			OutLocation = OutputLocation.DEBUG;
+
+			ExStorageTests.location = 1;
+			location = ExStorageTests.location;
+			loc = ExStorageTests.loc;
 
 			AppRibbon.xm = XsMgr;
 			AppRibbon.dm = DsMgr;
@@ -308,6 +315,9 @@ namespace AOTools
 
 		private void test01a()
 		{
+			location = ExStorageTests.location;
+			loc = ExStorageTests.loc;
+
 			// AppRibbon.idx = AppRibbon.idx++;
 
 			string ms = AppRibbon.getTestMsg1s();
@@ -322,7 +332,11 @@ namespace AOTools
 				+ $"rib static indirect meth| {m1}\n"
 				+ $"rib static indirect prop| {m1t}\n"
 				+ $" xs static| {mxs}\n"
-				+ $" xs static indirect prop| {mx1}";
+				+ $" xs static indirect prop| {mx1}\n"
+				+ $"\n"
+				+ $"static tests\n"
+				+ $"xtest guid| {xsTest.guid}\n"
+				+ $"xtest sub-guid| {ExStorageTests.staticTest01.guid}";
 
 			xsTest.taskDialogWarning_Ok("Static test",
 				"Test static objects", msg2);
@@ -358,6 +372,88 @@ namespace AOTools
 				"\n"
 				+ $"app guid|\n{msg2}");
 
+		}
+
+	}
+
+
+	
+	[Transaction(TransactionMode.Manual)]
+	class EraseExStore1 : IExternalCommand
+	{
+		ExStorageTests xsTest = new ExStorageTests(Guid.NewGuid().ToString());
+
+		private int location;
+		private string loc;
+
+		public Result Execute(ExternalCommandData commandData, ref string message, ElementSet elements)
+		{
+			AppRibbon.UiApp = commandData.Application;
+			AppRibbon.Uidoc = AppRibbon.UiApp.ActiveUIDocument;
+			AppRibbon.App =  AppRibbon.UiApp.Application;
+			AppRibbon.Doc =  AppRibbon.Uidoc.Document;
+
+			OutLocation = OutputLocation.DEBUG;
+
+			ExStorageTests.location = 1;
+			location = ExStorageTests.location;
+			loc = ExStorageTests.loc;
+
+			AppRibbon.xm = XsMgr;
+			AppRibbon.dm = DsMgr;
+
+			return test01();
+		}
+
+		private Result test02()
+		{
+			string result;
+			string vendorId = "PRO.CYBERSTUDIO";
+
+			result = xsTest.ReadAll(vendorId);
+
+			xsTest.taskDialogWarning_Ok("read schema by vendor id",
+				$"read by| {vendorId}", result);
+
+			return Result.Succeeded;
+		}
+
+
+		private Result test01()
+		{
+			Transaction T = null;
+			string vendorId = "PRO.CYBERSTUDIO";
+			Tuple<int, int> result;
+
+			try
+			{
+				using (T = new Transaction(AppRibbon.Doc, "delete by vendor id"))
+				{
+					T.Start();
+					result = XsMgr.DeleteByVendorId(vendorId);
+					T.Commit();
+
+				}
+				xsTest.taskDialogWarning_Ok("delete schema by vendor id",
+					$"Delete by| {vendorId}", $"total found {result.Item1}\n"
+					+ $"total erased| {result.Item2}");
+
+				return Result.Succeeded;
+
+			}
+			catch (Exception e)
+			{
+				if (T != null && T.HasStarted())
+				{
+					T.RollBack();
+				}
+
+				string msg = e.Message;
+				string imsg = e.InnerException.Message;
+
+			}
+
+			return Result.Succeeded;
 		}
 
 	}

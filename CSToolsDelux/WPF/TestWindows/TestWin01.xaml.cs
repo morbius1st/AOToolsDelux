@@ -94,7 +94,7 @@ namespace CSToolsDelux.WPF.TestWindows
 		private void clear()
 		{
 			textMsg01 = "";
-			WriteLineMsg($"file name| {Test01.doc.Title}");
+			WriteLineMsg($"file name| {AppRibbon.Doc.Title}");
 		}
 
 		private void show()

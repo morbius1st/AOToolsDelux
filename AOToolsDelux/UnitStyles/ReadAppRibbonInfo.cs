@@ -37,7 +37,7 @@ namespace AOTools
 		// public static Schema SchemaDS;
 		// public static Entity EntityDS;
 
-		ExStorageTests xsTest = new ExStorageTests();
+		ExStorageTests xsTest = new ExStorageTests(null);
 
 		private ExStoreMgr xm; // = new ExStoreMgr();
 		public int idx2x = 0;

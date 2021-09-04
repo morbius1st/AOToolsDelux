@@ -13,6 +13,26 @@ using CSToolsDelux.Fields.SchemaInfo.SchemaDefinitions;
 
 namespace CSToolsDelux.Fields.SchemaInfo.SchemaData.SchemaDataDefinitions
 {
+	public class SchemaCellDataField<TD> : SchemaDataFieldDef<SchemaCellKey, TD>
+	{
+		public SchemaCellDataField(TD value, ISchemaFieldDef<SchemaCellKey> fieldDef)
+		{
+			Value = value;
+			FieldDef = fieldDef;
+			ValueType = typeof(TD);
+		}
+	}
+
+	public class SchemaRootAppDataField<TD> : SchemaDataFieldDef<SchemaRootAppKey, TD>
+	{
+		public SchemaRootAppDataField(TD value, ISchemaFieldDef<SchemaRootAppKey> fieldDef)
+		{
+			Value = value;
+			FieldDef = fieldDef;
+			ValueType = typeof(TD);
+		}
+	}
+
 	
 	public class SchemaAppDataField<TD> : SchemaDataFieldDef<SchemaAppKey, TD>
 	{

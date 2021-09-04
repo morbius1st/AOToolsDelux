@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
@@ -13,7 +14,10 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using Autodesk.Revit.DB;
+using Autodesk.Revit.DB.ExtensibleStorage;
 using CSToolsDelux.Fields.FieldsManagement;
+using CSToolsDelux.WPF;
 using CSToolsDelux.Revit.Commands;
 using UtilityLibrary;
 
@@ -30,21 +34,29 @@ namespace CSToolsDelux.WPF.FieldsWindow
 		private string textMsg01;
 
 		private int marginSize = 0;
+
 		private int marginSpaceSize = 2;
 
 		private string location;
 
 		private FieldsManager fm;
+		
+
+
+		private Document doc;
 
 	#endregion
 
 	#region ctor
 
-		public MainFields()
+		public MainFields(Document doc)
 		{
+			
+			this.doc = doc;
+
 			InitializeComponent();
 
-			fm = new FieldsManager(this, Test01.doc.Title);
+			fm = new FieldsManager(this, doc, doc.Title);
 		}
 
 	#endregion
@@ -157,6 +169,16 @@ namespace CSToolsDelux.WPF.FieldsWindow
 			Close();
 		}
 
+		private void BtnRootAppFields_OnClick(object sender, RoutedEventArgs e)
+		{
+			fm.ShowRootAppFields();
+		}
+		
+		private void BtnRootAppData_OnClick(object sender, RoutedEventArgs e)
+		{
+			fm.ShowRootAppData();
+		}
+		
 		private void BtnShowRootFields_OnClick(object sender, RoutedEventArgs e)
 		{
 			fm.ShowRootFields();
@@ -175,6 +197,58 @@ namespace CSToolsDelux.WPF.FieldsWindow
 		private void BtnAppData_OnClick(object sender, RoutedEventArgs e)
 		{
 			fm.ShowAppData();
+		}
+
+		private void BtnCellFields_OnClick(object sender, RoutedEventArgs e)
+		{
+			fm.ShowCellFields();
+		}
+
+		private void BtnCellData_OnClick(object sender, RoutedEventArgs e)
+		{
+			fm.ShowCellData();
+		}
+
+		private void BtnFindRootDs_OnClick(object sender, RoutedEventArgs e)
+		{
+			fm.GetDataStorage();
+		}
+
+		private void BtnWriteFirstSchema_OnClick(object sender, RoutedEventArgs e)
+		{
+			IList<Schema> schemas;
+			IList<DataStorage> dx;
+
+			bool result = fm.GetRootSchema(out schemas);
+
+			WriteAligned($"schema (in memory) found?| {result.ToString()}", $"quantity| {schemas.Count}");
+
+			if (schemas.Count > 0)
+			{
+				WriteMsg("\n");
+
+				foreach (Schema s in schemas)
+				{
+					WriteAligned($"schema info| {s.SchemaName}  {s.VendorId}  {s.Documentation}");
+				}
+			}
+
+
+			result = fm.GetRootDataStorages(out dx);
+			WriteMsg("\n");
+			WriteAligned($"datastorage found?| {result.ToString()}", $"quantity| {dx.Count}");
+
+			if (dx.Count > 0)
+			{
+				WriteMsg("\n");
+
+				foreach (DataStorage ds in dx)
+				{
+					WriteLineAligned($"datastorage info| {ds.Name}", $"valid?| {ds.IsValidObject}");
+				}
+			}
+
+			ShowMsg();
 		}
 	}
 }

@@ -37,7 +37,7 @@ namespace AOTools
 		// public static Schema SchemaDS;
 		// public static Entity EntityDS;
 
-		ExStorageTests xsTest = new ExStorageTests();
+		ExStorageTests xsTest = new ExStorageTests(null);
 
 		public Result Execute(ExternalCommandData commandData, ref string message, ElementSet elements)
 		{
