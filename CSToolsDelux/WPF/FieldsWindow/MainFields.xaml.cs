@@ -5,6 +5,7 @@ using System.ComponentModel;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -16,9 +17,11 @@ using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.DB.ExtensibleStorage;
+using Autodesk.Revit.UI;
 using CSToolsDelux.Fields.FieldsManagement;
 using CSToolsDelux.WPF;
 using CSToolsDelux.Revit.Commands;
+using CSToolsDelux.Utility;
 using UtilityLibrary;
 
 namespace CSToolsDelux.WPF.FieldsWindow
@@ -214,8 +217,93 @@ namespace CSToolsDelux.WPF.FieldsWindow
 			fm.GetDataStorage();
 		}
 
-		private void BtnWriteFirstSchema_OnClick(object sender, RoutedEventArgs e)
+		private void BtnMakeSchema_OnClick(object sender, RoutedEventArgs e)
 		{
+			Schema schema;
+			fm.MakeRootAppSchema(out schema);
+
+			WriteLineAligned($"schema made| {schema.SchemaName}");
+
+			ShowMsg();
+
+
+		}
+
+		private void testNames()
+		{
+			string test;
+			string testA;
+			string testB;
+
+			SchemaBuilder sb = new SchemaBuilder(Guid.NewGuid());
+
+			// failed - the "." is no good
+			testA = Util.GetVendorId();
+
+			WriteLineAligned($"is ok?| {testA}| ", $"{sb.AcceptableName(testA)}");
+
+			// worked
+			testA = Util.GetVendorId().Replace(".", "_");
+
+			WriteLineAligned($"is ok?| {testA}| ", $"{sb.AcceptableName(testA)}");
+
+			// this worked (but see below)
+			testB = AppRibbon.Doc.Title;
+			test = (testA + "_" + testB);
+
+			WriteLineAligned($"is ok?| {test}| ", $"{sb.AcceptableName(test)}");
+
+			// this worked (but see below)
+			testB = AppRibbon.Doc.Title.Replace(' ','_');
+			test = (testA + "_" + testB);
+
+			WriteLineAligned($"is ok?| {test}| ", $"{sb.AcceptableName(test)}");
+
+			// this worked (but see below)
+			testB = AppRibbon.Doc.Title.Replace(" ",null);
+			test = (testA + "_" + testB);
+
+			WriteLineAligned($"is ok?| {test}| ", $"{sb.AcceptableName(test)}");
+			
+			// this failed because the spaces are no-good
+			// the above titles worked because the model's title already has no spaces
+			testB = "this is a test";
+			test = (testA + "_" + testB);
+
+			WriteLineAligned($"is ok?| {test}| ", $"{sb.AcceptableName(test)}");
+			
+			// worked (eliminated the spaces)
+			testB = "this is a test".Replace(" ",null);
+			test = (testA + "_" + testB);
+
+			WriteLineAligned($"is ok?| {test}| ", $"{sb.AcceptableName(test)}");
+			
+			// worked (eliminate the spaces)
+			testB = "this is a test".Replace(" ","");
+			test = (testA + "_" + testB);
+
+			WriteLineAligned($"is ok?| {test}| ", $"{sb.AcceptableName(test)}");
+			
+			testB = "this is a test TEST+123-456&789 =0";
+			testB = Regex.Replace(testB, @"[^0-9a-zA-Z]", "");
+			test = (testA + "_" + testB);
+
+			WriteLineAligned($"is ok?| {test}| ", $"{sb.AcceptableName(test)}");
+
+
+
+			ShowMsg();
+			
+		}
+
+
+		private void BtnFindSchemaAndDataStor_OnClick(object sender, RoutedEventArgs e)
+		{
+			// get the entity by using ELEMENT.GetEntity(Schema) - 
+			// per the below, the DataStorage is the element 
+			// asuming that a single schema / element get found
+
+
 			IList<Schema> schemas;
 			IList<DataStorage> dx;
 

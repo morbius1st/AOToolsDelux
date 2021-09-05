@@ -16,7 +16,7 @@ namespace CSToolsDelux.Fields.SchemaInfo.SchemaDefinitions
 		RAK_VERSION           = 30,
 		RAK_DEVELOPER         = 40,
 		RAK_CREATE_DATE       = 60,
-		// RAK_APP_GUID          = 70,
+		RAK_APP_GUID          = 70,
 	}
 
 

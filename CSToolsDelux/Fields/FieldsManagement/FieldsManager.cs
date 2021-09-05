@@ -97,6 +97,23 @@ namespace CSToolsDelux.Fields.FieldsManagement
 
 	#region public methods
 
+		public bool MakeRootAppSchema(out Schema schema)
+		{
+			bool result = false;
+
+			string key = scMgr.makeKey(docName);
+
+			raFields.SetValue(SchemaRootAppKey.RAK_NAME, key);
+
+			result = scMgr.MakeRootAppSchema(key, raFields, cData.Data.Count);
+
+			schema = scMgr.SchemaList[key].Schema;
+
+			if (result) show.ShowSchema(schema);
+
+			return true;
+		}
+
 		public bool GetRootDataStorages(out IList<DataStorage> dx)
 		{
 			bool result = false;

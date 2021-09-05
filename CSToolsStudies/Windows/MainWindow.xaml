@@ -322,6 +322,7 @@
 					HorizontalContentAlignment="Center"
 					Background="#333333"
 					Foreground="White"
+					Click="BtnTest02_OnClick"
 					>
 				<Button.Content>
 					<StackPanel Orientation="Vertical">
@@ -329,13 +330,13 @@
 								Margin="-1"
 								Padding="0"
 								TextAlignment="Center"
-								Text="Write Schema"
+								Text="Test"
 								/>
 						<TextBlock
 								Margin="-1"
 								Padding="0"
 								TextAlignment="Center"
-								Text="First Time"
+								Text="02"
 								/>
 					</StackPanel>
 				</Button.Content>

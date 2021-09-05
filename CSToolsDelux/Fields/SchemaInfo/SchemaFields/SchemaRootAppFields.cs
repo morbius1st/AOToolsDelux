@@ -13,6 +13,7 @@ namespace CSToolsDelux.Fields.SchemaInfo.SchemaFields
 	public class SchemaRootAppFields : ASchemaFieldsRootApp
 	{
 		public const string RA_SCHEMA_NAME = "CellsRootAppSchema";
+		public const string RA_SUBSCHEMA_NAME = "CellsSubSchemaName_";
 		public const string RA_SCHEMA_DESC = "Excel Cells to Revit Exchange";
 		public const string RA_ROOT_DEVELOPER_NAME = "CyberStudio";
 		public const string RA_SCHEMA_VER = "0.1";
@@ -21,6 +22,8 @@ namespace CSToolsDelux.Fields.SchemaInfo.SchemaFields
 		{
 			defineFields();
 		}
+
+		// public string SchemaName { get; set; }
 
 		public override SchemaRootAppKey[] KeyOrder { get; set; }
 
@@ -62,10 +65,29 @@ namespace CSToolsDelux.Fields.SchemaInfo.SchemaFields
 
 			KeyOrder[idx++] =
 				defineField<string>(RAK_CREATE_DATE, "CreationData", "Date and Time Created", DateTime.UtcNow.ToString());
-			//
-			// KeyOrder[idx++] =
-			// 	defineField<string>(RAK_APP_GUID, "AppGuidString", "App Guid String", Guid.Empty.ToString());
+			
+			KeyOrder[idx++] =
+				defineField<string>(RAK_APP_GUID, "AppGuidString", "App Guid String", Guid.NewGuid().ToString());
 
+		}
+
+		public Tuple<string, Guid> SubSchemaField()
+		{
+			string uniqueName = RA_SUBSCHEMA_NAME+ System.IO.Path.GetRandomFileName().Replace('.', '_');
+
+			return new Tuple<string, Guid>(uniqueName, Guid.NewGuid());
+		}
+
+
+		public SchemaRootAppFields SubSchemaFields()
+		{
+			SchemaRootAppFields subS = new SchemaRootAppFields();
+
+			string uniqueName = RA_SUBSCHEMA_NAME+ System.IO.Path.GetRandomFileName().Replace('.', '_');
+
+			subS.SetValue(RAK_NAME, uniqueName);
+
+			return subS;
 		}
 
 		// the guid for each sub-schema and the 

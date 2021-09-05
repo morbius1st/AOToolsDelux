@@ -128,5 +128,15 @@ namespace CSToolsStudies.Windows
 			fmMgr.ShowRootAppData();
 		}
 
+		private void BtnTest02_OnClick(object sender, RoutedEventArgs e) 
+		{
+			string x = System.IO.Path.GetRandomFileName().Replace('.','_');
+
+			WriteLineAligned("unique name| ", x);
+
+			ShowMsg();
+		}
+
+		
 	}
 }

@@ -268,7 +268,7 @@ namespace AOTools
 	}
 
 	[Transaction(TransactionMode.Manual)]
-	class TestExStore3 : IExternalCommand
+	class TestExStore : IExternalCommand
 	{
 		ExStorageTests xsTest = new ExStorageTests(Guid.NewGuid().ToString());
 
@@ -473,7 +473,7 @@ namespace AOTools
 
 
 	[Transaction(TransactionMode.Manual)]
-	class TestExStore : IExternalCommand
+	class TestExStore3 : IExternalCommand
 	{
 		public Result Execute(ExternalCommandData commandData, ref string message, ElementSet elements)
 		{
@@ -499,7 +499,7 @@ namespace AOTools
 				ExStoreRtnCodes result;
 
 				// result = test01_1();
-				// if (result != ExStoreRtnCodes.GOOD) return Result.Failed;
+				// if (result != ExStoreRtnCodes.XRC_GOOD) return Result.Failed;
 				// info();
 
 				// result = test01_2();
@@ -567,6 +567,14 @@ namespace AOTools
 				{
 					// step 0 - just the initial status
 					stat("Initial status", result);
+
+					// temp to show the schema structure
+					if (false)
+					{
+						makeSampleDataAppAndCell();
+						XsMgr.xxx();
+					}
+
 					break;
 				}
 

@@ -1,6 +1,7 @@
 ﻿#region using
 using System;
 using System.Collections.Generic;
+using Autodesk.Revit.DB.ExtensibleStorage;
 using CSToolsDelux.Fields.SchemaInfo.SchemaData;
 using CSToolsDelux.Fields.SchemaInfo.SchemaData.SchemaDataDefinitions;
 using CSToolsDelux.Fields.SchemaInfo.SchemaDefinitions;
@@ -42,10 +43,29 @@ namespace CSToolsDelux.Fields.Testing
 
 	#endregion
 
-		private string formatFieldInfo(string name, string type, string value)
+		public void ShowSchema(Schema s)
 		{
-			return $"name| {name.PadRight(NAME_WIDTH)} Type| {type.PadRight(TYPE_WIDTH)}  value| {value}";
+			W.WriteLineMsg($"Show Schema|");
+			W.WriteMsg("\n");
+			W.WriteLineAligned("name| ", $"{s.SchemaName}");
+			W.WriteLineAligned("desc| ", $"{s.Documentation}");
+			W.WriteLineAligned("vendId| ", $"{s.VendorId}");
+			W.WriteLineAligned("Guid| ", $"{s.GUID}");
+
+			foreach (Field f in s.ListFields())
+			{
+				W.WriteLineAligned("field| ", $"name| {f.FieldName}  type| {f.ValueType.Name}"
+					+ $"  desc| {f.Documentation}");
+			}
+
+			W.WriteMsg("\n");
+
+			W.ShowMsg();
+			;
 		}
+
+
+
 
 		public void ShowRootFields(SchemaRootFields rootFields)
 		{
@@ -102,8 +122,6 @@ namespace CSToolsDelux.Fields.Testing
 			W.ShowMsg();
 		}
 		
-
-		
 		public void ShowRootAppData(SchemaRootAppFields rootFields,
 			SchemaRootAppData rootData)
 		{
@@ -132,8 +150,6 @@ namespace CSToolsDelux.Fields.Testing
 			W.ShowMsg();
 		}
 		
-
-
 		public void ShowRootAppFields(SchemaRootAppFields fields)
 		{
 			W.WriteLineAligned("this is| ", "CSToolsDelux");
@@ -216,7 +232,6 @@ namespace CSToolsDelux.Fields.Testing
 			W.ShowMsg();
 		}
 
-		
 		public void ShowCellFields(SchemaCellFields fields)
 		{
 			W.WriteLineAligned("this is| ", "CSToolsDelux");
@@ -305,6 +320,10 @@ namespace CSToolsDelux.Fields.Testing
 			W.ShowMsg();
 		}
 
+		private string formatFieldInfo(string name, string type, string value)
+		{
+			return $"name| {name.PadRight(NAME_WIDTH)} Type| {type.PadRight(TYPE_WIDTH)}  value| {value}";
+		}
 
 	#region system overrides
 

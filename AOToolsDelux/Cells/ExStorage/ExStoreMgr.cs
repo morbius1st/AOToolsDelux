@@ -1,6 +1,9 @@
 ﻿#region + Using Directives
 
 using System;
+using System.Collections;
+using System.Collections.Generic;
+using System.Diagnostics;
 using AOTools.Cells.ExDataStorage;
 using AOTools.Cells.SchemaDefinition;
 using AOTools.Cells.Tests;
@@ -488,9 +491,33 @@ namespace AOTools.Cells.ExStorage
 			result = WriteRoot();
 			if (result != ExStoreRtnCodes.XRC_GOOD) return result;
 
-			Configure();
+			// Configure();
 
 			return ExStoreRtnCodes.XRC_GOOD;
+		}
+
+		public void xxx()
+		{
+			Schema sApp = xsHlpr.MakeAppSchema(xApp, xCell);
+
+
+			Debug.WriteLine($"got schema| ");
+			Debug.WriteLine($"name| {sApp.SchemaName}");
+			Debug.WriteLine($"desc| {sApp.Documentation}");
+			Debug.WriteLine($"guid| {sApp.GUID.ToString()}");
+
+			IList<Field> fields = sApp.ListFields();
+
+			Debug.WriteLine($"# fields| {fields.Count}");
+
+			foreach (Field f in fields)
+			{
+				Debug.WriteLine($"Field| names| {f.FieldName}"
+					+ $"  type| {f.ValueType.Name}"
+					+ $"  desc| {f.Documentation}"
+					+ $"  sub-schema desc| {(f.SubSchema?.Documentation ?? "none")}");
+			}
+
 		}
 
 		public ExStoreRtnCodes CreateAppDs()

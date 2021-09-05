@@ -316,7 +316,7 @@
 					HorizontalContentAlignment="Center"
 					Background="#333333"
 					Foreground="White"
-					Click="BtnWriteFirstSchema_OnClick"
+					Click="BtnMakeSchema_OnClick"
 					>
 				<Button.Content>
 					<StackPanel Orientation="Vertical">
@@ -324,13 +324,40 @@
 								Margin="-1"
 								Padding="0"
 								TextAlignment="Center"
-								Text="Write Schema"
+								Text="Make Root-"
 								/>
 						<TextBlock
 								Margin="-1"
 								Padding="0"
 								TextAlignment="Center"
-								Text="First Time"
+								Text="App Schema"
+								/>
+					</StackPanel>
+				</Button.Content>
+			</Button>
+			
+			<Button x:Name="BtnFindSchema"
+					Margin="0,0,0,5"
+					Width="110"
+					MinHeight="30"
+					HorizontalContentAlignment="Center"
+					Background="#333333"
+					Foreground="White"
+					Click="BtnFindSchemaAndDataStor_OnClick"
+					>
+				<Button.Content>
+					<StackPanel Orientation="Vertical">
+						<TextBlock
+								Margin="-1"
+								Padding="0"
+								TextAlignment="Center"
+								Text="Find Schema &amp;"
+								/>
+						<TextBlock
+								Margin="-1"
+								Padding="0"
+								TextAlignment="Center"
+								Text="DataStorage"
 								/>
 					</StackPanel>
 				</Button.Content>
