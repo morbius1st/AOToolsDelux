@@ -10,9 +10,9 @@
 		Height="750"
 		DataContext="{Binding ElementName=testWin01}"
 		mc:Ignorable="d"
+		Background="#222222"
 		SnapsToDevicePixels="True"
 		>
-	<!--  Background="#222222"  -->
 
 	<Grid>
 
@@ -26,79 +26,79 @@
 			<RowDefinition Height="60" />
 		</Grid.RowDefinitions>
 
-		<!--  <TextBox Name="Tbx_01"  -->
-		<!--  Grid.Column="0"  -->
-		<!--  Grid.Row="0"  -->
-		<!--  Background="Transparent"  -->
-		<!--  Foreground="White"  -->
-		<!--  Text="{Binding TextMsg01,  -->
-		<!--  FallbackValue='hello world'}"  -->
-		<!--  />  -->
-
-		<Border
+		<TextBox Name="Tbx_01"
 				Grid.Column="0"
 				Grid.Row="0"
-				BorderThickness="1"
-				BorderBrush="Black"
-				>
-			<Border>
-				<Canvas x:Name="Pad">
+				Background="Transparent"
+				Foreground="White"
+				Text="{Binding TextMsg01,
+											 FallbackValue='hello world'}"
+				/>
 
-					<Rectangle
-							x:Name="r1"
-							Canvas.Left="10"
-							Margin="0"
-							Width="100"
-							Height="100"
-							Canvas.Top="10"
-							Fill="Red"
-							ClipToBounds="true"
-							StrokeThickness="1"
-							Stroke="White"
-							SnapsToDevicePixels="True"
-							ScrollViewer.VerticalScrollBarVisibility="Disabled"
-							>
+		<!--  <Border  -->
+		<!--  Grid.Column="0"  -->
+		<!--  Grid.Row="0"  -->
+		<!--  BorderThickness="1"  -->
+		<!--  BorderBrush="Black"  -->
+		<!--  >  -->
+		<!-- 	<Border> -->
+		<!-- 		<Canvas x:Name="Pad"> -->
+		<!--    -->
+		<!--  <Rectangle  -->
+		<!--  x:Name="r1"  -->
+		<!--  Canvas.Left="10"  -->
+		<!--  Margin="0"  -->
+		<!--  Width="100"  -->
+		<!--  Height="100"  -->
+		<!--  Canvas.Top="10"  -->
+		<!--  Fill="Red"  -->
+		<!--  ClipToBounds="true"  -->
+		<!--  StrokeThickness="1"  -->
+		<!--  Stroke="White"  -->
+		<!--  SnapsToDevicePixels="True"  -->
+		<!--  ScrollViewer.VerticalScrollBarVisibility="Disabled"  -->
+		<!--  >  -->
+		<!--    -->
+		<!-- 			</Rectangle> -->
+		<!--    -->
+		<!--  <Rectangle  -->
+		<!--  x:Name="r2"  -->
+		<!--  Margin="0"  -->
+		<!--  Canvas.Left="10"  -->
+		<!--  Width="100"  -->
+		<!--  Height="100"  -->
+		<!--  Canvas.Top="10"  -->
+		<!--  Fill="White"  -->
+		<!--  StrokeThickness="1"  -->
+		<!--  ScrollViewer.VerticalScrollBarVisibility="Disabled"  -->
+		<!--  Stroke="White"  -->
+		<!--  SnapsToDevicePixels="True"  -->
+		<!--  ClipToBounds="True"  -->
+		<!--  >  -->
+		<!-- 			</Rectangle> -->
 
-					</Rectangle>
-
-					<Rectangle
-							x:Name="r2"
-							Margin="0"
-							Canvas.Left="10"
-							Width="100"
-							Height="100"
-							Canvas.Top="10"
-							Fill="White"
-							StrokeThickness="1"
-							ScrollViewer.VerticalScrollBarVisibility="Disabled"
-							Stroke="White"
-							SnapsToDevicePixels="True"
-							ClipToBounds="True"
-							>
-					</Rectangle>
-
-					<!--  <Button Height="100"  -->
-					<!--  Width="100"  -->
-					<!--  BorderThickness="0"  -->
-					<!--  Background="Red"  -->
-					<!--  Canvas.Left="10"  -->
-					<!--  ClipToBounds="True"  -->
-					<!--  Canvas.Top="10"  -->
-					<!--  >  -->
-					<!-- </Button> -->
-					<!--    -->
-					<!--  <Button Height="100"  -->
-					<!--  Width="100"  -->
-					<!--  Background="White"  -->
-					<!--  BorderThickness="0"  -->
-					<!--  Canvas.Left="10"  -->
-					<!--  Canvas.Top="10">  -->
-					<!-- </Button> -->
+		<!--  <Button Height="100"  -->
+		<!--  Width="100"  -->
+		<!--  BorderThickness="0"  -->
+		<!--  Background="Red"  -->
+		<!--  Canvas.Left="10"  -->
+		<!--  ClipToBounds="True"  -->
+		<!--  Canvas.Top="10"  -->
+		<!--  >  -->
+		<!-- </Button> -->
+		<!--    -->
+		<!--  <Button Height="100"  -->
+		<!--  Width="100"  -->
+		<!--  Background="White"  -->
+		<!--  BorderThickness="0"  -->
+		<!--  Canvas.Left="10"  -->
+		<!--  Canvas.Top="10">  -->
+		<!-- </Button> -->
 
 
-				</Canvas>
-			</Border>
-		</Border>
+		<!-- 		</Canvas> -->
+		<!-- 	</Border> -->
+		<!-- </Border> -->
 
 		<Button x:Name="BtnClr"
 				Content="Clear"

@@ -16,10 +16,16 @@ using static Autodesk.Revit.DB.ExtensibleStorage.Schema;
 
 namespace CSToolsDelux.Fields.ExStorage.ExStorManagement
 {
+	// negative are error conditions
+	// zero is neutral & good to go
+	// positive is directions
 	public enum ExStoreRtnCodes
 	{
-		XRC_NOT_CONFIG       = -17,
-		XRC_IS_CONFIG           = -16,
+		XRC_ENTITY_NOT_FOUND    = -40,
+		XRC_SCHEMA_NOT_FOUND    = -35,
+		XRC_NOT_CONFIG          = -30,
+		XRC_IS_CONFIG           = -25,
+		XRC_DS_SINGLE_NOT_FOUND = -20,
 		XRC_DS_NOT_EXIST		= -15,
 		XRC_DS_EXISTS           = -10,
 		XRC_APP_NOT_EXIST       = -9,
@@ -28,11 +34,12 @@ namespace CSToolsDelux.Fields.ExStorage.ExStorManagement
 		XRC_EX_STORE_EXISTS	    = -6,
 		XRC_NOT_FOUND           = -5,
 		XRC_TOO_MANY_OPEN_DOCS  = -4,
-		XRC_DUPLICATE           = -3,
-		XRC_NOT_INIT            = -2,
+		XRC_NOT_INIT            = -3,
+		XRC_DUPLICATE           = -2,
 		XRC_FAIL                = -1,
-		XRC_UNDEFINED			= 0,
-		XRC_GOOD                = 1,
+		XRC_GOOD                = 0,
+		XRC_PROCEED_GET_DATA    = 10,
+		XRC_SEARCH_FOR_PRIOR    = 20,
 	}
 
 	public class ExStoreMgrSupport
@@ -51,51 +58,43 @@ namespace CSToolsDelux.Fields.ExStorage.ExStorManagement
 	#endregion
 
 
-
-
-
-
-
-
-
-
 	#region schema
 
-		private void makeSchemaDef(ref SchemaBuilder sb, string name, string description)
-		{
-			sb.SetReadAccessLevel(AccessLevel.Public);
-			sb.SetWriteAccessLevel(AccessLevel.Public);
-			sb.SetVendorId(Util.GetVendorId());
-			sb.SetSchemaName(name);
-			sb.SetDocumentation(description);
-		}
+		// private void makeSchemaDef(ref SchemaBuilder sb, string name, string description)
+		// {
+		// 	sb.SetReadAccessLevel(AccessLevel.Public);
+		// 	sb.SetWriteAccessLevel(AccessLevel.Public);
+		// 	sb.SetVendorId(Util.GetVendorId());
+		// 	sb.SetSchemaName(name);
+		// 	sb.SetDocumentation(description);
+		// }
 
 
 		
-		private void makeSchemaFields<T>(ref SchemaBuilder sbld, 
-			SchemaDictionaryBase<T> fieldList) where T : Enum
-		{
-			foreach (KeyValuePair<T, ISchemaFieldDef<T>> kvp in fieldList)
-			{
-				makeSchemaField(ref sbld, kvp.Value);
-			}
-		}
+		// private void makeSchemaFields<T>(ref SchemaBuilder sbld, 
+		// 	SchemaDictionaryBase<T> fieldList) where T : Enum
+		// {
+		// 	foreach (KeyValuePair<T, ISchemaFieldDef<T>> kvp in fieldList)
+		// 	{
+		// 		makeSchemaField(ref sbld, kvp.Value);
+		// 	}
+		// }
 
-		private void makeSchemaField<T>(ref SchemaBuilder sbld, 
-			ISchemaFieldDef<T> fieldDef) where T : Enum
-		{
-			Type t = fieldDef.ValueType;
-
-			FieldBuilder fbld = sbld.AddSimpleField(
-				fieldDef.Name, fieldDef.ValueType);
-
-			fbld.SetDocumentation(fieldDef.Desc);
-
-			if (fieldDef.UnitType != RevitUnitType.UT_UNDEFINED)
-			{
-				fbld.SetUnitType((UnitType) (int) fieldDef.UnitType);
-			}
-		}
+		// private void makeSchemaField<T>(ref SchemaBuilder sbld, 
+		// 	ISchemaFieldDef<T> fieldDef) where T : Enum
+		// {
+		// 	Type t = fieldDef.ValueType;
+		//
+		// 	FieldBuilder fbld = sbld.AddSimpleField(
+		// 		fieldDef.Name, fieldDef.ValueType);
+		//
+		// 	fbld.SetDocumentation(fieldDef.Desc);
+		//
+		// 	if (fieldDef.UnitType != RevitUnitType.UT_UNDEFINED)
+		// 	{
+		// 		fbld.SetUnitType((UnitType) (int) fieldDef.UnitType);
+		// 	}
+		// }
 /*
 		private void makeSchemaSubSchemaFields(ref SchemaBuilder sb,  SchemaCellFields xCell)
 		{

@@ -15,7 +15,6 @@ namespace CSToolsDelux.Revit.Tests
 
 	public class SubClass02
 	{
-
 		private int ti02;
 
 		public SubClass02()
@@ -23,14 +22,20 @@ namespace CSToolsDelux.Revit.Tests
 			ti02 = 0;
 		}
 
+		public string DocName { get; set; }
+
 		public int TestVal02
 		{
-			get
-			{
-				int a = ti02;
-				ti02 = ((ti02 + 1) % 5) ;
-				return a;
-			}
+			get => ti02;
+			set => ti02 = value;
+		}
+
+		internal int ti22 = 0;
+
+		public int TestVal22
+		{
+			get => ti22;
+			set => ti22 = value;
 		}
 
 	}

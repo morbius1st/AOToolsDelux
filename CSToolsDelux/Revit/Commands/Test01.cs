@@ -1,11 +1,16 @@
 #region using
 
+using System;
+using System.Collections;
+using System.Threading;
+
 using System.Diagnostics;
 using Autodesk.Revit.ApplicationServices;
 using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
 using Autodesk.Revit.UI.Selection;
+using CSToolsDelux.Revit.Tests;
 using CSToolsDelux.WPF.FieldsWindow;
 using CSToolsDelux.WPF.TestWindows;
 
@@ -27,10 +32,16 @@ namespace CSToolsDelux.Revit.Commands
 
 	#endregion
 
-		// public static UIApplication uiapp;
-		// public static UIDocument uidoc;
-		// public static Application app;
-		// public static Document doc;
+		internal static UIApplication uiApp;
+		internal static UIDocument uiDoc;
+		internal static Application app;
+		internal static Document doc;
+
+		public static string docName;
+
+		public static SubClass01 sc01 = new SubClass01(null);
+		public static SubClass02 sc02;
+		public static SubClassPerDoc pd01;
 
 	#region entry point: Execute
 
@@ -42,23 +53,51 @@ namespace CSToolsDelux.Revit.Commands
 			AppRibbon.App = AppRibbon.UiApp.Application;
 			AppRibbon.Doc = AppRibbon.Uidoc.Document;
 
-			showMainFields();
+			uiApp = commandData.Application;
+			uiDoc = AppRibbon.UiApp.ActiveUIDocument;
+			app = AppRibbon.UiApp.Application;
+			doc = AppRibbon.Uidoc.Document;
+
+			docName = doc.Title;
+
+			pd01 = new SubClassPerDoc();
+
+			showMainFields(commandData);
 
 			return Result.Succeeded;
 		}
 
-		private void showMainFields()
+		private void showMainFields(ExternalCommandData cmdData)
 		{
-			MainFields mf = new MainFields(AppRibbon.Doc);
 
-			mf.Show();
+			int key = 0;
+
+			switch (key)
+			{
+			case 0:
+				{
+					showFieldsWin();
+					break;
+				}
+			case 1:
+				{
+					showTestWin(cmdData);
+					break;
+				}
+			}
 		}
 
-		private void showTestWin()
+		private void showFieldsWin()
+		{
+			MainFields mf = new MainFields(AppRibbon.Doc);
+			mf.ShowDialog();
+		}
+
+		private void showTestWin(ExternalCommandData cmdData)
 		{
 			TestWin01 testWin = new TestWin01();
 
-			testWin.Show();
+			testWin.ShowDialog();
 		}
 
 

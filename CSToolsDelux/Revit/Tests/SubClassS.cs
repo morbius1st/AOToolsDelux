@@ -20,64 +20,33 @@ namespace CSToolsDelux.Revit.Tests
 {
 	public class SubClassS
 	{
-	#region private fields
-		
 		private int tiS;
 
 		private static readonly Lazy<SubClassS> instance =
 			new Lazy<SubClassS>(() => new SubClassS());
 
-	#endregion
-
-	#region ctor
-
 		private SubClassS() { }
-
-	#endregion
-
-	#region public properties
 
 		public static SubClassS Instance => instance.Value;
 
-	#endregion
-
-	#region private properties
-
-	#endregion
-
-	#region public methods
-
 		public int TestValS
 		{
-			get
-			{
-				int a = tiS;
-				tiS = ((tiS + 1) % 5);
-				return a;
-			}
+			get => tiS;
+			set => tiS = value;
 		}
 
-	#endregion
+		internal int tiS2 = 0;
 
-	#region private methods
-
-	#endregion
-
-	#region event consuming
-
-	#endregion
-
-	#region event publishing
-
-	#endregion
-
-	#region system overrides
+		public int TestValS2
+		{
+			get => tiS2;
+			set => tiS2 = value;
+		}
 
 		public override string ToString()
 		{
 			return "this is SubClassS";
 		}
 
-	#endregion
 	}
 }

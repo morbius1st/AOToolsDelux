@@ -78,7 +78,7 @@ namespace CSToolsDelux.Fields.SchemaInfo.SchemaFields
 			return new Tuple<string, Guid>(uniqueName, Guid.NewGuid());
 		}
 
-
+/*
 		public SchemaRootAppFields SubSchemaFields()
 		{
 			SchemaRootAppFields subS = new SchemaRootAppFields();
@@ -89,7 +89,7 @@ namespace CSToolsDelux.Fields.SchemaInfo.SchemaFields
 
 			return subS;
 		}
-
+*/
 		// the guid for each sub-schema and the 
 		// field that holds the sub-schema - both must match
 		// the guid here is missing the last (2) digits.

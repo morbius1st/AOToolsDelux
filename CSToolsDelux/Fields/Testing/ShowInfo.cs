@@ -7,7 +7,7 @@ using CSToolsDelux.Fields.SchemaInfo.SchemaData.SchemaDataDefinitions;
 using CSToolsDelux.Fields.SchemaInfo.SchemaDefinitions;
 using CSToolsDelux.Fields.SchemaInfo.SchemaFields;
 using CSToolsDelux.WPF;
-
+using CSToolsDelux.WPF.FieldsWindow;
 using UtilityLibrary;
 #endregion
 
@@ -34,14 +34,34 @@ namespace CSToolsDelux.Fields.Testing
 
 	#region ctor
 
-		public ShowInfo(AWindow w, string documentName)
+		public ShowInfo(AWindow w)
 		{
 			W = w;
 
-			this.documentName = documentName.IsVoid() ? "un-named" : documentName;
+			string docName = MainFields.DocName;
+				
+			this.documentName = docName.IsVoid() ? "un-named" : docName;
+
 		}
 
 	#endregion
+
+		public void ShowSchemas(IList<Schema> schemas)
+		{
+			if (schemas != null && schemas.Count > 0)
+			{
+				W.WriteLineAligned($"schema not found| {(schemas?.Count.ToString() ?? "is null")}");
+			}
+
+			foreach (Schema s in schemas)
+			{
+				W.WriteLineAligned($"schema|", $"name| {s.SchemaName.PadRight(35)}  vendor id| {s.VendorId.PadRight(20)}   guid| {s.GUID.ToString()}");
+			}
+
+			W.ShowMsg();
+		}
+
+
 
 		public void ShowSchema(Schema s)
 		{
@@ -63,8 +83,6 @@ namespace CSToolsDelux.Fields.Testing
 			W.ShowMsg();
 			;
 		}
-
-
 
 
 		public void ShowRootFields(SchemaRootFields rootFields)
@@ -304,9 +322,10 @@ namespace CSToolsDelux.Fields.Testing
 			{
 				foreach (SchemaCellKey key in fields.KeyOrder)
 				{
-					name = data.Data[i][key].FieldDef.Name;
-					value = data.Data[i][key].ValueString;
-					type = data.Data[i][key].ValueType.Name;
+					data.Index = i;
+					name = data.Data[key].FieldDef.Name;
+					value = data.Data[key].ValueString;
+					type = data.Data[key].ValueType.Name;
 
 					W.WriteLineAligned($"key| {key}| ",formatFieldInfo(name, type, value));
 				}

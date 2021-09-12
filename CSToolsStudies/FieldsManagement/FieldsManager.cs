@@ -7,7 +7,6 @@ using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
-using CSToolsDelux.Fields.ExStorage.ExDataStorage;
 using CSToolsDelux.Fields.ExStorage.ExStorManagement;
 using CSToolsDelux.Fields.SchemaInfo.SchemaData;
 using CSToolsDelux.Fields.SchemaInfo.SchemaDefinitions;
@@ -44,11 +43,11 @@ namespace CSToolsStudies.FieldsManagement
 			cFields = new SchemaCellFields();
 		}
 
-		public FieldsManager(AWindow w, string documentName)
+		public FieldsManager(AWindow w)
 		{
 			
 			W = w;
-			show = new ShowInfo(w, documentName);
+			show = new ShowInfo(w);
 						
 			rData = new SchemaRootData();
 			rData.Configure(SchemaGuidManager.GetNewAppGuidString());

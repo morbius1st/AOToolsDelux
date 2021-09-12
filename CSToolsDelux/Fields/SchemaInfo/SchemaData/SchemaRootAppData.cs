@@ -20,11 +20,12 @@ using static CSToolsDelux.Fields.SchemaInfo.SchemaDefinitions.SchemaRootAppKey;
 
 namespace CSToolsDelux.Fields.SchemaInfo.SchemaData
 {
-	public class SchemaRootAppData
+	public class SchemaRootAppData : 
+		ISchemaData<SchemaRootAppKey, SchemaDataDictRootApp, SchemaDictionaryRootApp>
 	{
 	#region private fields
 
-		private SchemaDataDictRootApp appDict;
+		private SchemaDataDictRootApp data;
 		private SchemaRootAppFields appFields;
 
 	#endregion
@@ -33,7 +34,7 @@ namespace CSToolsDelux.Fields.SchemaInfo.SchemaData
 
 		public SchemaRootAppData()
 		{
-			appDict = new SchemaDataDictRootApp();
+			data = new SchemaDataDictRootApp();
 			appFields = new SchemaRootAppFields();
 		}
 
@@ -41,32 +42,22 @@ namespace CSToolsDelux.Fields.SchemaInfo.SchemaData
 
 	#region public properties
 
-		public SchemaDataDictRootApp AppDict => appDict;
+		public string DocumentName { get; set; }
+		public string DocKey { get; set; }
 
-		public ASchemaDataFieldDef<SchemaRootAppKey> this[SchemaRootAppKey key] => appDict[key];
+		public SchemaDataDictRootApp Data => data;
 
-		public TD GetValue<TD>(SchemaRootAppKey key)
+		public SchemaRootAppFields AppFields => appFields;
+
+		public SchemaDictionaryRootApp Fields => (SchemaDictionaryRootApp) appFields.Fields;
+
+		public ASchemaDataFieldDef<SchemaRootAppKey> this[SchemaRootAppKey key]
 		{
-			return ((SchemaRootAppDataField<TD>) appDict[key]).Value;
-		}
-
-		public void SetValue<TD>(SchemaRootAppKey key, TD value)
-		{
-			((SchemaRootAppDataField<TD>) appDict[key]).Value = value;
-		}
-
-		public void Add<TD>(SchemaRootAppKey key, TD value)
-		{
-			AppDict.Add(key, 
-				new SchemaRootAppDataField<TD>(value, appFields.GetField<TD>(key)));
-		}
-
-		public void AddDefault<TD>(SchemaRootAppKey key)
-		{
-			SchemaFieldDef<TD, SchemaRootAppKey> f = appFields.GetField<TD>(key);
-
-			AppDict.Add(key, 
-				new SchemaRootAppDataField<TD>(f.Value, f));
+			get
+			{
+				if (!data.ContainsKey(key)) return null;
+				return data[key];
+			}
 		}
 
 	#endregion
@@ -77,6 +68,30 @@ namespace CSToolsDelux.Fields.SchemaInfo.SchemaData
 
 	#region public methods
 
+		public TD GetValue<TD>(SchemaRootAppKey key)
+		{
+			return ((SchemaRootAppDataField<TD>) data[key]).Value;
+		}
+
+		public void SetValue<TD>(SchemaRootAppKey key, TD value)
+		{
+			((SchemaRootAppDataField<TD>) data[key]).Value = value;
+		}
+
+		public void Add<TD>(SchemaRootAppKey key, TD value)
+		{
+			Data.Add(key,
+				new SchemaRootAppDataField<TD>(value, appFields.GetField<TD>(key)));
+		}
+
+		public void AddDefault<TD>(SchemaRootAppKey key)
+		{
+			SchemaFieldDef<TD, SchemaRootAppKey> f = appFields.GetField<TD>(key);
+
+			Data.Add(key,
+				new SchemaRootAppDataField<TD>(f.Value, f));
+		}
+
 		public void Configure(string name, string desc)
 		{
 			Add<string>(RAK_NAME, name);
@@ -84,6 +99,7 @@ namespace CSToolsDelux.Fields.SchemaInfo.SchemaData
 			AddDefault<string>(RAK_VERSION);
 			AddDefault<string>(RAK_DEVELOPER);
 			Add<string>(RAK_CREATE_DATE, DateTime.UtcNow.ToString());
+			Add<string>(RAK_APP_GUID, Guid.Empty.ToString());
 		}
 
 	#endregion

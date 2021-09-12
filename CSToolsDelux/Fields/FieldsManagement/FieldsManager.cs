@@ -1,9 +1,11 @@
 ﻿#region using
+
 using System;
 using System.Collections.Generic;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.DB.ExtensibleStorage;
-using CSToolsDelux.Fields.ExStorage.ExDataStorage;
+using CSToolsDelux.Fields.ExStorage.DataStorageManagement;
+using CSToolsDelux.Fields.ExStorage.ExStorageData;
 using CSToolsDelux.Fields.ExStorage.ExStorManagement;
 using CSToolsDelux.Fields.SchemaInfo.SchemaData;
 using CSToolsDelux.Fields.SchemaInfo.SchemaDefinitions;
@@ -11,20 +13,64 @@ using CSToolsDelux.Fields.SchemaInfo.SchemaFields;
 using CSToolsDelux.Fields.SchemaInfo.SchemaManagement;
 using CSToolsDelux.Fields.Testing;
 using CSToolsDelux.WPF;
+
 #endregion
 
 // username: jeffs
 // created:  8/28/2021 8:58:30 PM
 
+/*
+ * flow charts
+ *
+ * flow chart for this testing
+ * A) start -> look for existing DS / ?? erase any out-of-date schema & entities?
+ *     | +-> found: open, read data, flag found -> goto (C)
+ *     +-> not found:
+ *          +- goto (B)
+ *
+ * B) no DS not found
+ *     +-> make test data
+ *      +->  make root-app schema & DS
+ *        +-> goto (A) [flag newly created]
+ *
+ * C) found:
+ *      +-> show info
+ *
+ *
+ *
+ * basic flow chart for a real app
+ *
+ * A) start -> look for existing DS  / ?? erase any out-of-date schema & entities?
+ *     | +-> found: open, read data, flag found -> goto (C)
+ *     +-> not found
+ *          +-> ask permission to modify the model ?? -> proceed (see below) -> nope -> good bye
+ *               |  -> nope -> goodbye
+ *               +-> yep - see (B) below
+ *
+ * B) no existing schema but OK to proceed
+ *     + -> dialog: get info
+ *       +-> save info
+ *         +-> goto (A) [flag newly created]
+ *
+ * C) found and opened.
+ *      show current
+ *		options: (edit prim data) (edit cell data) (test) (etc - see real app)
+ *
+ *
+ *
+*/
 
 namespace CSToolsDelux.Fields.FieldsManagement
 {
+	/// <summary>
+	/// <c>DataStorExist</c> | Determine if DataStor(docName) Exists<br/>
+	/// </summary>
 	public class FieldsManager
 	{
 	#region private fields
 
-		private DataStorageManager dsMgr;
-
+		private DataStoreManager dsMgr;
+		private ExStorData exData;
 		private ExStoreMgr exMgr;
 		private SchemaManager scMgr;
 		private ShowInfo show;
@@ -34,7 +80,6 @@ namespace CSToolsDelux.Fields.FieldsManagement
 		private Document doc;
 
 		// ********* //
-		private string docName;
 
 	#endregion
 
@@ -42,24 +87,23 @@ namespace CSToolsDelux.Fields.FieldsManagement
 
 		static FieldsManager()
 		{
-			
 			rFields = new SchemaRootFields();
 			aFields = new SchemaAppFields();
 			raFields = new SchemaRootAppFields();
 			cFields = new SchemaCellFields();
 		}
 
-		public FieldsManager(AWindow w, Document doc, string documentName)
+		public FieldsManager(AWindow w, Document doc)
 		{
 			this.doc = doc;
-			docName = documentName;
 
 			W = w;
 			scMgr = SchemaManager.Instance;
 			exMgr = new ExStoreMgr(w, doc);
-			dsMgr = new DataStorageManager(doc);
-			show = new ShowInfo(w, docName);
-			
+			dsMgr = new DataStoreManager(doc);
+			show = new ShowInfo(w);
+			exData = ExStorData.Instance;
+
 			rData = new SchemaRootData();
 			rData.Configure(SchemaGuidManager.GetNewAppGuidString());
 
@@ -70,7 +114,8 @@ namespace CSToolsDelux.Fields.FieldsManagement
 			raData.Configure("Root-App Data Name", "Root-App Data Description");
 
 			cData = new SchemaCellData();
-			cData.Configure("new name", "A1", UpdateRules.UR_AS_NEEDED, "cell Family", false, "xl file path", "worksheet name");
+			cData.Configure("new name", "A1", UpdateRules.UR_AS_NEEDED,
+				"cell Family", false, "xl file path", "worksheet name");
 		}
 
 	#endregion
@@ -95,39 +140,36 @@ namespace CSToolsDelux.Fields.FieldsManagement
 
 	#endregion
 
-	#region public methods
+	#region find
 
-		public bool MakeRootAppSchema(out Schema schema)
+		public ExStoreRtnCodes DataStorExist(string docKey)
 		{
-			bool result = false;
-
-			string key = scMgr.makeKey(docName);
-
-			raFields.SetValue(SchemaRootAppKey.RAK_NAME, key);
-
-			result = scMgr.MakeRootAppSchema(key, raFields, cData.Data.Count);
-
-			schema = scMgr.SchemaList[key].Schema;
-
-			if (result) show.ShowSchema(schema);
-
-			return true;
+			return dsMgr.DataStorageExists(docKey);
 		}
 
-		public bool GetRootDataStorages(out IList<DataStorage> dx)
+		public ExStoreRtnCodes FindRootAppEntity(string docName, out Entity entity, out Schema schema)
 		{
-			bool result = false;
+			ExStoreRtnCodes result;
 
-			result = dsMgr.FindDataStorage(docName, out dx);
+			result = exMgr.FindRootAppEntity(docName, out entity, out schema);
 
 			return result;
 		}
 
-		public bool GetRootSchema(out IList<Schema> schemas)
+		public ExStoreRtnCodes SearchForOldDs(string oldDocKey)
 		{
-			schemas = null;
+			return ExStoreRtnCodes.XRC_FAIL;
+		}
 
-			bool result = scMgr.Find(docName, out schemas);
+	#endregion
+
+	#region get
+
+		public ExStoreRtnCodes GetRootDataStorages(string docKey, out IList<DataStorage> dx)
+		{
+			ExStoreRtnCodes result = ExStoreRtnCodes.XRC_FAIL;
+
+			result = dsMgr.FindDataStorages(docKey, out dx);
 
 			return result;
 		}
@@ -137,11 +179,103 @@ namespace CSToolsDelux.Fields.FieldsManagement
 			exMgr.GetDataStorage();
 		}
 
+		public bool GetRootAppSchemas(string docKey, out IList<Schema> schemas)
+		{
+			schemas = null;
+
+			bool result = scMgr.FindSchemas(docKey, out schemas);
+
+			return result;
+		}
+
+	#endregion
+
+	#region read
+
+		public ExStoreRtnCodes ReadData()
+		{
+			ExStoreRtnCodes result;
+
+			result = exMgr.ReadData();
+
+			return result;
+		}
+
+	#endregion
+
+	#region write
+
+		public ExStoreRtnCodes WriteRootApp(SchemaRootAppData raData, SchemaCellData cData)
+		{
+			Transaction T;
+			ExStoreRtnCodes result;
+
+			using (T = new Transaction(AppRibbon.Doc, "fields"))
+			{
+				T.Start();
+				result = exMgr.WriteRootAppData(raData, cData, exData.DataStorage);
+				if (result == ExStoreRtnCodes.XRC_GOOD)
+				{
+					T.Commit();
+				}
+				else
+				{
+					T.RollBack();
+				}
+			}
+
+			return result;
+		}
+
+	#endregion
+
+	#region create
+
+		public ExStoreRtnCodes CreateDataStorage(string docKey)
+		{
+			Transaction T;
+			ExStoreRtnCodes result;
+
+			using (T = new Transaction(AppRibbon.Doc, "fields"))
+			{
+				T.Start();
+				result = dsMgr.CreateDataStorage(docKey);
+
+				if (result != ExStoreRtnCodes.XRC_GOOD) return ExStoreRtnCodes.XRC_FAIL;
+
+				T.Commit();
+			}
+
+			return result;
+		}
+
+	#endregion
+
+	#region delete
+
+		public ExStoreRtnCodes DeleteRootApp(string docKey)
+		{
+			Entity entity;
+			Schema schema;
+
+			ExStoreRtnCodes result = FindRootAppEntity(docKey, out entity, out schema);
+			if (result != ExStoreRtnCodes.XRC_GOOD) return result;
+
+			result = exMgr.EraseRootApp(entity, schema);
+			if (result != ExStoreRtnCodes.XRC_GOOD) return result;
+
+			return ExStoreRtnCodes.XRC_GOOD;
+		}
+
+	#endregion
+
+	#region public show methods
+
 		public void ShowRootAppFields()
 		{
 			show.ShowRootAppFields(raFields);
 		}
-		
+
 		public void ShowRootAppData()
 		{
 			show.ShowRootAppData(raFields, raData);
@@ -156,7 +290,7 @@ namespace CSToolsDelux.Fields.FieldsManagement
 		{
 			show.ShowRootData(rFields, rData);
 		}
-		
+
 		public void ShowAppFields()
 		{
 			show.ShowAppFields(aFields);
@@ -166,7 +300,7 @@ namespace CSToolsDelux.Fields.FieldsManagement
 		{
 			show.ShowAppData(aFields, aData);
 		}
-				
+
 		public void ShowCellFields()
 		{
 			show.ShowCellFields(cFields);
@@ -199,6 +333,21 @@ namespace CSToolsDelux.Fields.FieldsManagement
 		}
 
 	#endregion
+
+
+		
+		// public ExStoreRtnCodes GetDataStorage(string docKey)
+		// {
+		// 	ExStoreRtnCodes result;
+		//
+		// 	DataStorage ds;
+		//
+		// 	result = dsMgr.CreateDataStorage(docKey, out ds);
+		// 	if (result != ExStoreRtnCodes.XRC_GOOD) return result;
+		//
+		// 	return result;
+		// }
+
 
 	}
 }

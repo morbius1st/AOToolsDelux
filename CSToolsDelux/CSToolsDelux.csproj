@@ -80,10 +80,12 @@
       <Link>.External\CsUtilitiesMedia.cs</Link>
     </Compile>
     <Compile Include="AppRibbon.cs" />
-    <Compile Include="Fields\ExStorage\ExDataStorage\DataStorageManager.cs" />
+    <Compile Include="Fields\ExStorage\DataStorageManagement\DataStoreManager.cs" />
+    <Compile Include="Fields\ExStorage\ExStorageData\ExStorData.cs" />
     <Compile Include="Fields\ExStorage\ExStorManagement\ExStoreMgrSupport.cs" />
     <Compile Include="Fields\ExStorage\ExStorManagement\ExStoreMgr.cs" />
     <Compile Include="Fields\FieldsManagement\FieldsManager.cs" />
+    <Compile Include="Fields\SchemaInfo\SchemaData\ISchemaData.cs" />
     <Compile Include="Fields\SchemaInfo\SchemaData\SchemaRootAppData.cs" />
     <Compile Include="Fields\SchemaInfo\SchemaData\SchemaCellData.cs" />
     <Compile Include="Fields\SchemaInfo\SchemaData\SchemaDataDefinitions\SchemaDataField.cs" />
@@ -101,13 +103,17 @@
     <Compile Include="Fields\SchemaInfo\SchemaDefinitions\SchemaFieldEnums.cs" />
     <Compile Include="Fields\SchemaInfo\SchemaDefinitions\SchemaGuidManager.cs" />
     <Compile Include="Fields\SchemaInfo\SchemaManagement\SchemaManager.cs" />
-		<Compile Include="Fields\Testing\ExTests01.cs" />
+    <Compile Include="Fields\FieldsManagement\FieldsSupport.cs" />
+    <Compile Include="Fields\Testing\ExTests01.cs" />
     <Compile Include="Fields\Testing\SampleData.cs" />
     <Compile Include="Fields\Testing\ShowInfo.cs" />
     <Compile Include="Revit\Commands\Test01.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Revit\Tests\Singleton.cs" />
+    <Compile Include="Revit\Tests\SubClassLazy.cs" />
     <Compile Include="Revit\Tests\SubClass02.cs" />
     <Compile Include="Revit\Tests\SubClass01.cs" />
+    <Compile Include="Revit\Tests\SubClassPerDoc.cs" />
     <Compile Include="Revit\Tests\SubClassS.cs" />
     <Compile Include="WPF\AWindow.cs" />
     <Compile Include="WPF\FieldsWindow\MainFields.xaml.cs">
@@ -127,6 +133,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Fields\FieldsData\" />
+    <Folder Include="Fields\Support\" />
   </ItemGroup>
   <ItemGroup>
     <Page Include="WPF\FieldsWindow\MainFields.xaml">

@@ -33,6 +33,29 @@
 			<RowDefinition Height="60" />
 		</Grid.RowDefinitions>
 
+		<DockPanel
+				Grid.Column="0"
+				Grid.Row="1">
+			<StackPanel Orientation="Horizontal"
+					HorizontalAlignment="Left"
+					VerticalAlignment="Top"
+					Margin="10,5,5,5"
+					>
+				<TextBlock
+						Padding="0"
+						Margin="0"
+						Foreground="White"
+						Text="DocKey|"
+						/>
+				<TextBlock
+						Padding="0"
+						Margin="10,0,0,0"
+						Foreground="White"
+						Text="{Binding DocKey, FallbackValue='docKey'}" />
+			</StackPanel>
+
+		</DockPanel>
+
 		<TextBox Name="Tbx_01"
 				Grid.Column="0"
 				Grid.Row="0"
@@ -309,14 +332,14 @@
 				Orientation="Vertical"
 				>
 
-			<Button x:Name="BtnWriteFirstSchema"
+			<Button x:Name="BtnRead"
 					Margin="0,0,0,5"
 					Width="110"
 					MinHeight="30"
 					HorizontalContentAlignment="Center"
 					Background="#333333"
 					Foreground="White"
-					Click="BtnMakeSchema_OnClick"
+					Click="BtnRead_OnClick"
 					>
 				<Button.Content>
 					<StackPanel Orientation="Vertical">
@@ -324,13 +347,68 @@
 								Margin="-1"
 								Padding="0"
 								TextAlignment="Center"
-								Text="Make Root-"
+								Text="Read"
 								/>
 						<TextBlock
 								Margin="-1"
 								Padding="0"
 								TextAlignment="Center"
-								Text="App Schema"
+								Text="Data"
+								/>
+					</StackPanel>
+				</Button.Content>
+			</Button>
+			
+
+			<Button x:Name="BtnDelete"
+					Margin="0,0,0,5"
+					Width="110"
+					MinHeight="30"
+					HorizontalContentAlignment="Center"
+					Background="#333333"
+					Foreground="White"
+					Click="BtnDelete_OnClick"
+					>
+				<Button.Content>
+					<StackPanel Orientation="Vertical">
+						<TextBlock
+								Margin="-1"
+								Padding="0"
+								TextAlignment="Center"
+								Text="Delete"
+								/>
+						<TextBlock
+								Margin="-1"
+								Padding="0"
+								TextAlignment="Center"
+								Text="Root-App"
+								/>
+					</StackPanel>
+				</Button.Content>
+			</Button>
+			
+			<Button x:Name="BtnWriteFirstSchema"
+					Margin="0,0,0,5"
+					Width="110"
+					MinHeight="30"
+					HorizontalContentAlignment="Center"
+					Background="#333333"
+					Foreground="White"
+					Click="BtnWriteData_OnClick"
+					>
+				<Button.Content>
+					<StackPanel Orientation="Vertical">
+						<TextBlock
+								Margin="-1"
+								Padding="0"
+								TextAlignment="Center"
+								Text="Make"
+								/>
+						<TextBlock
+								Margin="-1"
+								Padding="0"
+								TextAlignment="Center"
+								Text="Root-App"
 								/>
 					</StackPanel>
 				</Button.Content>
@@ -351,13 +429,13 @@
 								Margin="-1"
 								Padding="0"
 								TextAlignment="Center"
-								Text="Find Schema &amp;"
+								Text="Find"
 								/>
 						<TextBlock
 								Margin="-1"
 								Padding="0"
 								TextAlignment="Center"
-								Text="DataStorage"
+								Text="Root-App"
 								/>
 					</StackPanel>
 				</Button.Content>
@@ -379,7 +457,7 @@
 								Margin="-1"
 								Padding="0"
 								TextAlignment="Center"
-								Text="Find Root"
+								Text="Find &quot;Cells&quot;"
 								/>
 						<TextBlock
 								Margin="-1"

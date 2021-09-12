@@ -27,11 +27,8 @@ using CSToolsDelux.Utility;
 
 namespace CSToolsDelux.Fields.SchemaInfo.SchemaManagement
 {
-	
 	public class SchemaManager
 	{
-		
-
 		public class schemaItem
 		{
 			private SchemaManager scMgr { get; set; }
@@ -41,11 +38,11 @@ namespace CSToolsDelux.Fields.SchemaInfo.SchemaManagement
 			public Dictionary<string, Guid> SubSchemaFields { get; set; }
 			public int QtySubSchema { get; private set; }
 
-			public schemaItem(string documentKey, int qtySubSchema) : this(documentKey, qtySubSchema, null) {}
+			public schemaItem(string docKey, int qtySubSchema) : this(docKey, qtySubSchema, null) { }
 
-			public schemaItem(string documentKey, int qtySubSchema, Schema schema)
+			public schemaItem(string docKey, int qtySubSchema, Schema schema)
 			{
-				DocumentKey = documentKey;
+				DocumentKey = docKey;
 				Schema = schema;
 				SubSchemaFields = new Dictionary<string, Guid>(qtySubSchema);
 				QtySubSchema = qtySubSchema;
@@ -54,8 +51,6 @@ namespace CSToolsDelux.Fields.SchemaInfo.SchemaManagement
 
 		public class schemaList
 		{
-			private SchemaManager scMgr { get; set; }
-
 			private Dictionary<string, schemaItem> items;
 
 			public schemaList()
@@ -65,25 +60,33 @@ namespace CSToolsDelux.Fields.SchemaInfo.SchemaManagement
 
 			public Dictionary<string, schemaItem> Items => items;
 
-			public schemaItem this[string idx] => items[idx];
-
-			public void AddNew(string key, int qtySubSchema)
+			public schemaItem this[string docKey]
 			{
-				schemaItem si = new schemaItem(key, qtySubSchema);
+				get
+				{
+					if (items.ContainsKey(docKey))
+					{
+						return items[docKey];
+					}
+
+					return null;
+				}
+			}
+
+			public void AddNew(string docKey, int qtySubSchema)
+			{
+				schemaItem si = new schemaItem(docKey, qtySubSchema);
 
 				items.Add(si.DocumentKey, si);
 			}
 
-			public Schema Find(string key)
+			public Schema Find(string docKey)
 			{
-				bool result = items.ContainsKey(key);
+				if (!items.ContainsKey(docKey)) return null;
 
-				if (result) return items[key].Schema;
-
-				return null;
+				return items[docKey].Schema;
 			}
 		}
-
 
 
 	#region private fields
@@ -100,7 +103,6 @@ namespace CSToolsDelux.Fields.SchemaInfo.SchemaManagement
 		private SchemaManager()
 		{
 			scList = new schemaList();
-
 		}
 
 	#endregion
@@ -119,56 +121,57 @@ namespace CSToolsDelux.Fields.SchemaInfo.SchemaManagement
 
 	#region public methods
 
-		public string makeKey(string documentName)
+		public Schema FindSchema(string docKey)
 		{
-			string vendId = Util.GetVendorId().Replace('.','_');
-			string docName = Regex.Replace(documentName, @"[^0-9a-zA-Z]", "");
-			return vendId + "_" + docName;
+			bool result;
+			IList<Schema> schemas;
+			result = FindSchemasFromDoc(docKey, out schemas);
+
+			if (schemas.Count != 1) return null;
+
+			return schemas[0];
 		}
 
-		public bool Find(string docName, out IList<Schema> schemas)
+		public bool FindSchemas(string docKey, out IList<Schema> schemas)
 		{
 			bool result;
 			schemas = new List<Schema>(1);
 
 			// already got the schema?
-			result = FindSchemasFromList(docName, out schemas);
+			result = FindSchemasFromList(docKey, out schemas);
 
 			if (result) return true;
 
 			// don't already got
 			// check the document
 
-			result = FindSchemasFromDoc(docName, out schemas);
+			result = FindSchemasFromDoc(docKey, out schemas);
 
 			if (!result) return false;
 
 			return true;
 		}
 
-		public bool MakeRootAppSchema(string key, SchemaRootAppFields raFields, int QtySubSchema)
+		public bool MakeRootAppSchema(string docKey, SchemaRootAppData raData, int QtySubSchema)
 		{
-			if (raFields == null || key == null || QtySubSchema == 0) return false;
+			if (raData == null || docKey == null || QtySubSchema == 0) return false;
 
-			scList.AddNew(key, QtySubSchema);
+			scList.AddNew(docKey, QtySubSchema);
 
 			Schema schema = null;
-
-			Dictionary<string, Guid> subSchemaFields;
 
 			try
 			{
 				SchemaBuilder sb = new SchemaBuilder(Guid.NewGuid());
 
-				makeSchemaDef(ref sb, raFields.GetValue<string>(SchemaRootAppKey.RAK_NAME), 
-					raFields.GetValue<string>(SchemaRootAppKey.RAK_DESCRIPTION));
+				makeSchemaDef(ref sb, raData.GetValue<string>(SchemaRootAppKey.RAK_NAME),
+					raData.GetValue<string>(SchemaRootAppKey.RAK_DESCRIPTION));
 
-				makeSchemaFields(ref sb, raFields.Fields);
+				makeSchemaFields(ref sb, raData.Fields);
 
-				makeSchemaSubSchemaFields(key, ref sb, raFields);
+				makeSchemaSubSchemaFields(docKey, ref sb, raData);
 
 				schema = sb.Finish();
-
 			}
 			catch (Exception e)
 			{
@@ -176,7 +179,7 @@ namespace CSToolsDelux.Fields.SchemaInfo.SchemaManagement
 				string iex = e?.InnerException.Message ?? "none";
 			}
 
-			scList[key].Schema = schema;
+			scList[docKey].Schema = schema;
 
 			return true;
 		}
@@ -185,44 +188,44 @@ namespace CSToolsDelux.Fields.SchemaInfo.SchemaManagement
 
 	#region private methods
 
-		private bool FindSchemasFromDoc(string docName, out IList<Schema> schemaList)
+		private bool FindSchemasFromDoc(string docKey, out IList<Schema> schemaList)
 		{
 			bool result = false;
 			schemaList = new List<Schema>(1);
-			string key = makeKey(docName);
 
 			IList<Schema> schemas = Schema.ListSchemas();
 
 			foreach (Schema s in schemas)
 			{
-				if (s.SchemaName.Equals(key))
+				if (s.SchemaName.Equals(docKey))
 				{
 					schemaList.Add(s);
 
 					result = true;
 				}
 			}
+
 			return result;
 		}
 
-		private bool FindSchemasFromList(string docName, out IList<Schema> schemaList)
+		private bool FindSchemasFromList(string docKey, out IList<Schema> schemaList)
 		{
 			bool result = false;
 			Schema schema = null;
-			string key = makeKey(docName);
 
 			schemaList = new List<Schema>(1);
 
-			schema = scList.Find(key);
+			schema = scList.Find(docKey);
 
 			if (schema != null)
 			{
-				schemaList.Add(scList.Find(key));
+				schemaList.Add(schema);
 				result = true;
 			}
 
 			return result;
 		}
+
 
 		private void makeSchemaDef(ref SchemaBuilder sb, string name, string description)
 		{
@@ -255,23 +258,73 @@ namespace CSToolsDelux.Fields.SchemaInfo.SchemaManagement
 			}
 		}
 
-		private void makeSchemaSubSchemaFields(string key, ref SchemaBuilder sb,  SchemaRootAppFields raFields)
+		private void makeSchemaSubSchemaFields(string docKey, ref SchemaBuilder sb,  SchemaRootAppData raData)
 		{
-
-			int qty = scList[key].QtySubSchema;
+			int qty = scList[docKey].QtySubSchema;
 
 			for (int i = 0; i < qty; i++)
 			{
-				Tuple<string, Guid> subS = raFields.SubSchemaField();
+				Tuple<string, Guid> subS = raData.AppFields.SubSchemaField();
 
 				FieldBuilder fb = sb.AddSimpleField(subS.Item1, typeof(Entity));
 
-				fb.SetDocumentation(raFields.GetValue<string>(SchemaRootAppKey.RAK_DESCRIPTION));
+				fb.SetDocumentation(raData.GetValue<string>(SchemaRootAppKey.RAK_DESCRIPTION));
 				fb.SetSubSchemaGUID(subS.Item2);
 
-				scList[key].SubSchemaFields.Add(subS.Item1, subS.Item2);
+				scList[docKey].SubSchemaFields.Add(subS.Item1, subS.Item2);
 			}
 		}
+
+		public void MakeSubSchemasFields(Entity entity, Schema schema, SchemaCellData cData)
+		{
+			int idx = 0;
+
+			foreach (KeyValuePair<string, Guid> kvp in SchemaList[cData.DocKey].SubSchemaFields)
+			{
+				Field f = schema.GetField(kvp.Key);
+
+				Schema subSchema  = makeSubSchema(idx, kvp.Value, cData);
+
+				Entity subE = new Entity(subSchema);
+
+				entity.Set(f, subE);
+
+				idx++;
+			}
+		}
+
+		private Schema makeSubSchema(int idx, Guid guid, SchemaCellData cData)
+		{
+			SchemaBuilder sb = new SchemaBuilder(guid);
+
+			cData.Index = idx;
+
+			makeSchemaDef(ref sb, cData.GetValue<string>( SchemaCellKey.CK_NAME),
+				cData.GetValue<string>( SchemaCellKey.CK_DESCRIPTION));
+
+			makeSchemaFields(ref sb, cData.Fields);
+
+			return sb.Finish();
+		}
+
+
+		// public void MakeSchemaSubSchemaFields(string key, ref SchemaBuilder sb,  SchemaRootAppFields raFields)
+		// {
+		//
+		// 	int qty = scList[key].QtySubSchema;
+		//
+		// 	for (int i = 0; i < qty; i++)
+		// 	{
+		// 		Tuple<string, Guid> subS = raFields.SubSchemaField();
+		//
+		// 		FieldBuilder fb = sb.AddSimpleField(subS.Item1, typeof(Entity));
+		//
+		// 		fb.SetDocumentation(raFields.GetValue<string>(SchemaRootAppKey.RAK_DESCRIPTION));
+		// 		fb.SetSubSchemaGUID(subS.Item2);
+		//
+		// 		scList[key].SubSchemaFields.Add(subS.Item1, subS.Item2);
+		// 	}
+		// }
 
 /*	
 		private void makeSubSchemasFields(Entity entity, Schema schema, SchemaCellFields cFields)

@@ -46,12 +46,14 @@ namespace CSToolsStudies.Windows
 		{
 			InitializeComponent();
 
-			fmMgr = new FieldsManager(this, "CSToolsStudies");
+			fmMgr = new FieldsManager(this);
 		}
 
 	#endregion
 
 	#region public properties
+
+		public static string DocKey => "CSToolsStudies";
 
 	#endregion
 

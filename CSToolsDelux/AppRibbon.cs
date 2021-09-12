@@ -54,9 +54,7 @@ namespace CSToolsDelux
 		internal static Application App;
 		internal static Document Doc;
 
-
-
-
+		internal static string docName;
 
 		public Result OnStartup(UIControlledApplication app)
 		{
