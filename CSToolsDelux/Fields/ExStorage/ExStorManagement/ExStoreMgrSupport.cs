@@ -40,6 +40,8 @@ namespace CSToolsDelux.Fields.ExStorage.ExStorManagement
 		XRC_GOOD                = 0,
 		XRC_PROCEED_GET_DATA    = 10,
 		XRC_SEARCH_FOR_PRIOR    = 20,
+		XRC_SEARCH_FOUND_PRIOR  = 21,
+		XRC_SEARCH_FOUND_PRIOR_AND_NEW  = 23,
 	}
 
 	public class ExStoreMgrSupport

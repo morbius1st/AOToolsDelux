@@ -91,9 +91,14 @@ namespace CSToolsDelux.Fields.ExStorage.ExStorageData
 
 		internal static string MakeKey(string documentName)
 		{
-			string vendId = Util.GetVendorId().Replace('.','_');
+			string vendId = MakeVendIdPrefix();
 			string docName = Regex.Replace(documentName, @"[^0-9a-zA-Z]", "");
 			return vendId + "_" + docName;
+		}
+
+		internal static string MakeVendIdPrefix()
+		{
+			return Util.GetVendorId().Replace('.','_');
 		}
 	}
 }

@@ -138,7 +138,39 @@ namespace CSToolsDelux.Fields.FieldsManagement
 
 	#region private properties
 
+		public List<string> OldDataStorageList => dsMgr.OldDataStorageList;
+
 	#endregion
+
+	#region process procedures
+
+	#region start process
+
+		// initial 
+		public ExStoreRtnCodes DoesDataStoreExist()
+		{
+			ExStoreRtnCodes result;
+
+			int choice = 1; // == result of determining if data store exists
+
+			switch (choice)
+			{
+			case 0: // exists and there are no other data stores
+				{
+					break;
+				}
+			}
+
+			return ExStoreRtnCodes.XRC_GOOD;
+		}
+
+	#endregion
+
+
+
+
+	#endregion
+
 
 	#region find
 

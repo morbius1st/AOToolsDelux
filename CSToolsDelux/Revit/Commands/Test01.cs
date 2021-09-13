@@ -67,8 +67,9 @@ namespace CSToolsDelux.Revit.Commands
 			return Result.Succeeded;
 		}
 
-		private void showMainFields(ExternalCommandData cmdData)
+		private Result showMainFields(ExternalCommandData cmdData)
 		{
+			Result result = Result.Cancelled;
 
 			int key = 0;
 
@@ -76,28 +77,38 @@ namespace CSToolsDelux.Revit.Commands
 			{
 			case 0:
 				{
-					showFieldsWin();
+					result = showFieldsWin();
 					break;
 				}
 			case 1:
 				{
-					showTestWin(cmdData);
+					result = showTestWin(cmdData);
 					break;
 				}
 			}
+
+			return result;
 		}
 
-		private void showFieldsWin()
+		private Result showFieldsWin()
 		{
 			MainFields mf = new MainFields(AppRibbon.Doc);
-			mf.ShowDialog();
+			bool? result = mf.ShowDialog();
+
+			if (result.HasValue && result.Value) return Result.Succeeded;
+
+			return Result.Cancelled;
 		}
 
-		private void showTestWin(ExternalCommandData cmdData)
+		private Result showTestWin(ExternalCommandData cmdData)
 		{
 			TestWin01 testWin = new TestWin01();
 
-			testWin.ShowDialog();
+			bool? result = testWin.ShowDialog();
+
+			if (result.HasValue && result.Value) return Result.Succeeded;
+
+			return Result.Cancelled;
 		}
 
 

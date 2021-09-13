@@ -145,6 +145,12 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
   </ItemGroup>
+  <ItemGroup>
+    <None Include="Activity1.taact" />
+    <None Include="Activity1.taact.diagram">
+      <DependentUpon>Activity1.taact</DependentUpon>
+    </None>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PreBuildEvent>echo *** Configuration: $(ConfigurationName) ***</PreBuildEvent>

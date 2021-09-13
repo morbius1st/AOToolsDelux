@@ -82,11 +82,16 @@ namespace CSToolsDelux.WPF.FieldsWindow
 			exData = ExStorData.Instance;
 
 			docName = doc.Title;
+
+			// temp to just creata a bogus old DS entry and name
+			// docName = "HasDataStorage X";
+
+			// save a local copy
 			DocKey = ExStorData.MakeKey(docName);
 			exData.DocKey = docKey;
 
 			// save a record copy
-			DataStoreManager.DocKey = ExStorData.MakeKey(docName);
+			// DataStoreManager.DocKey = ExStorData.MakeKey(docName);
 		}
 
 	#endregion
@@ -105,17 +110,6 @@ namespace CSToolsDelux.WPF.FieldsWindow
 			}
 		}
 
-		// use the version in AWindow
-		// public new string MessageBoxText
-		// {
-		// 	get => textMsg01;
-		// 	set
-		// 	{
-		// 		textMsg01 = value;
-		// 		OnPropertyChanged();
-		// 	}
-		// }
-
 	#endregion
 
 	#region private properties
@@ -124,65 +118,16 @@ namespace CSToolsDelux.WPF.FieldsWindow
 
 	#region public methods
 
-/*
-		public void MsgClr()
-		{
-			textMsg01 = "";
-			ShowMsg();
-		}
-
-		public void MarginClr()
-		{
-			marginSize = 0;
-		}
-
-		public void MarginUp()
-		{
-			marginSize += marginSpaceSize;
-		}
-
-		public void MarginDn()
-		{
-			marginSize -= marginSpaceSize;
-
-			if (marginSize < 0) marginSize = 0;
-		}
-
-		public void WriteMsg(string msg1, string msg2 = "", string loc = "", string spacer = " ")
-		{
-			writeMsg(msg1, msg2, loc, spacer);
-		}
-
-		public void WriteLineMsg(string msg1, string msg2 = "", string loc = "", string spacer = " ")
-		{
-			writeMsg(msg1, msg2 + "\n", loc, spacer);
-		}
-
-		public void ShowMsg()
-		{
-			OnPropertyChanged("MessageBoxText");
-		}
-*/
-
 	#endregion
 
 	#region private methods
 
-/*
-		private string margin(string spacer)
+		// initial starting point when window opens
+		private bool startProcess()
 		{
-			if (marginSize == 0) return "";
 
-			return spacer.Repeat(marginSize);
+			return true;
 		}
-
-		private void writeMsg(string msg1, string msg2, string loc, string spacer)
-		{
-			location = loc;
-
-			textMsg01 += margin(spacer) + msg1 + " " + msg2;
-		}
-*/
 
 	#endregion
 
@@ -273,13 +218,13 @@ namespace CSToolsDelux.WPF.FieldsWindow
 			raData = new SchemaRootAppData();
 			raData.Configure("Root_App_Data_Name", "Root-App Data Description");
 			raData.DocumentName = docName;
-			raData.DocKey = DataStoreManager.DocKey;
+			raData.DocKey = exData.DocKey;
 
 			cData = new SchemaCellData();
 			cData.Configure("Cell_Data_Name", "A1",
 				UpdateRules.UR_AS_NEEDED, "cell Family", false, "xl file path", "worksheet name");
 			cData.DocumentName = docName;
-			cData.DocKey = DataStoreManager.DocKey;
+			cData.DocKey = exData.DocKey;
 
 			// result = fm.GetDataStorage(raData.DocKey);
 			// if (result != ExStoreRtnCodes.XRC_GOOD) return;
@@ -317,7 +262,7 @@ namespace CSToolsDelux.WPF.FieldsWindow
 			IList<Schema> schemas;
 			IList<DataStorage> dx;
 
-			bool result = fm.GetRootAppSchemas(DataStoreManager.DocKey, out schemas);
+			bool result = fm.GetRootAppSchemas(exData.DocKey, out schemas);
 
 			WriteLineAligned($"schema (in memory) found?| {result.ToString()}", $"quantity| {schemas.Count}");
 
@@ -331,7 +276,7 @@ namespace CSToolsDelux.WPF.FieldsWindow
 				}
 			}
 
-			ExStoreRtnCodes answer = fm.GetRootDataStorages(DataStoreManager.DocKey, out dx);
+			ExStoreRtnCodes answer = fm.GetRootDataStorages(exData.DocKey, out dx);
 
 			WriteMsg("\n");
 			WriteLineAligned($"datastorage found?| {answer.ToString()}", $"quantity| {dx.Count}");
@@ -355,7 +300,7 @@ namespace CSToolsDelux.WPF.FieldsWindow
 			{
 				T.Start();
 
-				ExStoreRtnCodes result = fm.DeleteRootApp(DataStoreManager.DocKey);
+				ExStoreRtnCodes result = fm.DeleteRootApp(exData.DocKey);
 
 				if (result == ExStoreRtnCodes.XRC_GOOD)
 				{
@@ -397,6 +342,17 @@ namespace CSToolsDelux.WPF.FieldsWindow
 			}
 
 			ShowMsg();
+		}
+
+		private void MainFields_Loaded(object sender, RoutedEventArgs e)
+		{
+			bool result = startProcess();
+
+			if (!result)
+			{
+				DialogResult = false;
+				Close();
+			}
 		}
 	}
 }

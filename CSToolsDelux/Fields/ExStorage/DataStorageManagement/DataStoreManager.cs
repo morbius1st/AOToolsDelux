@@ -32,6 +32,8 @@ namespace CSToolsDelux.Fields.ExStorage.DataStorageManagement
 		private Document doc;
 		private ExStorData exData;
 
+		private List<string> oldDataStorages;
+
 	#endregion
 
 	#region ctor
@@ -40,13 +42,14 @@ namespace CSToolsDelux.Fields.ExStorage.DataStorageManagement
 		{
 			this.doc = doc;
 			exData = ExStorData.Instance;
+			
 		}
 
 	#endregion
 
 	#region public properties
 
-		public static string DocKey { get; set; }
+		public List<string> OldDataStorageList => oldDataStorages;
 
 	#endregion
 
@@ -175,14 +178,11 @@ namespace CSToolsDelux.Fields.ExStorage.DataStorageManagement
 
 		public ExStoreRtnCodes FindDataStorages(string docKey, out IList<DataStorage> dx)
 		{
-			ExStoreRtnCodes result = ExStoreRtnCodes.XRC_DS_NOT_EXIST;
+			ExStoreRtnCodes result;
+			string vendIdPrefix = ExStorData.MakeVendIdPrefix();
+
 			dx = new List<DataStorage>(1);
-			//
-			// FilteredElementCollector collector = new FilteredElementCollector(doc);
-			//
-			// FilteredElementCollector dataStorages =
-			// 	collector.OfClass(typeof(DataStorage));
-			// if (dataStorages == null) return ExStoreRtnCodes.XRC_DS_NOT_EXIST;
+			oldDataStorages = new List<string>();
 
 			IList<DataStorage> dataStorList;
 			result = FindDataStorages(out dataStorList);
@@ -192,8 +192,25 @@ namespace CSToolsDelux.Fields.ExStorage.DataStorageManagement
 				if (ds.Name.StartsWith(docKey))
 				{
 					dx.Add((DataStorage) ds);
-					result = ExStoreRtnCodes.XRC_GOOD;
+				} 
+				else if (ds.Name.StartsWith(vendIdPrefix))
+				{
+					oldDataStorages.Add(ds.Name);
 				}
+			}
+
+			if (oldDataStorages.Count > 0)
+			{
+				result = ExStoreRtnCodes.XRC_SEARCH_FOUND_PRIOR;
+
+				if (dx.Count > 0)
+				{
+					result = ExStoreRtnCodes.XRC_SEARCH_FOUND_PRIOR_AND_NEW;
+				}
+			}
+			else if (dx.Count > 0)
+			{
+				result = ExStoreRtnCodes.XRC_GOOD;
 			}
 
 			return result;

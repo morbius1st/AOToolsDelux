@@ -338,77 +338,16 @@ namespace CSToolsDelux.Fields.ExStorage.ExStorManagement
 			return ExStoreRtnCodes.XRC_GOOD;
 		}
 
-
-		// private ExStoreRtnCodes ReadData<TE>(SchemaDataDictionaryBase<TE> data,
-		// 	SchemaDictionaryBase<TE> fields ) where TE : Enum
-		// {
-		// 	foreach (KeyValuePair<TE, ISchemaFieldDef<TE>> kvp in fields)
-		// 	{
-		// 		TE key = kvp.Value.Key;
-		// 		string fieldName = kvp.Value.Name;
-		// 		// string fieldName = kvp.Value.FieldDef.Name;
-		// 		Field f = exData.Schema.GetField(fieldName);
-		// 		if (f == null) return ExStoreRtnCodes.XRC_FAIL;
-		//
-		// 		Type t = f.ValueType;
-		// 		if (t == null) return ExStoreRtnCodes.XRC_FAIL;
-		//
-		// 		if (t?.Equals(typeof(string)) ?? false)
-		// 		{
-		// 			((SchemaDataFieldDef<TE, string>) data[key]).Value = 
-		// 				exData.Entity.Get<string>(fieldName);
-		// 		}
-		// 		else if (t?.Equals(typeof(double)) ?? false)
-		// 		{
-		// 			((SchemaDataFieldDef<TE, double>) data[key]).Value = 
-		// 				exData.Entity.Get<double>(fieldName);
-		// 		}
-		// 		else if (t?.Equals(typeof(bool)) ?? false)
-		// 		{
-		// 			((SchemaDataFieldDef<TE, bool>) data[key]).Value = 
-		// 				exData.Entity.Get<bool>(fieldName);
-		// 		}
-		// 	}
-		//
-		// 	return ExStoreRtnCodes.XRC_GOOD;
-		// }
-
 	#endregion
 
 	#region create
 
-		// public ExStoreRtnCodes CreateRootDataStor(Schema schema)
-		// {
-		// 	ExStoreRtnCodes result;
-		//
-		// 	DataStorage ds = null;
-		// 	Entity e;
-		//
-		// 	result = dsMgr.CreateDataStorage(schema, out e, out ds);
-		//
-		// 	return ExStoreRtnCodes.XRC_GOOD;
-		// }
 
 	#endregion
 
 
 	#region write
 
-
-
-		// public ExStoreRtnCodes WriteRootAppData(SchemaRootAppData raData, SchemaCellData cData,
-		// 	DataStorage ds)
-		// {
-		// 	ExStoreRtnCodes result;
-		//
-		// 	result = writeRootAppData(raData, cData, ds);
-		// 	if (result != ExStoreRtnCodes.XRC_GOOD) return result;
-		//
-		// 	return ExStoreRtnCodes.XRC_GOOD;
-		// }
-
-		// write the data to datastorage
-		// datastorage must already exist
 		public ExStoreRtnCodes WriteRootAppData(SchemaRootAppData raData, SchemaCellData cData, 
 			DataStorage ds)
 		{
@@ -421,7 +360,7 @@ namespace CSToolsDelux.Fields.ExStorage.ExStorManagement
 			try
 			{
 				bool answer =
-					scMgr.MakeRootAppSchema(docKey, raData, cData.Data.Count);
+					scMgr.MakeRootAppSchema(docKey, raData, cData.DataList.Count);
 				if (!answer) return ExStoreRtnCodes.XRC_FAIL;
 
 				Schema schema = scMgr.SchemaList[docKey].Schema;
@@ -580,6 +519,67 @@ namespace CSToolsDelux.Fields.ExStorage.ExStorManagement
 
 	#endregion
 
+
+
+		// private ExStoreRtnCodes ReadData<TE>(SchemaDataDictionaryBase<TE> data,
+		// 	SchemaDictionaryBase<TE> fields ) where TE : Enum
+		// {
+		// 	foreach (KeyValuePair<TE, ISchemaFieldDef<TE>> kvp in fields)
+		// 	{
+		// 		TE key = kvp.Value.Key;
+		// 		string fieldName = kvp.Value.Name;
+		// 		// string fieldName = kvp.Value.FieldDef.Name;
+		// 		Field f = exData.Schema.GetField(fieldName);
+		// 		if (f == null) return ExStoreRtnCodes.XRC_FAIL;
+		//
+		// 		Type t = f.ValueType;
+		// 		if (t == null) return ExStoreRtnCodes.XRC_FAIL;
+		//
+		// 		if (t?.Equals(typeof(string)) ?? false)
+		// 		{
+		// 			((SchemaDataFieldDef<TE, string>) data[key]).Value = 
+		// 				exData.Entity.Get<string>(fieldName);
+		// 		}
+		// 		else if (t?.Equals(typeof(double)) ?? false)
+		// 		{
+		// 			((SchemaDataFieldDef<TE, double>) data[key]).Value = 
+		// 				exData.Entity.Get<double>(fieldName);
+		// 		}
+		// 		else if (t?.Equals(typeof(bool)) ?? false)
+		// 		{
+		// 			((SchemaDataFieldDef<TE, bool>) data[key]).Value = 
+		// 				exData.Entity.Get<bool>(fieldName);
+		// 		}
+		// 	}
+		//
+		// 	return ExStoreRtnCodes.XRC_GOOD;
+		// }
+
+		// public ExStoreRtnCodes CreateRootDataStor(Schema schema)
+		// {
+		// 	ExStoreRtnCodes result;
+		//
+		// 	DataStorage ds = null;
+		// 	Entity e;
+		//
+		// 	result = dsMgr.CreateDataStorage(schema, out e, out ds);
+		//
+		// 	return ExStoreRtnCodes.XRC_GOOD;
+		// }
+
+		// public ExStoreRtnCodes WriteRootAppData(SchemaRootAppData raData, SchemaCellData cData,
+		// 	DataStorage ds)
+		// {
+		// 	ExStoreRtnCodes result;
+		//
+		// 	result = writeRootAppData(raData, cData, ds);
+		// 	if (result != ExStoreRtnCodes.XRC_GOOD) return result;
+		//
+		// 	return ExStoreRtnCodes.XRC_GOOD;
+		// }
+
+		// write the data to datastorage
+		// datastorage must already exist
 
 		//
 		// 	ExStorageTests xsTest = new ExStorageTests();
