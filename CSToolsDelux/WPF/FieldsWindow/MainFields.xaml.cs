@@ -33,6 +33,32 @@ using UtilityLibrary;
 
 namespace CSToolsDelux.WPF.FieldsWindow
 {
+
+	/*
+	 * my concept
+	 * this is the conductor that collects and directs the tasks
+	 * in general, it does not perform any tasks
+	 *
+	 * FieldsManager
+	 * is the primary task manager.  this will have a collection of
+	 * tasks that need to be performed as directed by MainFields
+	 *
+	 * ExStoreManager
+	 * is the primary action manager & performer
+	 * this will have the individual task components that are
+	 * needed by the task manager.
+	 *
+	 * This will utilize the sub-managers / data objects
+	 * SchemaManager
+	 * ExStorData
+	 * DataStoreManager
+	 *
+	 * to perform its tasks
+	 *
+	 */
+
+
+
 	/// <summary>
 	/// Interaction logic for MainFields.xaml
 	/// </summary>
@@ -47,12 +73,8 @@ namespace CSToolsDelux.WPF.FieldsWindow
 
 		private Document doc;
 
-
 		/// <inheritdoc cref="FieldsManager"/>
 		private FieldsManager fm;
-
-		private SchemaManager scMgr;
-
 
 		private string myName = nameof(MainFields);
 		private string textMsg01;
@@ -77,7 +99,6 @@ namespace CSToolsDelux.WPF.FieldsWindow
 			InitializeComponent();
 
 			fm = new FieldsManager(this, doc);
-			scMgr = SchemaManager.Instance;
 			et = new ExTests01(this, doc);
 			exData = ExStorData.Instance;
 
@@ -89,9 +110,6 @@ namespace CSToolsDelux.WPF.FieldsWindow
 			// save a local copy
 			DocKey = ExStorData.MakeKey(docName);
 			exData.DocKey = docKey;
-
-			// save a record copy
-			// DataStoreManager.DocKey = ExStorData.MakeKey(docName);
 		}
 
 	#endregion
@@ -125,6 +143,10 @@ namespace CSToolsDelux.WPF.FieldsWindow
 		// initial starting point when window opens
 		private bool startProcess()
 		{
+			ExStoreRtnCodes result;
+			result = fm.DoesDataStoreExist();
+
+			if (result != ExStoreRtnCodes.XRC_GOOD) return false;
 
 			return true;
 		}
@@ -132,6 +154,17 @@ namespace CSToolsDelux.WPF.FieldsWindow
 	#endregion
 
 	#region event consuming
+
+		private void MainFields_Loaded(object sender, RoutedEventArgs e)
+		{
+			bool result = startProcess();
+
+			if (!result)
+			{
+				DialogResult = false;
+				Close();
+			}
+		}
 
 	#endregion
 
@@ -155,55 +188,26 @@ namespace CSToolsDelux.WPF.FieldsWindow
 
 	#endregion
 
+	#region button event consumers
 
 		private void BtnExit_OnClick(object sender, RoutedEventArgs e)
 		{
 			Close();
 		}
 
-		private void BtnRootAppFields_OnClick(object sender, RoutedEventArgs e)
-		{
-			fm.ShowRootAppFields();
-		}
+	#endregion
 
-		private void BtnRootAppData_OnClick(object sender, RoutedEventArgs e)
-		{
-			fm.ShowRootAppData();
-		}
+	#region test - debug methods
 
-		private void BtnShowRootFields_OnClick(object sender, RoutedEventArgs e)
-		{
-			fm.ShowRootFields();
-		}
-
-		private void BtnRootData_OnClick(object sender, RoutedEventArgs e)
-		{
-			fm.ShowRootData();
-		}
-
-		private void BtnAppFields_OnClick(object sender, RoutedEventArgs e)
-		{
-			fm.ShowAppFields();
-		}
-
-		private void BtnAppData_OnClick(object sender, RoutedEventArgs e)
-		{
-			fm.ShowAppData();
-		}
-
-		private void BtnCellFields_OnClick(object sender, RoutedEventArgs e)
-		{
-			fm.ShowCellFields();
-		}
-
-		private void BtnCellData_OnClick(object sender, RoutedEventArgs e)
-		{
-			fm.ShowCellData();
-		}
-
+		
 		private void BtnFindRootDs_OnClick(object sender, RoutedEventArgs e)
 		{
-			fm.GetDataStorage();
+			ExStoreRtnCodes result;
+
+			result = fm.FindRootDS();
+
+			WriteLineMsg("find root DS|", result.ToString());
+			Show();
 		}
 
 		private void BtnWriteData_OnClick(object sender, RoutedEventArgs e)
@@ -230,10 +234,10 @@ namespace CSToolsDelux.WPF.FieldsWindow
 			// if (result != ExStoreRtnCodes.XRC_GOOD) return;
 
 
-			result = fm.DataStorExist(raData.DocKey);
+			result = fm.DataStorExist(exData.DocKey);
 			if (result == ExStoreRtnCodes.XRC_DS_NOT_EXIST)
 			{
-				result = fm.CreateDataStorage(raData.DocKey);
+				result = fm.CreateDataStorage(exData.DocKey);
 				if (result != ExStoreRtnCodes.XRC_GOOD) return;
 			}
 
@@ -344,15 +348,49 @@ namespace CSToolsDelux.WPF.FieldsWindow
 			ShowMsg();
 		}
 
-		private void MainFields_Loaded(object sender, RoutedEventArgs e)
-		{
-			bool result = startProcess();
 
-			if (!result)
-			{
-				DialogResult = false;
-				Close();
-			}
+
+		private void BtnRootAppFields_OnClick(object sender, RoutedEventArgs e)
+		{
+			fm.ShowRootAppFields();
 		}
+
+		private void BtnRootAppData_OnClick(object sender, RoutedEventArgs e)
+		{
+			fm.ShowRootAppData();
+		}
+
+		private void BtnShowRootFields_OnClick(object sender, RoutedEventArgs e)
+		{
+			fm.ShowRootFields();
+		}
+
+		private void BtnRootData_OnClick(object sender, RoutedEventArgs e)
+		{
+			fm.ShowRootData();
+		}
+
+		private void BtnAppFields_OnClick(object sender, RoutedEventArgs e)
+		{
+			fm.ShowAppFields();
+		}
+
+		private void BtnAppData_OnClick(object sender, RoutedEventArgs e)
+		{
+			fm.ShowAppData();
+		}
+
+		private void BtnCellFields_OnClick(object sender, RoutedEventArgs e)
+		{
+			fm.ShowCellFields();
+		}
+
+		private void BtnCellData_OnClick(object sender, RoutedEventArgs e)
+		{
+			fm.ShowCellData();
+		}
+
+	#endregion
+
 	}
 }

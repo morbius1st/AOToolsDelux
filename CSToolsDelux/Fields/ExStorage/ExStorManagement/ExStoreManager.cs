@@ -22,103 +22,9 @@ using InvalidOperationException = Autodesk.Revit.Exceptions.InvalidOperationExce
 // user name: jeffs
 // created:   7/5/2021 6:55:42 AM
 
-/*
- * process:
- *  config
- *   +-> finds info -> read info.
- *   +-> not find info -> create info -> write info
- *
- * make root path
- * makeroot()-> DsMgr.CreateDataStorage<-
- *           +> WriteRoot-> xsHlpr.WriteRootData -> makeRootSchema -> makeSchemaDef <-
- *                                                                 +> makeSchemaFields -> makeSchemaField <-
- *                                               +> writeData <-
- *
- *
- *
- * note: since a schema is immutable, the subschema (cells) cannot
- * be modified / deleted 
- *
- * procedures
- * startup
- *  +> ExMgr
- *     +> initialize()
- *        * init to true
- *        * status to INIT
- *     +> config()
- *        * status is INIT
- *        +> dsExists == true // note that ds and root get setup together
- *           +> rootExists == true // root can exist separate from app & cell
- *              +> appExists == true // note that app / cell will be all config'd together
- *                 * proceed "normal"
- *                   * status to READY
- *              +> appExists == false
- *                 * need cell information to proceed
- *                   * status to NEED_APP_CELL
- *           +> rootExists == false
- *              * this should never happen as ds and root get setup together
- *                * status to FAIL
- *       +> dsExists == false
- *          * need to setup system
- *            * status to NEED_CONFIG
- *
- * startup
- *  +> start ExMgr
- *     +> status == READY -> proceed normal -> flip buttons
- *     +> status == INIT -> should never happen -> report program failure - exit
- *     +> status == FAIL -> should never happen -> report program failure - exit
- *     +> status == NEED_APP_CELL -> flip buttons
- *     +> status == NEED_CONFIG -> flip buttons
- *
- *  buttons (on a dialog box)
- *                        button             
- *                        off unless         
- *                        status             
- *  * initialize          is NEED_CONFIG     
- *  * add cell			  is NEED_APP_CELL or
- *                        is READY
- *  * show root info	  is READY
- *  * show app info		  is READY
- *    * show cell info	  is READY
- *  * show all cell info  is READY
- *  * modify cell		  is READY
- *  * delete cell		  is READY
- *  * remove system		  is READY
- *
- *			
- *			
- * function							datastore (ds)
- *					init	confg	root	app		root		app	
- *					req'd	req'd	exists	exists	exists		exists	
- *
- * initialize		false	n/a		n/a		n/a		n/a			n/a
- * configure		true	false	n/a		n/a		n/a			n/a		tests ds / root / app exists
- *
- * Create ds		true	false	false	n/a		n/a			n/a
- *
- * Read root		n/a		n/a		true			n/a			n/a		true ds == init / config true
- * Read app			n/a		n/a		n/a				true		false	true root exist == init / confg / ds true
- * Read cells		n/a		n/a		n/a				true		true	true root exist == init / confg / ds true
- * write root		n/a		n/a		true			false		n/a		true ds == init / config true
- * write app +		n/a		n/a		n/a				true		n/a		true root exist == init / confg / ds true
- *	cells
- * update root		-- n/a -						 not permitted
- * update app +		n/a		n/a		n/a				true 		n/a		true root exist == init true
- * 	cells
- * del root			n/a		n/a		n/a				true		false	false app exist == false cell(s) exist / true root exists == init / confg / ds true
- * del app +		n/a		n/a		n/a				n/a			true	true app exists == init / confg / ds true
- *  cell(s)
- *
- * ds exists		true	false	false			n/a			n/a
- * root exists		na		n/a		true			false		n/a		
- * app exists		n/a		n/a		n/a				true		false
- *
- * **	cell(s) exist	n/a							n/a			true	** probably do not need
- */
-
 namespace CSToolsDelux.Fields.ExStorage.ExStorManagement
 {
-	public class ExStoreMgr
+	public class ExStoreManager
 	{
 		private Document doc;
 		private AWindow W;
@@ -129,7 +35,7 @@ namespace CSToolsDelux.Fields.ExStorage.ExStorManagement
 		private ShowInfo show;
 
 
-		public ExStoreMgr(AWindow w, Document doc)
+		public ExStoreManager(AWindow w, Document doc)
 		{
 			this.doc = doc;
 			W = w;
@@ -140,48 +46,9 @@ namespace CSToolsDelux.Fields.ExStorage.ExStorManagement
 			exData = ExStorData.Instance;
 		}
 
-		public bool Initialized { get; private set; }
-
-		public bool Configured { get; private set; }
-
 		public string OpDescription  { get; private set; }
 
-
 	#region find
-
-		public ExStoreRtnCodes FindRootAppEntity(string docKey, out Entity entity, out Schema schema)
-		{
-			entity = null;
-			schema = null;
-
-			IList<Schema> schemas;
-			IList<DataStorage> dx;
-			bool result;
-
-			result = scMgr.FindSchemas(docKey, out schemas);
-
-			
-			if (!result || schemas.Count > 1)
-			{
-				return ExStoreRtnCodes.XRC_FAIL;
-			}
-			else
-			{
-				show.ShowSchemas(schemas);
-
-				ExStoreRtnCodes answer = dsMgr.FindDataStorages(docKey, out dx);
-
-				if (answer != ExStoreRtnCodes.XRC_GOOD) return answer;
-			}
-
-			// got a schema and a datastorage - get the entity
-			schema = schemas[0];
-			entity = dx[0].GetEntity(schemas[0]);
-
-			if (entity == null) return ExStoreRtnCodes.XRC_FAIL;
-
-			return ExStoreRtnCodes.XRC_GOOD;
-		}
 
 	#endregion
 
@@ -340,12 +207,6 @@ namespace CSToolsDelux.Fields.ExStorage.ExStorManagement
 
 	#endregion
 
-	#region create
-
-
-	#endregion
-
-
 	#region write
 
 		public ExStoreRtnCodes WriteRootAppData(SchemaRootAppData raData, SchemaCellData cData, 
@@ -372,12 +233,8 @@ namespace CSToolsDelux.Fields.ExStorage.ExStorManagement
 				writeData(e, schema, raData.Data);
 				writeCellData(e, schema, cData);
 
-				// using (t = new Transaction(AppRibbon.Doc, "Save Cells Default Config Info"))
-				// {
-				// 	t.Start();
 				ds.SetEntity(e);
-				// 	t.Commit();
-				// }
+
 			}
 			catch (InvalidOperationException ex)
 			{
@@ -449,50 +306,42 @@ namespace CSToolsDelux.Fields.ExStorage.ExStorManagement
 	#endregion
 
 
-	#region get
+	#region util
 
-		public IList<Schema> GetSchemas()
+
+		// todo: eliminate?
+		public ExStoreRtnCodes FindRootAppEntity(string docKey, out Entity entity, out Schema schema)
 		{
-			IList<Schema> schemas = ListSchemas();
+			entity = null;
+			schema = null;
 
-			return schemas;
-		}
+			IList<Schema> schemas;
+			IList<DataStorage> dx;
+			bool result;
 
-		public void GetDataStorage()
-		{
-			DataStorage ds;
+			result = scMgr.FindSchemas(docKey, out schemas);
 
-			string result = dsMgr.FindDataStorage(out ds);
-
-			if (result != null)
+			
+			if (!result || schemas.Count > 1)
 			{
-				W.WriteLineAligned($"DataStorages found|\n", result);
+				return ExStoreRtnCodes.XRC_FAIL;
 			}
 			else
 			{
-				W.WriteLineAligned($"DataStorages not found|", result);
+				show.ShowSchemas(schemas);
+
+				ExStoreRtnCodes answer = dsMgr.FindDataStorages(docKey, out dx);
+
+				if (answer != ExStoreRtnCodes.XRC_GOOD) return answer;
 			}
 
-			IList<Schema> schemas = GetSchemas();
+			// got a schema and a datastorage - get the entity
+			schema = schemas[0];
+			entity = dx[0].GetEntity(schemas[0]);
 
-			W.WriteAligned("\n");
-			W.WriteAligned($"List of schema|");
+			if (entity == null) return ExStoreRtnCodes.XRC_FAIL;
 
-			if (schemas != null)
-			{
-				W.WriteLineMsg($"found| {schemas.Count}");
-
-				foreach (Schema s in schemas)
-				{
-					W.WriteLineAligned($"schema|", $"name| {s.SchemaName.PadRight(35)}  vendor id| {s.VendorId.PadRight(20)}   guid| {s.GUID.ToString()}");
-				}
-			}
-			else
-			{
-				W.WriteLineAligned($"none found");
-			}
-
-			W.ShowMsg();
+			return ExStoreRtnCodes.XRC_GOOD;
 		}
 
 		private ExStoreRtnCodes getRootAppEntityAndSchema()
@@ -519,6 +368,50 @@ namespace CSToolsDelux.Fields.ExStorage.ExStorManagement
 
 	#endregion
 
+
+		// public IList<Schema> GetSchemas()
+		// {
+		// 	IList<Schema> schemas = ListSchemas();
+		//
+		// 	return schemas;
+		// }
+
+		// public void GetDataStorage()
+		// {
+		// 	DataStorage ds;
+		//
+		// 	string result = dsMgr.FindDataStorage(out ds);
+		//
+		// 	if (result != null)
+		// 	{
+		// 		W.WriteLineAligned($"DataStorages found|\n", result);
+		// 	}
+		// 	else
+		// 	{
+		// 		W.WriteLineAligned($"DataStorages not found|", result);
+		// 	}
+		//
+		// 	IList<Schema> schemas = GetSchemas();
+		//
+		// 	W.WriteAligned("\n");
+		// 	W.WriteAligned($"List of schema|");
+		//
+		// 	if (schemas != null)
+		// 	{
+		// 		W.WriteLineMsg($"found| {schemas.Count}");
+		//
+		// 		foreach (Schema s in schemas)
+		// 		{
+		// 			W.WriteLineAligned($"schema|", $"name| {s.SchemaName.PadRight(35)}  vendor id| {s.VendorId.PadRight(20)}   guid| {s.GUID.ToString()}");
+		// 		}
+		// 	}
+		// 	else
+		// 	{
+		// 		W.WriteLineAligned($"none found");
+		// 	}
+		//
+		// 	W.ShowMsg();
+		// }
 
 
 		// private ExStoreRtnCodes ReadData<TE>(SchemaDataDictionaryBase<TE> data,

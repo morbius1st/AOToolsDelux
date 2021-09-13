@@ -32,17 +32,5 @@ namespace CSToolsDelux.Fields.SchemaInfo.SchemaData.SchemaDataDefinitions
 			return copy;
 		}
 
-
-		// public TC Clone<TC>(TC original) where TC : SchemaDataDictionaryBase<TE>, new()
-		// {
-		// 	TC copy = new TC();
-		//
-		// 	foreach (KeyValuePair<TE, ASchemaDataFieldDef<TE>> kvp in original)
-		// 	{
-		// 		copy.Add(kvp.Key, (ASchemaDataFieldDef<TE>) kvp.Value.Clone());
-		// 	}
-		//
-		// 	return copy;
-		// }
 	}
 }

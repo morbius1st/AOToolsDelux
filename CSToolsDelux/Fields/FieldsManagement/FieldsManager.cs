@@ -71,7 +71,7 @@ namespace CSToolsDelux.Fields.FieldsManagement
 
 		private DataStoreManager dsMgr;
 		private ExStorData exData;
-		private ExStoreMgr exMgr;
+		private ExStoreManager exMgr;
 		private SchemaManager scMgr;
 		private ShowInfo show;
 
@@ -99,7 +99,7 @@ namespace CSToolsDelux.Fields.FieldsManagement
 
 			W = w;
 			scMgr = SchemaManager.Instance;
-			exMgr = new ExStoreMgr(w, doc);
+			exMgr = new ExStoreManager(w, doc);
 			dsMgr = new DataStoreManager(doc);
 			show = new ShowInfo(w);
 			exData = ExStorData.Instance;
@@ -171,8 +171,6 @@ namespace CSToolsDelux.Fields.FieldsManagement
 	#endregion
 
 
-
-
 	#endregion
 
 
@@ -192,28 +190,9 @@ namespace CSToolsDelux.Fields.FieldsManagement
 			return result;
 		}
 
-		public ExStoreRtnCodes SearchForOldDs(string oldDocKey)
-		{
-			return ExStoreRtnCodes.XRC_FAIL;
-		}
-
 	#endregion
 
 	#region get
-
-		public ExStoreRtnCodes GetRootDataStorages(string docKey, out IList<DataStorage> dx)
-		{
-			ExStoreRtnCodes result = ExStoreRtnCodes.XRC_FAIL;
-
-			result = dsMgr.FindDataStorages(docKey, out dx);
-
-			return result;
-		}
-
-		public void GetDataStorage()
-		{
-			exMgr.GetDataStorage();
-		}
 
 		public bool GetRootAppSchemas(string docKey, out IList<Schema> schemas)
 		{
@@ -305,6 +284,50 @@ namespace CSToolsDelux.Fields.FieldsManagement
 
 	#endregion
 
+	#region private methods
+
+	#endregion
+
+	#region event consuming
+
+	#endregion
+
+	#region event publishing
+
+	#endregion
+
+	#region system overrides
+
+		public override string ToString()
+		{
+			return "this is FieldsManager";
+		}
+
+	#endregion
+
+	#region test - debug methods
+
+		public ExStoreRtnCodes FindRootDS()
+		{
+			ExStoreRtnCodes result;
+			result = DataStorExist(exData.DocKey);
+			if (result == ExStoreRtnCodes.XRC_DS_NOT_EXIST) return result;
+
+			return ExStoreRtnCodes.XRC_GOOD;
+		}
+
+		public ExStoreRtnCodes GetRootDataStorages(string docKey, out IList<DataStorage> dx)
+		{
+			ExStoreRtnCodes result = ExStoreRtnCodes.XRC_FAIL;
+		
+			result = dsMgr.FindDataStorages(docKey, out dx);
+		
+			return result;
+		}
+		
+	#endregion
+
+
 	#region public show methods
 
 		public void ShowRootAppFields()
@@ -349,29 +372,11 @@ namespace CSToolsDelux.Fields.FieldsManagement
 
 	#endregion
 
-	#region private methods
 
-	#endregion
-
-	#region event consuming
-
-	#endregion
-
-	#region event publishing
-
-	#endregion
-
-	#region system overrides
-
-		public override string ToString()
-		{
-			return "this is FieldsManager";
-		}
-
-	#endregion
-
-
-		
+		// public void GetDataStorage()
+		// {
+		// 	exMgr.GetDataStorage();
+		// }	
 		// public ExStoreRtnCodes GetDataStorage(string docKey)
 		// {
 		// 	ExStoreRtnCodes result;

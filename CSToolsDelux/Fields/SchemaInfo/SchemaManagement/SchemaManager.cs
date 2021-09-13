@@ -88,7 +88,6 @@ namespace CSToolsDelux.Fields.SchemaInfo.SchemaManagement
 			}
 		}
 
-
 	#region private fields
 
 		private static readonly Lazy<SchemaManager> instance =
@@ -119,13 +118,13 @@ namespace CSToolsDelux.Fields.SchemaInfo.SchemaManagement
 
 	#endregion
 
-	#region public methods
+	#region find schema
 
 		public Schema FindSchema(string docKey)
 		{
 			bool result;
 			IList<Schema> schemas;
-			result = FindSchemasFromDoc(docKey, out schemas);
+			result = findSchemasFromDoc(docKey, out schemas);
 
 			if (schemas.Count != 1) return null;
 
@@ -138,19 +137,62 @@ namespace CSToolsDelux.Fields.SchemaInfo.SchemaManagement
 			schemas = new List<Schema>(1);
 
 			// already got the schema?
-			result = FindSchemasFromList(docKey, out schemas);
+			result = findSchemasFromList(docKey, out schemas);
 
 			if (result) return true;
 
 			// don't already got
 			// check the document
 
-			result = FindSchemasFromDoc(docKey, out schemas);
+			result = findSchemasFromDoc(docKey, out schemas);
 
 			if (!result) return false;
 
 			return true;
 		}
+
+
+		private bool findSchemasFromDoc(string docKey, out IList<Schema> schemaList)
+		{
+			bool result = false;
+			schemaList = new List<Schema>(1);
+
+			IList<Schema> schemas = Schema.ListSchemas();
+
+			foreach (Schema s in schemas)
+			{
+				if (s.SchemaName.Equals(docKey))
+				{
+					schemaList.Add(s);
+
+					result = true;
+				}
+			}
+
+			return result;
+		}
+
+		private bool findSchemasFromList(string docKey, out IList<Schema> schemaList)
+		{
+			bool result = false;
+			Schema schema = null;
+
+			schemaList = new List<Schema>(1);
+
+			schema = scList.Find(docKey);
+
+			if (schema != null)
+			{
+				schemaList.Add(schema);
+				result = true;
+			}
+
+			return result;
+		}
+
+	#endregion
+
+	#region make schema
 
 		public bool MakeRootAppSchema(string docKey, SchemaRootAppData raData, int QtySubSchema)
 		{
@@ -183,49 +225,6 @@ namespace CSToolsDelux.Fields.SchemaInfo.SchemaManagement
 
 			return true;
 		}
-
-	#endregion
-
-	#region private methods
-
-		private bool FindSchemasFromDoc(string docKey, out IList<Schema> schemaList)
-		{
-			bool result = false;
-			schemaList = new List<Schema>(1);
-
-			IList<Schema> schemas = Schema.ListSchemas();
-
-			foreach (Schema s in schemas)
-			{
-				if (s.SchemaName.Equals(docKey))
-				{
-					schemaList.Add(s);
-
-					result = true;
-				}
-			}
-
-			return result;
-		}
-
-		private bool FindSchemasFromList(string docKey, out IList<Schema> schemaList)
-		{
-			bool result = false;
-			Schema schema = null;
-
-			schemaList = new List<Schema>(1);
-
-			schema = scList.Find(docKey);
-
-			if (schema != null)
-			{
-				schemaList.Add(schema);
-				result = true;
-			}
-
-			return result;
-		}
-
 
 		private void makeSchemaDef(ref SchemaBuilder sb, string name, string description)
 		{
@@ -307,6 +306,8 @@ namespace CSToolsDelux.Fields.SchemaInfo.SchemaManagement
 			return sb.Finish();
 		}
 
+	#endregion
+
 
 		// public void MakeSchemaSubSchemaFields(string key, ref SchemaBuilder sb,  SchemaRootAppFields raFields)
 		// {
@@ -326,34 +327,32 @@ namespace CSToolsDelux.Fields.SchemaInfo.SchemaManagement
 		// 	}
 		// }
 
-/*	
-		private void makeSubSchemasFields(Entity entity, Schema schema, SchemaCellFields cFields)
-		{
-			foreach (KeyValuePair<string, string> kvp in xCell.SubSchemaFields)
-			{
-				Field f = schema.GetField(kvp.Key);
 
-				Schema subSchema  = makeSubSchema(kvp.Value, xCell);
+		// 	private void makeSubSchemasFields(Entity entity, Schema schema, SchemaCellFields cFields)
+		// 	{
+		// 		foreach (KeyValuePair<string, string> kvp in xCell.SubSchemaFields)
+		// 		{
+		// 			Field f = schema.GetField(kvp.Key);
+		//
+		// 			Schema subSchema  = makeSubSchema(kvp.Value, xCell);
+		//
+		// 			Entity subE = new Entity(subSchema);
+		//
+		// 			entity.Set(f, subE);
+		// 		}
+		// 	}
+		//
+		// private Schema makeSubSchema(string guid, SchemaCellFields cFields)
+		// 	{
+		// 		SchemaBuilder sb = new SchemaBuilder(new Guid(guid));
+		//
+		// 		makeSchemaDef(ref sb, xCell.Name, xCell.Description);
+		//
+		// 		makeSchemaFields(ref sb, xCell.Fields);
+		//
+		// 		return sb.Finish();
+		// 	}
 
-				Entity subE = new Entity(subSchema);
-
-				entity.Set(f, subE);
-			}
-		}
-
-	private Schema makeSubSchema(string guid, SchemaCellFields cFields)
-		{
-			SchemaBuilder sb = new SchemaBuilder(new Guid(guid));
-
-			makeSchemaDef(ref sb, xCell.Name, xCell.Description);
-
-			makeSchemaFields(ref sb, xCell.Fields);
-
-			return sb.Finish();
-		}
-*/
-
-	#endregion
 
 	#region event consuming
 

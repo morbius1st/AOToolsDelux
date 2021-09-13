@@ -82,8 +82,8 @@
     <Compile Include="AppRibbon.cs" />
     <Compile Include="Fields\ExStorage\DataStorageManagement\DataStoreManager.cs" />
     <Compile Include="Fields\ExStorage\ExStorageData\ExStorData.cs" />
-    <Compile Include="Fields\ExStorage\ExStorManagement\ExStoreMgrSupport.cs" />
-    <Compile Include="Fields\ExStorage\ExStorManagement\ExStoreMgr.cs" />
+    <Compile Include="Fields\ExStorage\ExStorManagement\ExStoreManager.cs" />
+    <Compile Include="Fields\ExStorage\ExStorManagement\ExStoreRtnCodes.cs" />
     <Compile Include="Fields\FieldsManagement\FieldsManager.cs" />
     <Compile Include="Fields\SchemaInfo\SchemaData\ISchemaData.cs" />
     <Compile Include="Fields\SchemaInfo\SchemaData\SchemaRootAppData.cs" />
@@ -131,10 +131,7 @@
     <Content Include=".External\Linked Files Here.txt" />
     <Content Include="Other\CSToolsDelux.addin" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Fields\FieldsData\" />
-    <Folder Include="Fields\Support\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <Page Include="WPF\FieldsWindow\MainFields.xaml">
       <Generator>MSBuild:Compile</Generator>

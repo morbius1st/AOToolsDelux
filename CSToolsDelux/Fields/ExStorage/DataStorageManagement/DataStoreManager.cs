@@ -42,7 +42,6 @@ namespace CSToolsDelux.Fields.ExStorage.DataStorageManagement
 		{
 			this.doc = doc;
 			exData = ExStorData.Instance;
-			
 		}
 
 	#endregion
@@ -71,8 +70,6 @@ namespace CSToolsDelux.Fields.ExStorage.DataStorageManagement
 			// step 1
 			// already got?
 			if (ExStorData.Instance.MatchName(docKey)) return ExStoreRtnCodes.XRC_GOOD;
-
-			// if (exStoreList.ContainsKey(docKey)) return ExStoreRtnCodes.XRC_GOOD;
 
 			ExStoreRtnCodes result;
 			IList<DataStorage> dsList;
@@ -112,69 +109,6 @@ namespace CSToolsDelux.Fields.ExStorage.DataStorageManagement
 
 			return ExStoreRtnCodes.XRC_GOOD;
 		}
-
-		/// <summary>
-		/// create a datastorage element and assign the entity
-		/// </summary>
-		/// <param name="schema"></param>
-		/// <param name="e"></param>
-		/// <param name="ds"></param>
-		/// <returns></returns>
-		// public ExStoreRtnCodes CreateDataStorage(Schema schema,
-		// 	out Entity e, out DataStorage ds)
-		// {
-		// 	e = null;
-		// 	ds = null;
-		//
-		// 	try
-		// 	{
-		// 		ds = DataStorage.Create(doc);
-		//
-		// 		e = new Entity(schema);
-		//
-		// 		ds.SetEntity(e);
-		// 	}
-		// 	catch
-		// 	{
-		// 		return ExStoreRtnCodes.XRC_FAIL;
-		// 	}
-		//
-		// 	return ExStoreRtnCodes.XRC_GOOD;
-		// }
-
-		// /// <summary>
-		// /// find an existing datastorage element
-		// /// </summary>
-		// /// <param name="schema"></param>
-		// /// <param name="ex"></param>
-		// /// <param name="dx"></param>
-		// /// <returns></returns>
-		// public bool GetDataStorage(Schema schema, out Entity ex, out DataStorage dx)
-		// {
-		// 	ex = null;
-		// 	dx = null;
-		//
-		// 	FilteredElementCollector collector = new FilteredElementCollector(doc);
-		//
-		// 	FilteredElementCollector dataStorages =
-		// 		collector.OfClass(typeof(DataStorage));
-		//
-		// 	if (dataStorages == null) return false;
-		//
-		// 	foreach (DataStorage ds in dataStorages)
-		// 	{
-		// 		Entity e = ds.GetEntity(schema);
-		//
-		// 		if (!e.IsValid()) continue;
-		//
-		// 		ex = e;
-		// 		dx = ds;
-		//
-		// 		return true;
-		// 	}
-		//
-		// 	return false;
-		// }
 
 		public ExStoreRtnCodes FindDataStorages(string docKey, out IList<DataStorage> dx)
 		{
@@ -238,30 +172,119 @@ namespace CSToolsDelux.Fields.ExStorage.DataStorageManagement
 		}
 
 
-		// find DS for cells
-		public string FindDataStorage(out DataStorage dx)
+	#endregion
+
+	#region private methods
+
+	#endregion
+
+	#region event consuming
+
+	#endregion
+
+	#region event publishing
+
+	#endregion
+
+	#region system overrides
+
+		public override string ToString()
 		{
-			string result = null;
-			string name = "Cells";
-			dx = null;
-
-			FilteredElementCollector collector = new FilteredElementCollector(doc);
-
-			FilteredElementCollector dataStorages =
-				collector.OfClass(typeof(DataStorage));
-
-			if (dataStorages == null) return null;
-
-			foreach (Element ds in dataStorages)
-			{
-				if (!ds.Name.IsVoid() && ds.Name.StartsWith(name))
-				{
-					result += ds.Name + " \n";
-				}
-			}
-
-			return result;
+			return "this is DataStorageManager";
 		}
+
+	#endregion
+
+		
+		
+		// /// <summary>
+		// /// create a datastorage element and assign the entity
+		// /// </summary>
+		// /// <param name="schema"></param>
+		// /// <param name="e"></param>
+		// /// <param name="ds"></param>
+		// /// <returns></returns>
+		// public ExStoreRtnCodes CreateDataStorage(Schema schema,
+		// 	out Entity e, out DataStorage ds)
+		// {
+		// 	e = null;
+		// 	ds = null;
+		//
+		// 	try
+		// 	{
+		// 		ds = DataStorage.Create(doc);
+		//
+		// 		e = new Entity(schema);
+		//
+		// 		ds.SetEntity(e);
+		// 	}
+		// 	catch
+		// 	{
+		// 		return ExStoreRtnCodes.XRC_FAIL;
+		// 	}
+		//
+		// 	return ExStoreRtnCodes.XRC_GOOD;
+		// }
+
+		// /// <summary>
+		// /// find an existing datastorage element
+		// /// </summary>
+		// /// <param name="schema"></param>
+		// /// <param name="ex"></param>
+		// /// <param name="dx"></param>
+		// /// <returns></returns>
+		// public bool GetDataStorage(Schema schema, out Entity ex, out DataStorage dx)
+		// {
+		// 	ex = null;
+		// 	dx = null;
+		//
+		// 	FilteredElementCollector collector = new FilteredElementCollector(doc);
+		//
+		// 	FilteredElementCollector dataStorages =
+		// 		collector.OfClass(typeof(DataStorage));
+		//
+		// 	if (dataStorages == null) return false;
+		//
+		// 	foreach (DataStorage ds in dataStorages)
+		// 	{
+		// 		Entity e = ds.GetEntity(schema);
+		//
+		// 		if (!e.IsValid()) continue;
+		//
+		// 		ex = e;
+		// 		dx = ds;
+		//
+		// 		return true;
+		// 	}
+		//
+		// 	return false;
+		// }
+
+
+		// find DS for cells
+		// public string FindDataStorage(out DataStorage dx)
+		// {
+		// 	string result = null;
+		// 	string name = "Cells";
+		// 	dx = null;
+		//
+		// 	FilteredElementCollector collector = new FilteredElementCollector(doc);
+		//
+		// 	FilteredElementCollector dataStorages =
+		// 		collector.OfClass(typeof(DataStorage));
+		//
+		// 	if (dataStorages == null) return null;
+		//
+		// 	foreach (Element ds in dataStorages)
+		// 	{
+		// 		if (!ds.Name.IsVoid() && ds.Name.StartsWith(name))
+		// 		{
+		// 			result += ds.Name + " \n";
+		// 		}
+		// 	}
+		//
+		// 	return result;
+		// }
 
 		// private Dictionary<string, ExStorData> exStoreList;
 
@@ -371,27 +394,6 @@ namespace CSToolsDelux.Fields.ExStorage.DataStorageManagement
 		// 	return ExStoreRtnCodes.XRC_GOOD;
 		// }
 
-	#endregion
 
-	#region private methods
-
-	#endregion
-
-	#region event consuming
-
-	#endregion
-
-	#region event publishing
-
-	#endregion
-
-	#region system overrides
-
-		public override string ToString()
-		{
-			return "this is DataStorageManager";
-		}
-
-	#endregion
 	}
 }

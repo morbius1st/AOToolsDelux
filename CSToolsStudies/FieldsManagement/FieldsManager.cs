@@ -25,7 +25,7 @@ namespace CSToolsStudies.FieldsManagement
 	{
 	#region private fields
 
-		private ExStoreMgr exMgr;
+		private ExStoreManager exMgr;
 
 		private ShowInfo show;
 
@@ -87,10 +87,10 @@ namespace CSToolsStudies.FieldsManagement
 
 	#region public methods
 		
-		public void GetDataStorage()
-		{
-			exMgr.GetDataStorage();
-		}
+		// public void GetDataStorage()
+		// {
+		// 	exMgr.GetDataStorage();
+		// }
 
 		public void ShowRootAppFields()
 		{
