@@ -33,29 +33,6 @@ namespace CSToolsDelux.Fields.SchemaInfo.SchemaData.SchemaDataDefinitions
 		}
 	}
 
-	
-	public class SchemaAppDataField<TD> : SchemaDataFieldDef<SchemaAppKey, TD>
-	{
-		public SchemaAppDataField(TD value, ISchemaFieldDef<SchemaAppKey> fieldDef)
-		{
-			Value = value;
-			FieldDef = fieldDef;
-			ValueType = typeof(TD);
-		}
-	}
-
-		
-	public class SchemaRootDataField<TD> : SchemaDataFieldDef<SchemaRootKey, TD>
-	{
-		public SchemaRootDataField(TD value, ISchemaFieldDef<SchemaRootKey> fieldDef)
-		{
-			Value = value;
-			FieldDef = fieldDef;
-			ValueType = typeof(TD);
-		}
-	}
-
-
 	public class SchemaDataFieldDef<TE, TD> : ASchemaDataFieldDef<TE> where TE : Enum
 	{
 		public override TE Key { get; protected set; }

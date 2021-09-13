@@ -364,26 +364,6 @@ namespace CSToolsDelux.WPF.FieldsWindow
 			fm.ShowRootAppData();
 		}
 
-		// private void BtnShowRootFields_OnClick(object sender, RoutedEventArgs e)
-		// {
-		// 	fm.ShowRootFields();
-		// }
-		//
-		// private void BtnRootData_OnClick(object sender, RoutedEventArgs e)
-		// {
-		// 	fm.ShowRootData();
-		// }
-		//
-		// private void BtnAppFields_OnClick(object sender, RoutedEventArgs e)
-		// {
-		// 	fm.ShowAppFields();
-		// }
-		//
-		// private void BtnAppData_OnClick(object sender, RoutedEventArgs e)
-		// {
-		// 	fm.ShowAppData();
-		// }
-
 		private void BtnCellFields_OnClick(object sender, RoutedEventArgs e)
 		{
 			fm.ShowCellFields();

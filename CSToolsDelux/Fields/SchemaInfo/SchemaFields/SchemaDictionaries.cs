@@ -28,20 +28,4 @@ namespace CSToolsDelux.Fields.SchemaInfo.SchemaFields
 		}
 	}
 
-	// public class SchemaDictionaryApp : SchemaDictionaryBase<SchemaAppKey>
-	// {
-	// 	public SchemaDictionaryApp Clone()
-	// 	{
-	// 		return Clone(this);
-	// 	}
-	// }
-	//
-	// public class SchemaDictionaryRoot : SchemaDictionaryBase<SchemaRootKey>
-	// {
-	// 	public SchemaDictionaryRoot Clone()
-	// 	{
-	// 		return Clone(this);
-	// 	}
-	// }
-
 }

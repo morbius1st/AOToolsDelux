@@ -25,8 +25,6 @@ namespace CSToolsDelux.Fields.SchemaInfo.SchemaFields
 
 		public override SchemaCellKey[] KeyOrder { get; set; }
 
-		// public new ISchemaFieldDef<SchemaCellKey> this[SchemaCellKey key] => Fields[key];
-
 		public SchemaFieldCell<TD> GetField<TD>(SchemaCellKey key)
 		{
 			return (SchemaFieldCell<TD>) Fields[key];

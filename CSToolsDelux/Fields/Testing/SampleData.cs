@@ -9,7 +9,7 @@ using CSToolsDelux.Fields.SchemaInfo.SchemaData;
 using CSToolsDelux.Fields.SchemaInfo.SchemaData.SchemaDataDefinitions;
 using CSToolsDelux.Fields.SchemaInfo.SchemaDefinitions;
 using CSToolsDelux.Fields.SchemaInfo.SchemaFields;
-using static CSToolsDelux.Fields.SchemaInfo.SchemaDefinitions.SchemaRootKey;
+
 
 #endregion
 

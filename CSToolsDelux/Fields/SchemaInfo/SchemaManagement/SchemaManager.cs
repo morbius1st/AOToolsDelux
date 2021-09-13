@@ -308,52 +308,6 @@ namespace CSToolsDelux.Fields.SchemaInfo.SchemaManagement
 
 	#endregion
 
-
-		// public void MakeSchemaSubSchemaFields(string key, ref SchemaBuilder sb,  SchemaRootAppFields raFields)
-		// {
-		//
-		// 	int qty = scList[key].QtySubSchema;
-		//
-		// 	for (int i = 0; i < qty; i++)
-		// 	{
-		// 		Tuple<string, Guid> subS = raFields.SubSchemaField();
-		//
-		// 		FieldBuilder fb = sb.AddSimpleField(subS.Item1, typeof(Entity));
-		//
-		// 		fb.SetDocumentation(raFields.GetValue<string>(SchemaRootAppKey.RAK_DESCRIPTION));
-		// 		fb.SetSubSchemaGUID(subS.Item2);
-		//
-		// 		scList[key].SubSchemaFields.Add(subS.Item1, subS.Item2);
-		// 	}
-		// }
-
-
-		// 	private void makeSubSchemasFields(Entity entity, Schema schema, SchemaCellFields cFields)
-		// 	{
-		// 		foreach (KeyValuePair<string, string> kvp in xCell.SubSchemaFields)
-		// 		{
-		// 			Field f = schema.GetField(kvp.Key);
-		//
-		// 			Schema subSchema  = makeSubSchema(kvp.Value, xCell);
-		//
-		// 			Entity subE = new Entity(subSchema);
-		//
-		// 			entity.Set(f, subE);
-		// 		}
-		// 	}
-		//
-		// private Schema makeSubSchema(string guid, SchemaCellFields cFields)
-		// 	{
-		// 		SchemaBuilder sb = new SchemaBuilder(new Guid(guid));
-		//
-		// 		makeSchemaDef(ref sb, xCell.Name, xCell.Description);
-		//
-		// 		makeSchemaFields(ref sb, xCell.Fields);
-		//
-		// 		return sb.Finish();
-		// 	}
-
-
 	#region event consuming
 
 	#endregion

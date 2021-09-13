@@ -19,30 +19,6 @@ namespace CSToolsDelux.Fields.SchemaInfo.SchemaDefinitions
 		RAK_APP_GUID          = 70,
 	}
 
-
-	public enum SchemaRootKey
-	{
-		RK_UNDEFINED		 = -10,
-		RK_NAME              = 10,
-		RK_DESCRIPTION       = 20,
-		RK_VERSION           = 30,
-		RK_DEVELOPER         = 40,
-		RK_APP_GUID          = 50,
-		RK_CREATION          = 60,
-		RK_COUNT             = 6
-	}
-
-	// primary scheme element 
-	// defines the basic information
-	public enum SchemaAppKey
-	{
-		AK_UNDEFINED		  = -10,
-		AK_NAME              = 10,
-		AK_DESCRIPTION       = 20,
-		AK_VERSION           = 30,
-		AK_COUNT             = 3
-	}
-
 	public enum SchemaCellKey
 	{
 		CK_NAME              = 10,

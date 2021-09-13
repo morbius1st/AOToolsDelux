@@ -61,8 +61,6 @@ namespace CSToolsDelux.Fields.Testing
 			W.ShowMsg();
 		}
 
-
-
 		public void ShowSchema(Schema s)
 		{
 			W.WriteLineMsg($"Show Schema|");
