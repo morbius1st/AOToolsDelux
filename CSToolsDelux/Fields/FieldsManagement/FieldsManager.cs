@@ -151,7 +151,7 @@ namespace CSToolsDelux.Fields.FieldsManagement
 		{
 			ExStoreRtnCodes result;
 
-			int choice = 1; // == result of determining if data store exists
+			int choice = 0; // == result of determining if data store exists
 
 			switch (choice)
 			{
@@ -172,7 +172,6 @@ namespace CSToolsDelux.Fields.FieldsManagement
 
 
 	#endregion
-
 
 	#region find
 
@@ -312,6 +311,8 @@ namespace CSToolsDelux.Fields.FieldsManagement
 			ExStoreRtnCodes result;
 			result = DataStorExist(exData.DocKey);
 			if (result == ExStoreRtnCodes.XRC_DS_NOT_EXIST) return result;
+
+			W.WriteLineAligned("fm| find root DS", $"found| {(exData.DataStorage?.Name ?? "null")}");
 
 			return ExStoreRtnCodes.XRC_GOOD;
 		}

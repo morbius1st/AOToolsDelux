@@ -148,6 +148,10 @@ namespace CSToolsDelux.WPF.FieldsWindow
 
 			if (result != ExStoreRtnCodes.XRC_GOOD) return false;
 
+			WriteLineAligned("start process", "good");
+
+			Show();
+
 			return true;
 		}
 
@@ -207,7 +211,7 @@ namespace CSToolsDelux.WPF.FieldsWindow
 			result = fm.FindRootDS();
 
 			WriteLineMsg("find root DS|", result.ToString());
-			Show();
+			ShowMsg();
 		}
 
 		private void BtnWriteData_OnClick(object sender, RoutedEventArgs e)
