@@ -90,25 +90,25 @@ namespace CSToolsStudies.Windows
 			base.Close();
 		}
 
-		private void BtnShowRootFields_OnClick(object sender, RoutedEventArgs e)
-		{
-			fmMgr.ShowRootFields();
-		}
-
-		private void BtnRootData_OnClick(object sender, RoutedEventArgs e)
-		{
-			fmMgr.ShowRootData();
-		}
-
-		private void BtnAppFields_OnClick(object sender, RoutedEventArgs e)
-		{
-			fmMgr.ShowAppFields();
-		}
-
-		private void BtnAppData_OnClick(object sender, RoutedEventArgs e)
-		{
-			fmMgr.ShowAppData();
-		}
+		// private void BtnShowRootFields_OnClick(object sender, RoutedEventArgs e)
+		// {
+		// 	fmMgr.ShowRootFields();
+		// }
+		//
+		// private void BtnRootData_OnClick(object sender, RoutedEventArgs e)
+		// {
+		// 	fmMgr.ShowRootData();
+		// }
+		//
+		// private void BtnAppFields_OnClick(object sender, RoutedEventArgs e)
+		// {
+		// 	fmMgr.ShowAppFields();
+		// }
+		//
+		// private void BtnAppData_OnClick(object sender, RoutedEventArgs e)
+		// {
+		// 	fmMgr.ShowAppData();
+		// }
 
 		private void BtnCellFields_OnClick(object sender, RoutedEventArgs e)
 		{

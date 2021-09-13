@@ -37,8 +37,8 @@ namespace CSToolsStudies.FieldsManagement
 
 		static FieldsManager()
 		{
-			rFields = new SchemaRootFields();
-			aFields = new SchemaAppFields();
+			// rFields = new SchemaRootFields();
+			// aFields = new SchemaAppFields();
 			raFields = new SchemaRootAppFields();
 			cFields = new SchemaCellFields();
 		}
@@ -49,11 +49,11 @@ namespace CSToolsStudies.FieldsManagement
 			W = w;
 			show = new ShowInfo(w);
 						
-			rData = new SchemaRootData();
-			rData.Configure(SchemaGuidManager.GetNewAppGuidString());
-
-			aData = new SchemaAppData();
-			aData.Configure("App Data Name", "App Data Description");
+			// rData = new SchemaRootData();
+			// rData.Configure(SchemaGuidManager.GetNewAppGuidString());
+			//
+			// aData = new SchemaAppData();
+			// aData.Configure("App Data Name", "App Data Description");
 
 			raData = new SchemaRootAppData();
 			raData.Configure("Root-App Data Name", "Root-App Data Description");
@@ -67,15 +67,15 @@ namespace CSToolsStudies.FieldsManagement
 
 	#region public properties
 
-		public SchemaRootFields SchemaRootFields => rFields;
-
-		public SchemaRootData rData { get; private set; }
-		public SchemaAppData aData { get; private set; }
+		// public SchemaRootFields SchemaRootFields => rFields;
+		//
+		// public SchemaRootData rData { get; private set; }
+		// public SchemaAppData aData { get; private set; }
 		public SchemaRootAppData raData { get; private set; }
 		public SchemaCellData cData { get; private set; }
 
-		public static SchemaRootFields rFields { get; }
-		public static SchemaAppFields aFields { get; }
+		// public static SchemaRootFields rFields { get; }
+		// public static SchemaAppFields aFields { get; }
 		public static SchemaRootAppFields raFields { get; }
 		public static SchemaCellFields cFields { get; }
 
@@ -102,26 +102,26 @@ namespace CSToolsStudies.FieldsManagement
 			show.ShowRootAppData(raFields, raData);
 		}
 
-		public void ShowRootFields()
-		{
-			show.ShowRootFields(rFields);
-		}
-
-		public void ShowRootData()
-		{
-			show.ShowRootData(rFields, rData);
-		}
-		
-		public void ShowAppFields()
-		{
-			show.ShowAppFields(aFields);
-		}
-
-		public void ShowAppData()
-		{
-			show.ShowAppData(aFields, aData);
-		}
-				
+		// public void ShowRootFields()
+		// {
+		// 	show.ShowRootFields(rFields);
+		// }
+		//
+		// public void ShowRootData()
+		// {
+		// 	show.ShowRootData(rFields, rData);
+		// }
+		//
+		// public void ShowAppFields()
+		// {
+		// 	show.ShowAppFields(aFields);
+		// }
+		//
+		// public void ShowAppData()
+		// {
+		// 	show.ShowAppData(aFields, aData);
+		// }
+		// 		
 		public void ShowCellFields()
 		{
 			show.ShowCellFields(cFields);

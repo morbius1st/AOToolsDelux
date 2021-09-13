@@ -85,61 +85,61 @@ namespace CSToolsDelux.Fields.Testing
 		}
 
 
-		public void ShowRootFields(SchemaRootFields rootFields)
-		{
-			W.WriteLineAligned("this is| ", "CSToolsDelux");
-			W.WriteLineAligned("this is| ", $"{documentName}");
-			W.WriteLineAligned("Show Root Fields| ", "type 1");
-			W.WriteAligned("\n");
-
-			string name;
-			string value;
-			string type;
-
-			foreach (SchemaRootKey key in rootFields.KeyOrder)
-			{
-				name = rootFields[key].Name;
-				value = rootFields[key].ValueString;
-				type =  rootFields[key].ValueType.Name;
-
-				W.WriteLineAligned($"key| {key}| ", formatFieldInfo(name, type, value));
-			}
-
-			W.WriteAligned("\n");
-			W.WriteLineAligned("Show Root Fields| ", "finished");
-			W.WriteAligned("\n");
-
-			W.ShowMsg();
-		}
-
-		public void ShowRootData(SchemaRootFields rootFields,
-			SchemaRootData rootData)
-		{
-			W.WriteLineAligned("this is| ", "CSToolsDelux");
-			W.WriteLineAligned("this is| ", $"{documentName}");
-			W.WriteLineAligned("Show Root data| ", "type 1");
-			W.WriteAligned("\n");
-
-			string name;
-			string type;
-			string value;
-
-			foreach (SchemaRootKey key in rootFields.KeyOrder)
-			{
-				name = rootData[key].FieldDef.Name;
-				value = rootData[key].ValueString;
-				type =  rootData[key].ValueType.Name;
-
-				W.WriteLineAligned($"key| {key}| ", formatFieldInfo(name, type, value));
-			}
-
-			W.WriteAligned("\n");
-			W.WriteLineAligned("Show Root data| ", "finished");
-			W.WriteAligned("\n");
-
-			W.ShowMsg();
-		}
-		
+		// public void ShowRootFields(SchemaRootFields rootFields)
+		// {
+		// 	W.WriteLineAligned("this is| ", "CSToolsDelux");
+		// 	W.WriteLineAligned("this is| ", $"{documentName}");
+		// 	W.WriteLineAligned("Show Root Fields| ", "type 1");
+		// 	W.WriteAligned("\n");
+		//
+		// 	string name;
+		// 	string value;
+		// 	string type;
+		//
+		// 	foreach (SchemaRootKey key in rootFields.KeyOrder)
+		// 	{
+		// 		name = rootFields[key].Name;
+		// 		value = rootFields[key].ValueString;
+		// 		type =  rootFields[key].ValueType.Name;
+		//
+		// 		W.WriteLineAligned($"key| {key}| ", formatFieldInfo(name, type, value));
+		// 	}
+		//
+		// 	W.WriteAligned("\n");
+		// 	W.WriteLineAligned("Show Root Fields| ", "finished");
+		// 	W.WriteAligned("\n");
+		//
+		// 	W.ShowMsg();
+		// }
+		//
+		// public void ShowRootData(SchemaRootFields rootFields,
+		// 	SchemaRootData rootData)
+		// {
+		// 	W.WriteLineAligned("this is| ", "CSToolsDelux");
+		// 	W.WriteLineAligned("this is| ", $"{documentName}");
+		// 	W.WriteLineAligned("Show Root data| ", "type 1");
+		// 	W.WriteAligned("\n");
+		//
+		// 	string name;
+		// 	string type;
+		// 	string value;
+		//
+		// 	foreach (SchemaRootKey key in rootFields.KeyOrder)
+		// 	{
+		// 		name = rootData[key].FieldDef.Name;
+		// 		value = rootData[key].ValueString;
+		// 		type =  rootData[key].ValueType.Name;
+		//
+		// 		W.WriteLineAligned($"key| {key}| ", formatFieldInfo(name, type, value));
+		// 	}
+		//
+		// 	W.WriteAligned("\n");
+		// 	W.WriteLineAligned("Show Root data| ", "finished");
+		// 	W.WriteAligned("\n");
+		//
+		// 	W.ShowMsg();
+		// }
+		//
 		public void ShowRootAppData(SchemaRootAppFields rootFields,
 			SchemaRootAppData rootData)
 		{
@@ -195,60 +195,60 @@ namespace CSToolsDelux.Fields.Testing
 			W.ShowMsg();
 		}
 		
-		public void ShowAppFields(SchemaAppFields fields)
-		{
-			W.WriteLineAligned("this is| ", "CSToolsDelux");
-			W.WriteLineAligned("this is| ", $"{documentName}");
-			W.WriteLineAligned("Show App Fields| ", "type 1");
-			W.WriteAligned("\n");
-
-			string name;
-			string type;
-			string value;
-
-			foreach (SchemaAppKey key in fields.KeyOrder)
-			{
-				name = fields[key].Name;
-				value = fields[key].ValueString;
-				type = fields[key].ValueType.Name;
-
-				W.WriteLineAligned($"key| {key}| ", formatFieldInfo(name, type, value));
-			}
-
-			W.WriteAligned("\n");
-			W.WriteLineAligned("Show App Fields| ", "finished");
-			W.WriteAligned("\n");
-
-			W.ShowMsg();
-		}
-
-		public void ShowAppData(SchemaAppFields fields,
-			SchemaAppData data)
-		{
-			W.WriteLineAligned("this is| ", "CSToolsDelux");
-			W.WriteLineAligned("this is| ", $"{documentName}");
-			W.WriteLineAligned("Show App data| ", "type 1");
-			W.WriteAligned("\n");
-
-			string name;
-			string type;
-			string value;
-
-			foreach (SchemaAppKey key in fields.KeyOrder)
-			{
-				name = data[key].FieldDef.Name;
-				value = data[key].ValueString;
-				type =  data[key].ValueType.Name;
-
-				W.WriteLineAligned($"key| {key}| ", formatFieldInfo(name, type, value));
-			}
-
-			W.WriteAligned("\n");
-			W.WriteLineAligned("Show App data| ", "finished");
-			W.WriteAligned("\n");
-
-			W.ShowMsg();
-		}
+		// public void ShowAppFields(SchemaAppFields fields)
+		// {
+		// 	W.WriteLineAligned("this is| ", "CSToolsDelux");
+		// 	W.WriteLineAligned("this is| ", $"{documentName}");
+		// 	W.WriteLineAligned("Show App Fields| ", "type 1");
+		// 	W.WriteAligned("\n");
+		//
+		// 	string name;
+		// 	string type;
+		// 	string value;
+		//
+		// 	foreach (SchemaAppKey key in fields.KeyOrder)
+		// 	{
+		// 		name = fields[key].Name;
+		// 		value = fields[key].ValueString;
+		// 		type = fields[key].ValueType.Name;
+		//
+		// 		W.WriteLineAligned($"key| {key}| ", formatFieldInfo(name, type, value));
+		// 	}
+		//
+		// 	W.WriteAligned("\n");
+		// 	W.WriteLineAligned("Show App Fields| ", "finished");
+		// 	W.WriteAligned("\n");
+		//
+		// 	W.ShowMsg();
+		// }
+		//
+		// public void ShowAppData(SchemaAppFields fields,
+		// 	SchemaAppData data)
+		// {
+		// 	W.WriteLineAligned("this is| ", "CSToolsDelux");
+		// 	W.WriteLineAligned("this is| ", $"{documentName}");
+		// 	W.WriteLineAligned("Show App data| ", "type 1");
+		// 	W.WriteAligned("\n");
+		//
+		// 	string name;
+		// 	string type;
+		// 	string value;
+		//
+		// 	foreach (SchemaAppKey key in fields.KeyOrder)
+		// 	{
+		// 		name = data[key].FieldDef.Name;
+		// 		value = data[key].ValueString;
+		// 		type =  data[key].ValueType.Name;
+		//
+		// 		W.WriteLineAligned($"key| {key}| ", formatFieldInfo(name, type, value));
+		// 	}
+		//
+		// 	W.WriteAligned("\n");
+		// 	W.WriteLineAligned("Show App data| ", "finished");
+		// 	W.WriteAligned("\n");
+		//
+		// 	W.ShowMsg();
+		// }
 
 		public void ShowCellFields(SchemaCellFields fields)
 		{
@@ -318,7 +318,7 @@ namespace CSToolsDelux.Fields.Testing
 			string type;
 			string value;
 
-			for (int i = 0; i < data.Data.Count; i++)
+			for (int i = 0; i < data.DataList.Count; i++)
 			{
 				foreach (SchemaCellKey key in fields.KeyOrder)
 				{

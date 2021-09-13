@@ -90,15 +90,11 @@
     <Compile Include="Fields\SchemaInfo\SchemaData\SchemaCellData.cs" />
     <Compile Include="Fields\SchemaInfo\SchemaData\SchemaDataDefinitions\SchemaDataField.cs" />
     <Compile Include="Fields\SchemaInfo\SchemaData\SchemaDataDefinitions\SchemaDataDictionaries.cs" />
-    <Compile Include="Fields\SchemaInfo\SchemaData\SchemaAppData.cs" />
-    <Compile Include="Fields\SchemaInfo\SchemaData\SchemaRootData.cs" />
     <Compile Include="Fields\SchemaInfo\SchemaDefinitions\ASchemaFields.cs" />
     <Compile Include="Fields\SchemaInfo\SchemaDefinitions\SchemaDictionaryBase.cs" />
     <Compile Include="Fields\SchemaInfo\SchemaFields\SchemaRootAppFields.cs" />
-    <Compile Include="Fields\SchemaInfo\SchemaFields\SchemaAppFields.cs" />
     <Compile Include="Fields\SchemaInfo\SchemaFields\SchemaCellFields.cs" />
     <Compile Include="Fields\SchemaInfo\SchemaFields\SchemaDictionaries.cs" />
-    <Compile Include="Fields\SchemaInfo\SchemaFields\SchemaRootFields.cs" />
     <Compile Include="Fields\SchemaInfo\SchemaDefinitions\SchemaFieldDef.cs" />
     <Compile Include="Fields\SchemaInfo\SchemaDefinitions\SchemaFieldEnums.cs" />
     <Compile Include="Fields\SchemaInfo\SchemaDefinitions\SchemaGuidManager.cs" />

@@ -192,115 +192,115 @@
 					</StackPanel>
 				</Button.Content>
 			</Button>
-			
-			<Button x:Name="BtnAppData"
-					Margin="0,0,0,5"
-					Width="110"
-					MinHeight="30"
-					HorizontalContentAlignment="Center"
-					Background="#333333"
-					Foreground="White"
-					Click="BtnAppData_OnClick"
-			>
-				<Button.Content>
-					<StackPanel Orientation="Vertical">
-						<TextBlock
-								Margin="-1"
-								Padding="0"
-								TextAlignment="Center"
-								Text="Show"
-						/>
-						<TextBlock
-								Margin="-1"
-								Padding="0"
-								TextAlignment="Center"
-								Text="App Data"
-						/>
-					</StackPanel>
-				</Button.Content>
-			</Button>
-			
-			<Button x:Name="BtnAppFields"
-					Margin="0,0,0,5"
-					Width="110"
-					MinHeight="30"
-					HorizontalContentAlignment="Center"
-					Background="#333333"
-					Foreground="White"
-					Click="BtnAppFields_OnClick"
-			>
-				<Button.Content>
-					<StackPanel Orientation="Vertical">
-						<TextBlock
-								Margin="-1"
-								Padding="0"
-								TextAlignment="Center"
-								Text="Show"
-						/>
-						<TextBlock
-								Margin="-1"
-								Padding="0"
-								TextAlignment="Center"
-								Text="App Fields"
-						/>
-					</StackPanel>
-				</Button.Content>
-			</Button>
-			
-			<Button x:Name="BtnRootData"
-					Margin="0,0,0,5"
-					Width="110"
-					MinHeight="30"
-					HorizontalContentAlignment="Center"
-					Background="#333333"
-					Foreground="White"
-					Click="BtnRootData_OnClick"
-			>
-				<Button.Content>
-					<StackPanel Orientation="Vertical">
-						<TextBlock
-								Margin="-1"
-								Padding="0"
-								TextAlignment="Center"
-								Text="Show"
-						/>
-						<TextBlock
-								Margin="-1"
-								Padding="0"
-								TextAlignment="Center"
-								Text="Root Data"
-						/>
-					</StackPanel>
-				</Button.Content>
-			</Button>
-
-			<!-- Content="Find Data Storage" -->
-			<Button x:Name="BtnShowRootFields"
-					Margin="0"
-					Width="110"
-					MinHeight="30"
-					HorizontalContentAlignment="Center"
-					Background="#333333"
-					Foreground="White"
-					Click="BtnShowRootFields_OnClick"
-			>
-				<Button.Content>
-					<StackPanel Orientation="Vertical">
-						<TextBlock
-								Margin="-1"
-								Padding="0"
-								TextAlignment="Center"
-								Text="Show"
-						/>
-						<TextBlock
-								Margin="-1"
-								Padding="0"
-								TextAlignment="Center"
-								Text="Root Fields"
-						/>
-					</StackPanel>
-				</Button.Content>
-			</Button>
+			<!-- -->
+			<!-- <Button x:Name="BtnAppData" -->
+			<!-- 		Margin="0,0,0,5" -->
+			<!-- 		Width="110" -->
+			<!-- 		MinHeight="30" -->
+			<!-- 		HorizontalContentAlignment="Center" -->
+			<!-- 		Background="#333333" -->
+			<!-- 		Foreground="White" -->
+			<!-- 		Click="BtnAppData_OnClick" -->
+			<!-- > -->
+			<!-- 	<Button.Content> -->
+			<!-- 		<StackPanel Orientation="Vertical"> -->
+			<!-- 			<TextBlock -->
+			<!-- 					Margin="-1" -->
+			<!-- 					Padding="0" -->
+			<!-- 					TextAlignment="Center" -->
+			<!-- 					Text="Show" -->
+			<!-- 			/> -->
+			<!-- 			<TextBlock -->
+			<!-- 					Margin="-1" -->
+			<!-- 					Padding="0" -->
+			<!-- 					TextAlignment="Center" -->
+			<!-- 					Text="App Data" -->
+			<!-- 			/> -->
+			<!-- 		</StackPanel> -->
+			<!-- 	</Button.Content> -->
+			<!-- </Button> -->
+			<!-- -->
+			<!-- <Button x:Name="BtnAppFields" -->
+			<!-- 		Margin="0,0,0,5" -->
+			<!-- 		Width="110" -->
+			<!-- 		MinHeight="30" -->
+			<!-- 		HorizontalContentAlignment="Center" -->
+			<!-- 		Background="#333333" -->
+			<!-- 		Foreground="White" -->
+			<!-- 		Click="BtnAppFields_OnClick" -->
+			<!-- > -->
+			<!-- 	<Button.Content> -->
+			<!-- 		<StackPanel Orientation="Vertical"> -->
+			<!-- 			<TextBlock -->
+			<!-- 					Margin="-1" -->
+			<!-- 					Padding="0" -->
+			<!-- 					TextAlignment="Center" -->
+			<!-- 					Text="Show" -->
+			<!-- 			/> -->
+			<!-- 			<TextBlock -->
+			<!-- 					Margin="-1" -->
+			<!-- 					Padding="0" -->
+			<!-- 					TextAlignment="Center" -->
+			<!-- 					Text="App Fields" -->
+			<!-- 			/> -->
+			<!-- 		</StackPanel> -->
+			<!-- 	</Button.Content> -->
+			<!-- </Button> -->
+			<!-- -->
+			<!-- <Button x:Name="BtnRootData" -->
+			<!-- 		Margin="0,0,0,5" -->
+			<!-- 		Width="110" -->
+			<!-- 		MinHeight="30" -->
+			<!-- 		HorizontalContentAlignment="Center" -->
+			<!-- 		Background="#333333" -->
+			<!-- 		Foreground="White" -->
+			<!-- 		Click="BtnRootData_OnClick" -->
+			<!-- > -->
+			<!-- 	<Button.Content> -->
+			<!-- 		<StackPanel Orientation="Vertical"> -->
+			<!-- 			<TextBlock -->
+			<!-- 					Margin="-1" -->
+			<!-- 					Padding="0" -->
+			<!-- 					TextAlignment="Center" -->
+			<!-- 					Text="Show" -->
+			<!-- 			/> -->
+			<!-- 			<TextBlock -->
+			<!-- 					Margin="-1" -->
+			<!-- 					Padding="0" -->
+			<!-- 					TextAlignment="Center" -->
+			<!-- 					Text="Root Data" -->
+			<!-- 			/> -->
+			<!-- 		</StackPanel> -->
+			<!-- 	</Button.Content> -->
+			<!-- </Button> -->
+			<!-- -->
+			<!-- ~1~ Content="Find Data Storage" @1@ -->
+			<!-- <Button x:Name="BtnShowRootFields" -->
+			<!-- 		Margin="0" -->
+			<!-- 		Width="110" -->
+			<!-- 		MinHeight="30" -->
+			<!-- 		HorizontalContentAlignment="Center" -->
+			<!-- 		Background="#333333" -->
+			<!-- 		Foreground="White" -->
+			<!-- 		Click="BtnShowRootFields_OnClick" -->
+			<!-- > -->
+			<!-- 	<Button.Content> -->
+			<!-- 		<StackPanel Orientation="Vertical"> -->
+			<!-- 			<TextBlock -->
+			<!-- 					Margin="-1" -->
+			<!-- 					Padding="0" -->
+			<!-- 					TextAlignment="Center" -->
+			<!-- 					Text="Show" -->
+			<!-- 			/> -->
+			<!-- 			<TextBlock -->
+			<!-- 					Margin="-1" -->
+			<!-- 					Padding="0" -->
+			<!-- 					TextAlignment="Center" -->
+			<!-- 					Text="Root Fields" -->
+			<!-- 			/> -->
+			<!-- 		</StackPanel> -->
+			<!-- 	</Button.Content> -->
+			<!-- </Button> -->
 
 		</StackPanel>
 
