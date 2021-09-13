@@ -155,7 +155,11 @@ namespace CSToolsDelux.Fields.FieldsManagement
 
 			switch (choice)
 			{
-			case 0: // exists and there are no other data stores
+			case 0: // exists and there are NO other data stores
+				{
+					break;
+				}
+			case 1: // exists and there ARE other data stores
 				{
 					break;
 				}
