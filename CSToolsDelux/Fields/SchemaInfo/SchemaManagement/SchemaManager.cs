@@ -131,6 +131,12 @@ namespace CSToolsDelux.Fields.SchemaInfo.SchemaManagement
 			return schemas[0];
 		}
 
+		/// <summary>
+		/// get the list of schemas that match the dockey
+		/// </summary>
+		/// <param name="docKey"></param>
+		/// <param name="schemas"></param>
+		/// <returns></returns>
 		public bool FindSchemas(string docKey, out IList<Schema> schemas)
 		{
 			bool result;
@@ -150,7 +156,6 @@ namespace CSToolsDelux.Fields.SchemaInfo.SchemaManagement
 
 			return true;
 		}
-
 
 		private bool findSchemasFromDoc(string docKey, out IList<Schema> schemaList)
 		{

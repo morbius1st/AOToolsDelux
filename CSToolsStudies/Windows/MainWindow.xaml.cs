@@ -8,6 +8,7 @@ using CSToolsStudies.FieldsManagement;
 using CSToolsDelux.WPF;
 using UtilityLibrary;
 using Autodesk.Revit.DB;
+using CSToolsStudies.Testing;
 
 #endregion
 
@@ -139,6 +140,11 @@ namespace CSToolsStudies.Windows
 			ShowMsg();
 		}
 
-		
+		private void BtnTestStart_OnClick(object sender, RoutedEventArgs e)
+		{
+			FieldStartProcedure start = new FieldStartProcedure(this);
+
+			start.proc00();
+		}
 	}
 }

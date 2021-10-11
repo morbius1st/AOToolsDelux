@@ -75,16 +75,29 @@
 				HorizontalAlignment="Right"
 				VerticalAlignment="Bottom"
 				>
-			<Button x:Name="BtnExit"
-					Content="Exit"
-					Margin="5,0,5,5"
-					Width="110"
-					MinHeight="30"
-					HorizontalContentAlignment="Center"
-					Background="#333333"
-					Foreground="White"
-					Click="BtnExit_OnClick"
-					/>
+			<StackPanel
+					Orientation="Horizontal"
+					>
+				<Button x:Name="BtnDebug"
+						Content="Debug"
+						Margin="5,0,5,5"
+						Width="110"
+						MinHeight="30"
+						HorizontalContentAlignment="Center"
+						Background="#333333"
+						Foreground="White"
+						Click="BtnDebug_OnClick" />
+
+				<Button x:Name="BtnExit"
+						Content="Exit"
+						Margin="5,0,5,5"
+						Width="110"
+						MinHeight="30"
+						HorizontalContentAlignment="Center"
+						Background="#333333"
+						Foreground="White"
+						Click="BtnExit_OnClick" /></StackPanel>
+
 		</DockPanel>
 
 

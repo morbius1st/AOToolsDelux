@@ -315,14 +315,14 @@
 				Orientation="Vertical"
 				>
 
-			<Button x:Name="BtnTest02"
+			<Button x:Name="BtnTestStart"
 					Margin="0,0,0,5"
 					Width="110"
 					MinHeight="30"
 					HorizontalContentAlignment="Center"
 					Background="#333333"
 					Foreground="White"
-					Click="BtnTest02_OnClick"
+					Click="BtnTestStart_OnClick"
 					>
 				<Button.Content>
 					<StackPanel Orientation="Vertical">
@@ -336,7 +336,7 @@
 								Margin="-1"
 								Padding="0"
 								TextAlignment="Center"
-								Text="02"
+								Text="Start"
 								/>
 					</StackPanel>
 				</Button.Content>

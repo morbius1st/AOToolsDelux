@@ -1,7 +1,9 @@
 ﻿#region + Using Directives
 
+using System.Diagnostics;
 using System.Runtime.CompilerServices;
 using System.Windows;
+using CSToolsDelux.Fields.Testing;
 using UtilityLibrary;
 
 #endregion
@@ -74,7 +76,7 @@ namespace CSToolsDelux.WPF
 
 		}
 		
-		public void WriteLineMsg(string msg1, string msg2 = "", string loc = "")
+		public void WriteLine(string msg1, string msg2 = "", string loc = "")
 		{
 			writeMsg(msg1, msg2 + "\n", loc);
 		}
@@ -82,6 +84,14 @@ namespace CSToolsDelux.WPF
 		public void ShowMsg()
 		{
 			OnPropertyChanged("MessageBoxText");
+		}
+
+		public void WriteDebugMsg(string msgA, string msgB, string msgD, string loc = "", int colWidth = -1)
+		{
+
+			writeMsg(msgA, msgB, loc, colWidth);
+			Debug.WriteLine(fmtMsg(msgA, msgD));
+
 		}
 
 	#endregion
@@ -95,26 +105,26 @@ namespace CSToolsDelux.WPF
 			return spacer.Repeat(marginSize);
 		}
 
-		private string fmtMsg(string msg1, string msg2)
+		private string fmtMsg(string msg1, string msg2, int colWidth = -1)
 		{
-			string partA = msg1.IsVoid() ? msg1 : msg1.PadRight(ColumnWidth);
+			string partA = msg1.IsVoid() ? msg1 : msg1.PadRight(colWidth == -1 ? ColumnWidth : colWidth);
 			string partB = msg2.IsVoid() ? msg2 : " " + msg2;
 
 			return partA + partB;
 		}
 
-		private void writeMsg(string msg1, string msg2, string loc, string spacer)
+		private void writeMsg(string msg1, string msg2, string loc, string spacer, int colWidth = -1)
 		{
 			location = loc;
 
-			textMsg01 += margin(spacer) + fmtMsg(msg1, msg2);
+			textMsg01 += margin(spacer) + fmtMsg(msg1, msg2, colWidth);
 		}
 
-		private void writeMsg(string msg1, string msg2, string loc)
+		private void writeMsg(string msg1, string msg2, string loc, int colWidth = -1)
 		{
 			location = loc;
 
-			textMsg01 += fmtMsg(msg1, msg2);
+			textMsg01 += fmtMsg(msg1, msg2, colWidth);
 		}
 
 	#endregion

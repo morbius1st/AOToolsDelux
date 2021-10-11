@@ -2,8 +2,10 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.DB.ExtensibleStorage;
+using Autodesk.Revit.UI;
 using CSToolsDelux.Fields.ExStorage.DataStorageManagement;
 using CSToolsDelux.Fields.ExStorage.ExStorageData;
 using CSToolsDelux.Fields.ExStorage.ExStorManagement;
@@ -19,47 +21,6 @@ using CSToolsDelux.WPF;
 // username: jeffs
 // created:  8/28/2021 8:58:30 PM
 
-/*
- * flow charts
- *
- * flow chart for this testing
- * A) start -> look for existing DS / ?? erase any out-of-date schema & entities?
- *     | +-> found: open, read data, flag found -> goto (C)
- *     +-> not found:
- *          +- goto (B)
- *
- * B) no DS not found
- *     +-> make test data
- *      +->  make root-app schema & DS
- *        +-> goto (A) [flag newly created]
- *
- * C) found:
- *      +-> show info
- *
- *
- *
- * basic flow chart for a real app
- *
- * A) start -> look for existing DS  / ?? erase any out-of-date schema & entities?
- *     | +-> found: open, read data, flag found -> goto (C)
- *     +-> not found
- *          +-> ask permission to modify the model ?? -> proceed (see below) -> nope -> good bye
- *               |  -> nope -> goodbye
- *               +-> yep - see (B) below
- *
- * B) no existing schema but OK to proceed
- *     + -> dialog: get info
- *       +-> save info
- *         +-> goto (A) [flag newly created]
- *
- * C) found and opened.
- *      show current
- *		options: (edit prim data) (edit cell data) (test) (etc - see real app)
- *
- *
- *
-*/
-
 namespace CSToolsDelux.Fields.FieldsManagement
 {
 	/// <summary>
@@ -74,6 +35,7 @@ namespace CSToolsDelux.Fields.FieldsManagement
 		private ExStoreManager exMgr;
 		private SchemaManager scMgr;
 		private ShowInfo show;
+		// private FieldsStartProcedure fs;
 
 		private AWindow W;
 
@@ -99,6 +61,7 @@ namespace CSToolsDelux.Fields.FieldsManagement
 			dsMgr = new DataStoreManager(doc);
 			show = new ShowInfo(w);
 			exData = ExStorData.Instance;
+			// fs = new FieldsStartProcedure(w);
 
 			raData = new SchemaRootAppData();
 			raData.Configure("Root-App Data Name", "Root-App Data Description");
@@ -128,31 +91,35 @@ namespace CSToolsDelux.Fields.FieldsManagement
 
 	#region process procedures
 
-	#region start process
+	#region start procedure
 
-		// initial 
-		public ExStoreRtnCodes DoesDataStoreExist()
+
+		/// <summary>
+		/// initial procedure that runs when first started<br/>
+		/// this finds DataStore and Loads the data<br/>
+		/// This
+		/// </summary>
+		/// <returns></returns>
+		// proc00
+		public ExStoreRtnCodes StartProcess()
 		{
-			ExStoreRtnCodes result;
+			int loc = SampleData.p00;
 
-			int choice = 0; // == result of determining if data store exists
+			ExStoreRtnCodes result = ExStoreRtnCodes.XRC_FAIL;
 
-			switch (choice)
-			{
-			case 0: // exists and there are NO other data stores
-				{
-					break;
-				}
-			case 1: // exists and there ARE other data stores
-				{
-					break;
-				}
-			}
 
-			return ExStoreRtnCodes.XRC_GOOD;
+
+
+
+			return  result;
 		}
 
+
+		
+
 	#endregion
+
+
 
 
 	#endregion
@@ -195,6 +162,7 @@ namespace CSToolsDelux.Fields.FieldsManagement
 			ExStoreRtnCodes result;
 
 			result = exMgr.ReadData();
+			if (result != ExStoreRtnCodes.XRC_GOOD) return ExStoreRtnCodes.XRC_DATA_NOT_FOUND;
 
 			return result;
 		}
@@ -294,22 +262,22 @@ namespace CSToolsDelux.Fields.FieldsManagement
 		{
 			ExStoreRtnCodes result;
 			result = DataStorExist(exData.DocKey);
-			if (result == ExStoreRtnCodes.XRC_DS_NOT_EXIST) return result;
+			if (result == ExStoreRtnCodes.XRC_DS_NOT_FOUND) return result;
 
 			W.WriteLineAligned("fm| find root DS", $"found| {(exData.DataStorage?.Name ?? "null")}");
 
 			return ExStoreRtnCodes.XRC_GOOD;
 		}
 
-		public ExStoreRtnCodes GetRootDataStorages(string docKey, out IList<DataStorage> dx)
+		public ExStoreStartRtnCodes GetRootDataStorages(string docKey, out IList<DataStorage> dx)
 		{
-			ExStoreRtnCodes result = ExStoreRtnCodes.XRC_FAIL;
-		
+			ExStoreStartRtnCodes result;
+
 			result = dsMgr.FindDataStorages(docKey, out dx);
-		
+
 			return result;
 		}
-		
+
 	#endregion
 
 
@@ -336,7 +304,5 @@ namespace CSToolsDelux.Fields.FieldsManagement
 		}
 
 	#endregion
-
-
 	}
 }

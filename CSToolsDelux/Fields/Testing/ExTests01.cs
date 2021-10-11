@@ -39,116 +39,13 @@ namespace CSToolsDelux.Fields.Testing
 			fm = new FieldsManager(w, doc);
 		}
 
-		// start process
-
-		// step 1, does data storage?
-		// yes -> step 101
-		// yes + prior -> step 801
-		// no -> step 201
-		// no + prior -> step 901
-
-		// DS exists, does data exist?
-		// step 101, read data
-		// data exists -> step 1701
-		// data does not exist -> step 1801
-
-		// DS exists, data exists
-		// step 1701
-
-		// DS exists, data does not exist
-		// step 1801
-
-
-		// DS does not exist (data does not exist)
-		// step 201, notify, ok to proceed
-		// yes -> step 301
-		// no -> step 401
-
-		// data not exist and yes ok to proceed
-		// step 301, get data
-		// step 302, save data
-		// step 303, step 1
-
-		// data not exist and do not proceed
-		// step 401, confirm, should exit, need to search?
-		// yes -> step 501
-		// no -> step 1000
-
-		// not found but may exist
-		// step 501, provide old document name
-		// step 502, search for old name
-		// found -> step 601
-		// not found -> step 701
-
-		// possible data found
-		// step 601, show data, confirm
-		// step 602, convert to new name
-		// step 603, to to step 101
-
-		// again not found
-		// step 701, try again?
-		// yes -> step 501
-		// no -> step exit
-
-
-		// found current + prior
-		// step 801, inform + direction?
-		// use current, remove old -> step 1001
-		// remove current, use prior, single -> step 1101
-		// remove current, use prior, multiple -> step 1201
-
-		// found current, use current DS and remove the old
-		// step 1001 -> remove old DS(s)
-		// step 1002 -> step 101
-
-		// found current, remove current, use prior, single
-		// step 1101, remove current
-		// step 1102, rename prior
-		// step 1103 -> step 101
-
-		// found current, remove current, use prior, multiple
-		// step 1201, select which of the prior to use
-		// step 1202, read prior
-		// step 1203, remove current
-		// step 1204, write prior as current
-		// step 1205 -> step 101
-
-
-		// DS does not exist, found prior DS
-		// step 901, inform + direction
-		// make current, remove old -> step 1301
-		// use prior, single -> step 1401
-		// use prior, multiple -> step 1501
-
-		// found prior but make current
-		// step 1301, remove prior(s)
-		// step 1302 -> step 301
-
-		// found prior, single, but no current, use prior
-		// step 1401, rename prior
-		// step 1402 -> step 101
-		
-		// found prior, multiple, but no current, use prior
-		// step 1501, select prior
-		// step 1502, rename prior
-		// step 1402 -> step 101
-
-		// erase prior(s)
-
-		// rename prior
-
-		// select prior
-
-
-
-		// no choices left
-		// step exit, bye
 
 		public ExStoreRtnCodes StartProcess(string docKey)
 		{
 			ExStoreRtnCodes result;
-
+	
 			result = fm.DataStorExist(docKey);
+
 			if (result == ExStoreRtnCodes.XRC_GOOD)
 			{
 				// go read data

@@ -72,6 +72,7 @@
       <Link>.External\CsUtilities.cs</Link>
     </Compile>
     <Compile Include=".Utility\AddinClasses.cs" />
+    <Compile Include=".Utility\ProcedureInfo.cs" />
     <Compile Include=".Utility\Util.cs" />
     <Compile Include="D:\Users\Jeff\Documents\Programming\VisualStudioProjects\UtilityLibrary\UtilityLibrary\CsExtensions.cs">
       <Link>.External\CsExtensions.cs</Link>
@@ -85,6 +86,7 @@
     <Compile Include="Fields\ExStorage\ExStorManagement\ExStoreManager.cs" />
     <Compile Include="Fields\ExStorage\ExStorManagement\ExStoreRtnCodes.cs" />
     <Compile Include="Fields\FieldsManagement\FieldsManager.cs" />
+    <Compile Include="Fields\FieldsManagement\FieldsStartProcedure.cs" />
     <Compile Include="Fields\SchemaInfo\SchemaData\ISchemaData.cs" />
     <Compile Include="Fields\SchemaInfo\SchemaData\SchemaRootAppData.cs" />
     <Compile Include="Fields\SchemaInfo\SchemaData\SchemaCellData.cs" />
@@ -142,6 +144,10 @@
     <None Include="Activity1.taact" />
     <None Include="Activity1.taact.diagram">
       <DependentUpon>Activity1.taact</DependentUpon>
+    </None>
+    <None Include="ComponentsDesigner1.tacmpt" />
+    <None Include="ComponentsDesigner1.tacmpt.diagram">
+      <DependentUpon>ComponentsDesigner1.tacmpt</DependentUpon>
     </None>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

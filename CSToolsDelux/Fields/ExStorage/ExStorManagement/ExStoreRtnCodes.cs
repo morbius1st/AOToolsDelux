@@ -7,26 +7,50 @@ namespace CSToolsDelux.Fields.ExStorage.ExStorManagement
 {
 	public enum ExStoreRtnCodes
 	{
-		XRC_ENTITY_NOT_FOUND    = -40,
-		XRC_SCHEMA_NOT_FOUND    = -35,
-		XRC_NOT_CONFIG          = -30,
-		XRC_IS_CONFIG           = -25,
-		XRC_DS_SINGLE_NOT_FOUND = -20,
-		XRC_DS_NOT_EXIST		= -15,
-		XRC_DS_EXISTS           = -10,
-		XRC_APP_NOT_EXIST       = -9,
-		XRC_ROOT_NOT_EXIST      = -8,
-		XRC_EX_STORE_NOT_EXISTS	= -7,
-		XRC_EX_STORE_EXISTS	    = -6,
-		XRC_NOT_FOUND           = -5,
-		XRC_TOO_MANY_OPEN_DOCS  = -4,
-		XRC_NOT_INIT            = -3,
-		XRC_DUPLICATE           = -2,
-		XRC_FAIL                = -1,
-		XRC_GOOD                = 0,
-		XRC_PROCEED_GET_DATA    = 10,
-		XRC_SEARCH_FOR_PRIOR    = 20,
-		XRC_SEARCH_FOUND_PRIOR  = 21,
-		XRC_SEARCH_FOUND_PRIOR_AND_NEW  = 23,
+		XRC_DATA_NOT_FOUND              = -25,
+		XRC_ENTITY_NOT_FOUND            = -20,
+		XRC_SCHEMA_NOT_FOUND            = -15,
+		XRC_DS_EXISTS                   = -11,
+		XRC_DS_NOT_FOUND		        = -10,
+		XRC_TOO_MANY_OPEN_DOCS          = -6,
+		XRC_DUPLICATE                   = -5,
+		// negative - status codes
+		// 0 & positive - process codes
+		XRC_FAIL                        = 0,
+		XRC_GOOD                        = 1,
+		XRC_UNKNOWN                     ,
+		XRC_CANCEL                      ,
+		XRC_EXIT                        ,
+		XRC_PROCEED_GET_DATA            ,
+		XRC_SEARCH_FOR_PRIOR            ,
+		XRC_SEARCH_FOUND_PRIOR          ,
+		XRC_SEARCH_FOUND_PRIOR_AND_NEW  ,
 	}
+
+	public enum ExStoreStartRtnCodes
+	{
+		XSC_NO,
+		XSC_NO_WITH_PRIOR,
+		XSC_YES,
+		XSC_YES_WITH_PRIOR,
+	}
+
+	public enum ExStoreSelectDsRtnCodes
+	{
+		XDS_CANCEL         = 0,
+		XDS_USE_NEW        = 1,
+		XDS_USE_EXIST      = 2,
+		XDS_USE_CURRENT    = 3,
+	}
+
+	public enum ExStorDsLockStatus
+	{
+		XLK_UNKNOWN           = -1,
+		XLK_UNLOCKED          = 0,
+		XLK_LOCKED_BY_ME      = 1,
+		XLK_LOCKED_BY_OTHER   = 2,
+		XLK_OVERRIDE          = 1000
+	}
+
+
 }

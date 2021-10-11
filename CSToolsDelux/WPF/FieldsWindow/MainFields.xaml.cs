@@ -1,42 +1,23 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.ComponentModel;
-using System.Linq;
+using System.Diagnostics;
 using System.Runtime.CompilerServices;
-using System.Text;
-using System.Text.RegularExpressions;
-using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.DB.ExtensibleStorage;
-using Autodesk.Revit.UI;
-using CSToolsDelux.Fields.ExStorage.DataStorageManagement;
 using CSToolsDelux.Fields.ExStorage.ExStorageData;
 using CSToolsDelux.Fields.ExStorage.ExStorManagement;
 using CSToolsDelux.Fields.FieldsManagement;
 using CSToolsDelux.Fields.SchemaInfo.SchemaData;
 using CSToolsDelux.Fields.SchemaInfo.SchemaDefinitions;
-using CSToolsDelux.Fields.SchemaInfo.SchemaManagement;
 using CSToolsDelux.Fields.Testing;
-using CSToolsDelux.WPF;
-using CSToolsDelux.Revit.Commands;
-using CSToolsDelux.Utility;
-using UtilityLibrary;
 
 namespace CSToolsDelux.WPF.FieldsWindow
 {
 
 	/*
 	 * my concept
-	 * this is the conductor that collects and directs the tasks
+	 * MainFields is the conductor that collects and directs the tasks
 	 * in general, it does not perform any tasks
 	 *
 	 * FieldsManager
@@ -48,7 +29,7 @@ namespace CSToolsDelux.WPF.FieldsWindow
 	 * this will have the individual task components that are
 	 * needed by the task manager.
 	 *
-	 * This will utilize the sub-managers / data objects
+	 * ExStoreManager will utilize the sub-managers / data objects
 	 * SchemaManager
 	 * ExStorData
 	 * DataStoreManager
@@ -144,9 +125,9 @@ namespace CSToolsDelux.WPF.FieldsWindow
 		private bool startProcess()
 		{
 			ExStoreRtnCodes result;
-			result = fm.DoesDataStoreExist();
+			// result = fm.proc00();
 
-			if (result != ExStoreRtnCodes.XRC_GOOD) return false;
+			// if (result != ExStoreRtnCodes.XRC_GOOD) return false;
 
 			WriteLineAligned("start process", "good");
 
@@ -203,15 +184,9 @@ namespace CSToolsDelux.WPF.FieldsWindow
 
 	#region test - debug methods
 
-		
-		private void BtnFindRootDs_OnClick(object sender, RoutedEventArgs e)
+		private void BtnDebug_OnClick(object sender, RoutedEventArgs e)
 		{
-			ExStoreRtnCodes result;
-
-			result = fm.FindRootDS();
-
-			WriteLineMsg("find root DS|", result.ToString());
-			ShowMsg();
+			Debug.WriteLine("@debug");
 		}
 
 		private void BtnWriteData_OnClick(object sender, RoutedEventArgs e)
@@ -234,12 +209,9 @@ namespace CSToolsDelux.WPF.FieldsWindow
 			cData.DocumentName = docName;
 			cData.DocKey = exData.DocKey;
 
-			// result = fm.GetDataStorage(raData.DocKey);
-			// if (result != ExStoreRtnCodes.XRC_GOOD) return;
-
 
 			result = fm.DataStorExist(exData.DocKey);
-			if (result == ExStoreRtnCodes.XRC_DS_NOT_EXIST)
+			if (result == ExStoreRtnCodes.XRC_DS_NOT_FOUND)
 			{
 				result = fm.CreateDataStorage(exData.DocKey);
 				if (result != ExStoreRtnCodes.XRC_GOOD) return;
@@ -256,6 +228,19 @@ namespace CSToolsDelux.WPF.FieldsWindow
 				WriteLineAligned($"Data Storage failed!\n");
 			}
 
+			ShowMsg();
+		}
+
+
+
+		
+		private void BtnFindRootDs_OnClick(object sender, RoutedEventArgs e)
+		{
+			ExStoreRtnCodes result;
+
+			result = fm.FindRootDS();
+
+			WriteLine("find root DS|", result.ToString());
 			ShowMsg();
 		}
 
@@ -284,7 +269,7 @@ namespace CSToolsDelux.WPF.FieldsWindow
 				}
 			}
 
-			ExStoreRtnCodes answer = fm.GetRootDataStorages(exData.DocKey, out dx);
+			ExStoreStartRtnCodes answer = fm.GetRootDataStorages(exData.DocKey, out dx);
 
 			WriteMsg("\n");
 			WriteLineAligned($"datastorage found?| {answer.ToString()}", $"quantity| {dx.Count}");

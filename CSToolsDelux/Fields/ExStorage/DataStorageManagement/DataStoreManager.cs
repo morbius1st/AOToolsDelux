@@ -29,6 +29,7 @@ namespace CSToolsDelux.Fields.ExStorage.DataStorageManagement
 
 	#region private fields
 
+
 		private Document doc;
 		private ExStorData exData;
 
@@ -42,6 +43,8 @@ namespace CSToolsDelux.Fields.ExStorage.DataStorageManagement
 		{
 			this.doc = doc;
 			exData = ExStorData.Instance;
+
+			LockStatus = ExStorDsLockStatus.XLK_UNKNOWN;
 		}
 
 	#endregion
@@ -49,6 +52,9 @@ namespace CSToolsDelux.Fields.ExStorage.DataStorageManagement
 	#region public properties
 
 		public List<string> OldDataStorageList => oldDataStorages;
+
+		public static ExStorDsLockStatus LockStatus { get; set; }
+
 
 	#endregion
 
@@ -71,7 +77,7 @@ namespace CSToolsDelux.Fields.ExStorage.DataStorageManagement
 			// already got?
 			if (ExStorData.Instance.MatchName(docKey)) return ExStoreRtnCodes.XRC_GOOD;
 
-			ExStoreRtnCodes result;
+			ExStoreStartRtnCodes result;
 			IList<DataStorage> dsList;
 
 			// step 2
@@ -87,7 +93,7 @@ namespace CSToolsDelux.Fields.ExStorage.DataStorageManagement
 			}
 
 			// not found
-			return ExStoreRtnCodes.XRC_DS_NOT_EXIST;
+			return ExStoreRtnCodes.XRC_DS_NOT_FOUND;
 		}
 
 		public ExStoreRtnCodes CreateDataStorage(string docKey)
@@ -110,15 +116,25 @@ namespace CSToolsDelux.Fields.ExStorage.DataStorageManagement
 			return ExStoreRtnCodes.XRC_GOOD;
 		}
 
-		public ExStoreRtnCodes FindDataStorages(string docKey, out IList<DataStorage> dx)
+
+		/// <summary>
+		/// Search for 
+		/// </summary>
+		/// <param name="docKey"></param>
+		/// <param name="dx"></param>
+		/// <returns></returns>
+		public ExStoreStartRtnCodes FindDataStorages(string docKey, out IList<DataStorage> dx)
 		{
+			ExStoreStartRtnCodes answer;
+
 			ExStoreRtnCodes result;
-			string vendIdPrefix = ExStorData.MakeVendIdPrefix();
+			string vendIdPrefix = ExStorData.VendorId;
 
 			dx = new List<DataStorage>(1);
 			oldDataStorages = new List<string>();
 
 			IList<DataStorage> dataStorList;
+
 			result = FindDataStorages(out dataStorList);
 
 			foreach (Element ds in dataStorList)
@@ -133,34 +149,43 @@ namespace CSToolsDelux.Fields.ExStorage.DataStorageManagement
 				}
 			}
 
-			if (oldDataStorages.Count > 0)
+			if (dx.Count > 0)
 			{
-				result = ExStoreRtnCodes.XRC_SEARCH_FOUND_PRIOR;
-
-				if (dx.Count > 0)
+				if (oldDataStorages.Count == 0)
 				{
-					result = ExStoreRtnCodes.XRC_SEARCH_FOUND_PRIOR_AND_NEW;
+					answer = ExStoreStartRtnCodes.XSC_YES;
+				}
+				else
+				{
+					answer = ExStoreStartRtnCodes.XSC_YES_WITH_PRIOR;
 				}
 			}
-			else if (dx.Count > 0)
+			else
 			{
-				result = ExStoreRtnCodes.XRC_GOOD;
+				if (oldDataStorages.Count == 0)
+				{
+					answer = ExStoreStartRtnCodes.XSC_NO;
+				}
+				else
+				{
+					answer = ExStoreStartRtnCodes.XSC_NO_WITH_PRIOR;
+				}
 			}
 
-			return result;
+			return answer;
 		}
 
 		// find all DataStorages
 		public ExStoreRtnCodes FindDataStorages(out IList<DataStorage> dx)
 		{
-			ExStoreRtnCodes result = ExStoreRtnCodes.XRC_DS_NOT_EXIST;
+			ExStoreRtnCodes result = ExStoreRtnCodes.XRC_DS_NOT_FOUND;
 			dx = new List<DataStorage>(1);
 
 			FilteredElementCollector collector = new FilteredElementCollector(doc);
 
 			FilteredElementCollector dataStorages =
 				collector.OfClass(typeof(DataStorage));
-			if (dataStorages == null) return ExStoreRtnCodes.XRC_DS_NOT_EXIST;
+			if (dataStorages == null) return ExStoreRtnCodes.XRC_DS_NOT_FOUND;
 
 			foreach (Element ds in dataStorages)
 			{

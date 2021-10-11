@@ -34,7 +34,6 @@ namespace CSToolsDelux.Fields.ExStorage.ExStorManagement
 		private SchemaManager scMgr;
 		private ShowInfo show;
 
-
 		public ExStoreManager(AWindow w, Document doc)
 		{
 			this.doc = doc;
@@ -106,12 +105,13 @@ namespace CSToolsDelux.Fields.ExStorage.ExStorManagement
 
 	#region read
 
+		// fn20
 		public ExStoreRtnCodes ReadData()
 		{
 			ExStoreRtnCodes result;
 
 			if (!exData.HasDataStorage || !exData.HasDocKey) 
-				return ExStoreRtnCodes.XRC_DS_NOT_EXIST;
+				return ExStoreRtnCodes.XRC_DS_NOT_FOUND;
 
 			if (!exData.HasEntity || !exData.HasSchema)
 			{
@@ -330,9 +330,9 @@ namespace CSToolsDelux.Fields.ExStorage.ExStorManagement
 			{
 				show.ShowSchemas(schemas);
 
-				ExStoreRtnCodes answer = dsMgr.FindDataStorages(docKey, out dx);
+				ExStoreStartRtnCodes answer = dsMgr.FindDataStorages(docKey, out dx);
 
-				if (answer != ExStoreRtnCodes.XRC_GOOD) return answer;
+				if (answer != ExStoreStartRtnCodes.XSC_YES) return ExStoreRtnCodes.XRC_FAIL;
 			}
 
 			// got a schema and a datastorage - get the entity
@@ -351,7 +351,7 @@ namespace CSToolsDelux.Fields.ExStorage.ExStorManagement
 			Schema s = null;
 
 			if (!exData.HasDataStorage || !exData.HasDocKey) 
-				return ExStoreRtnCodes.XRC_DS_NOT_EXIST;
+				return ExStoreRtnCodes.XRC_DS_NOT_FOUND;
 
 			s = scMgr.FindSchema(exData.DocKey);
 			if (s == null) return ExStoreRtnCodes.XRC_SCHEMA_NOT_FOUND;
@@ -398,7 +398,7 @@ namespace CSToolsDelux.Fields.ExStorage.ExStorManagement
 		//
 		// 	if (schemas != null)
 		// 	{
-		// 		W.WriteLineMsg($"found| {schemas.Count}");
+		// 		W.WriteLine($"found| {schemas.Count}");
 		//
 		// 		foreach (Schema s in schemas)
 		// 		{
@@ -579,7 +579,7 @@ namespace CSToolsDelux.Fields.ExStorage.ExStorManagement
 		//
 		// 		// check if the root datastorage element exists
 		// 		// in the database
-		// 		// if not, create one using the default information
+		// 		// if not, create one using the default show.information
 		// 		if (!DsMgr[ROOT_DATA_STORE].GotDataStorage)
 		// 		{
 		// 			AppRibbon.msg += "don't got xroot\n";
@@ -729,7 +729,7 @@ namespace CSToolsDelux.Fields.ExStorage.ExStorManagement
 		// 		OpDescription = "Create app datastore";
 		// 		if (!IsInit(OpDescription))  return ExStoreRtnCodes.XRC_NOT_INIT;
 		// 		if (Configured) return ExStoreRtnCodes.XRC_IS_CONFIG;
-		// 		if (!DsMgr[ROOT_DATA_STORE].GotDataStorage) return ExStoreRtnCodes.XRC_DS_NOT_EXIST;
+		// 		if (!DsMgr[ROOT_DATA_STORE].GotDataStorage) return ExStoreRtnCodes.XRC_DS_NOT_FOUND;
 		// 		if (DsMgr[APP_DATA_STORE_CURR].GotDataStorage) return ExStoreRtnCodes.XRC_DS_EXISTS;
 		//
 		// 		ExStoreRtnCodes result;
@@ -786,7 +786,7 @@ namespace CSToolsDelux.Fields.ExStorage.ExStorManagement
 		// 		OpDescription = "Create app datastore";
 		// 		if (!IsInit(OpDescription))  return ExStoreRtnCodes.XRC_NOT_INIT;
 		// 		if (Configured) return ExStoreRtnCodes.XRC_IS_CONFIG;
-		// 		if (!DsMgr[ROOT_DATA_STORE].GotDataStorage) return ExStoreRtnCodes.XRC_DS_NOT_EXIST;
+		// 		if (!DsMgr[ROOT_DATA_STORE].GotDataStorage) return ExStoreRtnCodes.XRC_DS_NOT_FOUND;
 		// 		if (DsMgr[APP_DATA_STORE_CURR].GotDataStorage) return ExStoreRtnCodes.XRC_DS_EXISTS;
 		//
 		// 		ExStoreRtnCodes result;
@@ -813,7 +813,7 @@ namespace CSToolsDelux.Fields.ExStorage.ExStorManagement
 		// 	private ExStoreRtnCodes ReadRoot()
 		// 	{
 		// 		OpDescription = "Read Root Data";
-		// 		if (!DsMgr[ROOT_DATA_STORE].GotDataStorage) return ExStoreRtnCodes.XRC_DS_NOT_EXIST;
+		// 		if (!DsMgr[ROOT_DATA_STORE].GotDataStorage) return ExStoreRtnCodes.XRC_DS_NOT_FOUND;
 		// 		// if (!IsInit(OpDescription))  return ExStoreRtnCodes.NOT_INIT;
 		// 		// if (!IsConfig(OpDescription))  return ExStoreRtnCodes.NOT_CONFIG;
 		//
@@ -861,7 +861,7 @@ namespace CSToolsDelux.Fields.ExStorage.ExStorManagement
 		// 	{
 		// 		OpDescription = "Write Root Data";
 		// 		if (!DsMgr[ROOT_DATA_STORE].GotDataStorage)
-		// 			return ExStoreRtnCodes.XRC_DS_NOT_EXIST;
+		// 			return ExStoreRtnCodes.XRC_DS_NOT_FOUND;
 		// 		// if (!IsInit("Save App Data"))  return ExStoreRtnCodes.NOT_INIT;
 		// 		// if (RootExStorExists) return ExStoreRtnCodes.ROOT_NOT_EXIST;
 		//

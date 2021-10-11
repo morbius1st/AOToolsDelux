@@ -32,6 +32,7 @@ namespace CSToolsDelux.Fields.ExStorage.ExStorageData
 		private ExStorData() { }
 
 		public string DocKey { get; set; }
+		public static string VendorId { get; private set; }
 
 		public DataStorage DataStorage { get; set; }
 		public Entity Entity { get; set; }
@@ -52,6 +53,8 @@ namespace CSToolsDelux.Fields.ExStorage.ExStorageData
 		public void Config(string docKey, DataStorage ds)
 		{
 			reset();
+
+			VendorId = Util.GetVendorId().Replace('.','_');
 
 			DocKey = docKey;
 			DataStorage = ds;
@@ -91,14 +94,14 @@ namespace CSToolsDelux.Fields.ExStorage.ExStorageData
 
 		internal static string MakeKey(string documentName)
 		{
-			string vendId = MakeVendIdPrefix();
+			string vendId = VendorId;
 			string docName = Regex.Replace(documentName, @"[^0-9a-zA-Z]", "");
 			return vendId + "_" + docName;
 		}
 
-		internal static string MakeVendIdPrefix()
-		{
-			return Util.GetVendorId().Replace('.','_');
-		}
+		// internal static string MakeVendIdPrefix()
+		// {
+		// 	return Util.GetVendorId().Replace('.','_');
+		// }
 	}
 }
