@@ -86,22 +86,23 @@
     <Compile Include="Fields\ExStorage\ExStorManagement\ExStoreManager.cs" />
     <Compile Include="Fields\ExStorage\ExStorManagement\ExStoreRtnCodes.cs" />
     <Compile Include="Fields\FieldsManagement\FieldsManager.cs" />
-    <Compile Include="Fields\FieldsManagement\FieldsStartProcedure.cs" />
-    <Compile Include="Fields\SchemaInfo\SchemaData\ISchemaData.cs" />
-    <Compile Include="Fields\SchemaInfo\SchemaData\SchemaRootAppData.cs" />
+		<Compile Include="Fields\SchemaInfo\SchemaData\ISchemaData.cs" />
+    <Compile Include="Fields\SchemaInfo\SchemaData\SchemaLockData.cs" />
+    <Compile Include="Fields\SchemaInfo\SchemaData\SchemaRootData.cs" />
     <Compile Include="Fields\SchemaInfo\SchemaData\SchemaCellData.cs" />
     <Compile Include="Fields\SchemaInfo\SchemaData\SchemaDataDefinitions\SchemaDataField.cs" />
     <Compile Include="Fields\SchemaInfo\SchemaData\SchemaDataDefinitions\SchemaDataDictionaries.cs" />
     <Compile Include="Fields\SchemaInfo\SchemaDefinitions\ASchemaFields.cs" />
     <Compile Include="Fields\SchemaInfo\SchemaDefinitions\SchemaDictionaryBase.cs" />
-    <Compile Include="Fields\SchemaInfo\SchemaFields\SchemaRootAppFields.cs" />
+    <Compile Include="Fields\SchemaInfo\SchemaFields\SchemaLockFields.cs" />
+    <Compile Include="Fields\SchemaInfo\SchemaFields\SchemaRootFields.cs" />
     <Compile Include="Fields\SchemaInfo\SchemaFields\SchemaCellFields.cs" />
     <Compile Include="Fields\SchemaInfo\SchemaFields\SchemaDictionaries.cs" />
     <Compile Include="Fields\SchemaInfo\SchemaDefinitions\SchemaFieldDef.cs" />
     <Compile Include="Fields\SchemaInfo\SchemaDefinitions\SchemaFieldEnums.cs" />
     <Compile Include="Fields\SchemaInfo\SchemaDefinitions\SchemaGuidManager.cs" />
     <Compile Include="Fields\SchemaInfo\SchemaManagement\SchemaManager.cs" />
-    <Compile Include="Fields\FieldsManagement\FieldsSupport.cs" />
+    <Compile Include="Fields\FieldsManagement\X_FieldsSupport.cs" />
     <Compile Include="Fields\Testing\ExTests01.cs" />
     <Compile Include="Fields\Testing\SampleData.cs" />
     <Compile Include="Fields\Testing\ShowInfo.cs" />
@@ -121,6 +122,18 @@
       <DependentUpon>TestWin01.xaml</DependentUpon>
     </Compile>
   </ItemGroup>
+	<ItemGroup>
+    <Page Include="WPF\FieldsWindow\MainFields.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+  </ItemGroup>
+	<ItemGroup>
+    <Page Include="WPF\TestWindows\TestWin01.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+  </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Resources\information32.png" />
     <EmbeddedResource Include="Resources\information16.png" />
@@ -129,27 +142,7 @@
     <Content Include=".External\Linked Files Here.txt" />
     <Content Include="Other\CSToolsDelux.addin" />
   </ItemGroup>
-  <ItemGroup />
-  <ItemGroup>
-    <Page Include="WPF\FieldsWindow\MainFields.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="WPF\TestWindows\TestWin01.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Activity1.taact" />
-    <None Include="Activity1.taact.diagram">
-      <DependentUpon>Activity1.taact</DependentUpon>
-    </None>
-    <None Include="ComponentsDesigner1.tacmpt" />
-    <None Include="ComponentsDesigner1.tacmpt.diagram">
-      <DependentUpon>ComponentsDesigner1.tacmpt</DependentUpon>
-    </None>
-  </ItemGroup>
+
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PreBuildEvent>echo *** Configuration: $(ConfigurationName) ***</PreBuildEvent>

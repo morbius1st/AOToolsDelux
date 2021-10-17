@@ -54,7 +54,7 @@ namespace CSToolsDelux.Fields.ExStorage.ExStorManagement
 
 	#region delete
 
-		public ExStoreRtnCodes EraseRootApp(Entity e, Schema s)
+		public ExStoreRtnCodes EraseRoot(Entity e, Schema s)
 		{
 			List<Entity> entities;
 			int i;
@@ -115,11 +115,11 @@ namespace CSToolsDelux.Fields.ExStorage.ExStorManagement
 
 			if (!exData.HasEntity || !exData.HasSchema)
 			{
-				result = getRootAppEntityAndSchema();
+				result = getRootEntityAndSchema();
 				if (result != ExStoreRtnCodes.XRC_GOOD) return result;
 			}
 
-			result = readRootAppData();
+			result = readRootData();
 			if (result != ExStoreRtnCodes.XRC_GOOD) return result;
 
 			result = readCellData();
@@ -128,16 +128,16 @@ namespace CSToolsDelux.Fields.ExStorage.ExStorManagement
 			return ExStoreRtnCodes.XRC_GOOD;
 		}
 
-		private ExStoreRtnCodes readRootAppData()
+		private ExStoreRtnCodes readRootData()
 		{
 			ExStoreRtnCodes result;
 
-			SchemaDictionaryRootApp a =
-				exData.RootAppData.Fields;
+			SchemaDictionaryRoot a =
+				exData.RootData.Fields;
 
-			result = readData(exData.RootAppData);
+			result = readData(exData.RootData);
 
-			// result = ReadData(exData.RootAppData.Data, exData.RootAppData.Fields);
+			// result = ReadData(exData.RootData.Data, exData.RootData.Fields);
 			if (result != ExStoreRtnCodes.XRC_GOOD) return result;
 
 			return ExStoreRtnCodes.XRC_GOOD;
@@ -209,19 +209,19 @@ namespace CSToolsDelux.Fields.ExStorage.ExStorManagement
 
 	#region write
 
-		public ExStoreRtnCodes WriteRootAppData(SchemaRootAppData raData, SchemaCellData cData, 
+		public ExStoreRtnCodes WriteRootData(SchemaRootData raData, SchemaCellData cData, 
 			DataStorage ds)
 		{
 			Transaction t = null;
 			string docKey = exData.DocKey;
 			ExStoreRtnCodes result = ExStoreRtnCodes.XRC_FAIL;
 
-			raData.SetValue(SchemaRootAppKey.RAK_NAME, docKey);
+			raData.SetValue(SchemaRootKey.RK_SCHEMA_NAME, docKey);
 
 			try
 			{
 				bool answer =
-					scMgr.MakeRootAppSchema(docKey, raData, cData.DataList.Count);
+					scMgr.MakeRootSchema(docKey, raData, cData.DataList.Count);
 				if (!answer) return ExStoreRtnCodes.XRC_FAIL;
 
 				Schema schema = scMgr.SchemaList[docKey].Schema;
@@ -263,7 +263,7 @@ namespace CSToolsDelux.Fields.ExStorage.ExStorManagement
 				if (f == null || !f.IsValidObject) continue;
 
 
-				if (kvp.Value.FieldDef.UnitType != RevitUnitType.UT_UNDEFINED)
+				if (kvp.Value.FieldDef.UnitType != FieldUnitType.UT_UNDEFINED)
 				{
 					entity.Set(f, kvp.Value.AsDouble(), DisplayUnitType.DUT_GENERAL);
 				}
@@ -310,7 +310,7 @@ namespace CSToolsDelux.Fields.ExStorage.ExStorManagement
 
 
 		// todo: eliminate?
-		public ExStoreRtnCodes FindRootAppEntity(string docKey, out Entity entity, out Schema schema)
+		public ExStoreRtnCodes FindRootEntity(string docKey, out Entity entity, out Schema schema)
 		{
 			entity = null;
 			schema = null;
@@ -344,7 +344,7 @@ namespace CSToolsDelux.Fields.ExStorage.ExStorManagement
 			return ExStoreRtnCodes.XRC_GOOD;
 		}
 
-		private ExStoreRtnCodes getRootAppEntityAndSchema()
+		private ExStoreRtnCodes getRootEntityAndSchema()
 		{
 			ExStoreRtnCodes result;
 			Entity e = null;
@@ -460,12 +460,12 @@ namespace CSToolsDelux.Fields.ExStorage.ExStorManagement
 		// 	return ExStoreRtnCodes.XRC_GOOD;
 		// }
 
-		// public ExStoreRtnCodes WriteRootAppData(SchemaRootAppData raData, SchemaCellData cData,
+		// public ExStoreRtnCodes WriteRootData(SchemaRootData raData, SchemaCellData cData,
 		// 	DataStorage ds)
 		// {
 		// 	ExStoreRtnCodes result;
 		//
-		// 	result = writeRootAppData(raData, cData, ds);
+		// 	result = writeRootData(raData, cData, ds);
 		// 	if (result != ExStoreRtnCodes.XRC_GOOD) return result;
 		//
 		// 	return ExStoreRtnCodes.XRC_GOOD;
@@ -976,7 +976,7 @@ namespace CSToolsDelux.Fields.ExStorage.ExStorManagement
 		// 		if (result != ExStoreRtnCodes.XRC_GOOD) return result;
 		//
 		// 		xRoot.IsDefault = false;
-		// 		SchemaGuidManager.AppGuidString = XRoot.Data[SchemaRootKey.RK_APP_GUID].Value;
+		// 		SchemaGuidManager.AppGuidString = XRoot.Data[SchemaRootKey.RK_GUID].Value;
 		//
 		// 		return ExStoreRtnCodes.XRC_GOOD;
 		// 	}

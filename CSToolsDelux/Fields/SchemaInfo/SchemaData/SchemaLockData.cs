@@ -11,7 +11,8 @@ using CSToolsDelux.Fields.SchemaInfo.SchemaData.SchemaDataDefinitions;
 using CSToolsDelux.Fields.SchemaInfo.SchemaDefinitions;
 using CSToolsDelux.Fields.SchemaInfo.SchemaFields;
 using CSToolsDelux.Fields.Testing;
-using static CSToolsDelux.Fields.SchemaInfo.SchemaDefinitions.SchemaRootKey;
+using UtilityLibrary;
+using static CSToolsDelux.Fields.SchemaInfo.SchemaDefinitions.SchemaLockKey;
 
 #endregion
 
@@ -39,22 +40,24 @@ namespace CSToolsDelux.Fields.SchemaInfo.SchemaData
 	// }
 
 
-	public class SchemaRootData: 
-		ISchemaData<SchemaRootKey, SchemaDataDictRoot, SchemaDictionaryRoot>
+	public class SchemaLockData: 
+		ISchemaData<SchemaLockKey, SchemaDataDictLock, SchemaDictionaryLock>
 	{
 	#region private fields
 
-		private SchemaDataDictRoot data;
-		private SchemaRootFields appFields;
+		private SchemaDataDictLock data;
+		private SchemaLockFields appFields;
 
 	#endregion
 
 	#region ctor
 
-		public SchemaRootData()
+		public SchemaLockData()
 		{
-			data = new SchemaDataDictRoot();
-			appFields = new SchemaRootFields();
+			data = new SchemaDataDictLock();
+			appFields = new SchemaLockFields();
+
+			Configure();
 		}
 
 	#endregion
@@ -64,23 +67,15 @@ namespace CSToolsDelux.Fields.SchemaInfo.SchemaData
 		public string DocumentName { get; set; }
 		public string DocKey { get; set; }
 
-		public override SchemaDataDictRoot Data {
+		public override SchemaDataDictLock Data 
+		{
 			get => data;
-			protected set {}
-	}
+			protected set { }
+		}
 
-		public SchemaRootFields AppFields => appFields;
+		public SchemaLockFields AppFields => appFields;
 
-		public override SchemaDictionaryRoot Fields => (SchemaDictionaryRoot) appFields.Fields;
-
-		// public ASchemaDataFieldDef<SchemaRootKey> this[SchemaRootKey key]
-		// {
-		// 	get
-		// 	{
-		// 		if (!data.ContainsKey(key)) return null;
-		// 		return data[key];
-		// 	}
-		// }
+		public override SchemaDictionaryLock Fields => (SchemaDictionaryLock) appFields.Fields;
 
 	#endregion
 
@@ -90,38 +85,41 @@ namespace CSToolsDelux.Fields.SchemaInfo.SchemaData
 
 	#region public methods
 
-		public override TD GetValue<TD>(SchemaRootKey key)
+		public override TD GetValue<TD>(SchemaLockKey key)
 		{
-			return ((SchemaRootDataField<TD>) data[key]).Value;
+			return ((SchemaLockDataField<TD>) data[key]).Value;
 		}
 
-		public override void SetValue<TD>(SchemaRootKey key, TD value)
+		public override void SetValue<TD>(SchemaLockKey key, TD value)
 		{
-			((SchemaRootDataField<TD>) data[key]).Value = value;
+			((SchemaLockDataField<TD>) data[key]).Value = value;
 		}
 
-		public override void Add<TD>(SchemaRootKey key, TD value)
+		public override void Add<TD>(SchemaLockKey key, TD value)
 		{
 			Data.Add(key,
-				new SchemaRootDataField<TD>(value, appFields.GetField<TD>(key)));
+				new SchemaLockDataField<TD>(value, appFields.GetField<TD>(key)));
 		}
 
-		public override void AddDefault<TD>(SchemaRootKey key)
+		public override void AddDefault<TD>(SchemaLockKey key)
 		{
-			SchemaFieldDef<TD, SchemaRootKey> f = appFields.GetField<TD>(key);
+			SchemaFieldDef<TD, SchemaLockKey> f = appFields.GetField<TD>(key);
 
 			Data.Add(key,
-				new SchemaRootDataField<TD>(f.Value, f));
+				new SchemaLockDataField<TD>(f.Value, f));
 		}
 
-		public void Configure(string name, string desc)
+		private void Configure()
 		{
-			Add<string>(RK_SCHEMA_NAME, name);
-			Add<string>(RK_DESCRIPTION, desc);
-			AddDefault<string>(RK_VERSION);
-			AddDefault<string>(RK_DEVELOPER);
-			Add<string>(RK_CREATE_DATE, DateTime.UtcNow.ToString());
-			Add<string>(RK_GUID, Guid.Empty.ToString());
+			AddDefault<string>(LK_SCHEMA_NAME);
+			AddDefault<string>(LK_DESCRIPTION);
+			AddDefault<string>(LK_VERSION);
+			AddDefault<string>(LK_USER_NAME);
+			AddDefault<string>(LK_MACHINE_NAME);
+			AddDefault<string>(LK_GUID);
+
+			Add<string>(LK_CREATE_DATE, DateTime.UtcNow.ToString());
+
 		}
 
 	#endregion

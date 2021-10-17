@@ -11,9 +11,9 @@ using CSToolsDelux.Fields.SchemaInfo.SchemaDefinitions;
 namespace CSToolsDelux.Fields.SchemaInfo.SchemaFields
 {
 	
-	public class SchemaDictionaryRootApp : SchemaDictionaryBase<SchemaRootAppKey>
+	public class SchemaDictionaryRoot : SchemaDictionaryBase<SchemaRootKey>
 	{
-		public SchemaDictionaryRootApp Clone()
+		public SchemaDictionaryRoot Clone()
 		{
 			return Clone(this);
 		}
@@ -27,5 +27,15 @@ namespace CSToolsDelux.Fields.SchemaInfo.SchemaFields
 			return Clone(this);
 		}
 	}
+
+	
+	public class SchemaDictionaryLock : SchemaDictionaryBase<SchemaLockKey>
+	{
+		public SchemaDictionaryLock Clone()
+		{
+			return Clone(this);
+		}
+	}
+
 
 }

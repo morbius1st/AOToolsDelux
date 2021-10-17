@@ -199,7 +199,7 @@ namespace CSToolsDelux.Fields.SchemaInfo.SchemaManagement
 
 	#region make schema
 
-		public bool MakeRootAppSchema(string docKey, SchemaRootAppData raData, int QtySubSchema)
+		public bool MakeRootSchema(string docKey, SchemaRootData raData, int QtySubSchema)
 		{
 			if (raData == null || docKey == null || QtySubSchema == 0) return false;
 
@@ -211,8 +211,8 @@ namespace CSToolsDelux.Fields.SchemaInfo.SchemaManagement
 			{
 				SchemaBuilder sb = new SchemaBuilder(Guid.NewGuid());
 
-				makeSchemaDef(ref sb, raData.GetValue<string>(SchemaRootAppKey.RAK_NAME),
-					raData.GetValue<string>(SchemaRootAppKey.RAK_DESCRIPTION));
+				makeSchemaDef(ref sb, raData.GetValue<string>(SchemaRootKey.RK_SCHEMA_NAME),
+					raData.GetValue<string>(SchemaRootKey.RK_DESCRIPTION));
 
 				makeSchemaFields(ref sb, raData.Fields);
 
@@ -256,13 +256,13 @@ namespace CSToolsDelux.Fields.SchemaInfo.SchemaManagement
 
 			fb.SetDocumentation(fieldDef.Desc);
 
-			if (fieldDef.UnitType != RevitUnitType.UT_UNDEFINED)
+			if (fieldDef.UnitType != FieldUnitType.UT_UNDEFINED)
 			{
 				fb.SetUnitType((UnitType) (int) fieldDef.UnitType);
 			}
 		}
 
-		private void makeSchemaSubSchemaFields(string docKey, ref SchemaBuilder sb,  SchemaRootAppData raData)
+		private void makeSchemaSubSchemaFields(string docKey, ref SchemaBuilder sb,  SchemaRootData raData)
 		{
 			int qty = scList[docKey].QtySubSchema;
 
@@ -272,7 +272,7 @@ namespace CSToolsDelux.Fields.SchemaInfo.SchemaManagement
 
 				FieldBuilder fb = sb.AddSimpleField(subS.Item1, typeof(Entity));
 
-				fb.SetDocumentation(raData.GetValue<string>(SchemaRootAppKey.RAK_DESCRIPTION));
+				fb.SetDocumentation(raData.GetValue<string>(SchemaRootKey.RK_DESCRIPTION));
 				fb.SetSubSchemaGUID(subS.Item2);
 
 				scList[docKey].SubSchemaFields.Add(subS.Item1, subS.Item2);
@@ -303,7 +303,7 @@ namespace CSToolsDelux.Fields.SchemaInfo.SchemaManagement
 
 			cData.Index = idx;
 
-			makeSchemaDef(ref sb, cData.GetValue<string>( SchemaCellKey.CK_NAME),
+			makeSchemaDef(ref sb, cData.GetValue<string>( SchemaCellKey.CK_SCHEMA_NAME),
 				cData.GetValue<string>( SchemaCellKey.CK_DESCRIPTION));
 
 			makeSchemaFields(ref sb, cData.Fields);

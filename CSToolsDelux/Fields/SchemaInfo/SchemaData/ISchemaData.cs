@@ -9,15 +9,26 @@ using CSToolsDelux.Fields.SchemaInfo.SchemaDefinitions;
 
 namespace CSToolsDelux.Fields.SchemaInfo.SchemaData
 {
-	public interface ISchemaData<TE, TD, TF> where TE : Enum
-		where TD : SchemaDataDictionaryBase<TE> where TF :  SchemaDictionaryBase<TE>
+	public abstract class ISchemaData<TE, TD, TF> 
+		where TE : Enum
+		where TD : SchemaDataDictionaryBase<TE> 
+		where TF :  SchemaDictionaryBase<TE>
 	{
-		TD Data { get; }
-		TF Fields { get; }
+		public abstract TD Data { get; protected set;}
+		public abstract TF Fields { get;}
 
-		TX GetValue<TX>(TE key);
-		void SetValue<TX>(TE key, TX value);
-		void Add<TX>(TE key, TX value);
-		void AddDefault<TX>(TE key);
+		public ASchemaDataFieldDef<TE> this[TE key]
+		{
+			get
+			{
+				if (!Data.ContainsKey(key)) return null;
+				return Data[key];
+			}
+		}
+
+		public abstract TX GetValue<TX>(TE key);
+		public abstract void SetValue<TX>(TE key, TX value);
+		public abstract void Add<TX>(TE key, TX value);
+		public abstract void AddDefault<TX>(TE key);
 	}
 }

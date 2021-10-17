@@ -12,40 +12,39 @@ using static CSToolsDelux.Fields.SchemaInfo.SchemaDefinitions.UpdateRules;
 
 namespace CSToolsDelux.Fields.SchemaInfo.SchemaFields
 {
-	public class SchemaCellFields : ASchemaFieldsCell
+	public class SchemaCellFields : ASchemaFields2<SchemaCellKey, SchemaDictionaryBase<SchemaCellKey>>
 	{
-		public const string SCHEMA_NAME = "CellDefaultDefinition";
+		// public const string SCHEMA_NAME = "CellDefaultDefinition";
 		public const string SCHEMA_DESC = "Default Root Cells Definition";
 		public const string NOTDEFINED = "<not defined>";
 
 		public SchemaCellFields()
 		{
+			SchemaName = "Fields>FieldSchema>Cell";
 			defineFields();
 		}
 
-		public override SchemaCellKey[] KeyOrder { get; set; }
+		// public CellFields<TD> GetField<TD>(SchemaCellKey key)
+		// {
+		// 	return (CellFields<TD>) Fields[key];
+		// }
+		//
+		// public TD GetValue<TD>(SchemaCellKey key)
+		// {
+		// 	return ((CellFields<TD>) Fields[key]).Value;
+		// }
+		//
+		// public void SetValue<TD>(SchemaCellKey key, TD value)
+		// {
+		// 	((CellFields<TD>) Fields[key]).Value = value;
+		// }
+		//
+		// public ASchemaCellFields GetValue2<TD>(SchemaCellKey key)
+		// {
+		// 	return (ASchemaCellFields) Fields[key];
+		// }
 
-		public SchemaFieldCell<TD> GetField<TD>(SchemaCellKey key)
-		{
-			return (SchemaFieldCell<TD>) Fields[key];
-		}
-
-		public TD GetValue<TD>(SchemaCellKey key)
-		{
-			return ((SchemaFieldCell<TD>) Fields[key]).Value;
-		}
-
-		public void SetValue<TD>(SchemaCellKey key, TD value)
-		{
-			((SchemaFieldCell<TD>) Fields[key]).Value = value;
-		}
-
-		public ASchemaFieldsCell GetValue2<TD>(SchemaCellKey key)
-		{
-			return (ASchemaFieldsCell) Fields[key];
-		}
-
-		private void defineFields()
+		protected override void defineFields()
 		{
 			Fields = new SchemaDictionaryCell();
 
@@ -54,7 +53,7 @@ namespace CSToolsDelux.Fields.SchemaInfo.SchemaFields
 			int idx = 0;
 
 			KeyOrder[idx++] =
-				defineField<string>(CK_NAME, "Name", "Name" , SCHEMA_NAME);
+				defineField<string>(CK_SCHEMA_NAME, "Name", "Name" , SchemaName);
 
 			KeyOrder[idx++] =
 				defineField<string>(CK_DESCRIPTION, "Description", "Description", SCHEMA_DESC );

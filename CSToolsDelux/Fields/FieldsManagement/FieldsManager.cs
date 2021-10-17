@@ -47,8 +47,9 @@ namespace CSToolsDelux.Fields.FieldsManagement
 
 		static FieldsManager()
 		{
-			raFields = new SchemaRootAppFields();
+			raFields = new SchemaRootFields();
 			cFields = new SchemaCellFields();
+			lFields = new SchemaLockFields();
 		}
 
 		public FieldsManager(AWindow w, Document doc)
@@ -63,7 +64,7 @@ namespace CSToolsDelux.Fields.FieldsManagement
 			exData = ExStorData.Instance;
 			// fs = new FieldsStartProcedure(w);
 
-			raData = new SchemaRootAppData();
+			raData = new SchemaRootData();
 			raData.Configure("Root-App Data Name", "Root-App Data Description");
 
 			cData = new SchemaCellData();
@@ -75,11 +76,13 @@ namespace CSToolsDelux.Fields.FieldsManagement
 
 	#region public properties
 
-		public SchemaRootAppData raData { get; private set; }
+		public SchemaRootData raData { get; private set; }
 		public SchemaCellData cData { get; private set; }
+		public SchemaLockData lData { get; private set; }
 
-		public static SchemaRootAppFields raFields { get; }
+		public static SchemaRootFields raFields { get; }
 		public static SchemaCellFields cFields { get; }
+		public static SchemaLockFields lFields { get; }
 
 	#endregion
 
@@ -131,11 +134,11 @@ namespace CSToolsDelux.Fields.FieldsManagement
 			return dsMgr.DataStorageExists(docKey);
 		}
 
-		public ExStoreRtnCodes FindRootAppEntity(string docName, out Entity entity, out Schema schema)
+		public ExStoreRtnCodes FindAppEntity(string docName, out Entity entity, out Schema schema)
 		{
 			ExStoreRtnCodes result;
 
-			result = exMgr.FindRootAppEntity(docName, out entity, out schema);
+			result = exMgr.FindRootEntity(docName, out entity, out schema);
 
 			return result;
 		}
@@ -144,7 +147,7 @@ namespace CSToolsDelux.Fields.FieldsManagement
 
 	#region get
 
-		public bool GetRootAppSchemas(string docKey, out IList<Schema> schemas)
+		public bool GetAppSchemas(string docKey, out IList<Schema> schemas)
 		{
 			schemas = null;
 
@@ -171,7 +174,7 @@ namespace CSToolsDelux.Fields.FieldsManagement
 
 	#region write
 
-		public ExStoreRtnCodes WriteRootApp(SchemaRootAppData raData, SchemaCellData cData)
+		public ExStoreRtnCodes WriteRoot(SchemaRootData raData, SchemaCellData cData)
 		{
 			Transaction T;
 			ExStoreRtnCodes result;
@@ -179,7 +182,7 @@ namespace CSToolsDelux.Fields.FieldsManagement
 			using (T = new Transaction(AppRibbon.Doc, "fields"))
 			{
 				T.Start();
-				result = exMgr.WriteRootAppData(raData, cData, exData.DataStorage);
+				result = exMgr.WriteRootData(raData, cData, exData.DataStorage);
 				if (result == ExStoreRtnCodes.XRC_GOOD)
 				{
 					T.Commit();
@@ -219,15 +222,15 @@ namespace CSToolsDelux.Fields.FieldsManagement
 
 	#region delete
 
-		public ExStoreRtnCodes DeleteRootApp(string docKey)
+		public ExStoreRtnCodes DeleteRoot(string docKey)
 		{
 			Entity entity;
 			Schema schema;
 
-			ExStoreRtnCodes result = FindRootAppEntity(docKey, out entity, out schema);
+			ExStoreRtnCodes result = FindAppEntity(docKey, out entity, out schema);
 			if (result != ExStoreRtnCodes.XRC_GOOD) return result;
 
-			result = exMgr.EraseRootApp(entity, schema);
+			result = exMgr.EraseRoot(entity, schema);
 			if (result != ExStoreRtnCodes.XRC_GOOD) return result;
 
 			return ExStoreRtnCodes.XRC_GOOD;
@@ -280,27 +283,41 @@ namespace CSToolsDelux.Fields.FieldsManagement
 
 	#endregion
 
-
 	#region public show methods
 
-		public void ShowRootAppFields()
+		public void ShowRootFields()
 		{
-			show.ShowRootAppFields(raFields);
+			// show.ShowRootFields(raFields);
+			show.ShowSchemaFields(raFields);
 		}
 
-		public void ShowRootAppData()
+		public void ShowRootData()
 		{
-			show.ShowRootAppData(raFields, raData);
+			show.ShowRootData(raFields, raData);
 		}
 
 		public void ShowCellFields()
 		{
-			show.ShowCellFields(cFields);
+			// show.ShowCellFields(cFields);
+			show.ShowSchemaFields(cFields);
 		}
 
 		public void ShowCellData()
 		{
-			show.ShowCellData(cData, cFields);
+			show.ShowCellData( cFields, cData);
+		}
+
+		public void ShowLockFields()
+		{
+			// show.ShowLockFields(lFields);
+			show.ShowSchemaFields(lFields);
+		}
+
+		public void ShowLockData()
+		{
+			lData = new SchemaLockData();
+
+			show.ShowLockData(lFields, lData);
 		}
 
 	#endregion

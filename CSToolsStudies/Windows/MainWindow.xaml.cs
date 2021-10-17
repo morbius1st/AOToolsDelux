@@ -103,7 +103,7 @@ namespace CSToolsStudies.Windows
 		//
 		// private void BtnAppFields_OnClick(object sender, RoutedEventArgs e)
 		// {
-		// 	fmMgr.ShowAppFields();
+		// 	fmMgr.ShowRootFields();
 		// }
 		//
 		// private void BtnAppData_OnClick(object sender, RoutedEventArgs e)
@@ -123,13 +123,24 @@ namespace CSToolsStudies.Windows
 
 		private void BtnRootAppFields_OnClick(object sender, RoutedEventArgs e)
 		{
-			fmMgr.ShowRootAppFields();
+			fmMgr.ShowRootFields();
 		}
 
 		private void BtnRootAppData_OnClick(object sender, RoutedEventArgs e)
 		{
-			fmMgr.ShowRootAppData();
+			fmMgr.ShowRootData();
 		}
+
+		private void BtnShowLockFields_OnClick(object sender, RoutedEventArgs e)
+		{
+			fmMgr.ShowLockFields();
+		}
+
+		private void BtnShowLockData_OnClick(object sender, RoutedEventArgs e)
+		{
+			fmMgr.ShowLockData();
+		}
+
 
 		private void BtnTest02_OnClick(object sender, RoutedEventArgs e) 
 		{

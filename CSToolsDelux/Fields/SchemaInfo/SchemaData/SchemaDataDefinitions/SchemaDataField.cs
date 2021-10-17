@@ -23,9 +23,19 @@ namespace CSToolsDelux.Fields.SchemaInfo.SchemaData.SchemaDataDefinitions
 		}
 	}
 
-	public class SchemaRootAppDataField<TD> : SchemaDataFieldDef<SchemaRootAppKey, TD>
+	public class SchemaRootDataField<TD> : SchemaDataFieldDef<SchemaRootKey, TD>
 	{
-		public SchemaRootAppDataField(TD value, ISchemaFieldDef<SchemaRootAppKey> fieldDef)
+		public SchemaRootDataField(TD value, ISchemaFieldDef<SchemaRootKey> fieldDef)
+		{
+			Value = value;
+			FieldDef = fieldDef;
+			ValueType = typeof(TD);
+		}
+	}
+	
+	public class SchemaLockDataField<TD> : SchemaDataFieldDef<SchemaLockKey, TD>
+	{
+		public SchemaLockDataField(TD value, ISchemaFieldDef<SchemaLockKey> fieldDef)
 		{
 			Value = value;
 			FieldDef = fieldDef;

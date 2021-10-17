@@ -37,26 +37,18 @@ namespace CSToolsStudies.FieldsManagement
 
 		static FieldsManager()
 		{
-			// rFields = new SchemaRootFields();
-			// aFields = new SchemaAppFields();
-			raFields = new SchemaRootAppFields();
+			raFields = new SchemaRootFields();
 			cFields = new SchemaCellFields();
+			lFields = new SchemaLockFields();
 		}
 
 		public FieldsManager(AWindow w)
 		{
-			
 			W = w;
 			show = new ShowInfo(w);
-						
-			// rData = new SchemaRootData();
-			// rData.Configure(SchemaGuidManager.GetNewAppGuidString());
-			//
-			// aData = new SchemaAppData();
-			// aData.Configure("App Data Name", "App Data Description");
 
-			raData = new SchemaRootAppData();
-			raData.Configure("Root-App Data Name", "Root-App Data Description");
+			rData = new SchemaRootData();
+			rData.Configure("Root Data Name", "Root Data Description");
 
 			cData = new SchemaCellData();
 			cData.Configure("new name", "A1", UpdateRules.UR_AS_NEEDED, "cell Family", false, "xl file path", "worksheet name");
@@ -67,17 +59,13 @@ namespace CSToolsStudies.FieldsManagement
 
 	#region public properties
 
-		// public SchemaRootFields SchemaRootFields => rFields;
-		//
-		// public SchemaRootData rData { get; private set; }
-		// public SchemaAppData aData { get; private set; }
-		public SchemaRootAppData raData { get; private set; }
+		public SchemaRootData rData { get; private set; }
 		public SchemaCellData cData { get; private set; }
+		public SchemaLockData lData { get; private set; }
 
-		// public static SchemaRootFields rFields { get; }
-		// public static SchemaAppFields aFields { get; }
-		public static SchemaRootAppFields raFields { get; }
+		public static SchemaRootFields raFields { get; }
 		public static SchemaCellFields cFields { get; }
+		public static SchemaLockFields lFields { get; }
 
 	#endregion
 
@@ -86,50 +74,41 @@ namespace CSToolsStudies.FieldsManagement
 	#endregion
 
 	#region public methods
-		
-		// public void GetDataStorage()
-		// {
-		// 	exMgr.GetDataStorage();
-		// }
 
-		public void ShowRootAppFields()
+		public void ShowRootFields()
 		{
-			show.ShowRootAppFields(raFields);
+			// show.ShowRootFields(raFields);
+
+			show.ShowSchemaFields(raFields);
 		}
 		
-		public void ShowRootAppData()
+		public void ShowRootData()
 		{
-			show.ShowRootAppData(raFields, raData);
+			show.ShowRootData(raFields, rData);
 		}
 
-		// public void ShowRootFields()
-		// {
-		// 	show.ShowRootFields(rFields);
-		// }
-		//
-		// public void ShowRootData()
-		// {
-		// 	show.ShowRootData(rFields, rData);
-		// }
-		//
-		// public void ShowAppFields()
-		// {
-		// 	show.ShowAppFields(aFields);
-		// }
-		//
-		// public void ShowAppData()
-		// {
-		// 	show.ShowAppData(aFields, aData);
-		// }
-		// 		
 		public void ShowCellFields()
 		{
-			show.ShowCellFields(cFields);
+			// show.ShowCellFields(cFields);
+			show.ShowSchemaFields(cFields);
 		}
 
 		public void ShowCellData()
 		{
-			show.ShowCellData(cData, cFields);
+			show.ShowCellData( cFields, cData);
+		}
+		
+		public void ShowLockFields()
+		{
+			// show.ShowLockFields(lFields);
+			show.ShowSchemaFields(lFields);
+		}
+
+		public void ShowLockData()
+		{
+			lData = new SchemaLockData();
+
+			show.ShowLockData( lFields, lData);
 		}
 
 	#endregion

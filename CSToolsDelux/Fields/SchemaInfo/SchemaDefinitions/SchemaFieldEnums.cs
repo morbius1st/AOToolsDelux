@@ -9,27 +9,38 @@ using Autodesk.Revit.DB;
 
 namespace CSToolsDelux.Fields.SchemaInfo.SchemaDefinitions
 {
-	public enum SchemaRootAppKey
+	public enum SchemaRootKey
 	{
-		RAK_NAME              = 10,
-		RAK_DESCRIPTION       = 20,
-		RAK_VERSION           = 30,
-		RAK_DEVELOPER         = 40,
-		RAK_CREATE_DATE       = 60,
-		RAK_APP_GUID          = 70,
+		RK_SCHEMA_NAME       ,
+		RK_DESCRIPTION       ,
+		RK_VERSION           ,
+		RK_DEVELOPER         ,
+		RK_CREATE_DATE       ,
+		RK_GUID          ,
 	}
 
 	public enum SchemaCellKey
 	{
-		CK_NAME              = 10,
-		CK_VERSION           = 20,
-		CK_DESCRIPTION       = 30,
-		CK_SEQUENCE          = 40,
-		CK_UPDATE_RULE       = 50,
-		CK_CELL_FAMILY_NAME  = 60,
-		CK_SKIP              = 70,
-		CK_XL_FILE_PATH      = 80,
-		CK_XL_WORKSHEET_NAME = 90,
+		CK_SCHEMA_NAME       ,
+		CK_DESCRIPTION       ,
+		CK_VERSION           ,
+		CK_SEQUENCE          ,
+		CK_UPDATE_RULE       ,
+		CK_CELL_FAMILY_NAME  ,
+		CK_SKIP              ,
+		CK_XL_FILE_PATH      ,
+		CK_XL_WORKSHEET_NAME ,
+	}
+
+	public enum SchemaLockKey
+	{
+		LK_SCHEMA_NAME       ,
+		LK_DESCRIPTION       ,
+		LK_VERSION           ,
+		LK_CREATE_DATE       ,
+		LK_USER_NAME         ,
+		LK_MACHINE_NAME      ,
+		LK_GUID              ,
 	}
 
 	public enum SchemaBoolOpts
@@ -50,7 +61,7 @@ namespace CSToolsDelux.Fields.SchemaInfo.SchemaDefinitions
 
 
 	// defined here as this file will be revit specific
-	public enum RevitUnitType
+	public enum FieldUnitType
 	{
 		UT_CUSTOM = UnitType.UT_Custom,
 		UT_UNDEFINED = UnitType.UT_Undefined,

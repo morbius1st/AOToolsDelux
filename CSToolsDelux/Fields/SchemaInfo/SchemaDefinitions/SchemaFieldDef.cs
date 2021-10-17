@@ -10,20 +10,29 @@ using System;
 namespace CSToolsDelux.Fields.SchemaInfo.SchemaDefinitions
 {
 	
-	public class SchemaFieldRootApp<TD> : SchemaFieldDef<TD, SchemaRootAppKey>
+	public class RootFields<TD> : SchemaFieldDef<TD, SchemaRootKey>
 	{
-		public SchemaFieldRootApp(SchemaRootAppKey sequence, string name, string desc, TD val,
-			RevitUnitType unitType = RevitUnitType.UT_UNDEFINED, string guid = "") :
+		public RootFields(SchemaRootKey sequence, string name, string desc, TD val,
+			FieldUnitType unitType = FieldUnitType.UT_UNDEFINED, string guid = "") :
 			base(sequence, name, desc, val, unitType, guid) {}
 	}
 
 	
-	public class SchemaFieldCell<TD> : SchemaFieldDef<TD, SchemaCellKey>
+	public class CellFields<TD> : SchemaFieldDef<TD, SchemaCellKey>
 	{
-		public SchemaFieldCell(SchemaCellKey sequence, string name, string desc, TD val,
-			RevitUnitType unitType = RevitUnitType.UT_UNDEFINED, string guid = "") :
+		public CellFields(SchemaCellKey sequence, string name, string desc, TD val,
+			FieldUnitType unitType = FieldUnitType.UT_UNDEFINED, string guid = "") :
 			base(sequence, name, desc, val, unitType, guid) {}
 	}
+
+		
+	public class LockFields<TD> : SchemaFieldDef<TD, SchemaLockKey>
+	{
+		public LockFields(SchemaLockKey sequence, string name, string desc, TD val,
+			FieldUnitType unitType = FieldUnitType.UT_UNDEFINED, string guid = "") :
+			base(sequence, name, desc, val, unitType, guid) {}
+	}
+
 
 	public interface ISchemaFieldDef<TE> where TE : Enum
 	{
@@ -31,7 +40,7 @@ namespace CSToolsDelux.Fields.SchemaInfo.SchemaDefinitions
 		int Sequence { get;}
 		string Name { get;}
 		string Desc { get;}
-		RevitUnitType UnitType { get;}
+		FieldUnitType UnitType { get;}
 		string Guid { get; }
 		string ValueString { get; }
 		Type ValueType { get; }
@@ -52,7 +61,7 @@ namespace CSToolsDelux.Fields.SchemaInfo.SchemaDefinitions
 		public string Desc { get; set; }
 
 		// [DataMember(Order = 4)]
-		public RevitUnitType UnitType { get; set; }
+		public FieldUnitType UnitType { get; set; }
 
 		// [DataMember(Order = 5)]
 		public string Guid { get; set; }
@@ -70,12 +79,12 @@ namespace CSToolsDelux.Fields.SchemaInfo.SchemaDefinitions
 			Name = null;
 			Desc = null;
 			Value = default;
-			UnitType = RevitUnitType.UT_UNDEFINED;
+			UnitType = FieldUnitType.UT_UNDEFINED;
 			Guid = null;
 		}
 
 		public SchemaFieldDef(TE sequence, string name, string desc, TD val,
-			RevitUnitType unitType = RevitUnitType.UT_UNDEFINED, string guid = "")
+			FieldUnitType unitType = FieldUnitType.UT_UNDEFINED, string guid = "")
 		{
 			Key = sequence;
 			Sequence = (int)(object) sequence;

@@ -21,13 +21,16 @@ namespace CSToolsDelux.WPF.FieldsWindow
 	 * in general, it does not perform any tasks
 	 *
 	 * FieldsManager
-	 * is the primary task manager.  this will have a collection of
-	 * tasks that need to be performed as directed by MainFields
+	 * is the primary process manager.  this will have a collection of
+	 * processes that can be performed as directed by MainFields
+	 * e.g StartProcess (e.g. proc00)
 	 *
 	 * ExStoreManager
-	 * is the primary action manager & performer
-	 * this will have the individual task components that are
+	 * is the primary action / task performer / manager
+	 * this will have the individual task components (procedures / methods) that are
 	 * needed by the task manager.
+	 * e.g. get data on startup (e.g. proc01)
+	 * e.g. check lock status (e.g. procLx401)
 	 *
 	 * ExStoreManager will utilize the sub-managers / data objects
 	 * SchemaManager
@@ -49,7 +52,7 @@ namespace CSToolsDelux.WPF.FieldsWindow
 
 		private ExTests01 et;
 		private ExStorData exData;
-		private SchemaRootAppData raData;
+		private SchemaRootData raData;
 		private SchemaCellData cData;
 
 		private Document doc;
@@ -182,14 +185,136 @@ namespace CSToolsDelux.WPF.FieldsWindow
 
 	#endregion
 
-	#region test - debug methods
+	#region new - debug methods
+
+		private void BtnSetRoot_OnClick(object sender, RoutedEventArgs e)
+		{
+
+		}
+		
+		private void BtnSetCell_OnClick(object sender, RoutedEventArgs e)
+		{
+
+		}
+		
+		private void BtnSetLock_OnClick(object sender, RoutedEventArgs e)
+		{
+
+		}
+
+		private void BtnMakeDs_OnClick(object sender, RoutedEventArgs e)
+		{
+
+		}
+		
+		private void BtnFindDs_OnClick(object sender, RoutedEventArgs e)
+		{
+
+		}
+
+
+	#endregion
+
+	#region debug method
 
 		private void BtnDebug_OnClick(object sender, RoutedEventArgs e)
 		{
 			Debug.WriteLine("@debug");
 		}
 
-		private void BtnWriteData_OnClick(object sender, RoutedEventArgs e)
+	#endregion
+
+	#region show - debug methods
+
+		// show
+
+		private void BtnShowRootData_OnClick(object sender, RoutedEventArgs e)
+		{
+			fm.ShowRootData();
+		}
+
+		private void BtnShowRootFields_OnClick(object sender, RoutedEventArgs e)
+		{
+			fm.ShowRootFields();
+		}
+
+		private void BtnShowCellFields_OnClick(object sender, RoutedEventArgs e)
+		{
+			fm.ShowCellFields();
+		}
+
+		private void BtnShowCellData_OnClick(object sender, RoutedEventArgs e)
+		{
+			fm.ShowCellData();
+		}
+
+		private void BtnShowLockFields_OnClick(object sender, RoutedEventArgs e)
+		{
+			fm.ShowLockFields();
+		}
+
+		private void BtnShowLockData_OnClick(object sender, RoutedEventArgs e)
+		{
+			fm.ShowLockData();
+		}
+
+	#endregion
+
+	#region old - debug methods
+
+		// "old"
+
+		private void BtnStartProcess_OnClick(object sender, RoutedEventArgs e)
+		{
+
+			using (Transaction T = new Transaction(AppRibbon.Doc, "fields| Read"))
+			{
+				T.Start();
+
+				ExStoreRtnCodes result = et.StartProcess(exData.DocKey);
+
+				if (result == ExStoreRtnCodes.XRC_GOOD)
+				{
+					T.Commit();
+					WriteLineAligned($"read| ");
+					WriteLineAligned($"date| {exData.RootData.GetValue<string>(SchemaRootKey.RK_CREATE_DATE)}");
+				}
+				else
+				{
+					T.RollBack();
+
+					WriteLineAligned($"not read| {result.ToString()}");
+				}
+			}
+
+			ShowMsg();
+		}
+
+		private void BtnDeleteRoot_OnClick(object sender, RoutedEventArgs e)
+		{
+			using (Transaction T = new Transaction(AppRibbon.Doc, "fields"))
+			{
+				T.Start();
+
+				ExStoreRtnCodes result = fm.DeleteRoot(exData.DocKey);
+
+				if (result == ExStoreRtnCodes.XRC_GOOD)
+				{
+					T.Commit();
+					WriteLineAligned($"erased| ");
+				}
+				else
+				{
+					T.RollBack();
+
+					WriteLineAligned($"entity NOT found| ");
+				}
+			}
+
+			ShowMsg();
+		}
+
+		private void BtnWriteRoot_OnClick(object sender, RoutedEventArgs e)
 		{
 			// test only
 			// et.testNames();
@@ -198,7 +323,7 @@ namespace CSToolsDelux.WPF.FieldsWindow
 			ExStoreRtnCodes result;
 
 			// bogus data for testing
-			raData = new SchemaRootAppData();
+			raData = new SchemaRootData();
 			raData.Configure("Root_App_Data_Name", "Root-App Data Description");
 			raData.DocumentName = docName;
 			raData.DocKey = exData.DocKey;
@@ -217,7 +342,7 @@ namespace CSToolsDelux.WPF.FieldsWindow
 				if (result != ExStoreRtnCodes.XRC_GOOD) return;
 			}
 
-			result = fm.WriteRootApp(raData, cData);
+			result = fm.WriteRoot(raData, cData);
 
 			if (result == ExStoreRtnCodes.XRC_GOOD)
 			{
@@ -231,20 +356,7 @@ namespace CSToolsDelux.WPF.FieldsWindow
 			ShowMsg();
 		}
 
-
-
-		
-		private void BtnFindRootDs_OnClick(object sender, RoutedEventArgs e)
-		{
-			ExStoreRtnCodes result;
-
-			result = fm.FindRootDS();
-
-			WriteLine("find root DS|", result.ToString());
-			ShowMsg();
-		}
-
-		private void BtnFindSchemaAndDataStor_OnClick(object sender, RoutedEventArgs e)
+		private void BtnFindRoot_OnClick(object sender, RoutedEventArgs e)
 		{
 			// get the entity by using ELEMENT.GetEntity(Schema) - 
 			// per the below, the DataStorage is the element 
@@ -255,7 +367,7 @@ namespace CSToolsDelux.WPF.FieldsWindow
 			IList<Schema> schemas;
 			IList<DataStorage> dx;
 
-			bool result = fm.GetRootAppSchemas(exData.DocKey, out schemas);
+			bool result = fm.GetAppSchemas(exData.DocKey, out schemas);
 
 			WriteLineAligned($"schema (in memory) found?| {result.ToString()}", $"quantity| {schemas.Count}");
 
@@ -287,77 +399,17 @@ namespace CSToolsDelux.WPF.FieldsWindow
 			ShowMsg();
 		}
 
-		private void BtnDelete_OnClick(object sender, RoutedEventArgs e)
+		// probably n/a
+		private void BtnFindRootDs_OnClick(object sender, RoutedEventArgs e)
 		{
-			using (Transaction T = new Transaction(AppRibbon.Doc, "fields"))
-			{
-				T.Start();
+			ExStoreRtnCodes result;
 
-				ExStoreRtnCodes result = fm.DeleteRootApp(exData.DocKey);
+			result = fm.FindRootDS();
 
-				if (result == ExStoreRtnCodes.XRC_GOOD)
-				{
-					T.Commit();
-					WriteLineAligned($"erased| ");
-				}
-				else
-				{
-					T.RollBack();
-
-					WriteLineAligned($"entity NOT found| ");
-				}
-			}
-
+			WriteLine("find root DS|", result.ToString());
 			ShowMsg();
 		}
 
-		private void BtnRead_OnClick(object sender, RoutedEventArgs e)
-		{
-
-			using (Transaction T = new Transaction(AppRibbon.Doc, "fields| Read"))
-			{
-				T.Start();
-
-				ExStoreRtnCodes result = et.StartProcess(exData.DocKey);
-
-				if (result == ExStoreRtnCodes.XRC_GOOD)
-				{
-					T.Commit();
-					WriteLineAligned($"read| ");
-					WriteLineAligned($"date| {exData.RootAppData.GetValue<string>(SchemaRootAppKey.RAK_CREATE_DATE)}");
-				}
-				else
-				{
-					T.RollBack();
-
-					WriteLineAligned($"not read| {result.ToString()}");
-				}
-			}
-
-			ShowMsg();
-		}
-
-
-
-		private void BtnRootAppFields_OnClick(object sender, RoutedEventArgs e)
-		{
-			fm.ShowRootAppFields();
-		}
-
-		private void BtnRootAppData_OnClick(object sender, RoutedEventArgs e)
-		{
-			fm.ShowRootAppData();
-		}
-
-		private void BtnCellFields_OnClick(object sender, RoutedEventArgs e)
-		{
-			fm.ShowCellFields();
-		}
-
-		private void BtnCellData_OnClick(object sender, RoutedEventArgs e)
-		{
-			fm.ShowCellData();
-		}
 
 	#endregion
 

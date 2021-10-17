@@ -12,7 +12,9 @@ namespace CSToolsDelux.Fields.SchemaInfo.SchemaData.SchemaDataDefinitions
 
 	public class SchemaDataDictCell : SchemaDataDictionaryBase<SchemaCellKey> { }
 
-	public class SchemaDataDictRootApp : SchemaDataDictionaryBase<SchemaRootAppKey> { }
+	public class SchemaDataDictRoot : SchemaDataDictionaryBase<SchemaRootKey> { }
+
+	public class SchemaDataDictLock : SchemaDataDictionaryBase<SchemaLockKey> { }
 
 	public class SchemaDataDictionaryBase<TE> : Dictionary<TE, ASchemaDataFieldDef<TE>>  where TE : Enum
 	{

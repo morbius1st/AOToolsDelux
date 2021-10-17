@@ -20,7 +20,7 @@ namespace CSToolsDelux.Fields.SchemaInfo.SchemaData
 	{
 	#region private fields
 
-		private SchemaCellFields cellFields;
+		private static SchemaCellFields cellFields;
 
 	#endregion
 
@@ -41,14 +41,14 @@ namespace CSToolsDelux.Fields.SchemaInfo.SchemaData
 
 		public SchemaCellFields FieldsDefinition => cellFields;
 
-		public SchemaDictionaryCell Fields => (SchemaDictionaryCell) cellFields.Fields;
+		public override SchemaDictionaryCell Fields => (SchemaDictionaryCell) cellFields.Fields;
 
 		public List<SchemaDataDictCell> DataList { get; set; }
 
-		public SchemaDataDictCell Data
+		public override SchemaDataDictCell Data
 		{
 			get => DataList[Index];
-			private set => DataList[Index] = value; 
+			protected set => DataList[Index] = value; 
 		}
 
 		public Guid ExStorCellGuid => Guid.Empty;
@@ -62,38 +62,6 @@ namespace CSToolsDelux.Fields.SchemaInfo.SchemaData
 	#endregion
 
 	#region public methods
-
-		public TD GetValue<TD>( SchemaCellKey key)
-		{
-			return ((SchemaCellDataField<TD>) Data[key]).Value;
-		}
-
-		public void SetValue<TD>(  SchemaCellKey key, TD value)
-		{
-			((SchemaCellDataField<TD>) Data[key]).Value = value;
-		}
-
-		public void Add<TD>(SchemaCellKey key, TD value)
-		{
-			Data.Add(key,
-				new SchemaCellDataField<TD>(value, cellFields.GetField<TD>(key)));
-		}
-
-		public void AddDefault<TD>(SchemaCellKey key)
-		{
-			SchemaFieldDef<TD, SchemaCellKey> f = cellFields.GetField<TD>(key);
-
-			Data.Add(key,
-				new SchemaCellDataField<TD>(f.Value, f));
-		}
-
-		public SchemaCellDataField<TD> GetDefaultData<TD>( SchemaCellKey key)
-		{
-			SchemaCellDataField<TD> data = new SchemaCellDataField<TD>(cellFields.GetField<TD>(key).Value,
-				cellFields.GetField<TD>(key));
-
-			return data;
-		}
 
 		public void Initialize()
 		{
@@ -113,13 +81,46 @@ namespace CSToolsDelux.Fields.SchemaInfo.SchemaData
 
 			DataList.Add(MakeDefaultCellData());
 
-			SetValue( CK_NAME, name);
+			SetValue( CK_SCHEMA_NAME, name);
 			SetValue( CK_SEQUENCE, seq);
 			SetValue( CK_UPDATE_RULE, (int) ur);
 			SetValue( CK_CELL_FAMILY_NAME, cellFamName);
 			SetValue( CK_SKIP, skip);
 			SetValue( CK_XL_FILE_PATH, xlFilePath);
 			SetValue( CK_XL_WORKSHEET_NAME, xlWrkShtName);
+		}
+
+
+		public override TD GetValue<TD>( SchemaCellKey key)
+		{
+			return ((SchemaCellDataField<TD>) Data[key]).Value;
+		}
+
+		public override void SetValue<TD>(  SchemaCellKey key, TD value)
+		{
+			((SchemaCellDataField<TD>) Data[key]).Value = value;
+		}
+
+		public override void Add<TD>(SchemaCellKey key, TD value)
+		{
+			Data.Add(key,
+				new SchemaCellDataField<TD>(value, cellFields.GetField<TD>(key)));
+		}
+
+		public override void AddDefault<TD>(SchemaCellKey key)
+		{
+			SchemaFieldDef<TD, SchemaCellKey> f = cellFields.GetField<TD>(key);
+
+			Data.Add(key,
+				new SchemaCellDataField<TD>(f.Value, f));
+		}
+
+		public SchemaCellDataField<TD> GetDefaultData<TD>( SchemaCellKey key)
+		{
+			SchemaCellDataField<TD> data = new SchemaCellDataField<TD>(cellFields.GetField<TD>(key).Value,
+				cellFields.GetField<TD>(key));
+
+			return data;
 		}
 
 		public SchemaDictionaryCell DefValues()

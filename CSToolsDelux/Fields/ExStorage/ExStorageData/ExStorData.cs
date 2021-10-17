@@ -37,17 +37,17 @@ namespace CSToolsDelux.Fields.ExStorage.ExStorageData
 		public DataStorage DataStorage { get; set; }
 		public Entity Entity { get; set; }
 		public Schema Schema { get; set; }
-		public SchemaRootAppData RootAppData { get; set; }
+		public SchemaRootData RootData { get; set; }
 		public SchemaCellData CellData { get; set; }
 
 		public bool HasDocKey => DocKey != null;
 		public bool HasDataStorage => DataStorage != null;
 		public bool HasEntity => Entity != null;
 		public bool HasSchema => Schema != null;
-		public bool HasRootApp => RootAppData != null;
+		public bool HasRoot => RootData != null;
 		public bool HasCell => CellData != null;
 
-		public bool HasRootAppData => RootAppData.Data != null;
+		public bool HasRootData => RootData.Data != null;
 		public bool HasCellData => CellData.Data != null;
 
 		public void Config(string docKey, DataStorage ds)
@@ -59,7 +59,7 @@ namespace CSToolsDelux.Fields.ExStorage.ExStorageData
 			DocKey = docKey;
 			DataStorage = ds;
 
-			RootAppData = new SchemaRootAppData();
+			RootData = new SchemaRootData();
 			CellData = new SchemaCellData();
 		}
 
@@ -87,7 +87,7 @@ namespace CSToolsDelux.Fields.ExStorage.ExStorageData
 			DataStorage = null;
 			Entity = null;
 			Schema = null;
-			RootAppData = null;
+			RootData = null;
 			CellData = null;
 		}
 
