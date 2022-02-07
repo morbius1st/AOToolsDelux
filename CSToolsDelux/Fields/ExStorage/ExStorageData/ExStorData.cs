@@ -1,14 +1,8 @@
 ﻿#region + Using Directives
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Text.RegularExpressions;
-using System.Threading.Tasks;
-using System.Windows.Controls;
 using Autodesk.Revit.DB.ExtensibleStorage;
 using CSToolsDelux.Fields.SchemaInfo.SchemaData;
-using CSToolsDelux.Fields.SchemaInfo.SchemaData.SchemaDataDefinitions;
 using CSToolsDelux.Utility;
 
 #endregion
@@ -31,7 +25,7 @@ namespace CSToolsDelux.Fields.ExStorage.ExStorageData
 
 		private ExStorData() { }
 
-		public string DocKey { get; set; }
+		public string DsKey { get; set; }
 		public static string VendorId { get; private set; }
 
 		public DataStorage DataStorage { get; set; }
@@ -40,7 +34,7 @@ namespace CSToolsDelux.Fields.ExStorage.ExStorageData
 		public SchemaRootData RootData { get; set; }
 		public SchemaCellData CellData { get; set; }
 
-		public bool HasDocKey => DocKey != null;
+		public bool HasDsKey => DsKey != null;
 		public bool HasDataStorage => DataStorage != null;
 		public bool HasEntity => Entity != null;
 		public bool HasSchema => Schema != null;
@@ -50,40 +44,40 @@ namespace CSToolsDelux.Fields.ExStorage.ExStorageData
 		public bool HasRootData => RootData.Data != null;
 		public bool HasCellData => CellData.Data != null;
 
-		public void Config(string docKey, DataStorage ds)
+		public void Config(string dsKey, DataStorage ds)
 		{
 			reset();
 
 			VendorId = Util.GetVendorId().Replace('.','_');
 
-			DocKey = docKey;
+			DsKey = dsKey;
 			DataStorage = ds;
 
 			RootData = new SchemaRootData();
 			CellData = new SchemaCellData();
 		}
 
-		public bool MatchDsName(string testDocKey)
+		public bool MatchDsName(string testDsKey)
 		{
 			return (HasDataStorage &&
-				DataStorage.Name.Equals(testDocKey));
+				DataStorage.Name.Equals(testDsKey));
 		}
 
-		public bool MatchDocKeyName(string testDocKey)
+		public bool MatchDsKeyName(string testDsKey)
 		{
-			return (HasDocKey &&
-				DocKey.Equals(testDocKey));
+			return (HasDsKey &&
+				DsKey.Equals(testDsKey));
 		}
 
-		public bool MatchName(string testDocKey)
+		public bool MatchName(string testDsKey)
 		{
-			return (MatchDsName(testDocKey) && 
-				MatchDocKeyName(testDocKey));
+			return (MatchDsName(testDsKey) && 
+				MatchDsKeyName(testDsKey));
 		}
 
 		private void reset()
 		{
-			DocKey = null;
+			DsKey = null;
 			DataStorage = null;
 			Entity = null;
 			Schema = null;

@@ -34,7 +34,11 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
+  <PropertyGroup>
+    <StartupObject />
+  </PropertyGroup>
   <ItemGroup>
+
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
@@ -68,7 +72,8 @@
     <Compile Include="AutoDesk\Revit.cs" />
     <Compile Include="FieldsManagement\FieldsManager.cs" />
     <Compile Include="FieldsManagement\FieldsStartProcedure.cs" />
-    <Compile Include="Testing\FieldStartProcedure.cs" />
+    <Compile Include="Fields\SchemaInfo\SchemaDefinitions\SchemaFieldUnitTypeEnum.cs" />
+    <Compile Include="Testing\Tests01.cs" />
     <Compile Include="Windows\MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
@@ -109,11 +114,6 @@
     <Folder Include="Windows\ResourceFiles\ImageResources\" />
     <Folder Include="Windows\Support\" />
   </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\CSToolsDelux\CSToolsDelux.csproj">
-      <Project>{8d6dbac0-6821-42bc-a690-e88844968d90}</Project>
-      <Name>CSToolsDelux</Name>
-    </ProjectReference>
-  </ItemGroup>
+  <Import Project="..\SharedCode\SharedCode.projitems" Label="Shared" />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

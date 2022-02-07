@@ -2,11 +2,12 @@
 
 using System;
 using System.Collections.Generic;
-using Autodesk.Revit.DB.Analysis;
 using CSToolsDelux.Fields.SchemaInfo.SchemaData.SchemaDataDefinitions;
-using CSToolsDelux.Fields.SchemaInfo.SchemaDefinitions;
-using CSToolsDelux.Fields.SchemaInfo.SchemaFields;
-using static CSToolsDelux.Fields.SchemaInfo.SchemaDefinitions.SchemaCellKey;
+using SharedCode.Fields.SchemaInfo.SchemaSupport;
+using SharedCode.Fields.SchemaInfo.SchemaFields.FieldsTemplates;
+using SharedCode.Fields.SchemaInfo.SchemaData.DataTemplate;
+using SharedCode.Fields.SchemaInfo.SchemaFields;
+using static SharedCode.Fields.SchemaInfo.SchemaSupport.SchemaCellKey;
 
 #endregion
 
@@ -16,11 +17,11 @@ using static CSToolsDelux.Fields.SchemaInfo.SchemaDefinitions.SchemaCellKey;
 namespace CSToolsDelux.Fields.SchemaInfo.SchemaData
 {
 	public class SchemaCellData :
-		ISchemaData<SchemaCellKey, SchemaDataDictCell, SchemaDictionaryCell>
+		ISchemaData<SchemaCellKey, SchemaDataDictCell,  FieldsTempDictionary<SchemaCellKey>>
 	{
 	#region private fields
 
-		private static SchemaCellFields cellFields;
+		private static FieldsCell fieldsCell;
 
 	#endregion
 
@@ -36,12 +37,12 @@ namespace CSToolsDelux.Fields.SchemaInfo.SchemaData
 	#region public properties
 
 		public string DocumentName { get; set; }
-		public string DocKey { get; set; }
+		public string DsKey { get; set; }
 		public int Index { get; set; } = 0;
 
-		public SchemaCellFields FieldsDefinition => cellFields;
+		// public SchemaCellFields FieldsDefinition => cellFields;
 
-		public override SchemaDictionaryCell Fields => (SchemaDictionaryCell) cellFields.Fields;
+		public override FieldsTempDictionary<SchemaCellKey> Fields =>  fieldsCell.Fields;
 
 		public List<SchemaDataDictCell> DataList { get; set; }
 
@@ -67,7 +68,7 @@ namespace CSToolsDelux.Fields.SchemaInfo.SchemaData
 		{
 			if (IsInitialized) return;
 
-			cellFields = new SchemaCellFields();
+			fieldsCell = new FieldsCell();
 
 			DataList = new List<SchemaDataDictCell>();
 
@@ -82,6 +83,7 @@ namespace CSToolsDelux.Fields.SchemaInfo.SchemaData
 			DataList.Add(MakeDefaultCellData());
 
 			SetValue( CK_SCHEMA_NAME, name);
+			SetValue( CK_CREATE_DATE, DateTime.UtcNow.ToString());
 			SetValue( CK_SEQUENCE, seq);
 			SetValue( CK_UPDATE_RULE, (int) ur);
 			SetValue( CK_CELL_FAMILY_NAME, cellFamName);
@@ -93,40 +95,40 @@ namespace CSToolsDelux.Fields.SchemaInfo.SchemaData
 
 		public override TD GetValue<TD>( SchemaCellKey key)
 		{
-			return ((SchemaCellDataField<TD>) Data[key]).Value;
+			return ((CellData<TD>) Data[key]).Value;
 		}
 
 		public override void SetValue<TD>(  SchemaCellKey key, TD value)
 		{
-			((SchemaCellDataField<TD>) Data[key]).Value = value;
+			((CellData<TD>) Data[key]).Value = value;
 		}
 
 		public override void Add<TD>(SchemaCellKey key, TD value)
 		{
 			Data.Add(key,
-				new SchemaCellDataField<TD>(value, cellFields.GetField<TD>(key)));
+				new CellData<TD>(value, fieldsCell.GetField<TD>(key)));
 		}
 
 		public override void AddDefault<TD>(SchemaCellKey key)
 		{
-			SchemaFieldDef<TD, SchemaCellKey> f = cellFields.GetField<TD>(key);
+			FieldsTemp< SchemaCellKey,TD> f = fieldsCell.GetField<TD>(key);
 
 			Data.Add(key,
-				new SchemaCellDataField<TD>(f.Value, f));
+				new CellData<TD>(f.Value, f));
 		}
 
-		public SchemaCellDataField<TD> GetDefaultData<TD>( SchemaCellKey key)
+		public CellData<TD> GetDefaultData<TD>( SchemaCellKey key)
 		{
-			SchemaCellDataField<TD> data = new SchemaCellDataField<TD>(cellFields.GetField<TD>(key).Value,
-				cellFields.GetField<TD>(key));
+			CellData<TD> data = new CellData<TD>(fieldsCell.GetField<TD>(key).Value,
+				fieldsCell.GetField<TD>(key));
 
 			return data;
 		}
 
-		public SchemaDictionaryCell DefValues()
-		{
-			return Fields.Clone();
-		}
+		// public SchemaDictionaryCell DefValues()
+		// {
+		// 	return Fields.Clone();
+		// }
 
 		public void AddDefaultData(int qty)
 		{
@@ -142,11 +144,11 @@ namespace CSToolsDelux.Fields.SchemaInfo.SchemaData
 		{
 			SchemaDataDictCell data = new SchemaDataDictCell();
 
-			for (int j = 0; j < cellFields.KeyOrder.Length; j++)
+			for (int j = 0; j < fieldsCell.FieldOrderDefault.Length; j++)
 			{
-				SchemaCellKey key = cellFields.KeyOrder[j];
+				SchemaCellKey key = fieldsCell.FieldOrderDefault[j];
 
-				Type t = cellFields[key].ValueType;
+				Type t = fieldsCell[key].ValueType;
 
 				if (t == typeof(string))
 				{
@@ -186,11 +188,11 @@ namespace CSToolsDelux.Fields.SchemaInfo.SchemaData
 				copy.Add(new SchemaDataDictCell());
 
 				foreach (KeyValuePair<SchemaCellKey, 
-					ASchemaDataFieldDef<SchemaCellKey>> kvp in DataList[i])
+					ADataMembers<SchemaCellKey>> kvp in DataList[i])
 				{
 					if (kvp.Value.ValueType == typeof(string))
 					{
-						copy[i].Add(kvp.Key, new SchemaCellDataField<SchemaCellKey>(((SchemaCellDataField<SchemaCellKey>)kvp.Value).Value, kvp.Value.FieldDef));
+						copy[i].Add(kvp.Key, new CellData<SchemaCellKey>(((CellData<SchemaCellKey>)kvp.Value).Value, kvp.Value.AFieldsMembers));
 					}
 				}
 			}

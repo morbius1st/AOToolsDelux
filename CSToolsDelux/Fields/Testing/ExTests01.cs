@@ -1,19 +1,14 @@
 ﻿#region + Using Directives
 
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Text.RegularExpressions;
-using System.Threading.Tasks;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.DB.ExtensibleStorage;
 using Autodesk.Revit.UI;
-using CSToolsDelux.Fields.ExStorage.ExStorManagement;
 using CSToolsDelux.Fields.FieldsManagement;
-using CSToolsDelux.Fields.SchemaInfo.SchemaData;
 using CSToolsDelux.Utility;
-using CSToolsDelux.WPF;
+using SharedCode.Windows;
+using SharedCode.Fields.ExStorage.ExStorManagement;
 
 #endregion
 
@@ -40,11 +35,11 @@ namespace CSToolsDelux.Fields.Testing
 		}
 
 
-		public ExStoreRtnCodes StartProcess(string docKey)
+		public ExStoreRtnCodes StartProcess(string dsKey)
 		{
 			ExStoreRtnCodes result;
 	
-			result = fm.DataStorExist(docKey);
+			result = fm.DataStorExist(dsKey);
 
 			if (result == ExStoreRtnCodes.XRC_GOOD)
 			{

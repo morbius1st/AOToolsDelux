@@ -5,6 +5,7 @@
 
 namespace CSToolsDelux.Fields.ExStorage.ExStorManagement
 {
+	/*
 	public enum ExStoreRtnCodes
 	{
 		XRC_DATA_NOT_FOUND              = -25,
@@ -52,5 +53,5 @@ namespace CSToolsDelux.Fields.ExStorage.ExStorManagement
 		XLK_OVERRIDE          = 1000
 	}
 
-
+	*/
 }

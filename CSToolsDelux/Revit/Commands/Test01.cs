@@ -1,9 +1,5 @@
 #region using
 
-using System;
-using System.Collections;
-using System.Threading;
-
 using System.Diagnostics;
 using Autodesk.Revit.ApplicationServices;
 using Autodesk.Revit.Attributes;

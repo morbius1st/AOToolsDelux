@@ -1,10 +1,14 @@
 ﻿#region + Using Directives
 
-using System.Drawing;
-using CSToolsDelux.Fields.ExStorage.DataStorageManagement;
-using CSToolsDelux.Fields.ExStorage.ExStorManagement;
-using CSToolsDelux.Fields.Testing;
-using CSToolsDelux.WPF;
+using SharedCode.Windows;
+using SharedCode.Fields.ExStorage.ExStorManagement;
+using SharedCode.Fields.Testing;
+using SharedCode.ShowInformation;
+using UtilityLibrary;
+
+// using CSToolsDelux.WPF;
+// using CSToolsDelux.Fields.Testing;
+// using CSToolsDelux.Fields.ExStorage.DataStorageManagement;
 
 #endregion
 
@@ -16,11 +20,11 @@ namespace CSToolsStudies.FieldsManagement
 	public class FieldsStartProcedure
 	{
 		// private ExStoreManager exMgr;
-		private ShowInfo show;
+		private ShShowInfo show;
 
 		public FieldsStartProcedure(AWindow w)
 		{
-			show = new ShowInfo(w);
+			show = new ShShowInfo(w, CsUtilities.AssemblyName, "CsToolsStudies");
 		}
 
 	#region pseudo code routines
@@ -402,7 +406,7 @@ namespace CSToolsStudies.FieldsManagement
 			return result;
 		}
 
-
+/*
 		// create the lock DS
 		// procLX101
 		// 
@@ -421,7 +425,7 @@ namespace CSToolsStudies.FieldsManagement
 
 			return result;
 		}
-
+*/
 
 
 

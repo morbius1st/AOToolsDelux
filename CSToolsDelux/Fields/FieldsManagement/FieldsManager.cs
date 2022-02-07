@@ -1,20 +1,22 @@
 ﻿#region using
 
-using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.DB.ExtensibleStorage;
-using Autodesk.Revit.UI;
 using CSToolsDelux.Fields.ExStorage.DataStorageManagement;
 using CSToolsDelux.Fields.ExStorage.ExStorageData;
 using CSToolsDelux.Fields.ExStorage.ExStorManagement;
 using CSToolsDelux.Fields.SchemaInfo.SchemaData;
-using CSToolsDelux.Fields.SchemaInfo.SchemaDefinitions;
-using CSToolsDelux.Fields.SchemaInfo.SchemaFields;
 using CSToolsDelux.Fields.SchemaInfo.SchemaManagement;
-using CSToolsDelux.Fields.Testing;
-using CSToolsDelux.WPF;
+using CSToolsDelux.WPF.FieldsWindow;
+using SharedCode.Fields.SchemaInfo.SchemaSupport;
+using SharedCode.Windows;
+using SharedCode.Fields.SchemaInfo.SchemaData;
+using SharedCode.Fields.SchemaInfo.SchemaFields;
+
+using SharedCode.Fields.ExStorage.ExStorManagement;
+using SharedCode.Fields.Testing;
+using UtilityLibrary;
 
 #endregion
 
@@ -30,11 +32,23 @@ namespace CSToolsDelux.Fields.FieldsManagement
 	{
 	#region private fields
 
+		// basic datastorage routines - create, find, etc.  Also has a list
+		// to save datastorages in order to use the revit model less - eliminate this part
 		private DataStoreManager dsMgr;
-		private ExStorData exData;
+
+		// ex storage routines - create, find, etc. - needs to be refined
 		private ExStoreManager exMgr;
+
+		// the static data class to hold the information for the document's datastore
+		private ExStorData exData;
+
+		// static schema routines - create & find
+		// has a list of schema
 		private SchemaManager scMgr;
-		private ShowInfo show;
+
+		// show information routines
+		private SharedCode.ShowInformation.ShShowInfo show;
+
 		// private FieldsStartProcedure fs;
 
 		private AWindow W;
@@ -47,9 +61,9 @@ namespace CSToolsDelux.Fields.FieldsManagement
 
 		static FieldsManager()
 		{
-			raFields = new SchemaRootFields();
-			cFields = new SchemaCellFields();
-			lFields = new SchemaLockFields();
+			R = new FieldsRoot();
+			C = new FieldsCell();
+			L = new FieldsLock();
 		}
 
 		public FieldsManager(AWindow w, Document doc)
@@ -60,29 +74,36 @@ namespace CSToolsDelux.Fields.FieldsManagement
 			scMgr = SchemaManager.Instance;
 			exMgr = new ExStoreManager(w, doc);
 			dsMgr = new DataStoreManager(doc);
-			show = new ShowInfo(w);
+			show = new SharedCode.ShowInformation.ShShowInfo(w, CsUtilities.AssemblyName, MainFields.DocName);
 			exData = ExStorData.Instance;
 			// fs = new FieldsStartProcedure(w);
 
-			raData = new SchemaRootData();
-			raData.Configure("Root-App Data Name", "Root-App Data Description");
+			rData = new SchemaRootData();
+			rData.Configure("Root Data Name", "Root Data Description");
 
 			cData = new SchemaCellData();
 			cData.Configure("new name", "A1", UpdateRules.UR_AS_NEEDED,
 				"cell Family", false, "xl file path", "worksheet name");
+
+			RtData = new DataRoot(R);
+			RtData.Configure("Root Data Name - Generic");
+
 		}
 
 	#endregion
 
 	#region public properties
 
-		public SchemaRootData raData { get; private set; }
+		public SchemaRootData rData { get; private set; }
 		public SchemaCellData cData { get; private set; }
 		public SchemaLockData lData { get; private set; }
 
-		public static SchemaRootFields raFields { get; }
-		public static SchemaCellFields cFields { get; }
-		public static SchemaLockFields lFields { get; }
+		public static FieldsRoot R { get; }
+		public static FieldsCell C { get; }
+		public static FieldsLock L { get; }
+
+		public DataRoot RtData { get; private set; }
+
 
 	#endregion
 
@@ -264,7 +285,7 @@ namespace CSToolsDelux.Fields.FieldsManagement
 		public ExStoreRtnCodes FindRootDS()
 		{
 			ExStoreRtnCodes result;
-			result = DataStorExist(exData.DocKey);
+			result = DataStorExist(exData.DsKey);
 			if (result == ExStoreRtnCodes.XRC_DS_NOT_FOUND) return result;
 
 			W.WriteLineAligned("fm| find root DS", $"found| {(exData.DataStorage?.Name ?? "null")}");
@@ -287,37 +308,37 @@ namespace CSToolsDelux.Fields.FieldsManagement
 
 		public void ShowRootFields()
 		{
-			// show.ShowRootFields(raFields);
-			show.ShowSchemaFields(raFields);
+			// show.ShowRootFields(rtFields);
+			show.ShowSchemaFields(R);
 		}
 
 		public void ShowRootData()
 		{
-			show.ShowRootData(raFields, raData);
+			// show.ShowRootData(rFields, rData);
 		}
 
 		public void ShowCellFields()
 		{
-			// show.ShowCellFields(cFields);
-			show.ShowSchemaFields(cFields);
+			// show.ShowCellFields(clFields);
+			show.ShowSchemaFields(C);
 		}
 
 		public void ShowCellData()
 		{
-			show.ShowCellData( cFields, cData);
+			// show.ShowCellData( cFields, cData);
 		}
 
 		public void ShowLockFields()
 		{
-			// show.ShowLockFields(lFields);
-			show.ShowSchemaFields(lFields);
+			// show.ShowLockFields(lkFields);
+			show.ShowSchemaFields(L);
 		}
 
 		public void ShowLockData()
 		{
 			lData = new SchemaLockData();
 
-			show.ShowLockData(lFields, lData);
+			// show.ShowLockData(lFields, lData);
 		}
 
 	#endregion

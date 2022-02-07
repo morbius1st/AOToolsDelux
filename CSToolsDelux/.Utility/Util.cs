@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.IO;
 using System.Xml.Serialization;
 using Autodesk.Revit.DB;
@@ -12,7 +11,7 @@ namespace CSToolsDelux.Utility
 	{
 		public static RevitAddIns addinManifest;
 //		public static readonly string nl = Environment.NewLine;
-	
+
 
 		internal const ObjectSnapTypes snaps =
 			ObjectSnapTypes.Centers | ObjectSnapTypes.Endpoints | ObjectSnapTypes.Intersections |
@@ -21,7 +20,6 @@ namespace CSToolsDelux.Utility
 
 		public static string FormatLengthNumber(double length, Units units)
 		{
-			
 			return UnitFormatUtils.Format(units,
 				UnitType.UT_Length, length, true, false);
 		}
@@ -49,7 +47,7 @@ namespace CSToolsDelux.Utility
 
 		internal struct VType
 		{
-			internal VTypeSub VTSub { get;} 
+			internal VTypeSub VTSub { get; }
 			internal VTtypeCat VTCat { get; }
 			internal string VTName { get; }
 
@@ -67,31 +65,31 @@ namespace CSToolsDelux.Utility
 
 			switch (v.ViewType)
 			{
-				case ViewType.AreaPlan:
-				case ViewType.CeilingPlan:
-				case ViewType.EngineeringPlan:
-				case ViewType.FloorPlan:
-					vtype = new VType(VTypeSub.D2_HORIZONTAL, 
-						VTtypeCat.D2_WITHPLANE, "Plan 2D View");
-					break;
-				case ViewType.Elevation:
-				case ViewType.Section:
-					vtype = new VType(VTypeSub.D2_VERTICAL, 
-						VTtypeCat.D2_WITHPLANE, "Vertical 2D View");
-					break;
-				case ViewType.ThreeD:
-					vtype = new VType(VTypeSub.D3_VIEW, 
-						VTtypeCat.D3_WITHPLANE, "3D View");
-					break;
-				case ViewType.Detail:
-				case ViewType.DraftingView:
-					vtype = new VType(VTypeSub.D2_DRAFTING, 
-						VTtypeCat.D2_WITHOUTPLANE, "Drafting View");
-					break;
-				case ViewType.DrawingSheet:
-					vtype = new VType(VTypeSub.D2_SHEET, 
-						VTtypeCat.D2_WITHOUTPLANE, "Sheet View");
-					break;
+			case ViewType.AreaPlan:
+			case ViewType.CeilingPlan:
+			case ViewType.EngineeringPlan:
+			case ViewType.FloorPlan:
+				vtype = new VType(VTypeSub.D2_HORIZONTAL,
+					VTtypeCat.D2_WITHPLANE, "Plan 2D View");
+				break;
+			case ViewType.Elevation:
+			case ViewType.Section:
+				vtype = new VType(VTypeSub.D2_VERTICAL,
+					VTtypeCat.D2_WITHPLANE, "Vertical 2D View");
+				break;
+			case ViewType.ThreeD:
+				vtype = new VType(VTypeSub.D3_VIEW,
+					VTtypeCat.D3_WITHPLANE, "3D View");
+				break;
+			case ViewType.Detail:
+			case ViewType.DraftingView:
+				vtype = new VType(VTypeSub.D2_DRAFTING,
+					VTtypeCat.D2_WITHOUTPLANE, "Drafting View");
+				break;
+			case ViewType.DrawingSheet:
+				vtype = new VType(VTypeSub.D2_SHEET,
+					VTtypeCat.D2_WITHOUTPLANE, "Sheet View");
+				break;
 			}
 
 			return vtype;
@@ -102,7 +100,7 @@ namespace CSToolsDelux.Utility
 			string path = CsUtilities.AssemblyDirectory;
 
 			using (FileStream fs =
-				new FileStream(path + "\\" + AppRibbon.APP_NAME + ".addin", FileMode.Open))
+					new FileStream(path + "\\" + AppRibbon.APP_NAME + ".addin", FileMode.Open))
 			{
 				XmlSerializer xs = new XmlSerializer(typeof(RevitAddIns));
 				addinManifest = (RevitAddIns) xs.Deserialize(fs);
@@ -138,7 +136,6 @@ namespace CSToolsDelux.Utility
 
 			return siteElements[0];
 		}
-
 	}
 
 	// internal struct PointMeasurements

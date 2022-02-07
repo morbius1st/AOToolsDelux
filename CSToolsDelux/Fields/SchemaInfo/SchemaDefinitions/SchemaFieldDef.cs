@@ -1,55 +1,25 @@
 ﻿#region + Using Directives
-
 using System;
+using System.Collections.Generic;
+using SharedCode.Fields.SchemaInfo.SchemaDefinitions;
 
 #endregion
 
 // user name: jeffs
 // created:   7/3/2021 7:16:58 AM
 
+// defines a SINGLE field
+
 namespace CSToolsDelux.Fields.SchemaInfo.SchemaDefinitions
 {
-	
-	public class RootFields<TD> : SchemaFieldDef<TD, SchemaRootKey>
+
+	// definition of a single schema field
+
+	public class SchemaFieldDef<TE, TD> : ISchemaFieldDef<TE> where TE: Enum 
 	{
-		public RootFields(SchemaRootKey sequence, string name, string desc, TD val,
-			FieldUnitType unitType = FieldUnitType.UT_UNDEFINED, string guid = "") :
-			base(sequence, name, desc, val, unitType, guid) {}
-	}
+		// defines the type
+		public KeyValuePair<string, int> Type { get; }
 
-	
-	public class CellFields<TD> : SchemaFieldDef<TD, SchemaCellKey>
-	{
-		public CellFields(SchemaCellKey sequence, string name, string desc, TD val,
-			FieldUnitType unitType = FieldUnitType.UT_UNDEFINED, string guid = "") :
-			base(sequence, name, desc, val, unitType, guid) {}
-	}
-
-		
-	public class LockFields<TD> : SchemaFieldDef<TD, SchemaLockKey>
-	{
-		public LockFields(SchemaLockKey sequence, string name, string desc, TD val,
-			FieldUnitType unitType = FieldUnitType.UT_UNDEFINED, string guid = "") :
-			base(sequence, name, desc, val, unitType, guid) {}
-	}
-
-
-	public interface ISchemaFieldDef<TE> where TE : Enum
-	{
-		TE Key { get; }
-		int Sequence { get;}
-		string Name { get;}
-		string Desc { get;}
-		FieldUnitType UnitType { get;}
-		string Guid { get; }
-		string ValueString { get; }
-		Type ValueType { get; }
-
-		ISchemaFieldDef<TE> Clone();
-	}
-
-	public class SchemaFieldDef<TD, TE> : ISchemaFieldDef<TE> where TE: Enum 
-	{
 		public TE Key { get; private set; }
 		// [DataMember(Order = 1)]
 		public int Sequence { get; set; }
@@ -73,6 +43,14 @@ namespace CSToolsDelux.Fields.SchemaInfo.SchemaDefinitions
 		// [DataMember(Name = "RevitFieldValue", Order = 6)]
 		public TD Value { get; set; }
 
+		public SchemaFieldDisplayLevel DisplayLevel { get; set; }
+
+		// initial order to list in a chart
+		public string DisplayOrder { get; set; }
+
+		// initial display box width
+		public int DisplayWidth { get; set; }
+
 		public SchemaFieldDef()
 		{
 			Sequence = -1;
@@ -81,15 +59,28 @@ namespace CSToolsDelux.Fields.SchemaInfo.SchemaDefinitions
 			Value = default;
 			UnitType = FieldUnitType.UT_UNDEFINED;
 			Guid = null;
+			DisplayLevel = SchemaFieldDisplayLevel.DL_DEBUG;
+			DisplayOrder = null;
+			DisplayWidth = -1;
 		}
 
-		public SchemaFieldDef(TE sequence, string name, string desc, TD val,
-			FieldUnitType unitType = FieldUnitType.UT_UNDEFINED, string guid = "")
+		public SchemaFieldDef(TE sequence,
+			string name,
+			string desc,
+			TD val,
+			SchemaFieldDisplayLevel displayLevel,
+			string dispOrder,
+			int dispWidth,
+			FieldUnitType unitType = FieldUnitType.UT_UNDEFINED,
+			string guid = "")
 		{
 			Key = sequence;
 			Sequence = (int)(object) sequence;
 			Name = name;
 			Desc = desc;
+			DisplayLevel = displayLevel;
+			DisplayOrder = dispOrder;
+			DisplayWidth = dispWidth;
 			Value = val;
 			ValueType = val.GetType();
 			UnitType = unitType;
@@ -98,16 +89,19 @@ namespace CSToolsDelux.Fields.SchemaInfo.SchemaDefinitions
 
 		public ISchemaFieldDef<TE> Clone()
 		{
-			SchemaFieldDef<TD, TE> copy = new SchemaFieldDef<TD, TE>();
+			SchemaFieldDef<TE, TD> copy = new SchemaFieldDef<TE, TD>();
 
-			copy.Key        = Key;
-			copy.Sequence	= Sequence;
-			copy.Name		= Name;
-			copy.Desc		= Desc;
-			copy.ValueType	= ValueType;
-			copy.UnitType	= UnitType;
-			copy.Guid		= Guid;
-			copy.Value		= Value;
+			copy.Key          = Key;
+			copy.Sequence	  = Sequence;
+			copy.Name		  = Name;
+			copy.Desc		  = Desc;
+			copy.DisplayLevel = DisplayLevel;
+			copy.DisplayOrder = DisplayOrder;
+			copy.DisplayWidth = DisplayWidth;
+			copy.ValueType	  = ValueType;
+			copy.UnitType	  = UnitType;
+			copy.Guid		  = Guid;
+			copy.Value		  = Value;
 
 			return copy;
 		}
@@ -117,4 +111,36 @@ namespace CSToolsDelux.Fields.SchemaInfo.SchemaDefinitions
 			return $"(field def) name| {Name}  type| {ValueType}  value| {Value}";
 		}
 	}
+
+	/*
+public class RootFields<TD> : SchemaFieldDef<SchemaRootKey, TD>
+{
+	public RootFields(SchemaRootKey sequence, string name, string desc, TD val,
+		string dispOrder, int dispWidth,
+		FieldUnitType unitType = FieldUnitType.UT_UNDEFINED, string guid = "") :
+		base(sequence, name, desc, val, TODO, dispOrder, dispWidth, unitType, guid) {}
+}
+
+
+public class CellFields<TD> : SchemaFieldDef<SchemaCellKey, TD>
+{
+	public CellFields(SchemaCellKey sequence, string name, string desc, TD val,
+		string dispOrder, int dispWidth,
+		FieldUnitType unitType = FieldUnitType.UT_UNDEFINED, string guid = "") :
+		base(sequence, name, desc, val, TODO, dispOrder, dispWidth, unitType, guid) {}
+}
+
+	
+public class LockFields<TD> : SchemaFieldDef<SchemaLockKey, TD>
+{
+	public LockFields(SchemaLockKey sequence, string name, string desc, TD val,
+		string dispOrder, int dispWidth,
+		FieldUnitType unitType = FieldUnitType.UT_UNDEFINED, string guid = "") :
+		base(sequence, name, desc, val, TODO, dispOrder, dispWidth, unitType, guid) {}
+}
+
+*/
+
+
+
 }

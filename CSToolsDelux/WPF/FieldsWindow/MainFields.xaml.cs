@@ -1,16 +1,16 @@
-﻿using System.Collections.Generic;
-using System.ComponentModel;
+﻿using System.ComponentModel;
 using System.Diagnostics;
 using System.Runtime.CompilerServices;
 using System.Windows;
 using Autodesk.Revit.DB;
-using Autodesk.Revit.DB.ExtensibleStorage;
-using CSToolsDelux.Fields.ExStorage.ExStorageData;
-using CSToolsDelux.Fields.ExStorage.ExStorManagement;
 using CSToolsDelux.Fields.FieldsManagement;
-using CSToolsDelux.Fields.SchemaInfo.SchemaData;
-using CSToolsDelux.Fields.SchemaInfo.SchemaDefinitions;
 using CSToolsDelux.Fields.Testing;
+using SharedCode.Fields.SchemaInfo.SchemaSupport;
+using SharedCode.Windows;
+using SharedCode.Fields.ExStorage.ExStorManagement;
+
+using SharedCode.ShowInformation;
+using UtilityLibrary;
 
 namespace CSToolsDelux.WPF.FieldsWindow
 {
@@ -50,17 +50,26 @@ namespace CSToolsDelux.WPF.FieldsWindow
 	{
 	#region private fields
 
-		private ExTests01 et;
-		private ExStorData exData;
-		private SchemaRootData raData;
-		private SchemaCellData cData;
+		private FieldsManager2 fm2;
+		private ShowInfo show;
+		private ShShowInfo shShow;
 
+		// original
+		// private ExTests01 et;
+		// private ExStorData exData;
+		// private SchemaRootData raData;
+		// private SchemaCellData cData;
+		// /// <inheritdoc cref="FieldsManager"/>
+		// private FieldsManager fm;
+		private static string docName;
+		private string dsKey;
+		private SchemaDataStorType dsType;
+
+		// generic
 		private Document doc;
 
-		/// <inheritdoc cref="FieldsManager"/>
-		private FieldsManager fm;
-
 		private string myName = nameof(MainFields);
+
 		private string textMsg01;
 
 		private int marginSize = 0;
@@ -69,8 +78,6 @@ namespace CSToolsDelux.WPF.FieldsWindow
 
 		private string location;
 
-		private static string docName;
-		private string docKey;
 
 	#endregion
 
@@ -78,22 +85,25 @@ namespace CSToolsDelux.WPF.FieldsWindow
 
 		public MainFields(Document doc)
 		{
-			this.doc = doc;
+			ExStoreRtnCodes result;
 
 			InitializeComponent();
 
-			fm = new FieldsManager(this, doc);
+			this.doc = doc;
+			docName = doc.Title;
+
+			fm2 = new FieldsManager2(this, doc);
+			shShow = new ShShowInfo(this, CsUtilities.AssemblyName, doc.Title);
+			// show = new ShowInfo(this);
+/*
 			et = new ExTests01(this, doc);
 			exData = ExStorData.Instance;
 
-			docName = doc.Title;
-
-			// temp to just creata a bogus old DS entry and name
-			// docName = "HasDataStorage X";
-
-			// save a local copy
-			DocKey = ExStorData.MakeKey(docName);
-			exData.DocKey = docKey;
+			DsKey = ExStorData.MakeKey(docName);
+			exData.DsKey = dsKey;
+*/
+			DsKey = fm2.DsKey;
+			DsType = SchemaDataStorType.DT_ROOT;
 		}
 
 	#endregion
@@ -102,12 +112,22 @@ namespace CSToolsDelux.WPF.FieldsWindow
 
 		public static string DocName => docName;
 
-		public string DocKey
+		public string DsKey
 		{
-			get => docKey ?? "undefined";
+			get => dsKey ?? "undefined";
 			set
 			{
-				docKey = value;
+				dsKey = value;
+				OnPropertyChanged();
+			}
+		}
+
+		public SchemaDataStorType DsType
+		{
+			get => dsType;
+			set
+			{
+				dsType = value;
 				OnPropertyChanged();
 			}
 		}
@@ -189,17 +209,17 @@ namespace CSToolsDelux.WPF.FieldsWindow
 
 		private void BtnSetRoot_OnClick(object sender, RoutedEventArgs e)
 		{
-
+			DsType = SchemaDataStorType.DT_ROOT;
 		}
 		
 		private void BtnSetCell_OnClick(object sender, RoutedEventArgs e)
 		{
-
+			DsType = SchemaDataStorType.DT_CELL;
 		}
 		
 		private void BtnSetLock_OnClick(object sender, RoutedEventArgs e)
 		{
-
+			DsType = SchemaDataStorType.DT_LOCK;
 		}
 
 		private void BtnMakeDs_OnClick(object sender, RoutedEventArgs e)
@@ -209,6 +229,35 @@ namespace CSToolsDelux.WPF.FieldsWindow
 		
 		private void BtnFindDs_OnClick(object sender, RoutedEventArgs e)
 		{
+
+		}
+
+
+
+		// show info
+		private void BtnShowData_OnClick(object sender, RoutedEventArgs e)
+		{
+			this.MsgClr();
+
+
+			switch (DsType)
+			{
+			case SchemaDataStorType.DT_ROOT:
+				{
+					shShow.ShowDataGeneric(fm2.RtData);
+					break;
+				}
+			case SchemaDataStorType.DT_CELL:
+				{
+					shShow.ShowDataGeneric(fm2.ClData);
+					break;
+				}
+			case SchemaDataStorType.DT_LOCK:
+				{
+					shShow.ShowDataGeneric(fm2.LkData);
+					break;
+				}
+			}
 
 		}
 
@@ -226,190 +275,190 @@ namespace CSToolsDelux.WPF.FieldsWindow
 
 	#region show - debug methods
 
-		// show
-
-		private void BtnShowRootData_OnClick(object sender, RoutedEventArgs e)
-		{
-			fm.ShowRootData();
-		}
-
-		private void BtnShowRootFields_OnClick(object sender, RoutedEventArgs e)
-		{
-			fm.ShowRootFields();
-		}
-
-		private void BtnShowCellFields_OnClick(object sender, RoutedEventArgs e)
-		{
-			fm.ShowCellFields();
-		}
-
-		private void BtnShowCellData_OnClick(object sender, RoutedEventArgs e)
-		{
-			fm.ShowCellData();
-		}
-
-		private void BtnShowLockFields_OnClick(object sender, RoutedEventArgs e)
-		{
-			fm.ShowLockFields();
-		}
-
-		private void BtnShowLockData_OnClick(object sender, RoutedEventArgs e)
-		{
-			fm.ShowLockData();
-		}
-
 	#endregion
 
 	#region old - debug methods
-
-		// "old"
-
-		private void BtnStartProcess_OnClick(object sender, RoutedEventArgs e)
-		{
-
-			using (Transaction T = new Transaction(AppRibbon.Doc, "fields| Read"))
-			{
-				T.Start();
-
-				ExStoreRtnCodes result = et.StartProcess(exData.DocKey);
-
-				if (result == ExStoreRtnCodes.XRC_GOOD)
-				{
-					T.Commit();
-					WriteLineAligned($"read| ");
-					WriteLineAligned($"date| {exData.RootData.GetValue<string>(SchemaRootKey.RK_CREATE_DATE)}");
-				}
-				else
-				{
-					T.RollBack();
-
-					WriteLineAligned($"not read| {result.ToString()}");
-				}
-			}
-
-			ShowMsg();
-		}
-
-		private void BtnDeleteRoot_OnClick(object sender, RoutedEventArgs e)
-		{
-			using (Transaction T = new Transaction(AppRibbon.Doc, "fields"))
-			{
-				T.Start();
-
-				ExStoreRtnCodes result = fm.DeleteRoot(exData.DocKey);
-
-				if (result == ExStoreRtnCodes.XRC_GOOD)
-				{
-					T.Commit();
-					WriteLineAligned($"erased| ");
-				}
-				else
-				{
-					T.RollBack();
-
-					WriteLineAligned($"entity NOT found| ");
-				}
-			}
-
-			ShowMsg();
-		}
-
-		private void BtnWriteRoot_OnClick(object sender, RoutedEventArgs e)
-		{
-			// test only
-			// et.testNames();
-
-
-			ExStoreRtnCodes result;
-
-			// bogus data for testing
-			raData = new SchemaRootData();
-			raData.Configure("Root_App_Data_Name", "Root-App Data Description");
-			raData.DocumentName = docName;
-			raData.DocKey = exData.DocKey;
-
-			cData = new SchemaCellData();
-			cData.Configure("Cell_Data_Name", "A1",
-				UpdateRules.UR_AS_NEEDED, "cell Family", false, "xl file path", "worksheet name");
-			cData.DocumentName = docName;
-			cData.DocKey = exData.DocKey;
-
-
-			result = fm.DataStorExist(exData.DocKey);
-			if (result == ExStoreRtnCodes.XRC_DS_NOT_FOUND)
-			{
-				result = fm.CreateDataStorage(exData.DocKey);
-				if (result != ExStoreRtnCodes.XRC_GOOD) return;
-			}
-
-			result = fm.WriteRoot(raData, cData);
-
-			if (result == ExStoreRtnCodes.XRC_GOOD)
-			{
-				WriteLineAligned($"Data storage made and written!\n");
-			}
-			else
-			{
-				WriteLineAligned($"Data Storage failed!\n");
-			}
-
-			ShowMsg();
-		}
-
-		private void BtnFindRoot_OnClick(object sender, RoutedEventArgs e)
-		{
-			// get the entity by using ELEMENT.GetEntity(Schema) - 
-			// per the below, the DataStorage is the element 
-			// asuming that a single schema / element get found
-
-			WriteMsg("\n");
-
-			IList<Schema> schemas;
-			IList<DataStorage> dx;
-
-			bool result = fm.GetAppSchemas(exData.DocKey, out schemas);
-
-			WriteLineAligned($"schema (in memory) found?| {result.ToString()}", $"quantity| {schemas.Count}");
-
-			if (schemas.Count > 0)
-			{
-				WriteMsg("\n");
-
-				foreach (Schema s in schemas)
-				{
-					WriteLineAligned($"schema info| {s.SchemaName}  {s.VendorId}  {s.Documentation}");
-				}
-			}
-
-			ExStoreStartRtnCodes answer = fm.GetRootDataStorages(exData.DocKey, out dx);
-
-			WriteMsg("\n");
-			WriteLineAligned($"datastorage found?| {answer.ToString()}", $"quantity| {dx.Count}");
-
-			if (dx.Count > 0)
-			{
-				WriteMsg("\n");
-
-				foreach (DataStorage ds in dx)
-				{
-					WriteLineAligned($"datastorage info| {ds.Name}", $"valid?| {ds.IsValidObject}");
-				}
-			}
-
-			ShowMsg();
-		}
-
-		// probably n/a
-		private void BtnFindRootDs_OnClick(object sender, RoutedEventArgs e)
-		{
-			ExStoreRtnCodes result;
-
-			result = fm.FindRootDS();
-
-			WriteLine("find root DS|", result.ToString());
-			ShowMsg();
-		}
-
+		//
+		// // "old"
+		//
+		// // show
+		//
+		// private void BtnShowRootData_OnClick(object sender, RoutedEventArgs e)
+		// {
+		// 	fm.ShowRootData();
+		// }
+		//
+		// private void BtnShowRootFields_OnClick(object sender, RoutedEventArgs e)
+		// {
+		// 	fm.ShowRootFields();
+		// }
+		//
+		// private void BtnShowCellFields_OnClick(object sender, RoutedEventArgs e)
+		// {
+		// 	fm.ShowCellFields();
+		// }
+		//
+		// private void BtnShowCellData_OnClick(object sender, RoutedEventArgs e)
+		// {
+		// 	fm.ShowCellData();
+		// }
+		//
+		// private void BtnShowLockFields_OnClick(object sender, RoutedEventArgs e)
+		// {
+		// 	fm.ShowLockFields();
+		// }
+		//
+		// private void BtnShowLockData_OnClick(object sender, RoutedEventArgs e)
+		// {
+		// 	fm.ShowLockData();
+		// }
+		//
+		// private void BtnStartProcess_OnClick(object sender, RoutedEventArgs e)
+		// {
+		//
+		// 	using (Transaction T = new Transaction(AppRibbon.Doc, "fields| Read"))
+		// 	{
+		// 		T.Start();
+		//
+		// 		ExStoreRtnCodes result = et.StartProcess(exData.DsKey);
+		//
+		// 		if (result == ExStoreRtnCodes.XRC_GOOD)
+		// 		{
+		// 			T.Commit();
+		// 			WriteLineAligned($"read| ");
+		// 			WriteLineAligned($"date| {exData.RootData.GetValue<string>(SchemaRootKey.RK_CREATE_DATE)}");
+		// 		}
+		// 		else
+		// 		{
+		// 			T.RollBack();
+		//
+		// 			WriteLineAligned($"not read| {result.ToString()}");
+		// 		}
+		// 	}
+		//
+		// 	ShowMsg();
+		// }
+		//
+		// private void BtnDeleteRoot_OnClick(object sender, RoutedEventArgs e)
+		// {
+		// 	using (Transaction T = new Transaction(AppRibbon.Doc, "fields"))
+		// 	{
+		// 		T.Start();
+		//
+		// 		ExStoreRtnCodes result = fm.DeleteRoot(exData.DsKey);
+		//
+		// 		if (result == ExStoreRtnCodes.XRC_GOOD)
+		// 		{
+		// 			T.Commit();
+		// 			WriteLineAligned($"erased| ");
+		// 		}
+		// 		else
+		// 		{
+		// 			T.RollBack();
+		//
+		// 			WriteLineAligned($"entity NOT found| ");
+		// 		}
+		// 	}
+		//
+		// 	ShowMsg();
+		// }
+		//
+		// private void BtnWriteRoot_OnClick(object sender, RoutedEventArgs e)
+		// {
+		// 	// test only
+		// 	// et.testNames();
+		//
+		//
+		// 	ExStoreRtnCodes result;
+		//
+		// 	// bogus data for testing
+		// 	raData = new SchemaRootData();
+		// 	raData.Configure("Root_App_Data_Name", "Root-App Data Description");
+		// 	// raData.DocumentName = docName;
+		// 	raData.DsKey = exData.DsKey;
+		//
+		// 	cData = new SchemaCellData();
+		// 	cData.Configure("Cell_Data_Name", "A1",
+		// 		UpdateRules.UR_AS_NEEDED, "cell Family", false, "xl file path", "worksheet name");
+		// 	cData.DocumentName = docName;
+		// 	cData.DsKey = exData.DsKey;
+		//
+		//
+		// 	result = fm.DataStorExist(exData.DsKey);
+		// 	if (result == ExStoreRtnCodes.XRC_DS_NOT_FOUND)
+		// 	{
+		// 		result = fm.CreateDataStorage(exData.DsKey);
+		// 		if (result != ExStoreRtnCodes.XRC_GOOD) return;
+		// 	}
+		//
+		// 	result = fm.WriteRoot(raData, cData);
+		//
+		// 	if (result == ExStoreRtnCodes.XRC_GOOD)
+		// 	{
+		// 		WriteLineAligned($"Data storage made and written!\n");
+		// 	}
+		// 	else
+		// 	{
+		// 		WriteLineAligned($"Data Storage failed!\n");
+		// 	}
+		//
+		// 	ShowMsg();
+		// }
+		//
+		// private void BtnFindRoot_OnClick(object sender, RoutedEventArgs e)
+		// {
+		// 	// get the entity by using ELEMENT.GetEntity(Schema) - 
+		// 	// per the below, the DataStorage is the element 
+		// 	// asuming that a single schema / element get found
+		//
+		// 	WriteMsg("\n");
+		//
+		// 	IList<Schema> schemas;
+		// 	IList<DataStorage> dx;
+		//
+		// 	bool result = fm.GetAppSchemas(exData.DsKey, out schemas);
+		//
+		// 	WriteLineAligned($"schema (in memory) found?| {result.ToString()}", $"quantity| {schemas.Count}");
+		//
+		// 	if (schemas.Count > 0)
+		// 	{
+		// 		WriteMsg("\n");
+		//
+		// 		foreach (Schema s in schemas)
+		// 		{
+		// 			WriteLineAligned($"schema info| {s.SchemaName}  {s.VendorId}  {s.Documentation}");
+		// 		}
+		// 	}
+		//
+		// 	ExStoreStartRtnCodes answer = fm.GetRootDataStorages(exData.DsKey, out dx);
+		//
+		// 	WriteMsg("\n");
+		// 	WriteLineAligned($"datastorage found?| {answer.ToString()}", $"quantity| {dx.Count}");
+		//
+		// 	if (dx.Count > 0)
+		// 	{
+		// 		WriteMsg("\n");
+		//
+		// 		foreach (DataStorage ds in dx)
+		// 		{
+		// 			WriteLineAligned($"datastorage info| {ds.Name}", $"valid?| {ds.IsValidObject}");
+		// 		}
+		// 	}
+		//
+		// 	ShowMsg();
+		// }
+		//
+		// // probably n/a
+		// private void BtnFindRootDs_OnClick(object sender, RoutedEventArgs e)
+		// {
+		// 	ExStoreRtnCodes result;
+		//
+		// 	result = fm.FindRootDS();
+		//
+		// 	WriteLine("find root DS|", result.ToString());
+		// 	ShowMsg();
+		// }
+		//
 
 	#endregion
 

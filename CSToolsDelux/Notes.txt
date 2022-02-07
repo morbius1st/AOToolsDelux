@@ -1,0 +1,15 @@
+﻿where things are found
+
+schema definition
+-> Fields.SchemaInfo.SchemaFields
+	contains the definitions of the schema / each field
+
+data containers definition
+-> Fields.SchemaInfo.SchemaData
+	actual data containers
+
+actual holder of the data
+-> Fields.FieldsManagement.FieldsManager2
+
+
+

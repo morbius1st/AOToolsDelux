@@ -1,12 +1,9 @@
 ﻿#region using directives
-
 using System.Collections.Generic;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.DB.ExtensibleStorage;
 using CSToolsDelux.Fields.ExStorage.ExStorageData;
-using CSToolsDelux.Fields.ExStorage.ExStorManagement;
-using UtilityLibrary;
-
+using SharedCode.Fields.ExStorage.ExStorManagement;
 #endregion
 
 
@@ -15,13 +12,15 @@ using UtilityLibrary;
 // username: jeffs
 // created:  8/15/2021 6:39:48 PM
 
+
+
 namespace CSToolsDelux.Fields.ExStorage.DataStorageManagement
 {
 	/// <summary>
 	/// <c>DataStorageExists</c> | Determine if the DataStorage Exists<br/>
 	/// <c>CreateDataStorage</c> | Create a DataStorage element (no info)<br/>
 	/// <c>CreateDataStorage</c> | Create a DataStorage element (with info)<br/>
-	/// <c>FindDataStorages</c>  | Provide a list of existing DataStorages per DocKey<br/>
+	/// <c>FindDataStorages</c>  | Provide a list of existing DataStorages per DsKey<br/>
 	/// <c>FindDataStorages</c>  | Provide a list of existing DataStorages<br/>
 	/// </summary>
 	public class DataStoreManager
@@ -69,24 +68,24 @@ namespace CSToolsDelux.Fields.ExStorage.DataStorageManagement
 		/// Determine if the DataStorage exists - either already read<br/>
 		/// or in the active document
 		/// </summary>
-		/// <param name="docKey"></param>
+		/// <param name="dsKey"></param>
 		/// <returns></returns>
-		public ExStoreRtnCodes DataStorageExists(string docKey)
+		public ExStoreRtnCodes DataStorageExists(string dsKey)
 		{
 			// step 1
 			// already got?
-			if (ExStorData.Instance.MatchName(docKey)) return ExStoreRtnCodes.XRC_GOOD;
+			if (ExStorData.Instance.MatchName(dsKey)) return ExStoreRtnCodes.XRC_GOOD;
 
 			ExStoreStartRtnCodes result;
 			IList<DataStorage> dsList;
 
 			// step 2
 			// see if the document has the datastorage
-			result = FindDataStorages(docKey, out dsList);
+			result = FindDataStorages(dsKey, out dsList);
 
 			if ((dsList?.Count ?? 0) == 1)
 			{
-				exData.Config(docKey, dsList[0]);
+				exData.Config(dsKey, dsList[0]);
 
 				// found and saved
 				return ExStoreRtnCodes.XRC_GOOD;
@@ -96,7 +95,7 @@ namespace CSToolsDelux.Fields.ExStorage.DataStorageManagement
 			return ExStoreRtnCodes.XRC_DS_NOT_FOUND;
 		}
 
-		public ExStoreRtnCodes CreateDataStorage(string docKey)
+		public ExStoreRtnCodes CreateDataStorage(string dsKey)
 		{
 			DataStorage ds = null;
 			Transaction T;
@@ -104,14 +103,14 @@ namespace CSToolsDelux.Fields.ExStorage.DataStorageManagement
 			try
 			{
 				ds = DataStorage.Create(doc);
-				ds.Name = docKey;
+				ds.Name = dsKey;
 			}
 			catch
 			{
 				return ExStoreRtnCodes.XRC_FAIL;
 			}
 
-			exData.Config(docKey, ds);
+			exData.Config(dsKey, ds);
 
 			return ExStoreRtnCodes.XRC_GOOD;
 		}
@@ -120,10 +119,10 @@ namespace CSToolsDelux.Fields.ExStorage.DataStorageManagement
 		/// <summary>
 		/// Search for 
 		/// </summary>
-		/// <param name="docKey"></param>
+		/// <param name="dsKey"></param>
 		/// <param name="dx"></param>
 		/// <returns></returns>
-		public ExStoreStartRtnCodes FindDataStorages(string docKey, out IList<DataStorage> dx)
+		public ExStoreStartRtnCodes FindDataStorages(string dsKey, out IList<DataStorage> dx)
 		{
 			ExStoreStartRtnCodes answer;
 
@@ -139,7 +138,7 @@ namespace CSToolsDelux.Fields.ExStorage.DataStorageManagement
 
 			foreach (Element ds in dataStorList)
 			{
-				if (ds.Name.StartsWith(docKey))
+				if (ds.Name.StartsWith(dsKey))
 				{
 					dx.Add((DataStorage) ds);
 				} 

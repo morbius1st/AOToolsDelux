@@ -9,15 +9,44 @@
     <Import_RootNamespace>SharedCode</Import_RootNamespace>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="$(MSBuildThisFileDirectory)Fields\ExStorage\ExStorManagement\ExStoreRtnCodes.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Fields\SchemaInfo\SchemaData\DataTemplates\ADataTempBase.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Fields\SchemaInfo\SchemaData\DataCell.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Fields\SchemaInfo\SchemaData\DataTemplates\ADataMembers.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Fields\SchemaInfo\SchemaData\DataTemplates\DataMembers.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Fields\SchemaInfo\SchemaData\DataLock.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Fields\SchemaInfo\SchemaData\DataRoot.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Fields\SchemaInfo\SchemaFields\FieldsTemplates\AFieldsTemp.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Fields\SchemaInfo\SchemaFields\FieldsTemplates\FieldsTemp.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Fields\SchemaInfo\SchemaFields\FieldsTemplates\FieldsTempDictionary.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Fields\SchemaInfo\SchemaFields\FieldsTemplates\AFieldsMembers.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Fields\SchemaInfo\SchemaSupport\SchemaSupportData.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Fields\SchemaInfo\SchemaSupport\SchemaGuidManager.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Fields\SchemaInfo\SchemaFields\FieldsCell.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Fields\SchemaInfo\SchemaFields\FieldsLock.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Fields\SchemaInfo\SchemaFields\FieldsRoot.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Fields\Testing\SampleData.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ShowInformation\ShShowInfo.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Windows\AWindow.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Windows\MainFields.xaml.cs">
-      <DependentUpon>MainFields.xaml</DependentUpon>
+    <Compile Include="$(MSBuildThisFileDirectory)Windows\ColData.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Fields\SchemaInfo\SchemaData\DataTemplates\DataTemplateMembers.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Fields\SchemaInfo\SchemaFields\FieldsTemplates\FieldsTemplateMembers.cs" />
+    <Compile Include="\\CRONOS\Users\jeffs\Documents\Programming\VisualStudioProjects\UtilityLibrary\UtilityLibrary\CsExtensions.cs">
+      <Link>.Linked\CsExtensions.cs</Link>
+    </Compile>
+    <Compile Include="\\CRONOS\Users\jeffs\Documents\Programming\VisualStudioProjects\UtilityLibrary\UtilityLibrary\CsUtilities.cs">
+      <Link>.Linked\CsUtilities.cs</Link>
+    </Compile>
+    <Compile Include="\\CRONOS\Users\jeffs\Documents\Programming\VisualStudioProjects\UtilityLibrary\UtilityLibrary\CsUtilitiesMedia.cs">
+      <Link>.Linked\CsUtilitiesMedia.cs</Link>
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Page Include="$(MSBuildThisFileDirectory)Windows\MainFields.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
+    <Folder Include="$(MSBuildThisFileDirectory)Fields\ExStorage\DataStorageManagement\" />
+    <Folder Include="$(MSBuildThisFileDirectory)Fields\SchemaInfo\SchemaSupport\" />
+    <Folder Include="$(MSBuildThisFileDirectory)ShowInformation\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="$(MSBuildThisFileDirectory)Information Organization.txt" />
   </ItemGroup>
 </Project>

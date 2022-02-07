@@ -1,21 +1,15 @@
 ﻿#region using directives
 
 using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Linq;
-using System.Runtime.CompilerServices;
-using System.Text;
-using System.Text.RegularExpressions;
-using System.Threading.Tasks;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.DB.ExtensibleStorage;
-using Autodesk.Revit.DB.Macros;
 using CSToolsDelux.Fields.SchemaInfo.SchemaData;
-using CSToolsDelux.Fields.SchemaInfo.SchemaDefinitions;
-using CSToolsDelux.Fields.SchemaInfo.SchemaFields;
 using CSToolsDelux.Utility;
+using SharedCode.Fields.SchemaInfo.SchemaSupport;
+using SharedCode.Fields.SchemaInfo.SchemaFields.FieldsTemplates;
+
+using SharedCode.Fields.SchemaInfo.SchemaDefinitions;
 
 #endregion
 
@@ -38,11 +32,11 @@ namespace CSToolsDelux.Fields.SchemaInfo.SchemaManagement
 			public Dictionary<string, Guid> SubSchemaFields { get; set; }
 			public int QtySubSchema { get; private set; }
 
-			public schemaItem(string docKey, int qtySubSchema) : this(docKey, qtySubSchema, null) { }
+			public schemaItem(string dsKey, int qtySubSchema) : this(dsKey, qtySubSchema, null) { }
 
-			public schemaItem(string docKey, int qtySubSchema, Schema schema)
+			public schemaItem(string dsKey, int qtySubSchema, Schema schema)
 			{
-				DocumentKey = docKey;
+				DocumentKey = dsKey;
 				Schema = schema;
 				SubSchemaFields = new Dictionary<string, Guid>(qtySubSchema);
 				QtySubSchema = qtySubSchema;
@@ -60,31 +54,31 @@ namespace CSToolsDelux.Fields.SchemaInfo.SchemaManagement
 
 			public Dictionary<string, schemaItem> Items => items;
 
-			public schemaItem this[string docKey]
+			public schemaItem this[string dsKey]
 			{
 				get
 				{
-					if (items.ContainsKey(docKey))
+					if (items.ContainsKey(dsKey))
 					{
-						return items[docKey];
+						return items[dsKey];
 					}
 
 					return null;
 				}
 			}
 
-			public void AddNew(string docKey, int qtySubSchema)
+			public void AddNew(string dsKey, int qtySubSchema)
 			{
-				schemaItem si = new schemaItem(docKey, qtySubSchema);
+				schemaItem si = new schemaItem(dsKey, qtySubSchema);
 
 				items.Add(si.DocumentKey, si);
 			}
 
-			public Schema Find(string docKey)
+			public Schema Find(string dsKey)
 			{
-				if (!items.ContainsKey(docKey)) return null;
+				if (!items.ContainsKey(dsKey)) return null;
 
-				return items[docKey].Schema;
+				return items[dsKey].Schema;
 			}
 		}
 
@@ -120,11 +114,11 @@ namespace CSToolsDelux.Fields.SchemaInfo.SchemaManagement
 
 	#region find schema
 
-		public Schema FindSchema(string docKey)
+		public Schema FindSchema(string dsKey)
 		{
 			bool result;
 			IList<Schema> schemas;
-			result = findSchemasFromDoc(docKey, out schemas);
+			result = findSchemasFromDoc(dsKey, out schemas);
 
 			if (schemas.Count != 1) return null;
 
@@ -132,32 +126,32 @@ namespace CSToolsDelux.Fields.SchemaInfo.SchemaManagement
 		}
 
 		/// <summary>
-		/// get the list of schemas that match the dockey
+		/// get the list of schemas that match the dskey
 		/// </summary>
-		/// <param name="docKey"></param>
+		/// <param name="dsKey"></param>
 		/// <param name="schemas"></param>
 		/// <returns></returns>
-		public bool FindSchemas(string docKey, out IList<Schema> schemas)
+		public bool FindSchemas(string dsKey, out IList<Schema> schemas)
 		{
 			bool result;
 			schemas = new List<Schema>(1);
 
 			// already got the schema?
-			result = findSchemasFromList(docKey, out schemas);
+			result = findSchemasFromList(dsKey, out schemas);
 
 			if (result) return true;
 
 			// don't already got
 			// check the document
 
-			result = findSchemasFromDoc(docKey, out schemas);
+			result = findSchemasFromDoc(dsKey, out schemas);
 
 			if (!result) return false;
 
 			return true;
 		}
 
-		private bool findSchemasFromDoc(string docKey, out IList<Schema> schemaList)
+		private bool findSchemasFromDoc(string dsKey, out IList<Schema> schemaList)
 		{
 			bool result = false;
 			schemaList = new List<Schema>(1);
@@ -166,7 +160,7 @@ namespace CSToolsDelux.Fields.SchemaInfo.SchemaManagement
 
 			foreach (Schema s in schemas)
 			{
-				if (s.SchemaName.Equals(docKey))
+				if (s.SchemaName.Equals(dsKey))
 				{
 					schemaList.Add(s);
 
@@ -177,14 +171,14 @@ namespace CSToolsDelux.Fields.SchemaInfo.SchemaManagement
 			return result;
 		}
 
-		private bool findSchemasFromList(string docKey, out IList<Schema> schemaList)
+		private bool findSchemasFromList(string dsKey, out IList<Schema> schemaList)
 		{
 			bool result = false;
 			Schema schema = null;
 
 			schemaList = new List<Schema>(1);
 
-			schema = scList.Find(docKey);
+			schema = scList.Find(dsKey);
 
 			if (schema != null)
 			{
@@ -199,11 +193,11 @@ namespace CSToolsDelux.Fields.SchemaInfo.SchemaManagement
 
 	#region make schema
 
-		public bool MakeRootSchema(string docKey, SchemaRootData raData, int QtySubSchema)
+		public bool MakeRootSchema(string dsKey, SchemaRootData raData, int QtySubSchema)
 		{
-			if (raData == null || docKey == null || QtySubSchema == 0) return false;
+			if (raData == null || dsKey == null || QtySubSchema == 0) return false;
 
-			scList.AddNew(docKey, QtySubSchema);
+			scList.AddNew(dsKey, QtySubSchema);
 
 			Schema schema = null;
 
@@ -216,7 +210,7 @@ namespace CSToolsDelux.Fields.SchemaInfo.SchemaManagement
 
 				makeSchemaFields(ref sb, raData.Fields);
 
-				makeSchemaSubSchemaFields(docKey, ref sb, raData);
+				makeSchemaSubSchemaFields(dsKey, ref sb, raData);
 
 				schema = sb.Finish();
 			}
@@ -226,7 +220,7 @@ namespace CSToolsDelux.Fields.SchemaInfo.SchemaManagement
 				string iex = e?.InnerException.Message ?? "none";
 			}
 
-			scList[docKey].Schema = schema;
+			scList[dsKey].Schema = schema;
 
 			return true;
 		}
@@ -240,42 +234,42 @@ namespace CSToolsDelux.Fields.SchemaInfo.SchemaManagement
 			sb.SetDocumentation(description);
 		}
 
-		private void makeSchemaFields<T>(ref SchemaBuilder sbld, SchemaDictionaryBase<T> fieldList) where T : Enum
+		private void makeSchemaFields<T>(ref SchemaBuilder sbld, FieldsTempDictionary<T> fieldList) where T : Enum
 		{
-			foreach (KeyValuePair<T, ISchemaFieldDef<T>> kvp in fieldList)
+			foreach (KeyValuePair<T, AFieldsMembers<T>> kvp in fieldList)
 			{
 				makeSchemaField(ref sbld, kvp.Value);
 			}
 		}
 
-		private void makeSchemaField<T>(ref SchemaBuilder sbld, ISchemaFieldDef<T> fieldDef) where T : Enum
+		private void makeSchemaField<T>(ref SchemaBuilder sbld, AFieldsMembers<T> aFieldsMembers) where T : Enum
 		{
-			Type t = fieldDef.ValueType;
+			Type t = aFieldsMembers.ValueType;
 
-			FieldBuilder fb = sbld.AddSimpleField(fieldDef.Name, fieldDef.ValueType);
+			FieldBuilder fb = sbld.AddSimpleField(aFieldsMembers.Name, aFieldsMembers.ValueType);
 
-			fb.SetDocumentation(fieldDef.Desc);
+			fb.SetDocumentation(aFieldsMembers.Desc);
 
-			if (fieldDef.UnitType != FieldUnitType.UT_UNDEFINED)
+			if (aFieldsMembers.UnitType != FieldUnitType.UT_UNDEFINED)
 			{
-				fb.SetUnitType((UnitType) (int) fieldDef.UnitType);
+				fb.SetUnitType((UnitType) (int) aFieldsMembers.UnitType);
 			}
 		}
 
-		private void makeSchemaSubSchemaFields(string docKey, ref SchemaBuilder sb,  SchemaRootData raData)
+		private void makeSchemaSubSchemaFields(string dsKey, ref SchemaBuilder sb,  SchemaRootData raData)
 		{
-			int qty = scList[docKey].QtySubSchema;
+			int qty = scList[dsKey].QtySubSchema;
 
 			for (int i = 0; i < qty; i++)
 			{
-				Tuple<string, Guid> subS = raData.AppFields.SubSchemaField();
+				Tuple<string, Guid> subS = raData.FieldsRoot.SubSchemaField();
 
 				FieldBuilder fb = sb.AddSimpleField(subS.Item1, typeof(Entity));
 
 				fb.SetDocumentation(raData.GetValue<string>(SchemaRootKey.RK_DESCRIPTION));
 				fb.SetSubSchemaGUID(subS.Item2);
 
-				scList[docKey].SubSchemaFields.Add(subS.Item1, subS.Item2);
+				scList[dsKey].SubSchemaFields.Add(subS.Item1, subS.Item2);
 			}
 		}
 
@@ -283,7 +277,7 @@ namespace CSToolsDelux.Fields.SchemaInfo.SchemaManagement
 		{
 			int idx = 0;
 
-			foreach (KeyValuePair<string, Guid> kvp in SchemaList[cData.DocKey].SubSchemaFields)
+			foreach (KeyValuePair<string, Guid> kvp in SchemaList[cData.DsKey].SubSchemaFields)
 			{
 				Field f = schema.GetField(kvp.Key);
 

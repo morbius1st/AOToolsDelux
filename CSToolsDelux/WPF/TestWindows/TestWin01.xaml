@@ -122,17 +122,17 @@
 				Orientation="Vertical"
 				>
 
-			<Button x:Name="BtnQ2"
-					Content="Qty=2"
+			<Button x:Name="BtnShow"
+					Content="Show"
 					Margin="5,0,5,5"
 					Height="30"
 					Background="#333333"
 					Foreground="White"
-					Click="BtnQ2_OnClick"
+					Click="BtnShow_OnClick"
 					/>
 
 			<Button x:Name="BtnQ3"
-					Content="Qty=1"
+					Content="Qty += 1"
 					Margin="5,0,5,5"
 					Height="30"
 					Background="#333333"

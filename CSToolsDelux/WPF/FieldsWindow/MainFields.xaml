@@ -6,7 +6,7 @@
 		xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
 		xmlns:local="clr-namespace:CSToolsDelux.WPF.FieldsWindow"
 		xmlns:windows="SharedCode.Windows"
-		xmlns:wpf="clr-namespace:CSToolsDelux.WPF"
+		xmlns:wpf="clr-namespace:SharedCode.Windows"
 		Title="MainFields"
 		Width="1100"
 		Height="750"
@@ -16,7 +16,30 @@
 		Background="#222222"
 		Loaded="MainFields_Loaded"
 		>
-	<!--  x:Name="mainFields"  -->
+
+	<Window.Resources>
+
+		<Style x:Key="BtnBase"
+				TargetType="Button"
+				>
+			<Setter Property="Margin" Value="2.5,5,2.5,0"/>
+			<Setter Property="MinHeight" Value="30" />
+			<Setter Property="HorizontalContentAlignment" Value="Center" />
+			<Setter Property="Background" Value="#333333" />
+		</Style>
+
+		<Style x:Key="BtnVoid" TargetType="Button" BasedOn="{StaticResource BtnBase}">
+			<Setter Property="Foreground" Value="Gray"/>
+			<Setter Property="DockPanel.Dock" Value="Top"/>
+		</Style>
+
+		<Style x:Key="BtnNew" TargetType="Button" BasedOn="{StaticResource BtnBase}">
+			<Setter Property="Foreground" Value="White"/>
+			<Setter Property="DockPanel.Dock" Value="Bottom"/>
+		</Style>
+
+
+	</Window.Resources>
 
 	<Grid UseLayoutRounding="true">
 
@@ -44,38 +67,144 @@
 		<DockPanel
 				Grid.Column="2"
 				Grid.Row="0"
-				Margin="5,5,5,0"
+				Margin="0,0,0,0"
 				HorizontalAlignment="Stretch"
 				VerticalAlignment="Stretch"
 				>
 
-			<StackPanel
+			<Border
+					Margin="2.5,0,2.5,0"
+					VerticalAlignment="Top"
+					BorderThickness="0,4,0,2"
+					BorderBrush="White"
+					DockPanel.Dock="Top"
+					>
+				<TextBlock
+						
+						Background="#333333"
+						Foreground="White"
+						TextAlignment="Center"
+						Text="Tests (old)"
+						/>
+			</Border>
+
+			<Button x:Name="BtnRead"
+
+					VerticalAlignment="Top"
+					Style="{StaticResource BtnVoid}"
+
+					>
+				<!--  Click="BtnStartProcess_OnClick"  -->
+				<Button.Content>
+					<StackPanel Orientation="Vertical">
+						<TextBlock
+								Margin="-1"
+								Padding="0"
+								TextAlignment="Center"
+								Text="Start"
+								/>
+						<TextBlock
+								Margin="-1"
+								Padding="0"
+								TextAlignment="Center"
+								Text="Process"
+								/>
+					</StackPanel>
+				</Button.Content>
+			</Button>
+
+			<Button x:Name="Btnx"
+
+					VerticalAlignment="Top"
+					Style="{StaticResource BtnVoid}"
+
+					>
+				<Button.Content>
+					<StackPanel Orientation="Vertical">
+						<TextBlock
+								Margin="-1"
+								Padding="0"
+								TextAlignment="Center"
+								Text="(void) Delete"
+								/>
+						<TextBlock
+								Margin="-1"
+								Padding="0"
+								TextAlignment="Center"
+								Text="DS"
+								/>
+					</StackPanel>
+				</Button.Content>
+			</Button>
+
+			<Button x:Name="Btnz"
+
+					VerticalAlignment="Top"
+					Style="{StaticResource BtnVoid}"
+			>
+				<Button.Content>
+					<StackPanel Orientation="Vertical">
+						<TextBlock
+								Margin="-1"
+								Padding="0"
+								TextAlignment="Center"
+								Text="(void) Make"
+								/>
+						<TextBlock
+								Margin="-1"
+								Padding="0"
+								TextAlignment="Center"
+								Text="DS"
+								/>
+					</StackPanel>
+				</Button.Content>
+			</Button>
+
+			<Button x:Name="Btny"
+
+					VerticalAlignment="Top"
+					Style="{StaticResource BtnVoid}"
+			>
+				<Button.Content>
+					<StackPanel Orientation="Vertical">
+						<TextBlock
+								Margin="-1"
+								Padding="0"
+								TextAlignment="Center"
+								Text="(void) Find"
+								/>
+						<TextBlock
+								Margin="-1"
+								Padding="0"
+								TextAlignment="Center"
+								Text="DS"
+								/>
+					</StackPanel>
+				</Button.Content>
+			</Button>
+
+			<Grid
+					Margin="0,0,0,0"
 					HorizontalAlignment="Stretch"
 					VerticalAlignment="Top"
-					DockPanel.Dock="Top"
-					Orientation="Vertical"
+					DockPanel.Dock="Bottom"
 					>
-				<Border
-						Margin="0,0,0,5"
-						BorderThickness="0,4,0,2"
-						BorderBrush="White"
-						>
-					<TextBlock
-							Background="#333333"
-							Foreground="White"
-							TextAlignment="Center"
-							Text="Tests (old)"
-							/>
-				</Border>
 
-				<Button x:Name="BtnRead"
-						Margin="0,0,0,5"
-						Width="110"
-						MinHeight="30"
-						HorizontalContentAlignment="Center"
-						Background="#333333"
-						Foreground="White"
-						Click="BtnStartProcess_OnClick"
+				<Grid.RowDefinitions>
+					<RowDefinition Height="*" />
+					<RowDefinition Height="*" />
+				</Grid.RowDefinitions>
+				<Grid.ColumnDefinitions>
+					<ColumnDefinition Width="*" />
+					<ColumnDefinition Width="*" />
+
+				</Grid.ColumnDefinitions>
+
+				<Button
+						Grid.Column="0"
+						Grid.Row="0"
+						Click="BtnSetRoot_OnClick"
+						Style="{StaticResource BtnNew}"
 						>
 					<Button.Content>
 						<StackPanel Orientation="Vertical">
@@ -83,236 +212,158 @@
 									Margin="-1"
 									Padding="0"
 									TextAlignment="Center"
-									Text="Start"
+									Text="Set"
 									/>
 							<TextBlock
 									Margin="-1"
 									Padding="0"
 									TextAlignment="Center"
-									Text="Process"
+									Text="Root"
 									/>
 						</StackPanel>
 					</Button.Content>
 				</Button>
 
-			</StackPanel>
+				<Button
+						Grid.Column="1"
+						Grid.Row="0"
+						Click="BtnSetCell_OnClick"
+						Style="{StaticResource BtnNew}"
+						>
+					<Button.Content>
+						<StackPanel Orientation="Vertical">
+							<TextBlock
+									Margin="-1"
+									Padding="0"
+									TextAlignment="Center"
+									Text="Set"
+									/>
+							<TextBlock
+									Margin="-1"
+									Padding="0"
+									TextAlignment="Center"
+									Text="Cell"
+									/>
+						</StackPanel>
+					</Button.Content>
+				</Button>
 
-			<StackPanel
-					HorizontalAlignment="Stretch"
+				<Button
+						Grid.Column="0"
+						Grid.Row="1"
+						Style="{StaticResource BtnNew}"
+						DockPanel.Dock="Left"
+						Click="BtnSetLock_OnClick"
+						>
+					<Button.Content>
+						<StackPanel Orientation="Vertical">
+							<TextBlock
+									Margin="-1"
+									Padding="0"
+									TextAlignment="Center"
+									Text="Set"
+									/>
+							<TextBlock
+									Margin="-1"
+									Padding="0"
+									TextAlignment="Center"
+									Text="Lock"
+									/>
+						</StackPanel>
+					</Button.Content>
+				</Button>
+
+
+			</Grid>
+
+			<Border
+					Margin="2.5,0,2.5,0"
 					VerticalAlignment="Bottom"
-					DockPanel.Dock="Top"
-					Orientation="Vertical"
+					BorderThickness="0,4,0,2"
+					BorderBrush="White"
+					DockPanel.Dock="Bottom"
+					
 					>
-				<Border
-						Margin="0,0,0,5"
-						BorderThickness="0,4,0,2"
-						BorderBrush="White"
-						>
-					<TextBlock
-							Background="#333333"
-							Foreground="White"
-							TextAlignment="Center"
-							Text="Tests (new)"
-							/>
-				</Border>
-
-				<Grid
-						Margin="0,0,0,5"
-						HorizontalAlignment="Stretch"
-						>
-					<Grid.ColumnDefinitions>
-						<ColumnDefinition Width="*" />
-						<ColumnDefinition Width="*" />
-						<ColumnDefinition Width="*" />
-					</Grid.ColumnDefinitions>
-
-					<Button
-							Grid.Column="0"
-							Margin="0,0,3,0"
-							MinHeight="30"
-							HorizontalContentAlignment="Center"
-							Background="#333333"
-							Foreground="White"
-							>
-						<Button.Content>
-							<StackPanel Orientation="Vertical">
-								<TextBlock
-										Margin="-1"
-										Padding="0"
-										TextAlignment="Center"
-										Text="Set"
-										/>
-								<TextBlock
-										Margin="-1"
-										Padding="0"
-										TextAlignment="Center"
-										Text="Root"
-										/>
-							</StackPanel>
-						</Button.Content>
-					</Button>
-
-					<Button
-							Grid.Column="1"
-							Margin="0,0,3,0"
-							MinHeight="30"
-							HorizontalContentAlignment="Center"
-							Background="#333333"
-							Foreground="White"
-							>
-						<Button.Content>
-							<StackPanel Orientation="Vertical">
-								<TextBlock
-										Margin="-1"
-										Padding="0"
-										TextAlignment="Center"
-										Text="Set"
-										/>
-								<TextBlock
-										Margin="-1"
-										Padding="0"
-										TextAlignment="Center"
-										Text="Cell"
-										/>
-							</StackPanel>
-						</Button.Content>
-					</Button>
-
-					<Button
-							Grid.Column="2"
-							MinHeight="30"
-							HorizontalContentAlignment="Center"
-							Background="#333333"
-							Foreground="White"
-							DockPanel.Dock="Left"
-							>
-						<Button.Content>
-							<StackPanel Orientation="Vertical">
-								<TextBlock
-										Margin="-1"
-										Padding="0"
-										TextAlignment="Center"
-										Text="Set"
-										/>
-								<TextBlock
-										Margin="-1"
-										Padding="0"
-										TextAlignment="Center"
-										Text="Lock"
-										/>
-							</StackPanel>
-						</Button.Content>
-					</Button>
-
-
-				</Grid>
-
-				<Button x:Name="Btnz"
-						Margin="0,0,0,5"
-						Width="110"
-						MinHeight="30"
-						HorizontalContentAlignment="Center"
+				<TextBlock
 						Background="#333333"
 						Foreground="White"
-						>
-					<Button.Content>
-						<StackPanel Orientation="Vertical">
-							<TextBlock
-									Margin="-1"
-									Padding="0"
-									TextAlignment="Center"
-									Text="Make"
-									/>
-							<TextBlock
-									Margin="-1"
-									Padding="0"
-									TextAlignment="Center"
-									Text="DS"
-									/>
-						</StackPanel>
-					</Button.Content>
-				</Button>
-
-				<Button x:Name="Btny"
-						Margin="0,0,0,5"
-						Width="110"
-						MinHeight="30"
-						HorizontalContentAlignment="Center"
-						Background="#333333"
-						Foreground="White"
-						>
-					<Button.Content>
-						<StackPanel Orientation="Vertical">
-							<TextBlock
-									Margin="-1"
-									Padding="0"
-									TextAlignment="Center"
-									Text="Find"
-									/>
-							<TextBlock
-									Margin="-1"
-									Padding="0"
-									TextAlignment="Center"
-									Text="DS"
-									/>
-						</StackPanel>
-					</Button.Content>
-				</Button>
-
-				<Button x:Name="Btnx"
-						Margin="0,0,0,5"
-						Width="110"
-						MinHeight="30"
-						HorizontalContentAlignment="Center"
-						Background="#333333"
-						Foreground="White"
-						>
-					<Button.Content>
-						<StackPanel Orientation="Vertical">
-							<TextBlock
-									Margin="-1"
-									Padding="0"
-									TextAlignment="Center"
-									Text="Delete"
-									/>
-							<TextBlock
-									Margin="-1"
-									Padding="0"
-									TextAlignment="Center"
-									Text="DS"
-									/>
-						</StackPanel>
-					</Button.Content>
-				</Button>
-
-			</StackPanel>
+						TextAlignment="Center"
+						Text="Tests (new)"
+						/>
+			</Border>
 
 		</DockPanel>
+
+
+
+
+
+
 
 		<DockPanel
 				Grid.Column="0"
 				Grid.Row="1"
 				>
 			<StackPanel
-					Margin="10,5,5,5"
+					Margin="0,5,0,0"
 					HorizontalAlignment="Left"
 					VerticalAlignment="Top"
+					DockPanel.Dock="Top"
 					Orientation="Horizontal"
 					>
+				<Border
+						Margin="5,0,5,0"
+						Padding="0"
+						BorderThickness="0,0,1,0"
+						BorderBrush="White"
+						>
+					<TextBlock
+							Margin="0"
+							Width="60"
+							Padding="0"
+							Foreground="White"
+							Text="DsKey"
+							/>
+				</Border>
 				<TextBlock
 						Margin="0"
 						Padding="0"
 						Foreground="White"
-						Text="DocKey|"
-						/>
-				<TextBlock
-						Margin="10,0,0,0"
-						Padding="0"
-						Foreground="White"
-						Text="{Binding DocKey,
-													 FallbackValue='docKey'}"
+						Text="{Binding DsKey,
+													 FallbackValue='dsKey'}"
 						/>
 			</StackPanel>
+
+			<StackPanel
+					Margin="0,5,0,0"
+					HorizontalAlignment="Left"
+					VerticalAlignment="Top"
+					DockPanel.Dock="Top"
+					Orientation="Horizontal"
+					>
+				<Border
+						Margin="5,0,5,0"
+						Padding="0"
+						BorderThickness="0,0,1,0"
+						BorderBrush="White"
+						>
+					<TextBlock
+							Margin="0"
+							Width="60"
+							Padding="0"
+							Foreground="White"
+							Text="DsType"
+							/>
+				</Border>
+				<TextBlock
+						Margin="0,0,0,0"
+						Padding="0"
+						Foreground="White"
+						Text="{Binding DsType,
+													 FallbackValue='dsType'}"
+						/>
+			</StackPanel>
+
 
 
 
@@ -356,444 +407,288 @@
 		<DockPanel
 				Grid.Column="1"
 				Grid.Row="0"
-				Margin="5,5,5,0"
+				Margin="0,0,0,0"
 				VerticalAlignment="Stretch"
 				>
 
-			<StackPanel
-					HorizontalAlignment="Center"
-					VerticalAlignment="Top"
+
+			<Border
+					Margin="2.5,0,2.5,0"
+					BorderThickness="0,4,0,2"
+					BorderBrush="White"
 					DockPanel.Dock="Top"
-					Orientation="Vertical"
+					
 					>
-				<Border
-						Margin="0,0,0,5"
-						BorderThickness="0,4,0,2"
-						BorderBrush="White"
-						>
-					<TextBlock
-							Background="#333333"
-							Foreground="White"
-							TextAlignment="Center"
-							Text="Old"
-							/>
-				</Border>
-
-
-
-				<Button x:Name="BtnDelete"
-						Margin="0,0,0,5"
-						Width="110"
-						MinHeight="30"
-						HorizontalContentAlignment="Center"
+				<TextBlock
 						Background="#333333"
 						Foreground="White"
-						Click="BtnDeleteRoot_OnClick"
-						>
-					<Button.Content>
-						<StackPanel Orientation="Vertical">
-							<TextBlock
-									Margin="-1"
-									Padding="0"
-									TextAlignment="Center"
-									Text="Delete"
-									/>
-							<TextBlock
-									Margin="-1"
-									Padding="0"
-									TextAlignment="Center"
-									Text="Root DS"
-									/>
-						</StackPanel>
-					</Button.Content>
-				</Button>
+						TextAlignment="Center"
+						Text="Old"
+						/>
+			</Border>
 
-				<Button x:Name="BtnWriteFirstSchema"
-						Margin="0,0,0,5"
-						Width="110"
-						MinHeight="30"
-						HorizontalContentAlignment="Center"
-						Background="#333333"
-						Foreground="White"
-						Click="BtnWriteRoot_OnClick"
-						>
-					<Button.Content>
-						<StackPanel Orientation="Vertical">
-							<TextBlock
-									Margin="-1"
-									Padding="0"
-									TextAlignment="Center"
-									Text="Write"
-									/>
-							<TextBlock
-									Margin="-1"
-									Padding="0"
-									TextAlignment="Center"
-									Text="Root DS"
-									/>
-						</StackPanel>
-					</Button.Content>
-				</Button>
-
-				<Button x:Name="BtnFindSchema"
-						Margin="0,0,0,5"
-						Width="110"
-						MinHeight="30"
-						HorizontalContentAlignment="Center"
-						Background="#333333"
-						Foreground="White"
-						Click="BtnFindRoot_OnClick"
-						>
-					<Button.Content>
-						<StackPanel Orientation="Vertical">
-							<TextBlock
-									Margin="-1"
-									Padding="0"
-									TextAlignment="Center"
-									Text="Find"
-									/>
-							<TextBlock
-									Margin="-1"
-									Padding="0"
-									TextAlignment="Center"
-									Text="Root DS"
-									/>
-						</StackPanel>
-					</Button.Content>
-				</Button>
-
-				<!--  Content="Find Data Storage"  -->
-				<Button x:Name="BtnFindRootDs"
-						Margin="0"
-						Width="110"
-						MinHeight="30"
-						HorizontalContentAlignment="Center"
-						Background="#333333"
-						Foreground="White"
-						Click="BtnFindRootDs_OnClick"
-						>
-					<Button.Content>
-						<StackPanel Orientation="Vertical">
-							<TextBlock
-									Margin="-1"
-									Padding="0"
-									TextAlignment="Center"
-									Text="Find"
-									/>
-							<TextBlock
-									Margin="-1"
-									Padding="0"
-									TextAlignment="Center"
-									Text="Root DS"
-									/>
-						</StackPanel>
-					</Button.Content>
-				</Button>
-
-			</StackPanel>
-
-
-			<StackPanel
-					HorizontalAlignment="Center"
-					VerticalAlignment="Bottom"
-					DockPanel.Dock="Bottom"
-					Orientation="Vertical"
+			<Button x:Name="BtnDelete"
+					VerticalAlignment="Top"
+					Style="{StaticResource BtnVoid}"
+					
 					>
+				<!--  Click="BtnDeleteRoot_OnClick"  -->
+				<Button.Content>
+					<StackPanel Orientation="Vertical">
+						<TextBlock
+								Margin="-1"
+								Padding="0"
+								TextAlignment="Center"
+								Text="(void) Delete"
+								/>
+						<TextBlock
+								Margin="-1"
+								Padding="0"
+								TextAlignment="Center"
+								Text="Root DS"
+								/>
+					</StackPanel>
+				</Button.Content>
+			</Button>
 
-				<Border
-						Margin="0,0,0,5"
-						BorderThickness="0,4,0,2"
-						BorderBrush="White"
-						>
+			<Button x:Name="BtnWriteFirstSchema"
+					Style="{StaticResource BtnVoid}"
+					VerticalAlignment="Top"
+					
+					>
+				<!--  Click="BtnWriteRoot_OnClick"  -->
+				<Button.Content>
+					<StackPanel Orientation="Vertical">
+						<TextBlock
+								Margin="-1"
+								Padding="0"
+								TextAlignment="Center"
+								Text="(void) Write"
+								/>
+						<TextBlock
+								Margin="-1"
+								Padding="0"
+								TextAlignment="Center"
+								Text="Root DS"
+								/>
+					</StackPanel>
+				</Button.Content>
+			</Button>
 
-					<TextBlock
-							Background="#333333"
-							Foreground="White"
-							TextAlignment="Center"
-							Text="Show"
-							/>
-				</Border>
+			<Button x:Name="BtnFindSchema"
+					Style="{StaticResource BtnVoid}"
+					VerticalAlignment="Top"
 
-				<Button x:Name="BtnRootAppFields"
-						Margin="0,0,0,5"
-						Width="110"
-						MinHeight="30"
-						HorizontalContentAlignment="Center"
-						Background="#333333"
-						Foreground="White"
-						Click="BtnShowRootFields_OnClick"
-						>
-					<Button.Content>
-						<StackPanel Orientation="Vertical">
-							<TextBlock
-									Margin="-1"
-									Padding="0"
-									TextAlignment="Center"
-									Text="Show"
-									/>
-							<TextBlock
-									Margin="-1"
-									Padding="0"
-									TextAlignment="Center"
-									Text="Root Fields"
-									/>
-						</StackPanel>
-					</Button.Content>
-				</Button>
+					>
+				<!--  Click="BtnFindRoot_OnClick"  -->
+				<Button.Content>
+					<StackPanel Orientation="Vertical">
+						<TextBlock
+								Margin="-1"
+								Padding="0"
+								TextAlignment="Center"
+								Text="(void) Find"
+								/>
+						<TextBlock
+								Margin="-1"
+								Padding="0"
+								TextAlignment="Center"
+								Text="Root DS"
+								/>
+					</StackPanel>
+				</Button.Content>
+			</Button>
 
-				<Button x:Name="BtnCellFields"
-						Margin="0,0,0,5"
-						Width="110"
-						MinHeight="30"
-						HorizontalContentAlignment="Center"
-						Background="#333333"
-						Foreground="White"
-						Click="BtnShowCellFields_OnClick"
-						>
-					<Button.Content>
-						<StackPanel Orientation="Vertical">
-							<TextBlock
-									Margin="-1"
-									Padding="0"
-									TextAlignment="Center"
-									Text="Show"
-									/>
-							<TextBlock
-									Margin="-1"
-									Padding="0"
-									TextAlignment="Center"
-									Text="Cell Fields"
-									/>
-						</StackPanel>
-					</Button.Content>
-				</Button>
+			<!--  Content="Find Data Storage"  -->
+			<Button x:Name="BtnFindRootDs"
+					VerticalAlignment="Top"
+					Style="{StaticResource BtnVoid}"
 
+					>
+				<!--  Click="BtnFindRootDs_OnClick"  -->
+				<Button.Content>
+					<StackPanel Orientation="Vertical">
+						<TextBlock
+								Margin="-1"
+								Padding="0"
+								TextAlignment="Center"
+								Text="(void) Find"
+								/>
+						<TextBlock
+								Margin="-1"
+								Padding="0"
+								TextAlignment="Center"
+								Text="Root DS"
+								/>
+					</StackPanel>
+				</Button.Content>
+			</Button>
 
-				<Button x:Name="BtnLockFields"
-						Margin="0,0,0,5"
-						Width="110"
-						MinHeight="30"
-						HorizontalContentAlignment="Center"
-						Background="#333333"
-						Foreground="White"
-						Click="BtnShowLockFields_OnClick"
-						>
-					<Button.Content>
-						<StackPanel Orientation="Vertical">
-							<TextBlock
-									Margin="-1"
-									Padding="0"
-									TextAlignment="Center"
-									Text="Show"
-									/>
-							<TextBlock
-									Margin="-1"
-									Padding="0"
-									TextAlignment="Center"
-									Text="Lock Fields"
-									/>
-						</StackPanel>
-					</Button.Content>
-				</Button>
+			<Button x:Name="BtnRootAppFields"
 
-				<Button x:Name="BtnRootAppData"
-						Margin="0,15,0,5"
-						Width="110"
-						MinHeight="30"
-						HorizontalContentAlignment="Center"
-						Background="#333333"
-						Foreground="White"
-						Click="BtnShowRootData_OnClick"
-						>
-					<Button.Content>
-						<StackPanel Orientation="Vertical">
-							<TextBlock
-									Margin="-1"
-									Padding="0"
-									TextAlignment="Center"
-									Text="Show Root"
-									/>
-							<TextBlock
-									Margin="-1"
-									Padding="0"
-									TextAlignment="Center"
-									Text="Data"
-									/>
-						</StackPanel>
-					</Button.Content>
-				</Button>
+					VerticalAlignment="Top"
+					Style="{StaticResource BtnVoid}"
 
-				<Button x:Name="BtnCellData"
-						Margin="0,0,0,5"
-						Width="110"
-						MinHeight="30"
-						HorizontalContentAlignment="Center"
-						Background="#333333"
-						Foreground="White"
-						Click="BtnShowCellData_OnClick"
-						>
-					<Button.Content>
-						<StackPanel Orientation="Vertical">
-							<TextBlock
-									Margin="-1"
-									Padding="0"
-									TextAlignment="Center"
-									Text="Show"
-									/>
-							<TextBlock
-									Margin="-1"
-									Padding="0"
-									TextAlignment="Center"
-									Text="Cell Data"
-									/>
-						</StackPanel>
-					</Button.Content>
-				</Button>
-
-				<Button x:Name="BtnLockData"
-						Margin="0,0,0,5"
-						Width="110"
-						MinHeight="30"
-						HorizontalContentAlignment="Center"
-						Background="#333333"
-						Foreground="White"
-						Click="BtnShowLockData_OnClick"
-						>
-					<Button.Content>
-						<StackPanel Orientation="Vertical">
-							<TextBlock
-									Margin="-1"
-									Padding="0"
-									TextAlignment="Center"
-									Text="Show"
-									/>
-							<TextBlock
-									Margin="-1"
-									Padding="0"
-									TextAlignment="Center"
-									Text="Lock Data"
-									/>
-						</StackPanel>
-					</Button.Content>
-				</Button>
-
-
-
-
-				<!--    -->
-				<!--  <Button x:Name="BtnAppData"  -->
-				<!--  Margin="0,0,0,5"  -->
-				<!--  Width="110"  -->
-				<!--  MinHeight="30"  -->
-				<!--  HorizontalContentAlignment="Center"  -->
-				<!--  Background="#333333"  -->
-				<!--  Foreground="White"  -->
-				<!--  Click="BtnAppData_OnClick"  -->
-				<!--  >  -->
-				<!-- 	<Button.Content> -->
-				<!-- 		<StackPanel Orientation="Vertical"> -->
-				<!--  <TextBlock  -->
-				<!--  Margin="-1"  -->
-				<!--  Padding="0"  -->
-				<!--  TextAlignment="Center"  -->
-				<!--  Text="Show"  -->
-				<!--  />  -->
-				<!--  <TextBlock  -->
-				<!--  Margin="-1"  -->
-				<!--  Padding="0"  -->
-				<!--  TextAlignment="Center"  -->
-				<!--  Text="App Data"  -->
-				<!--  />  -->
-				<!-- 		</StackPanel> -->
-				<!-- 	</Button.Content> -->
-				<!-- </Button> -->
-				<!--    -->
-				<!--    -->
-				<!--  <Button x:Name="BtnAppFields"  -->
-				<!--  Margin="0,0,0,5"  -->
-				<!--  Width="110"  -->
-				<!--  MinHeight="30"  -->
-				<!--  HorizontalContentAlignment="Center"  -->
-				<!--  Background="#333333"  -->
-				<!--  Foreground="White"  -->
-				<!--  Click="BtnAppFields_OnClick"  -->
-				<!--  >  -->
-				<!-- 	<Button.Content> -->
-				<!-- 		<StackPanel Orientation="Vertical"> -->
-				<!--  <TextBlock  -->
-				<!--  Margin="-1"  -->
-				<!--  Padding="0"  -->
-				<!--  TextAlignment="Center"  -->
-				<!--  Text="Show"  -->
-				<!--  />  -->
-				<!--  <TextBlock  -->
-				<!--  Margin="-1"  -->
-				<!--  Padding="0"  -->
-				<!--  TextAlignment="Center"  -->
-				<!--  Text="App Fields"  -->
-				<!--  />  -->
-				<!-- 		</StackPanel> -->
-				<!-- 	</Button.Content> -->
-				<!-- </Button> -->
-				<!--    -->
-				<!--    -->
-				<!--  <Button x:Name="BtnRootData"  -->
-				<!--  Margin="0,0,0,5"  -->
-				<!--  Width="110"  -->
-				<!--  MinHeight="30"  -->
-				<!--  HorizontalContentAlignment="Center"  -->
-				<!--  Background="#333333"  -->
-				<!--  Foreground="White"  -->
-				<!--  Click="BtnRootData_OnClick"  -->
-				<!--  >  -->
-				<!-- 	<Button.Content> -->
-				<!-- 		<StackPanel Orientation="Vertical"> -->
-				<!--  <TextBlock  -->
-				<!--  Margin="-1"  -->
-				<!--  Padding="0"  -->
-				<!--  TextAlignment="Center"  -->
-				<!--  Text="Show"  -->
-				<!--  />  -->
-				<!--  <TextBlock  -->
-				<!--  Margin="-1"  -->
-				<!--  Padding="0"  -->
-				<!--  TextAlignment="Center"  -->
-				<!--  Text="Root Data"  -->
-				<!--  />  -->
-				<!-- 		</StackPanel> -->
-				<!-- 	</Button.Content> -->
-				<!-- </Button> -->
-				<!--    -->
-				<!--  ~1~  Content="Find Data Storage"  @1@  -->
-				<!--  <Button x:Name="BtnShowRootFields"  -->
-				<!--  Margin="0"  -->
-				<!--  Width="110"  -->
-				<!--  MinHeight="30"  -->
-				<!--  HorizontalContentAlignment="Center"  -->
-				<!--  Background="#333333"  -->
-				<!--  Foreground="White"  -->
+					>
 				<!--  Click="BtnShowRootFields_OnClick"  -->
-				<!--  >  -->
-				<!-- 	<Button.Content> -->
-				<!-- 		<StackPanel Orientation="Vertical"> -->
-				<!--  <TextBlock  -->
-				<!--  Margin="-1"  -->
-				<!--  Padding="0"  -->
-				<!--  TextAlignment="Center"  -->
-				<!--  Text="Show"  -->
-				<!--  />  -->
-				<!--  <TextBlock  -->
-				<!--  Margin="-1"  -->
-				<!--  Padding="0"  -->
-				<!--  TextAlignment="Center"  -->
-				<!--  Text="Root Fields"  -->
-				<!--  />  -->
-				<!-- 		</StackPanel> -->
-				<!-- 	</Button.Content> -->
-				<!-- </Button> -->
+				<Button.Content>
+					<StackPanel Orientation="Vertical">
+						<TextBlock
+								Margin="-1"
+								Padding="0"
+								TextAlignment="Center"
+								Text="(void) Show"
+								/>
+						<TextBlock
+								Margin="-1"
+								Padding="0"
+								TextAlignment="Center"
+								Text="Root Fields"
+								/>
+					</StackPanel>
+				</Button.Content>
+			</Button>
 
-			</StackPanel>
+			<Button x:Name="BtnCellFields"
 
+					VerticalAlignment="Top"
+					Style="{StaticResource BtnVoid}"
+
+					>
+				<!--  Click="BtnShowCellFields_OnClick"  -->
+				<Button.Content>
+					<StackPanel Orientation="Vertical">
+						<TextBlock
+								Margin="-1"
+								Padding="0"
+								TextAlignment="Center"
+								Text="(void) Show"
+								/>
+						<TextBlock
+								Margin="-1"
+								Padding="0"
+								TextAlignment="Center"
+								Text="Cell Fields"
+								/>
+					</StackPanel>
+				</Button.Content>
+			</Button>
+
+			<Button x:Name="BtnLockFields"
+
+					VerticalAlignment="Top"
+					Style="{StaticResource BtnVoid}"
+
+					>
+				<!--  Click="BtnShowLockFields_OnClick"  -->
+				<Button.Content>
+					<StackPanel Orientation="Vertical">
+						<TextBlock
+								Margin="-1"
+								Padding="0"
+								TextAlignment="Center"
+								Text="(void) Show"
+								/>
+						<TextBlock
+								Margin="-1"
+								Padding="0"
+								TextAlignment="Center"
+								Text="Lock Fields"
+								/>
+					</StackPanel>
+				</Button.Content>
+			</Button>
+
+			<Button x:Name="BtnRootAppData"
+
+					VerticalAlignment="Top"
+					Style="{StaticResource BtnVoid}"
+
+					>
+				<!--  Click="BtnShowRootData_OnClick"  -->
+				<Button.Content>
+					<StackPanel Orientation="Vertical">
+						<TextBlock
+								Margin="-1"
+								Padding="0"
+								TextAlignment="Center"
+								Text="(void) Show"
+								/>
+						<TextBlock
+								Margin="-1"
+								Padding="0"
+								TextAlignment="Center"
+								Text="Root Data"
+								/>
+					</StackPanel>
+				</Button.Content>
+			</Button>
+
+			<Button x:Name="BtnCellData"
+
+					VerticalAlignment="Top"
+					Style="{StaticResource BtnVoid}"
+
+					>
+				<!--  Click="BtnShowCellData_OnClick"  -->
+				<Button.Content>
+					<StackPanel Orientation="Vertical">
+						<TextBlock
+								Margin="-1"
+								Padding="0"
+								TextAlignment="Center"
+								Text="(void) Show"
+								/>
+						<TextBlock
+								Margin="-1"
+								Padding="0"
+								TextAlignment="Center"
+								Text="Cell Data"
+								/>
+					</StackPanel>
+				</Button.Content>
+			</Button>
+
+			<Button x:Name="BtnLockData"
+					Click="BtnShowData_OnClick"
+					VerticalAlignment="Top"
+					Style="{StaticResource BtnNew}"
+					
+					>
+				<!--  Click="BtnShowLockData_OnClick"  -->
+				<Button.Content>
+					<StackPanel Orientation="Vertical">
+						<TextBlock
+								Margin="-1"
+								Padding="0"
+								TextAlignment="Center"
+								Text="(void) Show"
+								/>
+						<TextBlock
+								Margin="-1"
+								Padding="0"
+								TextAlignment="Center"
+								Text="Lock Data"
+								/>
+					</StackPanel>
+				</Button.Content>
+			</Button>
+
+			<Border
+					Margin="2.5,0,2.5,0"
+					VerticalAlignment="bottom"
+					BorderThickness="0,4,0,2"
+					BorderBrush="White"
+					DockPanel.Dock="Bottom"
+					>
+
+				<TextBlock
+						Background="#333333"
+						Foreground="White"
+						TextAlignment="Center"
+						Text="Show (new)"
+						/>
+			</Border>
 
 		</DockPanel>
 

@@ -1,19 +1,11 @@
 ﻿#region using
 
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Linq;
-using System.Runtime.CompilerServices;
-using System.Text;
-using System.Threading.Tasks;
 using CSToolsDelux.Fields.SchemaInfo.SchemaData.SchemaDataDefinitions;
-using CSToolsDelux.Fields.SchemaInfo.SchemaDefinitions;
-using CSToolsDelux.Fields.SchemaInfo.SchemaFields;
-using CSToolsDelux.Fields.Testing;
-using UtilityLibrary;
-using static CSToolsDelux.Fields.SchemaInfo.SchemaDefinitions.SchemaLockKey;
-
+using SharedCode.Fields.SchemaInfo.SchemaSupport;
+using SharedCode.Fields.SchemaInfo.SchemaFields.FieldsTemplates;
+using SharedCode.Fields.SchemaInfo.SchemaFields;
+using static SharedCode.Fields.SchemaInfo.SchemaSupport.SchemaLockKey;
 #endregion
 
 // username: jeffs
@@ -21,32 +13,14 @@ using static CSToolsDelux.Fields.SchemaInfo.SchemaDefinitions.SchemaLockKey;
 
 namespace CSToolsDelux.Fields.SchemaInfo.SchemaData
 {
-	// public abstract class SchemaData<TE, TD, TF> : 
-	// 	ISchemaData<TE, TD, TF>
-	// 	where TE : Enum
-	// 	where TD : SchemaDataDictionaryBase<TE>
-	// 	where TF : SchemaDictionaryBase<TE>
-	// {
-	// 	public void Add<TX>(TE key, TX value) { }
-	// 	public void AddDefault<TX>(TE key) { }
-	// 	public TD Data { get; }
-	// 	public TF Fields { get; }
-	// 	public TX GetValue<TX>(TE key)
-	// 	{
-	// 		return default;
-	// 	}
-	//
-	// 	public void SetValue<TX>(TE key, TX value) { }
-	// }
-
-
 	public class SchemaLockData: 
-		ISchemaData<SchemaLockKey, SchemaDataDictLock, SchemaDictionaryLock>
+		ISchemaData<SchemaLockKey, SchemaDataDictLock, FieldsTempDictionary<SchemaLockKey>>
 	{
 	#region private fields
 
+		private FieldsLock fieldsLock;
+
 		private SchemaDataDictLock data;
-		private SchemaLockFields appFields;
 
 	#endregion
 
@@ -55,7 +29,7 @@ namespace CSToolsDelux.Fields.SchemaInfo.SchemaData
 		public SchemaLockData()
 		{
 			data = new SchemaDataDictLock();
-			appFields = new SchemaLockFields();
+			fieldsLock = new FieldsLock();
 
 			Configure();
 		}
@@ -65,7 +39,7 @@ namespace CSToolsDelux.Fields.SchemaInfo.SchemaData
 	#region public properties
 
 		public string DocumentName { get; set; }
-		public string DocKey { get; set; }
+		public string DsKey { get; set; }
 
 		public override SchemaDataDictLock Data 
 		{
@@ -73,9 +47,9 @@ namespace CSToolsDelux.Fields.SchemaInfo.SchemaData
 			protected set { }
 		}
 
-		public SchemaLockFields AppFields => appFields;
+		// public SchemaLockFields LockFields => lockFields;
 
-		public override SchemaDictionaryLock Fields => (SchemaDictionaryLock) appFields.Fields;
+		public override FieldsTempDictionary<SchemaLockKey> Fields => fieldsLock.Fields;
 
 	#endregion
 
@@ -87,26 +61,26 @@ namespace CSToolsDelux.Fields.SchemaInfo.SchemaData
 
 		public override TD GetValue<TD>(SchemaLockKey key)
 		{
-			return ((SchemaLockDataField<TD>) data[key]).Value;
+			return ((LockData<TD>) data[key]).Value;
 		}
 
 		public override void SetValue<TD>(SchemaLockKey key, TD value)
 		{
-			((SchemaLockDataField<TD>) data[key]).Value = value;
+			((LockData<TD>) data[key]).Value = value;
 		}
 
 		public override void Add<TD>(SchemaLockKey key, TD value)
 		{
 			Data.Add(key,
-				new SchemaLockDataField<TD>(value, appFields.GetField<TD>(key)));
+				new LockData<TD>(value, fieldsLock.GetField<TD>(key)));
 		}
 
 		public override void AddDefault<TD>(SchemaLockKey key)
 		{
-			SchemaFieldDef<TD, SchemaLockKey> f = appFields.GetField<TD>(key);
+			FieldsTemp< SchemaLockKey,TD> f = fieldsLock.GetField<TD>(key);
 
 			Data.Add(key,
-				new SchemaLockDataField<TD>(f.Value, f));
+				new LockData<TD>(f.Value, f));
 		}
 
 		private void Configure()

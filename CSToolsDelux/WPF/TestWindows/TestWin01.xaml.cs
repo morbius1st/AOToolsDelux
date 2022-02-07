@@ -1,22 +1,7 @@
 ﻿using System;
-using System.Collections;
-using System.Threading;
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.Linq;
-using System.Reflection;
 using System.Runtime.CompilerServices;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
-using Autodesk.Revit.UI;
 using CSToolsDelux.Revit.Commands;
 using CSToolsDelux.Revit.Tests;
 
@@ -38,8 +23,8 @@ namespace CSToolsDelux.WPF.TestWindows
 		private static SubClass02 sc02;
 		private SubClassS scS;
 
-		private SubClassLazy sclEarly = SubClassLazy.Instance;
-		private SubClassLazy sclLate;
+		private SingletonLazy scLazyEarly = SingletonLazy.Instance;
+		private SingletonLazy scLazyLate;
 
 		private Singleton single;
 
@@ -64,8 +49,6 @@ namespace CSToolsDelux.WPF.TestWindows
 
 			SubClass01.StaticDocName = AppRibbon.Doc.Title;
 
-			single = Singleton.Get(AppRibbon.Doc.Title);
-
 			docName = AppRibbon.Doc.Title;
 
 			AppRibbon.docName = AppRibbon.Doc.Title;
@@ -77,14 +60,23 @@ namespace CSToolsDelux.WPF.TestWindows
 
 			sc01x.TestVal12 = 0;
 
-			SubClassLazy.sc02Early.DocName = docName;
-			SubClassLazy.sc02Late = new SubClass02();
-			SubClassLazy.sc02Late.DocName = docName;
 
-			sclLate = SubClassLazy.Instance;
+			single = Singleton.Get(AppRibbon.Doc.Title);
+			single.I1 = 100;
 
-			sclEarly.DocName2 = docName;
-			sclLate.DocName2 = docName;
+
+			SingletonLazy.sc02Early.DocName = docName;
+			SingletonLazy.sc02Late = new SubClass02();
+			SingletonLazy.sc02Late.DocName = docName;
+
+			scLazyLate = SingletonLazy.Instance;
+
+
+			scLazyEarly.DocName2 = docName;
+			scLazyLate.DocName2 = docName;
+
+			scLazyEarly.I1 = 10;
+			scLazyLate.I1 = 100;
 
 
 			clear();
@@ -132,10 +124,6 @@ namespace CSToolsDelux.WPF.TestWindows
 
 				int01 += i;
 
-				single.D1 += 1;
-				single.I1 += 1;
-
-
 				sc01.TestVal12 += 1;
 				sc02.TestVal22 += 1;
 				scS.TestValS2 += 1;
@@ -152,6 +140,13 @@ namespace CSToolsDelux.WPF.TestWindows
 
 				SubClassPerDoc.pd01 += 1;
 				Test01.pd01.pd11 += 1;
+
+
+				single.D1 += 1;
+				single.I1 += 1;
+
+				scLazyEarly.I1 += 1;
+				scLazyLate.I1 += 1;
 
 			}
 
@@ -180,6 +175,20 @@ namespace CSToolsDelux.WPF.TestWindows
 			WriteLineMsg($"single (doc)| {single.docName}");
 
 			WriteLineMsg("");
+		}
+
+		private void show1()
+		{
+			WriteLineMsg("\n\n");
+			WriteLineMsg($"Single    | docname| {single.DocName}");
+			WriteLineMsg($"Single    |      I1| {single.I1}");
+			WriteLineMsg("\n");
+			WriteLineMsg($"lazy early| docname| {scLazyEarly.DocName2}");
+			WriteLineMsg($"lazy early|      I1| {scLazyEarly.I1}");
+			WriteLineMsg("");
+			WriteLineMsg($"lazy late | docname| {scLazyLate.DocName2}");
+			WriteLineMsg($"lazy late |      I1| {scLazyLate.I1}");
+
 		}
 
 		private void show2()
@@ -232,11 +241,11 @@ namespace CSToolsDelux.WPF.TestWindows
 			WriteLineMsg($"static late  bound| {SubClass01.sc02Late.DocName}");       // not shared
 			WriteLineMsg($"static after  bound| {SubClass01.sc02After2.DocName}");    // not shared
 			WriteLineMsg("");
-			WriteLineMsg($"lazy early bound| {SubClassLazy.sc02Early.DocName}"); // not shared
-			WriteLineMsg($"lazy late bound| {SubClassLazy.sc02Late.DocName}");   // not shared
+			WriteLineMsg($"lazy early bound| {SingletonLazy.sc02Early.DocName}"); // not shared
+			WriteLineMsg($"lazy late bound| {SingletonLazy.sc02Late.DocName}");   // not shared
 			WriteLineMsg("");                                                    // not shared
-			WriteLineMsg($"lazy inst early bound| {sclEarly.DocName2}");         // not shared
-			WriteLineMsg($"lazy inst late bound| {sclLate.DocName2}");           // not shared
+			WriteLineMsg($"lazy inst early bound| {scLazyEarly.DocName2}");         // not shared
+			WriteLineMsg($"lazy inst late bound| {scLazyLate.DocName2}");           // not shared
 
 		}
 
@@ -255,18 +264,20 @@ namespace CSToolsDelux.WPF.TestWindows
 			test(1);
 		}
 
-		private void BtnQ2_OnClick(object sender, RoutedEventArgs e)
+		private void BtnShow_OnClick(object sender, RoutedEventArgs e)
 		{
 			WriteLineMsg("show info only");
 
-			show2();
+			show1();
+			// show2();
 
 		}
 
 		private void BtnClr_OnClick(object sender, RoutedEventArgs e)
 		{
 			clear();
-			show2();
+			show1();
+			// show2();
 		}
 	}
 }

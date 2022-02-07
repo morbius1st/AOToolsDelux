@@ -1,0 +1,323 @@
+﻿<wpf:AWindow
+		x:Class="CSToolsStudies.Windows.MainWindow"
+		xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+		xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+		xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+		xmlns:local="clr-namespace:CSToolsStudies.Windows"
+		xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+		xmlns:wpf="clr-namespace:CSToolsDelux.WPF;assembly=CSToolsDelux"
+		Title="MainWindow"
+		Width="1100"
+		Height="850"
+		mc:Ignorable="d"
+		DataContext="{Binding Mode=OneWay,
+													RelativeSource={RelativeSource Self}}"
+		Background="{StaticResource Normal.Window.Background}"
+		>
+		<!-- Name="mainWin" -->
+
+	<wpf:AWindow.Resources>
+
+		<Style TargetType="{x:Type ScrollBar}">
+			<Setter Property="Background" Value="#444444"/>
+			<Setter Property="BorderBrush" Value="#666666"/>
+		</Style>
+
+	</wpf:AWindow.Resources>
+
+
+	<Grid
+			UseLayoutRounding="true"
+			>
+
+		<Grid.ColumnDefinitions>
+			<ColumnDefinition Width="*" />
+			<ColumnDefinition Width="120" />
+			<ColumnDefinition Width="120" />
+		</Grid.ColumnDefinitions>
+
+		<Grid.RowDefinitions>
+			<RowDefinition Height="*" />
+			<RowDefinition Height="60" />
+		</Grid.RowDefinitions>
+		
+		<TextBox Name="Tbx_01"
+				Grid.Column="0"
+				Grid.Row="0"
+				Background="Transparent"
+				Foreground="White"
+				
+				VerticalScrollBarVisibility="Visible"
+				HorizontalScrollBarVisibility="Visible"
+				Text="{Binding MessageBoxText,
+											 FallbackValue='hello world'}"
+						 FontFamily="Droid Sans Mono">
+		</TextBox>
+
+		<DockPanel
+				Grid.Column="0"
+				Grid.Row="1"
+				Grid.ColumnSpan="3"
+				HorizontalAlignment="Right"
+				VerticalAlignment="Bottom"
+				>
+			<Button x:Name="BtnExit"
+					Content="Exit"
+					Margin="5,0,5,5"
+					Width="110"
+					MinHeight="30"
+					HorizontalContentAlignment="Center"
+					Background="#333333"
+					Foreground="White"
+					Click="BtnExit_OnClick"
+					/>
+		</DockPanel>
+
+		
+		<StackPanel
+				Grid.Column="1"
+				Grid.Row="0"
+				Margin="5,5,5,0"
+				HorizontalAlignment="Center"
+				VerticalAlignment="Bottom"
+				Orientation="Vertical"
+		>
+
+			
+			<Button x:Name="BtnRootAppFields"
+					Margin="0,0,0,5"
+					Width="110"
+					MinHeight="30"
+					HorizontalContentAlignment="Center"
+					Background="#333333"
+					Foreground="White"
+					Click="BtnRootAppFields_OnClick"
+			>
+				<Button.Content>
+					<StackPanel Orientation="Vertical">
+						<TextBlock
+								Margin="-1"
+								Padding="0"
+								TextAlignment="Center"
+								Text="Show"
+						/>
+						<TextBlock
+								Margin="-1"
+								Padding="0"
+								TextAlignment="Center"
+								Text="Root Fields"
+						/>
+					</StackPanel>
+				</Button.Content>
+			</Button>			
+			<Button x:Name="BtnRootAppData"
+					Margin="0,0,0,5"
+					Width="110"
+					MinHeight="30"
+					HorizontalContentAlignment="Center"
+					Background="#333333"
+					Foreground="White"
+					Click="BtnRootAppData_OnClick"
+			>
+				<Button.Content>
+					<StackPanel Orientation="Vertical">
+						<TextBlock
+								Margin="-1"
+								Padding="0"
+								TextAlignment="Center"
+								Text="Show"
+						/>
+						<TextBlock
+								Margin="-1"
+								Padding="0"
+								TextAlignment="Center"
+								Text="Root Data"
+						/>
+					</StackPanel>
+				</Button.Content>
+			</Button>
+
+			
+			<Button x:Name="BtnCellFields"
+					Margin="0,0,0,5"
+					Width="110"
+					MinHeight="30"
+					HorizontalContentAlignment="Center"
+					Background="#333333"
+					Foreground="White"
+					Click="BtnCellFields_OnClick"
+			>
+				<Button.Content>
+					<StackPanel Orientation="Vertical">
+						<TextBlock
+								Margin="-1"
+								Padding="0"
+								TextAlignment="Center"
+								Text="Show"
+						/>
+						<TextBlock
+								Margin="-1"
+								Padding="0"
+								TextAlignment="Center"
+								Text="Cell Fields"
+						/>
+					</StackPanel>
+				</Button.Content>
+			</Button>
+
+			<Button x:Name="BtnCellData"
+					Margin="0,0,0,5"
+					Width="110"
+					MinHeight="30"
+					HorizontalContentAlignment="Center"
+					Background="#333333"
+					Foreground="White"
+					Click="BtnCellData_OnClick"
+			>
+				<Button.Content>
+					<StackPanel Orientation="Vertical">
+						<TextBlock
+								Margin="-1"
+								Padding="0"
+								TextAlignment="Center"
+								Text="Show"
+						/>
+						<TextBlock
+								Margin="-1"
+								Padding="0"
+								TextAlignment="Center"
+								Text="Cell Data"
+						/>
+					</StackPanel>
+				</Button.Content>
+			</Button>
+
+			
+			<Button x:Name="BtnLockFields"
+					Margin="0,0,0,5"
+					Width="110"
+					MinHeight="30"
+					HorizontalContentAlignment="Center"
+					Background="#333333"
+					Foreground="White"
+					Click="BtnShowLockFields_OnClick"
+			>
+				<Button.Content>
+					<StackPanel Orientation="Vertical">
+						<TextBlock
+								Margin="-1"
+								Padding="0"
+								TextAlignment="Center"
+								Text="Show"
+						/>
+						<TextBlock
+								Margin="-1"
+								Padding="0"
+								TextAlignment="Center"
+								Text="Lock Fields"
+						/>
+					</StackPanel>
+				</Button.Content>
+			</Button>
+
+			
+			<Button x:Name="BtnLockData"
+					Margin="0,0,0,5"
+					Width="110"
+					MinHeight="30"
+					HorizontalContentAlignment="Center"
+					Background="#333333"
+					Foreground="White"
+					Click="BtnShowLockData_OnClick"
+			>
+				<Button.Content>
+					<StackPanel Orientation="Vertical">
+						<TextBlock
+								Margin="-1"
+								Padding="0"
+								TextAlignment="Center"
+								Text="Show"
+						/>
+						<TextBlock
+								Margin="-1"
+								Padding="0"
+								TextAlignment="Center"
+								Text="Lock Data"
+						/>
+					</StackPanel>
+				</Button.Content>
+			</Button>
+
+			
+
+		</StackPanel>
+
+
+
+		<StackPanel
+				Grid.Column="2"
+				Grid.Row="0"
+				Margin="5,5,5,0"
+				HorizontalAlignment="Center"
+				VerticalAlignment="Bottom"
+				Orientation="Vertical"
+				>
+
+			<Button x:Name="BtnTestStart"
+					Margin="0,0,0,5"
+					Width="110"
+					MinHeight="30"
+					HorizontalContentAlignment="Center"
+					Background="#333333"
+					Foreground="White"
+					Click="BtnTestStart_OnClick"
+					>
+				<Button.Content>
+					<StackPanel Orientation="Vertical">
+						<TextBlock
+								Margin="-1"
+								Padding="0"
+								TextAlignment="Center"
+								Text="Test"
+								/>
+						<TextBlock
+								Margin="-1"
+								Padding="0"
+								TextAlignment="Center"
+								Text="Start"
+								/>
+					</StackPanel>
+				</Button.Content>
+			</Button>
+
+					<!-- Content="Find Data Storage" -->
+			<Button x:Name="BtnTest01"
+					Margin="0"
+					Width="110"
+					MinHeight="30"
+					HorizontalContentAlignment="Center"
+					Background="#333333"
+					Foreground="White"
+					>
+				<Button.Content>
+					<StackPanel Orientation="Vertical">
+						<TextBlock
+								Margin="-1"
+								Padding="0"
+								TextAlignment="Center"
+								Text="Find"
+						/>
+						<TextBlock
+								Margin="-1"
+								Padding="0"
+								TextAlignment="Center"
+								Text="Data Storage"
+						/>
+					</StackPanel>
+				</Button.Content>
+			</Button>
+
+		</StackPanel>
+
+	</Grid>
+</wpf:AWindow>

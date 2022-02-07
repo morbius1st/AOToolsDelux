@@ -1,18 +1,11 @@
 ﻿#region using
 
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Linq;
-using System.Runtime.CompilerServices;
-using System.Text;
-using System.Threading.Tasks;
 using CSToolsDelux.Fields.SchemaInfo.SchemaData.SchemaDataDefinitions;
-using CSToolsDelux.Fields.SchemaInfo.SchemaDefinitions;
-using CSToolsDelux.Fields.SchemaInfo.SchemaFields;
-using CSToolsDelux.Fields.Testing;
-using static CSToolsDelux.Fields.SchemaInfo.SchemaDefinitions.SchemaRootKey;
-
+using SharedCode.Fields.SchemaInfo.SchemaSupport;
+using SharedCode.Fields.SchemaInfo.SchemaFields.FieldsTemplates;
+using SharedCode.Fields.SchemaInfo.SchemaFields;
+using static SharedCode.Fields.SchemaInfo.SchemaSupport.SchemaRootKey;
 #endregion
 
 // username: jeffs
@@ -20,32 +13,14 @@ using static CSToolsDelux.Fields.SchemaInfo.SchemaDefinitions.SchemaRootKey;
 
 namespace CSToolsDelux.Fields.SchemaInfo.SchemaData
 {
-	// public abstract class SchemaData<TE, TD, TF> : 
-	// 	ISchemaData<TE, TD, TF>
-	// 	where TE : Enum
-	// 	where TD : SchemaDataDictionaryBase<TE>
-	// 	where TF : SchemaDictionaryBase<TE>
-	// {
-	// 	public void Add<TX>(TE key, TX value) { }
-	// 	public void AddDefault<TX>(TE key) { }
-	// 	public TD Data { get; }
-	// 	public TF Fields { get; }
-	// 	public TX GetValue<TX>(TE key)
-	// 	{
-	// 		return default;
-	// 	}
-	//
-	// 	public void SetValue<TX>(TE key, TX value) { }
-	// }
-
-
 	public class SchemaRootData: 
-		ISchemaData<SchemaRootKey, SchemaDataDictRoot, SchemaDictionaryRoot>
+		ISchemaData<SchemaRootKey, SchemaDataDictRoot, FieldsTempDictionary<SchemaRootKey>>
 	{
 	#region private fields
 
+		private FieldsRoot fieldsRoot;
+
 		private SchemaDataDictRoot data;
-		private SchemaRootFields appFields;
 
 	#endregion
 
@@ -54,33 +29,24 @@ namespace CSToolsDelux.Fields.SchemaInfo.SchemaData
 		public SchemaRootData()
 		{
 			data = new SchemaDataDictRoot();
-			appFields = new SchemaRootFields();
+			fieldsRoot = new FieldsRoot();
 		}
 
 	#endregion
 
 	#region public properties
 
-		public string DocumentName { get; set; }
-		public string DocKey { get; set; }
+		// public string DocumentName { get; set; }
+		public string DsKey { get; set; }
 
 		public override SchemaDataDictRoot Data {
 			get => data;
 			protected set {}
 	}
 
-		public SchemaRootFields AppFields => appFields;
+		public FieldsRoot FieldsRoot => fieldsRoot;
 
-		public override SchemaDictionaryRoot Fields => (SchemaDictionaryRoot) appFields.Fields;
-
-		// public ASchemaDataFieldDef<SchemaRootKey> this[SchemaRootKey key]
-		// {
-		// 	get
-		// 	{
-		// 		if (!data.ContainsKey(key)) return null;
-		// 		return data[key];
-		// 	}
-		// }
+		public override FieldsTempDictionary<SchemaRootKey> Fields => fieldsRoot.Fields;
 
 	#endregion
 
@@ -92,26 +58,26 @@ namespace CSToolsDelux.Fields.SchemaInfo.SchemaData
 
 		public override TD GetValue<TD>(SchemaRootKey key)
 		{
-			return ((SchemaRootDataField<TD>) data[key]).Value;
+			return ((RootData<TD>) data[key]).Value;
 		}
 
 		public override void SetValue<TD>(SchemaRootKey key, TD value)
 		{
-			((SchemaRootDataField<TD>) data[key]).Value = value;
+			((RootData<TD>) data[key]).Value = value;
 		}
 
 		public override void Add<TD>(SchemaRootKey key, TD value)
 		{
 			Data.Add(key,
-				new SchemaRootDataField<TD>(value, appFields.GetField<TD>(key)));
+				new RootData<TD>(value, fieldsRoot.GetField<TD>(key)));
 		}
 
 		public override void AddDefault<TD>(SchemaRootKey key)
 		{
-			SchemaFieldDef<TD, SchemaRootKey> f = appFields.GetField<TD>(key);
+			FieldsTemp<SchemaRootKey, TD> f = fieldsRoot.GetField<TD>(key);
 
 			Data.Add(key,
-				new SchemaRootDataField<TD>(f.Value, f));
+				new RootData<TD>(f.Value, f));
 		}
 
 		public void Configure(string name, string desc)

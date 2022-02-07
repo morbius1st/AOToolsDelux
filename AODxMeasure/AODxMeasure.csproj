@@ -26,7 +26,8 @@
     <RegisterForComInterop>false</RegisterForComInterop>
     <PlatformTarget>AnyCPU</PlatformTarget>
     <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
-    <PreBuildEvent>echo *** Configuration: $(ConfigurationName) ***</PreBuildEvent>
+    <PreBuildEvent>echo *** Configuration: $(ConfigurationName) ***
+echo $(AppData)\Autodesk\REVIT\Addins\adm01</PreBuildEvent>
     <PostBuildEvent>(copy /y "$(ProjectDir)Other\$(TargetName).addin" "$(AppData)\Autodesk\REVIT\Addins\2017")
 (copy /y "$(TargetPath)" "$(AppData)\Autodesk\REVIT\Addins\2017")</PostBuildEvent>
     <StartAction>Program</StartAction>
@@ -44,7 +45,8 @@
     <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
     <DebugSymbols>
     </DebugSymbols>
-    <PreBuildEvent>echo *** Configuration: $(ConfigurationName) ***</PreBuildEvent>
+    <PreBuildEvent>echo *** Configuration: $(ConfigurationName) ***
+echo $(AppData)\Autodesk\REVIT\Addins\adm02</PreBuildEvent>
     <PostBuildEvent>(copy /y "$(ProjectDir)Other\$(TargetName).addin" "$(AppData)\Autodesk\REVIT\Addins\2017")
 (copy /y "$(TargetPath)" "$(AppData)\Autodesk\REVIT\Addins\2017")</PostBuildEvent>
     <StartAction>Program</StartAction>
@@ -61,7 +63,8 @@
     <WarningLevel>4</WarningLevel>
     <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
     <Optimize>false</Optimize>
-    <PreBuildEvent>echo *** Configuration: $(ConfigurationName) ***</PreBuildEvent>
+    <PreBuildEvent>echo *** Configuration: $(ConfigurationName) ***
+echo $(AppData)\Autodesk\REVIT\Addins\adm03</PreBuildEvent>
     <PostBuildEvent>(copy /y "$(ProjectDir)Other\$(TargetName).addin" "$(AppData)\Autodesk\REVIT\Addins\2018")
 (copy /y "$(TargetPath)" "$(AppData)\Autodesk\REVIT\Addins\2018")</PostBuildEvent>
     <StartAction>Program</StartAction>
@@ -78,7 +81,8 @@
     <WarningLevel>4</WarningLevel>
     <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
     <Optimize>false</Optimize>
-    <PreBuildEvent>echo *** Configuration: $(ConfigurationName) ***</PreBuildEvent>
+    <PreBuildEvent>echo *** Configuration: $(ConfigurationName) ***
+echo $(AppData)\Autodesk\REVIT\Addins\adm04</PreBuildEvent>
     <PostBuildEvent>(copy /y "$(ProjectDir)Other\$(TargetName).addin" "$(AppData)\Autodesk\REVIT\Addins\2019")
 (copy /y "$(TargetPath)" "$(AppData)\Autodesk\REVIT\Addins\2019")</PostBuildEvent>
     <StartAction>Program</StartAction>
@@ -95,7 +99,8 @@
     <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
     <WarningLevel>4</WarningLevel>
     <Optimize>false</Optimize>
-    <PreBuildEvent>echo *** Configuration: $(ConfigurationName) ***</PreBuildEvent>
+    <PreBuildEvent>echo *** Configuration: $(ConfigurationName) ***
+echo $(AppData)\Autodesk\REVIT\Addins\adm05</PreBuildEvent>
     <PostBuildEvent>(copy /y "$(ProjectDir)Other\$(TargetName).addin" "$(AppData)\Autodesk\REVIT\Addins\2020")
 (copy /y "$(TargetPath)" "$(AppData)\Autodesk\REVIT\Addins\2020")</PostBuildEvent>
     <StartAction>Program</StartAction>
@@ -147,12 +152,10 @@
   <ItemGroup>
     <Reference Include="PresentationCore" />
     <Reference Include="RevitAPI">
-      <HintPath>C:\Program Files\Autodesk\Revit 2017\RevitAPI.dll</HintPath>
-      <Private>False</Private>
+      <HintPath>..\..\..\..\..\..\..\..\Program Files\Autodesk\Revit 2021\RevitAPI.dll</HintPath>
     </Reference>
     <Reference Include="RevitAPIUI">
-      <HintPath>C:\Program Files\Autodesk\Revit 2017\RevitAPIUI.dll</HintPath>
-      <Private>False</Private>
+      <HintPath>..\..\..\..\..\..\..\..\Program Files\Autodesk\Revit 2021\RevitAPIUI.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -239,6 +242,8 @@
 (copy /y "$(TargetPath)" "$(AppData)\Autodesk\REVIT\Addins\2021")</PostBuildEvent>
   </PropertyGroup>
   <PropertyGroup>
-    <PreBuildEvent>echo *** Configuration: $(ConfigurationName) ***</PreBuildEvent>
+    <PreBuildEvent>echo *** Configuration: $(ConfigurationName) ***
+echo $(AppData)\Autodesk\REVIT\Addins\adm06
+		</PreBuildEvent>
   </PropertyGroup>
 </Project>

@@ -1,10 +1,6 @@
 ﻿#region + Using Directives
-using System;
+
 using System.Collections.Generic;
-using System.Linq;
-using System.Runtime.CompilerServices;
-using System.Text;
-using System.Threading.Tasks;
 
 #endregion
 
@@ -15,7 +11,6 @@ namespace CSToolsDelux.Revit.Tests
 {
 	public class Singleton
 	{
-
 		private static Dictionary<string, Singleton> data;
 
 		static Singleton()
@@ -23,7 +18,7 @@ namespace CSToolsDelux.Revit.Tests
 			data = new Dictionary<string, Singleton>();
 		}
 
-		private Singleton() {}
+		private Singleton() { }
 
 		public static Singleton Get(string docName)
 		{
@@ -48,10 +43,7 @@ namespace CSToolsDelux.Revit.Tests
 		public string DocName
 		{
 			get => docName;
-			private set
-			{
-				docName = value;
-			}
+			private set { docName = value; }
 		}
 
 		public int I1

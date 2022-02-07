@@ -5,19 +5,20 @@
 
 using System;
 using CSToolsDelux.Fields.SchemaInfo.SchemaData.SchemaDataDefinitions;
-using CSToolsDelux.Fields.SchemaInfo.SchemaDefinitions;
+using SharedCode.Fields.SchemaInfo.SchemaData.DataTemplate;
+using SharedCode.Fields.SchemaInfo.SchemaFields.FieldsTemplates;
 
 namespace CSToolsDelux.Fields.SchemaInfo.SchemaData
 {
 	public abstract class ISchemaData<TE, TD, TF> 
 		where TE : Enum
-		where TD : SchemaDataDictionaryBase<TE> 
-		where TF :  SchemaDictionaryBase<TE>
+		where TD : SchemaDataDictionary<TE> 
+		where TF :  FieldsTempDictionary<TE>
 	{
 		public abstract TD Data { get; protected set;}
 		public abstract TF Fields { get;}
 
-		public ASchemaDataFieldDef<TE> this[TE key]
+		public ADataMembers<TE> this[TE key]
 		{
 			get
 			{

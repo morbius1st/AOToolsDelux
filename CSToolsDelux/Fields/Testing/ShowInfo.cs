@@ -1,26 +1,22 @@
 ﻿#region using
-using System;
-using System.Collections.Generic;
-using System.Diagnostics;
+
 using Autodesk.Revit.DB.ExtensibleStorage;
-using CSToolsDelux.Fields.SchemaInfo.SchemaData;
-using CSToolsDelux.Fields.SchemaInfo.SchemaData.SchemaDataDefinitions;
-using CSToolsDelux.Fields.SchemaInfo.SchemaDefinitions;
-using CSToolsDelux.Fields.SchemaInfo.SchemaFields;
-using CSToolsDelux.WPF;
+using SharedCode.Windows;
+using System.Collections.Generic;
 using CSToolsDelux.WPF.FieldsWindow;
 using UtilityLibrary;
+
 #endregion
 
 // username: jeffs
 // created:  8/28/2021 7:48:35 PM
 
 
-
 namespace CSToolsDelux.Fields.Testing
 {
 	public class ShowInfo
 	{
+
 	#region private fields
 
 		private const int NAME_WIDTH = 20;
@@ -42,13 +38,13 @@ namespace CSToolsDelux.Fields.Testing
 			W = w;
 
 			string docName = MainFields.DocName;
-				
-			this.documentName = docName.IsVoid() ? "un-named" : docName;
 
+			this.documentName = docName.IsVoid() ? "un-named" : docName;
 		}
 
-	#endregion
+		#endregion
 
+/*
 		private string leftMarginSpacer = "   ";
 		private string[] flowEnter      = new [] {"", "->"};
 		private string[] flowExit       = new [] {"", "<-"};
@@ -60,6 +56,7 @@ namespace CSToolsDelux.Fields.Testing
 		// private const int leftMarginAdjustAmt = 2;
 		private static int leftMarginWidth;
 		private string leftMargin;
+		private AWindow w;
 
 		private void incLeftMargin()
 		{
@@ -67,7 +64,7 @@ namespace CSToolsDelux.Fields.Testing
 			leftMarginWidth += 1;
 			leftMargin = leftMarginSpacer.Repeat(leftMarginWidth);
 		}
-		
+
 		private void decLeftMargin()
 		{
 			Debug.WriteLine("decrement");
@@ -93,27 +90,27 @@ namespace CSToolsDelux.Fields.Testing
 			incLeftMargin();
 		}
 
-		
+
 		public void informStartExit(int idx, string info, string code = "")
 		{
 			decLeftMargin();
 			informStartX(idx, info, $"{flowExit[0]}{flowExit[1]}", code);
 		}
-		
+
 		public void informStartLoopBeg(int idx, string info, string code = "")
 		{
 			informStartX(idx, info, $"{flowLoopBeg[0]}{flowLoopBeg[1]}", code, flowLoopBeg[1]);
 			incLeftMargin();
 		}
 
-		
+
 		public void informStartLoopEnd(int idx, string info, string code = "")
 		{
 			decLeftMargin();
 			informStartX(idx, info, $"{flowLoopEnd[0]}{flowLoopEnd[1]}", code, flowLoopEnd[1]);
 		}
 
-				
+
 		public void informStartCont(int idx, string code = "")
 		{
 			informStartX(idx, null, $"{flowCont[0]}{flowCont[1]}", code);
@@ -163,7 +160,6 @@ namespace CSToolsDelux.Fields.Testing
 			}
 
 			informStart(msgA, info, flow, code, $"{desc}");
-
 		}
 
 		public void informStart(int idx, string info, string flow, string code = "")
@@ -187,7 +183,7 @@ namespace CSToolsDelux.Fields.Testing
 			informStart(msgA, info, flow, code, $"{SampleData.ti[idx].description}");
 		}
 
-		private void informStart(string msgA, string info, 
+		private void informStart(string msgA, string info,
 			string flow, string code, string desc)
 		{
 			string msgB;
@@ -196,7 +192,7 @@ namespace CSToolsDelux.Fields.Testing
 
 			if (!(info.IsVoid() && flow.IsVoid() && code.IsVoid()))
 			{
-				msgB = flow.IsVoid() ? "" : $"{flow}"; 
+				msgB = flow.IsVoid() ? "" : $"{flow}";
 
 				msgD = code.IsVoid() ? "" : $"{code.PadRight(CODE_WIDTH)}";
 
@@ -204,8 +200,9 @@ namespace CSToolsDelux.Fields.Testing
 
 				msgC = msgC.IsVoid() ? (desc.IsVoid() ? null : $"{" ".PadRight(INFO_WIDTH)} | ({desc})") : $"{msgC} | ({desc})";
 
-				msgC = msgB.IsVoid() && msgC.IsVoid() && msgD.IsVoid() ? null : 
-					$"| {msgB.PadRight(FLOW_WIDTH)}"
+				msgC = msgB.IsVoid() && msgC.IsVoid() && msgD.IsVoid()
+					? null
+					: $"| {msgB.PadRight(FLOW_WIDTH)}"
 					+ $" {msgD.PadRight(CODE_WIDTH)}"
 					+ $"| {msgC}";
 			}
@@ -216,12 +213,12 @@ namespace CSToolsDelux.Fields.Testing
 		public void informStart(  int idx, int location, string flow, string code)
 		{
 			string msgA = $"B {SampleData.ti[idx].routine.PadRight(PROC_WIDTH)}";
-		
+
 			string msgB = $"{flow.PadRight(FLOW_WIDTH)} ";
-			 msgB = $"{msgB}{code.PadRight(CODE_WIDTH)} | ({SampleData.ti[idx].description})";
-		
+			msgB = $"{msgB}{code.PadRight(CODE_WIDTH)} | ({SampleData.ti[idx].description})";
+
 			string msgC = $"location {SampleData.ti[location].routine} > {msgB}";
-		
+
 			// W.WriteLine(msgA, msgC);
 			debugMsg(msgA, msgB);
 		}
@@ -229,14 +226,13 @@ namespace CSToolsDelux.Fields.Testing
 
 		private void debugMsg(string msgA, string msgB)
 		{
-			W.WriteDebugMsg(msgA, msgB, 
+			W.WriteLineDebugMsg(msgA, msgB,
 				$"{msgB.PadRight(60)} | {(SampleData.TestIdx + 1)} : {SampleData.PrimeLoopIdx}", "", 40);
 
 			// W.WriteLine($"{msgA} {msgB}");
 			// Debug.WriteLine($"{msgA} {msgB.PadRight(60)} | {(SampleData.TestIdx + 1)} : {SampleData.PrimeLoopIdx}");
-
 		}
-
+*/
 		public void ShowSchemas(IList<Schema> schemas)
 		{
 			if (schemas != null && schemas.Count > 0)
@@ -251,7 +247,7 @@ namespace CSToolsDelux.Fields.Testing
 
 			W.ShowMsg();
 		}
-
+/*
 		public void ShowSchema(Schema s)
 		{
 			W.WriteLine($"Show Schema|");
@@ -273,6 +269,7 @@ namespace CSToolsDelux.Fields.Testing
 			;
 		}
 
+
 		public void ShowSchemaFields<TE>(ASchemaFields2<TE, SchemaDictionaryBase<TE>> fields)
 			where TE : Enum
 		{
@@ -285,7 +282,7 @@ namespace CSToolsDelux.Fields.Testing
 			string type;
 			string value;
 
-			foreach (TE key in fields.KeyOrder)
+			foreach (TE key in fields.FieldOrderDefault)
 			{
 				name = fields[key].Name;
 				value = fields[key].ValueString;
@@ -302,7 +299,6 @@ namespace CSToolsDelux.Fields.Testing
 		}
 
 
-/*
 		public void ShowRootFields(SchemaRootFields fields)
 		{
 			W.WriteLineAligned("this is (prog name)| ", "CSToolsDelux");
@@ -382,7 +378,47 @@ namespace CSToolsDelux.Fields.Testing
 			W.ShowMsg();
 		}
 	
-*/
+
+
+
+		public void ShowDataGeneric<TE>(ASchemaData<TE> data) where TE : Enum
+		{
+			W.WriteLineAligned("this is (prog name)| ", "CSToolsDelux");
+			W.WriteLineAligned("this is  (doc name)| ", $"{(documentName ?? "un-named")}");
+			W.WriteLineAligned("Show Root data| ", "type 2");
+			W.WriteLineAligned("Show Root data| ", $"schema name {data.SchemaName}");
+			W.WriteLineAligned("Show Root data| ", $"schema desc {data.SchemaDesc}");
+			W.WriteLineAligned("Show Root data| ", $"schema date {data.SchemaCreateDate}");
+			W.WriteLineAligned("Show Root data| ", $"schema ver  {data.SchemaVersion}");
+			W.WriteLineAligned("Show Root data| ", $"data lists| {data.DataIndexMaxAllowed}");
+			W.WriteAligned("\n");
+
+			string name;
+			string value;
+			string type;
+
+			for (int i = 0; i < data.DataIndexMaxAllowed; i++)
+			{
+				W.WriteLineAligned($"datalist idx| ", $"{i}");
+
+				foreach (TE key in data.FieldsData.FieldOrderDefault)
+				{
+					name =  data[i, key].FieldDef.Name;
+					value = data[i, key].ValueString;
+					type =  data[i, key].ValueType.Name;
+
+					W.WriteLineAligned($"key| {key}| ", formatFieldInfo(name, type, value));
+				}
+
+				W.WriteAligned("\n");
+			}
+
+			W.WriteAligned("\n");
+			W.WriteLineAligned("Show Root data| ", "finished");
+			W.WriteAligned("\n");
+
+			W.ShowMsg();
+		}
 
 
 		public void ShowRootData(SchemaRootFields rootFields, SchemaRootData rootData)
@@ -396,7 +432,7 @@ namespace CSToolsDelux.Fields.Testing
 			string value;
 			string type;
 
-			foreach (SchemaRootKey key in rootFields.KeyOrder)
+			foreach (SchemaRootKey key in rootFields.FieldOrderDefault)
 			{
 				name = rootData[key].FieldDef.Name;
 				value = rootData[key].ValueString;
@@ -411,9 +447,6 @@ namespace CSToolsDelux.Fields.Testing
 
 			W.ShowMsg();
 		}
-		
-
-
 
 
 		public void ShowCellData( SchemaCellFields fields, SchemaCellData data)
@@ -429,14 +462,14 @@ namespace CSToolsDelux.Fields.Testing
 
 			for (int i = 0; i < data.DataList.Count; i++)
 			{
-				foreach (SchemaCellKey key in fields.KeyOrder)
+				foreach (SchemaCellKey key in fields.FieldOrderDefault)
 				{
 					data.Index = i;
 					name = data.Data[key].FieldDef.Name;
 					value = data.Data[key].ValueString;
 					type = data.Data[key].ValueType.Name;
 
-					W.WriteLineAligned($"key| {key}| ",formatFieldInfo(name, type, value));
+					W.WriteLineAligned($"key| {key}| ", formatFieldInfo(name, type, value));
 				}
 			}
 
@@ -459,7 +492,7 @@ namespace CSToolsDelux.Fields.Testing
 			string value;
 			string type;
 
-			foreach (SchemaLockKey key in rootFields.KeyOrder)
+			foreach (SchemaLockKey key in rootFields.FieldOrderDefault)
 			{
 				name = rootData[key].FieldDef.Name;
 				value = rootData[key].ValueString;
@@ -474,7 +507,7 @@ namespace CSToolsDelux.Fields.Testing
 
 			W.ShowMsg();
 		}
-		
+
 
 		private string formatFieldInfo(string name, string type, string value)
 		{
@@ -482,10 +515,8 @@ namespace CSToolsDelux.Fields.Testing
 		}
 
 
-
-
 		private void showData<TE, TD, TF>(TE[] keys,
-			ISchemaData<TE, TD, TF> data) 
+			ISchemaData<TE, TD, TF> data)
 			where TE : Enum
 			where TD : SchemaDataDictionaryBase<TE>
 			where TF : SchemaDictionaryBase<TE>
@@ -519,7 +550,7 @@ namespace CSToolsDelux.Fields.Testing
 			string type;
 			string value;
 
-			foreach (TE key in fields.KeyOrder)
+			foreach (TE key in fields.FieldOrderDefault)
 			{
 				name = fields[key].Name;
 				value = fields[key].ValueString;
@@ -534,7 +565,7 @@ namespace CSToolsDelux.Fields.Testing
 
 			W.ShowMsg();
 		}
-
+*/
 	#region system overrides
 
 		public override string ToString()
@@ -544,4 +575,6 @@ namespace CSToolsDelux.Fields.Testing
 
 	#endregion
 	}
+
 }
+

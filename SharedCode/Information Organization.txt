@@ -1,0 +1,119 @@
+﻿
+
+SchemaFields
+
+SchemaFieldEnums
+(enums per field type)
+(used as the key in the dictionary [ that is == TE])
+
+// definition of a single schema field
+
+IFieldsTemp<enum>												defines the basic properties for a single schema field
+|
++---------------------------------------+
+                                        v
+FieldsTemp<enum, value type> : IFieldsTemp<enum> 				defines the properties / basic ctor's for a single schema field
+	|
+	+-----------------------------------------------+
+                                                    |
+AFieldsTemp<enum>									|			collection (dictionary) of all associated schema fields + properties
+|		v                                           v           dictionary is populated with new FieldsTemp<enum, value type>
+|	(FieldsTempDictionary<enum> : Dictionary<enum, IFieldsTemp<enum>>)
+|
+|  (note that these are non-static classes)
++-> FieldsRoot		defines the information for the fields for: Root (primary definition of the root fields)
++-> FieldsLock		defines the information for the fields for: Lock (for locking when cell being edited)
++-> FieldsCell  	defines the information for the fields for: Cell (definition of the fields for a cell)
+
+
+
+SchemaData
+
+// actual information, the above only includes default data
+// remember - the data is stored in a list of dictionaries
+//      for root and lock, this does not matter as each will only have a single dictionary
+//      but, for cells, this will have a running list - one for each cell
+
+
+ADataMember<enum>										basic data field definition + methods to get Value in different formats
+  |
+  +----------------------------+
+                               v
+DataMember<enum, value type> : ADataTemp<enum>		implementation of ASchemaDataFieldDef
+  |
+  +------------------------------+
+                                 |
+// data field collection         |
+                                 |
+ADataTempBase                    |     collection (list) of a collection (dictionary) of data elements
+|	| |                          v     populated with DataTempElements
+|	| +-> (List<Dictionary<TE, ADataMember<TE>>)
+|	|
+|	+-> DataCell     cell specific data collection
+|	+-> DataLock     lock specific data collection
+|	+-> DataRoot     root specific data collection
+|
+|
+|	ADataMember<enum>
+|		* (5) data members
+|		* Clone()
+|		* Indexer[id] where id is DataColumn.{enum}
+|		* DataRowInfo() -> provide all data members in the default order
+|
++-----------------------+
+FieldsManager           v
+	* RtData -> the collection of root data
+		+-> DataRoot : ADataTempBase
+				+-> ListOfDataDictionaries
+						+-> (one or more of) Dictionary<TE, ADataMember<TE>>
+								+->  ADataMember<TE> -> 
+
+
+dataTempBaseDef -> Data (Dictionary<SchemaRootKey, ADataMember<SchemaRootKey>>) 
+	->[SchemaRootKey] ->
+	->ForEach -> kvp.value[DataColumns] -> string
+
+
+
+
+
+
+
+subjects: 
+
+[SchemaInfo][SchemaFields]                         implementation of a fields collection
+	FieldsCell
+	FieldsLock
+	FieldsRoot
+
+	[FieldsTemplate]                                    definition of a field structure
+		AFieldsTemp<TE>
+		FieldsTemp<TE, TD>
+		FieldsTempDictionary<TE>
+		IFieldsTemp<TE>
+
+
+[SchemaInfo][SchemaData]  
+	DataCell
+	DataLock
+	DataRoot
+
+	[DataTemplate]
+		ADataTemp
+		ADataTempBase
+		DataTemp
+
+[SchemaInfo][SchemaSupport] 
+	SchemaSupportData
+
+
+	DataStorType		(move or use from SchemaFieldEnums)
+not sure
+	SchemaGuidManager
+
+removed
+	SchemaDictionaries.cs
+	ASchemaFields4.cs
+
+
+

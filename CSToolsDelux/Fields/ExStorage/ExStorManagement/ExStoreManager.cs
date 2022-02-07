@@ -1,20 +1,25 @@
 ﻿#region + Using Directives
 
-using System;
-using System.Collections.Generic;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.DB.ExtensibleStorage;
-using Autodesk.Revit.UI;
+using SharedCode.Fields.ExStorage.ExStorManagement;
+using SharedCode.Fields.SchemaInfo.SchemaDefinitions;
+using SharedCode.Windows;
+
+using System;
+using System.Collections.Generic;
 using CSToolsDelux.Fields.ExStorage.DataStorageManagement;
 using CSToolsDelux.Fields.ExStorage.ExStorageData;
 using CSToolsDelux.Fields.SchemaInfo.SchemaData;
 using CSToolsDelux.Fields.SchemaInfo.SchemaData.SchemaDataDefinitions;
-using CSToolsDelux.Fields.SchemaInfo.SchemaDefinitions;
-using CSToolsDelux.Fields.SchemaInfo.SchemaFields;
 using CSToolsDelux.Fields.SchemaInfo.SchemaManagement;
 using CSToolsDelux.Fields.Testing;
-using CSToolsDelux.WPF;
+using SharedCode.Fields.SchemaInfo.SchemaSupport;
+using SharedCode.Fields.SchemaInfo.SchemaFields.FieldsTemplates;
+using SharedCode.Fields.SchemaInfo.SchemaData.DataTemplate;
+using SharedCode.Fields.SchemaInfo.SchemaData.DataTemplates;
 using static Autodesk.Revit.DB.ExtensibleStorage.Schema;
+
 using InvalidOperationException = Autodesk.Revit.Exceptions.InvalidOperationException;
 
 #endregion
@@ -50,7 +55,6 @@ namespace CSToolsDelux.Fields.ExStorage.ExStorManagement
 	#region find
 
 	#endregion
-
 
 	#region delete
 
@@ -102,7 +106,6 @@ namespace CSToolsDelux.Fields.ExStorage.ExStorManagement
 
 	#endregion
 
-
 	#region read
 
 		// fn20
@@ -110,7 +113,7 @@ namespace CSToolsDelux.Fields.ExStorage.ExStorManagement
 		{
 			ExStoreRtnCodes result;
 
-			if (!exData.HasDataStorage || !exData.HasDocKey) 
+			if (!exData.HasDataStorage || !exData.HasDsKey) 
 				return ExStoreRtnCodes.XRC_DS_NOT_FOUND;
 
 			if (!exData.HasEntity || !exData.HasSchema)
@@ -132,8 +135,8 @@ namespace CSToolsDelux.Fields.ExStorage.ExStorManagement
 		{
 			ExStoreRtnCodes result;
 
-			SchemaDictionaryRoot a =
-				exData.RootData.Fields;
+			// SchemaDictionaryRoot a =
+			// 	exData.RootData.Fields;
 
 			result = readData(exData.RootData);
 
@@ -169,10 +172,10 @@ namespace CSToolsDelux.Fields.ExStorage.ExStorManagement
 
 		private ExStoreRtnCodes readData<TE, TD, TF>(ISchemaData<TE, TD, TF> schemaData) 
 			where TE : Enum 
-			where TD : SchemaDataDictionaryBase<TE> 
-			where TF : SchemaDictionaryBase<TE>
+			where TD : SchemaDataDictionary<TE> 
+			where TF : FieldsTempDictionary<TE>
 		{
-			foreach (KeyValuePair<TE, ISchemaFieldDef<TE>> kvp in schemaData.Fields)
+			foreach (KeyValuePair<TE, AFieldsMembers<TE>> kvp in schemaData.Fields)
 			{
 				TE key = kvp.Value.Key;
 				string fieldName = kvp.Value.Name;
@@ -213,18 +216,18 @@ namespace CSToolsDelux.Fields.ExStorage.ExStorManagement
 			DataStorage ds)
 		{
 			Transaction t = null;
-			string docKey = exData.DocKey;
+			string dsKey = exData.DsKey;
 			ExStoreRtnCodes result = ExStoreRtnCodes.XRC_FAIL;
 
-			raData.SetValue(SchemaRootKey.RK_SCHEMA_NAME, docKey);
+			raData.SetValue(SchemaRootKey.RK_SCHEMA_NAME, dsKey);
 
 			try
 			{
 				bool answer =
-					scMgr.MakeRootSchema(docKey, raData, cData.DataList.Count);
+					scMgr.MakeRootSchema(dsKey, raData, cData.DataList.Count);
 				if (!answer) return ExStoreRtnCodes.XRC_FAIL;
 
-				Schema schema = scMgr.SchemaList[docKey].Schema;
+				Schema schema = scMgr.SchemaList[dsKey].Schema;
 
 				Entity e = new Entity(schema);
 
@@ -255,31 +258,33 @@ namespace CSToolsDelux.Fields.ExStorage.ExStorManagement
 			return ExStoreRtnCodes.XRC_GOOD;
 		}
 
-		private void writeData<T>(Entity entity, Schema schema, SchemaDataDictionaryBase<T> data) where T : Enum
+		private void writeData<T>(Entity entity, Schema schema, SchemaDataDictionary<T> data) where T : Enum
 		{
-			foreach (KeyValuePair<T, ASchemaDataFieldDef<T>> kvp in data)
+			foreach (KeyValuePair<T, ADataMembers<T>> kvp in data)
 			{
-				Field f = schema.GetField(kvp.Value.FieldDef.Name);
+				Field f = schema.GetField(kvp.Value.AFieldsMembers.Name);
 				if (f == null || !f.IsValidObject) continue;
 
 
-				if (kvp.Value.FieldDef.UnitType != FieldUnitType.UT_UNDEFINED)
+				if (kvp.Value.AFieldsMembers.UnitType != FieldUnitType.UT_UNDEFINED)
 				{
-					entity.Set(f, kvp.Value.AsDouble(), DisplayUnitType.DUT_GENERAL);
+#pragma warning disable CS0618 // Type or member is obsolete
+					entity.Set(f,  (DataMembers<T, double>) kvp.Value, DisplayUnitType.DUT_GENERAL);
+#pragma warning restore CS0618 // Type or member is obsolete
 				}
 				else
 				{
 					if (kvp.Value.ValueType == typeof(string))
 					{
-						entity.Set(f, kvp.Value.AsString());
+						entity.Set(f, (DataMembers<T, string>) kvp.Value);
 					}
 					else if (kvp.Value.ValueType == typeof(double))
 					{
-						entity.Set(f, kvp.Value.AsDouble());
+						entity.Set(f, (DataMembers<T, double>) kvp.Value);
 					}
 					else if (kvp.Value.ValueType == typeof(int))
 					{
-						entity.Set(f, kvp.Value.AsInteger());
+						entity.Set(f, (DataMembers<T, int>) kvp.Value);
 					}
 				}
 			}
@@ -290,7 +295,7 @@ namespace CSToolsDelux.Fields.ExStorage.ExStorManagement
 			int j = 0;
 
 			foreach (KeyValuePair<string, Guid> kvp in
-				scMgr.SchemaList[cData.DocKey].SubSchemaFields)
+				scMgr.SchemaList[cData.DsKey].SubSchemaFields)
 			{
 				Field f = schema.GetField(kvp.Key);
 
@@ -305,12 +310,11 @@ namespace CSToolsDelux.Fields.ExStorage.ExStorManagement
 
 	#endregion
 
-
 	#region util
 
 
 		// todo: eliminate?
-		public ExStoreRtnCodes FindRootEntity(string docKey, out Entity entity, out Schema schema)
+		public ExStoreRtnCodes FindRootEntity(string dsKey, out Entity entity, out Schema schema)
 		{
 			entity = null;
 			schema = null;
@@ -319,7 +323,7 @@ namespace CSToolsDelux.Fields.ExStorage.ExStorManagement
 			IList<DataStorage> dx;
 			bool result;
 
-			result = scMgr.FindSchemas(docKey, out schemas);
+			result = scMgr.FindSchemas(dsKey, out schemas);
 
 			
 			if (!result || schemas.Count > 1)
@@ -330,7 +334,7 @@ namespace CSToolsDelux.Fields.ExStorage.ExStorManagement
 			{
 				show.ShowSchemas(schemas);
 
-				ExStoreStartRtnCodes answer = dsMgr.FindDataStorages(docKey, out dx);
+				ExStoreStartRtnCodes answer = dsMgr.FindDataStorages(dsKey, out dx);
 
 				if (answer != ExStoreStartRtnCodes.XSC_YES) return ExStoreRtnCodes.XRC_FAIL;
 			}
@@ -350,10 +354,10 @@ namespace CSToolsDelux.Fields.ExStorage.ExStorManagement
 			Entity e = null;
 			Schema s = null;
 
-			if (!exData.HasDataStorage || !exData.HasDocKey) 
+			if (!exData.HasDataStorage || !exData.HasDsKey) 
 				return ExStoreRtnCodes.XRC_DS_NOT_FOUND;
 
-			s = scMgr.FindSchema(exData.DocKey);
+			s = scMgr.FindSchema(exData.DsKey);
 			if (s == null) return ExStoreRtnCodes.XRC_SCHEMA_NOT_FOUND;
 
 			exData.Schema = s;
@@ -460,12 +464,12 @@ namespace CSToolsDelux.Fields.ExStorage.ExStorManagement
 		// 	return ExStoreRtnCodes.XRC_GOOD;
 		// }
 
-		// public ExStoreRtnCodes WriteRootData(SchemaRootData raData, SchemaCellData cData,
+		// public ExStoreRtnCodes WriteRootData(SchemaRootData rData, SchemaCellData cData,
 		// 	DataStorage ds)
 		// {
 		// 	ExStoreRtnCodes result;
 		//
-		// 	result = writeRootData(raData, cData, ds);
+		// 	result = writeRootData(rData, cData, ds);
 		// 	if (result != ExStoreRtnCodes.XRC_GOOD) return result;
 		//
 		// 	return ExStoreRtnCodes.XRC_GOOD;
