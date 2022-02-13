@@ -1,4 +1,5 @@
-﻿using System.ComponentModel;
+﻿using System.Collections.Generic;
+using System.ComponentModel;
 using System.Diagnostics;
 using System.Runtime.CompilerServices;
 using System.Windows;
@@ -78,6 +79,8 @@ namespace CSToolsDelux.WPF.FieldsWindow
 
 		private string location;
 
+		private KeyValuePair<SchemaDataStorType, string> currentSchemaDataType;
+
 
 	#endregion
 
@@ -104,6 +107,8 @@ namespace CSToolsDelux.WPF.FieldsWindow
 */
 			DsKey = fm2.DsKey;
 			DsType = SchemaDataStorType.DT_ROOT;
+
+			CurrentSchemaDataType = SchemaConstants.SchemaTypeRoot;
 		}
 
 	#endregion
@@ -128,6 +133,16 @@ namespace CSToolsDelux.WPF.FieldsWindow
 			set
 			{
 				dsType = value;
+				OnPropertyChanged();
+			}
+		}
+
+		public KeyValuePair<SchemaDataStorType, string> CurrentSchemaDataType
+		{
+			get => currentSchemaDataType;
+			set
+			{
+				currentSchemaDataType = value;
 				OnPropertyChanged();
 			}
 		}
@@ -202,10 +217,25 @@ namespace CSToolsDelux.WPF.FieldsWindow
 		{
 			Close();
 		}
+		
+		private void BtnClrTxBx_OnClick(object sender, RoutedEventArgs e)
+		{
+			MsgClr();
+		}
 
 	#endregion
 
-	#region new - debug methods
+
+	#region debug method
+
+		private void BtnDebug_OnClick(object sender, RoutedEventArgs e)
+		{
+			Debug.WriteLine("@debug");
+		}
+
+	#endregion
+
+	#region show
 
 		private void BtnSetRoot_OnClick(object sender, RoutedEventArgs e)
 		{
@@ -222,62 +252,148 @@ namespace CSToolsDelux.WPF.FieldsWindow
 			DsType = SchemaDataStorType.DT_LOCK;
 		}
 
-		private void BtnMakeDs_OnClick(object sender, RoutedEventArgs e)
-		{
-
-		}
-		
-		private void BtnFindDs_OnClick(object sender, RoutedEventArgs e)
-		{
-
-		}
-
-
-
-		// show info
 		private void BtnShowData_OnClick(object sender, RoutedEventArgs e)
 		{
 			this.MsgClr();
 
-
-			switch (DsType)
+			switch (CurrentSchemaDataType.Key)
 			{
 			case SchemaDataStorType.DT_ROOT:
 				{
-					shShow.ShowDataGeneric(fm2.RtData);
+					shShow.ShowData(fm2.RtData);
 					break;
 				}
 			case SchemaDataStorType.DT_CELL:
 				{
-					shShow.ShowDataGeneric(fm2.ClData);
+					shShow.ShowData(fm2.ClData);
 					break;
 				}
 			case SchemaDataStorType.DT_LOCK:
 				{
-					shShow.ShowDataGeneric(fm2.LkData);
+					shShow.ShowData(fm2.LkData);
 					break;
 				}
 			}
-
 		}
 
-
-	#endregion
-
-	#region debug method
-
-		private void BtnDebug_OnClick(object sender, RoutedEventArgs e)
+		private void BtnShowDataInfo_OnClick(object sender, RoutedEventArgs e)
 		{
-			Debug.WriteLine("@debug");
+			this.MsgClr();
+
+			switch (CurrentSchemaDataType.Key)
+			{
+			case SchemaDataStorType.DT_ROOT:
+				{
+					shShow.ShowDataMembers(fm2.RtData);
+					break;
+				}
+			case SchemaDataStorType.DT_CELL:
+				{
+					shShow.ShowDataMembers(fm2.ClData);
+					break;
+				}
+			case SchemaDataStorType.DT_LOCK:
+				{
+					shShow.ShowDataMembers(fm2.LkData);
+					break;
+				}
+			}
+		}
+
+		private void BtnShowFieldsInfo_OnClick(object sender, RoutedEventArgs e)
+		{
+			this.MsgClr();
+
+			switch (CurrentSchemaDataType.Key)
+			{
+			case SchemaDataStorType.DT_ROOT:
+				{
+					// shShow.ShowSchemaFields(fm.RtFields);
+					shShow.ShowFieldMembers(fm2.RtFields);
+					// fm.ShowRootFields();
+					break;
+				}
+			case SchemaDataStorType.DT_CELL:
+				{
+					shShow.ShowFieldMembers(fm2.ClFields);
+					// fm.ShowCellFields();
+					break;
+				}
+			case SchemaDataStorType.DT_LOCK:
+				{
+					shShow.ShowFieldMembers(fm2.LkFields);
+					// fm.ShowLockFields();
+					break;
+				}
+			}
+		}
+
+		private void BtnShowDataTest_OnClick(object sender, RoutedEventArgs e)
+		{
+			this.MsgClr();
+
+			switch (CurrentSchemaDataType.Key)
+			{
+			case SchemaDataStorType.DT_ROOT:
+				{
+					shShow.ShowTest(fm2.RtData, SchemaRootKey.RK_DESCRIPTION);
+					break;
+				}
+			case SchemaDataStorType.DT_CELL:
+				{
+					shShow.ShowTest(fm2.ClData, SchemaCellKey.CK_DESCRIPTION);
+					break;
+				}
+			case SchemaDataStorType.DT_LOCK:
+				{
+					shShow.ShowTest(fm2.LkData, SchemaLockKey.LK_DESCRIPTION);
+					break;
+				}
+			}
+		}
+
+		private void BtnShowExStorInfo_OnClick(object sender, RoutedEventArgs e)
+		{
+			this.MsgClr();
+
+			bool exsConfgd = fm2.ExStoreCtlr.IsConfigured;
+
+			if (exsConfgd)
+			{
+				WriteLine2("ExStoreCtlr|isConfg'd", "| ", fm2.ExStoreCtlr.IsConfigured);
+				WriteLine2("ExStoreCtlr|DsKey", "| ", fm2.ExStoreCtlr.DsKey);
+				WriteLine2("ExSupport|DsKey", "| ", fm2.ExStoreCtlr.ExSupport.DsKey);
+				WriteLine2("ExSupport|DocName", "| ", fm2.ExStoreCtlr.ExSupport.DocName);
+				WriteLine2("ExSupport|DocumentName", "| ", fm2.ExStoreCtlr.ExSupport.DocumentName);
+				WriteLine2("ExSupport|VendorId", "| ", fm2.ExStoreCtlr.ExSupport.VendorId);
+				WriteLine2("ExSupport|IsDocValid", "| ", fm2.ExStoreCtlr.ExSupport.IsDocValid);
+			}
+			else
+			{
+				
+			}
+
+
+
 		}
 
 	#endregion
 
-	#region show - debug methods
+		private void BtnFindAllDs_OnClick(object sender, RoutedEventArgs e)
+		{
+			
+		}
+
+	#region tests
 
 	#endregion
+
+	}
+}
+
 
 	#region old - debug methods
+
 		//
 		// // "old"
 		//
@@ -462,5 +578,3 @@ namespace CSToolsDelux.WPF.FieldsWindow
 
 	#endregion
 
-	}
-}

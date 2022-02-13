@@ -20,10 +20,10 @@ namespace SharedCode.Fields.SchemaInfo.SchemaFields.FieldsTemplates
 			new Tuple<FieldColumns, int, int, JustifyHoriz, JustifyHoriz>(NAME      , 16, 12, CENTER, LEFT),
 			new Tuple<FieldColumns, int, int, JustifyHoriz, JustifyHoriz>(DESC      , 30, 28, CENTER, LEFT),
 			new Tuple<FieldColumns, int, int, JustifyHoriz, JustifyHoriz>(VALUE_STR , 30, 28, CENTER, LEFT),
-			new Tuple<FieldColumns, int, int, JustifyHoriz, JustifyHoriz>(DISP_LEVEL, 16, 12, CENTER, LEFT),
-			new Tuple<FieldColumns, int, int, JustifyHoriz, JustifyHoriz>(DISP_ORDER, 16, 12, CENTER, LEFT),
-			new Tuple<FieldColumns, int, int, JustifyHoriz, JustifyHoriz>(DISP_WIDTH, 16, 12, CENTER, LEFT),
-			new Tuple<FieldColumns, int, int, JustifyHoriz, JustifyHoriz>(UNIT_TYPE , 16, 12, CENTER, LEFT));
+			new Tuple<FieldColumns, int, int, JustifyHoriz, JustifyHoriz>(DISP_LEVEL, 12, 10, CENTER, LEFT),
+			new Tuple<FieldColumns, int, int, JustifyHoriz, JustifyHoriz>(DISP_ORDER, 10, 8, CENTER, CENTER),
+			new Tuple<FieldColumns, int, int, JustifyHoriz, JustifyHoriz>(COL_WIDTH, 10, 8, CENTER, CENTER),
+			new Tuple<FieldColumns, int, int, JustifyHoriz, JustifyHoriz>(UNIT_TYPE , 12, 10, CENTER, LEFT));
 
 		public static Dictionary<FieldColumns, string> fieldsHdrInfo =
 			new Dictionary<FieldColumns, string>()
@@ -34,7 +34,7 @@ namespace SharedCode.Fields.SchemaInfo.SchemaFields.FieldsTemplates
 				{ VALUE_STR , "Value String" },
 				{ DISP_LEVEL, "Display Level" },
 				{ DISP_ORDER, "Display Order" },
-				{ DISP_WIDTH, "Display Width" },
+				{ COL_WIDTH, "Display Width" },
 				{ UNIT_TYPE , "Unit Type" }
 			};
 
@@ -46,7 +46,7 @@ namespace SharedCode.Fields.SchemaInfo.SchemaFields.FieldsTemplates
 			VALUE_STR ,
 			DISP_LEVEL,
 			DISP_ORDER,
-			DISP_WIDTH,
+			COL_WIDTH,
 			UNIT_TYPE
 		};
 
@@ -58,23 +58,13 @@ namespace SharedCode.Fields.SchemaInfo.SchemaFields.FieldsTemplates
 
 			foreach (KeyValuePair<TSk, AFieldsMembers<TSk>> kvp in data.Fields)
 			{
-				// infoList.Add(((AFieldsTemp<TSk>)kvp.Value));
-			}
-			/*
-			foreach (Dictionary<TSk, ADataMember<TSk>> dataDict in data.ListOfDataDictionaries)
-			{
-				List<Dictionary<DataColumns, string>> infoList = new List<Dictionary<DataColumns, string>>();
-
-				foreach (KeyValuePair<TSk, ADataMember<TSk>> kvp in dataDict)
-				{
-					infoList.Add(kvp.Value.DataRowInfo());
-				}
-
-				infoLists.Add(infoList);
+				infoList.Add(kvp.Value.FieldsRowInfo());
 			}
 
-			*/
+			infoLists.Add(infoList);
+
 			return infoLists;
 		}
+
 	}
 }

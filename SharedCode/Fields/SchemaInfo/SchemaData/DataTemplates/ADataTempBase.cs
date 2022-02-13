@@ -12,22 +12,22 @@ using SharedCode.Fields.SchemaInfo.SchemaSupport;
 
 namespace SharedCode.Fields.SchemaInfo.SchemaData.DataTemplates
 {
-	public abstract class ADataTempBase<TE>
-		where TE : Enum, new()
+	public abstract class ADataTempBase<TSk>
+		where TSk : Enum, new()
 	{
 		protected int dataIndexMaxAllowed = 0;
 		protected int dataIndexCurrent = 0;
 
-		public ADataTempBase(AFieldsTemp<TE> fields, int maxIndex = 1)
+		public ADataTempBase(AFieldsTemp<TSk> fields, int maxIndex = 1)
 		{
-			// dataIndexMaxAllowed = maxIndex;
-
 			this.FieldsData = fields;
 
-			ListOfDataDictionaries = new List<Dictionary<TE, ADataMembers<TE>>>(1);
+			ListOfDataDictionaries = new List<Dictionary<TSk, ADataMembers<TSk>>>(1);
 
 			ListAdd(maxIndex);
 		}
+
+		public abstract KeyValuePair<SchemaDataStorType, string> DataStorType { get; }
 
 		public int DataIndex
 		{
@@ -38,40 +38,39 @@ namespace SharedCode.Fields.SchemaInfo.SchemaData.DataTemplates
 				dataIndexCurrent = value;
 			}
 		}
-
 		public int DataIndexMaxAllowed => dataIndexMaxAllowed;
-
 		public abstract string SchemaName { get; }
 		public abstract string SchemaDesc { get; }
 		public abstract string SchemaVersion { get; }
 		public abstract string SchemaCreateDate { get; }
 
 		// data (not fields)
-		public List<Dictionary<TE, ADataMembers<TE>>> ListOfDataDictionaries { get; set; }
+		public List<Dictionary<TSk, ADataMembers<TSk>>> ListOfDataDictionaries { get; set; }
 
-		public Dictionary<TE, ADataMembers<TE>> Data
+		public Dictionary<TSk, ADataMembers<TSk>> Data
 		{
 			get => ListOfDataDictionaries[DataIndex];
 			protected set => ListOfDataDictionaries[DataIndex] = value;
 		}
 
 		// fields (not data)
-		public AFieldsTemp<TE> FieldsData { get; }
-		public Dictionary<TE, AFieldsMembers<TE>> Fields => FieldsData.Fields;
+		public AFieldsTemp<TSk> FieldsData { get; }
 
-		public AFieldsMembers<TE> GetField(TE key)
+		public Dictionary<TSk, AFieldsMembers<TSk>> Fields => FieldsData.Fields;
+
+		public AFieldsMembers<TSk> GetField(TSk key)
 		{
 			return ListOfDataDictionaries[DataIndex][key].AFieldsMembers;
 		}
 
-		public AFieldsMembers<TE> GetField(int idx, TE key)
+		public AFieldsMembers<TSk> GetField(int idx, TSk key)
 		{
 			return ListOfDataDictionaries[idx][key].AFieldsMembers;
 		}
 
 		public abstract void Configure(string name = null);
 
-		public ADataMembers<TE> this[TE key]
+		public ADataMembers<TSk> this[TSk key]
 		{
 			get
 			{
@@ -80,7 +79,7 @@ namespace SharedCode.Fields.SchemaInfo.SchemaData.DataTemplates
 			}
 		}
 
-		public ADataMembers<TE> this[int idx, TE key]
+		public ADataMembers<TSk> this[int idx, TSk key]
 		{
 			get
 			{
@@ -95,7 +94,7 @@ namespace SharedCode.Fields.SchemaInfo.SchemaData.DataTemplates
 
 			for (int i = 0; i < qty; i++)
 			{
-				ListOfDataDictionaries.Add(new Dictionary<TE, ADataMembers<TE>>());
+				ListOfDataDictionaries.Add(new Dictionary<TSk, ADataMembers<TSk>>());
 				dataIndexMaxAllowed += 1;
 			}
 		}
@@ -113,70 +112,70 @@ namespace SharedCode.Fields.SchemaInfo.SchemaData.DataTemplates
 
 		public void ListRemoveLast() { }
 
-		public Type GetValueType(TE key)
+		public Type GetValueType(TSk key)
 		{
 			if (!ListOfDataDictionaries[DataIndex].ContainsKey(key)) return null;
 			return ListOfDataDictionaries[DataIndex][key].ValueType;
 		}
 
-		public Type GetValueType(TE key, int idx)
+		public Type GetValueType(TSk key, int idx)
 		{
 			if (!ListOfDataDictionaries[idx].ContainsKey(key)) return null;
 			return ListOfDataDictionaries[idx][key].ValueType;
 		}
 
-		public T GetValue<T>(TE key)
+		public T GetValue<T>(TSk key)
 		{
-			return ((DataMembers<TE, T>) ListOfDataDictionaries[dataIndexCurrent][key]).Value;
+			return ((DataMembers<TSk, T>) ListOfDataDictionaries[dataIndexCurrent][key]).Value;
 		}
 
-		public T GetValue<T>(TE key, int idx)
+		public T GetValue<T>(TSk key, int idx)
 		{
-			return ((DataMembers<TE, T>) ListOfDataDictionaries[idx][key]).Value;
+			return ((DataMembers<TSk, T>) ListOfDataDictionaries[idx][key]).Value;
 		}
 
-		public void SetValue<T>(TE key, T value)
+		public void SetValue<T>(TSk key, T value)
 		{
-			((DataMembers<TE, T>) ListOfDataDictionaries[dataIndexCurrent][key]).Value = value;
+			((DataMembers<TSk, T>) ListOfDataDictionaries[dataIndexCurrent][key]).Value = value;
 		}
 
-		public void SetValue<T>(TE key, T value, int idx)
+		public void SetValue<T>(TSk key, T value, int idx)
 		{
-			((DataMembers<TE, T>) ListOfDataDictionaries[idx][key]).Value = value;
+			((DataMembers<TSk, T>) ListOfDataDictionaries[idx][key]).Value = value;
 		}
 
-		public void Add<T>(TE key, T value)
+		public void Add<T>(TSk key, T value)
 		{
 			ListOfDataDictionaries[dataIndexCurrent].Add(key,
-				new DataMembers<TE, T>(value, FieldsData.GetField<T>(key)));
+				new DataMembers<TSk, T>(value, FieldsData.GetField<T>(key)));
 		}
 
-		public void Add<T>(TE key, T value, int idx)
+		public void Add<T>(TSk key, T value, int idx)
 		{
 			ListOfDataDictionaries[idx].Add(key,
-				new DataMembers<TE, T>(value, FieldsData.GetField<T>(key)));
+				new DataMembers<TSk, T>(value, FieldsData.GetField<T>(key)));
 		}
 
-		public void AddDefault<T>(TE key)
+		public void AddDefault<T>(TSk key)
 		{
-			FieldsTemp<TE, T> f = FieldsData.GetField<T>(key);
+			FieldsTemp<TSk, T> f = FieldsData.GetField<T>(key);
 
 			ListOfDataDictionaries[dataIndexCurrent].Add(key,
-				new DataMembers<TE, T>(f.Value, f));
+				new DataMembers<TSk, T>(f.Value, f));
 		}
 
-		public void AddDefault<T>(TE key, int idx)
+		public void AddDefault<T>(TSk key, int idx)
 		{
-			FieldsTemp<TE, T> f = FieldsData.GetField<T>(key);
+			FieldsTemp<TSk, T> f = FieldsData.GetField<T>(key);
 
 			ListOfDataDictionaries[idx].Add(key,
-				new DataMembers<TE, T>(f.Value, f));
+				new DataMembers<TSk, T>(f.Value, f));
 		}
 
-		public DataMembers<TE, T> GetDefaultData<T>(TE key)
+		public DataMembers<TSk, T> GetDefaultData<T>(TSk key)
 		{
-			DataMembers<TE, T> d =
-				new DataMembers<TE, T>(FieldsData.GetField<T>(key).Value,
+			DataMembers<TSk, T> d =
+				new DataMembers<TSk, T>(FieldsData.GetField<T>(key).Value,
 					FieldsData.GetField<T>(key));
 
 			return d;

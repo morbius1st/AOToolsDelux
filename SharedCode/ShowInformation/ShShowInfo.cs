@@ -3,8 +3,11 @@
 using SharedCode.Fields.Testing;
 using SharedCode.Windows;
 using System;
+using System.CodeDom;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Windows.Documents;
+using SharedCode.Fields.SchemaInfo.SchemaData;
 using SharedCode.Fields.SchemaInfo.SchemaData.DataTemplates;
 using SharedCode.Fields.SchemaInfo.SchemaFields.FieldsTemplates;
 using SharedCode.Fields.SchemaInfo.SchemaData.DataTemplate;
@@ -64,6 +67,87 @@ namespace SharedCode.ShowInformation
 	#region show methods
 
 	#endregion
+
+
+		public void ShowDataMembers<TSk>(ADataTempBase<TSk> data) where TSk : Enum, new ()
+		{
+			List<List<Dictionary<DataColumns, string>>> info = DataTemplateMembers.FormatData(data);
+
+			showDataHeader(data);
+
+			showData(
+				DataTemplateMembers.DefaultDataOrder,
+				DataTemplateMembers.DataHdr,
+				DataTemplateMembers.DataHdrInfo,
+				info				
+				);
+		}
+
+		public void ShowFieldMembers<TSk>(AFieldsTemp<TSk> data) where TSk : Enum, new()
+		{
+			List<List<Dictionary<FieldColumns, string>>> info = FieldsTemplateMembers.FormatData(data);
+
+			showFieldsHeader("root", data);
+
+			showData(
+				FieldsTemplateMembers.DefaultFieldsOrder,
+				FieldsTemplateMembers.fieldHdr,
+				FieldsTemplateMembers.fieldsHdrInfo,
+				info
+				);
+		}
+
+		public void ShowData<TSk>(ADataTempBase<TSk> data) where TSk : Enum, new ()
+		{
+			Tuple<List<TSk>, Dictionary<TSk, ColData>, 
+				Dictionary<TSk, string>,
+				List<List<Dictionary<TSk, string>>>> colData;
+
+			colData = 
+				ShShowDataHelper.DataColHdr(data);
+
+			showDataHeader(data);
+
+			showData(colData.Item1, colData.Item2, colData.Item3, colData.Item4);
+		}
+
+		public void ShowTest<TSk>(ADataTempBase<TSk> data, TSk key) where TSk : Enum, new ()
+		{
+			showDataHeader(data);
+
+			Type t = data.GetValueType(key);
+
+			W.WriteLine2($"max dictionary count", "| ", data.DataIndexMaxAllowed);
+			W.WriteLine2($"index is", "| ", data.DataIndex);
+
+			W.WriteLine2($"for key","| ", key);
+			W.WriteLine2("value type is", "| ", data[key].ValueType);
+			W.WriteLine2("value string", "| ", data[key].ValueString);
+
+			if (t == typeof(string))
+			{
+				W.WriteLine2($"value (string)", "| ", data.GetValue<string>(key));
+			} 
+			else if (t == typeof(bool))
+			{
+				W.WriteLine2($"value (bool)", "| ", data.GetValue<bool>(key));
+			}
+
+			W.WriteNewLine();
+
+			AFieldsTemp<TSk> fd = data.FieldsData;
+			W.WriteLine2($"got field data", "| ", $"type| {fd.FieldStorType.Key} desc| {fd.FieldStorType.Value}");
+
+			AFieldsMembers<TSk> f = data.GetField(key);
+			W.WriteLine2($"got field| name", "| ", f.Name);
+			W.WriteLine2($"got field| desc", "| ", f.Desc);
+
+
+
+			W.ShowMsg();
+		}
+
+
 
 		private void incLeftMargin()
 		{
@@ -239,6 +323,150 @@ namespace SharedCode.ShowInformation
 			// Debug.WriteLine($"{msgA} {msgB.PadRight(60)} | {(SampleData.TestIdx + 1)} : {SampleData.PrimeLoopIdx}");
 		}
 
+	#region private methods
+
+
+		private void showData<TSk>(
+			List<TSk> dataOrder,
+			Dictionary<TSk, ColData> dataHdr,
+			Dictionary<TSk, string> dataHdrInfo,
+			List<List<Dictionary<TSk, string>>> dataInfo
+			) where TSk : Enum, new ()
+		{
+			Dictionary<TSk, string> dataRowInfo;
+
+			int count = 0;
+
+			foreach (List<Dictionary<TSk, string>> lists in dataInfo)
+			{
+				W.WriteNewLine();
+				W.WriteLineAligned("Show data", "| ", "start");
+				W.WriteLineAligned("list number", "| ", $"{count++}");
+				W.WriteNewLine();
+				W.WriteRow(dataOrder, dataHdr, dataHdrInfo, DataTemplateMembers.MaxHdrRows, JustifyVertical.MIDDLE, true, true);
+				W.WriteRowDivider(dataOrder, dataHdr);
+
+				foreach (Dictionary<TSk, string> info in lists)
+				{
+					W.WriteRow(dataOrder, dataHdr, info, DataTemplateMembers.MaxHdrRows, JustifyVertical.TOP, false, true);
+				}
+			}
+
+			W.WriteNewLine();
+			W.WriteLineAligned("Show data", "| ", "finished");
+			W.WriteNewLine();
+
+			W.ShowMsg();
+		}
+
+
+		private void showDataHeader<TSk>(ADataTempBase<TSk> data) where TSk : Enum, new()
+		{
+			showHeader();
+
+			W.WriteLineAligned("data stor type", "| ", $"type|{data.DataStorType.Value} desc| {data.DataStorType.Key}");
+			W.WriteLineAligned("schema name", "| ", $"{data.SchemaName}");
+			W.WriteLineAligned("schema desc", "| ", $"{data.SchemaDesc}");
+			W.WriteLineAligned("schema date", "| ", $"{data.SchemaCreateDate}");
+			W.WriteLineAligned("schema ver", "| " , $"{data.SchemaVersion}");
+			W.WriteLineAligned("max data lists", "| " , $"{data.DataIndexMaxAllowed}");
+			W.WriteLineAligned("act data lists", "| " , $"{data.ListOfDataDictionaries.Count}");
+			W.WriteNewLine();
+		}
+
+		private void showFieldsHeader<TSk>(string type, AFieldsTemp<TSk> data) where TSk : Enum, new()
+		{
+			showHeader();
+
+			W.WriteLineAligned("Show Fields", "| ", $"Type| {type}");
+			W.WriteLineAligned("Show Fields", "| ", $"{data.SchemaName}");
+
+			W.WriteNewLine();
+		}
+
+		private void showHeader()
+		{
+			W.WriteLineAligned("this is (prog name)", "| ", programName);
+			W.WriteLineAligned("this is  (doc name)", "| ", $"{(documentName ?? "un-named")}");
+		}
+
+	#endregion
+
+
+		/*  old / void
+
+
+		// show the data metadata - which is contained in the fields data
+		private void ShowDataInfo(
+			List<DataColumns> dataOrder,
+			Dictionary<DataColumns, ColData> dataHdr,
+			Dictionary<DataColumns, string> dataHdrInfo,
+			List<List<Dictionary<DataColumns, string>>> dataInfo
+			)
+		{
+
+			Dictionary<DataColumns, string> dataRowInfo;
+
+			// dataTempBaseDef is AdataTempBase which is the control class
+			// holds the data collection, fields, etc.
+
+			foreach (List<Dictionary<DataColumns, string>> lists in dataInfo)
+			{
+				W.WriteNewLine();
+				W.WriteRow(dataOrder, dataHdr, dataHdrInfo, DataTemplateMembers.MaxHdrRows, JustifyVertical.MIDDLE, true, true);
+				W.WriteRowDivider(dataOrder, dataHdr);
+
+				foreach (Dictionary<DataColumns, string> info in lists)
+				{
+
+					W.WriteRow(dataOrder, dataHdr, info, DataTemplateMembers.MaxHdrRows, JustifyVertical.TOP, false, false);
+				}
+			}
+
+			W.WriteNewLine();
+			W.WriteLineAligned("Show Root data", "| ", "finished");
+			W.WriteNewLine();
+
+			W.ShowMsg();
+		}
+
+
+		// show the data metadata - which is contained in the fields data
+		private void ShowFieldInfo(
+			List<FieldColumns> dataOrder,
+			Dictionary<FieldColumns, ColData> dataHdr,
+			Dictionary<FieldColumns, string> dataHdrInfo,
+			List<List<Dictionary<FieldColumns, string>>> dataInfo
+			)
+		{
+
+			Dictionary<FieldColumns, string> dataRowInfo;
+
+			// dataTempBaseDef is AdataTempBase which is the control class
+			// holds the data collection, fields, etc.
+
+			foreach (List<Dictionary<FieldColumns, string>> lists in dataInfo)
+			{
+				W.WriteNewLine();
+				W.WriteRow(dataOrder, dataHdr, dataHdrInfo, DataTemplateMembers.MaxHdrRows, JustifyVertical.MIDDLE, true, true);
+				W.WriteRowDivider(dataOrder, dataHdr);
+
+				foreach (Dictionary<FieldColumns, string> info in lists)
+				{
+
+					W.WriteRow(dataOrder, dataHdr, info, DataTemplateMembers.MaxHdrRows, JustifyVertical.TOP, false, true);
+				}
+			}
+
+			W.WriteNewLine();
+			W.WriteLineAligned("Show Root data", "| ", "finished");
+			W.WriteNewLine();
+
+			W.ShowMsg();
+		}
+
+
+		
 		// good - old method
 		public void ShowDataGeneric<TE>(ADataTempBase<TE> dataTempBaseDef) where TE : Enum, new()
 		{
@@ -280,9 +508,9 @@ namespace SharedCode.ShowInformation
 		}
 
 		// good - old method
-		public void ShowSchemaFields<TE>(AFieldsTemp<TE> fields) where TE : Enum, new()
+		public void ShowSchemaFieldsx<TE>(AFieldsTemp<TE> fields) where TE : Enum, new()
 		{
-			showFieldsHeader(fields.SchemaName);
+			showFieldsHeader(fields.SchemaName, fields);
 
 
 			string name;
@@ -311,7 +539,7 @@ namespace SharedCode.ShowInformation
 		// good - old method
 		public void ShowSchemaField<TE>(AFieldsTemp<TE> fields, TE key) where TE : Enum, new()
 		{
-			showFieldsHeader(fields.SchemaName);
+			showFieldsHeader(fields.SchemaName, fields);
 
 			W.WriteAligned("\n", null);
 			W.WriteAligned("method 1", null);
@@ -355,97 +583,6 @@ namespace SharedCode.ShowInformation
 			W.ShowMsg();
 		}
 
-		// show the data metadata - which is contained in the fields data
-		public void ShowDataInfo(
-			List<DataColumns> dataOrder,
-			Dictionary<DataColumns, ColData> dataHdr,
-			Dictionary<DataColumns, string> dataHdrInfo,
-			List<List<Dictionary<DataColumns, string>>> dataInfo
-			)
-		{
-
-			Dictionary<DataColumns, string> dataRowInfo;
-
-			// dataTempBaseDef is AdataTempBase which is the control class
-			// holds the data collection, fields, etc.
-
-			foreach (List<Dictionary<DataColumns, string>> lists in dataInfo)
-			{
-				W.WriteNewLine();
-				W.WriteRow(dataOrder, dataHdr, dataHdrInfo, DataTemplateMembers.MaxHdrRows, JustifyVertical.MIDDLE, true, true);
-
-				foreach (Dictionary<DataColumns, string> info in lists)
-				{
-
-					W.WriteRow(dataOrder, dataHdr, info, DataTemplateMembers.MaxHdrRows, JustifyVertical.TOP, false, false);
-				}
-			}
-
-			W.WriteNewLine();
-			W.WriteLineAligned("Show Root data", "| ", "finished");
-			W.WriteNewLine();
-
-			W.ShowMsg();
-		}
-
-		public void ShowDataMembers<TSk>(ADataTempBase<TSk> data) where TSk : Enum, new ()
-		{
-			List<List<Dictionary<DataColumns, string>>> info = DataTemplateMembers.FormatData(data);
-
-			showDataHeader(data);
-
-			ShowDataInfo(
-				DataTemplateMembers.DefaultDataOrder,
-				DataTemplateMembers.DataHdr,
-				DataTemplateMembers.DataHdrInfo,
-				info);
-		}
-
-
-		// show the data metadata - which is contained in the fields data
-		public void ShowFieldInfo(
-			List<FieldColumns> dataOrder,
-			Dictionary<FieldColumns, ColData> dataHdr,
-			Dictionary<FieldColumns, string> dataHdrInfo,
-			List<List<Dictionary<FieldColumns, string>>> dataInfo
-			)
-		{
-
-			Dictionary<FieldColumns, string> dataRowInfo;
-
-			// dataTempBaseDef is AdataTempBase which is the control class
-			// holds the data collection, fields, etc.
-
-			foreach (List<Dictionary<FieldColumns, string>> lists in dataInfo)
-			{
-				W.WriteNewLine();
-				W.WriteRow(dataOrder, dataHdr, dataHdrInfo, DataTemplateMembers.MaxHdrRows, JustifyVertical.MIDDLE, true, true);
-
-				foreach (Dictionary<FieldColumns, string> info in lists)
-				{
-
-					W.WriteRow(dataOrder, dataHdr, info, DataTemplateMembers.MaxHdrRows, JustifyVertical.TOP, false, false);
-				}
-			}
-
-			W.WriteNewLine();
-			W.WriteLineAligned("Show Root data", "| ", "finished");
-			W.WriteNewLine();
-
-			W.ShowMsg();
-		}
-
-
-		public void ShowFieldMembers<TSk>(AFieldsTemp<TSk> data) where TSk : Enum, new()
-		{
-
-		}
-
-
-
-
-
-		/*
 
 		// show the data metadata - which is contained in the fields data
 		public void ShowDataInfo3<Tsk>(
@@ -577,40 +714,7 @@ namespace SharedCode.ShowInformation
 
 			W.ShowMsg();
 		}
-		*/
 
-
-	#region private methods
-
-		private void showDataHeader<Tsk>(ADataTempBase<Tsk> data) where Tsk : Enum, new()
-		{
-			W.WriteLineAligned("this is (prog name)", "| ", programName);
-			W.WriteLineAligned("this is  (doc name)", "| ", $"{(documentName ?? "un-named")}");
-			W.WriteLineAligned("schema name", "| ", $"{data.SchemaName}");
-			W.WriteLineAligned("schema desc", "| ", $"{data.SchemaDesc}");
-			W.WriteLineAligned("schema date", "| ", $"{data.SchemaCreateDate}");
-			W.WriteLineAligned("schema ver", "| " , $"{data.SchemaVersion}");
-			W.WriteLineAligned("data lists", "| " , $"{data.DataIndexMaxAllowed}");
-			W.WriteNewLine();
-		}
-
-		private void showFieldsHeader(string type)
-		{
-			showHeader();
-			W.WriteLineAligned("Show Fields| ", null, msg2: $"Type| {type}");
-			W.WriteAligned("\n", null);
-		}
-
-		private void showHeader()
-		{
-			W.WriteLineAligned("this is (prog name)| ", null, msg2: programName);
-			W.WriteLineAligned("this is  (doc name)| ", null, msg2: $"{(documentName ?? "un-named")}");
-		}
-
-	#endregion
-
-
-/*
 		public void ShowRootFields(SchemaRootFields fields)
 		{
 			W.WriteLineAligned("this is (prog name)| ", "CSToolsDelux");

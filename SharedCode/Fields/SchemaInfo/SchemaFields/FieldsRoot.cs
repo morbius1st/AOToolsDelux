@@ -6,6 +6,7 @@ using SharedCode.Fields.SchemaInfo.SchemaSupport;
 using SharedCode.Fields.SchemaInfo.SchemaFields.FieldsTemplates;
 using static SharedCode.Fields.SchemaInfo.SchemaSupport.SchemaRootKey;
 using static SharedCode.Fields.SchemaInfo.SchemaSupport.SchemaFieldDisplayLevel;
+using static SharedCode.Windows.ColData.JustifyHoriz;
 #endregion
 
 // user name: jeffs
@@ -22,7 +23,7 @@ namespace SharedCode.Fields.SchemaInfo.SchemaFields
 		public const string RF_ROOT_DEVELOPER_NAME = "CyberStudio";
 		public const string RF_SCHEMA_VER = "0.1";
 
-		public KeyValuePair<string, SchemaDataStorType> Type { get; } = SchemaConstants.SchemaTypeRoot;
+		public override KeyValuePair<SchemaDataStorType, string> FieldStorType { get; } = SchemaConstants.SchemaTypeRoot;
 
 		public FieldsRoot()
 		{
@@ -38,22 +39,22 @@ namespace SharedCode.Fields.SchemaInfo.SchemaFields
 			int idx = 0;
 
 			FieldOrderDefault[idx++] =
-				defineField<string>(RK_SCHEMA_NAME, "Name", "Name", SchemaName, DL_BASIC, "A1", 16 );
+				defineField<string>(RK_SCHEMA_NAME, "Name", "Name", SchemaName, DL_BASIC, "A1", 24, 20, CENTER, LEFT );
 
 			FieldOrderDefault[idx++] =
-				defineField<string>(RK_DESCRIPTION, "Description", "Description", RF_SCHEMA_DESC, DL_BASIC, "A2", 16 );
+				defineField<string>(RK_DESCRIPTION, "Description", "Description", RF_SCHEMA_DESC, DL_BASIC, "A2", 24, 20, CENTER, LEFT );
 
 			FieldOrderDefault[idx++] =
-				defineField<string>(RK_VERSION    , "Version", "Cells Version", RF_SCHEMA_VER, DL_MEDIUM, "A3", 16 );
+				defineField<string>(RK_VERSION    , "Version", "Cells Version", RF_SCHEMA_VER, DL_MEDIUM, "A3", 16, 14, CENTER, LEFT );
 
 			FieldOrderDefault[idx++] =
-				defineField<string>(RK_CREATE_DATE, "CreationData", "Date and Time Created", DateTime.UtcNow.ToString(), DL_MEDIUM, "A5", 16);
+				defineField<string>(RK_CREATE_DATE, "CreationData", "Date and Time Created", DateTime.UtcNow.ToString(), DL_MEDIUM, "A5", 14, 12, CENTER, LEFT);
 			
 			FieldOrderDefault[idx++] =
-				defineField<string>(RK_DEVELOPER  , "Developer", "Developer", RF_ROOT_DEVELOPER_NAME, DL_ADVANCED, "A4", 16 );
+				defineField<string>(RK_DEVELOPER  , "Developer", "Developer", RF_ROOT_DEVELOPER_NAME, DL_ADVANCED, "A4", 16, 14, CENTER, LEFT );
 
 			FieldOrderDefault[idx++] =
-				defineField<string>(RK_GUID       , "AppGuidString", "App Guid String", Guid.NewGuid().ToString(), DL_DEBUG, "A6", 16);
+				defineField<string>(RK_GUID       , "AppGuidString", "App Guid String", Guid.NewGuid().ToString(), DL_DEBUG, "A6", 40, 38, CENTER, LEFT);
 
 		}
 
@@ -63,6 +64,9 @@ namespace SharedCode.Fields.SchemaInfo.SchemaFields
 
 			return new Tuple<string, Guid>(uniqueName, Guid.NewGuid());
 		}
+
+	}
+}
 
 /*
 		public SchemaRootFields SubSchemaFields()
@@ -95,5 +99,3 @@ namespace SharedCode.Fields.SchemaInfo.SchemaFields
 		//
 		// 	return subDef;
 		// }
-	}
-}

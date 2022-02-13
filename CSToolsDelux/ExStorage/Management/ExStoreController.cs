@@ -76,6 +76,10 @@ namespace CSToolsDelux.ExStorage.Management
 
 		public string DsKey { get; private set; }
 
+		public ExStoreSupport ExSupport => exSupport;
+
+		public bool IsConfigured => !string.IsNullOrWhiteSpace(DsKey);
+
 	#endregion
 
 	#region private properties

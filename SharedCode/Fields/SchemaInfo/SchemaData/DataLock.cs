@@ -4,6 +4,8 @@
 // Created:      2021-10-19 (6:13 AM)
 
 using System;
+using System.Collections.Generic;
+using SharedCode.Fields.SchemaInfo.SchemaData.DataTemplate;
 using SharedCode.Fields.SchemaInfo.SchemaSupport;
 using SharedCode.Fields.SchemaInfo.SchemaData.DataTemplates;
 using SharedCode.Fields.SchemaInfo.SchemaFields.FieldsTemplates;
@@ -13,6 +15,8 @@ namespace SharedCode.Fields.SchemaInfo.SchemaData
 {
 	public class DataLock : ADataTempBase<SchemaLockKey>
 	{
+		public override KeyValuePair<SchemaDataStorType, string> DataStorType { get; } = SchemaConstants.SchemaTypeLock;
+
 		public DataLock(
 			AFieldsTemp<SchemaLockKey> fields, int idxCount = 1) : base(fields, idxCount) { }
 
@@ -31,5 +35,6 @@ namespace SharedCode.Fields.SchemaInfo.SchemaData
 			Add(SchemaLockKey.LK_MACHINE_NAME, CsUtilities.MachineName);
 			Add(SchemaLockKey.LK_GUID, Guid.Empty.ToString());
 		}
+
 	}
 }

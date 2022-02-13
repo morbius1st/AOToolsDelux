@@ -43,7 +43,7 @@ namespace CSToolsStudies.Windows
 		private string dsKey;
 		private SchemaDataStorType dsType;
 
-		private KeyValuePair<string, SchemaDataStorType> currentSchemaDataType;
+		private KeyValuePair<SchemaDataStorType, string> currentSchemaDataType;
 
 		private FieldsManager fm;
 		private ShShowInfo shShow;
@@ -83,7 +83,7 @@ namespace CSToolsStudies.Windows
 		// 	}
 		// }
 
-		public KeyValuePair<string, SchemaDataStorType> CurrentSchemaDataType
+		public KeyValuePair<SchemaDataStorType, string> CurrentSchemaDataType
 		{
 			get => currentSchemaDataType;
 			set
@@ -133,67 +133,6 @@ namespace CSToolsStudies.Windows
 			MsgClr();
 		}
 
-
-		// private void BtnShowRootFields_OnClick(object sender, RoutedEventArgs e)
-		// {
-		// 	fmMgr.ShowRootFields();
-		// }
-		//
-		// private void BtnRootData_OnClick(object sender, RoutedEventArgs e)
-		// {
-		// 	fmMgr.ShowRootData();
-		// }
-		//
-		// private void BtnAppFields_OnClick(object sender, RoutedEventArgs e)
-		// {
-		// 	fmMgr.ShowRootFields();
-		// }
-		//
-		// private void BtnAppData_OnClick(object sender, RoutedEventArgs e)
-		// {
-		// 	fmMgr.ShowAppData();
-		// }
-
-		// private void BtnCellFields_OnClick(object sender, RoutedEventArgs e)
-		// {
-		// 	fm.ShowCellFields();
-		// }
-
-		// private void BtnRootAppFields_OnClick(object sender, RoutedEventArgs e)
-		// {
-		// 	fm.ShowRootFields();
-		// }
-
-		// private void BtnRootAppData_OnClick(object sender, RoutedEventArgs e)
-		// {
-		// 	fm.ShowRootData();
-		// }
-
-		// private void BtnShowLockFields_OnClick(object sender, RoutedEventArgs e)
-		// {
-		// 	fm.ShowLockFields();
-		// }
-
-		// private void BtnShowLockData_OnClick(object sender, RoutedEventArgs e)
-		// {
-		// 	fm.ShowLockData();
-		// }
-
-
-		// private void BtnTest02_OnClick(object sender, RoutedEventArgs e) 
-		// {
-		// 	string x = System.IO.Path.GetRandomFileName().Replace('.','_');
-		//
-		// 	WriteLineAligned("unique name| ", x);
-		//
-		// 	ShowMsg();
-		// }
-
-		// private void BtnTestStart_OnClick(object sender, RoutedEventArgs e)
-		// {
-		// 	test01.proc00();
-		// }
-
 	#region tests
 
 		private void Btn_TstDivText_OnClick(object sender, RoutedEventArgs e)
@@ -237,7 +176,31 @@ namespace CSToolsStudies.Windows
 		{
 			this.MsgClr();
 
-			switch (CurrentSchemaDataType.Value)
+			switch (CurrentSchemaDataType.Key)
+			{
+			case SchemaDataStorType.DT_ROOT:
+				{
+					shShow.ShowData(fm.RtData);
+					break;
+				}
+			case SchemaDataStorType.DT_CELL:
+				{
+					shShow.ShowData(fm.ClData);
+					break;
+				}
+			case SchemaDataStorType.DT_LOCK:
+				{
+					shShow.ShowData(fm.LkData);
+					break;
+				}
+			}
+		}
+
+		private void BtnShowDataInfo_OnClick(object sender, RoutedEventArgs e)
+		{
+			this.MsgClr();
+
+			switch (CurrentSchemaDataType.Key)
 			{
 			case SchemaDataStorType.DT_ROOT:
 				{
@@ -257,44 +220,136 @@ namespace CSToolsStudies.Windows
 			}
 		}
 
-		// private void ShowDataMembers<TSk>(ADataTempBase<TSk> data) where TSk : Enum, new ()
-		// {
-		// 	List<List<Dictionary<DataColumns, string>>> info = DataTemplateMembers.FormatData(data);
-		//
-		// 	shShow.ShowDataInfo(
-		// 		data,
-		// 		DataTemplateMembers.DefaultDataOrder,
-		// 		DataTemplateMembers.DataHdr,
-		// 		DataTemplateMembers.DataHdrInfo,
-		// 		info);
-		// }
-		//
-
-		private void BtnShowFields_OnClick(object sender, RoutedEventArgs e)
+		private void BtnShowFieldsInfo_OnClick(object sender, RoutedEventArgs e)
 		{
 			this.MsgClr();
 
-			switch (CurrentSchemaDataType.Value)
+			switch (CurrentSchemaDataType.Key)
 			{
 			case SchemaDataStorType.DT_ROOT:
 				{
-					shShow.ShowSchemaFields(fm.RtFields);
+					// shShow.ShowSchemaFields(fm.RtFields);
+					shShow.ShowFieldMembers(fm.RtFields);
 					// fm.ShowRootFields();
 					break;
 				}
 			case SchemaDataStorType.DT_CELL:
 				{
-					fm.ShowCellFields();
+					shShow.ShowFieldMembers(fm.ClFields);
+					// fm.ShowCellFields();
 					break;
 				}
 			case SchemaDataStorType.DT_LOCK:
 				{
-					fm.ShowLockFields();
+					shShow.ShowFieldMembers(fm.LkFields);
+					// fm.ShowLockFields();
 					break;
 				}
 			}
 		}
 
+		private void BtnShowDataTest_OnClick(object sender, RoutedEventArgs e)
+		{
+			this.MsgClr();
+
+			switch (CurrentSchemaDataType.Key)
+			{
+			case SchemaDataStorType.DT_ROOT:
+				{
+					shShow.ShowTest(fm.RtData, SchemaRootKey.RK_DESCRIPTION);
+					break;
+				}
+			case SchemaDataStorType.DT_CELL:
+				{
+					shShow.ShowTest(fm.ClData, SchemaCellKey.CK_DESCRIPTION);
+					break;
+				}
+			case SchemaDataStorType.DT_LOCK:
+				{
+					shShow.ShowTest(fm.LkData, SchemaLockKey.LK_DESCRIPTION);
+					break;
+				}
+			}
+		}
+
+
 	#endregion
+
 	}
 }
+
+		/*
+
+		private void BtnShowRootFields_OnClick(object sender, RoutedEventArgs e)
+		{
+			fmMgr.ShowRootFields();
+		}
+		
+		private void BtnRootData_OnClick(object sender, RoutedEventArgs e)
+		{
+			fmMgr.ShowRootData();
+		}
+		
+		private void BtnAppFields_OnClick(object sender, RoutedEventArgs e)
+		{
+			fmMgr.ShowRootFields();
+		}
+		
+		private void BtnAppData_OnClick(object sender, RoutedEventArgs e)
+		{
+			fmMgr.ShowAppData();
+		}
+
+		private void BtnCellFields_OnClick(object sender, RoutedEventArgs e)
+		{
+			fm.ShowCellFields();
+		}
+
+		private void BtnRootAppFields_OnClick(object sender, RoutedEventArgs e)
+		{
+			fm.ShowRootFields();
+		}
+
+		private void BtnRootAppData_OnClick(object sender, RoutedEventArgs e)
+		{
+			fm.ShowRootData();
+		}
+
+		private void BtnShowLockFields_OnClick(object sender, RoutedEventArgs e)
+		{
+			fm.ShowLockFields();
+		}
+
+		private void BtnShowLockData_OnClick(object sender, RoutedEventArgs e)
+		{
+			fm.ShowLockData();
+		}
+
+
+		private void BtnTest02_OnClick(object sender, RoutedEventArgs e) 
+		{
+			string x = System.IO.Path.GetRandomFileName().Replace('.','_');
+		
+			WriteLineAligned("unique name| ", x);
+		
+			ShowMsg();
+		}
+
+		private void BtnTestStart_OnClick(object sender, RoutedEventArgs e)
+		{
+			test01.proc00();
+		}
+
+
+		private void ShowDataMembers<TSk>(ADataTempBase<TSk> data) where TSk : Enum, new ()
+		{
+			List<List<Dictionary<DataColumns, string>>> info = DataTemplateMembers.FormatData(data);
+		
+			shShow.ShowDataInfo(
+				data,
+				DataTemplateMembers.DefaultDataOrder,
+				DataTemplateMembers.DataHdr,
+				DataTemplateMembers.DataHdrInfo,
+				info);
+		}
+		*/

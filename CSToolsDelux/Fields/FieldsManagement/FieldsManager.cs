@@ -306,33 +306,6 @@ namespace CSToolsDelux.Fields.FieldsManagement
 
 	#region public show methods
 
-		public void ShowRootFields()
-		{
-			// show.ShowRootFields(rtFields);
-			show.ShowSchemaFields(R);
-		}
-
-		public void ShowRootData()
-		{
-			// show.ShowRootData(rFields, rData);
-		}
-
-		public void ShowCellFields()
-		{
-			// show.ShowCellFields(clFields);
-			show.ShowSchemaFields(C);
-		}
-
-		public void ShowCellData()
-		{
-			// show.ShowCellData( cFields, cData);
-		}
-
-		public void ShowLockFields()
-		{
-			// show.ShowLockFields(lkFields);
-			show.ShowSchemaFields(L);
-		}
 
 		public void ShowLockData()
 		{

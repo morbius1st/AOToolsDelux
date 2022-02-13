@@ -8,17 +8,16 @@ SchemaFieldEnums
 
 // definition of a single schema field
 
-IFieldsTemp<enum>												defines the basic properties for a single schema field
+AFieldsTemp<enum>												defines the basic properties for a single schema field
 |
-+---------------------------------------+
-                                        v
-FieldsTemp<enum, value type> : IFieldsTemp<enum> 				defines the properties / basic ctor's for a single schema field
-	|
-	+-----------------------------------------------+
++---------------------------------------+-----------+
+                                        v           |
+FieldsTemp<enum, value type> : AFieldsTemp<enum> 	|			defines the properties / basic ctor's for a single schema field
+	                                                |
                                                     |
 AFieldsTemp<enum>									|			collection (dictionary) of all associated schema fields + properties
 |		v                                           v           dictionary is populated with new FieldsTemp<enum, value type>
-|	(FieldsTempDictionary<enum> : Dictionary<enum, IFieldsTemp<enum>>)
+|	(FieldsTempDictionary<enum> : Dictionary<enum, AFieldsTemp<enum>>)
 |
 |  (note that these are non-static classes)
 +-> FieldsRoot		defines the information for the fields for: Root (primary definition of the root fields)
@@ -35,11 +34,11 @@ SchemaData
 //      but, for cells, this will have a running list - one for each cell
 
 
-ADataMember<enum>										basic data field definition + methods to get Value in different formats
+ADataMembers<enum>										basic data field definition + methods to get Value in different formats
   |
   +----------------------------+
                                v
-DataMember<enum, value type> : ADataTemp<enum>		implementation of ASchemaDataFieldDef
+DataMember<enum, value type> : ADataMembers<enum>		implementation of ASchemaDataFieldDef
   |
   +------------------------------+
                                  |

@@ -7,6 +7,7 @@ using SharedCode.Fields.SchemaInfo.SchemaFields.FieldsTemplates;
 using UtilityLibrary;
 using static SharedCode.Fields.SchemaInfo.SchemaSupport.SchemaLockKey;
 using static SharedCode.Fields.SchemaInfo.SchemaSupport.SchemaFieldDisplayLevel;
+using static SharedCode.Windows.ColData.JustifyHoriz;
 #endregion
 
 // user name: jeffs
@@ -20,7 +21,7 @@ namespace SharedCode.Fields.SchemaInfo.SchemaFields
 		public const string LF_SCHEMA_DESC = "Fields Lock DS";
 		public const string LF_SCHEMA_VER = "0.1";
 
-		public KeyValuePair<string, SchemaDataStorType> Type { get; } = SchemaConstants.SchemaTypeLock;
+		public override KeyValuePair<SchemaDataStorType, string> FieldStorType { get; } = SchemaConstants.SchemaTypeLock;
 
 		public FieldsLock()
 		{
@@ -36,25 +37,25 @@ namespace SharedCode.Fields.SchemaInfo.SchemaFields
 			int idx = 0;
 
 			FieldOrderDefault[idx++] =
-				defineField<string>(LK_SCHEMA_NAME , "Name", "Name", SchemaName, DL_BASIC, "A1", 16 );
+				defineField<string>(LK_SCHEMA_NAME , "Name", "Name", SchemaName, DL_BASIC, "A1", 16, 14, CENTER, LEFT );
 
 			FieldOrderDefault[idx++] =
-				defineField<string>(LK_DESCRIPTION , "Description", "Description", LF_SCHEMA_DESC, DL_BASIC, "A2", 26 );
+				defineField<string>(LK_DESCRIPTION , "Description", "Description", LF_SCHEMA_DESC, DL_BASIC, "A2", 26, 24, CENTER, LEFT );
 
 			FieldOrderDefault[idx++] =
-				defineField<string>(LK_VERSION     , "Version", "Cells Version", LF_SCHEMA_VER, DL_MEDIUM, "A3", 10 );
+				defineField<string>(LK_VERSION     , "Version", "Cells Version", LF_SCHEMA_VER, DL_MEDIUM, "A3", 10, 8, CENTER, LEFT );
 
 			FieldOrderDefault[idx++] =
-				defineField<string>(LK_CREATE_DATE , "CreationData", "Date and Time Created", DateTime.UtcNow.ToString(), DL_MEDIUM, "A4", 16);
+				defineField<string>(LK_CREATE_DATE , "CreationData", "Date and Time Created", DateTime.UtcNow.ToString(), DL_MEDIUM, "A4", 16, 14, CENTER, LEFT);
 			
 			FieldOrderDefault[idx++] =
-				defineField<string>(LK_USER_NAME   , "UserName", "Name of Lock Owner", CsUtilities.UserName, DL_ADVANCED, "A5", 16);
+				defineField<string>(LK_USER_NAME   , "UserName", "Name of Lock Owner", CsUtilities.UserName, DL_ADVANCED, "A5", 16, 14, CENTER, LEFT);
 			
 			FieldOrderDefault[idx++] =
-				defineField<string>(LK_MACHINE_NAME, "MachineName", "Machine Lock Made", CsUtilities.MachineName, DL_ADVANCED, "A6", 16);
+				defineField<string>(LK_MACHINE_NAME, "MachineName", "Machine Lock Made", CsUtilities.MachineName, DL_ADVANCED, "A6", 16, 14, CENTER, LEFT);
 			
 			FieldOrderDefault[idx++] =
-				defineField<string>(LK_GUID        , "LockGuidString", "Lock Guid String", Guid.NewGuid().ToString(), DL_DEBUG, "A7", 32);
+				defineField<string>(LK_GUID        , "LockGuidString", "Lock Guid String", Guid.NewGuid().ToString(), DL_DEBUG, "A7", 32, 30, CENTER, LEFT);
 
 		}
 

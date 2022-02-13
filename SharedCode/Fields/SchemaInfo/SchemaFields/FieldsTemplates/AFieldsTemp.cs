@@ -23,6 +23,8 @@ namespace SharedCode.Fields.SchemaInfo.SchemaFields.FieldsTemplates
 	public abstract class AFieldsTemp<TE>
 		where TE : Enum, new()
 	{
+		public abstract KeyValuePair<SchemaDataStorType, string> FieldStorType { get; }
+
 		public string SchemaName { get; protected set; }
 
 		public TE[] FieldOrderDefault { get; set; }
@@ -54,10 +56,14 @@ namespace SharedCode.Fields.SchemaInfo.SchemaFields.FieldsTemplates
 			TD val,
 			SchemaFieldDisplayLevel dispLvl,
 			string dispOrder,
-			int dispWidth,
+			int colWidth,
+			int ttlWidth,
+			JustifyHoriz jh,
+			JustifyHoriz jv,
 			FieldUnitType unittype = FieldUnitType.UT_UNDEFINED)
 		{
-			Fields.Add(key, new FieldsTemp<TE, TD>(key, name, desc, val, dispLvl, dispOrder, dispWidth, unittype));
+			Fields.Add(key, new FieldsTemp<TE, TD>(key, name, desc, val, dispLvl, dispOrder, 
+				new ColData(colWidth, ttlWidth, jh, jv), unittype));
 
 			return key;
 		}

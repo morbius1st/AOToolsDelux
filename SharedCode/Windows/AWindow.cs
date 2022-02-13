@@ -139,63 +139,22 @@ namespace SharedCode.Windows
 		}
 
 
-		// private void appendInfo(
-		// 	ref StringBuilder[] sb, string[] s, ColData.JustifyHoriz j,
-		// 	int width , string colDiv, ref bool[] hasRow, bool isHeader = false)
-		// {
-		// 	for (int i = s.GetLength(0) - 1; i >= 0; i--)
-		// 	{
-		// 		hasRow[i] = hasRow[i] || !string.IsNullOrWhiteSpace(s[i]);
-		//
-		// 		// sb[i].Append(justifyString(s[i], j, width));
-		//
-		// 		sb[i].Append(TejString(s[i], j, width, false, false));
-		// 		sb[i].Append(colDiv);
-		// 	}
-		// }
-
-
-		public void WriteColumnRow<TE>(List<TE> order,
-			Dictionary<TE, ColData> hdrData,
-			Dictionary<TE, string> colInfo, int maxLines)
+		public void WriteRowDivider<TE>(List<TE> order,
+			Dictionary<TE, ColData> hdrData)
 		{
-			StringBuilder[] sb = initTblRow(maxLines, tblBorder[IS_ROW][TBL_BDR_BEG]);
-			bool[] hasRow = new bool[maxLines];
-
-			ColData.JustifyVertical jv = ColData.JustifyVertical.TOP;
-
-			TE key = order[0];
-			ColData cd = hdrData[key];
-			// break up the header text into individual lines of header text
-			List<string> hdrTxt = ColumnifyString(colInfo[key], cd.ColWidth, cd.ColWidth, maxLines, cd.Just[1], jv, true, true);
-
+			int width = tblBorder[IS_HDR][TBL_BDR_BEG].Length;
+			int divWidth = tblBorder[IS_HDR][TBL_BDR_MID].Length;
 			int i;
 
-			for (i = 1; i < order.Count - 1; i++)
+			for (i = 0; i < hdrData.Count - 1; i++)
 			{
-				appendInfo2(ref sb, hdrTxt, tblBorder[IS_ROW][TBL_BDR_MID], ref hasRow);
-
-				key = order[i];
-				cd = hdrData[key];
-				// break up the header text into individual lines of header text
-				hdrTxt = ColumnifyString(colInfo[key], cd.ColWidth, cd.ColWidth, maxLines, cd.Just[1], jv, true, true);
+				width += hdrData[order[i]].ColWidth + divWidth;
 			}
 
-			key = order[i];
-			cd = hdrData[key];
-			// break up the header text into individual lines of header text
-			hdrTxt = ColumnifyString(colInfo[key], cd.ColWidth, cd.ColWidth, maxLines, cd.Just[1], jv, true, true);
+			width += hdrData[order[i]].ColWidth + tblBorder[IS_HDR][TBL_BDR_END].Length;
 
-			appendInfo2(ref sb, hdrTxt, tblBorder[IS_ROW][TBL_BDR_END], ref hasRow);
+			WriteLine1("-".Repeat(width));
 
-			for (i =  maxLines - 1; i >= 0; i--)
-			{
-				if (hasRow[i])
-				{
-					writeMsg1(sb[i].ToString(), -1, "null?", null);
-					WriteNewLine();
-				}
-			}
 		}
 
 		public void WriteRow<TE>( List<TE> order,
@@ -347,90 +306,6 @@ namespace SharedCode.Windows
 
 			lines[1] = maxLines - resultLines - lines[0];
 			return lines;
-		}
-
-
-		// divide a string into sub-strings of maxLength size and a maximum
-		// of maxLines.  Last line has the overflow if any.
-		// maxLength > 0 means split on Word boundaries
-		// < 0 means split on character boundaries (exact maxLength)
-		// when maxLength > 0 the returned line can exceed maxLength
-		public static string[] StringDivide2(string text,
-			char[] splitanyOf,
-			int maxLength,
-			int maxLines)
-		{
-			text = text ?? "";
-
-			bool splitMidWord = false;
-
-			if ( maxLength < 0)
-			{
-				splitMidWord = true;
-				maxLength *= -1;
-			}
-
-			string[] result = new string[2 * (text.Length / maxLength) + 2];
-			string final;
-
-			result[0] = "";
-
-			int index = 0;
-			int loop = 0;
-
-			while (text.Length > 0)
-			{
-				int splitIdx;
-
-				if (maxLength + 1 <= text.Length)
-				{
-					splitIdx = text.Substring(0, maxLength - 1).LastIndexOfAny(splitanyOf) + 1;
-
-					if (!splitMidWord)
-					{
-						if ((splitIdx == 0 || splitIdx == -1))
-						{
-							splitIdx = text.IndexOfAny(splitanyOf, maxLength);
-						}
-					}
-				}
-				else
-				{
-					splitIdx = text.Length - index;
-				}
-
-				if (splitIdx == -1 || splitIdx == 0)
-				{
-					splitIdx = maxLength;
-				}
-
-				if (loop + 1 == maxLines)
-				{
-					final = text;
-					splitIdx = text.Length;
-				}
-				else
-				{
-					final = text.Substring(0, splitIdx);
-				}
-
-				result[loop] = final;
-
-				if (text.Length > splitIdx)
-				{
-					text = text.Substring(splitIdx);
-				}
-				else
-				{
-					text = string.Empty;
-				}
-
-				loop++;
-
-				result[loop] = null;
-			}
-
-			return result;
 		}
 
 
@@ -651,6 +526,152 @@ namespace SharedCode.Windows
 
 
 /*
+
+		
+		// private void appendInfo(
+		// 	ref StringBuilder[] sb, string[] s, ColData.JustifyHoriz j,
+		// 	int width , string colDiv, ref bool[] hasRow, bool isHeader = false)
+		// {
+		// 	for (int i = s.GetLength(0) - 1; i >= 0; i--)
+		// 	{
+		// 		hasRow[i] = hasRow[i] || !string.IsNullOrWhiteSpace(s[i]);
+		//
+		// 		// sb[i].Append(justifyString(s[i], j, width));
+		//
+		// 		sb[i].Append(TejString(s[i], j, width, false, false));
+		// 		sb[i].Append(colDiv);
+		// 	}
+		// }
+
+		public void WriteColumnRow<TE>(List<TE> order,
+			Dictionary<TE, ColData> hdrData,
+			Dictionary<TE, string> colInfo, int maxLines)
+		{
+			StringBuilder[] sb = initTblRow(maxLines, tblBorder[IS_ROW][TBL_BDR_BEG]);
+			bool[] hasRow = new bool[maxLines];
+
+			ColData.JustifyVertical jv = ColData.JustifyVertical.TOP;
+
+			TE key = order[0];
+			ColData cd = hdrData[key];
+			// break up the header text into individual lines of header text
+			List<string> hdrTxt = ColumnifyString(colInfo[key], cd.ColWidth, cd.ColWidth, maxLines, cd.Just[1], jv, true, true);
+
+			int i;
+
+			for (i = 1; i < order.Count - 1; i++)
+			{
+				appendInfo2(ref sb, hdrTxt, tblBorder[IS_ROW][TBL_BDR_MID], ref hasRow);
+
+				key = order[i];
+				cd = hdrData[key];
+				// break up the header text into individual lines of header text
+				hdrTxt = ColumnifyString(colInfo[key], cd.ColWidth, cd.ColWidth, maxLines, cd.Just[1], jv, true, true);
+			}
+
+			key = order[i];
+			cd = hdrData[key];
+			// break up the header text into individual lines of header text
+			hdrTxt = ColumnifyString(colInfo[key], cd.ColWidth, cd.ColWidth, maxLines, cd.Just[1], jv, true, true);
+
+			appendInfo2(ref sb, hdrTxt, tblBorder[IS_ROW][TBL_BDR_END], ref hasRow);
+
+			for (i =  maxLines - 1; i >= 0; i--)
+			{
+				if (hasRow[i])
+				{
+					writeMsg1(sb[i].ToString(), -1, "null?", null);
+					WriteNewLine();
+				}
+			}
+		}
+
+
+		// divide a string into sub-strings of maxLength size and a maximum
+		// of maxLines.  Last line has the overflow if any.
+		// maxLength > 0 means split on Word boundaries
+		// < 0 means split on character boundaries (exact maxLength)
+		// when maxLength > 0 the returned line can exceed maxLength
+		public static string[] StringDivide2(string text,
+			char[] splitanyOf,
+			int maxLength,
+			int maxLines)
+		{
+			text = text ?? "";
+
+			bool splitMidWord = false;
+
+			if ( maxLength < 0)
+			{
+				splitMidWord = true;
+				maxLength *= -1;
+			}
+
+			string[] result = new string[2 * (text.Length / maxLength) + 2];
+			string final;
+
+			result[0] = "";
+
+			int index = 0;
+			int loop = 0;
+
+			while (text.Length > 0)
+			{
+				int splitIdx;
+
+				if (maxLength + 1 <= text.Length)
+				{
+					splitIdx = text.Substring(0, maxLength - 1).LastIndexOfAny(splitanyOf) + 1;
+
+					if (!splitMidWord)
+					{
+						if ((splitIdx == 0 || splitIdx == -1))
+						{
+							splitIdx = text.IndexOfAny(splitanyOf, maxLength);
+						}
+					}
+				}
+				else
+				{
+					splitIdx = text.Length - index;
+				}
+
+				if (splitIdx == -1 || splitIdx == 0)
+				{
+					splitIdx = maxLength;
+				}
+
+				if (loop + 1 == maxLines)
+				{
+					final = text;
+					splitIdx = text.Length;
+				}
+				else
+				{
+					final = text.Substring(0, splitIdx);
+				}
+
+				result[loop] = final;
+
+				if (text.Length > splitIdx)
+				{
+					text = text.Substring(splitIdx);
+				}
+				else
+				{
+					text = string.Empty;
+				}
+
+				loop++;
+
+				result[loop] = null;
+			}
+
+			return result;
+		}
+
+
+
 		public void WriteColumns<TE>( List<TE> order,
 			Dictionary<TE, ColData> hdrData,
 			Dictionary<TE, string> colInfo,

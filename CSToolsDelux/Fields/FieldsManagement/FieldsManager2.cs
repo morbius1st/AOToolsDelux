@@ -34,20 +34,16 @@ namespace CSToolsDelux.Fields.FieldsManagement
 
 	#region ctor
 
-		static FieldsManager2()
-		{
-			Rt = new FieldsRoot();
-			Cl = new FieldsCell();
-			Lk = new FieldsLock();
-		}
-
-
 		public FieldsManager2(AWindow w, Document doc)
 		{
 			this.doc = doc;
 			W = w;
 
 			show = new ShowInfo(w);
+
+			RtFields = new FieldsRoot();
+			ClFields = new FieldsCell();
+			LkFields = new FieldsLock();
 
 			IsConfigured = configCtlr(w, doc);
 			configData();
@@ -56,6 +52,8 @@ namespace CSToolsDelux.Fields.FieldsManagement
 	#endregion
 
 	#region public properties
+
+		public ExStoreController ExStoreCtlr => exCtlr;
 
 		public string DsKey => exCtlr?.DsKey ?? "undefined";
 
@@ -67,17 +65,18 @@ namespace CSToolsDelux.Fields.FieldsManagement
 
 		private void configData()
 		{
+
 			// NEW class design
 			// root data
-			RtData = new DataRoot(Rt);
+			RtData = new DataRoot(RtFields);
 			RtData.Configure("New Root Data Name");
 
 			// lock data
-			LkData = new DataLock(Lk);
+			LkData = new DataLock(LkFields);
 			LkData.Configure("New Lock Data Name");
 			
 			// cell data
-			ClData = new DataCell(Cl, 2);
+			ClData = new DataCell(ClFields, 2);
 			ClData.DataIndex = 0;
 			ClData.Configure("New cell Data Name 0");
 
@@ -109,9 +108,9 @@ namespace CSToolsDelux.Fields.FieldsManagement
 
 	#region public methods
 
-		public static FieldsRoot Rt { get; }
-		public static FieldsCell Cl { get; }
-		public static FieldsLock Lk { get; }
+		public FieldsRoot RtFields { get; }
+		public FieldsCell ClFields { get; }
+		public FieldsLock LkFields { get; }
 
 		// NEW system
 		public DataRoot RtData { get; private set; }

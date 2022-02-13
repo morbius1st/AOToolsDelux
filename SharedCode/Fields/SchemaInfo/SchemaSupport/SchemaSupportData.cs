@@ -27,14 +27,14 @@ namespace SharedCode.Fields.SchemaInfo.SchemaSupport
 	public static class SchemaConstants
 	{
 		// field definition type
-		public static KeyValuePair<string, SchemaDataStorType> SchemaTypeRoot =
-			new KeyValuePair<string, SchemaDataStorType>("Root Fields", SchemaDataStorType.DT_ROOT);
+		public static KeyValuePair<SchemaDataStorType, string> SchemaTypeRoot =
+			new KeyValuePair<SchemaDataStorType, string>(SchemaDataStorType.DT_ROOT, "Root Info");
 
-		public static KeyValuePair<string, SchemaDataStorType> SchemaTypeLock =
-			new KeyValuePair<string, SchemaDataStorType>("Lock Fields", SchemaDataStorType.DT_LOCK);
+		public static KeyValuePair<SchemaDataStorType, string> SchemaTypeLock =
+			new KeyValuePair<SchemaDataStorType, string>(SchemaDataStorType.DT_LOCK, "Lock Info");
 
-		public static KeyValuePair<string, SchemaDataStorType> SchemaTypeCell =
-			new KeyValuePair<string, SchemaDataStorType>("Cell Fields", SchemaDataStorType.DT_CELL);
+		public static KeyValuePair<SchemaDataStorType, string> SchemaTypeCell =
+			new KeyValuePair<SchemaDataStorType, string>(SchemaDataStorType.DT_CELL, "Cell Info");
 
 		// standard / basic fields - ensure each uses the exact same
 		public const int K_SCHEMA_NAME       = 0;
@@ -73,7 +73,9 @@ namespace SharedCode.Fields.SchemaInfo.SchemaSupport
 	// schema field columns
 	public enum FieldColumns
 	{
-		TYPE, KEY, SEQUENCE, NAME, DESC, UNIT_TYPE, GUID, VALUE_TYPE, VALUE_STR, VALUE, DISP_LEVEL, DISP_ORDER, DISP_WIDTH
+		TYPE, KEY, SEQUENCE, NAME, DESC, UNIT_TYPE, 
+		GUID, VALUE_TYPE, VALUE_STR, VALUE, DISP_LEVEL, DISP_ORDER, 
+		COL_WIDTH, TITLE_WIDTH, JUST_HDR, JUST_VAL
 	}
 
 	// schema field keys

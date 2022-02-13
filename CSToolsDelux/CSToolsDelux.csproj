@@ -133,6 +133,7 @@
     <Folder Include="Fields\SchemaInfo\SchemaFields\" />
   </ItemGroup>
   <Import Project="..\SharedCode\SharedCode.projitems" Label="Shared" />
+  <Import Project="..\SharedRevitCode\SharedRevitCode.projitems" Label="Shared" />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PreBuildEvent>echo *** Configuration: $(ConfigurationName) ***

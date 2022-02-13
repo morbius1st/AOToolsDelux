@@ -13,20 +13,27 @@ using SharedCode.Windows;
 
 namespace SharedCode.Fields.SchemaInfo.SchemaData.DataTemplate
 {
-	public abstract class ADataMembers<TE> where TE : Enum
+	/// <summary>
+	/// Abstract class that defines the members for: Fields<br/>
+	/// TSkey is a Schema...Key
+	/// includes column information meta data to display the<br/>
+	/// the field members in a table
+	/// </summary>
+	/// <typeparam name="TSkey"></typeparam>
+	public abstract class ADataMembers<TSkey> where TSkey : Enum
 	{
 	#region data fields
 
-		public abstract TE Key                     { get; protected set; }
+		public abstract TSkey Key                  { get; protected set; }
 		public abstract string ValueString         { get; }
 		public abstract Type ValueType             { get; protected set; }
-		public abstract AFieldsMembers<TE> AFieldsMembers { get; protected set; }
+		public abstract AFieldsMembers<TSkey> AFieldsMembers { get; protected set; }
 
 	#endregion
 
 	#region system overrides
 
-		public abstract ADataMembers<TE> Clone();
+		public abstract ADataMembers<TSkey> Clone();
 
 	#endregion
 

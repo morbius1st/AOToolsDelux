@@ -1,4 +1,5 @@
 ﻿#region using
+
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -19,34 +20,94 @@ using SharedCode.Windows;
 namespace SharedCode.Fields.SchemaInfo.SchemaFields.FieldsTemplates
 {
 	public class FieldsTemp<TE, TD> : AFieldsMembers<TE> where TE : Enum
-  {
-    public KeyValuePair<string, int> Type { get; }
+	{
+		public override KeyValuePair<string, int> Type { get; }
 
-    public TE Key { get; private set; }
+		public override TE Key { get; protected set; }
 
-    public int Sequence { get; set; }
+		public override int Sequence { get; protected set; }
 
-    public string Name { get; set; }
+		public  override string Name { get; protected set; }
 
-    public string Desc { get; set; }
+		public  override string Desc { get; protected set; }
 
-    public FieldUnitType UnitType { get; set; }
+		public  override FieldUnitType UnitType { get; protected set; }
 
-    public string Guid { get; set; }
+		public  override string Guid { get; protected set; }
 
-    public System.Type ValueType { get; set; }
+		public  override System.Type ValueType { get; protected set; }
 
-    public string ValueString => this.Value.ToString();
+		public  override string ValueString => this.Value.ToString();
 
-    public TD Value { get; set; }
+		public TD Value { get; set; }
 
-    public SchemaFieldDisplayLevel DisplayLevel { get; set; }
+		public  override SchemaFieldDisplayLevel DisplayLevel { get; protected set; }
 
-    public string DisplayOrder { get; set; }
+		public  override string DisplayOrder { get; protected set; }
 
-    public int DisplayWidth { get; set; }
+		public override ColData ColDisplayData { get; protected set; }
+
+		public FieldsTemp()
+		{
+			this.Sequence = -1;
+			this.Name = (string) null;
+			this.Desc = (string) null;
+			this.Value = default (TD);
+			this.UnitType = FieldUnitType.UT_UNDEFINED;
+			this.Guid = (string) null;
+			this.DisplayLevel = SchemaFieldDisplayLevel.DL_DEBUG;
+			this.DisplayOrder = (string) null;
+			this.ColDisplayData = null;
+		}
+
+		public FieldsTemp(
+			TE sequence,
+			string name,
+			string desc,
+			TD val,
+			SchemaFieldDisplayLevel displayLevel,
+			string dispOrder,
+			ColData colDisplayData,
+			FieldUnitType unitType = FieldUnitType.UT_UNDEFINED,
+			string guid = "")
+		{
+			this.Key = sequence;
+			this.Sequence = (int) (object) sequence;
+			this.Name = name;
+			this.Desc = desc;
+			this.DisplayLevel = displayLevel;
+			this.DisplayOrder = dispOrder;
+			this.ColDisplayData = colDisplayData;
+
+			this.Value = val;
+			this.ValueType = val.GetType();
+			this.UnitType = unitType;
+			this.Guid = guid;
+		}
+
+		public override AFieldsMembers<TE> Clone() => (AFieldsMembers<TE>) new FieldsTemp<TE, TD>()
+		{
+			Key = this.Key,
+			Sequence = this.Sequence,
+			Name = this.Name,
+			Desc = this.Desc,
+			DisplayLevel = this.DisplayLevel,
+			DisplayOrder = this.DisplayOrder,
+			ColDisplayData = new ColData(this.ColDisplayData.ColWidth, this.ColDisplayData.TitleWidth, this.ColDisplayData.Just[0], this.ColDisplayData.Just[1]),
+			ValueType = this.ValueType,
+			UnitType = this.UnitType,
+			Guid = this.Guid,
+			Value = this.Value
+		};
+
+		public override string ToString() => string.Format("(field def) name| {0}  type| {1}  value| {2}", (object) this.Name, (object) this.ValueType, (object) this.Value);
+	}
+}
+
 
 /*
+
+
     public string[] showFieldsData(Dictionary<FieldColumns, ColData> Header)
     {
       string[] strArray1 = new string[Header.Count];
@@ -82,180 +143,84 @@ namespace SharedCode.Fields.SchemaInfo.SchemaFields.FieldsTemplates
       }
       return strArray1;
     }
-    */
-
-    public object this[FieldColumns Id]
-    {
-      get
-      {
-        switch (Id)
-        {
-          case FieldColumns.TYPE:
-            return (object) this.Type;
-          case FieldColumns.KEY:
-            return (object) this.Key;
-          case FieldColumns.SEQUENCE:
-            return (object) this.Sequence;
-          case FieldColumns.NAME:
-            return (object) this.Name;
-          case FieldColumns.DESC:
-            return (object) this.Desc;
-          case FieldColumns.UNIT_TYPE:
-            return (object) this.UnitType;
-          case FieldColumns.GUID:
-            return (object) this.Guid;
-          case FieldColumns.VALUE_TYPE:
-            return (object) this.ValueType;
-          case FieldColumns.VALUE_STR:
-            return (object) this.ValueString;
-          case FieldColumns.VALUE:
-            return (object) this.Value;
-          case FieldColumns.DISP_LEVEL:
-            return (object) this.DisplayLevel;
-          case FieldColumns.DISP_ORDER:
-            return (object) this.DisplayOrder;
-          case FieldColumns.DISP_WIDTH:
-            return (object) this.DisplayWidth;
-          default:
-            return (object) null;
-        }
-      }
-    }
-
-    public FieldsTemp()
-    {
-      this.Sequence = -1;
-      this.Name = (string) null;
-      this.Desc = (string) null;
-      this.Value = default (TD);
-      this.UnitType = FieldUnitType.UT_UNDEFINED;
-      this.Guid = (string) null;
-      this.DisplayLevel = SchemaFieldDisplayLevel.DL_DEBUG;
-      this.DisplayOrder = (string) null;
-      this.DisplayWidth = -1;
-    }
-
-    public FieldsTemp(
-      TE sequence,
-      string name,
-      string desc,
-      TD val,
-      SchemaFieldDisplayLevel displayLevel,
-      string dispOrder,
-      int dispWidth,
-      FieldUnitType unitType = FieldUnitType.UT_UNDEFINED,
-      string guid = "")
-    {
-      this.Key = sequence;
-      this.Sequence = (int) (object) sequence;
-      this.Name = name;
-      this.Desc = desc;
-      this.DisplayLevel = displayLevel;
-      this.DisplayOrder = dispOrder;
-      this.DisplayWidth = dispWidth;
-      this.Value = val;
-      this.ValueType = val.GetType();
-      this.UnitType = unitType;
-      this.Guid = guid;
-    }
-
-    public AFieldsMembers<TE> Clone() => (AFieldsMembers<TE>) new FieldsTemp<TE, TD>()
-    {
-      Key = this.Key,
-      Sequence = this.Sequence,
-      Name = this.Name,
-      Desc = this.Desc,
-      DisplayLevel = this.DisplayLevel,
-      DisplayOrder = this.DisplayOrder,
-      DisplayWidth = this.DisplayWidth,
-      ValueType = this.ValueType,
-      UnitType = this.UnitType,
-      Guid = this.Guid,
-      Value = this.Value
-    };
-
-    public override string ToString() => string.Format("(field def) name| {0}  type| {1}  value| {2}", (object) this.Name, (object) this.ValueType, (object) this.Value);
-  }
 
 
-}
-	/*
-	public class FieldsTemp<TE, TD> : AFieldsMembers<TE> where TE : Enum, new()
+public class FieldsTemp<TE, TD> : AFieldsMembers<TE> where TE : Enum, new()
+{
+	#region private fields
+
+
+
+	#endregion
+
+	#region ctor
+
+	public FieldsTemp() { }
+
+	#endregion
+
+	#region public properties
+
+
+
+	#endregion
+
+	#region private properties
+
+
+
+	#endregion
+
+	#region public methods
+
+
+
+	#endregion
+
+	#region private methods
+
+		public KeyValuePair<string, int> Type { get; }
+		public TE Key { get; }
+		public int Sequence { get; }
+		public string Name { get; }
+		public string Desc { get; }
+		public FieldUnitType UnitType { get; }
+		public string Guid { get; }
+		public Type ValueType { get; }
+		public string ValueString { get; }
+		public SchemaFieldDisplayLevel DisplayLevel { get; }
+		public string DisplayOrder { get; }
+		public int DisplayWidth { get; }
+
+	#endregion
+
+	#region event consuming
+
+
+
+	#endregion
+
+	#region event publishing
+
+
+
+	#endregion
+
+	#region system overrides
+
+	public override string ToString()
 	{
-		#region private fields
-
-
-
-		#endregion
-
-		#region ctor
-
-		public FieldsTemp() { }
-
-		#endregion
-
-		#region public properties
-
-
-
-		#endregion
-
-		#region private properties
-
-
-
-		#endregion
-
-		#region public methods
-
-
-
-		#endregion
-
-		#region private methods
-
-			public KeyValuePair<string, int> Type { get; }
-			public TE Key { get; }
-			public int Sequence { get; }
-			public string Name { get; }
-			public string Desc { get; }
-			public FieldUnitType UnitType { get; }
-			public string Guid { get; }
-			public Type ValueType { get; }
-			public string ValueString { get; }
-			public SchemaFieldDisplayLevel DisplayLevel { get; }
-			public string DisplayOrder { get; }
-			public int DisplayWidth { get; }
-
-		#endregion
-
-		#region event consuming
-
-
-
-		#endregion
-
-		#region event publishing
-
-
-
-		#endregion
-
-		#region system overrides
-
-		public override string ToString()
-		{
-			return "this is FieldsTemp";
-		}
-
-		#endregion
-
-
-
-			public AFieldsMembers<TE> Clone()
-			{
-				return null;
-			}
+		return "this is FieldsTemp";
 	}
 
-	*/
+	#endregion
+
+
+
+		public AFieldsMembers<TE> Clone()
+		{
+			return null;
+		}
+}
+
+*/

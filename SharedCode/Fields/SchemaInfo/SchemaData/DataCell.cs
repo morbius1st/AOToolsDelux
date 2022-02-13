@@ -4,6 +4,8 @@
 // Created:      2021-10-19 (6:13 AM)
 
 using System;
+using System.Collections.Generic;
+using SharedCode.Fields.SchemaInfo.SchemaData.DataTemplate;
 using SharedCode.Fields.SchemaInfo.SchemaData.DataTemplates;
 using SharedCode.Fields.SchemaInfo.SchemaFields.FieldsTemplates;
 using SharedCode.Fields.SchemaInfo.SchemaSupport;
@@ -12,6 +14,8 @@ namespace SharedCode.Fields.SchemaInfo.SchemaData
 {
 	public class DataCell : ADataTempBase<SchemaCellKey>
 	{
+		public override KeyValuePair<SchemaDataStorType, string> DataStorType { get; } = SchemaConstants.SchemaTypeCell;
+
 		public DataCell(
 			AFieldsTemp<SchemaCellKey> fields, int idxCount = 1) : base(fields, idxCount) { }
 
@@ -44,8 +48,6 @@ namespace SharedCode.Fields.SchemaInfo.SchemaData
 
 
 		}
-
-
 
 	}
 }

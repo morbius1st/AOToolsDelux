@@ -30,14 +30,6 @@ namespace CSToolsStudies.FieldsManagement
 
 	#region ctor
 
-		static FieldsManager()
-		{
-			// NEW and OLD system
-			
-			ClFields = new FieldsCell();
-			LkFields = new FieldsLock();
-		}
-
 		public FieldsManager(AWindow w)
 		{
 			W = w;
@@ -53,6 +45,8 @@ namespace CSToolsStudies.FieldsManagement
 
 
 			RtFields = new FieldsRoot();
+			ClFields = new FieldsCell();
+			LkFields = new FieldsLock();
 
 			// NEW class design
 			// root data
@@ -89,8 +83,8 @@ namespace CSToolsStudies.FieldsManagement
 
 		// NEW and OLD system
 		public FieldsRoot RtFields { get; }
-		public static FieldsCell ClFields { get; }
-		public static FieldsLock LkFields { get; }
+		public FieldsCell ClFields { get; }
+		public FieldsLock LkFields { get; }
 
 		// NEW system
 		public DataRoot RtData { get; private set; }
@@ -112,7 +106,7 @@ namespace CSToolsStudies.FieldsManagement
 		{
 			// show.ShowRootFields(rtFields);
 
-			shShow.ShowSchemaFields(RtFields);
+			// shShow.ShowSchemaFields(RtFields);
 		}
 
 		// public void ShowRootData()
@@ -125,7 +119,7 @@ namespace CSToolsStudies.FieldsManagement
 		public void ShowCellFields()
 		{
 			// show.ShowCellFields(clFields);
-			shShow.ShowSchemaFields(ClFields);
+			// shShow.ShowSchemaFields(ClFields);
 		}
 
 		// public void ShowCellData()
@@ -138,7 +132,7 @@ namespace CSToolsStudies.FieldsManagement
 		public void ShowLockFields()
 		{
 			// show.ShowLockFields(lkFields);
-			shShow.ShowSchemaFields(LkFields);
+			// shShow.ShowSchemaFields(LkFields);
 		}
 
 		// public void ShowLockData()
