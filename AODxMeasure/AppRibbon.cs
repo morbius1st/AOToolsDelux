@@ -217,7 +217,6 @@ namespace DluxMeasure
 			td.Show();
 		}
 
-
 		private PushButtonData CreateButton(string ButtonName,
 			string ButtonText,
 			string Image16,

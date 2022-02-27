@@ -1,7 +1,12 @@
 ﻿#region using
+
+using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Windows;
+using Autodesk.Revit.DB;
+using SettingsManager;
 
 #endregion
 
@@ -15,60 +20,120 @@ namespace DeluxMeasure.Windows
 	/// <summary>
 	/// Interaction logic for MainWindow.xaml
 	/// </summary>
-	public partial class MainWindow : Window, INotifyPropertyChanged
+	public partial class MainWindow : AWindow, INotifyPropertyChanged
 	{
-		#region private fields
 
-		#endregion
+	#region private fields
 
-		#region ctor
+	#endregion
+
+	#region ctor
 
 		public MainWindow()
 		{
 			InitializeComponent();
 		}
 
-		#endregion
+	#endregion
 
-		#region public properties
+	#region public properties
 
-		#endregion
+		public string MessageBoxText
+		{
+			get => textMsg01;
+			set
+			{
+				textMsg01 = value;
+			}
+		}
 
-		#region private properties
+	#endregion
 
-		#endregion
+	#region private properties
 
-		#region public methods
+	#endregion
 
-		#endregion
+	#region public methods
 
-		#region private methods
+		public void TestAppSettings()
+		{
 
-		#endregion
+			IList<ForgeTypeId> validUnits = UnitUtils.GetValidUnits(SpecTypeId.Length);
 
-		#region event consuming
+			Tuple<ForgeTypeId, bool, IList<ForgeTypeId>>[] answers = 
+			new Tuple<ForgeTypeId, bool, IList<ForgeTypeId>>[validUnits.Count];
 
-		#endregion
+			for (int i = 0; i < validUnits.Count; i++)
+			{
+				bool result = FormatOptions.CanHaveSymbol(validUnits[i]);
+				IList<ForgeTypeId> symbols = null;
 
-		#region event publishing
+				if (result)
+				{
+					symbols = FormatOptions.GetValidSymbols(validUnits[i]);
+				}
+
+				answers[i] = new Tuple<ForgeTypeId, bool, IList<ForgeTypeId>>(validUnits[i], result, symbols);
+			}
+
+
+			WriteNewLine();
+			WriteLine2("status", "| ", AppSettings.Admin.Status);
+			WriteLine2("path", "| ", AppSettings.Admin.Path);
+			WriteLine2("status", "| ", "reading");
+			AppSettings.Admin.Read();
+			WriteLine2("test value", "| ", AppSettings.Data.AppSettingsValue);
+			WriteLine2("change value", "| ", "to += 1");
+
+			AppSettings.Data.AppSettingsValue += 1;
+
+			AppSettings.Admin.Write();
+
+			WriteLine2("app settings", "| ", "written");
+			AppSettings.Data.AppSettingsValue = 0;
+			WriteLine2("change value", "| ", $"to {AppSettings.Data.AppSettingsValue}");
+
+			ShowMsg();
+
+			MessageBox.Show(this, textMsg01);
+
+		}
+
+	#endregion
+
+	#region private methods
+
+	#endregion
+
+	#region event consuming
+
+
+		private void Btn_SelPoints_OnClick(object sender, RoutedEventArgs e)
+		{
+			TestAppSettings();
+		}
+
+	#endregion
+
+	#region event publishing
 
 		public event PropertyChangedEventHandler PropertyChanged;
 
-		private void OnPropertyChange([CallerMemberName] string memberName = "")
+		protected override void OnPropertyChange([CallerMemberName] string memberName = "")
 		{
 			PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(memberName));
 		}
 
-		#endregion
+	#endregion
 
-		#region system overrides
+	#region system overrides
 
 		public override string ToString()
 		{
 			return "this is MainWindow";
 		}
 
-		#endregion
+	#endregion
 
 	}
 }

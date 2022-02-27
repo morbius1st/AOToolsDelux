@@ -1,14 +1,17 @@
 #region using
+
+using System.Reflection;
 using Autodesk.Revit.ApplicationServices;
-using Autodesk.Revit.Attributes;
-using Autodesk.Revit.DB;
 using Autodesk.Revit.DB.Events;
 using Autodesk.Revit.UI;
-
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-
+using System.Dynamic;
+using System.Windows.Controls;
+using Autodesk.Revit.DB;
+using DeluxMeasure.UnitsUtil;
+using DeluxMeasure.Windows.Support;
 using UtilityLibrary;
 
 #endregion
@@ -22,6 +25,7 @@ namespace DeluxMeasure
 {
 	internal class AppRibbon : IExternalApplication
 	{
+
 		public Result OnShutdown(UIControlledApplication a)
 		{
 			return Result.Succeeded;
@@ -29,22 +33,32 @@ namespace DeluxMeasure
 		// application: launch with revit - setup interface elements
 		// display information
 
-		private const string NAMESPACE_PREFIX = "DeluxMeasure.Resources";
+		internal const string APP_NAME = "Delux Measure";
+
+		private const string NAMESPACE_PREFIX_RESOURCES = "DeluxMeasure.Resources";
 
 		private const string PANEL_NAME = "DeluxMeasure";
 		private const string TAB_NAME = "AO Tools";
 
-		private const string BUTTON_NAME = "DeluxMeasure";
-		private const string BUTTON_TEXT = "DeluxMeasure";
-		private const string BUTTON_TOOL_TIP = "Button Tool Tip";
+		private const string BUTTON_NAME = "UnitStyles";
+		private const string BUTTON_TEXT = "UnitStyles";
 
 		private const string COMMAND_CLASS_NAME = "Command";
 
 		private static string AddInPath = typeof(AppRibbon).Assembly.Location;
-		private const string CLASSPATH = "DeluxMeasure.";
+		private const string CLASSPATH = "DeluxMeasure.Windows.Support.";
 
 		private const string SMALLICON = "information16.png";
 		private const string LARGEICON = "information32.png";
+
+
+		public const string BTN_NAME_DIVIDER = "?";
+		private string BTN_NAME = $"UnitStyle{BTN_NAME_DIVIDER}";
+
+		private UnitStyles us;
+		private UnitsManager uMgr;
+
+		public static SplitButton sb { get; set; }
 
 		internal UIApplication uiApp;
 
@@ -56,9 +70,16 @@ namespace DeluxMeasure
 
 		public Result OnStartup(UIControlledApplication app)
 		{
+
 			try
 			{
+				uMgr = UnitsManager.Instance;
+				// us = UnitStyles.Instance;
 				//				uiCtrlApp = app;
+
+				UnitsSettings usx = new UnitsSettings();
+
+				uMgr.StyleList = usx.GetStyles();
 
 				app.ControlledApplication.ApplicationInitialized += OnAppInitalized;
 
@@ -111,46 +132,25 @@ namespace DeluxMeasure
 				}
 
 				ribbonPanel.AddItem(
-					createButton(BUTTON_NAME, BUTTON_TEXT, COMMAND_CLASS_NAME,
-						BUTTON_TOOL_TIP, SMALLICON, LARGEICON));
+					CreateButton(
+						BUTTON_NAME, BUTTON_TEXT,
+						SMALLICON, LARGEICON,
+						AddInPath,
+						CLASSPATH + COMMAND_CLASS_NAME,
+						"Set Model Units to a Style"));
 
-
-				//				// example 1
-				//				//add a pull down button to the panel
-				//				if (!AddPullDownButton(ribbonPanel))
-				//				{
-				//					// create the split button failed
-				//					MessageBox.Show("Failed to Add the Pull Down Button!", "Information",
-				//						MessageBoxButtons.OK, MessageBoxIcon.Exclamation, MessageBoxDefaultButton.Button1);
-				//					return Result.Failed;
-				//				}
-				//
-				//				// example 2
-				//				//add a stacked pair of push buttons to the panel
-				//				if (!AddStackedPushButtons(ribbonPanel))
-				//				{
-				//					// create the split button failed
-				//					MessageBox.Show("Failed to Add the Stacked Push Buttons!", "Information",
-				//						MessageBoxButtons.OK, MessageBoxIcon.Exclamation, MessageBoxDefaultButton.Button1);
-				//					return Result.Failed;
-				//				}
-				//
-				//				// example 3
-				//				//add a stacked pair of push buttons and a text box to the panel
-				//				if (!AddStackedPushButtonsAndTextBox(ribbonPanel))
-				//				{
-				//					// create the split button failed
-				//					MessageBox.Show("Failed to Add the Stacked Push Buttons and TextBox!", "Information",
-				//						MessageBoxButtons.OK, MessageBoxIcon.Exclamation, MessageBoxDefaultButton.Button1);
-				//					return Result.Failed;
-				//				}
-
+				if (!addSplitButtons(ribbonPanel))
+				{
+					return Result.Failed;
+				}
 			}
 			catch (Exception e)
 			{
 				Debug.WriteLine("exception " + e.Message);
 				return Result.Failed;
 			}
+
+
 
 			return Result.Succeeded;
 		}
@@ -162,8 +162,236 @@ namespace DeluxMeasure
 			uiApp = new UIApplication(app);
 		}
 
-		private PushButtonData createButton(string ButtonName, string ButtonText,
-			string className, string ToolTip, string smallIcon, string largeIcon)
+		
+		private void CreateButtonFail(string whichButton)
+		{
+			// creating the pushbutton failed
+			TaskDialog td = new TaskDialog(APP_NAME + " - " + whichButton);
+			td.MainIcon = TaskDialogIcon.TaskDialogIconWarning;
+			td.MainContent = String.Format($"Failed to create the {0} button",
+				whichButton);
+			td.Show();
+		}
+
+		private PushButtonData CreateButton(string ButtonName,
+			string ButtonText,
+			string Image16,
+			string Image32,
+			string dllPath,
+			string dllClass,
+			string ToolTip
+			)
+		{
+			PushButtonData pdData;
+
+			try
+			{
+				pdData = new PushButtonData(
+					ButtonName,
+					ButtonText,
+					dllPath,
+					dllClass);
+				// if we have a path for a small image, try to load the image
+				if (Image16.Length != 0)
+				{
+					try
+					{
+						// load the image
+						pdData.Image = CsUtilitiesMedia.GetBitmapImage(Image16, NAMESPACE_PREFIX_RESOURCES);
+					}
+					catch
+					{
+						// could not locate the image
+					}
+				}
+
+				// if have a path for a large image, try to load the image
+				if (Image32.Length != 0)
+				{
+					try
+					{
+						// load the image
+						pdData.LargeImage = CsUtilitiesMedia.GetBitmapImage(Image32, NAMESPACE_PREFIX_RESOURCES);
+					}
+					catch
+					{
+						// could not locate the image
+					}
+				}
+
+				// set the tooltip
+				pdData.ToolTip = ToolTip;
+			}
+			catch
+			{
+				return null;
+			}
+
+			return pdData;
+		}
+
+		private bool addSplitButtons(RibbonPanel ribbonPanel)
+		{
+			SplitButtonData sbData = new SplitButtonData("splitButton1", "Split");
+			sb = ribbonPanel.AddItem(sbData) as SplitButton;
+
+			PushButtonData pbd;
+			UnitsData.UnitInfo ui;
+
+			for (int i = 0; 
+				i < (uMgr.StyleList.Count > UnitStyleCmd.MAX_STYLE_CMDS ? UnitStyleCmd.MAX_STYLE_CMDS : uMgr.StyleList.Count)
+				; i++)
+			{
+				
+				ui = uMgr.UnitData.GetInfo(uMgr.StyleList[i].Id);
+
+				string cmdName = $"UnitStyleCmd{i}";
+				string btnName = $"{BTN_NAME}{i:D3}";
+				string btnTitle = $"Units to\n" + ui.Title;
+				string btnToolTip = $"Set Model Units to " + ui.Desc;
+				string classPath = $"{CLASSPATH}{cmdName}";
+				string btnFailText = $"{ui.Title} Button";
+
+
+				pbd = CreateButton(
+					btnName, btnTitle, ui.IconFile, ui.IconFile, AddInPath, classPath, btnToolTip);
+
+				if (pbd == null)
+				{
+					CreateButtonFail(btnFailText);
+					return false;
+				}
+
+				sb.AddPushButton(pbd);
+			}
+
+			sb.IsSynchronizedWithCurrentItem = true;
+
+			return true;
+
+		}
+
+		/*
+
+		private const string NAMESPACE_PREFIX_ASSEMBLY = "DeluxMeasure";
+
+		private const string BUTTON_TOOL_TIP = "Button Tool Tip";
+
+		
+		private const string UNITS_PANEL_NAME = "Unit Styles";
+
+		private const string BUTTON_UNIT_FTIN_NAME   = "Units\nto Feet-In";
+		private const string BUTTON_UNIT_FRACIN_NAME = "Units\nto Frac In";
+		private const string BUTTON_UNIT_DECFT_NAME  = "Units\nto Dec Ft ";
+		private const string BUTTON_UNIT_DECIN_NAME  = "Units\nto Dec In ";
+
+		private const string BUTTON_FT_IN_STYLE_FAIL_TEXT = "Feet-Inch Button";
+		private const string BUTTON_FRAC_IN_STYLE_FAIL_TEXT = "Frac-Inch Button";
+		private const string BUTTON_DEC_IN_STYLE_FAIL_TEXT = "Dec-Inch Button";
+		private const string BUTTON_DEC_FT_STYLE_FAIL_TEXT = "Dec-Feet Button";
+
+
+		foreach (UnitStyles.UnitStyles.UnitStyle unitStyle in us.Styles)
+		{
+			ui = us.UnitsData.UnitTypes[unitStyle.Id];
+
+			pbd = CreateButton(
+				"BtnStyle01",
+				"Units to\n" + ui.Title,
+				ui.IconFile,
+				ui.IconFile,
+				AddInPath, CLASSPATH + "UnitStyles.UnitStyle01Cmd",
+				"Set Project Units to " + ui.Desc
+				);
+
+		}
+
+		ui = us.UnitsData.UnitTypes[us.Styles[0].Id];
+
+		pbd = CreateButton(
+			"BtnStyle01",
+			"Units to\n" + ui.Title,
+			ui.IconFile,
+			ui.IconFile,
+			AddInPath, CLASSPATH + "UnitStyles.UnitStyle01Cmd",
+			"Set Project Units to " + ui.Desc
+			);
+
+
+
+		//
+		// 	// "Delux Measure Ft-In 32.png",
+		// pbd = CreateButton("UnitStyleFtIn", BUTTON_UNIT_FTIN_NAME,
+		// 	"Delux Measure Ft-In 16.png",
+		// 	"Delux Measure Ft-In 32.png",
+		// 	AddInPath, CLASSPATH
+		// 	+ "UnitStyles.UnitStyle01Cmd",
+		// 	"Set Project Units to Standard Feet & Inches");
+
+		if (pbd == null)
+		{
+			CreateButtonFail(BUTTON_FT_IN_STYLE_FAIL_TEXT);
+			return false;
+		}
+
+		sb.AddPushButton(pbd);
+
+		pbd = CreateButton("UnitStyleFracIn", BUTTON_UNIT_FRACIN_NAME,
+			"Delux Measure Frac-In 16.png",
+			"Delux Measure Frac-In 32.png",
+			AddInPath, CLASSPATH
+			+ "UnitStyles.UnitStyle02Cmd",
+				"Set Project Units to Standard Fractional Inches");
+
+		if (pbd == null)
+		{
+			CreateButtonFail(BUTTON_FRAC_IN_STYLE_FAIL_TEXT);
+			return false;
+		}
+
+		sb.AddPushButton(pbd);
+
+		pbd = CreateButton("UnitStyleDecInch", BUTTON_UNIT_DECIN_NAME,
+			"Delux Measure Dec-In 16.png",
+			"Delux Measure Dec-In 32.png",
+			AddInPath, CLASSPATH
+			+ "UnitStyles.UnitStyle03Cmd",
+				"Set Project Units to Standard Decimal Inches");
+
+		if (pbd == null)
+		{
+			CreateButtonFail(BUTTON_DEC_IN_STYLE_FAIL_TEXT);
+			return false;
+		}
+
+		sb.AddPushButton(pbd);
+
+			// "Delux Measure Dec-Ft 32.png",
+		pbd = CreateButton("UnitStyleDecFeet", BUTTON_UNIT_DECFT_NAME,
+			"Delux Measure Dec-Ft 16.png",
+			"Delux Measure 128 dec-ft.png",
+			AddInPath, CLASSPATH
+			+ "UnitStyles.UnitStyle04Cmd",
+				"Set Project Units to Standard Decimal Feet");
+
+		if (pbd == null)
+		{
+			CreateButtonFail(BUTTON_DEC_FT_STYLE_FAIL_TEXT);
+			return false;
+		}
+
+		sb.AddPushButton(pbd);
+
+		return true;
+
+
+		private PushButtonData createButton(
+			string ButtonName,
+			string ButtonText,
+			string className,
+			string ToolTip,
+			string smallIcon,
+			string largeIcon)
 		{
 			PushButtonData pbd;
 
@@ -171,8 +399,8 @@ namespace DeluxMeasure
 			{
 				pbd = new PushButtonData(ButtonName, ButtonText, AddInPath, string.Concat(CLASSPATH, className))
 				{
-					Image = CsUtilitiesMedia.GetBitmapImage(smallIcon, NAMESPACE_PREFIX),
-					LargeImage = CsUtilitiesMedia.GetBitmapImage(largeIcon, NAMESPACE_PREFIX),
+					Image = CsUtilitiesMedia.GetBitmapImage(smallIcon, NAMESPACE_PREFIX_RESOURCES),
+					LargeImage = CsUtilitiesMedia.GetBitmapImage(largeIcon, NAMESPACE_PREFIX_RESOURCES),
 					ToolTip = ToolTip
 				};
 			}
@@ -183,330 +411,8 @@ namespace DeluxMeasure
 
 			return pbd;
 		}
-
-
-		/*        
-				private bool AddSplitButton(RibbonPanel rp)
-				{
-					try
-					{
-						SplitButtonData sbData = new SplitButtonData("splitButton01", "function select");
-						sbData.Image = RibbonUtil.GetBitmapImage(LARGEICON);
-						sbData.LargeImage = RibbonUtil.GetBitmapImage(LARGEICON);
-
-						SplitButton sb = rp.AddItem(sbData) as SplitButton;
-
-						PushButtonData pbd;
-
-						pbd = createButton("SplitBtn01", "Proper\nCascade", "OrganizeProperCascade",
-							"Organize Revit Windows by Proper Cascade", SMALLICON, LARGEICON);
-						sb.AddPushButton(pbd);
-
-						pbd = createButton("SplitBtn02", "Window's\nCascade", "OrganizeWindowsCascade",
-							"Organize Revit Windows by Windows Cascade", SMALLICON, LARGEICON);
-						sb.AddPushButton(pbd);
-
-						pbd = createButton("SplitBtn03", "Active on\nLeft Tiled", "OrganizeLeft",
-							"Place the Active Window on the Left", SMALLICON, LARGEICON);
-						sb.AddPushButton(pbd);
-
-						pbd = createButton("SplitBtn04", "Active on\nTop Tiled", "OrganizeTop",
-							"Place the Active Window on the Top", SMALLICON, LARGEICON);
-						sb.AddPushButton(pbd);
-
-						pbd = createButton("SplitBtn05", "Active on\nRight Tiled", "OrganizeRight",
-							"Place the Active Window on the Right", SMALLICON, LARGEICON);
-						sb.AddPushButton(pbd);
-
-						pbd = createButton("SplitBtn06", "Active on\nBottom Tiled", "OrganizeBottom",
-							"Place the Active Window on the Bottom", SMALLICON, LARGEICON);
-						sb.AddPushButton(pbd);
-
-						pbd = createButton("SplitBtn07", "Active to\nLeft Stacked", "OrganizeLeftOverlapped",
-							"Place the Active Window on the Left\nand Stack Remaining Windows", SMALLICON, LARGEICON);
-						sb.AddPushButton(pbd);
-					}
-					catch
-					{
-						return false;
-					}
-
-					return true;
-				}
 		*/
 
-		/* 
-						private bool AddStackedPullDownhButtons(RibbonPanel rp)
-				{
-					SplitButton sb0;
-					SplitButton sb1;
-
-
-					SplitButtonData sbData0 = new SplitButtonData("pullDownButton0", "function select");
-					sbData0.Image = RibbonUtil.GetBitmapImage(SMALLICON);
-
-					SplitButtonData sbData1 = new SplitButtonData("pullDownButton1", "auto activate");
-					sbData1.Image = RibbonUtil.GetBitmapImage(SMALLICON);
-
-					PushButtonData pbData0 = createButton("pushButton0", "Auto Update: On - Turn Off", "ToggAutoActivate", 
-						"Revit Windows Settings", SMALLICON, LARGEICON);
-
-					PushButtonData pbData1 = createButton("pushButton1", "Settings", "SettingsFormShow", 
-						"Revit Windows Settings", SMALLICON, LARGEICON);
-
-					IList<RibbonItem> ris = rp.AddStackedItems(sbData0, pbData0, pbData1);
-
-					sb0 = ris[0] as SplitButton;
-		//			sb1 = ris[1] as SplitButton;
-					pb01 = ris[1] as PushButton;
-
-					PushButtonData pbd;
-
-					// pull down button 0
-					pbd = createButton("button00", "Side Views Larger ", "IncreaseSideViewSize",
-						"Make the Active View Larger", SMALLICON, LARGEICON);
-					sb0.AddPushButton(pbd);
-
-					pbd = createButton("button01", "Side Views Smaller", "DecreaseSideViewSize",
-						"Make the Active View Smaller", SMALLICON, LARGEICON);
-					sb0.AddPushButton(pbd);
-
-		//			// pull down button 1
-		//			pbd = createButton("button10", "Activate Auto On", "AutoActivateOn",
-		//				"Turn on AutoActivate", SMALLICON, LARGEICON);
-		//			sb1.AddPushButton(pbd);
-		//
-		//			pbd = createButton("button11", "Activate Auto Off", "AutoActivateOff",
-		//				"Turn off AutoActivate", SMALLICON, LARGEICON);
-		//			sb1.AddPushButton(pbd);
-		//
-					return true;
-				}
-		 */
-
-		/*
-				 * examples of how to add various buttons
-				 *
-				 */
-		//				//add a split pull down button to the panel
-		//				if (!AddStackedComboBoxes(ribbonPanel))
-		//				{
-		//					TaskDialog td = new TaskDialog("Revit Windows");
-		//					td.TitleAutoPrefix = false;
-		//					td.MainInstruction = "Failed to Add the Stacked ComboBoxes!";
-		//					td.MainIcon = TaskDialogIcon.TaskDialogIconWarning;
-		//					td.CommonButtons = TaskDialogCommonButtons.Ok;
-		//
-		//					td.Show();
-		//
-		//					// create the split button failed
-		//					MessageBox.Show("Failed to Add the Stacked ComboBoxes!", "Information",
-		//						MessageBoxButtons.OK, MessageBoxIcon.Exclamation, MessageBoxDefaultButton.Button1);
-		//					return Result.Failed;
-		//				}
-		//
-		//				// example
-		//				// add a button to the panel
-		//				ribbonPanel.AddItem(
-		//					createButton("ModifyPoints1", "Modify\nPoints", "ModifyPoints",
-		//						"Modify the points of a topography surface", SMALLICON, LARGEICON));
-		//
-		//				// example 1
-		//				//add a split pull down button to the panel
-		//				if (!AddPullDownButton(ribbonPanel))
-		//				{
-		//					// create the split button failed
-		//					MessageBox.Show("Failed to Add the Pull Down Button!", "Information",
-		//						MessageBoxButtons.OK, MessageBoxIcon.Exclamation, MessageBoxDefaultButton.Button1);
-		//					return Result.Failed;
-		//				}
-		//
-		//				// example 2
-		//				//add a stacked pair of push buttons to the panel
-		//				if (!AddStackedPushButtons(ribbonPanel))
-		//				{
-		//					// create the split button failed
-		//					MessageBox.Show("Failed to Add the Stacked Push Buttons!", "Information",
-		//						MessageBoxButtons.OK, MessageBoxIcon.Exclamation, MessageBoxDefaultButton.Button1);
-		//					return Result.Failed;
-		//				}
-		//
-		//				// example 3
-		//				//add a stacked pair of push buttons and a text box to the panel
-		//				if (!AddStackedPushButtonsAndTextBox(ribbonPanel))
-		//				{
-		//					// create the split button failed
-		//					MessageBox.Show("Failed to Add the Stacked Push Buttons and TextBox!", "Information",
-		//						MessageBoxButtons.OK, MessageBoxIcon.Exclamation, MessageBoxDefaultButton.Button1);
-		//					return Result.Failed;
-		//				}
-
-
-		//
-		//		// add a pair of combo boxes - first is the function selection and 
-		//		// the second is basically a check box replacement since revit
-		//		// does not have a check box and I don't feel like making one at the moment
-		//		private bool AddStackedComboBoxes(RibbonPanel rp)
-		//		{
-		//			try
-		//			{
-		//				ComboBoxData cbxData1 = new ComboBoxData("functions");
-		//				ComboBoxData cbxData2 = new ComboBoxData("autoactivate");
-		//
-		//				IList<RibbonItem> ris = rp.AddStackedItems(cbxData1, cbxData2);
-		//
-		//				ComboBox cbx0 = ris[0] as ComboBox;
-		//				ComboBox cbx1 = ris[1] as ComboBox;
-		//
-		//				cbx0.ItemText = "combobox 0";
-		//				cbx0.ToolTip = "select a function";
-		//				cbx0.LongDescription = "select a window organize function";
-		//
-		//				cbx1.ItemText = "combobox 1";
-		//				cbx1.ToolTip = "toggle auto activate";
-		//				cbx1.LongDescription = " toggle auto activate on or off";
-		//
-		//				CreateFunctionsCbx(ref cbx0);
-		//				CreateAutoActivateCbx(ref cbx1);
-		//
-		//				cbx0.DropDownClosed += Cbx0_DropDownClosed;
-		//				cbx1.DropDownClosed += Cbx1_DropDownClosed;
-		//
-		//			}
-		//			catch
-		//			{
-		//				return false;
-		//			}
-		//			return true;
-		//		}
-		//
-		//		private void Cbx1_DropDownClosed(object sender, 
-		//			Autodesk.Revit.UI.Events.ComboBoxDropDownClosedEventArgs e)
-		//		{
-		//			TaskDialog.Show("Auto Activate", "this is a test " + ((ComboBox) sender).Current.ItemText
-		//				+ " name (" + ((ComboBox) sender).Current.Name + ")");
-		//		}
-		//
-		//		private void Cbx0_DropDownClosed(object sender, 
-		//			Autodesk.Revit.UI.Events.ComboBoxDropDownClosedEventArgs e)
-		//		{
-		//			TaskDialog.Show("Auto Activate", "this is a test " + ((ComboBox) sender).Current.ItemText
-		//				+ " name (" + ((ComboBox) sender).Current.Name + ")");
-		//		}
-		//
-		//
-		//		private void CreateFunctionsCbx(ref ComboBox cbx)
-		//		{
-		//			cbx.AddItem(createCbxMemberData("A", "Proper Cascade", SMALLICON));
-		//			cbx.AddItem(createCbxMemberData("B", "Window Cascade", SMALLICON));
-		//			cbx.AddItem(createCbxMemberData("C", "Active at Right", SMALLICON));
-		//			cbx.AddItem(createCbxMemberData("D", "Active at Top", SMALLICON));
-		//			cbx.AddItem(createCbxMemberData("E", "Active at Left", SMALLICON));
-		//			cbx.AddItem(createCbxMemberData("F", "Active at Bottom", SMALLICON));
-		//		}
-		//
-		//		private void CreateAutoActivateCbx(ref ComboBox cbx)
-		//		{
-		//			cbx.AddItem(createCbxMemberData("cx0", "Auto Activate On", SMALLICON));
-		//			cbx.AddItem(createCbxMemberData("cx1", "Auto Activate Off", SMALLICON));
-		//		}
-		//
-		//		private ComboBoxMemberData createCbxMemberData(string internalName, 
-		//			string visibleName, string smallIcon)
-		//		{
-		//			ComboBoxMemberData cbxd = new ComboBoxMemberData(internalName, visibleName);
-		//
-		//			cbxd.Image = RibbonUtil.GetBitmapImage(smallIcon);
-		//
-		//			return cbxd;
-		//		}
-		//
-		//		
-		//		private bool AddStackedPushButtonsAndTextBox(RibbonPanel rp)
-		//		{
-		//			TextBoxData tbd = new TextBoxData("TopoSurfaceName");
-		//			PushButtonData[] pbd = new PushButtonData[1];
-		//
-		//			pbd[0] = createButton("RaiseLowerPoints", "Raise\nLower\nPoints", "RaiseLowerPoints", 
-		//				"Raise or Lower points by a fixed amount", SMALLICON, LARGEICON);
-		//
-		//			IList<RibbonItem> ribbonItems = rp.AddStackedItems(tbd, pbd[0]);
-		//
-		//			TopoName = ribbonItems[0] as Autodesk.Revit.UI.TextBox;
-		//			TopoName.Value = "";
-		//			TopoName.ToolTip = "Current Topo Surface Name";
-		//			TopoName.Width = 200.0;
-		//			TopoName.Enabled = false;
-		//
-		//			return true;
-		//		}
-		//
-		//		private void SetTextBoxValue(object sender, TextBoxEnterPressedEventArgs args)
-		//		{
-		//			Units units = new Units(UnitSystem.Imperial);
-		//			double length = 0;
-		//			bool result = UnitFormatUtils.TryParse(units, UnitType.UT_Length, ElevChange.Value.ToString(), out length);
-		//
-		//			if (result)
-		//			{
-		//				elevChangeValue = length;
-		//
-		//				FormatOptions fOpt = new FormatOptions(DisplayUnitType.DUT_DECIMAL_FEET, 0.001);
-		//				fOpt.SuppressTrailingZeros = true;
-		//
-		//
-		//				FormatValueOptions opt = new FormatValueOptions();
-		//				opt.AppendUnitSymbol = true;
-		//				opt.SetFormatOptions(fOpt);
-		//				ElevChange.Value = UnitFormatUtils.Format(units, UnitType.UT_Length, length, false, true, opt);
-		//			}
-		//			else
-		//			{
-		//				ElevChange.Value = "invalid";
-		////				TaskDialog.Show("Parse", "Worked!", TaskDialogCommonButtons.Ok);
-		//				MessageBox.Show("Elevation Change Value", "Amount is not a real distance", MessageBoxButtons.OK, MessageBoxIcon.Error);
-		//			}
-		//		}
-		//
-		//
-		//		private bool AddStackedPushButtons(RibbonPanel rp)
-		//		{
-		//			PushButtonData[] pbd = new PushButtonData[2];
-		//
-		//			pbd[0] = createButton("RaisePoints2", "Raise\nPoints", "RaisePoints", 
-		//				"Raise points by a fixed amount", SMALLICON, LARGEICON);
-		//
-		//			pbd[1] = createButton("OffsetPoints2", "Offset\nPoints", "OffsetPoints", 
-		//				"Move points by a fixed amount", SMALLICON, LARGEICON);
-		//
-		//			IList<RibbonItem> ribbonItems = rp.AddStackedItems(pbd[0], pbd[1]);
-		//
-		//			return true;
-		//		}
-		//
-		//
-		//		// add a set of pull down buttons (3)
-		//		private bool AddPullDownButton(RibbonPanel ribbonPanel)
-		//		{
-		//			PulldownButton pb;
-		//
-		//			PulldownButtonData pdData = new PulldownButtonData("pullDownButton1", "Edit Points");
-		//			pdData.Image = RibbonUtil.GetBitmapImage(SMALLICON);
-		//
-		//			pb = ribbonPanel.AddItem(pdData) as PulldownButton;
-		//
-		//			PushButtonData pbd;
-		//
-		//			pbd = createButton("RaisePoints1", "Raise Points", "RaisePoints", 
-		//				"Raise points by a fixed amount", SMALLICON, LARGEICON);
-		//			pb.AddPushButton(pbd);
-		//
-		//			pbd = createButton("OffsetPoints1", "Offset Points", "OffsetPoints", 
-		//				"Move points by a fixed amount", SMALLICON, LARGEICON);
-		//			pb.AddPushButton(pbd);
-		//
-		//			return true;
-		//		}
-
 	}
+
 }

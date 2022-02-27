@@ -38,6 +38,9 @@
     <StartProgram>$(ProgramW6432)\Autodesk\Revit 2021\Revit.exe</StartProgram>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="AdWindows">
+      <HintPath>..\..\..\..\..\..\..\..\Program Files\Autodesk\Revit 2021\AdWindows.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
@@ -82,6 +85,13 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Compile Include="UnitsUtil\UnitsData.cs" />
+    <Compile Include="UnitsUtil\UnitsSettings.cs" />
+    <Compile Include="UnitsUtil\UnitsManager.cs" />
+    <Compile Include="Windows\Support\UnitStyleCmd.cs" />
+    <Compile Include="UnitsUtil\UnitStyles.cs" />
+    <Compile Include="Windows\AWindow.cs" />
+    <Compile Include="Windows\ColData.cs" />
     <Compile Include="\\CRONOS\Users\jeffs\Documents\Programming\VisualStudioProjects\UtilityLibrary\UtilityLibrary\CsUtilitiesMedia.cs">
       <Link>.Linked\CsUtilitiesMedia.cs</Link>
     </Compile>
@@ -119,10 +129,21 @@
       <SubType>Designer</SubType>
     </Page>
   </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
-    <Folder Include="Windows\Support\" />
-  </ItemGroup>
-  <ItemGroup>
+    <EmbeddedResource Include="Resources\Delux Measure dec-ft 32.png" />
+    <EmbeddedResource Include="Resources\Delux Measure dec-in 32.png" />
+    <EmbeddedResource Include="Resources\Delux Measure frac-in 32.png" />
+    <EmbeddedResource Include="Resources\Delux Measure cm 32.png" />
+    <EmbeddedResource Include="Resources\Delux Measure dm 32.png" />
+    <EmbeddedResource Include="Resources\Delux Measure ft-dec-in 32.png" />
+    <EmbeddedResource Include="Resources\Delux Measure ft-frac-in 32.png" />
+    <EmbeddedResource Include="Resources\Delux Measure m 32.png" />
+    <EmbeddedResource Include="Resources\Delux Measure m-cm 32.png" />
+    <EmbeddedResource Include="Resources\Delux Measure mm 32.png" />
+    <EmbeddedResource Include="Resources\Delux Measure us-ft 32.png" />
+    <EmbeddedResource Include="Resources\information16.png" />
+    <EmbeddedResource Include="Resources\information32.png" />
     <EmbeddedResource Include="Assets\information16.png" />
     <EmbeddedResource Include="Assets\information32.png" />
     <Content Include="Other\DeluxMeasure.addin" />

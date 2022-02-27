@@ -1,4 +1,6 @@
-﻿using System.Runtime.Serialization;
+﻿using System.Collections.Generic;
+using System.Runtime.Serialization;
+using DeluxMeasure.UnitsUtil;
 
 // App settings (per user)
 //	- applies to a specific app in the suite
@@ -18,16 +20,31 @@ namespace SettingsManager
 	public class AppSettingDataFile : IDataFile
 	{
 		[IgnoreDataMember]
-		public string DataFileVersion => "app 7.4a";
+		private List<UnitStyles.UnitStyle> appStyles;
 
 		[IgnoreDataMember]
-		public string DataFileDescription => "app setting file for SettingsManager v7.4";
+		public string DataFileVersion => "dxm 0.1";
 
 		[IgnoreDataMember]
-		public string DataFileNotes => "app / any notes go here";
+		public string DataFileDescription => "app setting file for DeluxMeasure";
+
+		[IgnoreDataMember]
+		public string DataFileNotes => "Settings include the default unit styles";
 
 		[DataMember(Order = 1)]
 		public int AppSettingsValue { get; set; } = 7;
+
+		[DataMember(Order = 2)]
+		public List<UnitStyles.UnitStyle> AppStyles {
+			get
+			{
+				return appStyles;
+			}
+			set
+			{
+				appStyles = value;
+			}
+		}
 	}
 
 	#endregion

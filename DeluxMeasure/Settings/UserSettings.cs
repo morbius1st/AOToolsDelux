@@ -1,4 +1,6 @@
-﻿using System.Runtime.Serialization;
+﻿using System.Collections.Generic;
+using System.Runtime.Serialization;
+using DeluxMeasure.UnitsUtil;
 
 // User settings (per user) 
 //  - user's settings for a specific app
@@ -18,6 +20,9 @@ namespace SettingsManager
 	public class UserSettingDataFile : IDataFile
 	{
 		[IgnoreDataMember]
+		private List<UnitStyles.UnitStyle> userStyles;
+
+		[IgnoreDataMember]
 		public string DataFileVersion => "user 7.4u";
 
 		[IgnoreDataMember]
@@ -28,6 +33,20 @@ namespace SettingsManager
 
 		[DataMember(Order = 1)]
 		public int UserSettingsValue { get; set; } = 7;
+
+		[DataMember(Order = 2)]
+		public List<UnitStyles.UnitStyle> UserStyles {
+			get
+			{
+				return userStyles;
+			}
+			set
+			{
+				userStyles = value;
+			}
+		}
+
+
 	}
 
 	#endregion
