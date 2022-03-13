@@ -2,7 +2,7 @@
 
 using System;
 using System.Collections.Generic;
-using System.Runtime.Serialization;
+using System.ComponentModel;
 using System.Windows.Documents;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
@@ -16,7 +16,7 @@ using static Autodesk.Revit.DB.FormatOptions;
 
 namespace DeluxMeasure.UnitsUtil
 {
-	public class UnitStyles
+	public partial class UnitStyles
 	{
 		public enum UnitCat
 		{
@@ -28,83 +28,7 @@ namespace DeluxMeasure.UnitsUtil
 
 		public const int STDSTYLECOUNT = 6;
 
-		// settings associated to a specific unit style
-		[DataContract(Namespace = "")]
-		public struct UnitStyle
-		{
-			[DataMember(Order = 1)]
-			public string Name { get; set; }
-			[DataMember(Order = 2)]
-			public ForgeTypeId Id { get; set; }
-			[DataMember(Order = 3)]
-			public ForgeTypeId Symbol { get; set; }
-			[DataMember(Order = 4)]
-			public double Precision { get; set; }
-			[DataMember(Order = 5)]
-			public bool SuppressLeadZero { get; set; }
-			[DataMember(Order = 5)]
-			public bool SuppressTrailZero { get; set; }
-			[DataMember(Order = 5)]
-			public bool SuppressSpaces { get; set; }
-			[DataMember(Order = 5)]
-			public bool UsePlusPrefix { get; set; }
-			[DataMember(Order = 5)]
-			public bool UseDigitGrouping { get; set; }
-
-			[DataMember(Order = 5)]
-			public bool HideFromRibbon { get; set; }
-			[DataMember(Order = 5)]
-			public bool HideFromListView { get; set; }
-
-			public bool DeleteStyle { get; set; }
-
-			public UnitSystem USys => UnitsData.UnitTypes[Id].USys;
-			public UnitCat UCat => UnitsData.UnitTypes[Id].UCat;
-
-			public UnitStyle(ForgeTypeId id, string name, string precision,
-				ForgeTypeId symbol, bool suppressLeadZero, bool suppressTrailZero,
-				bool suppressSpaces, bool usePlusPrefix, bool useDigitGrouping) : this()
-			{
-				double prec = UnitsData.GetPrec(UnitsData.UnitTypes[id].UCat, precision);
-				assign(id, name, prec, symbol, suppressLeadZero, suppressTrailZero, suppressSpaces, usePlusPrefix, useDigitGrouping);
-			}
-
-			public UnitStyle(ForgeTypeId id, string name, double precision,
-				ForgeTypeId symbol, bool suppressLeadZero, bool suppressTrailZero,
-				bool suppressSpaces, bool usePlusPrefix, bool useDigitGrouping) : this()
-			{
-				assign(id, name, precision, symbol, suppressLeadZero, suppressTrailZero, suppressSpaces, usePlusPrefix, useDigitGrouping);
-			}
-
-			private void assign(ForgeTypeId id, string name, double precision,
-				ForgeTypeId symbol, bool suppressLeadZero, bool suppressTrailZero,
-				bool suppressSpaces, bool usePlusPrefix, bool useDigitGrouping)
-			{
-				Name = name;
-				Id = id;
-				Symbol = symbol;
-				Precision = precision;
-				SuppressLeadZero = suppressLeadZero;
-				SuppressTrailZero = suppressTrailZero;
-				SuppressSpaces = suppressSpaces;
-				UsePlusPrefix = usePlusPrefix;
-				UseDigitGrouping = useDigitGrouping;
-
-				HideFromRibbon = false;
-				HideFromListView = false;
-				DeleteStyle = false;
-			}
-		}
-
 	#region private fields
-
-		/*
-		private static readonly Lazy<UnitStyles> instance =
-			new Lazy<UnitStyles>(() => new UnitStyles());
-
-		*/
-
-		// UnitsManager unitsManager = UnitsManager.Instance;
 
 	#endregion
 
@@ -173,7 +97,7 @@ namespace DeluxMeasure.UnitsUtil
 					true,                                      // trail zero
 					true,                                      // spaces
 					false,                                     // plus
-					true)                                      // grouping
+					true, -1, -1, -1)                          // grouping
 				);
 
 			// std style: frac Inches
@@ -181,13 +105,13 @@ namespace DeluxMeasure.UnitsUtil
 			StdStyles.Add(
 				new UnitStyle(uType,
 					"Std " + UnitsData.UnitTypes[uType].Title, // name
-					1.0 / 64.0,                                // precision
+					(1.0 / 64.0),                      // precision
 					SymbolTypeId.In,                           // symbol
 					true,                                      // lead zero
 					true,                                      // trail zero
 					true,                                      // spaces
 					false,                                     // plus
-					true)                                      // grouping
+					true, -1, -1, -1)                          // grouping
 				);
 
 			// std style: dec feet
@@ -195,13 +119,13 @@ namespace DeluxMeasure.UnitsUtil
 			StdStyles.Add(
 				new UnitStyle(uType,
 					"Std " + UnitsData.UnitTypes[uType].Title, // name
-					0.0001,                                    // precision
+					0.0001,                            // precision
 					SymbolTypeId.Ft,                           // symbol
 					true,                                      // lead zero
 					true,                                      // trail zero
 					true,                                      // spaces
 					false,                                     // plus
-					true)                                      // grouping
+					true, -1, -1, -1)                          // grouping
 				);
 
 			// std style: dec inches
@@ -209,13 +133,13 @@ namespace DeluxMeasure.UnitsUtil
 			StdStyles.Add(
 				new UnitStyle(uType,
 					"Std " + UnitsData.UnitTypes[uType].Title, // name
-					0.0001,                                    // precision
+					0.0001,                            // precision
 					SymbolTypeId.In,                           // symbol
 					true,                                      // lead zero
 					true,                                      // trail zero
 					true,                                      // spaces
 					false,                                     // plus
-					true)                                      // grouping
+					true, -1, -1, -1)                          // grouping
 				);
 
 
@@ -226,13 +150,13 @@ namespace DeluxMeasure.UnitsUtil
 			StdStyles.Add(
 				new UnitStyle(uType,
 					"Std " + UnitsData.UnitTypes[uType].Title, // name
-					0.0001,                                    // precision
+					0.0001,                            // precision
 					null,                                      // symbol
 					false,                                     // lead zero
 					true,                                      // trail zero
 					false,                                     // spaces
 					false,                                     // plus
-					true)                                      // grouping
+					true, -1, -1, -1)                          // grouping
 				);
 
 			// std style: Meters
@@ -240,13 +164,13 @@ namespace DeluxMeasure.UnitsUtil
 			StdStyles.Add(
 				new UnitStyle(uType,
 					"Std " + UnitsData.UnitTypes[uType].Title, // name
-					0.01,                                      // precision
+					0.01,                              // precision
 					SymbolTypeId.Meter,                        // symbol
 					false,                                     // lead zero
 					true,                                      // trail zero
 					false,                                     // spaces
 					false,                                     // plus
-					true)                                      // grouping
+					true, -1, -1, -1)                          // grouping
 				);
 
 			// std style: centimeters
@@ -254,13 +178,13 @@ namespace DeluxMeasure.UnitsUtil
 			StdStyles.Add(
 				new UnitStyle(uType,
 					"Std " + UnitsData.UnitTypes[uType].Title, // name
-					0.01,                                      // precision
+					0.01,                              // precision
 					SymbolTypeId.Cm,                           // symbol
 					false,                                     // lead zero
 					true,                                      // trail zero
 					false,                                     // spaces
 					false,                                     // plus
-					true)                                      // grouping
+					true, -1, -1, -1)                          // grouping
 				);
 
 			// std style: millimeters
@@ -268,42 +192,16 @@ namespace DeluxMeasure.UnitsUtil
 			StdStyles.Add(
 				new UnitStyle(uType,
 					"Std " + UnitsData.UnitTypes[uType].Title, // name
-					0.01,                                      // precision
+					0.01,                              // precision
 					SymbolTypeId.Mm,                           // symbol
 					false,                                     // lead zero
 					true,                                      // trail zero
 					false,                                     // spaces
 					false,                                     // plus
-					true)                                      // grouping
+					true, -1, -1, -1)                          // grouping
 				);
 			
-			// std style: millimeters
-			uType = UnitTypeId.Millimeters;
-			StdStyles.Add(
-				new UnitStyle(uType,
-					"Std " + UnitsData.UnitTypes[uType].Title, // name
-					0.01,                                      // precision
-					SymbolTypeId.Mm,                           // symbol
-					false,                                     // lead zero
-					true,                                      // trail zero
-					false,                                     // spaces
-					false,                                     // plus
-					true)                                      // grouping
-				);
-
-
 		}
-
-		// private bool setUnits(Document doc, Units units)
-		// {
-		// 	try { doc.SetUnits(units); }
-		// 	catch (Exception e)
-		// 	{
-		// 		return false;
-		// 	}
-		//
-		// 	return true;
-		// }
 
 	#endregion
 
@@ -326,6 +224,7 @@ namespace DeluxMeasure.UnitsUtil
 
 
 	#if DEBUGUNITPREC
+
 		private void makeTestStyles()
 		{
 			int count = 0;
@@ -598,5 +497,6 @@ namespace DeluxMeasure.UnitsUtil
 		}
 
 	#endif
+
 	}
 }

@@ -49,4 +49,10 @@
     <Content Include="$(MSBuildThisFileDirectory)Data Storage Objects.txt" />
     <Content Include="$(MSBuildThisFileDirectory)Information Organization.txt" />
   </ItemGroup>
+  <ItemGroup>
+    <Page Include="$(MSBuildThisFileDirectory)Windows\Resources\IconDelete.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
 </Project>

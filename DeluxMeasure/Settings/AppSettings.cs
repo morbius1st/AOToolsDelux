@@ -20,7 +20,7 @@ namespace SettingsManager
 	public class AppSettingDataFile : IDataFile
 	{
 		[IgnoreDataMember]
-		private List<UnitStyles.UnitStyle> appStyles;
+		private List<UnitStyle> appStyles;
 
 		[IgnoreDataMember]
 		public string DataFileVersion => "dxm 0.1";
@@ -35,7 +35,7 @@ namespace SettingsManager
 		public int AppSettingsValue { get; set; } = 7;
 
 		[DataMember(Order = 2)]
-		public List<UnitStyles.UnitStyle> AppStyles {
+		public List<UnitStyle> AppStyles {
 			get
 			{
 				return appStyles;

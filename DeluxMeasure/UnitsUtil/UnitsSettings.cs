@@ -47,7 +47,7 @@ namespace DeluxMeasure.UnitsUtil
 	#region public methods
 
 
-		public List<UnitStyles.UnitStyle> GetStyles()
+		public List<UnitStyle> GetStyles()
 		{
 			if (!getUserStyles())
 			{

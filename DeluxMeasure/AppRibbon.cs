@@ -143,6 +143,11 @@ namespace DeluxMeasure
 				{
 					return Result.Failed;
 				}
+
+				if (addDropPanel(ribbonPanel))
+				{
+					return Result.Failed;
+				}
 			}
 			catch (Exception e)
 			{
@@ -162,7 +167,6 @@ namespace DeluxMeasure
 			uiApp = new UIApplication(app);
 		}
 
-		
 		private void CreateButtonFail(string whichButton)
 		{
 			// creating the pushbutton failed
@@ -271,147 +275,25 @@ namespace DeluxMeasure
 
 		}
 
-		/*
-
-		private const string NAMESPACE_PREFIX_ASSEMBLY = "DeluxMeasure";
-
-		private const string BUTTON_TOOL_TIP = "Button Tool Tip";
-
-		
-		private const string UNITS_PANEL_NAME = "Unit Styles";
-
-		private const string BUTTON_UNIT_FTIN_NAME   = "Units\nto Feet-In";
-		private const string BUTTON_UNIT_FRACIN_NAME = "Units\nto Frac In";
-		private const string BUTTON_UNIT_DECFT_NAME  = "Units\nto Dec Ft ";
-		private const string BUTTON_UNIT_DECIN_NAME  = "Units\nto Dec In ";
-
-		private const string BUTTON_FT_IN_STYLE_FAIL_TEXT = "Feet-Inch Button";
-		private const string BUTTON_FRAC_IN_STYLE_FAIL_TEXT = "Frac-Inch Button";
-		private const string BUTTON_DEC_IN_STYLE_FAIL_TEXT = "Dec-Inch Button";
-		private const string BUTTON_DEC_FT_STYLE_FAIL_TEXT = "Dec-Feet Button";
-
-
-		foreach (UnitStyles.UnitStyles.UnitStyle unitStyle in us.Styles)
+		private bool addDropPanel(RibbonPanel ribbonPanel)
 		{
-			ui = us.UnitsData.UnitTypes[unitStyle.Id];
-
-			pbd = CreateButton(
-				"BtnStyle01",
-				"Units to\n" + ui.Title,
-				ui.IconFile,
-				ui.IconFile,
-				AddInPath, CLASSPATH + "UnitStyles.UnitStyle01Cmd",
-				"Set Project Units to " + ui.Desc
-				);
-
-		}
-
-		ui = us.UnitsData.UnitTypes[us.Styles[0].Id];
-
-		pbd = CreateButton(
-			"BtnStyle01",
-			"Units to\n" + ui.Title,
-			ui.IconFile,
-			ui.IconFile,
-			AddInPath, CLASSPATH + "UnitStyles.UnitStyle01Cmd",
-			"Set Project Units to " + ui.Desc
-			);
-
-
-
-		//
-		// 	// "Delux Measure Ft-In 32.png",
-		// pbd = CreateButton("UnitStyleFtIn", BUTTON_UNIT_FTIN_NAME,
-		// 	"Delux Measure Ft-In 16.png",
-		// 	"Delux Measure Ft-In 32.png",
-		// 	AddInPath, CLASSPATH
-		// 	+ "UnitStyles.UnitStyle01Cmd",
-		// 	"Set Project Units to Standard Feet & Inches");
-
-		if (pbd == null)
-		{
-			CreateButtonFail(BUTTON_FT_IN_STYLE_FAIL_TEXT);
-			return false;
-		}
-
-		sb.AddPushButton(pbd);
-
-		pbd = CreateButton("UnitStyleFracIn", BUTTON_UNIT_FRACIN_NAME,
-			"Delux Measure Frac-In 16.png",
-			"Delux Measure Frac-In 32.png",
-			AddInPath, CLASSPATH
-			+ "UnitStyles.UnitStyle02Cmd",
-				"Set Project Units to Standard Fractional Inches");
-
-		if (pbd == null)
-		{
-			CreateButtonFail(BUTTON_FRAC_IN_STYLE_FAIL_TEXT);
-			return false;
-		}
-
-		sb.AddPushButton(pbd);
-
-		pbd = CreateButton("UnitStyleDecInch", BUTTON_UNIT_DECIN_NAME,
-			"Delux Measure Dec-In 16.png",
-			"Delux Measure Dec-In 32.png",
-			AddInPath, CLASSPATH
-			+ "UnitStyles.UnitStyle03Cmd",
-				"Set Project Units to Standard Decimal Inches");
-
-		if (pbd == null)
-		{
-			CreateButtonFail(BUTTON_DEC_IN_STYLE_FAIL_TEXT);
-			return false;
-		}
-
-		sb.AddPushButton(pbd);
-
-			// "Delux Measure Dec-Ft 32.png",
-		pbd = CreateButton("UnitStyleDecFeet", BUTTON_UNIT_DECFT_NAME,
-			"Delux Measure Dec-Ft 16.png",
-			"Delux Measure 128 dec-ft.png",
-			AddInPath, CLASSPATH
-			+ "UnitStyles.UnitStyle04Cmd",
-				"Set Project Units to Standard Decimal Feet");
-
-		if (pbd == null)
-		{
-			CreateButtonFail(BUTTON_DEC_FT_STYLE_FAIL_TEXT);
-			return false;
-		}
-
-		sb.AddPushButton(pbd);
-
-		return true;
-
-
-		private PushButtonData createButton(
-			string ButtonName,
-			string ButtonText,
-			string className,
-			string ToolTip,
-			string smallIcon,
-			string largeIcon)
-		{
+			ribbonPanel.AddSlideOut();
+			
 			PushButtonData pbd;
 
-			try
-			{
-				pbd = new PushButtonData(ButtonName, ButtonText, AddInPath, string.Concat(CLASSPATH, className))
-				{
-					Image = CsUtilitiesMedia.GetBitmapImage(smallIcon, NAMESPACE_PREFIX_RESOURCES),
-					LargeImage = CsUtilitiesMedia.GetBitmapImage(largeIcon, NAMESPACE_PREFIX_RESOURCES),
-					ToolTip = ToolTip
-				};
-			}
-			catch
-			{
-				return null;
-			}
+			pbd = CreateButton(
+				"UnitStyleUtil",
+				"Unit Style Mgr",
+				SMALLICON,
+				LARGEICON,
+				AddInPath,
+				$"{CLASSPATH}UnitStyleMgr",
+				"Opens the Unit Style Manager");
 
-			return pbd;
+			ribbonPanel.AddItem(pbd);
+
+			return true;
 		}
-		*/
 
 	}
 

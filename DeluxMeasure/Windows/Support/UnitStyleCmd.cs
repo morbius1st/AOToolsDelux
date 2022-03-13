@@ -1,9 +1,13 @@
 ﻿#region using
 
+using System;
+using System.Windows;
+
 using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
 using DeluxMeasure.UnitsUtil;
+using SettingsManager;
 
 #endregion
 
@@ -30,7 +34,7 @@ namespace DeluxMeasure.Windows.Support
 			return SetUnit( doc, UnitsManager.StyleList[Index]);
 		}
 
-		private Result SetUnit( Document doc, UnitStyles.UnitStyle style)
+		private Result SetUnit( Document doc, UnitStyle style)
 		{
 			// ForgeTypeId id = unitStyles.Styles[idx].Id;
 			ForgeTypeId id = style.Id;
@@ -198,5 +202,31 @@ namespace DeluxMeasure.Windows.Support
 	public class UnitStyleCmd8 : UnitStyleCmd, IExternalCommand
 	{
 		protected override int Index { get; } = 8;
+	}
+
+	
+	[Transaction(TransactionMode.Manual)]
+	public class UnitStyleMgr : IExternalCommand
+	{
+		public Result Execute(
+			ExternalCommandData commandData,
+			ref string message,
+			ElementSet elements)
+		{
+			// Document doc = commandData.Application.ActiveUIDocument.Document;
+
+			IntPtr h = commandData.Application.MainWindowHandle;
+
+			Window w = RevitLibrary.RvtLibrary.WindowHandle(h);
+
+			UnitStylesManager usMgr = new UnitStylesManager();
+
+			usMgr.SetPosition(w);
+
+			usMgr.ShowDialog();
+	
+			return Result.Succeeded;
+		}
+	
 	}
 }

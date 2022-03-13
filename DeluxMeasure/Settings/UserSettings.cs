@@ -12,6 +12,18 @@ using DeluxMeasure.UnitsUtil;
 
 namespace SettingsManager
 {
+	public struct WindowLocation
+	{
+		public double Top { get; set; }
+		public double Left { get; set; }
+
+		public WindowLocation(double top, double left)
+		{
+			Top = top;
+			Left = left;
+		}
+	}
+
 	#region user data class
 
 	// this is the actual data set saved to the user's configuration file
@@ -20,22 +32,22 @@ namespace SettingsManager
 	public class UserSettingDataFile : IDataFile
 	{
 		[IgnoreDataMember]
-		private List<UnitStyles.UnitStyle> userStyles;
+		private List<UnitStyle> userStyles;
 
 		[IgnoreDataMember]
-		public string DataFileVersion => "user 7.4u";
+		public string DataFileVersion => "user 0.1";
 
 		[IgnoreDataMember]
-		public string DataFileDescription => "user setting file for SettingsManager v7.4";
+		public string DataFileDescription => "user setting file";
 
 		[IgnoreDataMember]
-		public string DataFileNotes => "user / any notes go here";
+		public string DataFileNotes => "user settings for DeluxMeasure";
 
 		[DataMember(Order = 1)]
 		public int UserSettingsValue { get; set; } = 7;
 
 		[DataMember(Order = 2)]
-		public List<UnitStyles.UnitStyle> UserStyles {
+		public List<UnitStyle> UserStyles {
 			get
 			{
 				return userStyles;
@@ -45,6 +57,9 @@ namespace SettingsManager
 				userStyles = value;
 			}
 		}
+
+		[DataMember]
+		public WindowLocation WinPosUnitStyleMgr { get; set; }
 
 
 	}

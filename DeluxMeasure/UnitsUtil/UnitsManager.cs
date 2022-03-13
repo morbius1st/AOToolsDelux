@@ -10,6 +10,8 @@ using System.Threading.Tasks;
 using Autodesk.Revit.DB;
 using static Autodesk.Revit.DB.FormatOptions;
 
+using DeluxMeasure.Windows.Support;
+
 #endregion
 
 // username: jeffs
@@ -22,8 +24,8 @@ namespace DeluxMeasure.UnitsUtil
 		private static readonly Lazy<UnitsManager> instance =
 			new Lazy<UnitsManager>(() => new UnitsManager());
 
-		private List<UnitStyles.UnitStyle> styleList = null;
-		private List<UnitStyles.UnitStyle> stdStyles = null;
+		private List<UnitStyle> styleList = null;
+		private List<UnitStyle> stdStyles = null;
 
 		public static UnitsManager Instance => instance.Value;
 
@@ -31,42 +33,33 @@ namespace DeluxMeasure.UnitsUtil
 		{
 			UnitData = new UnitsData();
 			UnitStyles = new UnitStyles();
+
+			populateDefaultStyleList();
+			stdStyles = UnitStyles.StdStyles;
 		}
 
 		public UnitStyles UnitStyles { get; }
+
 		public UnitsData UnitData { get; }
 
-		public List<UnitStyles.UnitStyle> StyleList
+		public List<UnitStyle> StyleList
 		{
-			get
-			{
-				if (styleList == null) populateDefaultStyleList();
-
-				return styleList;
-			}
-			set
-			{
-				styleList = value;
-			}
+			get => styleList;
+			set => styleList = value;
 		}
 
-		public List<UnitStyles.UnitStyle> StdStyles
+		public List<UnitStyle> StdStyles
 		{
-			get
-			{
-				if (stdStyles == null) return UnitStyles.StdStyles;
-
-				return stdStyles;
-			}
+			get => stdStyles;
 			set
 			{
 				if (value != null) stdStyles = value;
 			}
 		}
 
-		public bool SetUnit(Document doc, UnitStyles.UnitStyle style)
+		public bool SetUnit(Document doc, UnitStyle style)
 		{
-			Units units = makeStdLengthUnit(doc, style);
+			Units units = makeStdLengthUnit( style);
 
 			if (units == null) return false;
 
@@ -75,20 +68,15 @@ namespace DeluxMeasure.UnitsUtil
 			return false;
 		}
 
-		public bool SetUnit(Document doc, Units unit)
+		public string FormatLength(double value, UnitStyle style)
 		{
-			try { doc.SetUnits(unit); }
-			catch (Exception e)
-			{
-				return false;
-			}
-
-			return true;
+			Units units = makeStdLengthUnit(style);
+			string result =  UnitFormatUtils.Format(units, SpecTypeId.Length, value, false);
+			return result;
 		}
 
-		public Units makeStdLengthUnit(Document _doc, UnitStyles.UnitStyle style)
+		public FormatOptions GetFormatOptions(UnitStyle style)
 		{
-			Units units;
 			FormatOptions fmtOpts;
 
 			try
@@ -120,23 +108,51 @@ namespace DeluxMeasure.UnitsUtil
 				{
 					fmtOpts.UsePlusPrefix = style.UsePlusPrefix;
 				}
-
-				units = new Units(style.USys);
-				units.SetFormatOptions(SpecTypeId.Length, fmtOpts);
 			}
 			catch (Exception e)
 			{
 				return null;
 			}
 
+			return fmtOpts;
+		}
+
+		public bool SetUnit(Document doc, Units unit)
+		{
+			try { doc.SetUnits(unit); }
+			catch (Exception e)
+			{
+				return false;
+			}
+
+			return true;
+		}
+
+		public Units makeStdLengthUnit(UnitStyle style)
+		{
+			Units units;
+			FormatOptions fmtOpts;
+
+			try
+			{
+				fmtOpts = GetFormatOptions(style);
+			}
+			catch (Exception e)
+			{
+				return null;
+			}
+
+			units = new Units(style.USys);
+			units.SetFormatOptions(SpecTypeId.Length, fmtOpts);
+			
 			return units;
 		}
 
 		private void populateDefaultStyleList()
 		{
-			styleList = new List<UnitStyles.UnitStyle>();
+			styleList = new List<UnitStyle>();
 
-			foreach (UnitStyles.UnitStyle unitStyle in UnitStyles.StdStyles)
+			foreach (UnitStyle unitStyle in UnitStyles.StdStyles)
 			{
 				styleList.Add(unitStyle);
 			}

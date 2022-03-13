@@ -1,22 +1,22 @@
 ﻿<local:AWindow
-		x:Class="DeluxMeasure.Windows.MainWindow"
-		xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-		xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-		xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-		xmlns:local="clr-namespace:DeluxMeasure.Windows"
-		xmlns:sys="clr-namespace:System;assembly=mscorlib"
-		xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-		Title="Delux Measure"
-		Width="650"
-		MinWidth="650"
-		MaxWidth="650"
-		Height="450"
-		DataContext="{Binding RelativeSource={RelativeSource Self}}"
-		mc:Ignorable="d"
-		Background="{DynamicResource Normal.Window.Background}"
-		Foreground="White"
-		SizeToContent="Height" ResizeMode="NoResize"
-		>
+	x:Class="DeluxMeasure.Windows.MainWindow"
+	xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+	xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+	xmlns:local="clr-namespace:DeluxMeasure.Windows"
+	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+	xmlns:sys="clr-namespace:System;assembly=mscorlib"
+	Title="Delux Measure"
+	Width="650"
+	Height="450"
+	MinWidth="650"
+	MaxWidth="650"
+	Background="{DynamicResource Normal.Window.Background}"
+	DataContext="{Binding RelativeSource={RelativeSource Self}}"
+	Foreground="White"
+	ResizeMode="NoResize"
+	SizeToContent="Height"
+	mc:Ignorable="d">
 	<Window.Resources>
 
 		<ResourceDictionary>
@@ -38,9 +38,6 @@
 
 			<sys:Double x:Key="rDistDbl">225</sys:Double>
 			<GridLength x:Key="rDist">225</GridLength>
-
-
-
 
 			<SolidColorBrush x:Key="Horiz.Bar.Grey" Color="{StaticResource Gray.400}" />
 			<SolidColorBrush x:Key="Unit.Background" Color="{StaticResource Gray.300}" />
@@ -64,10 +61,10 @@
 				<Setter Property="FontFamily" Value="Tahoma" />
 			</Style>
 
-			<Style x:Key="Button.Dark.Style"
-					TargetType="Button"
-					BasedOn="{StaticResource Button.Normal.Style}"
-					>
+			<Style
+				x:Key="Button.Dark.Style"
+				BasedOn="{StaticResource Button.Normal.Style}"
+				TargetType="Button">
 				<Setter Property="VerticalContentAlignment" Value="Center" />
 				<Setter Property="HorizontalContentAlignment" Value="Center" />
 				<Setter Property="HorizontalAlignment" Value="Right" />
@@ -75,14 +72,12 @@
 				<Setter Property="Foreground" Value="White" />
 				<Setter Property="Background">
 					<Setter.Value>
-						<SolidColorBrush Color="{StaticResource Gray.250}">
-						</SolidColorBrush>
+						<SolidColorBrush Color="{StaticResource Gray.250}" />
 					</Setter.Value>
 				</Setter>
 				<Setter Property="BorderBrush">
 					<Setter.Value>
-						<SolidColorBrush Color="{StaticResource Gray.150}">
-						</SolidColorBrush>
+						<SolidColorBrush Color="{StaticResource Gray.150}" />
 					</Setter.Value>
 				</Setter>
 				<Style.Triggers>
@@ -92,10 +87,10 @@
 				</Style.Triggers>
 			</Style>
 
-			<Style x:Key="Unit.Tbx"
-					TargetType="TextBox"
-					BasedOn="{StaticResource {x:Type TextBox}}"
-					>
+			<Style
+				x:Key="Unit.Tbx"
+				BasedOn="{StaticResource {x:Type TextBox}}"
+				TargetType="TextBox">
 				<Setter Property="BorderThickness" Value="0" />
 				<Setter Property="Padding" Value="0,2,0,4" />
 				<Setter Property="TextAlignment" Value="Center" />
@@ -105,10 +100,10 @@
 			</Style>
 
 
-			<Style x:Key="Unit.Tblk"
-					TargetType="TextBlock"
-					BasedOn="{StaticResource {x:Type TextBlock}}"
-					>
+			<Style
+				x:Key="Unit.Tblk"
+				BasedOn="{StaticResource {x:Type TextBlock}}"
+				TargetType="TextBlock">
 				<Setter Property="Padding" Value="0,2,0,4" />
 				<Setter Property="TextAlignment" Value="Center" />
 				<Setter Property="VerticalAlignment" Value="Center" />
@@ -116,29 +111,27 @@
 				<Setter Property="Background" Value="{StaticResource Unit.Background}" />
 			</Style>
 
-			<Style x:Key="Unit.Ttl.toprow"
-					TargetType="TextBlock"
-					BasedOn="{StaticResource Unit.Tblk}"
-					>
+			<Style
+				x:Key="Unit.Ttl.toprow"
+				BasedOn="{StaticResource Unit.Tblk}"
+				TargetType="TextBlock">
 				<Setter Property="VerticalAlignment" Value="Bottom" />
 				<Setter Property="Background" Value="Transparent" />
 				<Setter Property="FontSize" Value="10" />
-				<Setter Property="Margin" Value="0,3,0,0">
-				</Setter>
+				<Setter Property="Margin" Value="0,3,0,0" />
 			</Style>
 
-			<Style x:Key="Unit.Ttl.bottrow"
-					TargetType="TextBlock"
-					BasedOn="{StaticResource Unit.Ttl.toprow}"
-					>
-				<Setter Property="Margin" Value="0,5,0,0">
-				</Setter>
+			<Style
+				x:Key="Unit.Ttl.bottrow"
+				BasedOn="{StaticResource Unit.Ttl.toprow}"
+				TargetType="TextBlock">
+				<Setter Property="Margin" Value="0,5,0,0" />
 			</Style>
 
-			<Style x:Key="Unit.Subject"
-					TargetType="TextBlock"
-					BasedOn="{StaticResource {x:Type TextBlock}}"
-					>
+			<Style
+				x:Key="Unit.Subject"
+				BasedOn="{StaticResource {x:Type TextBlock}}"
+				TargetType="TextBlock">
 				<Setter Property="Margin" Value="0,5,10,0" />
 				<Setter Property="TextAlignment" Value="Center" />
 				<Setter Property="VerticalAlignment" Value="Top" />
@@ -146,10 +139,10 @@
 				<Setter Property="MinWidth" Value="88" />
 			</Style>
 
-			<Style x:Key="Unit.display"
-					TargetType="TextBlock"
-					BasedOn="{StaticResource {x:Type TextBlock}}"
-					>
+			<Style
+				x:Key="Unit.display"
+				BasedOn="{StaticResource {x:Type TextBlock}}"
+				TargetType="TextBlock">
 				<Setter Property="Margin" Value="0,0,0,10" />
 				<Setter Property="TextAlignment" Value="Left" />
 				<Setter Property="VerticalAlignment" Value="Bottom" />
@@ -157,10 +150,10 @@
 				<Setter Property="FontSize" Value="12" />
 			</Style>
 
-			<Style x:Key="Pt"
-					TargetType="TextBlock"
-					BasedOn="{StaticResource Unit.Ttl.toprow}"
-					>
+			<Style
+				x:Key="Pt"
+				BasedOn="{StaticResource Unit.Ttl.toprow}"
+				TargetType="TextBlock">
 				<Setter Property="HorizontalAlignment" Value="Left" />
 				<Setter Property="VerticalAlignment" Value="Center" />
 			</Style>
@@ -179,27 +172,25 @@
 			<RowDefinition Height="90" />
 		</Grid.RowDefinitions>
 		<Border
-				Grid.Column="0"
-				Grid.Row="0"
-				Margin="0"
-				Padding="0"
-				BorderThickness="0,0,0,1"
-				BorderBrush="Red"
-				>
+			Grid.Row="0"
+			Grid.Column="0"
+			Margin="0"
+			Padding="0"
+			BorderBrush="Red"
+			BorderThickness="0,0,0,1">
 			<TextBlock
-					Margin="0,0,0,5"
-					FontSize="12"
-					Background="Transparent"
-					Text="Note: Selected points are projected into the current Work Plane"
-					/>
+				Margin="0,0,0,5"
+				Background="Transparent"
+				FontSize="12"
+				Text="Note: Selected points are projected into the current Work Plane" />
 		</Border>
 
 
-		<Grid x:Name="Grid_DistancesBlock"
-				Grid.Column="0"
-				Grid.Row="1"
-				Margin="0,5,0,0"
-				>
+		<Grid
+			x:Name="Grid_DistancesBlock"
+			Grid.Row="1"
+			Grid.Column="0"
+			Margin="0,5,0,0">
 
 			<Grid.RowDefinitions>
 				<RowDefinition Height="{StaticResource rHdr}" />
@@ -214,32 +205,30 @@
 				</Grid.ColumnDefinitions>
 
 				<TextBlock
-						Grid.Column="0"
-						Grid.Row="0"
-						FontWeight="Bold"
-						FontSize="14"
-						Text="Distances"
-						/>
+					Grid.Row="0"
+					Grid.Column="0"
+					FontSize="14"
+					FontWeight="Bold"
+					Text="Distances" />
 
 				<Rectangle
-						Grid.Column="1"
-						Grid.Row="0"
-						Margin="0,3,0,0"
-						Height="4"
-						HorizontalAlignment="Stretch"
-						StrokeThickness="0"
-						Fill="{StaticResource Horiz.Bar.Grey}"
-						Stroke="{StaticResource Horiz.Bar.Grey}"
-						/>
+					Grid.Row="0"
+					Grid.Column="1"
+					Height="4"
+					Margin="0,3,0,0"
+					HorizontalAlignment="Stretch"
+					Fill="{StaticResource Horiz.Bar.Grey}"
+					Stroke="{StaticResource Horiz.Bar.Grey}"
+					StrokeThickness="0" />
 
 			</Grid>
 
-			<Grid x:Name="Grid_Distances"
-					Grid.Column="0"
-					Grid.Row="1"
-					Margin="0,0,10,0"
-					HorizontalAlignment="Stretch"
-					>
+			<Grid
+				x:Name="Grid_Distances"
+				Grid.Row="1"
+				Grid.Column="0"
+				Margin="0,0,10,0"
+				HorizontalAlignment="Stretch">
 
 				<Grid.ColumnDefinitions>
 					<ColumnDefinition Width="{StaticResource ct}" />
@@ -253,24 +242,23 @@
 				</Grid.RowDefinitions>
 
 				<TextBlock
-						Grid.Column="0"
-						Grid.Row="0"
-						Text="Primary Units"
-						RenderTransformOrigin="0.5,0.5"
-						Style="{StaticResource Unit.Subject}"
-						>
+					Grid.Row="0"
+					Grid.Column="0"
+					RenderTransformOrigin="0.5,0.5"
+					Style="{StaticResource Unit.Subject}"
+					Text="Primary Units">
 					<TextBlock.LayoutTransform>
 						<RotateTransform Angle="-90" />
 					</TextBlock.LayoutTransform>
 				</TextBlock>
 
-				<Grid x:Name="Grid_DistPrimUnits"
-						Grid.Column="1"
-						Grid.Row="0"
-						Margin="0,0,0,15"
-						HorizontalAlignment="Stretch"
-						DockPanel.Dock="Top"
-						>
+				<Grid
+					x:Name="Grid_DistPrimUnits"
+					Grid.Row="0"
+					Grid.Column="1"
+					Margin="0,0,0,15"
+					HorizontalAlignment="Stretch"
+					DockPanel.Dock="Top">
 
 					<Grid.RowDefinitions>
 						<!--  x, y, z titles  -->
@@ -301,146 +289,137 @@
 					<!--#region > xyz distances-->
 
 					<TextBlock
-							Grid.Column="1"
-							Text="X"
-							Style="{StaticResource Unit.Ttl.toprow}"
-							/>
+						Grid.Column="1"
+						Style="{StaticResource Unit.Ttl.toprow}"
+						Text="X" />
 
-					<TextBox x:Name="Tbx_Dist1X"
-							Grid.Column="1"
-							Grid.Row="1"
-							Text="99,999'-11.999&quot;"
-							Style="{StaticResource Unit.Tbx}"
-							/>
-
-
-					<TextBlock
-							Grid.Column="3"
-							Grid.Row="0"
-							Text="Y"
-							Style="{StaticResource Unit.Ttl.toprow}"
-							/>
-
-					<TextBox x:Name="Tbx_Dist1Y"
-							Grid.Column="3"
-							Grid.Row="1"
-							Text="99,999'-11.999&quot;"
-							Style="{StaticResource Unit.Tbx}"
-							/>
+					<TextBox
+						x:Name="Tbx_Dist1X"
+						Grid.Row="1"
+						Grid.Column="1"
+						Style="{StaticResource Unit.Tbx}"
+						Text="99,999'-11.999&quot;" />
 
 
 					<TextBlock
-							Grid.Column="5"
-							Grid.Row="0"
-							Text="Z"
-							Style="{StaticResource Unit.Ttl.toprow}"
-							/>
+						Grid.Row="0"
+						Grid.Column="3"
+						Style="{StaticResource Unit.Ttl.toprow}"
+						Text="Y" />
 
-					<TextBox x:Name="Tbx_Dist1Z"
-							Grid.Column="5"
-							Grid.Row="1"
-							Text="99,999'-11.999&quot;"
-							Style="{StaticResource Unit.Tbx}"
-							/>
+					<TextBox
+						x:Name="Tbx_Dist1Y"
+						Grid.Row="1"
+						Grid.Column="3"
+						Style="{StaticResource Unit.Tbx}"
+						Text="99,999'-11.999&quot;" />
+
+
+					<TextBlock
+						Grid.Row="0"
+						Grid.Column="5"
+						Style="{StaticResource Unit.Ttl.toprow}"
+						Text="Z" />
+
+					<TextBox
+						x:Name="Tbx_Dist1Z"
+						Grid.Row="1"
+						Grid.Column="5"
+						Style="{StaticResource Unit.Tbx}"
+						Text="99,999'-11.999&quot;" />
 
 					<!--#endregion-->
 
 					<!--#region > extended distances-->
 
 					<TextBlock
-							Grid.Column="1"
-							Grid.Row="2"
-							Text="XY"
-							Style="{StaticResource Unit.Ttl.bottrow}"
-							/>
+						Grid.Row="2"
+						Grid.Column="1"
+						Style="{StaticResource Unit.Ttl.bottrow}"
+						Text="XY" />
 
-					<TextBox x:Name="Tbx_Dist1Xy"
-							Grid.Column="1"
-							Grid.Row="3"
-							Text="99,999'-11.999&quot;"
-							Style="{StaticResource Unit.Tbx}"
-							/>
-
-
-					<TextBlock
-							Grid.Column="3"
-							Grid.Row="2"
-							Text="XZ"
-							Style="{StaticResource Unit.Ttl.bottrow}"
-							/>
-
-					<TextBox x:Name="Tbx_Dist1Xz"
-							Grid.Column="3"
-							Grid.Row="3"
-							Text="99,999'-11.999&quot;"
-							Style="{StaticResource Unit.Tbx}"
-							/>
+					<TextBox
+						x:Name="Tbx_Dist1Xy"
+						Grid.Row="3"
+						Grid.Column="1"
+						Style="{StaticResource Unit.Tbx}"
+						Text="99,999'-11.999&quot;" />
 
 
 					<TextBlock
-							Grid.Column="5"
-							Grid.Row="2"
-							Text="YZ"
-							Style="{StaticResource Unit.Ttl.bottrow}"
-							/>
+						Grid.Row="2"
+						Grid.Column="3"
+						Style="{StaticResource Unit.Ttl.bottrow}"
+						Text="XZ" />
 
-					<TextBox x:Name="Tbx_Dist1Yz"
-							Grid.Column="5"
-							Grid.Row="3"
-							Text="99,999'-11.999&quot;"
-							Style="{StaticResource Unit.Tbx}"
-							/>
+					<TextBox
+						x:Name="Tbx_Dist1Xz"
+						Grid.Row="3"
+						Grid.Column="3"
+						Style="{StaticResource Unit.Tbx}"
+						Text="99,999'-11.999&quot;" />
+
 
 					<TextBlock
-							Grid.Column="7"
-							Grid.Row="2"
-							Text="XYZ"
-							Style="{StaticResource Unit.Ttl.bottrow}"
-							/>
+						Grid.Row="2"
+						Grid.Column="5"
+						Style="{StaticResource Unit.Ttl.bottrow}"
+						Text="YZ" />
 
-					<TextBox x:Name="Tbx_Dist1Xyz"
-							Grid.Column="7"
-							Grid.Row="3"
-							Text="99,999'-11.999&quot;"
-							Style="{StaticResource Unit.Tbx}"
-							/>
+					<TextBox
+						x:Name="Tbx_Dist1Yz"
+						Grid.Row="3"
+						Grid.Column="5"
+						Style="{StaticResource Unit.Tbx}"
+						Text="99,999'-11.999&quot;" />
+
+					<TextBlock
+						Grid.Row="2"
+						Grid.Column="7"
+						Style="{StaticResource Unit.Ttl.bottrow}"
+						Text="XYZ" />
+
+					<TextBox
+						x:Name="Tbx_Dist1Xyz"
+						Grid.Row="3"
+						Grid.Column="7"
+						Style="{StaticResource Unit.Tbx}"
+						Text="99,999'-11.999&quot;" />
 
 				</Grid>
 				<!--#endregion-->
 
 
 				<Rectangle
-						Grid.Column="1"
-						Grid.Row="1"
-						Margin="0,0,0,0"
-						Height="4"
-						HorizontalAlignment="Stretch"
-						StrokeThickness="0"
-						Fill="{StaticResource Horiz.Bar.Grey}"
-						Stroke="{StaticResource Horiz.Bar.Grey}"
-						/>
+					Grid.Row="1"
+					Grid.Column="1"
+					Height="4"
+					Margin="0,0,0,0"
+					HorizontalAlignment="Stretch"
+					Fill="{StaticResource Horiz.Bar.Grey}"
+					Stroke="{StaticResource Horiz.Bar.Grey}"
+					StrokeThickness="0" />
 
 
 				<TextBlock
-						Grid.Column="0"
-						Grid.Row="2"
-						Text="Secondary Units"
-						RenderTransformOrigin="0.5,0.5"
-						Style="{StaticResource Unit.Subject}"
-						>
+					Grid.Row="2"
+					Grid.Column="0"
+					RenderTransformOrigin="0.5,0.5"
+					Style="{StaticResource Unit.Subject}"
+					Text="Secondary Units">
 					<TextBlock.LayoutTransform>
 						<RotateTransform Angle="-90" />
 					</TextBlock.LayoutTransform>
 				</TextBlock>
 
 
-				<Grid x:Name="Grid_DistSecUnits"
-						Grid.Column="1"
-						Grid.Row="2"
-						Margin="0,0,0,15"
-						HorizontalAlignment="Stretch"
-						DockPanel.Dock="Top"
-						>
+				<Grid
+					x:Name="Grid_DistSecUnits"
+					Grid.Row="2"
+					Grid.Column="1"
+					Margin="0,0,0,15"
+					HorizontalAlignment="Stretch"
+					DockPanel.Dock="Top">
 
 					<Grid.RowDefinitions>
 						<!--  x, y, z titles  -->
@@ -472,109 +451,101 @@
 					<!--#region > xyz distances-->
 
 					<TextBlock
-							Grid.Column="1"
-							Text="X"
-							Style="{StaticResource Unit.Ttl.toprow}"
-							/>
+						Grid.Column="1"
+						Style="{StaticResource Unit.Ttl.toprow}"
+						Text="X" />
 
-					<TextBox x:Name="Tbx_Dist2X"
-							Grid.Column="1"
-							Grid.Row="1"
-							Text="99,999'-11.999&quot;"
-							Style="{StaticResource Unit.Tbx}"
-							/>
-
-
-					<TextBlock
-							Grid.Column="3"
-							Grid.Row="0"
-							Text="Y"
-							Style="{StaticResource Unit.Ttl.toprow}"
-							/>
-
-					<TextBox x:Name="Tbx_Dist2Y"
-							Grid.Column="3"
-							Grid.Row="1"
-							Text="99,999'-11.999&quot;"
-							Style="{StaticResource Unit.Tbx}"
-							/>
+					<TextBox
+						x:Name="Tbx_Dist2X"
+						Grid.Row="1"
+						Grid.Column="1"
+						Style="{StaticResource Unit.Tbx}"
+						Text="99,999'-11.999&quot;" />
 
 
 					<TextBlock
-							Grid.Column="5"
-							Grid.Row="0"
-							Text="Z"
-							Style="{StaticResource Unit.Ttl.toprow}"
-							/>
+						Grid.Row="0"
+						Grid.Column="3"
+						Style="{StaticResource Unit.Ttl.toprow}"
+						Text="Y" />
 
-					<TextBox x:Name="Tbx_Dist2Z"
-							Grid.Column="5"
-							Grid.Row="1"
-							Text="99,999'-11.999&quot;"
-							Style="{StaticResource Unit.Tbx}"
-							/>
+					<TextBox
+						x:Name="Tbx_Dist2Y"
+						Grid.Row="1"
+						Grid.Column="3"
+						Style="{StaticResource Unit.Tbx}"
+						Text="99,999'-11.999&quot;" />
+
+
+					<TextBlock
+						Grid.Row="0"
+						Grid.Column="5"
+						Style="{StaticResource Unit.Ttl.toprow}"
+						Text="Z" />
+
+					<TextBox
+						x:Name="Tbx_Dist2Z"
+						Grid.Row="1"
+						Grid.Column="5"
+						Style="{StaticResource Unit.Tbx}"
+						Text="99,999'-11.999&quot;" />
 
 					<!--#endregion-->
 
 					<!--#region > extended distances-->
 
 					<TextBlock
-							Grid.Column="1"
-							Grid.Row="2"
-							Text="XY"
-							Style="{StaticResource Unit.Ttl.bottrow}"
-							/>
-
-					<TextBox x:Name="Tbx_Dist2Xy"
-							Grid.Column="1"
-							Grid.Row="3"
-							Text="99,999'-11.999&quot;"
-							Style="{StaticResource Unit.Tbx}"
-							/>
-
-
-					<TextBlock
-							Grid.Column="3"
-							Grid.Row="2"
-							Text="XZ"
-							Style="{StaticResource Unit.Ttl.bottrow}"
-							/>
-
-					<TextBox x:Name="Tbx_Dist2Xz"
-							Grid.Column="3"
-							Grid.Row="3"
-							Text="99,999'-11.999&quot;"
-							Style="{StaticResource Unit.Tbx}"
-							/>
-
-
-					<TextBlock
-							Grid.Column="5"
-							Grid.Row="2"
-							Text="YZ"
-							Style="{StaticResource Unit.Ttl.bottrow}"
-							/>
-
-					<TextBox x:Name="Tbx_Dist2Xyz"
-							Grid.Column="5"
-							Grid.Row="3"
-							Text="99,999'-11.999&quot;"
-							Style="{StaticResource Unit.Tbx}"
-							/>
-
-					<TextBlock
-							Grid.Column="7"
-							Grid.Row="2"
-							Text="XYZ"
-							Style="{StaticResource Unit.Ttl.bottrow}"
-							/>
+						Grid.Row="2"
+						Grid.Column="1"
+						Style="{StaticResource Unit.Ttl.bottrow}"
+						Text="XY" />
 
 					<TextBox
-							Grid.Column="7"
-							Grid.Row="3"
-							Text="99,999'-11.999&quot;"
-							Style="{StaticResource Unit.Tbx}"
-							/>
+						x:Name="Tbx_Dist2Xy"
+						Grid.Row="3"
+						Grid.Column="1"
+						Style="{StaticResource Unit.Tbx}"
+						Text="99,999'-11.999&quot;" />
+
+
+					<TextBlock
+						Grid.Row="2"
+						Grid.Column="3"
+						Style="{StaticResource Unit.Ttl.bottrow}"
+						Text="XZ" />
+
+					<TextBox
+						x:Name="Tbx_Dist2Xz"
+						Grid.Row="3"
+						Grid.Column="3"
+						Style="{StaticResource Unit.Tbx}"
+						Text="99,999'-11.999&quot;" />
+
+
+					<TextBlock
+						Grid.Row="2"
+						Grid.Column="5"
+						Style="{StaticResource Unit.Ttl.bottrow}"
+						Text="YZ" />
+
+					<TextBox
+						x:Name="Tbx_Dist2Xyz"
+						Grid.Row="3"
+						Grid.Column="5"
+						Style="{StaticResource Unit.Tbx}"
+						Text="99,999'-11.999&quot;" />
+
+					<TextBlock
+						Grid.Row="2"
+						Grid.Column="7"
+						Style="{StaticResource Unit.Ttl.bottrow}"
+						Text="XYZ" />
+
+					<TextBox
+						Grid.Row="3"
+						Grid.Column="7"
+						Style="{StaticResource Unit.Tbx}"
+						Text="99,999'-11.999&quot;" />
 
 					<!--#endregion-->
 
@@ -584,18 +555,17 @@
 
 		</Grid>
 
-		<Expander x:Name="Xpdr_Coordinates"
-				Grid.Column="0"
-				Grid.Row="2"
-				Margin="0,5,0,0"
-		>
+		<Expander
+			x:Name="Xpdr_Coordinates"
+			Grid.Row="2"
+			Grid.Column="0"
+			Margin="0,5,0,0">
 			<Expander.Header>
 
-				<Grid x:Name="Grid_CoordinatesTitle"
-						Margin="5,0,0,0"
-						Width="{Binding ActualWidth,
-														RelativeSource={RelativeSource AncestorType={x:Type Expander}}}"
-						>
+				<Grid
+					x:Name="Grid_CoordinatesTitle"
+					Width="{Binding ActualWidth, RelativeSource={RelativeSource AncestorType={x:Type Expander}}}"
+					Margin="5,0,0,0">
 
 					<Grid.ColumnDefinitions>
 						<ColumnDefinition Width="{StaticResource c1}" />
@@ -603,23 +573,21 @@
 					</Grid.ColumnDefinitions>
 
 					<TextBlock
-							Grid.Column="0"
-							Grid.Row="0"
-							FontWeight="Bold"
-							FontSize="14"
-							Text="Coordinates"
-							/>
+						Grid.Row="0"
+						Grid.Column="0"
+						FontSize="14"
+						FontWeight="Bold"
+						Text="Coordinates" />
 
 					<Rectangle
-							Grid.Column="1"
-							Grid.Row="0"
-							Margin="0,3,0,0"
-							Height="4"
-							HorizontalAlignment="Stretch"
-							StrokeThickness="0"
-							Fill="{StaticResource Horiz.Bar.Grey}"
-							Stroke="{StaticResource Horiz.Bar.Grey}"
-							/>
+						Grid.Row="0"
+						Grid.Column="1"
+						Height="4"
+						Margin="0,3,0,0"
+						HorizontalAlignment="Stretch"
+						Fill="{StaticResource Horiz.Bar.Grey}"
+						Stroke="{StaticResource Horiz.Bar.Grey}"
+						StrokeThickness="0" />
 
 				</Grid>
 
@@ -633,11 +601,11 @@
 
 
 
-				<Grid x:Name="Grid_Coordinates"
-						Grid.Column="0"
-						Margin="0,0,10,0"
-						HorizontalAlignment="Stretch"
-						>
+				<Grid
+					x:Name="Grid_Coordinates"
+					Grid.Column="0"
+					Margin="0,0,10,0"
+					HorizontalAlignment="Stretch">
 
 					<Grid.ColumnDefinitions>
 						<ColumnDefinition Width="{StaticResource ct}" />
@@ -652,26 +620,26 @@
 
 					<!--#region > primary units-->
 
-					<TextBlock Tag="primary units"
-							Grid.Column="0"
-							Grid.Row="0"
-							Text="Primary Units"
-							RenderTransformOrigin="0.5,0.5"
-							Style="{StaticResource Unit.Subject}"
-							>
+					<TextBlock
+						Grid.Row="0"
+						Grid.Column="0"
+						RenderTransformOrigin="0.5,0.5"
+						Style="{StaticResource Unit.Subject}"
+						Tag="primary units"
+						Text="Primary Units">
 						<TextBlock.LayoutTransform>
 							<RotateTransform Angle="-90" />
 						</TextBlock.LayoutTransform>
 					</TextBlock>
 
 
-					<Grid x:Name="Grid_CoordPrimUnits"
-							Grid.Column="1"
-							Grid.Row="0"
-							Margin="0,0,0,10"
-							HorizontalAlignment="Stretch"
-							DockPanel.Dock="Top"
-							>
+					<Grid
+						x:Name="Grid_CoordPrimUnits"
+						Grid.Row="0"
+						Grid.Column="1"
+						Margin="0,0,0,10"
+						HorizontalAlignment="Stretch"
+						DockPanel.Dock="Top">
 
 						<Grid.RowDefinitions>
 							<!--  x, y, z titles  -->
@@ -704,98 +672,92 @@
 						<!--#region > point 1-->
 
 						<TextBlock
-								Grid.Column="0"
-								Grid.Row="0"
-								HorizontalAlignment="Center"
-								Text="Pt"
-								Style="{StaticResource Pt}"
-								/>
+							Grid.Row="0"
+							Grid.Column="0"
+							HorizontalAlignment="Center"
+							Style="{StaticResource Pt}"
+							Text="Pt" />
 
 						<TextBlock
-								Grid.Column="0"
-								Grid.Row="1"
-								Text="1st"
-								Style="{StaticResource Pt}"
-								/>
+							Grid.Row="1"
+							Grid.Column="0"
+							Style="{StaticResource Pt}"
+							Text="1st" />
 
 						<TextBlock
-								Grid.Column="1"
-								Grid.Row="0"
-								Text="X"
-								Style="{StaticResource Unit.Ttl.toprow}"
-								/>
+							Grid.Row="0"
+							Grid.Column="1"
+							Style="{StaticResource Unit.Ttl.toprow}"
+							Text="X" />
 
-						<TextBox x:Name="Tbx_Pt11X"
-								Grid.Column="1"
-								Grid.Row="1"
-								Text="99,999'-11.999&quot;"
-								Style="{StaticResource Unit.Tbx}"
-								/>
+						<TextBox
+							x:Name="Tbx_Pt11X"
+							Grid.Row="1"
+							Grid.Column="1"
+							Style="{StaticResource Unit.Tbx}"
+							Text="99,999'-11.999&quot;" />
 
 
 						<TextBlock
-								Grid.Column="3"
-								Grid.Row="0"
-								Text="Y"
-								Style="{StaticResource Unit.Ttl.toprow}"
-								/>
+							Grid.Row="0"
+							Grid.Column="3"
+							Style="{StaticResource Unit.Ttl.toprow}"
+							Text="Y" />
 
-						<TextBox x:Name="Tbx_Pt11Y"
-								Grid.Column="3"
-								Grid.Row="1"
-								Text="99,999'-11.999&quot;"
-								Style="{StaticResource Unit.Tbx}"
-								/>
+						<TextBox
+							x:Name="Tbx_Pt11Y"
+							Grid.Row="1"
+							Grid.Column="3"
+							Style="{StaticResource Unit.Tbx}"
+							Text="99,999'-11.999&quot;" />
 
 
 						<TextBlock
-								Grid.Column="5"
-								Grid.Row="0"
-								Text="Z"
-								Style="{StaticResource Unit.Ttl.toprow}"
-								/>
+							Grid.Row="0"
+							Grid.Column="5"
+							Style="{StaticResource Unit.Ttl.toprow}"
+							Text="Z" />
 
-						<TextBox x:Name="Tbx_Pt11Z"
-								Grid.Column="5"
-								Grid.Row="1"
-								Text="99,999'-11.999&quot;"
-								Style="{StaticResource Unit.Tbx}"
-								/>
+						<TextBox
+							x:Name="Tbx_Pt11Z"
+							Grid.Row="1"
+							Grid.Column="5"
+							Style="{StaticResource Unit.Tbx}"
+							Text="99,999'-11.999&quot;" />
 
 						<!--#endregion-->
 
 						<!--#region > point 2-->
 
 						<TextBlock
-								Grid.Column="0"
-								Grid.Row="3"
-								Text="2nd"
-								Style="{StaticResource Pt}"
-								/>
+							Grid.Row="3"
+							Grid.Column="0"
+							Style="{StaticResource Pt}"
+							Text="2nd" />
 
 
-						<TextBox x:Name="Tbx_Pt12X"
-								Grid.Column="1"
-								Grid.Row="3"
-								Text="99,999'-11.999&quot;"
-								Style="{StaticResource Unit.Tbx}"
-								/>
+						<TextBox
+							x:Name="Tbx_Pt12X"
+							Grid.Row="3"
+							Grid.Column="1"
+							Style="{StaticResource Unit.Tbx}"
+							Text="99,999'-11.999&quot;" />
 
 
-						<TextBox x:Name="Tbx_Pt12Y"
-								Grid.Column="3"
-								Grid.Row="3"
-								Text="99,999'-11.999&quot;"
-								Style="{StaticResource Unit.Tbx}"
-								/>
+						<TextBox
+							x:Name="Tbx_Pt12Y"
+							Grid.Row="3"
+							Grid.Column="3"
+							Style="{StaticResource Unit.Tbx}"
+							Text="99,999'-11.999&quot;" />
 
 
-						<TextBox x:Name="Tbx_Pt12Z"
-								Grid.Column="5"
-								Grid.Row="3"
-								Text="99,999'-11.999&quot;"
-								Style="{StaticResource Unit.Tbx}"
-								/>
+						<TextBox
+							x:Name="Tbx_Pt12Z"
+							Grid.Row="3"
+							Grid.Column="5"
+							Style="{StaticResource Unit.Tbx}"
+							Text="99,999'-11.999&quot;" />
 
 						<!--#endregion-->
 
@@ -804,37 +766,35 @@
 					<!--#endregion-->
 
 					<Rectangle
-							Grid.Column="1"
-							Grid.Row="1"
-							Margin="0,0,0,0"
-							Height="4"
-							HorizontalAlignment="Stretch"
-							StrokeThickness="0"
-							Fill="{StaticResource Horiz.Bar.Grey}"
-							Stroke="{StaticResource Horiz.Bar.Grey}"
-							/>
+						Grid.Row="1"
+						Grid.Column="1"
+						Height="4"
+						Margin="0,0,0,0"
+						HorizontalAlignment="Stretch"
+						Fill="{StaticResource Horiz.Bar.Grey}"
+						Stroke="{StaticResource Horiz.Bar.Grey}"
+						StrokeThickness="0" />
 
 					<!--#region > 2ndry Units-->
 
 					<TextBlock
-							Grid.Column="0"
-							Grid.Row="2"
-							Text="Secondary Units"
-							RenderTransformOrigin="0.5,0.5"
-							Style="{StaticResource Unit.Subject}"
-							>
+						Grid.Row="2"
+						Grid.Column="0"
+						RenderTransformOrigin="0.5,0.5"
+						Style="{StaticResource Unit.Subject}"
+						Text="Secondary Units">
 						<TextBlock.LayoutTransform>
 							<RotateTransform Angle="-90" />
 						</TextBlock.LayoutTransform>
 					</TextBlock>
 
-					<Grid x:Name="Grid_CoordSecUnits"
-							Grid.Column="1"
-							Grid.Row="2"
-							Margin="0,5,0,15"
-							HorizontalAlignment="Stretch"
-							DockPanel.Dock="Top"
-							>
+					<Grid
+						x:Name="Grid_CoordSecUnits"
+						Grid.Row="2"
+						Grid.Column="1"
+						Margin="0,5,0,15"
+						HorizontalAlignment="Stretch"
+						DockPanel.Dock="Top">
 
 						<Grid.RowDefinitions>
 							<!--  x, y, z titles  -->
@@ -867,95 +827,89 @@
 						<!--#region > point 1-->
 
 						<TextBlock
-								Grid.Column="0"
-								Grid.Row="0"
-								HorizontalAlignment="Center"
-								Text="Pt"
-								Style="{StaticResource Pt}"
-								/>
+							Grid.Row="0"
+							Grid.Column="0"
+							HorizontalAlignment="Center"
+							Style="{StaticResource Pt}"
+							Text="Pt" />
 
 						<TextBlock
-								Grid.Column="0"
-								Grid.Row="1"
-								Text="1st"
-								Style="{StaticResource Pt}"
-								/>
+							Grid.Row="1"
+							Grid.Column="0"
+							Style="{StaticResource Pt}"
+							Text="1st" />
 
 						<TextBlock
-								Grid.Column="1"
-								Grid.Row="0"
-								Text="X"
-								Style="{StaticResource Unit.Ttl.toprow}"
-								/>
+							Grid.Row="0"
+							Grid.Column="1"
+							Style="{StaticResource Unit.Ttl.toprow}"
+							Text="X" />
 
-						<TextBox x:Name="Tbx_Pt21X"
-								Grid.Column="1"
-								Grid.Row="1"
-								Text="99,999'-11.999&quot;"
-								Style="{StaticResource Unit.Tbx}"
-								/>
+						<TextBox
+							x:Name="Tbx_Pt21X"
+							Grid.Row="1"
+							Grid.Column="1"
+							Style="{StaticResource Unit.Tbx}"
+							Text="99,999'-11.999&quot;" />
 
 
 						<TextBlock
-								Grid.Column="3"
-								Grid.Row="0"
-								Text="Y"
-								Style="{StaticResource Unit.Ttl.toprow}"
-								/>
+							Grid.Row="0"
+							Grid.Column="3"
+							Style="{StaticResource Unit.Ttl.toprow}"
+							Text="Y" />
 
-						<TextBox x:Name="Tbx_Pt21Y"
-								Grid.Column="3"
-								Grid.Row="1"
-								Text="99,999'-11.999&quot;"
-								Style="{StaticResource Unit.Tbx}"
-								/>
+						<TextBox
+							x:Name="Tbx_Pt21Y"
+							Grid.Row="1"
+							Grid.Column="3"
+							Style="{StaticResource Unit.Tbx}"
+							Text="99,999'-11.999&quot;" />
 
 
 						<TextBlock
-								Grid.Column="5"
-								Grid.Row="0"
-								Text="Z"
-								Style="{StaticResource Unit.Ttl.toprow}"
-								/>
+							Grid.Row="0"
+							Grid.Column="5"
+							Style="{StaticResource Unit.Ttl.toprow}"
+							Text="Z" />
 
-						<TextBox x:Name="Tbx_Pt21Z"
-								Grid.Column="5"
-								Grid.Row="1"
-								Text="99,999'-11.999&quot;"
-								Style="{StaticResource Unit.Tbx}"
-								/>
+						<TextBox
+							x:Name="Tbx_Pt21Z"
+							Grid.Row="1"
+							Grid.Column="5"
+							Style="{StaticResource Unit.Tbx}"
+							Text="99,999'-11.999&quot;" />
 
 						<!--#endregion-->
 
 						<!--#region > point 2-->
 
 						<TextBlock
-								Grid.Column="0"
-								Grid.Row="3"
-								Text="2nd"
-								Style="{StaticResource Pt}"
-								/>
+							Grid.Row="3"
+							Grid.Column="0"
+							Style="{StaticResource Pt}"
+							Text="2nd" />
 
-						<TextBox x:Name="Tbx_Pt22X"
-								Grid.Column="1"
-								Grid.Row="3"
-								Text="99,999'-11.999&quot;"
-								Style="{StaticResource Unit.Tbx}"
-								/>
+						<TextBox
+							x:Name="Tbx_Pt22X"
+							Grid.Row="3"
+							Grid.Column="1"
+							Style="{StaticResource Unit.Tbx}"
+							Text="99,999'-11.999&quot;" />
 
-						<TextBox x:Name="Tbx_Pt22Y"
-								Grid.Column="3"
-								Grid.Row="3"
-								Text="99,999'-11.999&quot;"
-								Style="{StaticResource Unit.Tbx}"
-								/>
+						<TextBox
+							x:Name="Tbx_Pt22Y"
+							Grid.Row="3"
+							Grid.Column="3"
+							Style="{StaticResource Unit.Tbx}"
+							Text="99,999'-11.999&quot;" />
 
-						<TextBox x:Name="Tbx_Pt22Z"
-								Grid.Column="5"
-								Grid.Row="3"
-								Text="99,999'-11.999&quot;"
-								Style="{StaticResource Unit.Tbx}"
-								/>
+						<TextBox
+							x:Name="Tbx_Pt22Z"
+							Grid.Row="3"
+							Grid.Column="5"
+							Style="{StaticResource Unit.Tbx}"
+							Text="99,999'-11.999&quot;" />
 
 						<!--#endregion-->
 
@@ -968,17 +922,16 @@
 			</Grid>
 		</Expander>
 
-		<Expander x:Name="Xpdr_SelUnits"
-				Grid.Column="0"
-				Grid.Row="3"
-				Margin="0,5,0,0"
-				>
+		<Expander
+			x:Name="Xpdr_SelUnits"
+			Grid.Row="3"
+			Grid.Column="0"
+			Margin="0,5,0,0">
 			<Expander.Header>
-				<Grid x:Name="Grid_SelUnitsHdr"
-						Margin="5,0,0,0"
-						Width="{Binding ActualWidth,
-														RelativeSource={RelativeSource AncestorType={x:Type Expander}}}"
-						>
+				<Grid
+					x:Name="Grid_SelUnitsHdr"
+					Width="{Binding ActualWidth, RelativeSource={RelativeSource AncestorType={x:Type Expander}}}"
+					Margin="5,0,0,0">
 
 					<Grid.ColumnDefinitions>
 						<ColumnDefinition Width="{StaticResource c1}" />
@@ -986,23 +939,21 @@
 					</Grid.ColumnDefinitions>
 
 					<TextBlock
-							Grid.Column="0"
-							Grid.Row="0"
-							FontWeight="Bold"
-							FontSize="14"
-							Text="Select Units"
-							/>
+						Grid.Row="0"
+						Grid.Column="0"
+						FontSize="14"
+						FontWeight="Bold"
+						Text="Select Units" />
 
 					<Rectangle
-							Grid.Column="1"
-							Grid.Row="0"
-							Margin="0,3,0,0"
-							Height="4"
-							HorizontalAlignment="Stretch"
-							StrokeThickness="0"
-							Fill="{StaticResource Horiz.Bar.Grey}"
-							Stroke="{StaticResource Horiz.Bar.Grey}"
-							/>
+						Grid.Row="0"
+						Grid.Column="1"
+						Height="4"
+						Margin="0,3,0,0"
+						HorizontalAlignment="Stretch"
+						Fill="{StaticResource Horiz.Bar.Grey}"
+						Stroke="{StaticResource Horiz.Bar.Grey}"
+						StrokeThickness="0" />
 
 				</Grid>
 
@@ -1015,10 +966,10 @@
 				</Grid.ColumnDefinitions>
 
 
-				<Grid x:Name="Grid_SelUnitsLists"
-						Grid.Column="0"
-						Margin="15,10,15,0"
-						>
+				<Grid
+					x:Name="Grid_SelUnitsLists"
+					Grid.Column="0"
+					Margin="15,10,15,0">
 
 					<Grid.ColumnDefinitions>
 						<ColumnDefinition Width="*" />
@@ -1032,35 +983,33 @@
 					</Grid.RowDefinitions>
 
 					<TextBlock
-							Grid.Column="0"
-							Grid.Row="0"
-							Text="Primary Units"
-							Style="{StaticResource Unit.display}"
-							/>
+						Grid.Row="0"
+						Grid.Column="0"
+						Style="{StaticResource Unit.display}"
+						Text="Primary Units" />
 
-					<ListBox x:Name="Lbx_PrimeUnits"
-							Grid.Column="0"
-							Grid.Row="1"
-							Height="120"
-							Background="{StaticResource Unit.Display.Background}"
-							BorderThickness="0"
-							/>
+					<ListBox
+						x:Name="Lbx_PrimeUnits"
+						Grid.Row="1"
+						Grid.Column="0"
+						Height="120"
+						Background="{StaticResource Unit.Display.Background}"
+						BorderThickness="0" />
 
 
 					<TextBlock
-							Grid.Column="2"
-							Grid.Row="0"
-							Text="Secondary Units"
-							Style="{StaticResource Unit.display}"
-							/>
+						Grid.Row="0"
+						Grid.Column="2"
+						Style="{StaticResource Unit.display}"
+						Text="Secondary Units" />
 
-					<ListBox x:Name="Lbx_SecondaryUnits"
-							Grid.Column="2"
-							Grid.Row="1"
-							Height="120"
-							Background="{StaticResource Unit.Display.Background}"
-							BorderThickness="0"
-							/>
+					<ListBox
+						x:Name="Lbx_SecondaryUnits"
+						Grid.Row="1"
+						Grid.Column="2"
+						Height="120"
+						Background="{StaticResource Unit.Display.Background}"
+						BorderThickness="0" />
 
 
 				</Grid>
@@ -1069,16 +1018,15 @@
 		</Expander>
 
 		<Border
-				Grid.Column="0"
-				Grid.Row="4"
-				Margin="0,8,0,0"
-				BorderThickness="0,1,0,0"
-				BorderBrush="Red"
-				>
-			<Grid x:Name="Grid_FooterBlock"
-					Margin="5,12,0,0"
-					VerticalAlignment="Stretch"
-					>
+			Grid.Row="4"
+			Grid.Column="0"
+			Margin="0,8,0,0"
+			BorderBrush="Red"
+			BorderThickness="0,1,0,0">
+			<Grid
+				x:Name="Grid_FooterBlock"
+				Margin="5,12,0,0"
+				VerticalAlignment="Stretch">
 
 				<Grid.ColumnDefinitions>
 					<ColumnDefinition />
@@ -1091,77 +1039,72 @@
 					<RowDefinition Height="*" />
 				</Grid.RowDefinitions>
 
-				<CheckBox x:Name="CkBx_WkPlane"
-						Content="Display Work Plane"
-						Grid.Column="0"
-						Grid.Row="0"
-						Margin="0,0,0,0"
-						HorizontalAlignment="Left"
-						VerticalAlignment="Top"
-						Background="Transparent"
-						/>
+				<CheckBox
+					x:Name="CkBx_WkPlane"
+					Grid.Row="0"
+					Grid.Column="0"
+					Margin="0,0,0,0"
+					HorizontalAlignment="Left"
+					VerticalAlignment="Top"
+					Background="Transparent"
+					Content="Display Work Plane" />
 
-				<TextBlock x:Name="Tblk_Msg"
-						Grid.Column="0"
-						Grid.Row="1"
-						Margin="0,10,15,0"
-						VerticalAlignment="Stretch"
-						FontSize="11"
-						Text="{Binding MessageBoxText, FallbackValue='Today&#13;Tomorrow&#13;Yesterday'}"
-						TextWrapping="Wrap"
-
-						/>
+				<TextBlock
+					x:Name="Tblk_Msg"
+					Grid.Row="1"
+					Grid.Column="0"
+					Margin="0,10,15,0"
+					VerticalAlignment="Stretch"
+					FontSize="11"
+					Text="{Binding MessageBoxText, FallbackValue='Today&#13;Tomorrow&#13;Yesterday'}"
+					TextWrapping="Wrap" />
 
 
 				<StackPanel
-						Grid.Column="1"
-						Grid.Row="0"
-						Grid.RowSpan="2"
-						HorizontalAlignment="Right"
-						VerticalAlignment="Bottom"
-						Orientation="Vertical"
-						>
+					Grid.Row="0"
+					Grid.RowSpan="2"
+					Grid.Column="1"
+					HorizontalAlignment="Right"
+					VerticalAlignment="Bottom"
+					Orientation="Vertical">
 					<StackPanel VerticalAlignment="Bottom" Orientation="Horizontal">
 						<Button
-								Content="Help"
-								Margin="5,5,0,0"
-								Width="{StaticResource Normal.Button.Width}"
-								Height="{StaticResource Normal.Button.Height}"
-								Style="{StaticResource Button.Dark.Style}"
-								Template="{StaticResource Button.Normal.ControlTemplate}"
-								/>
+							Width="{StaticResource Normal.Button.Width}"
+							Height="{StaticResource Normal.Button.Height}"
+							Margin="5,5,0,0"
+							Content="Help"
+							Style="{StaticResource Button.Dark.Style}"
+							Template="{StaticResource Button.Normal.ControlTemplate}" />
 
 						<Button
-								Content="About"
-								Margin="5,5,0,0"
-								Width="{StaticResource Normal.Button.Width}"
-								Height="{StaticResource Normal.Button.Height}"
-								Style="{StaticResource Button.Dark.Style}"
-								Template="{StaticResource Button.Normal.ControlTemplate}"
-								/>
+							Width="{StaticResource Normal.Button.Width}"
+							Height="{StaticResource Normal.Button.Height}"
+							Margin="5,5,0,0"
+							Content="About"
+							Style="{StaticResource Button.Dark.Style}"
+							Template="{StaticResource Button.Normal.ControlTemplate}" />
 
 
 					</StackPanel>
 
 					<StackPanel VerticalAlignment="Bottom" Orientation="Horizontal">
-						<Button x:Name="Btn_SelPoints"
-								Content="Select Points"
-								Margin="5,5,0,0"
-								Width="{StaticResource Normal.Button.Width}"
-								Height="{StaticResource Normal.Button.Height}"
-								Style="{StaticResource Button.Dark.Style}"
-								Template="{StaticResource Button.Normal.ControlTemplate}"
-								Click="Btn_SelPoints_OnClick"
-								/>
+						<Button
+							x:Name="Btn_SelPoints"
+							Width="{StaticResource Normal.Button.Width}"
+							Height="{StaticResource Normal.Button.Height}"
+							Margin="5,5,0,0"
+							Click="Btn_SelPoints_OnClick"
+							Content="Select Points"
+							Style="{StaticResource Button.Dark.Style}"
+							Template="{StaticResource Button.Normal.ControlTemplate}" />
 
 						<Button
-								Content="Done"
-								Margin="5,5,0,0"
-								Width="{StaticResource Normal.Button.Width}"
-								Height="{StaticResource Normal.Button.Height}"
-								Style="{StaticResource Button.Dark.Style}"
-								Template="{StaticResource Button.Normal.ControlTemplate}"
-								/>
+							Width="{StaticResource Normal.Button.Width}"
+							Height="{StaticResource Normal.Button.Height}"
+							Margin="5,5,0,0"
+							Content="Done"
+							Style="{StaticResource Button.Dark.Style}"
+							Template="{StaticResource Button.Normal.ControlTemplate}" />
 					</StackPanel>
 
 				</StackPanel>

@@ -4,11 +4,6 @@ using Autodesk.Revit.ApplicationServices;
 using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
-using Autodesk.Revit.UI.Selection;
-using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using DeluxMeasure.Windows;
 
 #endregion
 
@@ -17,7 +12,7 @@ using DeluxMeasure.Windows;
 // username: jeffs
 // created:  2/12/2022 8:46:31 AM
 
-namespace DeluxMeasure
+namespace DeluxMeasure.Windows.Support
 {
 	[Transaction(TransactionMode.Manual)]
 	public class Command : IExternalCommand
@@ -40,36 +35,9 @@ namespace DeluxMeasure
 
 			MainWindow main = new MainWindow();
 
-			bool? result = main.ShowDialog();
-
-			// if (result.HasValue && result.Value) return Result.Succeeded;
+			main.Show();
 
 			return Result.Succeeded;
-
-			/*
-			// Access current selection
-			Selection sel = uidoc.Selection;
-
-			// Retrieve elements from database
-			FilteredElementCollector col
-				= new FilteredElementCollector(doc)
-				.WhereElementIsNotElementType()
-				.OfCategory(BuiltInCategory.INVALID)
-				.OfClass(typeof(Wall));
-
-			// Filtered element collector is iterable
-			foreach (Element e in col)
-			{
-				Debug.Print(e.Name);
-			}
-
-			// Modify document within a transaction
-			using (Transaction tx = new Transaction(doc))
-			{
-				tx.Start(ROOT_TRANSACTION_NAME);
-				tx.Commit();
-			}
-			*/
 
 		}
 	}
