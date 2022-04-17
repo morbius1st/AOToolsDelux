@@ -7,7 +7,7 @@
 		xmlns:sys="clr-namespace:System;assembly=mscorlib"
 		Title="Test"
 		Width="840"
-		Height="480"
+		Height="680"
 		mc:Ignorable="d"
 		FontSize="{DynamicResource FontSize.Normal}"
 		Background="{DynamicResource Normal.Window.Background}"
@@ -25,6 +25,43 @@
 				<!-- <ResourceDictionary Source="Support/CsScrollBar.xaml" /> -->
 			</ResourceDictionary.MergedDictionaries>
 
+			<SolidColorBrush x:Key="Header.Background" Color="{StaticResource True.Green}" />
+
+			<SolidColorBrush x:Key="Desc.Background" Color="{StaticResource Light.Blue.550}" />
+			<SolidColorBrush x:Key="Value.Background" Color="{StaticResource Blue.350}" />
+
+
+			<SolidColorBrush x:Key="Lv.Item.Panel.Bkg.Sel" Color="{StaticResource Deep.Purple.200}" />
+
+			<SolidColorBrush x:Key="Lv.Item.Bkg" Color="{StaticResource Light.Blue.350}" />
+			<SolidColorBrush x:Key="Lv.Item.SubHdr.Bkg" Color="{StaticResource Teal.400}" />
+			<SolidColorBrush x:Key="Lv.Item.control.Bkg" Color="#0070f0" />
+
+
+
+			<SolidColorBrush x:Key="Lv.Item.Panel.Bkg.Nml" Color="{StaticResource Blue.200}" />
+			<SolidColorBrush x:Key="Lv.Item.Panel.Bkg.Nml2" Color="{StaticResource Blue.150}" />
+
+			<SolidColorBrush x:Key="Lv.Item.control.Bkg2" Color="{StaticResource Cool.Blue.450}" />
+			<SolidColorBrush x:Key="Lv.Item.control.Bkg3" Color="{StaticResource Cool.Blue.450}" />
+			<SolidColorBrush x:Key="Lv.Item.control.Bkg2.unfocused" Color="{StaticResource Blue.300}" />
+
+			<SolidColorBrush x:Key="Lv.Item.Bkg2" Color="{StaticResource Cool.Blue.350}" />
+			<SolidColorBrush x:Key="Lv.Item.Bkg3" Color="{StaticResource Cool.Blue.350}" />
+			<SolidColorBrush x:Key="Lv.Item.Bkg2.Unfocused" Color="{StaticResource Blue.220}" />
+
+			<SolidColorBrush x:Key="Lv.Item.SubHdr.Bkg2" Color="{StaticResource Teal.500}" />
+			<SolidColorBrush x:Key="Lv.Item.SubHdr.Bkg2.Unfocused" Color="{StaticResource Teal.300}" />
+
+			<SolidColorBrush x:Key="Lv.Item.Important" Color="{StaticResource Deep.Orange.500}" />
+			<SolidColorBrush x:Key="Lv.Item.Important.Unfocused" Color="{StaticResource Deep.Orange.200}" />
+
+			<SolidColorBrush x:Key="Lv.Item.FG" Color="White" />
+			<SolidColorBrush x:Key="Lv.Item.FG.Unfocused" Color="{StaticResource Gray.650}" />
+
+
+
+
 			<GridLength x:Key="C1">220*</GridLength>
 			<GridLength x:Key="C2">620*</GridLength>
 
@@ -40,7 +77,6 @@
 
 			<sys:Double x:Key="Normal.CornerRad">6</sys:Double>
 			<sys:Double x:Key="Small.CornerRad">5</sys:Double>
-
 
 
 			<CornerRadius x:Key="Normal.CornerRadius"
@@ -85,24 +121,37 @@
 					Bottom="3"
 					/>
 
-			<Style x:Key="BorderStyle" TargetType="Border">
+			<Style x:Key="BorderStyle"
+					TargetType="Border"
+					>
 				<Setter Property="Margin" Value="0,0,2,2" />
 				<Setter Property="Padding" Value="5,0,5,3" />
-				<Setter Property="Background" Value="#005596" />
+				<Setter Property="Background" Value="#0070f0" />
 				<Setter Property="BorderThickness" Value="0" />
 				<Setter Property="CornerRadius" Value="4" />
 			</Style>
 
 			<Style x:Key="bs2"
-					TargetType="Border" BasedOn="{StaticResource BorderStyle}">
+					TargetType="Border"
+					BasedOn="{StaticResource BorderStyle}"
+					>
 				<Setter Property="Background" Value="#009090" />
 			</Style>
 
 			<Style x:Key="bs3"
-					TargetType="Border" BasedOn="{StaticResource BorderStyle}">
+					TargetType="Border"
+					BasedOn="{StaticResource BorderStyle}"
+					>
 				<Setter Property="Background" Value="#0070f0" />
 			</Style>
 
+			<Style x:Key="TblkSample"
+					TargetType="TextBlock"
+					>
+				<Setter Property="Padding" Value="5,0,0,2" />
+				<Setter Property="Margin" Value="0,0,0,2" />
+				<Setter Property="Foreground" Value="{StaticResource Lv.Item.FG}" />
+			</Style>
 
 		</ResourceDictionary>
 
@@ -345,15 +394,15 @@
 					Height="Auto"
 					VerticalAlignment="Top"
 					Background="#333333"
-					DockPanel.Dock="Left"
+					DockPanel.Dock="Top"
 					>
 
 				<Grid.ColumnDefinitions>
-					<ColumnDefinition Width="6*" />
-					<ColumnDefinition Width="5*" />
-					<ColumnDefinition Width="5*" />
-
-					<ColumnDefinition Width="5*" />
+					<ColumnDefinition Width="78" />
+					<ColumnDefinition Width="86" />
+					<ColumnDefinition Width="3*" />
+					<ColumnDefinition Width="4*" />
+					<ColumnDefinition Width="3*" />
 				</Grid.ColumnDefinitions>
 
 				<Grid.RowDefinitions>
@@ -364,76 +413,436 @@
 
 				<Border Grid.Column="0"
 						Grid.Row="0"
-						Grid.ColumnSpan="3" 
-						Style="{StaticResource BorderStyle}">
+						Grid.RowSpan="3"
+						Padding="0"
+						Style="{StaticResource BorderStyle}"
+						>
+
+								<!-- Grid.RowSpan="3" -->
+						<TextBlock Grid.Column="0"
+								Grid.Row="1"
+								Margin="0,0,0,4"
+								Padding="0"
+								HorizontalAlignment="Center"
+								VerticalAlignment="Center"
+								FontSize="38"
+								FontWeight="DemiBold"
+								Text="01"
+								/>
+				</Border>
+
+						<Border Grid.Column="0"
+								Grid.Row="2"
+								Margin="0,0,0,5"
+								Padding="0"
+								HorizontalAlignment="Center"
+								VerticalAlignment="Bottom"
+								Background="OrangeRed"
+								Visibility="Visible"
+								Style="{StaticResource BorderStyle}"
+								>
+							<TextBlock 
+									Margin="0,-2,0,0"
+									Padding="8,1,8,1"
+									FontSize="9"
+									TextAlignment="Center"
+									Text="Locked"
+									/>
+						</Border>
+
+					<!-- <Grid> -->
+					<!-- 	<Grid.RowDefinitions> -->
+					<!-- 		<RowDefinition Height="*" /> -->
+					<!-- 		<RowDefinition Height="16" /> -->
+					<!-- 	</Grid.RowDefinitions> -->
+					<!-- -->
+					<!-- -->
+					<!-- -->
+					<!-- -->
+					<!-- </Grid> -->
+
+
+				<Border Grid.Column="1"
+						Grid.Row="0"
+						Grid.RowSpan="3"
+						Background="LightGray"
+						Style="{StaticResource BorderStyle}"
+						>
+
+				</Border>
+
+				<Border Grid.Column="2"
+						Grid.Row="0"
+						Grid.ColumnSpan="2"
+						Style="{StaticResource BorderStyle}"
+						>
 					<TextBlock Text="This is the unit name" />
 				</Border>
-				
-				<Border Grid.Column="0"
+
+				<Border Grid.Column="2"
 						Grid.Row="1"
-						Grid.ColumnSpan="3" 
-						Style="{StaticResource BorderStyle}">
+						Grid.ColumnSpan="2"
+						Style="{StaticResource BorderStyle}"
+						>
 					<TextBlock Text="This is the unit Description" />
 				</Border>
 
-				<Border Grid.Column="3"
-						Grid.Row="0"
-						Grid.RowSpan="2"
-						HorizontalAlignment="Stretch"
-						VerticalAlignment="Stretch"
-						Style="{StaticResource BorderStyle}">
-					<TextBlock 
-							FontSize="20"
-							HorizontalAlignment="Center"
-							VerticalAlignment="Center"
-							Text="Example" />
-				</Border>
 
-				<Border Grid.Column="0"
-						Grid.Row="2"
-						Style="{StaticResource bs2}">
-					<TextBlock Text="Show In this List" />
-				</Border>
 
-				<Border Grid.Column="1"
-						Grid.Row="2"
-						Style="{StaticResource bs3}">
-					<CheckBox
-							IsChecked="True"
-							Background="#666666"
-							Foreground="White"
-							VerticalContentAlignment="Center"
-							Content="Ribbon Favs"
-							/>
-				</Border>
-				
 				<Border Grid.Column="2"
 						Grid.Row="2"
-						Style="{StaticResource bs3}">
-					<CheckBox
-							IsChecked="True"
-							Background="#666666"
-							Foreground="White"
-							VerticalContentAlignment="Center"
-							Content="Dialog Left"
+						HorizontalAlignment="Stretch"
+						Style="{StaticResource bs2}"
+						>
+					<TextBlock Padding="0,0,10,0"
+							TextAlignment="Center"
+							Text="Example"
 							/>
 				</Border>
-								
+
 				<Border Grid.Column="3"
 						Grid.Row="2"
-						Style="{StaticResource bs3}">
-					<CheckBox
-							IsChecked="True"
-							Background="#666666"
-							Foreground="White"
-							VerticalContentAlignment="Center"
-							Content="Dialog Right"
+						Style="{StaticResource bs3}"
+						>
+					<TextBlock Padding="0,0,10,0"
+							TextAlignment="Center"
+							Text="1,234' - 255/256&quot;"
 							/>
+				</Border>
+
+				<!--  <Border Grid.Column="5"  -->
+				<!--  Grid.Row="2"  -->
+				<!--  Style="{StaticResource bs3}"  -->
+				<!--  >  -->
+				<!--  <CheckBox Content="Dialog Right"  -->
+				<!--  VerticalContentAlignment="Center"  -->
+				<!--  Background="#666666"  -->
+				<!--  Foreground="White"  -->
+				<!--  IsChecked="True"  -->
+				<!--  />  -->
+				<!-- </Border> -->
+
+
+				<Border Grid.Column="4"
+						Grid.Row="0"
+						Grid.RowSpan="3"
+						HorizontalAlignment="Stretch"
+						VerticalAlignment="Stretch"
+						Style="{StaticResource BorderStyle}"
+						>
+					<Grid>
+
+						<Grid.ColumnDefinitions>
+							<ColumnDefinition Width="*" />
+
+						</Grid.ColumnDefinitions>
+
+						<Grid.RowDefinitions>
+							<RowDefinition Height="*" />
+							<RowDefinition Height="*" />
+							<RowDefinition Height="*" />
+							<RowDefinition Height="*" />
+						</Grid.RowDefinitions>
+
+						<TextBlock HorizontalAlignment="Stretch"
+								VerticalAlignment="Center"
+								FontSize="14"
+								TextAlignment="Left"
+								Text="Show in this list"
+								Margin="5,0,0,0"
+								/>
+
+
+						<CheckBox Content="Favs"
+								Grid.Column="0"
+								Grid.Row="1"
+								Margin="5,0,0,0"
+								VerticalContentAlignment="Center"
+								FontSize="14"
+								Background="#666666"
+								Foreground="White"
+								IsChecked="True"
+								/>
+						<CheckBox Content="Dialog left"
+								Grid.Column="0"
+								Grid.Row="2"
+								Margin="5,0,0,0"
+								VerticalContentAlignment="Center"
+								FontSize="14"
+								Background="#666666"
+								Foreground="White"
+								IsChecked="True"
+								/>
+						<CheckBox Content="Dialog Right"
+								Grid.Column="0"
+								Grid.Row="3"
+								Margin="5,0,0,0"
+								VerticalContentAlignment="Center"
+								FontSize="14"
+								Background="#666666"
+								Foreground="White"
+								IsChecked="True"
+								/>
+
+
+					</Grid>
+
 				</Border>
 
 
 
 			</Grid>
+
+
+			<Grid VerticalAlignment="Top"
+					DockPanel.Dock="Top"
+					>
+				<Grid.ColumnDefinitions>
+					<ColumnDefinition Width="*" />
+					<ColumnDefinition Width="*" />
+					<ColumnDefinition Width="*" />
+				</Grid.ColumnDefinitions>
+
+				<Grid.RowDefinitions>
+					<RowDefinition Height="*" />
+					<RowDefinition Height="*" />
+					<RowDefinition Height="Auto" />
+					<RowDefinition Height="Auto" />
+					<RowDefinition Height="Auto" />
+					<RowDefinition Height="Auto" />
+				</Grid.RowDefinitions>
+
+				<TextBlock Grid.Column="0"
+						Grid.Row="0"
+						Grid.ColumnSpan="3"
+						Background="{StaticResource Header.Background}"
+						Foreground="Black"
+						Text="This is header text"
+						Style="{StaticResource TblkSample}"
+						/>
+
+				<TextBlock Grid.Column="0"
+						Grid.Row="1"
+						Background="{StaticResource Desc.Background}"
+						Text="This is title text"
+						Style="{StaticResource TblkSample}"
+						/>
+				<TextBlock Grid.Column="1"
+						Grid.Row="1"
+						Background="{StaticResource Value.Background}"
+						Text="This is value text"
+						Style="{StaticResource TblkSample}"
+						/>
+
+
+				<Border Grid.Column="0"
+						Grid.Row="2"
+						Grid.ColumnSpan="3"
+						Padding="7"
+						Background="{StaticResource Lv.Item.Panel.Bkg.Nml}"
+						Visibility="Collapsed"
+						CornerRadius="4"
+						>
+					<Grid>
+						<Grid.ColumnDefinitions>
+							<ColumnDefinition Width="*" />
+							<ColumnDefinition Width="*" />
+							<ColumnDefinition Width="*" />
+						</Grid.ColumnDefinitions>
+
+						<Grid.RowDefinitions>
+							<RowDefinition Height="*" />
+							<RowDefinition Height="*" />
+							<RowDefinition Height="*" />
+							<RowDefinition Height="*" />
+							<RowDefinition Height="*" />
+							<RowDefinition Height="*" />
+						</Grid.RowDefinitions>
+						<TextBlock Grid.Column="0"
+								Grid.Row="0"
+								Background="{StaticResource Lv.Item.Bkg}"
+								Text="This is title text prime"
+								Style="{StaticResource TblkSample}"
+								/>
+						<TextBlock Grid.Column="1"
+								Grid.Row="0"
+								Background="{StaticResource Lv.Item.Bkg}"
+								Text="This is value text 2ndry"
+								Style="{StaticResource TblkSample}"
+								/>
+						<TextBlock Grid.Column="2"
+								Grid.Row="0"
+								Background="{StaticResource Lv.Item.Bkg}"
+								TextAlignment="Center"
+								Text="Example"
+								Style="{StaticResource TblkSample}"
+								/>
+
+						<TextBlock Grid.Column="0"
+								Grid.Row="1"
+								Background="{StaticResource Lv.Item.SubHdr.Bkg}"
+								Text="This is sub-header 2"
+								Style="{StaticResource TblkSample}"
+								/>
+						<TextBlock Grid.Column="1"
+								Grid.Row="1"
+								Background="{StaticResource Lv.Item.control.Bkg}"
+								Text="This is editable text 2"
+								Style="{StaticResource TblkSample}"
+								/>
+					</Grid>
+				</Border>
+
+
+				<Border Grid.Column="0"
+						Grid.Row="3"
+						Grid.ColumnSpan="3"
+						Padding="7"
+						Background="{StaticResource Lv.Item.Panel.Bkg.Nml}"
+						CornerRadius="4"
+						>
+					<Grid>
+						<Grid.ColumnDefinitions>
+							<ColumnDefinition Width="*" />
+							<ColumnDefinition Width="*" />
+							<ColumnDefinition Width="*" />
+						</Grid.ColumnDefinitions>
+
+						<Grid.RowDefinitions>
+							<RowDefinition Height="Auto" />
+							<RowDefinition Height="Auto" />
+							<RowDefinition Height="Auto" />
+							<RowDefinition Height="Auto" />
+							<RowDefinition Height="*" />
+							<RowDefinition Height="*" />
+						</Grid.RowDefinitions>
+
+						<TextBlock Grid.Column="0"
+								Grid.Row="0"
+								Background="{StaticResource Lv.Item.Bkg2}"
+								Text="This is title / info text"
+								Style="{StaticResource TblkSample}"
+								/>
+						<TextBlock Grid.Column="1"
+								Grid.Row="0"
+								Background="{StaticResource Lv.Item.Bkg3}"
+								Text="This is title / info text"
+								Style="{StaticResource TblkSample}"
+								/>
+						<TextBlock Grid.Column="2"
+								Grid.Row="0"
+								Background="{StaticResource Lv.Item.Bkg2}"
+								TextAlignment="Center"
+								Text="Example"
+								Style="{StaticResource TblkSample}"
+								/>
+
+						<TextBlock Grid.Column="0"
+								Grid.Row="1"
+								Background="{StaticResource Lv.Item.SubHdr.Bkg2}"
+								Text="This is editable text&#x9;"
+								Style="{StaticResource TblkSample}"
+								/>
+						<TextBlock Grid.Column="1"
+								Grid.Row="1"
+								Background="{StaticResource Lv.Item.control.Bkg2}"
+								Text="This is changable (drop)"
+								Style="{StaticResource TblkSample}"
+								/>
+						<TextBlock Grid.Column="2"
+								Grid.Row="1"
+								Background="{StaticResource Lv.Item.control.Bkg3}"
+								Text="This is changable (drop)"
+								Style="{StaticResource TblkSample}"
+								/>
+
+
+						<TextBlock Grid.Column="0"
+								Grid.Row="2"
+								Background="{StaticResource Lv.Item.Important}"
+								Text="Highlighted item"
+								Style="{StaticResource TblkSample}"
+								/>
+
+
+					</Grid>
+				</Border>
+				<Border Grid.Column="0"
+						Grid.Row="4"
+						Grid.ColumnSpan="3"
+						Padding="7"
+						Background="{StaticResource Lv.Item.Panel.Bkg.Nml2}"
+						CornerRadius="4"
+						>
+					<Grid>
+						<Grid.ColumnDefinitions>
+							<ColumnDefinition Width="*" />
+							<ColumnDefinition Width="*" />
+							<ColumnDefinition Width="*" />
+						</Grid.ColumnDefinitions>
+
+						<Grid.RowDefinitions>
+							<RowDefinition Height="Auto" />
+							<RowDefinition Height="Auto" />
+							<RowDefinition Height="Auto" />
+							<RowDefinition Height="Auto" />
+							<RowDefinition Height="*" />
+							<RowDefinition Height="*" />
+						</Grid.RowDefinitions>
+
+						<TextBlock Grid.Column="0"
+								Grid.Row="3"
+								Background="{StaticResource Lv.Item.Bkg2.Unfocused}"
+								Foreground="{StaticResource Lv.Item.FG.Unfocused}"
+								Text="This is title text prime"
+								Style="{StaticResource TblkSample}"
+								/>
+						<TextBlock Grid.Column="1"
+								Grid.Row="3"
+								Background="{StaticResource Lv.Item.Bkg2.Unfocused}"
+								Foreground="{StaticResource Lv.Item.FG.Unfocused}"
+								Text="This is value text 2ndry"
+								Style="{StaticResource TblkSample}"
+								/>
+						<TextBlock Grid.Column="2"
+								Grid.Row="3"
+								Background="{StaticResource Lv.Item.Bkg2.Unfocused}"
+								Foreground="{StaticResource Lv.Item.FG.Unfocused}"
+								TextAlignment="Center"
+								Text="Example"
+								Style="{StaticResource TblkSample}"
+								/>
+
+						<TextBlock Grid.Column="0"
+								Grid.Row="4"
+								Background="{StaticResource Lv.Item.SubHdr.Bkg2.Unfocused}"
+								Foreground="{StaticResource Lv.Item.FG.Unfocused}"
+								Text="This is editable text"
+								Style="{StaticResource TblkSample}"
+								/>
+
+						<TextBlock Grid.Column="1"
+								Grid.Row="4"
+								Background="{StaticResource Lv.Item.control.Bkg2.unfocused}"
+								Foreground="{StaticResource Lv.Item.FG.Unfocused}"
+								Text="This is changable (drop)"
+								Style="{StaticResource TblkSample}"
+								/>
+
+						<TextBlock Grid.Column="0"
+								Grid.Row="5"
+								Background="{StaticResource Lv.Item.Important.Unfocused}"
+								Foreground="{StaticResource Lv.Item.FG.Unfocused}"
+								Text="Highlighted item"
+								Style="{StaticResource TblkSample}"
+								/>
+
+					</Grid>
+				</Border>
+
+
+			</Grid>
+
 
 
 		</DockPanel>
