@@ -25,7 +25,6 @@ namespace DeluxMeasure
 {
 	internal class AppRibbon : IExternalApplication
 	{
-
 		public Result OnShutdown(UIControlledApplication a)
 		{
 			return Result.Succeeded;
@@ -55,7 +54,7 @@ namespace DeluxMeasure
 		public const string BTN_NAME_DIVIDER = "?";
 		private string BTN_NAME = $"UnitStyle{BTN_NAME_DIVIDER}";
 
-		private UnitStyles us;
+		// private UnitStyles us;
 		private UnitsManager uMgr;
 
 		public static SplitButton sb { get; set; }
@@ -70,16 +69,25 @@ namespace DeluxMeasure
 
 		public Result OnStartup(UIControlledApplication app)
 		{
-
 			try
 			{
+			#if PATH
+				Debug.WriteLine($"@AppRibbon: OnStartup:");
+			#endif
+
+				UnitsSupport u = new UnitsSupport();
+
+				UnitsDataD udd = new UnitsDataD(STYLE_ID.Project.NameId, "sample", UnitsStdUStyles.ProjStyle());
+
+				string s = udd.Symbol;
+
 				uMgr = UnitsManager.Instance;
-				// us = UnitStyles.Instance;
-				//				uiCtrlApp = app;
 
-				UnitsSettings usx = new UnitsSettings();
 
-				uMgr.StyleList = usx.GetStyles();
+
+				uMgr.ReadUnitSettings();
+
+				// uMgr.StyleList = usx.GetStyles();
 
 				app.ControlledApplication.ApplicationInitialized += OnAppInitalized;
 
@@ -144,7 +152,7 @@ namespace DeluxMeasure
 					return Result.Failed;
 				}
 
-				if (addDropPanel(ribbonPanel))
+				if (!addDropPanel(ribbonPanel))
 				{
 					return Result.Failed;
 				}
@@ -154,7 +162,6 @@ namespace DeluxMeasure
 				Debug.WriteLine("exception " + e.Message);
 				return Result.Failed;
 			}
-
 
 
 			return Result.Succeeded;
@@ -240,25 +247,26 @@ namespace DeluxMeasure
 			sb = ribbonPanel.AddItem(sbData) as SplitButton;
 
 			PushButtonData pbd;
-			UnitsData.UnitInfo ui;
 
-			for (int i = 0; 
-				i < (uMgr.StyleList.Count > UnitStyleCmd.MAX_STYLE_CMDS ? UnitStyleCmd.MAX_STYLE_CMDS : uMgr.StyleList.Count)
-				; i++)
+			UStyle us;
+			// UnitsData.UnitInfo ui;
+
+			int max = uMgr.StyleList.Count > UnitStyleCmd.MAX_STYLE_CMDS ? UnitStyleCmd.MAX_STYLE_CMDS : uMgr.StyleList.Count;
+			int i = 0;
+
+			foreach (UnitsDataR udr in uMgr.StyleList)
 			{
-				
-				ui = uMgr.UnitData.GetInfo(uMgr.StyleList[i].Id);
+				us = udr.Ustyle;
 
 				string cmdName = $"UnitStyleCmd{i}";
-				string btnName = $"{BTN_NAME}{i:D3}";
-				string btnTitle = $"Units to\n" + ui.Title;
-				string btnToolTip = $"Set Model Units to " + ui.Desc;
+				string btnName = $"{BTN_NAME}{i:D2}";
+				string btnTitle = us.Description;
+				string btnToolTip = $"Set Model " + us.Description;
 				string classPath = $"{CLASSPATH}{cmdName}";
-				string btnFailText = $"{ui.Title} Button";
-
+				string btnFailText = $"{us.Name} Button";
 
 				pbd = CreateButton(
-					btnName, btnTitle, ui.IconFile, ui.IconFile, AddInPath, classPath, btnToolTip);
+					btnName, btnTitle, us.IconId, us.IconId, AddInPath, classPath, btnToolTip);
 
 				if (pbd == null)
 				{
@@ -267,18 +275,20 @@ namespace DeluxMeasure
 				}
 
 				sb.AddPushButton(pbd);
+
+				i++;
+				if (i == max) break;
 			}
 
 			sb.IsSynchronizedWithCurrentItem = true;
 
 			return true;
-
 		}
 
 		private bool addDropPanel(RibbonPanel ribbonPanel)
 		{
 			ribbonPanel.AddSlideOut();
-			
+
 			PushButtonData pbd;
 
 			pbd = CreateButton(
@@ -294,7 +304,5 @@ namespace DeluxMeasure
 
 			return true;
 		}
-
 	}
-
 }

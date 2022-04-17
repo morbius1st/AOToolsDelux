@@ -14,6 +14,5 @@ namespace CSToolsStudies
 	public partial class AppRibbon : Application
 	{
 
-
 	}
 }

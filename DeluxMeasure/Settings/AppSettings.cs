@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Runtime.Serialization;
 using DeluxMeasure.UnitsUtil;
+using Autodesk.Revit.DB;
 
 // App settings (per user)
 //	- applies to a specific app in the suite
@@ -20,7 +21,7 @@ namespace SettingsManager
 	public class AppSettingDataFile : IDataFile
 	{
 		[IgnoreDataMember]
-		private List<UnitStyle> appStyles;
+		private Dictionary<string, UnitsDataR> appStyles;
 
 		[IgnoreDataMember]
 		public string DataFileVersion => "dxm 0.1";
@@ -35,9 +36,10 @@ namespace SettingsManager
 		public int AppSettingsValue { get; set; } = 7;
 
 		[DataMember(Order = 2)]
-		public List<UnitStyle> AppStyles {
+		public Dictionary<string, UnitsDataR> AppStyles {
 			get
 			{
+				// return appStyles;
 				return appStyles;
 			}
 			set
@@ -45,6 +47,12 @@ namespace SettingsManager
 				appStyles = value;
 			}
 		}
+
+
+		// public void UpdateAppStyles(Dictionary<ForgeTypeId, UnitsDataR> original)
+		// {
+		// 	appStyles = new Dictionary<ForgeTypeId, UnitsDataR>(original);
+		// }
 	}
 
 	#endregion

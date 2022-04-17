@@ -49,9 +49,6 @@ namespace DeluxMeasure.Windows.Support
 	}
 
 
-
-
-
 	#region double divider converter
 
 	[ValueConversion(typeof(double), typeof(double))]
@@ -71,6 +68,31 @@ namespace DeluxMeasure.Windows.Support
 			return null;
 		}
 	}
+
+// #region bool to visibility value converter
+//
+// 	// yes = visible
+// 	// no = hidden
+// 	[ValueConversion(typeof(bool), typeof(Visibility))]
+// 	public class BoolToVisibilityConverter : IValueConverter
+// 	{
+// 		public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+// 		{
+// 			// if (targetType != typeof(object))
+// 			// 	throw new InvalidOperationException("The target must be an object");
+// 			return ((bool) (value ?? false)) ? Visibility.Visible : Visibility.Hidden;
+// 		}
+//
+// 		public object ConvertBack(object value, Type targetType, object parameter,
+// 			System.Globalization.CultureInfo culture)
+// 		{
+// 			throw new NotSupportedException();
+// 		}
+// 	}
+//
+// #endregion
+
+
 
 #endregion
 

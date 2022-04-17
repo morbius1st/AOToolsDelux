@@ -1,6 +1,9 @@
 ﻿using System.Collections.Generic;
+using System.Diagnostics;
+using System.Reflection;
 using System.Runtime.Serialization;
 using DeluxMeasure.UnitsUtil;
+using Autodesk.Revit.DB;
 
 // User settings (per user) 
 //  - user's settings for a specific app
@@ -32,7 +35,7 @@ namespace SettingsManager
 	public class UserSettingDataFile : IDataFile
 	{
 		[IgnoreDataMember]
-		private List<UnitStyle> userStyles;
+		private List<UnitsDataR> userStyles;
 
 		[IgnoreDataMember]
 		public string DataFileVersion => "user 0.1";
@@ -47,17 +50,29 @@ namespace SettingsManager
 		public int UserSettingsValue { get; set; } = 7;
 
 		[DataMember(Order = 2)]
-		public List<UnitStyle> UserStyles {
+		public List<UnitsDataR> UserStyles {
 			get
 			{
+			#if PATH
+				MethodBase mb = new StackTrace().GetFrame(1).GetMethod();
+
+				Debug.WriteLine($"@UserStyles: Get: {(mb.ReflectedType?.FullName ?? "is null")} > {mb.Name}");
+			#endif
+
 				return userStyles;
 			}
 			set
 			{
+			#if PATH
+				MethodBase mb = new StackTrace().GetFrame(1).GetMethod();
+
+				Debug.WriteLine($"@UserStyles: Set: {(mb.ReflectedType?.FullName ?? "is null")} > {mb.Name}");
+				#endif
+
 				userStyles = value;
 			}
 		}
-
+		
 		[DataMember]
 		public WindowLocation WinPosUnitStyleMgr { get; set; }
 

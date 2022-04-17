@@ -1,7 +1,9 @@
 ﻿#region using
 
 using System;
+using System.Diagnostics;
 using System.Windows;
+using System.Runtime.CompilerServices;
 
 using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
@@ -26,7 +28,7 @@ namespace DeluxMeasure.Windows.Support
 
 		public Result Execute(
 			ExternalCommandData commandData,
-			ref string message,
+			ref string message, 
 			ElementSet elements)
 		{
 			Document doc = commandData.Application.ActiveUIDocument.Document;
@@ -34,18 +36,15 @@ namespace DeluxMeasure.Windows.Support
 			return SetUnit( doc, UnitsManager.StyleList[Index]);
 		}
 
-		private Result SetUnit( Document doc, UnitStyle style)
+		private Result SetUnit( Document doc, UnitsDataR udr)
 		{
-			// ForgeTypeId id = unitStyles.Styles[idx].Id;
-			ForgeTypeId id = style.Id;
+			ForgeTypeId id = udr.Id;
 
-			UnitsData.UnitInfo ui = UnitsData.UnitTypes[id];
-
-			using (Transaction tg = new Transaction(doc, $"Set Units to {ui.Desc}"))
+			using (Transaction tg = new Transaction(doc, $"Set Units to {udr.Ustyle.Name}"))
 			{
 				tg.Start();
 
-				bool result = UnitsManager.SetUnit(doc, style);
+				bool result = UnitsManager.SetUnit( /* doc,*/  udr);
 
 				if (result)
 				{
@@ -213,7 +212,13 @@ namespace DeluxMeasure.Windows.Support
 			ref string message,
 			ElementSet elements)
 		{
-			// Document doc = commandData.Application.ActiveUIDocument.Document;
+		#if PATH
+			Debug.WriteLine($"@UnitStyleMgr/command: execute:");
+		#endif
+
+			Document doc = commandData.Application.ActiveUIDocument.Document;
+
+			UnitsManager.Doc = doc;
 
 			IntPtr h = commandData.Application.MainWindowHandle;
 

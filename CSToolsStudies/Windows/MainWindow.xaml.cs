@@ -58,6 +58,8 @@ namespace CSToolsStudies.Windows
 		{
 			InitializeComponent();
 
+			test1();
+
 			fm = new FieldsManager(this);
 			shShow = new ShShowInfo(this, CsUtilities.AssemblyName, "CSToolsStudies");
 			test01 = new Tests01(this);
@@ -96,6 +98,34 @@ namespace CSToolsStudies.Windows
 	#endregion
 
 	#region private properties
+
+	#endregion
+
+	#region private methods
+
+		private void test1()
+		{
+			Dictionary<string, string> s1 = new Dictionary<string, string>()
+			{
+				{ "B", "Beta"},
+				{ "Z", "Zeta"},
+				{ "D", "Delta"},
+				{ "E", "Epsilon"},
+				{ "A", "Alpha" },
+			};
+
+			Dictionary<int, string> s2 = new Dictionary<int, string>()
+			{
+				{ 2, "Two"},
+				{ 4, "Four"},
+				{ 5, "Five"},
+				{ 1, "One" },
+				{ 3, "Three"},
+			};
+
+			List<string> test1 = new List<string>(s1.Values);
+			List<string> test2 = new List<string>(s2.Values);
+		}
 
 	#endregion
 
