@@ -1,0 +1,1686 @@
+﻿<Window x:Name="WinUnitStyle"
+		x:Class="DeluxMeasure.Windows.UnitStylesManager"
+		xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+		xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+		xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+		xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+		xmlns:sys="clr-namespace:System;assembly=mscorlib"
+		xmlns:local="clr-namespace:DeluxMeasure.Windows"
+		xmlns:custom="clr-namespace:DeluxMeasure.Windows.Support"
+		xmlns:support="clr-namespace:DeluxMeasure.Windows.Support"
+		xmlns:unitsUtil="clr-namespace:DeluxMeasure.UnitsUtil"
+		Title="Unit Styles Manager"
+		Width="960"
+		Height="740"
+		MinWidth="960"
+		DataContext="{Binding RelativeSource={RelativeSource Self}}"
+		mc:Ignorable="d"
+		Background="{DynamicResource Normal.Window.Background}"
+		Foreground="White"
+		ResizeMode="NoResize"
+		Closing="WinUnitStyle_Closing"
+		Loaded="WinUnitStyle_Loaded"
+		>
+
+	<Window.Resources>
+
+		<ResourceDictionary>
+
+			<!--#region > resources and styles-->
+
+			<ResourceDictionary.MergedDictionaries>
+				<ResourceDictionary Source="ResourceFiles/XamlResources/MasterColorList.xaml" />
+				<ResourceDictionary Source="ResourceFiles/XamlResources/VisualStates.xaml" />
+				<ResourceDictionary Source="Support/ScrollViewerNarrow.xaml" />
+				<ResourceDictionary Source="Support/ScrollBar.xaml" />
+				<ResourceDictionary Source="Support/ComboBoxEx.xaml" />
+				<ResourceDictionary Source="ResourceFiles/SVG/IconDelete.xaml" />
+				<ResourceDictionary Source="ResourceFiles/SVG/padlock.xaml" />
+
+			</ResourceDictionary.MergedDictionaries>
+
+			<!--  sample size  -->
+			<sys:Double x:Key="FontSize.XLarge">18</sys:Double>
+			<!--  header size  -->
+			<sys:Double x:Key="FontSize.Large">16</sys:Double>
+			<!--  typical font size  -->
+			<sys:Double x:Key="FontSize.Normal">14</sys:Double>
+
+			<sys:Double x:Key="FontSize.Smaller">13</sys:Double>
+
+			<sys:Double x:Key="FontSize.Small">12</sys:Double>
+
+			<sys:Double x:Key="FontSize.XSmall">10</sys:Double>
+
+
+			<GridLength x:Key="Main.Row.Height">94*</GridLength>
+			<GridLength x:Key="Function.Row.Height">10*</GridLength>
+			<GridLength x:Key="Control.Row.Height">7*</GridLength>
+
+			<GridLength x:Key="Project.Unit.Width">300*</GridLength>
+			<GridLength x:Key="Style.Chart.Width">600*</GridLength>
+			<!--  total size = 15px + 200 + 617 + 8 == 840  -->
+			<!--  project unit column  -->
+
+			<GridLength x:Key="Style.Chart.Cnum">70</GridLength>
+			<GridLength x:Key="Style.Chart.Cico">70</GridLength>
+			<GridLength x:Key="Style.Chart.Cdata">3*</GridLength>
+			<GridLength x:Key="Style.Chart.Cex">5*</GridLength>
+			<GridLength x:Key="Style.Chart.Csho">3*</GridLength>
+
+			<sys:Double x:Key="R1">24</sys:Double>
+
+			<CornerRadius x:Key="Normal.CornerRadius"
+					BottomLeft="4"
+					BottomRight="4"
+					TopLeft="4"
+					TopRight="4"
+					/>
+
+			<Thickness x:Key="Lv1.Padding.Nml">8,2,10,4</Thickness>
+
+
+			<SolidColorBrush x:Key="Item.MouseOver.Background" Color="#1F26A0DA" />
+			<SolidColorBrush x:Key="Item.MouseOver.Border" Color="#a826A0Da" />
+			<SolidColorBrush x:Key="Item.SelectedActive.Background" Color="#3D26A0DA" />
+			<SolidColorBrush x:Key="Item.SelectedActive.Border" Color="#FF26A0DA" />
+			<SolidColorBrush x:Key="Item.SelectedInactive.Border" Color="#CFDADADA" />
+
+
+			<SolidColorBrush x:Key="OptionMark.Static.Border" Color="#FF707070" />
+			<SolidColorBrush x:Key="OptionMark.Static.Glyph" Color="#FF212121" />
+			<SolidColorBrush x:Key="OptionMark.MouseOver.Background" Color="#FFF3F9FF" />
+			<SolidColorBrush x:Key="OptionMark.MouseOver.Border" Color="#FF5593FF" />
+			<SolidColorBrush x:Key="OptionMark.MouseOver.Glyph" Color="#FF212121" />
+			<SolidColorBrush x:Key="OptionMark.Pressed.Background" Color="#FFD9ECFF" />
+			<SolidColorBrush x:Key="OptionMark.Pressed.Border" Color="#FF3C77DD" />
+			<SolidColorBrush x:Key="OptionMark.Pressed.Glyph" Color="#FF212121" />
+			<SolidColorBrush x:Key="OptionMark.Disabled.Background" Color="#FFE6E6E6" />
+			<SolidColorBrush x:Key="OptionMark.Disabled.Border" Color="#FFBCBCBC" />
+			<SolidColorBrush x:Key="OptionMark.Disabled.Glyph" Color="#FF707070" />
+
+
+			<SolidColorBrush x:Key="Header.Background" Color="{StaticResource True.Green}" />
+			<SolidColorBrush x:Key="Desc.Background" Color="{StaticResource Light.Blue.550}" />
+			<SolidColorBrush x:Key="Value.Background" Color="{StaticResource Light.Blue.300}" />
+			<SolidColorBrush x:Key="Value.Bkg.Selected" Color="{StaticResource Deep.Purple.450}" />
+
+			<SolidColorBrush x:Key="Lv.Item.Panel.Bkg.Sel" Color="{StaticResource Deep.Purple.300}" />
+			<SolidColorBrush x:Key="Lv.Item.Panel.Bkg.Nml" Color="{StaticResource Blue.200}" />
+			<SolidColorBrush x:Key="Lv.Item.CkBx.Bkg.Nml" Color="{StaticResource Gray.600}" />
+
+
+			<SolidColorBrush x:Key="Lv.Item.Control.Bkg2" Color="{StaticResource Cool.Blue.450}" />
+			<SolidColorBrush x:Key="Lv.Item.Control.Bkg2.Unselected" Color="{StaticResource Blue.300}" />
+
+			<SolidColorBrush x:Key="Lv.Item.Bkg2" Color="{StaticResource Cool.Blue.350}" />
+			<SolidColorBrush x:Key="Lv.Item.Bkg2.Unselected" Color="{StaticResource Blue.220}" />
+
+			<SolidColorBrush x:Key="Lv.Item.SubHdr.Bkg2" Color="{StaticResource Teal.500}" />
+			<SolidColorBrush x:Key="Lv.Item.SubHdr.Bkg2.UnSelected" Color="{StaticResource Teal.250}" />
+
+			<SolidColorBrush x:Key="Lv.Important" Color="{StaticResource Deep.Orange.400}" />
+			<SolidColorBrush x:Key="Lv.Important.UnSelected" Color="{StaticResource Deep.Orange.100}" />
+
+			<SolidColorBrush x:Key="Lv.Item.FG" Color="White" />
+			<SolidColorBrush x:Key="Lv.Item.FG.UnSelected" Color="{StaticResource Gray.650}" />
+
+			<SolidColorBrush x:Key="Icon.Bkg" Color="{StaticResource Gray.850}" />
+			<SolidColorBrush x:Key="Icon.Bkg.UnSelected" Color="{StaticResource Gray.450}" />
+
+
+			<!--#region > TBLK styles-->
+
+
+			<Style x:Key="Tblk.Base"
+					TargetType="TextBlock"
+					>
+				<Setter Property="Margin" Value="0" />
+				<Setter Property="Padding" Value="0" />
+				<Setter Property="FontSize" Value="{StaticResource FontSize.Normal}" />
+				<Setter Property="Foreground" Value="White" />
+				<Setter Property="TextAlignment" Value="Left" />
+				<Setter Property="VerticalAlignment" Value="Center" />
+				<Setter Property="HorizontalAlignment" Value="Left" />
+			</Style>
+
+			<Style x:Key="Tblk.Desc"
+					TargetType="TextBlock"
+					BasedOn="{StaticResource Tblk.Base}"
+					>
+				<Setter Property="Padding" Value="8,2,9,4" />
+				<Setter Property="HorizontalAlignment" Value="Center" />
+				<Setter Property="Background" Value="Transparent" />
+			</Style>
+
+			<Style x:Key="Tblk.Value"
+					TargetType="TextBlock"
+					BasedOn="{StaticResource Tblk.Base}"
+					>
+				<Setter Property="IsEnabled" Value="True" />
+				<Setter Property="Padding" Value="8,2,9,4" />
+				<Setter Property="TextAlignment" Value="Center" />
+				<Setter Property="Background" Value="Transparent" />
+				<Style.Triggers>
+					<Trigger Property="IsEnabled" Value="False">
+						<Setter Property="Foreground" Value="DarkGray" />
+					</Trigger>
+				</Style.Triggers>
+			</Style>
+
+			<Style x:Key="Tblk.Lv1.Base"
+					TargetType="TextBlock"
+					BasedOn="{StaticResource Tblk.Base}"
+					>
+				<Setter Property="Padding" Value="{StaticResource Lv1.Padding.Nml}" />
+				<Setter Property="Foreground" Value="{StaticResource Lv.Item.FG.UnSelected}" />
+				<Style.Triggers>
+					<DataTrigger Value="True" Binding="{Binding RelativeSource={RelativeSource AncestorType={x:Type ListBoxItem}}, Path=IsSelected}">
+						<Setter Property="Foreground" Value="{StaticResource Lv.Item.FG}">
+						</Setter>
+					</DataTrigger>
+				</Style.Triggers>
+			</Style>
+
+			<Style x:Key="Tblk.Lv1.Prime.Value"
+					TargetType="TextBlock"
+					BasedOn="{StaticResource Tblk.Lv1.Base}"
+					>
+				<Setter Property="TextWrapping" Value="Wrap" />
+			</Style>
+
+			<Style x:Key="Tblk.Lv1.Value.2ndry"
+					TargetType="TextBlock"
+					BasedOn="{StaticResource Tblk.Lv1.Prime.Value}"
+					>
+			</Style>
+
+			<Style x:Key="Tblk.Lv1.Unit"
+					TargetType="TextBlock"
+					BasedOn="{StaticResource Tblk.Lv1.Prime.Value}"
+					>
+			</Style>
+
+			<!--#endregion-->
+
+			<Style x:Key="StkPnl"
+					TargetType="StackPanel"
+					>
+				<Setter Property="VerticalAlignment" Value="Top" />
+				<Setter Property="HorizontalAlignment" Value="Stretch" />
+				<Setter Property="Orientation" Value="Horizontal" />
+				<Setter Property="Margin" Value="0,0,12,5" />
+			</Style>
+
+			<!--#region > Bdr styles-->
+
+			<Style x:Key="Bdr.Base"
+					TargetType="Border"
+					>
+				<Setter Property="CornerRadius" Value="{StaticResource Normal.CornerRadius}" />
+				<Setter Property="BorderThickness" Value="0" />
+			</Style>
+
+			<Style x:Key="Bdr.Value.Entry"
+					TargetType="Border"
+					BasedOn="{StaticResource Bdr.Base}"
+					>
+				<Setter Property="Background">
+					<Setter.Value>
+						<SolidColorBrush Color="{StaticResource Gray.300}" />
+					</Setter.Value>
+				</Setter>
+				<Setter Property="BorderBrush">
+					<Setter.Value>
+						<SolidColorBrush Color="{StaticResource Gray.450}" />
+					</Setter.Value>
+				</Setter>
+				<Style.Triggers>
+					<Trigger Property="IsMouseOver" Value="True">
+						<Setter Property="BorderBrush">
+							<Setter.Value>
+								<SolidColorBrush Color="{StaticResource Light.Blue.500}" />
+							</Setter.Value>
+						</Setter>
+						<Setter Property="Background">
+							<Setter.Value>
+								<SolidColorBrush Color="{StaticResource Gray.200}" />
+							</Setter.Value>
+						</Setter>
+					</Trigger>
+				</Style.Triggers>
+			</Style>
+
+			<Style x:Key="Bdr.Hdr.Prime"
+					TargetType="Border"
+					BasedOn="{StaticResource Bdr.Base}"
+					>
+				<Setter Property="Background" Value="{StaticResource Header.Background}" />
+
+			</Style>
+
+			<Style x:Key="Bdr.Proj.Units.Title"
+					TargetType="Border"
+					BasedOn="{StaticResource Bdr.Base}"
+					>
+				<Setter Property="CornerRadius" Value="4,0,0,4" />
+				<Setter Property="Background" Value="{StaticResource Desc.Background}" />
+			</Style>
+
+			<Style x:Key="Bdr.Proj.Units.Value"
+					TargetType="Border"
+					BasedOn="{StaticResource Bdr.Base}"
+					>
+				<Setter Property="CornerRadius" Value="0,4,4,0" />
+				<Setter Property="MinWidth" Value="30" />
+				<Setter Property="Background" Value="{StaticResource Value.Background}" />
+			</Style>
+
+
+
+
+			<Style x:Key="Bdr.Lv1"
+					TargetType="Border"
+					BasedOn="{StaticResource Bdr.Base}"
+					>
+				<Setter Property="Margin" Value="4,4,0,0">
+				</Setter>
+
+			</Style>
+
+			<Style x:Key="Bdr.Lv1.Prime.Item"
+					TargetType="Border"
+					BasedOn="{StaticResource Bdr.Lv1}"
+					>
+				<Setter Property="Background" Value="{StaticResource Lv.Item.Bkg2.Unselected}" />
+				<Style.Triggers>
+					<DataTrigger Value="true" Binding="{Binding RelativeSource={RelativeSource AncestorType={x:Type ListBoxItem}}, Path=IsSelected}">
+						<Setter Property="Background" Value="{StaticResource Lv.Item.Bkg2}">
+						</Setter>
+					</DataTrigger>
+				</Style.Triggers>
+			</Style>
+
+			<Style x:Key="Bdr.Lv1.Icon.Item"
+					TargetType="Border"
+					BasedOn="{StaticResource Bdr.Lv1}"
+					>
+				<Setter Property="Background" Value="{StaticResource Icon.Bkg.UnSelected}" />
+				<Style.Triggers>
+					<DataTrigger Value="true" Binding="{Binding RelativeSource={RelativeSource AncestorType={x:Type ListBoxItem}}, Path=IsSelected}">
+						<Setter Property="Background" Value="{StaticResource Icon.Bkg}">
+						</Setter>
+					</DataTrigger>
+				</Style.Triggers>
+			</Style>
+
+			<Style x:Key="Bdr.Lv1.2ndry.Item"
+					TargetType="Border"
+					BasedOn="{StaticResource Bdr.Lv1}"
+					>
+				<Setter Property="Background" Value="{StaticResource Lv.Item.Bkg2.Unselected}" />
+				<Style.Triggers>
+					<DataTrigger Value="true" Binding="{Binding RelativeSource={RelativeSource AncestorType={x:Type ListBoxItem}}, Path=IsSelected}">
+						<Setter Property="Background" Value="{StaticResource Lv.Item.Bkg2}">
+						</Setter>
+					</DataTrigger>
+				</Style.Triggers>
+			</Style>
+
+			<Style x:Key="Bdr.Lv1.Sub.Hdr"
+					TargetType="Border"
+					BasedOn="{StaticResource Bdr.Lv1}"
+					>
+				<Setter Property="Background" Value="{StaticResource Lv.Item.SubHdr.Bkg2.UnSelected}" />
+				<Style.Triggers>
+					<DataTrigger Value="true" Binding="{Binding RelativeSource={RelativeSource AncestorType={x:Type ListBoxItem}}, Path=IsSelected}">
+						<Setter Property="Background" Value="{StaticResource Lv.Item.SubHdr.Bkg2}">
+						</Setter>
+					</DataTrigger>
+				</Style.Triggers>
+			</Style>
+
+
+
+
+
+			<Style x:Key="Bdr.Lv1.ChkBx"
+					TargetType="Border"
+					BasedOn="{StaticResource Bdr.Base}"
+					>
+				<Setter Property="Background" Value="{StaticResource Lv.Item.Control.Bkg2.Unselected}" />
+				<Setter Property="Margin" Value="1,3,2,0" />
+				<Style.Triggers>
+					<DataTrigger Value="true" Binding="{Binding RelativeSource={RelativeSource AncestorType={x:Type ListBoxItem}}, Path=IsSelected}">
+						<Setter Property="Background" Value="{StaticResource Lv.Item.Control.Bkg2}">
+						</Setter>
+					</DataTrigger>
+				</Style.Triggers>
+			</Style>
+
+			<!--#endregion-->
+
+			<Style x:Key="OptionMarkFocusVisual">
+				<Setter Property="Control.Template">
+					<Setter.Value>
+						<ControlTemplate>
+							<Rectangle Margin="14,0,0,0"
+									StrokeDashArray="1 2"
+									Stroke="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}"
+									SnapsToDevicePixels="true"
+									StrokeThickness="1"
+									/>
+						</ControlTemplate>
+					</Setter.Value>
+				</Setter>
+			</Style>
+
+			<Style x:Key="FocusVisual">
+				<Setter Property="Control.Template">
+					<Setter.Value>
+						<ControlTemplate>
+							<Rectangle Margin="2"
+									StrokeDashArray="1 2"
+									Stroke="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}"
+									SnapsToDevicePixels="true"
+									StrokeThickness="1"
+									/>
+						</ControlTemplate>
+					</Setter.Value>
+				</Setter>
+			</Style>
+
+			<Style x:Key="Lv1.CheckBoxStyle"
+					TargetType="{x:Type CheckBox}"
+					>
+				<Setter Property="IsEnabled" Value="False" />
+				<Setter Property="Padding" Value="{StaticResource Lv1.Padding.Nml}">
+				</Setter>
+				<Setter Property="VerticalContentAlignment" Value="Center" />
+				<Setter Property="FontSize" Value="{StaticResource FontSize.Normal}" />
+				<Setter Property="FocusVisualStyle" Value="{StaticResource FocusVisual}" />
+				<Setter Property="Background" Value="{StaticResource Lv.Item.CkBx.Bkg.Nml}" />
+				<Setter Property="BorderBrush" Value="{StaticResource OptionMark.Static.Border}" />
+				<Setter Property="Foreground" Value="{StaticResource Lv.Item.FG.UnSelected}" />
+				<Setter Property="BorderThickness" Value="1" />
+				<Setter Property="Template">
+					<Setter.Value>
+						<ControlTemplate TargetType="{x:Type CheckBox}">
+							<Grid x:Name="templateRoot"
+									Background="Transparent"
+									SnapsToDevicePixels="True"
+									>
+								<Grid.ColumnDefinitions>
+									<ColumnDefinition Width="Auto" />
+									<ColumnDefinition Width="*" />
+								</Grid.ColumnDefinitions>
+								<Border x:Name="checkBoxBorder"
+										Margin="0"
+										HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+										VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+										BorderThickness="0"
+										BorderBrush="{TemplateBinding BorderBrush}"
+										>
+									<Grid x:Name="markGrid">
+										<Rectangle Margin="1"
+												Fill="{TemplateBinding Background}"
+												/>
+										<Path x:Name="optionMark"
+												Margin="0"
+												Data="F1 M 9.97498,1.22334L 4.6983,9.09834L 4.52164,9.09834L 0,5.19331L 1.27664,3.52165L 4.255,6.08833L 8.33331,1.52588e-005L 9.97498,1.22334 Z "
+												Fill="{StaticResource OptionMark.Static.Glyph}"
+												Opacity="0"
+												Stretch="None"
+												/>
+										<Rectangle x:Name="indeterminateMark"
+												Margin="0"
+												Fill="{StaticResource OptionMark.Static.Glyph}"
+												Opacity="0"
+												/>
+
+									</Grid>
+								</Border>
+								<ContentPresenter x:Name="contentPresenter"
+										Grid.Column="1"
+										Margin="{TemplateBinding Padding}"
+										HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+										VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+										Focusable="False"
+										RecognizesAccessKey="True"
+										SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
+										/>
+							</Grid>
+							<ControlTemplate.Triggers>
+								<DataTrigger Value="True" Binding="{Binding RelativeSource={RelativeSource AncestorType={x:Type ListBoxItem}}, Path=IsSelected}">
+									<Setter Property="Foreground" Value="{StaticResource Lv.Item.FG}" />
+									<Setter Property="IsEnabled" Value="True">
+									</Setter>
+								</DataTrigger>
+								<Trigger Property="HasContent" Value="true">
+									<Setter Property="FocusVisualStyle" Value="{StaticResource OptionMarkFocusVisual}" />
+									<Setter Property="Padding" Value="4,-1,0,0" />
+								</Trigger>
+								<Trigger Property="IsMouseOver" Value="true">
+									<Setter TargetName="checkBoxBorder" Property="Background" Value="{StaticResource OptionMark.MouseOver.Background}" />
+									<Setter TargetName="checkBoxBorder" Property="BorderBrush" Value="{StaticResource OptionMark.MouseOver.Border}" />
+									<Setter TargetName="optionMark" Property="Fill" Value="{StaticResource OptionMark.MouseOver.Glyph}" />
+									<Setter TargetName="indeterminateMark" Property="Fill" Value="{StaticResource OptionMark.MouseOver.Glyph}" />
+								</Trigger>
+								<Trigger Property="IsEnabled" Value="false">
+									<!-- <Setter TargetName="checkBoxBorder" Property="Background" Value="{StaticResource OptionMark.Disabled.Background}" /> -->
+									<!-- <Setter TargetName="checkBoxBorder" Property="BorderBrush" Value="{StaticResource OptionMark.Disabled.Border}" /> -->
+									<Setter TargetName="optionMark" Property="Fill" Value="{StaticResource OptionMark.Disabled.Glyph}" />
+									<Setter TargetName="indeterminateMark" Property="Fill" Value="{StaticResource OptionMark.Disabled.Glyph}" />
+								</Trigger>
+								<Trigger Property="IsPressed" Value="true">
+									<Setter TargetName="checkBoxBorder" Property="Background" Value="{StaticResource OptionMark.Pressed.Background}" />
+									<Setter TargetName="checkBoxBorder" Property="BorderBrush" Value="{StaticResource OptionMark.Pressed.Border}" />
+									<Setter TargetName="optionMark" Property="Fill" Value="{StaticResource OptionMark.Pressed.Glyph}" />
+									<Setter TargetName="indeterminateMark" Property="Fill" Value="{StaticResource OptionMark.Pressed.Glyph}" />
+								</Trigger>
+								<Trigger Property="IsChecked" Value="true">
+									<Setter TargetName="optionMark" Property="Opacity" Value="1" />
+									<Setter TargetName="indeterminateMark" Property="Opacity" Value="0" />
+								</Trigger>
+								<Trigger Property="IsChecked" Value="{x:Null}">
+									<Setter TargetName="optionMark" Property="Opacity" Value="0" />
+									<Setter TargetName="indeterminateMark" Property="Opacity" Value="1" />
+								</Trigger>
+							</ControlTemplate.Triggers>
+						</ControlTemplate>
+					</Setter.Value>
+				</Setter>
+			</Style>
+
+			<Style x:Key="ListBoxItemContainerStyle1"
+					TargetType="{x:Type ListBoxItem}"
+					>
+				<Setter Property="SnapsToDevicePixels" Value="True" />
+				<Setter Property="Padding" Value="0,0,4,4" />
+				<Setter Property="Margin" Value="2,0,0,3" />
+				<Setter Property="HorizontalContentAlignment" Value="{Binding HorizontalContentAlignment, RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}}}" />
+				<Setter Property="VerticalContentAlignment" Value="{Binding VerticalContentAlignment, RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}}}" />
+				<Setter Property="Background" Value="{StaticResource Lv.Item.Panel.Bkg.Nml}" />
+				<Setter Property="BorderBrush" Value="Transparent" />
+				<Setter Property="BorderThickness" Value="0" />
+				<Setter Property="FocusVisualStyle" Value="{StaticResource FocusVisual}" />
+				<Setter Property="Template">
+					<Setter.Value>
+						<ControlTemplate TargetType="{x:Type ListBoxItem}">
+							<Border x:Name="BdCs1"
+									Padding="{TemplateBinding Padding}"
+									Background="{TemplateBinding Background}"
+									BorderThickness="{TemplateBinding BorderThickness}"
+									BorderBrush="{TemplateBinding BorderBrush}"
+									CornerRadius="{StaticResource Normal.CornerRadius}"
+									SnapsToDevicePixels="true"
+									>
+								<ContentPresenter x:Name="Lv1Cp1"
+										HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+										VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+										SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
+										/>
+							</Border>
+							<ControlTemplate.Triggers>
+								<MultiTrigger>
+									<MultiTrigger.Conditions>
+										<Condition Property="IsMouseOver" Value="True" />
+									</MultiTrigger.Conditions>
+									<Setter TargetName="BdCs1" Property="Background" Value="{StaticResource Item.MouseOver.Background}" />
+									<Setter TargetName="BdCs1" Property="BorderBrush" Value="{StaticResource Item.MouseOver.Border}" />
+								</MultiTrigger>
+								<MultiTrigger>
+									<MultiTrigger.Conditions>
+										<Condition Property="Selector.IsSelectionActive" Value="False" />
+										<Condition Property="IsSelected" Value="True" />
+									</MultiTrigger.Conditions>
+									<Setter TargetName="BdCs1" Property="Padding" Value="0,0,4,4" />
+									<Setter TargetName="BdCs1" Property="BorderThickness" Value="0.5" />
+									<Setter TargetName="BdCs1" Property="Background" Value="{StaticResource Lv.Item.Panel.Bkg.Sel}" />
+									<Setter TargetName="BdCs1" Property="BorderBrush" Value="{StaticResource Item.SelectedInactive.Border}" />
+								</MultiTrigger>
+								<MultiTrigger>
+									<MultiTrigger.Conditions>
+										<Condition Property="Selector.IsSelectionActive" Value="True" />
+										<Condition Property="IsSelected" Value="True" />
+									</MultiTrigger.Conditions>
+									<Setter TargetName="BdCs1" Property="Padding" Value="0,0,4,4" />
+									<Setter TargetName="BdCs1" Property="Background" Value="{StaticResource Item.SelectedActive.Background}" />
+									<Setter TargetName="BdCs1" Property="BorderBrush" Value="{StaticResource Item.SelectedActive.Border}" />
+								</MultiTrigger>
+								<Trigger Property="IsEnabled" Value="False">
+									<Setter TargetName="BdCs1" Property="TextElement.Foreground" Value="{DynamicResource {x:Static SystemColors.GrayTextBrushKey}}" />
+								</Trigger>
+							</ControlTemplate.Triggers>
+						</ControlTemplate>
+					</Setter.Value>
+				</Setter>
+			</Style>
+
+			<Style x:Key="svStyle"
+					TargetType="{x:Type ScrollViewer}"
+					>
+				<Setter Property="Template" Value="{StaticResource ScrollViewerNarrow}" />
+				<Setter Property="support:ScrollBarAttached.ScrollBarWidth" Value="12" />
+				<Setter Property="support:ScrollBarAttached.ThumbCornerRadius" Value="3" />
+				<Setter Property="support:ScrollBarAttached.RepeatButtonLength" Value="12" />
+				<Setter Property="support:ScrollBarAttached.ScrollBarWidth" Value="4" />
+				<Setter Property="support:ScrollBarAttached.TrackWidth" Value="5" />
+				<Setter Property="support:ScrollBarAttached.RepeatButtonIconGirth" Value="6" />
+				<Setter Property="support:ScrollBarAttached.RepeatButtonIconLength" Value="10" />
+				<Setter Property="support:ScrollBarAttached.VertBorderThickness" Value="0,0,0,0" />
+				<Setter Property="support:ScrollBarAttached.VertBorderColor">
+					<Setter.Value>
+						<SolidColorBrush Color="{StaticResource Blue.350}" />
+					</Setter.Value>
+				</Setter>
+				<Setter Property="support:ScrollBarAttached.HorizBorderThickness" Value="0,0,0,0" />
+				<Setter Property="support:ScrollBarAttached.HorizBorderColor">
+					<Setter.Value>
+						<SolidColorBrush Color="{StaticResource Blue.350}" />
+					</Setter.Value>
+				</Setter>
+
+				<Setter Property="support:ScrollViewerAttached.CornerRectColor">
+					<Setter.Value>
+						<SolidColorBrush Color="{StaticResource Gray.150}" />
+					</Setter.Value>
+				</Setter>
+
+				<Setter Property="support:ScrollViewerAttached.CornerRectLeftBdrHeight" Value="0" />
+				<Setter Property="support:ScrollViewerAttached.CornerRectLeftBdrColor">
+					<Setter.Value>
+						<SolidColorBrush Color="{StaticResource Blue.350}" />
+					</Setter.Value>
+				</Setter>
+
+				<Setter Property="support:ScrollViewerAttached.CornerRectTopBdrHeight" Value="0" />
+				<Setter Property="support:ScrollViewerAttached.CornerRectTopBdrColor">
+					<Setter.Value>
+						<SolidColorBrush Color="{StaticResource Blue.350}" />
+					</Setter.Value>
+				</Setter>
+
+			</Style>
+
+			<!--#endregion-->
+
+			<DataTemplate x:Key="Lv1ItemTemplate"
+					d:DataType="unitsUtil:UnitsDataD"
+					DataType="unitsUtil:UnitsDataR"
+					>
+
+				<Grid x:Name="ChartGrid"
+						Margin="0,0,0,0"
+						HorizontalAlignment="Stretch"
+						>
+					<Grid.ColumnDefinitions>
+						<ColumnDefinition Width="{StaticResource Style.Chart.Cnum}" />
+						<ColumnDefinition Width="{StaticResource Style.Chart.Cico}" />
+						<ColumnDefinition Width="{StaticResource Style.Chart.Cdata}" />
+						<ColumnDefinition Width="{StaticResource Style.Chart.Cex}" />
+						<ColumnDefinition Width="{StaticResource Style.Chart.Csho}" />
+
+					</Grid.ColumnDefinitions>
+
+					<Grid.RowDefinitions>
+						<RowDefinition Height="*" />
+						<RowDefinition Height="*" />
+						<RowDefinition Height="*" />
+					</Grid.RowDefinitions>
+
+
+					<Border x:Name="ItemNumber"
+							Grid.Column="0"
+							Grid.Row="0"
+							Grid.RowSpan="3"
+							Style="{StaticResource Bdr.Lv1.Prime.Item}"
+							>
+						<TextBlock Margin="0,-8,0,0"
+								Padding="0"
+								HorizontalAlignment="Center"
+								VerticalAlignment="Center"
+								FontSize="38"
+								Text="{Binding SeqFormatted,
+															 Mode=OneWay}"
+								Style="{StaticResource Tblk.Lv1.Prime.Value}"
+								/>
+					</Border>
+
+					<Viewbox x:Name="vbPadlock"
+							Grid.Column="0"
+							Grid.Row="2"
+							Margin="0,0,2,4"
+							Width="16"
+							Height="16"
+							HorizontalAlignment="Right"
+							VerticalAlignment="Bottom"
+							Panel.ZIndex="2"
+							Stretch="none"
+							>
+						<Viewbox.Child>
+
+							<ContentControl Content="{StaticResource Padlock}"
+									Margin="0"
+									>
+
+								<ContentControl.Style>
+									<Style TargetType="ContentControl">
+										<Setter Property="Background" Value="{StaticResource Lv.Important}" />
+										<Setter Property="Visibility" Value="Hidden" />
+										<Style.Triggers>
+											<MultiDataTrigger>
+												<MultiDataTrigger.Conditions>
+													<Condition Value="True" Binding="{Binding RelativeSource={RelativeSource AncestorType={x:Type ListBoxItem}}, Path=IsSelected}" />
+													<Condition Value="True" Binding="{Binding Path=Ustyle.IsLocked}" />
+												</MultiDataTrigger.Conditions>
+												<Setter Property="Visibility" Value="Visible" />
+											</MultiDataTrigger>
+											<MultiDataTrigger>
+												<MultiDataTrigger.Conditions>
+													<Condition Value="False" Binding="{Binding RelativeSource={RelativeSource AncestorType={x:Type ListBoxItem}}, Path=IsSelected}" />
+													<Condition Value="True" Binding="{Binding Path=Ustyle.IsLocked}" />
+												</MultiDataTrigger.Conditions>
+												<Setter Property="Visibility" Value="Visible" />
+												<Setter Property="Background" Value="{StaticResource Lv.Important.UnSelected}" />
+
+											</MultiDataTrigger>
+										</Style.Triggers>
+									</Style>
+								</ContentControl.Style>
+
+
+							</ContentControl>
+
+						</Viewbox.Child>
+
+
+					</Viewbox>
+
+					<Border x:Name="Icon"
+							Grid.Column="1"
+							Grid.Row="0"
+							Grid.RowSpan="3"
+							Style="{StaticResource Bdr.Lv1.Icon.Item}"
+							>
+
+						<Image Name="UnitIcon"
+								Margin="8"
+								DockPanel.Dock="Top"
+								Stretch="None"
+								Source="{Binding Path=Ux}"
+								/>
+
+
+					</Border>
+
+					<Border x:Name="Name"
+							Grid.Column="2"
+							Grid.Row="0"
+							Grid.ColumnSpan="2"
+							Style="{StaticResource Bdr.Lv1.Prime.Item}"
+							>
+						<TextBlock Text="{Binding Path=Ustyle.Name}"
+								Style="{StaticResource Tblk.Lv1.Prime.Value}"
+								/>
+					</Border>
+
+					<Border x:Name="Desc"
+							Grid.Column="2"
+							Grid.Row="1"
+							Grid.ColumnSpan="2"
+							Style="{StaticResource Bdr.Lv1.2ndry.Item}"
+							>
+						<TextBlock Text="{Binding Path=Ustyle.Description}"
+								Style="{StaticResource Tblk.Lv1.Value.2ndry}"
+								/>
+					</Border>
+
+					<Border x:Name="ExampleBdr"
+							Grid.Column="2"
+							Grid.Row="2"
+							Style="{StaticResource Bdr.Lv1.Sub.Hdr}"
+							>
+						<TextBlock FontSize="{StaticResource FontSize.Normal}"
+								TextAlignment="Left"
+								Text="Example"
+								Style="{StaticResource Tblk.Lv1.Value.2ndry}"
+								/>
+					</Border>
+
+					<Border x:Name="ShowHere"
+							Grid.Column="4"
+							Grid.Row="0"
+							Grid.RowSpan="3"
+							HorizontalAlignment="Stretch"
+							Style="{StaticResource Bdr.Lv1.Prime.Item}"
+							>
+						<StackPanel VerticalAlignment="Stretch"
+								Orientation="Vertical"
+								>
+
+							<Border Margin="4"
+									Style="{StaticResource Bdr.Lv1.Sub.Hdr}"
+									>
+								<TextBlock Margin="5,0,0,2"
+										Padding="0"
+										Text="Show Here"
+										Style="{StaticResource Tblk.Lv1.Unit}"
+										/>
+							</Border>
+
+							<CheckBox Content="Ribbon Favs"
+									Margin="5,0,0,0"
+									Padding="5,-2,0,1"
+									VerticalAlignment="Top"
+									FontSize="{StaticResource FontSize.Smaller}"
+									IsChecked="{Binding Ustyle.ShowInRibbon}"
+									Style="{StaticResource Lv1.CheckBoxStyle}"
+									/>
+
+							<CheckBox Content="Dialog Left"
+									Margin="5,0,0,0"
+									Padding="5,-2,0,1"
+									VerticalAlignment="Center"
+									FontSize="{StaticResource FontSize.Smaller}"
+									IsChecked="{Binding Ustyle.ShowInDialogLeft}"
+									Style="{StaticResource Lv1.CheckBoxStyle}"
+									/>
+
+							<CheckBox Content="Dialog Right"
+									Margin="5,0,0,0"
+									Padding="5,-2,0,1"
+									VerticalAlignment="Bottom"
+									FontSize="{StaticResource FontSize.Smaller}"
+									IsChecked="{Binding Ustyle.ShowInDialogRight}"
+									Style="{StaticResource Lv1.CheckBoxStyle}"
+									/>
+
+						</StackPanel>
+
+					</Border>
+
+					<Border x:Name="Example"
+							Grid.Column="3"
+							Grid.Row="2"
+							HorizontalAlignment="Stretch"
+							Style="{StaticResource Bdr.Lv1.Prime.Item}"
+							>
+						<!--  d:Text="120'-11 248/255&quot;"  -->
+						<TextBlock HorizontalAlignment="Center"
+								FontSize="{StaticResource FontSize.Normal}"
+								Text="{Binding Path=UnitSampleFormatted,
+															 FallbackValue='0.00'}"
+								TextAlignment="Center"
+								Style="{StaticResource Tblk.Lv1.Prime.Value}"
+								/>
+					</Border>
+
+
+				</Grid>
+
+			</DataTemplate>
+
+
+			<DataTemplate x:Key="StylesSelection">
+
+				<!--#region > selection grid-->
+				<!--#endregion-->
+
+				<Grid x:Name="StylesSelectionGrid"
+						DataContext="{Binding ElementName=WinUnitStyle}"
+						>
+					<Grid.ColumnDefinitions>
+						<ColumnDefinition Width="{StaticResource Project.Unit.Width}" />
+						<ColumnDefinition Width="{StaticResource Style.Chart.Width}" />
+					</Grid.ColumnDefinitions>
+
+					<Grid.RowDefinitions>
+						<RowDefinition Height="{StaticResource Main.Row.Height}" />
+						<RowDefinition Height="{StaticResource Function.Row.Height}" />
+						<RowDefinition Height="{StaticResource Control.Row.Height}" />
+					</Grid.RowDefinitions>
+
+					<!--#region > columns-->
+					<!--#endregion-->
+
+
+					<!--#region > column 0-->
+
+					<DockPanel x:Name="AddUnitControl"
+							Grid.Column="0"
+							Grid.Row="2"
+							HorizontalAlignment="Stretch"
+							>
+
+						<Button x:Name="BtnAddBefore"
+								HorizontalAlignment="Left"
+								VerticalAlignment="Bottom"
+								FontSize="{StaticResource FontSize.Normal}"
+								IsEnabled="False"
+								DockPanel.Dock="Left"
+								Template="{StaticResource Button.Normal.ControlTemplate}"
+								>
+
+							<Button.Content>
+								<TextBlock Padding="10,1,10,3"
+										FontSize="{StaticResource FontSize.Normal}"
+										Text="Add Before"
+										/>
+							</Button.Content>
+						</Button>
+
+						<Border Margin="10,0,0,0"
+								Width="Auto"
+								Height="Auto"
+								VerticalAlignment="Bottom"
+								BorderThickness="1"
+								DockPanel.Dock="Left"
+								Style="{StaticResource Bdr.Value.Entry}"
+								>
+							<TextBox x:Name="TbxAddPosition"
+									MinWidth="55"
+									Padding="0,1,0,2"
+									FontSize="{StaticResource FontSize.Normal}"
+									Background="Transparent"
+									Foreground="White"
+									BorderThickness="0"
+									TextAlignment="Center"
+									Text="{Binding ElementName=WinUnitStyle,
+																 Path=Lv1SelIndex,
+																 StringFormat='{}{0:F}',
+																 Mode=TwoWay}"
+									AcceptsReturn="False"
+									AcceptsTab="False"
+									AutoWordSelection="True"
+									/>
+							<!--  Text="{Binding ElementName=WinUnitStyle,  -->
+							<!--  Path=InsertPosition,  -->
+							<!--  Mode=TwoWay}"  -->
+
+						</Border>
+
+						<Button x:Name="BtnAddLast"
+								HorizontalAlignment="Right"
+								VerticalAlignment="Bottom"
+								FontSize="{StaticResource FontSize.Normal}"
+								IsEnabled="False"
+								DockPanel.Dock="Right"
+								Template="{StaticResource Button.Normal.ControlTemplate}"
+								>
+
+							<Button.Content>
+								<TextBlock Padding="15,1,15,3"
+										FontSize="{StaticResource FontSize.Normal}"
+										Text="Add Last"
+										/>
+							</Button.Content>
+						</Button>
+
+					</DockPanel>
+
+					<DockPanel x:Name="Column0"
+							Grid.Column="0"
+							Grid.Row="0"
+							Grid.RowSpan="2"
+							Margin="0,0,0,0"
+							DataContext="{Binding ElementName=WinUnitStyle,
+																		Path=DetailUnit}"
+							d:DataContext="{Binding Source={x:Static unitsUtil:UnitStdStylesD.ListD},
+																			Path=[0]}"
+							>
+
+
+						<Border x:Name="Column0Title"
+								Margin="0,0,0,3"
+								DockPanel.Dock="Top"
+								Style="{StaticResource Bdr.Hdr.Prime}"
+								>
+
+							<TextBlock Padding="5,0,0,2"
+									FontSize="{StaticResource FontSize.XLarge}"
+									Foreground="Black"
+									Text="Current Project Length Unit"
+									/>
+						</Border>
+
+						<StackPanel x:Name="ProjUnit"
+								DockPanel.Dock="Top"
+								Orientation="Vertical"
+								>
+
+							<StackPanel x:Name="Sp_UnitName"
+									Style="{StaticResource StkPnl}"
+									>
+
+								<Border Style="{StaticResource Bdr.Proj.Units.Title}">
+									<TextBlock Text="Name"
+											Style="{StaticResource Tblk.Desc}"
+											/>
+								</Border>
+
+								<Border x:Name="Name_Units"
+										Style="{StaticResource Bdr.Proj.Units.Value}"
+										>
+									<TextBlock Text="{Binding Ustyle.Name,
+																		 FallbackValue='none'}"
+											Style="{StaticResource Tblk.Value}"
+											/>
+								</Border>
+
+							</StackPanel>
+
+							<StackPanel x:Name="Sp_UnitDesc"
+									Style="{StaticResource StkPnl}"
+									>
+
+								<Border Style="{StaticResource Bdr.Proj.Units.Title}">
+									<TextBlock Text="Desc"
+											Style="{StaticResource Tblk.Desc}"
+											/>
+								</Border>
+
+								<Border x:Name="Desc_Units"
+										Style="{StaticResource Bdr.Proj.Units.Value}"
+										>
+									<TextBlock Text="{Binding Ustyle.Description,
+																		 FallbackValue='none'}"
+											Style="{StaticResource Tblk.Value}"
+											/>
+								</Border>
+
+							</StackPanel>
+
+							<StackPanel x:Name="Sp_UnitSys"
+									Style="{StaticResource StkPnl}"
+									>
+
+								<Border Style="{StaticResource Bdr.Proj.Units.Title}">
+									<TextBlock Text="Unit System"
+											Style="{StaticResource Tblk.Desc}"
+											/>
+								</Border>
+
+								<Border x:Name="Unit_System"
+										Style="{StaticResource Bdr.Proj.Units.Value}"
+										>
+									<!--  d:Text="Unit System"  -->
+									<TextBlock Text="{Binding USystem,
+																		 FallbackValue='missing'}"
+											Style="{StaticResource Tblk.Value}"
+											/>
+								</Border>
+
+							</StackPanel>
+
+							<StackPanel x:Name="Sp_Symbol"
+									Style="{StaticResource StkPnl}"
+									>
+								<Border Style="{StaticResource Bdr.Proj.Units.Title}">
+									<TextBlock Text="Symbol"
+											Style="{StaticResource Tblk.Desc}"
+											/>
+								</Border>
+
+								<Border x:Name="Value_Symbol"
+										Style="{StaticResource Bdr.Proj.Units.Value}"
+										>
+									<!--  d:Text="Unit Symbol"  -->
+									<TextBlock Text="{Binding UnitSymbolFormated,
+																		 FallbackValue='missing'}"
+											Style="{StaticResource Tblk.Value}"
+											/>
+								</Border>
+							</StackPanel>
+
+							<StackPanel x:Name="Sp_Rounding"
+									Style="{StaticResource StkPnl}"
+									>
+								<Border Style="{StaticResource Bdr.Proj.Units.Title}">
+									<TextBlock Text="Rounding"
+											Style="{StaticResource Tblk.Desc}"
+											/>
+								</Border>
+
+								<Border x:Name="Value_Rounding"
+										Style="{StaticResource Bdr.Proj.Units.Value}"
+										>
+									<!--  d:Text="Unit Rounding"  -->
+									<TextBlock Text="{Binding UnitPrecisionFormatted,
+																		 FallbackValue='missing'}"
+											Style="{StaticResource Tblk.Value}"
+											/>
+								</Border>
+							</StackPanel>
+
+							<StackPanel x:Name="Sp_LeadZero"
+									Style="{StaticResource StkPnl}"
+									>
+								<Border Style="{StaticResource Bdr.Proj.Units.Title}">
+									<TextBlock Text="Leading Zero"
+											Style="{StaticResource Tblk.Desc}"
+											/>
+								</Border>
+
+								<Border x:Name="Value_LeadZero"
+										Style="{StaticResource Bdr.Proj.Units.Value}"
+										>
+									<!--  d:Text="Unit Lead Zero"  -->
+									<TextBlock IsEnabled="{Binding UnitLeadZeroEnable}"
+											Text="{Binding UnitLeadZero,
+																		 FallbackValue='missing'}"
+											Style="{StaticResource Tblk.Value}"
+											/>
+								</Border>
+							</StackPanel>
+
+							<StackPanel x:Name="Sp_TrailZero"
+									Style="{StaticResource StkPnl}"
+									>
+								<Border Style="{StaticResource Bdr.Proj.Units.Title}">
+									<TextBlock Text="Trailing Zeros"
+											Style="{StaticResource Tblk.Desc}"
+											/>
+								</Border>
+
+								<Border x:Name="Value_TrailZero"
+										Style="{StaticResource Bdr.Proj.Units.Value}"
+										>
+									<!--  d:Text="Unit Trail Zero"  -->
+									<TextBlock IsEnabled="{Binding UnitTrailZeroEnable}"
+											Text="{Binding UnitTrailZero,
+																		 FallbackValue='missing'}"
+											Style="{StaticResource Tblk.Value}"
+											/>
+								</Border>
+							</StackPanel>
+
+							<StackPanel x:Name="Sp_Spaces"
+									Style="{StaticResource StkPnl}"
+									>
+								<Border Style="{StaticResource Bdr.Proj.Units.Title}">
+									<TextBlock Text="Show Extra Spaces"
+											Style="{StaticResource Tblk.Desc}"
+											/>
+								</Border>
+
+								<Border x:Name="Value_Spaces"
+										Style="{StaticResource Bdr.Proj.Units.Value}"
+										>
+									<!--  d:Text="Unit Show Extra Spaces"  -->
+									<TextBlock IsEnabled="{Binding UnitExtraSpacesEnable}"
+											Text="{Binding UnitExtraSpaces,
+																		 FallbackValue='missing'}"
+											Style="{StaticResource Tblk.Value}"
+											/>
+								</Border>
+							</StackPanel>
+
+							<StackPanel x:Name="Sp_UsePlus"
+									Style="{StaticResource StkPnl}"
+									>
+								<Border Style="{StaticResource Bdr.Proj.Units.Title}">
+									<TextBlock Text="Show + for Positive Values"
+											Style="{StaticResource Tblk.Desc}"
+											/>
+								</Border>
+
+								<Border x:Name="Value_UsePlus"
+										Style="{StaticResource Bdr.Proj.Units.Value}"
+										>
+									<!--  d:Text="Unit Show Plus"  -->
+									<TextBlock IsEnabled="{Binding UnitShowPlusEnable}"
+											Text="{Binding UnitShowPlus,
+																		 FallbackValue='missing'}"
+											Style="{StaticResource Tblk.Value}"
+											/>
+								</Border>
+							</StackPanel>
+
+							<StackPanel x:Name="Sp_Grouping"
+									Style="{StaticResource StkPnl}"
+									>
+								<Border Style="{StaticResource Bdr.Proj.Units.Title}">
+									<TextBlock Text="Use Digit Grouping"
+											Style="{StaticResource Tblk.Desc}"
+											/>
+								</Border>
+
+								<Border x:Name="Value_Grouping"
+										Style="{StaticResource Bdr.Proj.Units.Value}"
+										>
+									<!--  d:Text="Unit Grouping"  -->
+									<TextBlock IsEnabled="{Binding UnitDigitGrpEnable}"
+											Text="{Binding UnitDigitGrp,
+																		 FallbackValue='missing'}"
+											Style="{StaticResource Tblk.Value}"
+											/>
+								</Border>
+							</StackPanel>
+
+
+							<StackPanel x:Name="Sp_UnitSample"
+									Style="{StaticResource StkPnl}"
+									>
+
+								<Border Style="{StaticResource Bdr.Proj.Units.Title}">
+									<TextBlock Text="Unit Sample"
+											Style="{StaticResource Tblk.Desc}"
+											/>
+								</Border>
+
+								<Border x:Name="Unit_Sample"
+										Style="{StaticResource Bdr.Proj.Units.Value}"
+										>
+									<!--  d:Text="120'-11 248/255&quot;"  -->
+									<TextBlock Text="{Binding UnitSampleFormatted,
+																		 FallbackValue='missing'}"
+											Style="{StaticResource Tblk.Value}"
+											/>
+								</Border>
+
+							</StackPanel>
+
+						</StackPanel>
+
+						<DockPanel x:Name="AddUnit"
+								HorizontalAlignment="Stretch"
+								VerticalAlignment="Bottom"
+								DataContext="{Binding ElementName=WinUnitStyle}"
+								DockPanel.Dock="Bottom"
+								>
+
+
+							<ComboBox x:Name="Cbx1"
+									Margin="5,0,0,0"
+									Width="200"
+									Height="24"
+									Padding="0,1,0,1"
+									HorizontalAlignment="Left"
+									DataContext="{Binding ElementName=WinUnitStyle}"
+
+									FontSize="12"
+									BorderThickness="2"
+									custom:CustomProperties.MouseOverBrush="{StaticResource ItemsControl.Subject.Background.MouseOver}"
+									custom:CustomProperties.NotEnabledBrush="{StaticResource ItemsControl.Subject.Background.Disabled}"
+									IsEditable="False"
+									IsSynchronizedWithCurrentItem="True"
+									custom:CustomProperties.DropDownBrushh="{StaticResource ItemsControl.ListItem.Background.Normal}"
+									custom:CustomProperties.DropDownWidth="180.0"
+
+									DockPanel.Dock="Top"
+									MaxDropDownHeight="200"
+
+									SelectedIndex="{Binding CbxSelIndex}"
+									SelectedItem="{Binding CbxSelItem,
+																				 Mode=TwoWay}"
+									Initialized="CbxStdStyles_Initialized"
+									Foreground="White"
+
+
+									ItemsSource="{Binding Path=StdStyles}"
+									FocusVisualStyle="{x:Null}"
+									Style="{StaticResource CbxExStyle1}"
+									Template="{StaticResource CbxEx1Ct1}"
+									>
+								<!-- ItemTemplate="{StaticResource CbxEx1Dt1}" -->
+								<ComboBox.ItemTemplate>
+									<DataTemplate >
+										<Border>
+											<TextBlock Margin="0"
+													Padding="0,0,0,2"
+													Background="Chartreuse"
+													HorizontalAlignment="Stretch"
+													Text="{Binding Path=Value.Ustyle.Name, FallbackValue='hello'}">
+												<TextBlock.Style>
+													<Style TargetType="TextBlock">
+														<Setter Property="Foreground" Value="White" />
+														<Setter Property="Visibility" Value="Visible" />
+														<!-- <Style.Triggers> -->
+														<!-- 	<DataTrigger Value="0" Binding="{Binding Path=OpCodeValue}"> -->
+														<!-- 		<Setter Property="Visibility" Value="Collapsed" /> -->
+														<!-- 	</DataTrigger> -->
+														<!-- 	<Trigger Property="IsEnabled" Value="false"> -->
+														<!-- 		<Setter Property="Foreground" Value="{StaticResource ItemsControl.Text.Disabled}" /> -->
+														<!-- 	</Trigger> -->
+														<!-- </Style.Triggers> -->
+													</Style>
+												</TextBlock.Style>
+											</TextBlock>
+											</Border>
+									</DataTemplate>
+								</ComboBox.ItemTemplate>
+
+
+							</ComboBox>
+
+
+							<ComboBox x:Name="CbxStdStyles"
+									DataContext="{Binding ElementName=WinUnitStyle}"
+									d:DataContext="{Binding ElementName=WinUnitStyle}"
+									Background="Black"
+									IsSynchronizedWithCurrentItem="True"
+									d:ItemsSource="{Binding Path=StdStyles}"
+									d:DisplayMemberPath="Value.Ustyle.Name"
+									DockPanel.Dock="Top"
+									SelectedIndex="{Binding CbxSelIndex}"
+									SelectedItem="{Binding CbxSelItem,
+																				 Mode=TwoWay}"
+									Initialized="CbxStdStyles_Initialized"
+									DisplayMemberPath="Value.Ustyle.Name"
+									ItemsSource="{Binding Path=StdStyles}"
+									>
+								<!--  SelectedValuePath="Key"  -->
+								<!--  d:SelectedValuePath="Key"  -->
+								<!--  SelectedValue="{Binding CbxSelValue, Mode=TwoWay}"  -->
+								<!--  SelectedValue="{Binding CbxSelValue}"  -->
+								<!--  DataContext="{Binding ElementName=WinUnitStyle}"  -->
+								<!--  d:DataContext="{Binding ElementName=WinUnitStyle}"  -->
+
+							</ComboBox>
+
+
+							<TextBlock x:Name="AddTitle1"
+									Margin="0,10,5,0"
+									HorizontalAlignment="Stretch"
+									FontSize="{StaticResource FontSize.Normal}"
+									DockPanel.Dock="Top"
+									Text="Add the above as a new style?"
+									TextWrapping="Wrap"
+									/>
+
+							<TextBlock x:Name="NameTitle"
+									Margin="0,5,5,5"
+									FontSize="{StaticResource FontSize.Normal}"
+									DockPanel.Dock="Top"
+									Text="Name for this style"
+									/>
+
+							<Border x:Name="NameEntry"
+									VerticalAlignment="Bottom"
+									BorderThickness="1"
+									DockPanel.Dock="Top"
+									Style="{StaticResource Bdr.Value.Entry}"
+									>
+								<TextBox x:Name="TbxNameEntry"
+										Padding="5,0,5,2"
+										FontSize="{StaticResource FontSize.Normal}"
+										Background="Transparent"
+										Foreground="White"
+										BorderThickness="0"
+										Text="{Binding NewName,
+																	 Mode=TwoWay}"
+										AcceptsReturn="True"
+										AcceptsTab="True"
+										/>
+							</Border>
+
+							<TextBlock x:Name="DescTitle"
+									Margin="0,6,5,0"
+									FontSize="{StaticResource FontSize.Normal}"
+									DockPanel.Dock="Top"
+									Text="Description for the new Style"
+									/>
+
+							<Border x:Name="DescEntry"
+									Margin="0,7,0,3"
+									VerticalAlignment="Top"
+									BorderThickness="1"
+									DockPanel.Dock="Top"
+									Style="{StaticResource Bdr.Value.Entry}"
+									>
+
+								<TextBox x:Name="TbxDescEntry"
+										Padding="5,0,5,2"
+										FontSize="{StaticResource FontSize.Normal}"
+										Background="Transparent"
+										Foreground="White"
+										BorderThickness="0"
+										Text="{Binding NewDesc,
+																	 Mode=TwoWay}"
+										AcceptsReturn="True"
+										AcceptsTab="True"
+										/>
+
+							</Border>
+
+						</DockPanel>
+
+					</DockPanel>
+
+					<!--#endregion-->
+
+					<!--#region > column 1-->
+
+					<DockPanel x:Name="Lv1Control"
+							Grid.Column="1"
+							Grid.Row="2"
+							Margin="5,0,10,0"
+							HorizontalAlignment="Stretch"
+							VerticalAlignment="Bottom"
+							DockPanel.Dock="Bottom"
+							>
+
+						<Button x:Name="BtnUp"
+								Margin="0,0,5,0"
+								Height="{Binding ElementName=BtnAddBefore,
+																 Path=ActualHeight}"
+								HorizontalAlignment="Right"
+								FontSize="{StaticResource FontSize.Normal}"
+								DockPanel.Dock="Left"
+								Template="{StaticResource Button.Normal.ControlTemplate}"
+								Click="BtnUp_OnClick"
+								>
+							<Button.Content>
+								<TextBlock Padding="10,0,10,4"
+										FontSize="{StaticResource FontSize.Normal}"
+										Text="▲"
+										/>
+							</Button.Content>
+						</Button>
+
+						<Button x:Name="BtnDn"
+								Margin="0,0,5,0"
+								Height="{Binding ElementName=BtnAddBefore,
+																 Path=ActualHeight}"
+								HorizontalAlignment="Right"
+								DockPanel.Dock="Left"
+								Template="{StaticResource Button.Normal.ControlTemplate}"
+								Click="BtnDn_OnClick"
+								>
+							<Button.Content>
+								<TextBlock Padding="10,2,10,4"
+										FontSize="{StaticResource FontSize.Normal}"
+										Text="▼"
+										/>
+							</Button.Content>
+						</Button>
+
+						<Button x:Name="BtnDelete"
+								Margin="0,0,5,0"
+								Width="{Binding ElementName=BtnDn,
+																Path=ActualWidth,
+																FallbackValue=18}"
+								Height="{Binding ElementName=BtnDn,
+																 Path=ActualHeight,
+																 FallbackValue=18}"
+								Foreground="White"
+								DockPanel.Dock="Left"
+								Template="{StaticResource Button.Normal.ControlTemplate}"
+								Click="BtnDelete_OnClick"
+								>
+							<Button.Background>
+								<SolidColorBrush Color="{StaticResource Deep.Orange.600}">
+								</SolidColorBrush>
+							</Button.Background>
+							<Button.Content>
+
+								<Label Content="{StaticResource DeleteIcon}"
+										Foreground="White"
+										BorderThickness="0"
+										/>
+
+							</Button.Content>
+						</Button>
+
+						<Border x:Name="ChangeCount"
+								Margin="0,0,0,0"
+								HorizontalAlignment="Right"
+								VerticalAlignment="Stretch"
+								BorderThickness="1"
+								DockPanel.Dock="Left"
+								Visibility="Collapsed"
+								Style="{StaticResource Bdr.Value.Entry}"
+								>
+							<TextBlock Margin="0"
+									Width="60"
+									Padding="5,0,5,2"
+									HorizontalAlignment="Right"
+									FontSize="{StaticResource FontSize.Large}"
+									DockPanel.Dock="Right"
+									Text="{Binding HasChanges,
+																 StringFormat='{}{0:D2}',
+																 FallbackValue=0}"
+									TextAlignment="Center"
+									/>
+						</Border>
+
+
+					</DockPanel>
+
+					<DockPanel x:Name="Lv1Panel"
+							Grid.Column="1"
+							Grid.Row="0"
+							Grid.RowSpan="2"
+							Margin="3,0,0,0"
+							HorizontalAlignment="Stretch"
+							>
+
+						<Border Margin="3,0,10,3"
+								DockPanel.Dock="Top"
+								Style="{StaticResource Bdr.Hdr.Prime}"
+								>
+
+							<TextBlock Padding="5,0,0,2"
+									FontSize="{StaticResource FontSize.XLarge}"
+									Foreground="Black"
+									Text="Saved Styles"
+									/>
+						</Border>
+
+						<ListBox x:Name="lbx"
+								Margin="0,0,0,0"
+								Padding="0,0,0,0"
+								HorizontalAlignment="Stretch"
+								VerticalAlignment="Top"
+								HorizontalContentAlignment="Stretch"
+								DataContext="{Binding ElementName=WinUnitStyle,
+																			Path=StylesView}"
+								d:DataContext="{x:Static unitsUtil:UnitStdStylesD.ListD}"
+								Background="Transparent"
+								BorderThickness="0"
+								IsSynchronizedWithCurrentItem="True"
+								SelectedItem="{Binding ElementName=WinUnitStyle,
+																			 Path=Lv1SelItem,
+																			 Mode=OneWayToSource}"
+								SelectedIndex="{Binding Lv1SelIndex,
+																				ElementName=WinUnitStyle,
+																				Mode=TwoWay}"
+								DockPanel.Dock="Top"
+								Grid.IsSharedSizeScope="True"
+								ItemContainerStyle="{DynamicResource ListBoxItemContainerStyle1}"
+								ItemTemplate="{StaticResource Lv1ItemTemplate}"
+								ItemsSource="{Binding}"
+								>
+							<!--  SelectedIndex="{Binding ElementName=WinUnitStyle,  -->
+							<!--  Path=SelIndex,  -->
+							<!--  Mode=TwoWay}"  -->
+							<!--  SelectedItem="{Binding ElementName=WinUnitStyle,  -->
+							<!--  Path=SelItem,  -->
+							<!--  Mode=OneWayToSource}"  -->
+
+							<ListBox.Resources>
+
+								<Style TargetType="{x:Type ScrollViewer}"
+										BasedOn="{StaticResource svStyle}"
+										>
+								</Style>
+
+							</ListBox.Resources>
+
+							<ListBox.Style>
+								<Style TargetType="ListBox">
+									<Setter Property="HorizontalAlignment" Value="Stretch" />
+									<Setter Property="Template">
+										<Setter.Value>
+											<ControlTemplate x:Name="Lv1Ctl1"
+													TargetType="{x:Type ListBox}"
+													>
+												<ScrollViewer Padding="{TemplateBinding Padding}"
+														Focusable="false"
+														>
+													<ItemsPresenter SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
+												</ScrollViewer>
+											</ControlTemplate>
+										</Setter.Value>
+									</Setter>
+								</Style>
+							</ListBox.Style>
+
+						</ListBox>
+
+					</DockPanel>
+
+					<!--#endregion-->
+
+				</Grid>
+
+			</DataTemplate>
+
+
+			<DataTemplate x:Key="StylesOrder">
+
+			</DataTemplate>
+
+
+		</ResourceDictionary>
+
+	</Window.Resources>
+
+	<Grid x:Name="WinGrid"
+			Margin="15,12,8,8"
+			>
+		<Grid.ColumnDefinitions>
+			<ColumnDefinition Width="1*" />
+		</Grid.ColumnDefinitions>
+
+		<Grid.RowDefinitions>
+			<RowDefinition Height="{StaticResource Main.Row.Height}" />
+			<RowDefinition Height="{StaticResource Control.Row.Height}" />
+		</Grid.RowDefinitions>
+
+		<DockPanel x:Name="DialogControl"
+				Grid.Column="0"
+				Grid.Row="1"
+				Margin="0,0,10,0"
+				HorizontalAlignment="Stretch"
+				VerticalAlignment="Bottom"
+				>
+
+			<Button x:Name="BtnChgTemplate1"
+					Margin="0,0,5,0"
+					HorizontalAlignment="left"
+					VerticalAlignment="Bottom"
+					DockPanel.Dock="Left"
+					Template="{StaticResource Button.Normal.ControlTemplate}"
+					Click="BtnChgTemplate_OnClick"
+					>
+				<TextBlock Padding="12,0,12,4"
+						FontSize="{StaticResource FontSize.Normal}"
+						d:Text="Adjust Styles"
+						Text="{Binding ContentType}"
+						/>
+			</Button>
+
+			<Button x:Name="BtnDone"
+					Margin="5,0,0,0"
+					HorizontalAlignment="Right"
+					VerticalAlignment="Bottom"
+					FontSize="{StaticResource FontSize.Normal}"
+					DockPanel.Dock="Right"
+					Template="{StaticResource Button.Normal.ControlTemplate}"
+					Click="BtnDone_OnClick"
+					>
+				<TextBlock Padding="25,0,25,4"
+						FontSize="{StaticResource FontSize.Normal}"
+						Text="{Binding CloseType,
+													 FallbackValue='Done'}"
+						/>
+			</Button>
+
+			<Button x:Name="BtnApply"
+					Margin="5,0,0,0"
+					HorizontalAlignment="Right"
+					VerticalAlignment="Bottom"
+					DockPanel.Dock="Right"
+					Template="{StaticResource Button.Normal.ControlTemplate}"
+					Click="BtnApply_OnClick"
+					>
+				<TextBlock Padding="25,0,25,4"
+						FontSize="{StaticResource FontSize.Normal}"
+						Text="Apply"
+						/>
+			</Button>
+
+			<Button x:Name="BtnCancel"
+					Margin="5,0,0,0"
+					HorizontalAlignment="Right"
+					VerticalAlignment="Bottom"
+					DockPanel.Dock="Right"
+					Template="{StaticResource Button.Normal.ControlTemplate}"
+					Click="BtnCancel_OnClick"
+					>
+				<TextBlock Padding="25,0,25,4"
+						FontSize="{StaticResource FontSize.Normal}"
+						Text="Cancel"
+						/>
+			</Button>
+
+			<Button x:Name="BtnReset"
+					Margin="5,0,0,0"
+					HorizontalAlignment="Right"
+					VerticalAlignment="Bottom"
+					DockPanel.Dock="Right"
+					Template="{StaticResource Button.Normal.ControlTemplate}"
+					Click="BtnReset_OnClick"
+					>
+				<TextBlock Padding="25,0,25,4"
+						FontSize="{StaticResource FontSize.Normal}"
+						Text="Reset"
+						/>
+			</Button>
+
+			<Button x:Name="BtnDebug"
+					Margin="5,0,0,0"
+					HorizontalAlignment="Right"
+					VerticalAlignment="Bottom"
+					DockPanel.Dock="Right"
+					Template="{StaticResource Button.Normal.ControlTemplate}"
+					Click="BtnDebug_OnClick"
+					>
+				<TextBlock Padding="25,0,25,4"
+						FontSize="{StaticResource FontSize.Normal}"
+						Text="Debug"
+						/>
+			</Button>
+
+		</DockPanel>
+
+		<ContentControl x:Name="Content"
+				Grid.Column="0"
+				Grid.Row="0"
+				DataContext="{Binding ElementName=WinUnitStyle}"
+				>
+
+			<ContentControl.Style>
+				<Style TargetType="ContentControl">
+					<Setter Property="HorizontalAlignment" Value="Stretch" />
+					<Style.Triggers>
+						<DataTrigger Value="0" Binding="{Binding DialogIndex, FallbackValue='0'}">
+							<Setter Property="ContentTemplate" Value="{DynamicResource StylesSelection}">
+							</Setter>
+						</DataTrigger>
+						<DataTrigger Value="1" Binding="{Binding DialogIndex}">
+							<Setter Property="ContentTemplate" Value="{DynamicResource StylesOrder}">
+							</Setter>
+						</DataTrigger>
+					</Style.Triggers>
+				</Style>
+			</ContentControl.Style>
+
+		</ContentControl>
+
+	</Grid>
+
+</Window>
+
