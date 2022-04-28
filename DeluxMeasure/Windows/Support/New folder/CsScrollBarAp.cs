@@ -13,12 +13,12 @@ using Color = System.Drawing.Color;
 
 namespace DeluxMeasure.Windows.Support
 {
-	public class ScrollBarAttached : DependencyObject
+	public class CsScrollBarAp : DependencyObject
 	{
 	#region ScrollBarWidth
 
 		public static readonly DependencyProperty ScrollBarWidthProperty = DependencyProperty.RegisterAttached(
-			"ScrollBarWidth", typeof(double), typeof(ScrollBarAttached), new PropertyMetadata(8.0));
+			"ScrollBarWidth", typeof(double), typeof(CsScrollBarAp), new PropertyMetadata(8.0));
 
 		public static void SetScrollBarWidth(UIElement element, double value)
 		{
@@ -35,7 +35,7 @@ namespace DeluxMeasure.Windows.Support
 	#region scrollbar corner radius
 
 		public static readonly DependencyProperty ScrollBarCornerRadiusProperty = DependencyProperty.RegisterAttached(
-			"ScrollBarCornerRadius", typeof(CornerRadius), typeof(ScrollBarAttached), new PropertyMetadata(new CornerRadius(0)));
+			"ScrollBarCornerRadius", typeof(CornerRadius), typeof(CsScrollBarAp), new PropertyMetadata(new CornerRadius(0)));
 
 		public static void SetScrollBarCornerRadius(UIElement element, CornerRadius value)
 		{
@@ -52,7 +52,7 @@ namespace DeluxMeasure.Windows.Support
 	#region thumb corner radius
 
 		public static readonly DependencyProperty ThumbCornerRadiusProperty = DependencyProperty.RegisterAttached(
-			"ThumbCornerRadius", typeof(CornerRadius), typeof(ScrollBarAttached), new PropertyMetadata(new CornerRadius(0)));
+			"ThumbCornerRadius", typeof(CornerRadius), typeof(CsScrollBarAp), new PropertyMetadata(new CornerRadius(0)));
 
 		public static void SetThumbCornerRadius(UIElement element, CornerRadius value)
 		{
@@ -69,7 +69,7 @@ namespace DeluxMeasure.Windows.Support
 	#region vertical border thickness
 
 		public static readonly DependencyProperty VertBorderThicknessProperty = DependencyProperty.RegisterAttached(
-			"VertBorderThickness", typeof(Thickness), typeof(ScrollBarAttached), new PropertyMetadata(new Thickness(1,1,1,1)));
+			"VertBorderThickness", typeof(Thickness), typeof(CsScrollBarAp), new PropertyMetadata(new Thickness(1,1,1,1)));
 
 		public static void SetVertBorderThickness(UIElement e, Thickness value)
 		{
@@ -86,7 +86,7 @@ namespace DeluxMeasure.Windows.Support
 	#region vertical border color
 
 		public static readonly DependencyProperty VertBorderColorProperty = DependencyProperty.RegisterAttached(
-			"VertBorderColor", typeof(SolidColorBrush), typeof(ScrollBarAttached), 
+			"VertBorderColor", typeof(SolidColorBrush), typeof(CsScrollBarAp), 
 			new PropertyMetadata(Brushes.Black));
 
 		public static void SetVertBorderColor(UIElement e, SolidColorBrush value)
@@ -104,7 +104,7 @@ namespace DeluxMeasure.Windows.Support
 	#region horizontal border thickness
 
 		public static readonly DependencyProperty HorizBorderThicknessProperty = DependencyProperty.RegisterAttached(
-			"HorizBorderThickness", typeof(Thickness), typeof(ScrollBarAttached), new PropertyMetadata(new Thickness(1,1,1,1)));
+			"HorizBorderThickness", typeof(Thickness), typeof(CsScrollBarAp), new PropertyMetadata(new Thickness(1,1,1,1)));
 
 		public static void SetHorizBorderThickness(UIElement e, Thickness value)
 		{
@@ -121,7 +121,7 @@ namespace DeluxMeasure.Windows.Support
 	#region horizontal border color
 
 		public static readonly DependencyProperty HorizBorderColorProperty = DependencyProperty.RegisterAttached(
-			"HorizBorderColor", typeof(SolidColorBrush), typeof(ScrollBarAttached), 
+			"HorizBorderColor", typeof(SolidColorBrush), typeof(CsScrollBarAp), 
 			new PropertyMetadata(Brushes.Black));
 
 		public static void SetHorizBorderColor(UIElement e, SolidColorBrush value)
@@ -139,7 +139,7 @@ namespace DeluxMeasure.Windows.Support
 	#region TrackWidth
 
 		public static readonly DependencyProperty TrackWidthProperty = DependencyProperty.RegisterAttached(
-			"TrackWidth", typeof(double), typeof(ScrollBarAttached), new FrameworkPropertyMetadata(4.0,
+			"TrackWidth", typeof(double), typeof(CsScrollBarAp), new FrameworkPropertyMetadata(4.0,
 			FrameworkPropertyMetadataOptions.Inherits | FrameworkPropertyMetadataOptions.AffectsRender));
 
 		public static void SetTrackWidth(UIElement e, double value)
@@ -157,7 +157,7 @@ namespace DeluxMeasure.Windows.Support
 	#region RepeatButtonLength
 
 		public static readonly DependencyProperty RepeatButtonLengthProperty = DependencyProperty.RegisterAttached(
-			"RepeatButtonLength", typeof(double), typeof(ScrollBarAttached), new PropertyMetadata(8.0));
+			"RepeatButtonLength", typeof(double), typeof(CsScrollBarAp), new PropertyMetadata(8.0));
 
 		public static void SetRepeatButtonLength(UIElement e, double value)
 		{
@@ -174,7 +174,7 @@ namespace DeluxMeasure.Windows.Support
 	#region RepeatButtonIconLength
 
 		public static readonly DependencyProperty RepeatButtonIconLengthProperty = DependencyProperty.RegisterAttached(
-			"RepeatButtonIconLength", typeof(double), typeof(ScrollBarAttached), new PropertyMetadata(6.0));
+			"RepeatButtonIconLength", typeof(double), typeof(CsScrollBarAp), new PropertyMetadata(6.0));
 
 		public static void SetRepeatButtonIconLength(UIElement e, double value)
 		{
@@ -191,7 +191,7 @@ namespace DeluxMeasure.Windows.Support
 	#region RepeatButtonIconGirth
 
 		public static readonly DependencyProperty RepeatButtonIconGirthProperty = DependencyProperty.RegisterAttached(
-			"RepeatButtonIconGirth", typeof(double), typeof(ScrollBarAttached), new PropertyMetadata(6.0));
+			"RepeatButtonIconGirth", typeof(double), typeof(CsScrollBarAp), new PropertyMetadata(6.0));
 
 		public static void SetRepeatButtonIconGirth(UIElement e, double value)
 		{
@@ -208,7 +208,7 @@ namespace DeluxMeasure.Windows.Support
 	#region IconMarginTop
 
 		public static readonly DependencyProperty IconMarginTopEndProperty = DependencyProperty.RegisterAttached(
-			"IconMarginTopEnd", typeof(Thickness), typeof(ScrollBarAttached), new PropertyMetadata(new Thickness(0,0,0,0)));
+			"IconMarginTopEnd", typeof(Thickness), typeof(CsScrollBarAp), new PropertyMetadata(new Thickness(0,0,0,0)));
 
 		public static void SetIconMarginTopEnd(UIElement e, Thickness value)
 		{
@@ -225,7 +225,7 @@ namespace DeluxMeasure.Windows.Support
 	#region IconMarginBottom
 
 		public static readonly DependencyProperty IconMarginBottomEndProperty = DependencyProperty.RegisterAttached(
-			"IconMarginBottomEnd", typeof(Thickness), typeof(ScrollBarAttached), new PropertyMetadata(new Thickness(0,0,0,0)));
+			"IconMarginBottomEnd", typeof(Thickness), typeof(CsScrollBarAp), new PropertyMetadata(new Thickness(0,0,0,0)));
 
 		public static void SetIconMarginBottomEnd(UIElement e, Thickness value)
 		{
@@ -242,7 +242,7 @@ namespace DeluxMeasure.Windows.Support
 	#region IconMarginLeft
 
 		public static readonly DependencyProperty IconMarginLeftEndProperty = DependencyProperty.RegisterAttached(
-			"IconMarginLeftEnd", typeof(Thickness), typeof(ScrollBarAttached), new PropertyMetadata(new Thickness(0,0,0,0)));
+			"IconMarginLeftEnd", typeof(Thickness), typeof(CsScrollBarAp), new PropertyMetadata(new Thickness(0,0,0,0)));
 
 		public static void SetIconMarginLeftEnd(UIElement e, Thickness value)
 		{
@@ -259,7 +259,7 @@ namespace DeluxMeasure.Windows.Support
 	#region IconMarginRight
 
 		public static readonly DependencyProperty IconMarginRightEndProperty = DependencyProperty.RegisterAttached(
-			"IconMarginRightEnd", typeof(Thickness), typeof(ScrollBarAttached), new PropertyMetadata(new Thickness(0,0,0,0)));
+			"IconMarginRightEnd", typeof(Thickness), typeof(CsScrollBarAp), new PropertyMetadata(new Thickness(0,0,0,0)));
 
 		public static void SetIconMarginRightEnd(UIElement e, Thickness value)
 		{

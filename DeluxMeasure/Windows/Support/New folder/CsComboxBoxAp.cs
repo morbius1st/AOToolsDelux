@@ -13,48 +13,13 @@ using Brushes = System.Drawing.Brushes;
 
 namespace DeluxMeasure.Windows.Support
 {
-	public class CustomProperties : DependencyObject
+	public class CsComboxBoxAp : DependencyObject
 	{
-	#region GenericBoolOne
-
-		public static readonly DependencyProperty GenericBoolOneProperty = DependencyProperty.RegisterAttached(
-			"GenericBoolOne", typeof(bool), typeof(CustomProperties),
-			new PropertyMetadata(false));
-
-		public static void SetGenericBoolOne(UIElement e, bool value)
-		{
-			e.SetValue(GenericBoolOneProperty, value);
-		}
-
-		public static bool GetGenericBoolOne(UIElement e)
-		{
-			return (bool) e.GetValue(GenericBoolOneProperty);
-		}
-
-	#endregion
-
-	#region GenericBoolOne
-
-		public static readonly DependencyProperty GenericBoolTwoProperty = DependencyProperty.RegisterAttached(
-			"GenericBoolTwo", typeof(bool), typeof(CustomProperties),
-			new PropertyMetadata(false));
-
-		public static void SetGenericBoolTwo(UIElement e, bool value)
-		{
-			e.SetValue(GenericBoolTwoProperty, value);
-		}
-
-		public static bool GetGenericBoolTwo(UIElement e)
-		{
-			return (bool) e.GetValue(GenericBoolTwoProperty);
-		}
-
-	#endregion
 
 	#region DropDownWidth
 
 		public static readonly DependencyProperty DropDownWidthProperty = DependencyProperty.RegisterAttached(
-			"DropDownWidth", typeof(double), typeof(CustomProperties), new PropertyMetadata(100.0));
+			"DropDownWidth", typeof(double), typeof(CsComboxBoxAp), new PropertyMetadata(100.0));
 
 		public static void SetDropDownWidth(UIElement e, double value)
 		{
@@ -71,7 +36,7 @@ namespace DeluxMeasure.Windows.Support
 	#region MouseOverBrush
 
 		public static readonly DependencyProperty MouseOverBrushProperty = DependencyProperty.RegisterAttached(
-			"MouseOverBrush", typeof(SolidColorBrush), typeof(CustomProperties), new PropertyMetadata(default(SolidColorBrush)));
+			"MouseOverBrush", typeof(SolidColorBrush), typeof(CsComboxBoxAp), new PropertyMetadata(default(SolidColorBrush)));
 
 		public static void SetMouseOverBrush(UIElement e, SolidColorBrush value)
 		{
@@ -88,7 +53,7 @@ namespace DeluxMeasure.Windows.Support
 	#region DropDownBrush
 
 		public static readonly DependencyProperty  DropDownBrushProperty = DependencyProperty.RegisterAttached(
-			"DropDownBrush", typeof(SolidColorBrush), typeof(CustomProperties), new PropertyMetadata(default(SolidColorBrush)));
+			"DropDownBrush", typeof(SolidColorBrush), typeof(CsComboxBoxAp), new PropertyMetadata(default(SolidColorBrush)));
 
 		public static void SetDropDownBrushh(UIElement e, SolidColorBrush value)
 		{
@@ -105,7 +70,7 @@ namespace DeluxMeasure.Windows.Support
 	#region NotEnabledBrush
 
 		public static readonly DependencyProperty NotEnabledBrushProperty = DependencyProperty.RegisterAttached(
-			"NotEnabledBrush", typeof(SolidColorBrush), typeof(CustomProperties), new PropertyMetadata(default(SolidColorBrush)));
+			"NotEnabledBrush", typeof(SolidColorBrush), typeof(CsComboxBoxAp), new PropertyMetadata(default(SolidColorBrush)));
 
 		public static void SetNotEnabledBrush(UIElement e, SolidColorBrush value)
 		{

@@ -11,13 +11,13 @@ using Brushes = System.Windows.Media.Brushes;
 
 namespace DeluxMeasure.Windows.Support
 {
-	public class ScrollViewerAttached : DependencyObject
+	public class CsScrollViewerAp : DependencyObject
 	{
 
 	#region corner rectangle color
 
 		public static readonly DependencyProperty CornerRectColorProperty = DependencyProperty.RegisterAttached(
-			"CornerRectColor", typeof(SolidColorBrush), typeof(ScrollViewerAttached), 
+			"CornerRectColor", typeof(SolidColorBrush), typeof(CsScrollViewerAp), 
 			new PropertyMetadata(Brushes.Black));
 
 		public static void SetCornerRectColor(UIElement e, SolidColorBrush value)
@@ -35,7 +35,7 @@ namespace DeluxMeasure.Windows.Support
 	#region corner rectangle left border color
 
 		public static readonly DependencyProperty CornerRectLeftBdrColorProperty = DependencyProperty.RegisterAttached(
-			"CornerRectLeftBdrColor", typeof(SolidColorBrush), typeof(ScrollViewerAttached), 
+			"CornerRectLeftBdrColor", typeof(SolidColorBrush), typeof(CsScrollViewerAp), 
 			new PropertyMetadata(Brushes.Black));
 
 		public static void SetCornerRectLeftBdrColor(UIElement e, SolidColorBrush value)
@@ -53,7 +53,7 @@ namespace DeluxMeasure.Windows.Support
 	#region corner rectangle top border color
 
 		public static readonly DependencyProperty CornerRectTopBdrColorProperty = DependencyProperty.RegisterAttached(
-			"CornerRectTopBdrColor", typeof(SolidColorBrush), typeof(ScrollViewerAttached), 
+			"CornerRectTopBdrColor", typeof(SolidColorBrush), typeof(CsScrollViewerAp), 
 			new PropertyMetadata(Brushes.Black));
 
 		public static void SetCornerRectTopBdrColor(UIElement e, SolidColorBrush value)
@@ -71,7 +71,7 @@ namespace DeluxMeasure.Windows.Support
 	#region corner rectangle right border color
 
 		public static readonly DependencyProperty CornerRectRightBdrColorProperty = DependencyProperty.RegisterAttached(
-			"CornerRectRightBdrColor", typeof(SolidColorBrush), typeof(ScrollViewerAttached), 
+			"CornerRectRightBdrColor", typeof(SolidColorBrush), typeof(CsScrollViewerAp), 
 			new PropertyMetadata(Brushes.Black));
 
 		public static void SetCornerRectRightBdrColor(UIElement e, SolidColorBrush value)
@@ -89,7 +89,7 @@ namespace DeluxMeasure.Windows.Support
 	#region corner rectangle bottom border color
 
 		public static readonly DependencyProperty CornerRectBottBdrColorProperty = DependencyProperty.RegisterAttached(
-			"CornerRectBottBdrColor", typeof(SolidColorBrush), typeof(ScrollViewerAttached), 
+			"CornerRectBottBdrColor", typeof(SolidColorBrush), typeof(CsScrollViewerAp), 
 			new PropertyMetadata(Brushes.Black));
 
 		public static void SetCornerRectBottBdrColor(UIElement e, SolidColorBrush value)
@@ -107,7 +107,7 @@ namespace DeluxMeasure.Windows.Support
 	#region corner rectangle left border height
 
 		public static readonly DependencyProperty CornerRectLeftBdrHeightProperty = DependencyProperty.RegisterAttached(
-			"CornerRectLeftBdrHeight", typeof(double), typeof(ScrollViewerAttached), new PropertyMetadata(0.0));
+			"CornerRectLeftBdrHeight", typeof(double), typeof(CsScrollViewerAp), new PropertyMetadata(0.0));
 
 		public static void SetCornerRectLeftBdrHeight(UIElement e, double value)
 		{
@@ -124,7 +124,7 @@ namespace DeluxMeasure.Windows.Support
 	#region corner rectangle top border height
 
 		public static readonly DependencyProperty CornerRectTopBdrHeightProperty = DependencyProperty.RegisterAttached(
-			"CornerRectTopBdrHeight", typeof(double), typeof(ScrollViewerAttached), new PropertyMetadata(0.0));
+			"CornerRectTopBdrHeight", typeof(double), typeof(CsScrollViewerAp), new PropertyMetadata(0.0));
 
 		public static void SetCornerRectTopBdrHeight(UIElement e, double value)
 		{
@@ -141,7 +141,7 @@ namespace DeluxMeasure.Windows.Support
 	#region corner rectangle right border height
 
 		public static readonly DependencyProperty CornerRectRightBdrHeightProperty = DependencyProperty.RegisterAttached(
-			"CornerRectRightBdrHeight", typeof(double), typeof(ScrollViewerAttached), 
+			"CornerRectRightBdrHeight", typeof(double), typeof(CsScrollViewerAp), 
 			new PropertyMetadata(0.0));
 
 		public static void SetCornerRectRightBdrHeight(UIElement e, double value)
@@ -159,7 +159,7 @@ namespace DeluxMeasure.Windows.Support
 	#region corner rectangle bottom border height
 
 		public static readonly DependencyProperty CornerRectBottBdrHeightProperty = DependencyProperty.RegisterAttached(
-			"CornerRectBottBdrHeight", typeof(double), typeof(ScrollViewerAttached), 
+			"CornerRectBottBdrHeight", typeof(double), typeof(CsScrollViewerAp), 
 			new PropertyMetadata(0.0));
 
 		public static void SetCornerRectBottBdrHeight(UIElement e, double value)

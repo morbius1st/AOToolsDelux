@@ -12,6 +12,7 @@ using Autodesk.Revit.UI;
 using Autodesk.Revit.DB;
 using DeluxMeasure.UnitsUtil;
 using SettingsManager;
+using UtilityLibrary;
 using ComboBox = System.Windows.Controls.ComboBox;
 using static DeluxMeasure.UnitsUtil.UnitsStdUStyles;
 
@@ -19,8 +20,30 @@ namespace DeluxMeasure.Windows
 {
 	/*
 
+	UI adjustments:
+	* Length Unit Settings
+	 * change title to Unit Settings
+	 * add subtitle to "Length"
+	 * add source dropdown
+	 * -> standard Style + {a standard style name}
+	 * -> user Style
+	 * * whichever style shown
+	 *	-> duplicate as a new style / add to list
+	 *  -> cannot duplicate "project" from standard styles
+
+	* allow user to delete "feet and decimal inches"
+
+
 	features / functions
 	(in no order)
+
+	 * startup
+		-> as configured
+		and
+		-> add project as a place holder
+
+	 * save
+		-> save project as a place holder
 
 	 * based on the current unit settings, create a new unit style
 		-> get name (shown in lists) and description
@@ -87,8 +110,6 @@ namespace DeluxMeasure.Windows
 
 		private Image img;
 
-		private int insertPosition;
-
 		private int lv1SelIndex;
 		private UnitsDataR lv1SelItem;
 
@@ -102,10 +123,13 @@ namespace DeluxMeasure.Windows
 
 		private int dialogIndex;
 
+		private int hasChanges;
+
+		private int insertPosition;
 		private string newName;
 		private string newDesc;
-
-		private int hasChanges;
+		private bool hasNewName = false;
+		private bool hasNewDesc = false;
 
 	#endregion
 
@@ -113,7 +137,6 @@ namespace DeluxMeasure.Windows
 
 		public UnitStylesManager()
 		{
-
 		#if PATH
 			MethodBase mb = new StackTrace().GetFrame(1).GetMethod();
 			Debug.WriteLine($"@UnitStyleMgr: ctor: {(mb.ReflectedType?.FullName ?? "is null")} > {mb.Name}");
@@ -136,7 +159,7 @@ namespace DeluxMeasure.Windows
 
 		public Image Imgs => img;
 
-		// the current project unit information
+		// the current displayed unit information
 		public UnitsDataR DetailUnit
 		{
 			get => detailUnit;
@@ -153,28 +176,6 @@ namespace DeluxMeasure.Windows
 		public ListCollectionView StylesView => styles;
 
 		public Dictionary<string, UnitsDataR> StdStyles => uMgr.StdStyles;
-
-		public int DialogIndex
-		{
-			get => dialogIndex;
-			set
-			{
-				if (value == dialogIndex) return;
-				dialogIndex = value;
-				OnPropertyChanged();
-			}
-		}
-
-		public int Lv1SelIndex
-		{
-			get => lv1SelIndex;
-			set
-			{
-				if (value == lv1SelIndex) return;
-				lv1SelIndex = value;
-				OnPropertyChanged();
-			}
-		}
 
 		public UnitsDataR Lv1SelItem
 		{
@@ -235,8 +236,14 @@ namespace DeluxMeasure.Windows
 			get => newName;
 			set
 			{
+				if (value.Equals(newName)) return;
+
+				hasNewName = !value.IsVoid();
+
 				newName = value;
 				OnPropertyChanged();
+				OnPropertyChanged(nameof(CanAddNew));
+
 			}
 		}
 
@@ -245,17 +252,44 @@ namespace DeluxMeasure.Windows
 			get => newDesc;
 			set
 			{
+				if (value.Equals(newDesc)) return;
+
+				hasNewDesc = !value.IsVoid();
+
 				newDesc = value;
+				OnPropertyChanged();
+				OnPropertyChanged(nameof(CanAddNew));
+			}
+		}
+
+		public string ContentType => contentSelection[dialogIndex];
+
+		public string CloseType => closeSelection[hasChanges > 1 ? 1 : 0];
+
+
+		public int DialogIndex
+		{
+			get => dialogIndex;
+			set
+			{
+				if (value == dialogIndex) return;
+				dialogIndex = value;
 				OnPropertyChanged();
 			}
 		}
 
+		public int Lv1SelIndex
+		{
+			get => lv1SelIndex;
+			set
+			{
+				if (value == lv1SelIndex) return;
+				lv1SelIndex = value;
+				OnPropertyChanged();
+			}
+		}
 
 		public int Count => styles.Count;
-
-		public string ContentType => contentSelection[dialogIndex];
-
-		public string CloseType => closeSelection[hasChanges > 1 ? 1: 0];
 
 		public bool IsModified => hasChanges > 0;
 
@@ -272,10 +306,10 @@ namespace DeluxMeasure.Windows
 			}
 		}
 
-		private FrameworkContentElement ce;
-		public FrameworkContentElement ContentElement
+
+		public bool CanAddNew
 		{
-			set => ce = value;
+			get { return true; }
 		}
 
 	#endregion
@@ -285,25 +319,6 @@ namespace DeluxMeasure.Windows
 	#endregion
 
 	#region public methods
-
-		public void Init()
-		{
-			initStatus = true;
-
-			HasChanges = 0;
-
-			configView();
-
-			DialogIndex = 0;
-
-			// CbxSelIndex = 0;
-
-			// setUnitDisplay(STYLE_ID.Project.NameId);
-
-			OnPropertyChanged(nameof(StylesView));
-
-			initStatus = false;
-		}
 
 
 
@@ -329,16 +344,32 @@ namespace DeluxMeasure.Windows
 
 	#region private methods
 
-		// private void setUnitDisplay(string which)
-		// {
-		// 	if (which.Equals(STYLE_ID.Project.NameId))
-		// 	{
-		// 		DetailUnit= uMgr.ProjectUnitStyle;
-		// 	}
-		// 	else
-		// 	{
-		// 		DetailUnit = StdStyles[which];
-		// 	}
+		private void Init()
+		{
+			initStatus = true;
+
+			HasChanges = 0;
+
+			configView();
+
+			DialogIndex = 0;
+
+			insertPosition = 0;
+
+			OnPropertyChanged(nameof(StylesView));
+			OnPropertyChanged(nameof(InsertPosition));
+
+			initStatus = false;
+		}
+
+
+		private bool canAddNew()
+		{
+			// 
+
+
+			return true;
+		}
 
 		private void setUnitDisplay(string name)
 		{
@@ -348,7 +379,6 @@ namespace DeluxMeasure.Windows
 			{
 				DetailUnit = udr;
 			}
-
 		}
 
 		private UnitsDataR getStdStyleFromName(string name)
@@ -372,7 +402,7 @@ namespace DeluxMeasure.Windows
 		private void configView()
 		{
 			uMgr.SetInitialSequence();
-			
+
 			styles = (ListCollectionView) CollectionViewSource.GetDefaultView(uMgr.StyleList);
 			styles.CurrentChanged += Styles_CurrentChanged;
 
@@ -383,10 +413,7 @@ namespace DeluxMeasure.Windows
 			styles.IsLiveSorting = true;
 		}
 
-		private void setInitialSequence()
-		{
-
-		}
+		private void setInitialSequence() { }
 
 		private bool isNotDeleted(object obj)
 		{
@@ -435,6 +462,12 @@ namespace DeluxMeasure.Windows
 
 	#region event consuming
 
+		private void CbxStdStyles_Initialized(object sender, EventArgs e)
+		{
+			cbx = (ComboBox) sender;
+			// cbx.SelectedIndex = 1;
+		}
+
 		private void Styles_CurrentChanged(object sender, EventArgs e)
 		{
 			if (initStatus) return;
@@ -462,6 +495,7 @@ namespace DeluxMeasure.Windows
 			UserSettings.Data.WinPosUnitStyleMgr = new WindowLocation(this.Top, this.Left);
 			UserSettings.Admin.Write();
 		}
+
 
 		private void BtnChgTemplate_OnClick(object sender, RoutedEventArgs e)
 		{
@@ -630,13 +664,10 @@ namespace DeluxMeasure.Windows
 			Lv1SelIndex = idx;
 		}
 
+		private void BtnAddBefore_OnClick(object sender, RoutedEventArgs e) { }
 
-		#endregion
+		private void BtnAddLast_OnClick(object sender, RoutedEventArgs e) { }
 
-		private void CbxStdStyles_Initialized(object sender, EventArgs e)
-		{
-			cbx = (ComboBox) sender;
-			// cbx.SelectedIndex = 1;
-		}
+	#endregion
 	}
 }

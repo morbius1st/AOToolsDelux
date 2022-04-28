@@ -118,8 +118,13 @@ namespace DeluxMeasure.UnitsUtil
 
 
 		[IgnoreDataMember]
-		public bool IsLocked => (UnitClass != UnitClass.CL_ORDINARY);
+		public bool IsLocked => (UnitClass < UnitClass.CL_ORDINARY);
 
+		[IgnoreDataMember]
+		public bool IsControl => this.UnitClass.Equals(UnitClass.CL_CONTROL);
+
+		[IgnoreDataMember]
+		public int ControlSeq => OrderInRibbon;
 
 		[IgnoreDataMember]
 		public int OrderInRibbon

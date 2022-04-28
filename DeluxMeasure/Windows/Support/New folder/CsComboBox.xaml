@@ -2,12 +2,12 @@
 		xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
 		xmlns:custom="clr-namespace:DeluxMeasure.Windows.Support"
 		xmlns:sys="clr-namespace:System;assembly=mscorlib"
-		>
+>
 	<!--  xmlns:treeSupport="clr-namespace:AndyShared.ClassificationDataSupport.TreeSupport;assembly=WpfShared"  -->
 
 	<sys:Double x:Key="ConditionFontSize">12</sys:Double>
 
-	<sys:Double x:Key="BarSizeOutline">12</sys:Double>
+	<sys:Double x:Key="BarSizeOutline">8</sys:Double>
 	<sys:Double x:Key="TrackWidth">4</sys:Double>
 	<sys:Double x:Key="RepeatButtonLength">10</sys:Double>
 	<sys:Double x:Key="RepeatButtonIconLength">6</sys:Double>
@@ -37,15 +37,17 @@
 	<SolidColorBrush x:Key="ItemsControl.ListItem.Background.Normal" Color="{DynamicResource Blue.400}" />
 
 
-	<sys:Double x:Key="DropDown.Width">180.0</sys:Double>
 
-	<!-- scroll viewer for combo box 
-	this relies on the re-configured
-	scroll bar style
+
+	<!--
+		scroll viewer for combo box
+		this relies on the re-configured
+		scroll bar style
 	-->
 	<ControlTemplate x:Key="CbxEx1Svwr1"
-			TargetType="{x:Type ScrollViewer}"
+			TargetType="ScrollViewer"
 			>
+
 		<Grid x:Name="Grid"
 				Background="{TemplateBinding Background}"
 				>
@@ -122,22 +124,24 @@
 			>
 
 		<Border x:Name="PART_ContentHost"
-				Focusable="False"
 				Background="{TemplateBinding Background}"
-
+				Focusable="False"
 				/>
 	</ControlTemplate>
 
-	<ControlTemplate x:Key="CbxEx1Tb1"
+	<ControlTemplate x:Key="CbxEx1Togg1"
 			TargetType="{x:Type ToggleButton}"
 			>
-		<Grid>
+		<Grid Margin="0">
 			<Grid.ColumnDefinitions>
-				<ColumnDefinition Width="20" />
+				<ColumnDefinition Width="16" />
 				<ColumnDefinition />
 			</Grid.ColumnDefinitions>
+
+			<!-- needed to create extend the clickable region -->
 			<Border x:Name="Border"
 					Grid.Column="0"
+					Background="Transparent"
 					BorderThickness="1"
 					CornerRadius="2"
 					/>
@@ -147,7 +151,8 @@
 					Padding="0"
 					Background="Transparent"
 					CornerRadius="2,0,0,2"
-					/>
+					/>			
+			<!--  Background="Transparent"  -->
 			<Path x:Name="Arrow"
 					Grid.Column="0"
 					Margin="0,1.5,0,0"
@@ -176,68 +181,68 @@
 		</ControlTemplate.Triggers>
 	</ControlTemplate>
 
-	<!-- template (control template) 
-	defines / references
-	-> toggle button (-> template (control template) -> "ComboBoxToggleButton1")
-	-> content presenter
-	-> the editable text box
-	-> visual states
+	<!--
+		template (control template)
+		defines / references
+		-> toggle button (-> template (control template) -> "ComboBoxToggleButton1")
+		-> content presenter
+		-> the editable text box
+		-> visual states
 	-->
 	<ControlTemplate x:Key="CbxEx1Ct1"
 			TargetType="ComboBox"
 			>
 		<Border x:Name="bdr_cbt1"
 				Margin="0,0,0,0"
-				Padding="4,0,10,0"
+				Padding="4,0,4,0"
 				BorderThickness="0"
 				CornerRadius="3"
 				>
 			<Border.Style>
 				<Style TargetType="Border">
 					<Setter Property="Background" Value="{Binding Background, RelativeSource={RelativeSource AncestorType={x:Type ComboBox}}}" />
-					<!-- <Setter Property="Background" Value="{StaticResource ItemsControl.Subject.Background.Normal}" /> -->
-
 					<Style.Triggers>
 						<!--  true  -->
 						<Trigger Property="IsMouseOver" Value="true">
-							<Setter Property="Background" Value="{Binding Path=(custom:CustomProperties.MouseOverBrush), RelativeSource={RelativeSource AncestorType={x:Type ComboBox}}}" />
+							<Setter Property="Background" Value="{Binding Path=(custom:CsComboxBoxAp.MouseOverBrush), RelativeSource={RelativeSource AncestorType={x:Type ComboBox}}}" />
 						</Trigger>
 						<Trigger Property="IsEnabled" Value="False">
 							<!--  false  -->
 							<Setter Property="TextElement.Foreground" Value="{StaticResource ItemsControl.Text.Disabled}" />
-							<Setter Property="Background" Value="{Binding Path=(custom:CustomProperties.NotEnabledBrush), RelativeSource={RelativeSource AncestorType={x:Type ComboBox}}}" />
+							<Setter Property="Background" Value="{Binding Path=(custom:CsComboxBoxAp.NotEnabledBrush), RelativeSource={RelativeSource AncestorType={x:Type ComboBox}}}" />
 						</Trigger>
-
 					</Style.Triggers>
 				</Style>
 			</Border.Style>
 
 			<Grid x:Name="cbx_gd1"
 					Margin="0"
+					HorizontalAlignment="Stretch"
 					>
 				<Grid.ColumnDefinitions>
 					<ColumnDefinition Width="20" />
-					<ColumnDefinition Width="Auto" />
+					<ColumnDefinition Width="*" />
 				</Grid.ColumnDefinitions>
 
 				<ToggleButton x:Name="ToggleButton"
 						Grid.Column="0"
 						Grid.ColumnSpan="2"
+						Padding="0"
 						Background="{TemplateBinding Background}"
 						IsChecked="{Binding IsDropDownOpen,
 																Mode=TwoWay,
 																RelativeSource={RelativeSource TemplatedParent}}"
 						ClickMode="Press"
 						Focusable="false"
-						Template="{StaticResource CbxEx1Tb1}"
+						Template="{StaticResource CbxEx1Togg1}"
 						/>
 
 				<ContentPresenter x:Name="ContentSite"
 						Content="{TemplateBinding SelectionBoxItem}"
 						Grid.Column="1"
-						Margin="0,0,1,0"
-						HorizontalAlignment="Left"
-						VerticalAlignment="Center"
+						Margin="0,0,0,0"
+						HorizontalAlignment="Stretch"
+						VerticalAlignment="Stretch"
 						IsHitTestVisible="False"
 						ContentTemplateSelector="{TemplateBinding ItemTemplateSelector}"
 						ContentTemplate="{TemplateBinding SelectionBoxItemTemplate}"
@@ -247,10 +252,9 @@
 
 				<TextBox x:Name="PART_EditableTextBox"
 						Grid.Column="1"
-						Margin="3,0,3,0"
-						HorizontalAlignment="Left"
-						VerticalAlignment="Bottom"
-						Background="Transparent"
+						Margin="0"
+						HorizontalAlignment="Stretch"
+						VerticalAlignment="Stretch"
 						Foreground="{TemplateBinding Foreground}"
 						IsReadOnly="{TemplateBinding IsReadOnly}"
 						Focusable="True"
@@ -260,40 +264,44 @@
 						/>
 
 				<Popup x:Name="Popup"
-						AllowsTransparency="True"
-						Grid.Column="1"
+						Grid.Column="0"
 						Margin="0"
 						IsOpen="{TemplateBinding IsDropDownOpen}"
 						Focusable="False"
 						Placement="Bottom"
 						PopupAnimation="Slide"
+						HorizontalOffset="0"
+						HorizontalAlignment="Left"
 						>
 					<!--  IsOpen="{TemplateBinding IsDropDownOpen}"  -->
-
+							<!-- MinWidth="{TemplateBinding ActualWidth}" -->
 					<Grid x:Name="DropDown"
-							Margin="2,2,0,0"
-							MinWidth="{TemplateBinding ActualWidth}"
+							Margin="0,0,0,0"
+							HorizontalAlignment="Left"
+							Width="{TemplateBinding ActualWidth}"
+							MinWidth="{TemplateBinding custom:CsComboxBoxAp.DropDownWidth}"
 							MaxHeight="{TemplateBinding MaxDropDownHeight}"
 							SnapsToDevicePixels="True"
+							Background="{Binding Path=(custom:CsComboxBoxAp.DropDownBrush),
+																		 RelativeSource={RelativeSource AncestorType={x:Type ComboBox}}}"
 							>
 						<Border x:Name="DropDownBorder"
 								Margin="0"
 								Padding="0"
-								Background="{Binding Path=(custom:CustomProperties.DropDownBrush),
+								HorizontalAlignment="Left"
+								Background="{Binding Path=(custom:CsComboxBoxAp.DropDownBrush),
 																		 RelativeSource={RelativeSource AncestorType={x:Type ComboBox}}}"
 								BorderThickness="0"
 								>
-							<!--  Background="{StaticResource ItemsControl.ListItem.Background.Normal}"  -->
-							<!--  <Setter Property="Background" Value="{Binding Path=(custom:CustomProperties.NotEnabledBrush),  -->
-							<!--  RelativeSource={RelativeSource AncestorType={x:Type ComboBox}}}"/>  -->
-							<!--  Background="{TemplateBinding Background}"  -->
-							<Border.BorderBrush>
-								<SolidColorBrush Color="{DynamicResource BorderMediumColor}" />
-							</Border.BorderBrush>
+							<!-- <Border.BorderBrush> -->
+							<!-- 	<SolidColorBrush Color="{DynamicResource BorderMediumColor}" /> -->
+							<!-- </Border.BorderBrush> -->
+								<!-- <SolidColorBrush Color="{DynamicResource BorderMediumColor}" /> -->
 
 						</Border>
 
-						<ScrollViewer Width="{TemplateBinding custom:CustomProperties.DropDownWidth}"
+								<!-- Width="{TemplateBinding custom:CustomProperties.DropDownWidth}" -->
+						<ScrollViewer 
 								Padding="0"
 								SnapsToDevicePixels="True"
 								Template="{DynamicResource CbxEx1Svwr1}"
@@ -305,6 +313,7 @@
 						</ScrollViewer>
 					</Grid>
 				</Popup>
+
 
 				<VisualStateManager.VisualStateGroups>
 					<VisualStateGroup x:Name="CommonStates">
@@ -363,7 +372,7 @@
 		</ControlTemplate.Triggers>
 	</ControlTemplate>
 
-	<!-- sample item template - very simple 
+	<!-- sample item template - very simple
 	<DataTemplate x:Key="CbxEx1Dt1">
 		<TextBlock Margin="0"
 				Padding="0,0,0,2"
@@ -384,10 +393,10 @@
 				</Style>
 			</TextBlock.Style>
 		</TextBlock>
-	</DataTemplate>
--->
+	</DataTemplate>	
+	-->
 
-	<Style x:Key="CbxExStyle1"
+	<Style x:Key="CsComboBoxStyle"
 			TargetType="ComboBox"
 			>
 		<Setter Property="OverridesDefaultStyle" Value="true" />
@@ -423,4 +432,5 @@
 	</ComboBox>
 
 	-->
+
 </ResourceDictionary>

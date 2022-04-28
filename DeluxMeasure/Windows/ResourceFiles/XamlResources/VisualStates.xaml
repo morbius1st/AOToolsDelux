@@ -116,8 +116,8 @@
 
 	<!--  listbox  -->
 	<SolidColorBrush x:Key="Header.Container.Background.Normal" Color="{StaticResource Blue.250}" />
-	<SolidColorBrush x:Key="Header.Prime.Bkg.Normal" Color="{StaticResource Blue.450}" />
-	<SolidColorBrush x:Key="Header.2ndry.Bkg.Normal" Color="{StaticResource Blue.400}" />
+	<SolidColorBrush x:Key="Header.Prime.Bkg.Normal" Color="{StaticResource True.Green}" />
+	<SolidColorBrush x:Key="Header.2ndry.Bkg.Normal" Color="{StaticResource Cool.Blue.550}" />
 
 
 	<SolidColorBrush x:Key="Item.Container.Background.Normal" Color="{StaticResource Blue.200}" />
@@ -145,11 +145,13 @@
 		<Setter Property="Foreground" Value="{StaticResource Normal.Foreground}" />
 	</Style>
 
-	<Style x:Key="ListBox.Normal.Style"
+	<Style
+		x:Key="ListBox.Normal.Style"
 		BasedOn="{StaticResource Control.Normal.Style}"
 		TargetType="ListBox" />
 
-	<Style x:Key="Button.Normal.Style"
+	<Style
+		x:Key="Button.Normal.Style"
 		BasedOn="{StaticResource Control.Normal.Style}"
 		TargetType="Button" />
 	<!-- <Setter Property="Background" Value="{StaticResource Normal.Disabled.Background}" /> -->

@@ -16,9 +16,10 @@ namespace DeluxMeasure.UnitsUtil
 {
 	public enum UnitClass
 	{
+		CL_CONTROL,   // special & locked
 		CL_PROJECT,   // special & locked
-		CL_FT_DEC_IN, // special & locked
-		CL_ORDINARY   // not special & not locked
+		CL_ORDINARY,   // not special & not locked
+		CL_FT_DEC_IN, // special & not-locked
 	}
 
 	public class UnitsSupport
@@ -42,6 +43,7 @@ namespace DeluxMeasure.UnitsUtil
 			UC_IN_DEC,
 			UC_IN_FRAC,
 			UC_FT_FRAC,
+			UC_NONE
 		}
 
 		public enum PrecXref

@@ -1,5 +1,4 @@
 ﻿#region using
-
 using System;
 using System.ComponentModel;
 using System.Globalization;
@@ -12,15 +11,16 @@ using System.Windows.Markup;
 // username: jeffs
 // created:  12/31/2021 6:23:40 AM
 
-namespace DeluxMeasure.Windows.Support
+namespace CSToolsStudies.Windows.Support
 {
+
 	[MarkupExtensionReturnType (typeof(GridLen))]
 	public class GridLen : UIElement
 	{
 		// Register an attached dependency property with the specified
 		// property name, property type, owner type, and property metadata.
-
-		public static readonly DependencyProperty GridLenProperty =
+		
+		public static readonly DependencyProperty GridLenProperty = 
 			DependencyProperty.RegisterAttached(
 				"GridLen",
 				typeof(GridLength),
@@ -30,21 +30,27 @@ namespace DeluxMeasure.Windows.Support
 				);
 
 		// Declare a get accessor method.
-
-		public static GridLength GetGridLen(UIElement target) => (GridLength)target.GetValue(GridLenProperty);
+		
+		public static GridLength GetGridLen(UIElement target) =>
+			(GridLength)target.GetValue(GridLenProperty);
 
 		// Declare a set accessor method.
-
-		public static void SetGridLen(UIElement target, GridLength value) => target.SetValue(GridLenProperty, value);
+		
+		public static void SetGridLen(UIElement target, GridLength value) =>
+			target.SetValue(GridLenProperty, value);
 
 		public static string Formula
 		{
-			set { }
+			set
+			{
+
+			}
 		}
+
 	}
 
 
-#region double divider converter
+	#region double divider converter
 
 	[ValueConversion(typeof(double), typeof(double))]
 	public class DivideConverter : IValueConverter
@@ -53,7 +59,9 @@ namespace DeluxMeasure.Windows.Support
 		{
 			double valu = (double) (value ?? 0.0);
 
-			Double.TryParse((string) (parameter ?? "1.0"), out double divisor);
+			bool result = double.TryParse((string) (parameter ?? "1.0"), out double divisor);
+
+			if (!result || divisor == 0) return valu;
 
 			return valu / divisor;
 		}
@@ -63,6 +71,37 @@ namespace DeluxMeasure.Windows.Support
 			return null;
 		}
 	}
+
+	#endregion
+
+	
+	#region double add converter
+
+	[ValueConversion(typeof(double), typeof(double))]
+	public class AddConverter : IMultiValueConverter
+	{
+		public object Convert(object[] values, Type targetType, object parameter, CultureInfo culture)
+		{
+			double sum = 0.0;
+
+			foreach (Double value in values)
+			{
+				sum += value;
+			}
+
+			return sum;
+		}
+
+		public object[] ConvertBack(object value, Type[] targetTypes, object parameter, CultureInfo culture)
+		{
+			return new object[] {0.0 };
+		}
+	}
+
+	#endregion
+
+
+
 
 // #region bool to visibility value converter
 //
@@ -87,53 +126,25 @@ namespace DeluxMeasure.Windows.Support
 //
 // #endregion
 
-#endregion
+#region pass-through converter
 
-
-#region double add converter
-
-	[ValueConversion(typeof(double), typeof(double))]
-	public class AddConverter : IMultiValueConverter
+	// for debugging only
+	// allows breakpoint here
+	[ValueConversion(typeof(object), typeof(object))]
+	public class PassThroughConverter : IValueConverter
 	{
-		public object Convert(object[] values, Type targetType, object parameter, CultureInfo culture)
+		public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
 		{
-			double sum = 0.0;
-
-			foreach (Double value in values)
-			{
-				sum += value;
-			}
-
-			return sum;
+			return value;
 		}
 
-		public object[] ConvertBack(object value, Type[] targetTypes, object parameter, CultureInfo culture)
+		public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
 		{
-			return new object[] { 0.0 };
+			return value;
 		}
 	}
 
 #endregion
-
-// #region pass-through converter
-//
-// 	// for debugging only
-// 	// allows breakpoint here
-// 	[ValueConversion(typeof(object), typeof(object))]
-// 	public class PassThroughConverter : IValueConverter
-// 	{
-// 		public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
-// 		{
-// 			return value;
-// 		}
-//
-// 		public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
-// 		{
-// 			return value;
-// 		}
-// 	}
-//
-// #endregion
 //
 // #region bool to "On" / "Off" string value converter
 //
@@ -412,4 +423,7 @@ namespace DeluxMeasure.Windows.Support
 // 	}
 //
 // #endregion
+
+
+
 }

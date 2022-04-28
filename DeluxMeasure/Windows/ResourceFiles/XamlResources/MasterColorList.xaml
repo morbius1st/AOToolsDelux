@@ -263,7 +263,7 @@
 	<Color x:Key="Blue.A400">#3F7FEB</Color>
 	<Color x:Key="Blue.A300">#3770CF</Color>
 
-	
+
 	<!--  cool.blue color range  -->
 	<Color x:Key="Cool.Blue.970">#D3E6FC</Color>
 	<Color x:Key="Cool.Blue.950">#CBE1FC</Color>

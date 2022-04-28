@@ -1,0 +1,335 @@
+﻿<ResourceDictionary
+	xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+	xmlns:custom="clr-namespace:DeluxMeasure.Windows.Support"
+	xmlns:sys="clr-namespace:System;assembly=mscorlib">
+	<!--  xmlns:treeSupport="clr-namespace:AndyShared.ClassificationDataSupport.TreeSupport;assembly=WpfShared"  -->
+
+	<sys:Double x:Key="ConditionFontSize">12</sys:Double>
+
+	<sys:Double x:Key="BarSizeOutline">12</sys:Double>
+	<sys:Double x:Key="TrackWidth">4</sys:Double>
+	<sys:Double x:Key="RepeatButtonLength">10</sys:Double>
+	<sys:Double x:Key="RepeatButtonIconLength">6</sys:Double>
+	<sys:Double x:Key="RepeatButtonIconGirth">6</sys:Double>
+
+	<Thickness x:Key="IconMarginTop">0, 0, 0, 0</Thickness>
+	<Thickness x:Key="IconMarginBottom">0, 0, 0, 0</Thickness>
+	<Thickness x:Key="IconMarginLeft">0, 0, 0, 0</Thickness>
+	<Thickness x:Key="IconMarginRight">0, 0, 0, 0</Thickness>
+
+	<Color x:Key="DisabledForegroundColor">#FF888888</Color>
+
+	<SolidColorBrush x:Key="MouseOver" Color="DeepSkyBlue" />
+	<SolidColorBrush x:Key="NotEnabled" Color="RoyalBlue" />
+	<SolidColorBrush x:Key="DropDown" Color="CornflowerBlue" />
+
+	<SolidColorBrush x:Key="ScrollBarBkg" Color="#222222" />
+
+	<SolidColorBrush x:Key="ItemsControl.Text.Disabled" Color="{DynamicResource Gray.600}" />
+
+	<SolidColorBrush x:Key="ItemsControl.Subject.Background.Normal" Color="{DynamicResource Blue.450}" />
+	<SolidColorBrush x:Key="ItemsControl.Subject.Background.MouseOver" Color="{DynamicResource Blue.600}" />
+	<SolidColorBrush x:Key="ItemsControl.Subject.Background.Disabled" Color="{DynamicResource Blue.300}" />
+
+	<SolidColorBrush x:Key="ItemsControl.Text.Normal" Color="{DynamicResource Gray.950}" />
+
+	<SolidColorBrush x:Key="ItemsControl.ListItem.Background.Normal" Color="{DynamicResource Blue.400}" />
+
+
+	<sys:Double x:Key="DropDown.Width">180.0</sys:Double>
+
+	<!--
+		scroll viewer for combo box
+		this relies on the re-configured
+		scroll bar style
+	-->
+	<ControlTemplate x:Key="CbxEx2Svwr1" TargetType="{x:Type ScrollViewer}">
+		<Grid
+			x:Name="Grid"
+			Width="90"
+			Height="90"
+			Background="OrangeRed">
+			<Grid.ColumnDefinitions>
+				<ColumnDefinition Width="Auto" />
+				<ColumnDefinition Width="*" />
+				<ColumnDefinition Width="Auto" />
+			</Grid.ColumnDefinitions>
+			<Grid.RowDefinitions>
+				<RowDefinition Height="Auto" />
+				<RowDefinition Height="*" />
+				<RowDefinition Height="Auto" />
+			</Grid.RowDefinitions>
+			<Rectangle
+				x:Name="Corner"
+				Grid.Row="2"
+				Grid.Column="2"
+				Fill="black" />
+
+			<ScrollContentPresenter
+				x:Name="PART_ScrollContentPresenter"
+				Grid.Row="1"
+				Grid.Column="0"
+				Grid.ColumnSpan="2"
+				Margin="{TemplateBinding Padding}"
+				CanContentScroll="{TemplateBinding CanContentScroll}"
+				CanHorizontallyScroll="False"
+				CanVerticallyScroll="False"
+				Content="{TemplateBinding Content}"
+				ContentTemplate="{TemplateBinding ContentTemplate}" />
+
+			<ScrollBar
+				x:Name="PART_VerticalScrollBar"
+				Grid.Row="1"
+				Grid.Column="2"
+				Width="{StaticResource BarSizeOutline}"
+				Margin="0,0,0,0"
+				Background="{StaticResource ScrollBarBkg}"
+				Cursor="Arrow"
+				Maximum="{TemplateBinding ScrollableHeight}"
+				Minimum="0"
+				Style="{DynamicResource ScrollBarStyle}"
+				ViewportSize="{TemplateBinding ViewportHeight}"
+				Visibility="{TemplateBinding ComputedVerticalScrollBarVisibility}"
+				Value="{Binding VerticalOffset, Mode=OneWay, RelativeSource={RelativeSource TemplatedParent}}" />
+
+			<ScrollBar
+				x:Name="PART_HorizontalScrollBar"
+				Grid.Row="2"
+				Grid.Column="1"
+				Height="{StaticResource BarSizeOutline}"
+				MinHeight="{StaticResource BarSizeOutline}"
+				AutomationProperties.AutomationId="HorizontalScrollBar"
+				Background="{StaticResource ScrollBarBkg}"
+				ClipToBounds="True"
+				Cursor="Arrow"
+				Maximum="{TemplateBinding ScrollableWidth}"
+				Minimum="0"
+				Orientation="Horizontal"
+				Style="{DynamicResource ScrollBarStyle}"
+				ViewportSize="{TemplateBinding ViewportWidth}"
+				Visibility="{TemplateBinding ComputedHorizontalScrollBarVisibility}"
+				Value="{Binding HorizontalOffset, Mode=OneWay, RelativeSource={RelativeSource TemplatedParent}}" />
+
+		</Grid>
+	</ControlTemplate>
+
+	<ControlTemplate x:Key="CbxEx2Tbx1" TargetType="{x:Type TextBox}">
+
+		<Border
+			x:Name="PART_ContentHost"
+			Background="Red"
+			Focusable="False" />
+	</ControlTemplate>
+
+	<ControlTemplate x:Key="CbxEx2Togb1" TargetType="{x:Type ToggleButton}">
+		<Grid>
+			<Grid.ColumnDefinitions>
+				<ColumnDefinition Width="16" />
+				<ColumnDefinition />
+			</Grid.ColumnDefinitions>
+			<Border
+				x:Name="Border"
+				Grid.Column="0"
+				Background="Transparent"
+				BorderThickness="1"
+				CornerRadius="2" />
+			<Border
+				Grid.Column="0"
+				Grid.ColumnSpan="2"
+				Margin="0"
+				Padding="0"
+				Background="Transparent"
+				CornerRadius="2,0,0,2" />
+			<!--  Background="Transparent"  -->
+			<Path
+				x:Name="Arrow"
+				Grid.Column="0"
+				Margin="0,1.5,0,0"
+				HorizontalAlignment="Center"
+				VerticalAlignment="Center"
+				Data="M 0,0 4,8 8,0 z"
+				Fill="red"
+				RenderTransformOrigin="0.5,0.5">
+				<Path.RenderTransform>
+					<TransformGroup>
+						<RotateTransform Angle="-90" />
+					</TransformGroup>
+				</Path.RenderTransform>
+			</Path>
+		</Grid>
+		<ControlTemplate.Triggers>
+			<Trigger Property="IsChecked" Value="true">
+				<Setter TargetName="Arrow" Property="Fill" Value="OrangeRed" />
+				<Setter TargetName="Arrow" Property="RenderTransform">
+					<Setter.Value>
+						<RotateTransform Angle="0" />
+					</Setter.Value>
+				</Setter>
+			</Trigger>
+		</ControlTemplate.Triggers>
+	</ControlTemplate>
+
+	<ControlTemplate x:Key="CbxEx2Ct1" TargetType="ComboBox">
+		<Border
+			x:Name="bdr_cbt1"
+			Margin="0,0,0,0"
+			Padding="4,0,10,0"
+			BorderThickness="0"
+			CornerRadius="3">
+			<Border.Style>
+				<Style TargetType="Border">
+					<Setter Property="Background" Value="{Binding Background, RelativeSource={RelativeSource AncestorType={x:Type ComboBox}}}" />
+					<!-- <Setter Property="Background" Value="{StaticResource ItemsControl.Subject.Background.Normal}" /> -->
+
+					<Style.Triggers>
+						<!--  true  -->
+						<Trigger Property="IsMouseOver" Value="true">
+							<Setter Property="Background" Value="{Binding Path=(custom:CsComboxBoxAp.MouseOverBrush), RelativeSource={RelativeSource AncestorType={x:Type ComboBox}}}" />
+						</Trigger>
+						<Trigger Property="IsEnabled" Value="False">
+							<!--  false  -->
+							<Setter Property="TextElement.Foreground" Value="{StaticResource ItemsControl.Text.Disabled}" />
+							<Setter Property="Background" Value="{Binding Path=(custom:CsComboxBoxAp.NotEnabledBrush), RelativeSource={RelativeSource AncestorType={x:Type ComboBox}}}" />
+						</Trigger>
+
+					</Style.Triggers>
+				</Style>
+			</Border.Style>
+
+			<Grid x:Name="cbx_gd1" Margin="0">
+				<Grid.ColumnDefinitions>
+					<ColumnDefinition Width="20" />
+					<ColumnDefinition Width="Auto" />
+				</Grid.ColumnDefinitions>
+
+				<ToggleButton
+					x:Name="ToggleButton"
+					Grid.Column="0"
+					Grid.ColumnSpan="2"
+					Background="{TemplateBinding Background}"
+					ClickMode="Press"
+					Focusable="false"
+					IsChecked="True"
+					Template="{StaticResource CbxEx2Togb1}" />
+
+				<ContentPresenter
+					x:Name="ContentSite"
+					Grid.Column="1"
+					Width="90"
+					Height="90"
+					Margin="0,0,1,0"
+					HorizontalAlignment="Left"
+					VerticalAlignment="Center"
+					Content="{TemplateBinding SelectionBoxItem}"
+					ContentTemplate="{TemplateBinding SelectionBoxItemTemplate}"
+					ContentTemplateSelector="{TemplateBinding ItemTemplateSelector}"
+					IsHitTestVisible="False" />
+
+				<TextBox
+					x:Name="PART_EditableTextBox"
+					Grid.Column="1"
+					Margin="3,0,3,0"
+					HorizontalAlignment="Left"
+					VerticalAlignment="Bottom"
+					Focusable="True"
+					Foreground="Black"
+					IsReadOnly="{TemplateBinding IsReadOnly}"
+					Template="{StaticResource CbxEx2Tbx1}"
+					Text="test2"
+					Visibility="Hidden" />
+
+				<Popup
+					x:Name="Popup"
+					Grid.Column="1"
+					Width="90"
+					Height="90"
+					Margin="0"
+					AllowsTransparency="True"
+					Focusable="False"
+					IsOpen="True"
+					Placement="Bottom"
+					PopupAnimation="Slide">
+					<!--  IsOpen="{TemplateBinding IsDropDownOpen}"  -->
+
+					<Grid
+						x:Name="DropDown"
+						Height="90"
+						MinWidth="90"
+						MaxHeight="{TemplateBinding MaxDropDownHeight}"
+						Margin="2,2,0,0"
+						SnapsToDevicePixels="True">
+						<Border
+							x:Name="DropDownBorder"
+							Margin="0"
+							Padding="0"
+							Background="{Binding Path=(custom:CsComboxBoxAp.DropDownBrush), RelativeSource={RelativeSource AncestorType={x:Type ComboBox}}}"
+							BorderThickness="0" />
+
+						<ScrollViewer
+							Width="{TemplateBinding custom:CsComboxBoxAp.DropDownWidth}"
+							Padding="0"
+							SnapsToDevicePixels="True"
+							Template="{DynamicResource CbxEx2Svwr1}">
+							<StackPanel IsItemsHost="True" KeyboardNavigation.DirectionalNavigation="Contained" />
+
+						</ScrollViewer>
+					</Grid>
+				</Popup>
+
+
+			</Grid>
+		</Border>
+
+		<!-- </Border> -->
+		<ControlTemplate.Triggers>
+
+			<Trigger Property="HasItems" Value="false">
+				<Setter TargetName="DropDownBorder" Property="MinHeight" Value="95" />
+			</Trigger>
+			<Trigger Property="IsGrouping" Value="true">
+				<Setter Property="ScrollViewer.CanContentScroll" Value="false" />
+			</Trigger>
+			<Trigger SourceName="Popup" Property="AllowsTransparency" Value="true">
+				<Setter TargetName="DropDownBorder" Property="CornerRadius" Value="4" />
+				<Setter TargetName="DropDownBorder" Property="Margin" Value="0,2,0,0" />
+			</Trigger>
+		</ControlTemplate.Triggers>
+	</ControlTemplate>
+
+	<!-- sample item template - very simple
+	<DataTemplate x:Key="CbxEx2Dt1">
+		<TextBlock Margin="0"
+				Padding="0,0,0,2"
+				Text="{Binding Path=Name}"
+				>
+			<TextBlock.Style>
+				<Style TargetType="TextBlock">
+					<Setter Property="Foreground" Value="White" />
+					<Setter Property="Visibility" Value="Visible" />
+					<Style.Triggers>
+						<DataTrigger Value="0" Binding="{Binding Path=OpCodeValue}">
+							<Setter Property="Visibility" Value="Collapsed" />
+						</DataTrigger>
+						<Trigger Property="IsEnabled" Value="false">
+							<Setter Property="Foreground" Value="{StaticResource ItemsControl.Text.Disabled}" />
+						</Trigger>
+					</Style.Triggers>
+				</Style>
+			</TextBlock.Style>
+		</TextBlock>
+	</DataTemplate>	-->
+
+	<Style x:Key="CbxEx2Style1" TargetType="ComboBox">
+		<Setter Property="OverridesDefaultStyle" Value="true" />
+		<Setter Property="ScrollViewer.CanContentScroll" Value="true" />
+		<Setter Property="ScrollViewer.HorizontalScrollBarVisibility" Value="Auto" />
+		<Setter Property="ScrollViewer.VerticalScrollBarVisibility" Value="Auto" />
+		<Setter Property="SnapsToDevicePixels" Value="true" />
+		<!--  this is the primary background color  -->
+		<Setter Property="Background" Value="{StaticResource ItemsControl.Subject.Background.Normal}" />
+		<Setter Property="Foreground" Value="{StaticResource ItemsControl.Text.Normal}" />
+	</Style>
+
+
+</ResourceDictionary>

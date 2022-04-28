@@ -240,6 +240,7 @@ namespace DeluxMeasure.UnitsUtil
 	// debug version only  (i.e. ...D
 	public class UnitsDataD : AUnitsData<string, string>
 	{
+		private UStyle ustyle;
 
 		public UnitsDataD(string id, string sample, UStyle us)
 		{
@@ -259,8 +260,29 @@ namespace DeluxMeasure.UnitsUtil
 
 		public override string USystem => Ustyle.UnitSys.ToString();
 
-		public override UStyle Ustyle { get; set; }
+		public override UStyle Ustyle
 
+		{
+			get => ustyle;
+			set
+			{
+				ustyle = value;
+				OnPropertyChanged();
+			}
+		}
+
+		public string DropDownName
+		{
+			get
+			{
+				if (ustyle.IsControl)
+				{
+					return Ustyle.Description;
+				}
+				// 
+				return $"Std. Style: {Ustyle.Name}";
+			}
+		}
 
 		protected override string formatSymbol()
 		{
@@ -314,7 +336,7 @@ namespace DeluxMeasure.UnitsUtil
 		private ForgeTypeId symbol;
 		private UStyle ustyle;
 
-		private BitmapImage bx;
+		// private BitmapImage bx;
 
 		public UnitsDataR(ForgeTypeId id,
 			ForgeTypeId symbol,
@@ -324,13 +346,7 @@ namespace DeluxMeasure.UnitsUtil
 			Symbol = symbol;
 			Ustyle = us;
 
-			// bx = new BitmapImage();
-			bx = CsUtilitiesMedia.GetBitmapImage(Ustyle.IconId, "DeluxMeasure.Resources");
-			// bx.BeginInit();
-			// //"pack://application:,,,/AssemblyName;component/Resources/logo.png")
-			// bx.UriSource = new Uri("/DeluxMeasure;component/Resources/Delux Measure cm 32.png", UriKind.Absolute);
-			// bx.UriSource = new Uri("pack://application:,,,/DeluxMeasure;component/DeluxMeasure/Resources/Delux Measure cm 32.png", UriKind.RelativeOrAbsolute);
-			// bx.EndInit();
+			// bx = CsUtilitiesMedia.GetBitmapImage(Ustyle.IconId, "DeluxMeasure.Resources");
 		}
 
 		[IgnoreDataMember]
@@ -373,6 +389,18 @@ namespace DeluxMeasure.UnitsUtil
 			}
 		}
 
+		public string DropDownName
+		{
+			get
+			{
+				if (ustyle.IsControl)
+				{
+					return Ustyle.Description;
+				}
+				// 
+				return $"Std. Style: {Ustyle.Name}";
+			}
+		}
 
 		protected override string formatSymbol()
 		{
@@ -448,6 +476,8 @@ namespace DeluxMeasure.UnitsUtil
 	[DataContract(Namespace = "")]
 	public class UnitStdStylesD : AUnitsStdStyles<string, UnitsDataD>, IEqualityComparer<UnitsDataD>
 	{
+		public UnitStdStylesD() { }
+
 		static UnitStdStylesD()
 		{
 			initialize();

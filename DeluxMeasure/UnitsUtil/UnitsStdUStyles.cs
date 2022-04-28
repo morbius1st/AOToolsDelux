@@ -33,6 +33,7 @@ namespace DeluxMeasure.UnitsUtil
 
 		// cross reference between Revit ForgeTypeId name and standard style Name
 		public static readonly STYLE_ID Invalid            = new STYLE_ID(null                  , null);
+		public static readonly STYLE_ID Control            = new STYLE_ID(null                  , null);
 		public static readonly STYLE_ID Project            = new STYLE_ID("General"             , "Project");
 		public static readonly STYLE_ID FtDecIn            = new STYLE_ID("Custom"              , "Feet and Decimal Inches");
 		public static readonly STYLE_ID FtFracIn           = new STYLE_ID("FeetFractionalInches", "Feet and Fractional Inches");
@@ -74,18 +75,32 @@ namespace DeluxMeasure.UnitsUtil
 
 		public static void Initialize()
 		{
+
+			StdStyles = new Dictionary<string, UStyle>();
+
+			// 0
+			// project style
+			StdStyles.Add(STYLE_ID.Project.NameId, ProjStyle());
+
+			addStandard();
+
+			UStyle us = CtrlStyle("SvdStyles", "Show Selected Saved Style", 1);
+
+			StdStyles.Add(us.Name, us);
+		}
+
+		// Show Selected Saved Style 
+		// Show System Style| {}
+
+
+		private static void addStandard()
+		{
 			// the below also identifies whether a 
 			// formatting option is allowed to be set
 			// null = cannot be set
 
 			string id;
 			string name;
-
-			StdStyles = new Dictionary<string, UStyle>(12);
-
-			// 0
-			// project style
-			StdStyles.Add(STYLE_ID.Project.NameId, ProjStyle());
 
 			//1
 			// id = STYLE_ID_FT_FRAC_IN;
@@ -107,7 +122,8 @@ namespace DeluxMeasure.UnitsUtil
 			// 2
 			// id = STYLE_ID_FT_DEC_IN;
 			name = "Feet and Decimal Inches";
-			StdStyles.Add(STYLE_ID.FtDecIn.NameId, new UStyle(UnitClass.CL_FT_DEC_IN, // locked
+			StdStyles.Add(STYLE_ID.FtDecIn.NameId, 
+				new UStyle(UnitClass.CL_FT_DEC_IN, // locked
 				STYLE_ID.FtDecIn.TypeId,
 				STYLE_ID.FtDecIn.NameId,
 				$"{name} Unit Style", 
@@ -125,7 +141,8 @@ namespace DeluxMeasure.UnitsUtil
 			// same as decimal feet
 			// id = STYLE_ID_US_SURVEY;
 			name = "Survey Feet";
-			StdStyles.Add(STYLE_ID.UsSurvey.NameId, new UStyle(UnitClass.CL_ORDINARY, 
+			StdStyles.Add(STYLE_ID.UsSurvey.NameId, 
+				new UStyle(UnitClass.CL_ORDINARY, 
 				STYLE_ID.UsSurvey.TypeId,
 				STYLE_ID.UsSurvey.NameId,
 				$"{name} Unit Style", 
@@ -316,7 +333,31 @@ namespace DeluxMeasure.UnitsUtil
 				1,                                  // this
 				112.4567,                           // this
 				"Delux Measure dec-ft 32.png");
-				// "Delux Measure ft-frac-in 32.png"); // ref
+				
+		}
+		
+		public static UStyle CtrlStyle(string name, string desc, int order)
+		{
+			return new UStyle(                      // which from this or reference
+				UnitClass.CL_CONTROL,               // this
+				STYLE_ID.Control.TypeId,            // ref
+				$"control|{name}",                  // ref
+				desc,                               // ref
+				UnitsSupport.UnitCat.UC_NONE,       // ref
+				UnitsSupport.UnitSys.US_IMPERIAL,   // ref
+				1,                                  // ref
+				null,                               // ref
+				null,                               // ref
+				null,                               // ref
+				null,                               // ref
+				null,                               // ref
+				null,                               // ref
+				order,                              // this
+				0,                                  // this
+				0,                                  // this
+				0,                                  // this
+				null);
+				
 		}
 
 		

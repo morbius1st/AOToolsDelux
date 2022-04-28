@@ -144,9 +144,10 @@
     <Compile Include="UnitsUtil\UnitsManager.cs" />
     <Compile Include="UnitsUtil\UnitStdStyles.cs" />
     <Compile Include="UnitsUtil\UnitUStyle.cs" />
-    <Compile Include="Windows\Support\CustomProperties.cs" />
-    <Compile Include="Windows\Support\ScrollBarAttached.cs" />
-    <Compile Include="Windows\Support\ScrollViewerAttached.cs" />
+    <Compile Include="Windows\Support\CsComboBoxAp.cs" />
+    <Compile Include="Windows\Support\CsScrollBarAp.cs" />
+    <Compile Include="Windows\Support\CsScrollViewerAp.cs" />
+    <Compile Include="Windows\Support\DependancyProperties.cs" />
     <Compile Include="Windows\Support\UnitStyleCmd.cs" />
     <Compile Include="Windows\AWindow.cs" />
     <Compile Include="Windows\ColData.cs" />
@@ -186,7 +187,11 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Page Include="Windows\Support\ComboBoxEx.xaml">
+    <Page Include="Windows\Support\CsScrollBar.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Windows\Support\CsComboBox.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -198,11 +203,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Windows\Support\ScrollBar.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Windows\Support\ScrollViewerNarrow.xaml">
+    <Page Include="Windows\Support\CsScrollViewer.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>

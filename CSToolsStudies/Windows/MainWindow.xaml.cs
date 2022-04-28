@@ -303,8 +303,12 @@ namespace CSToolsStudies.Windows
 		}
 
 
-	#endregion
+		#endregion
 
+		private void Cbx1_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
+		{
+
+		}
 	}
 }
 

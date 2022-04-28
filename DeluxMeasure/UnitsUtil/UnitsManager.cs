@@ -132,7 +132,7 @@ namespace DeluxMeasure.UnitsUtil
 				Debug.WriteLine($"@UnitsManager: StyleList: {(mb.ReflectedType?.FullName ?? "is null")} > {mb.Name}");
 			#endif
 
-				return SettingsManager.UserSettings.Data.UserStyles;
+				return UserSettings.Data.UserStyles;
 			}
 			// set => SettingsManager.UserSettings.Data.UserStyles = value;
 		}
