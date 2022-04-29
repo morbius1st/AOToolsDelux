@@ -1838,7 +1838,7 @@
 								custom:CsComboBoxAp.DropDownBdrBrush="{StaticResource ItemsControl.ListItem.Background.Normal}"
 								custom:CsComboBoxAp.DropDownBdrRadius="4"
 								custom:CsComboBoxAp.DropDownBdrThickness="4"
-								custom:CsComboBoxAp.DropDownBrush="{StaticResource ItemsControl.ListItem.Background.Normal}"
+								custom:CsComboBoxAp.DropDownBrush="{StaticResource ComboBox.Background.Normal}"
 								custom:CsComboBoxAp.DropDownWidthAdjustment="-10.0"
 								custom:CsComboBoxAp.MouseOverBrush="{StaticResource ItemsControl.Subject.Background.MouseOver}"
 								custom:CsComboBoxAp.NotEnabledBrush="{StaticResource ItemsControl.Subject.Background.Disabled}"

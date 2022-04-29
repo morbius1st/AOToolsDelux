@@ -24,6 +24,8 @@ namespace DeluxMeasure.UnitsUtil
 	[DataContract(Namespace = "")]
 	public abstract class AUnitsData<T, U> : INotifyPropertyChanged
 	{
+		private const string DROP_NAME_PREFACE = "Show Std. Style ";
+
 		private bool unitLeadZeroEnable;
 		private bool unitTrailZeroEnable;
 		private bool unitExtraSpacesEnable;
@@ -192,6 +194,18 @@ namespace DeluxMeasure.UnitsUtil
 			return deleteStyle;
 		}
 
+		public string DropDownName
+		{
+			get
+			{
+				if (Ustyle.IsControl)
+				{
+					return Ustyle.Description;
+				}
+				// 
+				return $"{DROP_NAME_PREFACE}: {Ustyle.Name}";
+			}
+		}
 
 		public string SeqFormatted => (sequence + 1).ToString("00");
 
@@ -271,18 +285,18 @@ namespace DeluxMeasure.UnitsUtil
 			}
 		}
 
-		public string DropDownName
-		{
-			get
-			{
-				if (ustyle.IsControl)
-				{
-					return Ustyle.Description;
-				}
-				// 
-				return $"Std. Style: {Ustyle.Name}";
-			}
-		}
+		// public string DropDownName
+		// {
+		// 	get
+		// 	{
+		// 		if (ustyle.IsControl)
+		// 		{
+		// 			return Ustyle.Description;
+		// 		}
+		// 		// 
+		// 		return $"Std. Style: {Ustyle.Name}";
+		// 	}
+		// }
 
 		protected override string formatSymbol()
 		{
@@ -389,18 +403,18 @@ namespace DeluxMeasure.UnitsUtil
 			}
 		}
 
-		public string DropDownName
-		{
-			get
-			{
-				if (ustyle.IsControl)
-				{
-					return Ustyle.Description;
-				}
-				// 
-				return $"Std. Style: {Ustyle.Name}";
-			}
-		}
+		// public string DropDownName
+		// {
+		// 	get
+		// 	{
+		// 		if (ustyle.IsControl)
+		// 		{
+		// 			return Ustyle.Description;
+		// 		}
+		// 		// 
+		// 		return $"Std. Style: {Ustyle.Name}";
+		// 	}
+		// }
 
 		protected override string formatSymbol()
 		{

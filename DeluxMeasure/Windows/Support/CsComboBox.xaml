@@ -7,11 +7,12 @@
 	<custom:AddConverter x:Key="AddConverter" />
 
 	<SolidColorBrush x:Key="ScrollBarBkg" Color="#222222" />
-	<SolidColorBrush x:Key="ItemsControl.Text.Disabled" Color="{DynamicResource Gray.600}" />
-	<SolidColorBrush x:Key="ItemsControl.Subject.Background.Normal" Color="{DynamicResource Blue.450}" />
-	<SolidColorBrush x:Key="ItemsControl.Text.Normal" Color="{DynamicResource Gray.950}" />
+	<SolidColorBrush x:Key="ComboBox.Text.Normal" Color="{DynamicResource Gray.950}" />
+	<SolidColorBrush x:Key="ComboBox.Text.Disabled" Color="{DynamicResource Gray.600}" />
+	<SolidColorBrush x:Key="ComboBox.Background.Normal" Color="{DynamicResource Teal.600}" />
 	<Color x:Key="DisabledForegroundColor">#FF888888</Color>
 
+	<!-- <SolidColorBrush x:Key="ItemsControl.Subject.Background.Normal" Color="{DynamicResource Blue.450}" /> -->
 	<!--
 		custom properties
 
@@ -36,8 +37,8 @@
 		<Setter Property="ScrollViewer.HorizontalScrollBarVisibility" Value="Auto" />
 		<Setter Property="ScrollViewer.VerticalScrollBarVisibility" Value="Auto" />
 		<Setter Property="SnapsToDevicePixels" Value="true" />
-		<Setter Property="Background" Value="{StaticResource ItemsControl.Subject.Background.Normal}" />
-		<Setter Property="Foreground" Value="{StaticResource ItemsControl.Text.Normal}" />
+		<Setter Property="Background" Value="{StaticResource ComboBox.Background.Normal}" />
+		<Setter Property="Foreground" Value="{StaticResource ComboBox.Text.Normal}" />
 		<Setter Property="Template">
 			<Setter.Value>
 				<ControlTemplate TargetType="ComboBox">
@@ -58,7 +59,7 @@
 									</Trigger>
 									<Trigger Property="IsEnabled" Value="False">
 										<!--  false  -->
-										<Setter Property="TextElement.Foreground" Value="{StaticResource ItemsControl.Text.Disabled}" />
+										<Setter Property="TextElement.Foreground" Value="{StaticResource ComboBox.Text.Disabled}" />
 										<Setter Property="Background" Value="{Binding Path=(custom:CsComboBoxAp.NotEnabledBrush), RelativeSource={RelativeSource AncestorType={x:Type ComboBox}}}" />
 									</Trigger>
 								</Style.Triggers>
