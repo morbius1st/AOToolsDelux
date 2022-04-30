@@ -111,38 +111,38 @@ namespace DeluxMeasure.UnitsUtil
 
 	#region public methods
 
-		public void SetInitialSequence(List<UnitsDataR> styleList)
+		public void SetInitialSequence(Dictionary<string, UnitsDataR> styleList)
 		{
-			foreach (UnitsDataR udr in styleList)
+			foreach (KeyValuePair<string, UnitsDataR> kvp in styleList)
 			{
-				udr.InitialSequence = udr.Sequence;
+				kvp.Value.InitialSequence = kvp.Value.Sequence;
 			}
 		}
 
-		public void ResetInitialSequence(List<UnitsDataR> styleList)
+		public void ResetInitialSequence(Dictionary<string, UnitsDataR> styleList)
 		{
-			foreach (UnitsDataR udr in styleList)
+			foreach (KeyValuePair<string, UnitsDataR> kvp in styleList)
 			{
-				udr.Sequence = udr.InitialSequence;
+				kvp.Value.Sequence = kvp.Value.InitialSequence;
 			}
 		}
 
-		public void UnDelete(List<UnitsDataR> styleList)
+		public void UnDeleteAll(Dictionary<string, UnitsDataR> styleList)
 		{
-			for (int i = styleList.Count - 1; i >= 0 ; i--)
-			{
-				styleList[i].DeleteStyle = false;
 
+			foreach (KeyValuePair<string, UnitsDataR> kvp in styleList)
+			{
+				kvp.Value.DeleteStyle = false;
 			}
 		}
 
-		public void RemoveDeleted(List<UnitsDataR> styleList)
+		public void RemoveDeleted(Dictionary<string, UnitsDataR> styleList)
 		{
-			for (int i = styleList.Count - 1; i >= 0 ; i--)
+			foreach (string key in styleList.Keys)
 			{
-				if (styleList[i].DeleteStyle)
+				if (styleList[key].DeleteStyle)
 				{
-					styleList.RemoveAt(i);
+					styleList.Remove(key);
 				}
 			}
 		}

@@ -254,9 +254,11 @@ namespace DeluxMeasure
 			int max = uMgr.StyleList.Count > UnitStyleCmd.MAX_STYLE_CMDS ? UnitStyleCmd.MAX_STYLE_CMDS : uMgr.StyleList.Count;
 			int i = 0;
 
-			foreach (UnitsDataR udr in uMgr.StyleList)
+			
+
+			foreach (KeyValuePair<string, UnitsDataR> kvp  in uMgr.StyleList)
 			{
-				us = udr.Ustyle;
+				us = kvp.Value.Ustyle;
 
 				string cmdName = $"UnitStyleCmd{i}";
 				string btnName = $"{BTN_NAME}{i:D2}";

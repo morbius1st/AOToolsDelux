@@ -35,7 +35,7 @@ namespace SettingsManager
 	public class UserSettingDataFile : IDataFile
 	{
 		[IgnoreDataMember]
-		private List<UnitsDataR> userStyles;
+		private Dictionary<string, UnitsDataR> userStyles;
 
 		[IgnoreDataMember]
 		public string DataFileVersion => "user 0.1";
@@ -50,7 +50,7 @@ namespace SettingsManager
 		public int UserSettingsValue { get; set; } = 7;
 
 		[DataMember(Order = 2)]
-		public List<UnitsDataR> UserStyles {
+		public Dictionary<string, UnitsDataR> UserStyles {
 			get
 			{
 			#if PATH

@@ -5,11 +5,9 @@ using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Runtime.Serialization;
 using System.Windows.Data;
-using System.Windows.Controls;
 using System.Windows.Media.Imaging;
 using Autodesk.Revit.DB;
 using UtilityLibrary;
-using static DeluxMeasure.UnitsUtil.UnitsStdUStyles;
 
 // Solution:     AOToolsDelux
 // Project:       DeluxMeasure
@@ -19,7 +17,6 @@ using static DeluxMeasure.UnitsUtil.UnitsStdUStyles;
 namespace DeluxMeasure.UnitsUtil
 {
 #region data types
-
 
 	[DataContract(Namespace = "")]
 	public abstract class AUnitsData<T, U> : INotifyPropertyChanged
@@ -51,8 +48,11 @@ namespace DeluxMeasure.UnitsUtil
 		[IgnoreDataMember]
 		public int InitialSequence { get; set; }
 
-			[DataMember(Order = 2)]
+		[DataMember(Order = 2)]
 		public abstract T Id { get; set; }
+
+		[IgnoreDataMember]
+		public abstract string Name { get;}
 
 		[DataMember(Order = 4)]
 		public abstract T Symbol { get; set;  }
@@ -268,6 +268,8 @@ namespace DeluxMeasure.UnitsUtil
 
 		public override string Id { get; set; }
 
+		public override string Name => Ustyle.Name;
+
 		public override string Symbol { get; set; }
 
 		private string Sample { get; set; }
@@ -376,6 +378,9 @@ namespace DeluxMeasure.UnitsUtil
 				OnPropertyChanged();
 			}
 		}
+
+		[IgnoreDataMember]
+		public override string Name => Ustyle.Name;
 
 		[DataMember(Order = 4)]
 		public override ForgeTypeId Symbol

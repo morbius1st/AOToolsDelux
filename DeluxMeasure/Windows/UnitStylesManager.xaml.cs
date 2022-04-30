@@ -177,6 +177,8 @@ namespace DeluxMeasure.Windows
 
 		public Dictionary<string, UnitsDataR> StdStyles => uMgr.StdStyles;
 
+		public List<string> InRibbonList => uMgr.InRibbonList;
+
 		public UnitsDataR Lv1SelItem
 		{
 			set { lv1SelItem = value; }
@@ -356,10 +358,30 @@ namespace DeluxMeasure.Windows
 
 			insertPosition = 0;
 
+			uMgr.SetInRibbonList();
+
 			OnPropertyChanged(nameof(StylesView));
 			OnPropertyChanged(nameof(InsertPosition));
+			OnPropertyChanged(nameof(InRibbonList));
 
 			initStatus = false;
+		}
+
+		private void configView()
+		{
+			uMgr.SetInitialSequence();
+			
+			CollectionViewSource x =  CollectionViewSource.GetDefaultView(uMgr.StyleList);
+
+			styles = (ListCollectionView) CollectionViewSource.GetDefaultView(uMgr.StyleList);
+
+			styles.CurrentChanged += Styles_CurrentChanged;
+
+			styles.SortDescriptions.Add(
+				new SortDescription("Sequence", ListSortDirection.Ascending));
+			styles.Filter = isNotDeleted;
+
+			styles.IsLiveSorting = true;
 		}
 
 
@@ -396,21 +418,6 @@ namespace DeluxMeasure.Windows
 			}
 
 			return udr;
-		}
-
-
-		private void configView()
-		{
-			uMgr.SetInitialSequence();
-
-			styles = (ListCollectionView) CollectionViewSource.GetDefaultView(uMgr.StyleList);
-			styles.CurrentChanged += Styles_CurrentChanged;
-
-			styles.SortDescriptions.Add(
-				new SortDescription("Sequence", ListSortDirection.Ascending));
-			styles.Filter = isNotDeleted;
-
-			styles.IsLiveSorting = true;
 		}
 
 		private void setInitialSequence() { }
@@ -566,13 +573,13 @@ namespace DeluxMeasure.Windows
 			Debug.WriteLine("");
 
 			int i = 0;
-			foreach (UnitsDataR udr in uMgr.StyleList)
+			foreach (KeyValuePair<string, UnitsDataR> kvp in uMgr.StyleList)
 			{
-				string seq = udr.Sequence == 0 ? "  " : $"{(udr.Sequence + 1):D2}";
-				string iseq = udr.InitialSequence == 0 ? "  " : $"{(udr.Sequence + 1):D2}";
+				string seq = kvp.Value.Sequence == 0 ? "  " : $"{(kvp.Value.Sequence + 1):D2}";
+				string iseq = kvp.Value.InitialSequence == 0 ? "  " : $"{(kvp.Value.Sequence + 1):D2}";
 
 
-				Debug.WriteLine($"idx: {i++:D2}  seq: {seq}  intseq:  {udr.InitialSequence:D2}  seq: {udr.Sequence:D2}   isDel: {udr.DeleteStyle,6}  name: {udr.Ustyle.Name}");
+				Debug.WriteLine($"idx: {i++:D2}  seq: {seq}  intseq:  {kvp.Value.InitialSequence:D2}  seq: {kvp.Value.Sequence:D2}   isDel: {kvp.Value.DeleteStyle,6}  name: {kvp.Value.Ustyle.Name}");
 			}
 
 			Debug.WriteLine("");

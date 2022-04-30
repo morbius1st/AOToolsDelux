@@ -90,6 +90,10 @@ namespace DeluxMeasure.UnitsUtil
 		private UnitsSettings uStg;
 		private UnitsSupport uSup;
 
+		private List<string> inRibbonList;
+		private List<string> inDialogLeftList;
+		private List<string> inDialogRightList;
+
 	#endregion
 
 	#region ctor
@@ -123,7 +127,8 @@ namespace DeluxMeasure.UnitsUtil
 			}
 	}
 
-		public List<UnitsDataR> StyleList
+		// the list of user styles
+		public Dictionary<string, UnitsDataR> StyleList
 		{
 			get
 			{
@@ -137,11 +142,14 @@ namespace DeluxMeasure.UnitsUtil
 			// set => SettingsManager.UserSettings.Data.UserStyles = value;
 		}
 
+		// the list of "office" standard styles
 		public Dictionary<string, UnitsDataR> StdStyles
 		{
 			get => SettingsManager.AppSettings.Data.AppStyles;
 			// set => SettingsManager.AppSettings.Data.AppStyles = value;
 		}
+
+		public List<string> InRibbonList => inRibbonList;
 
 		public static Document Doc { get; set ; }
 
@@ -155,6 +163,19 @@ namespace DeluxMeasure.UnitsUtil
 
 	#region public methods
 
+		public void SetInRibbonList()
+		{
+			inRibbonList = initUnitDataList(StyleList.Count);
+
+			foreach (KeyValuePair<string, UnitsDataR> kvp in StyleList)
+			{
+				if (kvp.Value.Ustyle.ShowInRibbon)
+				{
+					inRibbonList[kvp.Value.Ustyle.OrderInRibbon] = kvp.Value.Name;
+				}
+			}
+		}
+
 		public void SetInitialSequence()
 		{
 			uSup.SetInitialSequence(StyleList);
@@ -167,7 +188,7 @@ namespace DeluxMeasure.UnitsUtil
 
 		public void UnDelete()
 		{
-			uSup.UnDelete(StyleList);
+			uSup.UnDeleteAll(StyleList);
 		}
 
 		public void WriteUser()
@@ -262,6 +283,18 @@ namespace DeluxMeasure.UnitsUtil
 	#endregion
 
 	#region private methods
+
+		private List<string> initUnitDataList(int qty)
+		{
+			List<string> list = new List<string>(qty);
+
+			// for (int i = 0; i < qty; i++)
+			// {
+			// 	list[i] = null;
+			// }
+
+			return list;
+		}
 
 		private bool setFmtOpt(bool? opt)
 		{

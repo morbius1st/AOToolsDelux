@@ -33,7 +33,8 @@ namespace DeluxMeasure.Windows.Support
 		{
 			Document doc = commandData.Application.ActiveUIDocument.Document;
 
-			return SetUnit( doc, UnitsManager.StyleList[Index]);
+			// todo this this / the index passed needs to get the correct name
+			return SetUnit( doc, UnitsManager.StyleList[Index.ToString()]);
 		}
 
 		private Result SetUnit( Document doc, UnitsDataR udr)
@@ -119,7 +120,7 @@ namespace DeluxMeasure.Windows.Support
 		//
 		// }
 
-		
+
 	}
 
 	[Transaction(TransactionMode.Manual)]

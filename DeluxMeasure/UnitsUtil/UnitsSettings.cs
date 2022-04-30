@@ -1,6 +1,7 @@
 ﻿#region using
 
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
@@ -137,14 +138,17 @@ namespace DeluxMeasure.UnitsUtil
 			Debug.WriteLine($"@UnitsSettings: SetUserStyles: {(mb.ReflectedType?.FullName ?? "is null")} > {mb.Name}");
 		#endif
 
-			UserSettings.Data.UserStyles = 
-				new List<UnitsDataR>(AppSettings.Data.AppStyles.Values);
+			UserSettings.Data.UserStyles = new Dictionary<string, UnitsDataR>( AppSettings.Data.AppStyles);
+
+			// UserSettings.Data.UserStyles = 
+			// 	new List<UnitsDataR>(AppSettings.Data.AppStyles.Values);
 		}
 
 		private void setUserStyles()
 		{
-			UserSettings.Data.UserStyles = 
-				new List<UnitsDataR>(AppSettings.Data.AppStyles.Values);
+			UserSettings.Data.UserStyles = new Dictionary<string, UnitsDataR>(AppSettings.Data.AppStyles);
+			// UserSettings.Data.UserStyles = 
+			// 	new List<UnitsDataR>(AppSettings.Data.AppStyles.Values);
 
 			// int i = 1;
 			//

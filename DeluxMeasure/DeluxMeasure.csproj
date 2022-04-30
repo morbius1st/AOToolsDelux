@@ -142,7 +142,7 @@
     <Compile Include="UnitsUtil\UnitsSupport.cs" />
     <Compile Include="UnitsUtil\UnitsSettings.cs" />
     <Compile Include="UnitsUtil\UnitsManager.cs" />
-    <Compile Include="UnitsUtil\UnitStdStyles.cs" />
+    <Compile Include="UnitsUtil\UnitUData.cs" />
     <Compile Include="UnitsUtil\UnitUStyle.cs" />
     <Compile Include="Windows\Support\CsComboBoxAp.cs" />
     <Compile Include="Windows\Support\CsScrollBarAp.cs" />
