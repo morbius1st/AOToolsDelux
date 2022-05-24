@@ -1,28 +1,39 @@
-﻿// Solution:     AOToolsDelux
+﻿using System;
+using System.ComponentModel;
+using System.Runtime.CompilerServices;
+using System.Runtime.Serialization;
+using static DeluxMeasure.UnitsUtil.UnitData;
+
+
+// Solution:     AOToolsDelux
 // Project:       DeluxMeasure
 // File:             UnitUStyle.cs
 // Created:      2022-03-27 (7:21 AM)
 
-using System.ComponentModel;
-using System.Runtime.CompilerServices;
-using System.Runtime.Serialization;
 
 namespace DeluxMeasure.UnitsUtil
 {
 	[DataContract(Namespace = "")]
 	public class UStyle : INotifyPropertyChanged
 	{
+		public static readonly string[] INLIST_PROP_NAMES = new []
+		{
+			$"Ustyle.{nameof(OrderInRibbon)}",
+			$"Ustyle.{nameof(OrderInDialogLeft)}",
+			$"Ustyle.{nameof(OrderInDialogRight)}",
+		};
+
 		private double? sample;
 
-		public UStyle() {}
+		protected UStyle() {}
 
 		public UStyle(
 			UnitClass uClass,
 			string id,
 			string name,
 			string description,
-			UnitsSupport.UnitCat uCat,
-			UnitsSupport.UnitSys uSys,
+			UnitCat uCat,
+			UnitSys uSys,
 			double precision, string symbol,
 			bool? suppressTrailZeros,
 			bool? suppressLeadZeros,
@@ -51,7 +62,7 @@ namespace DeluxMeasure.UnitsUtil
 			UseDigitGrouping = useDigitGrouping;
 			IconId = iconId;
 
-			Order = new int[3];
+			OrderInList = new int[3];
 			OrderInRibbon = orderInRibbon;
 			OrderInDialogLeft = orderInDialogLeft;
 			OrderInDialogRight = orderInDialogRight;
@@ -72,10 +83,10 @@ namespace DeluxMeasure.UnitsUtil
 		public string Description { get; set; }
 		
 		[DataMember(Order = 14)]
-		public UnitsSupport.UnitCat UnitCat { get; set; }
+		public UnitCat UnitCat { get; set; }
 
 		[DataMember(Order = 14)]
-		public UnitsSupport.UnitSys UnitSys { get; set; }
+		public UnitSys UnitSys { get; set; }
 
 		[DataMember(Order = 16)]
 		public string Symbol { get; set; }
@@ -114,61 +125,78 @@ namespace DeluxMeasure.UnitsUtil
 		public string IconId { get; set; }
 
 		[DataMember(Order = 30)]
-		int[] Order { get; set; }
+		int[] OrderInList { get; set; }
+
+
 
 
 		[IgnoreDataMember]
 		public bool IsLocked => (UnitClass < UnitClass.CL_ORDINARY);
 
 		[IgnoreDataMember]
-		public bool IsControl => this.UnitClass.Equals(UnitClass.CL_CONTROL);
-
-		[IgnoreDataMember]
-		public int ControlSeq => OrderInRibbon;
+		public bool IsControl => UnitClass.Equals(UnitClass.CL_CONTROL);
 
 		[IgnoreDataMember]
 		public int OrderInRibbon
 		{
-			get => Order[(int) UnitsSupport.ListToShowIn.RIBBON];
-			set => Order[(int) UnitsSupport.ListToShowIn.RIBBON] = value;
+			get => OrderInList[(int) InList.RIBBON];
+			set => OrderInList[(int) InList.RIBBON] = value;
 		}
 
 		[IgnoreDataMember]
 		public int OrderInDialogLeft
 		{
-			get => Order[(int) UnitsSupport.ListToShowIn.DIALOG_LEFT];
-			set => Order[(int) UnitsSupport.ListToShowIn.DIALOG_LEFT] = value;
+			get => OrderInList[(int) InList.DIALOG_LEFT];
+			set => OrderInList[(int) InList.DIALOG_LEFT] = value;
 		}
 
 		[IgnoreDataMember]
 		public int OrderInDialogRight
 		{
-			get => Order[(int) UnitsSupport.ListToShowIn.DIALOG_RIGHT];
-			set => Order[(int) UnitsSupport.ListToShowIn.DIALOG_RIGHT] = value;
+			get => OrderInList[(int) InList.DIALOG_RIGHT];
+			set => OrderInList[(int) InList.DIALOG_RIGHT] = value;
 		}
 
 		[IgnoreDataMember]
 		public bool ShowInRibbon
 		{
-			get => OrderInRibbon >= 0;
-			set => OrderInRibbon = value ? 100 : -1;
+			get => OrderInRibbon > INLIST_UNDEFINED;
+			set => OrderInRibbon = value ? 100 : INLIST_UNDEFINED;
 		}
 
 		[IgnoreDataMember]
 		public bool ShowInDialogLeft
 		{
-			get => OrderInDialogLeft >= 0;
-			set => OrderInDialogLeft = value ? 100 : -1;
+			get => OrderInDialogLeft > INLIST_UNDEFINED;
+			set => OrderInDialogLeft = value ? 100 : INLIST_UNDEFINED;
 		}
 
 		[IgnoreDataMember]
 		public bool ShowInDialogRight
 		{
-			get => OrderInDialogRight >= 0;
-			set => OrderInDialogRight = value ? 100 : -1;
+			get => OrderInDialogRight > INLIST_UNDEFINED;
+			set => OrderInDialogRight = value ? 100 : INLIST_UNDEFINED;
 		}
 
-		public bool ShowIn(int which) => Order[which] >= 0;
+		[IgnoreDataMember]
+		public bool InRibbonEnabled
+		{
+			get => OrderInRibbon != INLIST_DISABLED;
+		}
+
+		[IgnoreDataMember]
+		public bool InDialogLeftEnabled
+		{
+			get => OrderInDialogLeft != INLIST_DISABLED;
+		}
+
+		[IgnoreDataMember]
+		public bool InDialogRightEnabled
+		{
+			get => OrderInDialogRight != INLIST_DISABLED;
+		}
+
+		public bool ShowIn(int which) => OrderInList[which] >= 0;
 
 		public void UpdateProperties()
 		{
@@ -176,6 +204,36 @@ namespace DeluxMeasure.UnitsUtil
 			OnPropertyChanged(nameof(ShowInRibbon));
 			OnPropertyChanged(nameof(ShowInDialogLeft));
 			OnPropertyChanged(nameof(ShowInDialogRight));
+			OnPropertyChanged(nameof(InRibbonEnabled));
+			OnPropertyChanged(nameof(InDialogLeftEnabled));
+			OnPropertyChanged(nameof(InDialogRightEnabled));
+		}
+
+
+
+		public UStyle Clone()
+		{
+			UStyle us = new UStyle();
+			us.UnitClass = UnitClass;
+			us.Id = Id;
+			us.Name = Name;
+			us.Description = Description;
+			us.UnitCat = UnitCat;
+			us.UnitSys = UnitSys;
+			us.Precision = Precision;
+			us.SuppressTrailZeros = SuppressTrailZeros;
+			us.SuppressLeadZeros = SuppressLeadZeros;
+			us.UsePlusPrefix = UsePlusPrefix;
+			us.UseDigitGrouping = UseDigitGrouping;
+			us.SuppressSpaces = SuppressSpaces;
+			us.OrderInList = new int[3];
+			us.OrderInRibbon = -1;
+			us.OrderInDialogLeft = -1;
+			us.OrderInDialogRight = -1;
+			us.Sample = Sample;
+			us.IconId = IconId;
+
+			return us;
 		}
 
 		public event PropertyChangedEventHandler PropertyChanged;

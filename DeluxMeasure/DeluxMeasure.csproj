@@ -82,6 +82,9 @@
     <LangVersion>7.3</LangVersion>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Microsoft.Xaml.Behaviors, Version=1.1.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Xaml.Behaviors.Wpf.1.1.39\lib\net45\Microsoft.Xaml.Behaviors.dll</HintPath>
+    </Reference>
     <Reference Include="RevitAPI">
       <HintPath>..\..\..\..\..\..\..\..\Program Files\Autodesk\Revit 2021\RevitAPI.dll</HintPath>
       <Private>False</Private>
@@ -115,6 +118,9 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="..\..\..\UtilityLibrary\UtilityLibrary\CsWpfUtilities.cs">
+      <Link>.Linked\CsWpfUtilities.cs</Link>
+    </Compile>
     <Compile Include="..\..\LibraryRevit\LibraryRevit\RevitLibrary.cs">
       <Link>.Linked\RevitLibrary.cs</Link>
     </Compile>
@@ -138,11 +144,12 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Compile Include="UnitsUtil\UnitData.cs" />
     <Compile Include="UnitsUtil\UnitsStdUStyles.cs" />
     <Compile Include="UnitsUtil\UnitsSupport.cs" />
     <Compile Include="UnitsUtil\UnitsSettings.cs" />
     <Compile Include="UnitsUtil\UnitsManager.cs" />
-    <Compile Include="UnitsUtil\UnitStdStyles.cs" />
+    <Compile Include="UnitsUtil\UnitUData.cs" />
     <Compile Include="UnitsUtil\UnitUStyle.cs" />
     <Compile Include="Windows\Support\CsComboBoxAp.cs" />
     <Compile Include="Windows\Support\CsScrollBarAp.cs" />
@@ -151,8 +158,10 @@
     <Compile Include="Windows\Support\UnitStyleCmd.cs" />
     <Compile Include="Windows\AWindow.cs" />
     <Compile Include="Windows\ColData.cs" />
+    <Compile Include="Windows\Support\UsMgrBindingValidations.cs" />
     <Compile Include="Windows\Support\ValueConverters.cs" />
     <Compile Include="Windows\Support\VisualStatesAttached.cs" />
+    <Compile Include="Windows\Support\XmalMarkup.cs" />
     <Compile Include="Windows\Test.xaml.cs">
       <DependentUpon>Test.xaml</DependentUpon>
     </Compile>
@@ -216,7 +225,9 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <None Include="packages.config" />
+  </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Resources\Delux Measure dec-ft 32.png" />
     <EmbeddedResource Include="Resources\Delux Measure dec-in 32.png" />

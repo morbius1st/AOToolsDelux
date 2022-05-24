@@ -1,10 +1,10 @@
-﻿<ResourceDictionary
-	xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-	xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-	xmlns:sys="clr-namespace:System;assembly=mscorlib"
-	mc:Ignorable="d">
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+		xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+		xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+		xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+		xmlns:sys="clr-namespace:System;assembly=mscorlib"
+		mc:Ignorable="d"
+		>
 	<!--  xmlns:sys="clr-namespace:System;assembly=mscorlib"  -->
 	<ResourceDictionary.MergedDictionaries>
 		<ResourceDictionary Source="MasterColorList.xaml" />
@@ -138,25 +138,29 @@
 
 	<!--#region > Styles-->
 
-	<Style x:Key="Control.Normal.Style" TargetType="Control">
+	<Style x:Key="Control.Normal.Style"
+			TargetType="Control"
+			>
 		<Setter Property="Background" Value="{StaticResource Normal.Background}" />
 		<Setter Property="BorderBrush" Value="{StaticResource Normal.Border}" />
 		<Setter Property="BorderThickness" Value="{StaticResource Normal.BorderThickness}" />
 		<Setter Property="Foreground" Value="{StaticResource Normal.Foreground}" />
 	</Style>
 
-	<Style
-		x:Key="ListBox.Normal.Style"
-		BasedOn="{StaticResource Control.Normal.Style}"
-		TargetType="ListBox" />
+	<Style x:Key="ListBox.Normal.Style"
+			BasedOn="{StaticResource Control.Normal.Style}"
+			TargetType="ListBox"
+			/>
 
-	<Style
-		x:Key="Button.Normal.Style"
-		BasedOn="{StaticResource Control.Normal.Style}"
-		TargetType="Button" />
+	<Style x:Key="Button.Normal.Style"
+			BasedOn="{StaticResource Control.Normal.Style}"
+			TargetType="Button"
+			/>
 	<!-- <Setter Property="Background" Value="{StaticResource Normal.Disabled.Background}" /> -->
 	<!--  listbox item container style  -->
-	<Style x:Key="ListBox.Normal.ItemContainer" TargetType="{x:Type ListBoxItem}">
+	<Style x:Key="ListBox.Normal.ItemContainer"
+			TargetType="{x:Type ListBoxItem}"
+			>
 		<Setter Property="BorderBrush" Value="Transparent" />
 		<Setter Property="BorderThickness" Value="1" />
 		<Setter Property="Foreground" Value="{StaticResource Gray.UnSelected.Foreground}" />
@@ -172,49 +176,49 @@
 			<Setter.Value>
 				<ControlTemplate TargetType="{x:Type ListBoxItem}">
 
-					<Border
-						x:Name="Bd"
-						Padding="{TemplateBinding Padding}"
-						Background="{StaticResource Gray.UnSelected.Background}"
-						BorderBrush="{TemplateBinding BorderBrush}"
-						BorderThickness="{TemplateBinding BorderThickness}"
-						SnapsToDevicePixels="true">
-						<ContentPresenter
-							HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
-							VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
-							SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
+					<Border x:Name="Bd"
+							Background="{StaticResource Gray.UnSelected.Background}"
+							BorderBrush="{TemplateBinding BorderBrush}"
+							BorderThickness="{TemplateBinding BorderThickness}"
+							Padding="{TemplateBinding Padding}"
+							SnapsToDevicePixels="true"
+							>
+						<ContentPresenter HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+								SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
+								VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+								/>
 					</Border>
 					<ControlTemplate.Triggers>
 						<Trigger Property="IsEnabled" Value="true">
-							<Setter TargetName="Bd" Property="Background" Value="{StaticResource Gray.UnSelected.Background}" />
-							<Setter TargetName="Bd" Property="TextElement.Foreground" Value="{StaticResource Normal.Foreground}" />
+							<Setter Property="Background" TargetName="Bd" Value="{StaticResource Gray.UnSelected.Background}" />
+							<Setter Property="TextElement.Foreground" TargetName="Bd" Value="{StaticResource Normal.Foreground}" />
 						</Trigger>
 						<MultiTrigger>
 							<MultiTrigger.Conditions>
 								<Condition Property="IsMouseOver" Value="True" />
 							</MultiTrigger.Conditions>
-							<Setter TargetName="Bd" Property="Background" Value="{StaticResource Normal.MouseOver.Background}" />
-							<Setter TargetName="Bd" Property="BorderBrush" Value="{StaticResource Normal.MouseOver.Border}" />
+							<Setter Property="Background" TargetName="Bd" Value="{StaticResource Normal.MouseOver.Background}" />
+							<Setter Property="BorderBrush" TargetName="Bd" Value="{StaticResource Normal.MouseOver.Border}" />
 						</MultiTrigger>
 						<MultiTrigger>
 							<MultiTrigger.Conditions>
 								<Condition Property="Selector.IsSelectionActive" Value="False" />
 								<Condition Property="IsSelected" Value="True" />
 							</MultiTrigger.Conditions>
-							<Setter TargetName="Bd" Property="Background" Value="{StaticResource Gray.UnSelected.Background}" />
-							<Setter TargetName="Bd" Property="BorderBrush" Value="{StaticResource Normal.SelectedInActive.Border}" />
+							<Setter Property="Background" TargetName="Bd" Value="{StaticResource Gray.UnSelected.Background}" />
+							<Setter Property="BorderBrush" TargetName="Bd" Value="{StaticResource Normal.SelectedInActive.Border}" />
 						</MultiTrigger>
 						<MultiTrigger>
 							<MultiTrigger.Conditions>
 								<Condition Property="Selector.IsSelectionActive" Value="True" />
 								<Condition Property="IsSelected" Value="True" />
 							</MultiTrigger.Conditions>
-							<Setter TargetName="Bd" Property="Background" Value="{StaticResource Gray.UnSelected.Background}" />
-							<Setter TargetName="Bd" Property="BorderBrush" Value="{StaticResource Normal.SelectedActive.Border}" />
+							<Setter Property="Background" TargetName="Bd" Value="{StaticResource Gray.UnSelected.Background}" />
+							<Setter Property="BorderBrush" TargetName="Bd" Value="{StaticResource Normal.SelectedActive.Border}" />
 						</MultiTrigger>
 						<Trigger Property="IsEnabled" Value="False">
-							<Setter TargetName="Bd" Property="Background" Value="{StaticResource Normal.Background}" />
-							<Setter TargetName="Bd" Property="TextElement.Foreground" Value="{StaticResource Normal.Foreground}" />
+							<Setter Property="Background" TargetName="Bd" Value="{StaticResource Normal.Background}" />
+							<Setter Property="TextElement.Foreground" TargetName="Bd" Value="{StaticResource Normal.Foreground}" />
 						</Trigger>
 
 					</ControlTemplate.Triggers>
@@ -229,33 +233,107 @@
 
 	<!--#region > Control Templates-->
 
-	<ControlTemplate x:Key="Button.Normal.ControlTemplate" TargetType="Button">
-		<Border
-			x:Name="border"
-			Background="{TemplateBinding Background}"
-			BorderBrush="{TemplateBinding BorderBrush}"
-			BorderThickness="{TemplateBinding BorderThickness}"
-			CornerRadius="4"
-			SnapsToDevicePixels="True">
-			<Border
-				x:Name="bdr1"
-				Margin="0,0,-1,-1"
-				BorderBrush="Transparent"
-				BorderThickness="{StaticResource Normal.Default.BorderThickness.Inner}">
+	<ControlTemplate x:Key="Button.Normal.ControlTemplate"
+			TargetType="Button"
+			>
+		<Border x:Name="border"
+				Background="{TemplateBinding Background}"
+				BorderBrush="{TemplateBinding BorderBrush}"
+				BorderThickness="{TemplateBinding BorderThickness}"
+				CornerRadius="4"
+				SnapsToDevicePixels="True"
+				>
+			<Border x:Name="bdr1"
+					BorderBrush="Transparent"
+					BorderThickness="{StaticResource Normal.Default.BorderThickness.Inner}"
+					Margin="0,0,-1,-1"
+					>
 
-				<ContentPresenter
-					x:Name="contentPresenter"
-					HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
-					VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
-					Content="{TemplateBinding Content}"
-					ContentStringFormat="{TemplateBinding ContentStringFormat}"
-					ContentTemplate="{TemplateBinding ContentTemplate}"
-					Focusable="False"
-					RecognizesAccessKey="True"
-					SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
+				<ContentPresenter x:Name="contentPresenter"
+						Content="{TemplateBinding Content}"
+						ContentStringFormat="{TemplateBinding ContentStringFormat}"
+						ContentTemplate="{TemplateBinding ContentTemplate}"
+						Focusable="False"
+						HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+						RecognizesAccessKey="True"
+						SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
+						VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+						/>
 				<!--  HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"  -->
 			</Border>
 		</Border>
+		<ControlTemplate.Triggers>
+
+
+			<Trigger Property="IsDefault" Value="True">
+				<Setter Property="BorderBrush" TargetName="bdr1" Value="{StaticResource Normal.Default.Border.Inner}" />
+				<Setter Property="BorderThickness" TargetName="bdr1" Value="{StaticResource Normal.Default.BorderThickness.Inner}" />
+
+			</Trigger>
+			<Trigger Property="IsDefault" Value="False">
+				<Setter Property="BorderBrush" TargetName="bdr1" Value="Transparent" />
+				<Setter Property="BorderThickness" TargetName="bdr1" Value="0" />
+			</Trigger>
+
+			<Trigger Property="IsMouseOver" Value="true">
+				<Setter Property="Foreground" Value="{StaticResource Normal.MouseOver.Foreground}" />
+				<Setter Property="Background" TargetName="border" Value="{StaticResource Normal.MouseOver.Background}" />
+				<Setter Property="BorderBrush" TargetName="border" Value="{StaticResource Normal.MouseOver.Border}" />
+			</Trigger>
+			<!-- <Setter Property="Foreground" Value="{StaticResource Normal.MouseOver.Foreground}" /> -->
+
+			<Trigger Property="IsPressed" Value="True">
+				<Setter Property="Foreground" Value="{StaticResource Normal.Pressed.Foreground}" />
+				<Setter Property="BorderBrush" TargetName="bdr1" Value="{StaticResource Normal.Pressed.Default.Inner.Border}" />
+				<Setter Property="Background" TargetName="border" Value="{StaticResource Normal.Pressed.Background}" />
+				<Setter Property="BorderBrush" TargetName="border" Value="{StaticResource Normal.Pressed.Border}" />
+			</Trigger>
+
+			<Trigger Property="IsEnabled" Value="False">
+				<Setter Property="Foreground" Value="{DynamicResource Normal.Disabled.Foreground}" />
+				<Setter Property="BorderBrush" TargetName="bdr1" Value="{DynamicResource Normal.Disabled.Border.Inner}" />
+				<Setter Property="Background" TargetName="border" Value="{DynamicResource Normal.Disabled.Background}" />
+				<Setter Property="BorderBrush" TargetName="border" Value="{DynamicResource Normal.Disabled.Border}" />
+			</Trigger>
+
+
+		</ControlTemplate.Triggers>
+	</ControlTemplate>
+
+	<ControlTemplate x:Key="Button.Stealth.ControlTemplate"
+			TargetType="Button"
+			>
+		<Border x:Name="border"
+				Background="{TemplateBinding Background}"
+				BorderBrush="{TemplateBinding BorderBrush}"
+				BorderThickness="{TemplateBinding BorderThickness}"
+				Padding="{TemplateBinding Padding}"
+				CornerRadius="4"
+				SnapsToDevicePixels="True"
+				VerticalAlignment="Center"
+				>
+			<Border x:Name="bdr1"
+					BorderBrush="Transparent"
+					BorderThickness="{StaticResource Normal.Default.BorderThickness.Inner}"
+					Margin="{TemplateBinding Padding}"
+					VerticalAlignment="Center"
+			>
+
+				<ContentPresenter x:Name="contentPresenter"
+						Content="{TemplateBinding Content}"
+						ContentStringFormat="{TemplateBinding ContentStringFormat}"
+						ContentTemplate="{TemplateBinding ContentTemplate}"
+						Focusable="False"
+						HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+						RecognizesAccessKey="True"
+						SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
+						VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+				/>
+				<!--  HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"  -->
+			</Border>
+		</Border>
+		<!--
+
 		<ControlTemplate.Triggers>
 
 
@@ -273,9 +351,9 @@
 				<Setter Property="Foreground" Value="{StaticResource Normal.MouseOver.Foreground}" />
 				<Setter TargetName="border" Property="Background" Value="{StaticResource Normal.MouseOver.Background}" />
 				<Setter TargetName="border" Property="BorderBrush" Value="{StaticResource Normal.MouseOver.Border}" />
-			</Trigger>
-			<!-- <Setter Property="Foreground" Value="{StaticResource Normal.MouseOver.Foreground}" /> -->
-
+			</Trigger>		-->
+		<!-- <Setter Property="Foreground" Value="{StaticResource Normal.MouseOver.Foreground}" /> -->
+		<!--
 			<Trigger Property="IsPressed" Value="True">
 				<Setter Property="Foreground" Value="{StaticResource Normal.Pressed.Foreground}" />
 				<Setter TargetName="bdr1" Property="BorderBrush" Value="{StaticResource Normal.Pressed.Default.Inner.Border}" />
@@ -292,6 +370,7 @@
 
 
 		</ControlTemplate.Triggers>
+	-->
 	</ControlTemplate>
 
 	<!--#endregion-->

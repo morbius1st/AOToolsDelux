@@ -88,6 +88,12 @@
     <DebugSymbols>true</DebugSymbols>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="envdte, Version=8.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </Reference>
+    <Reference Include="envdte80, Version=8.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
@@ -110,11 +116,18 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Properties\Annotations.cs" />
+    <Compile Include="Windows\Support\TestVisualStates.cs" />
     <Compile Include="Windows\Support\CsComboBoxAp.cs" />
+    <Compile Include="Windows\Support\CsCheckBoxAp.cs" />
     <Compile Include="Windows\Support\CustomProperties.cs" />
     <Compile Include="Windows\Support\CsScrollBarAp.cs" />
     <Compile Include="Windows\Support\CsScrollViewerAp.cs" />
     <Compile Include="Windows\Support\ValueConverters.cs" />
+    <Compile Include="Windows\Support\XmalMarkup.cs" />
+    <Compile Include="Windows\Test1.xaml.cs">
+      <DependentUpon>Test1.xaml</DependentUpon>
+    </Compile>
     <Page Include="Windows\MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -151,6 +164,10 @@
     <Page Include="Windows\Support\CsScrollViewer.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Windows\Test1.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
   </ItemGroup>
   <ItemGroup>

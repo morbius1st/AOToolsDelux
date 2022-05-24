@@ -115,25 +115,25 @@ namespace DeluxMeasure.Windows.Support
 
 #endregion
 
-// #region pass-through converter
-//
-// 	// for debugging only
-// 	// allows breakpoint here
-// 	[ValueConversion(typeof(object), typeof(object))]
-// 	public class PassThroughConverter : IValueConverter
-// 	{
-// 		public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
-// 		{
-// 			return value;
-// 		}
-//
-// 		public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
-// 		{
-// 			return value;
-// 		}
-// 	}
-//
-// #endregion
+#region pass-through converter
+
+	// for debugging only
+	// allows breakpoint here
+	[ValueConversion(typeof(object), typeof(object))]
+	public class PassThroughConverter : IValueConverter
+	{
+		public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+		{
+			return value;
+		}
+
+		public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+		{
+			return value;
+		}
+	}
+
+#endregion
 //
 // #region bool to "On" / "Off" string value converter
 //

@@ -5,7 +5,7 @@ using System.Windows.Data;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
 
-using DeluxMeasure.UnitsUtil;
+using static DeluxMeasure.UnitsUtil.UnitData;
 
 #endregion
 
@@ -20,32 +20,54 @@ using DeluxMeasure.UnitsUtil;
 
 namespace DeluxMeasure.UnitsUtil
 {
-	public struct STYLE_ID
+	public struct STYLE_DATA
 	{
 		public string TypeId { get; private set; }
 		public string NameId { get; private set; }
+		public int InRibbonPos { get; }
+		public int InDlgLeftPos { get; }
+		public int InDlgRightPos { get; }
 
-		public STYLE_ID(string typeId, string nameId)
+		// static STYLE_DATA()
+		// {
+		// 	STYLE_INFO = new STYLE_DATA[12];
+		// 	config();
+		// }
+
+		public STYLE_DATA(string typeId, string nameId, int inRibbonPos, int inDlgLeftPos, int inDlgRightPos)
 		{
 			TypeId = typeId;
 			NameId = nameId;
+			InRibbonPos = inRibbonPos;
+			InDlgLeftPos = inDlgLeftPos;
+			InDlgRightPos = inDlgRightPos;
 		}
 
 		// cross reference between Revit ForgeTypeId name and standard style Name
-		public static readonly STYLE_ID Invalid            = new STYLE_ID(null                  , null);
-		public static readonly STYLE_ID Control            = new STYLE_ID(null                  , null);
-		public static readonly STYLE_ID Project            = new STYLE_ID("General"             , "Project");
-		public static readonly STYLE_ID FtDecIn            = new STYLE_ID("Custom"              , "Feet and Decimal Inches");
-		public static readonly STYLE_ID FtFracIn           = new STYLE_ID("FeetFractionalInches", "Feet and Fractional Inches");
-		public static readonly STYLE_ID UsSurvey           = new STYLE_ID("UsSurveyFeet"        , "Survey Feet");
-		public static readonly STYLE_ID Feet               = new STYLE_ID("Feet"                , "Decimal Feet");
-		public static readonly STYLE_ID DecInches          = new STYLE_ID("Inches"              , "Decimal Inches");
-		public static readonly STYLE_ID FracInches         = new STYLE_ID("FractionalInches"    , "Fractional Inches");
-		public static readonly STYLE_ID Meters             = new STYLE_ID("Meters"              , "Meters"     );
-		public static readonly STYLE_ID Decimeters         = new STYLE_ID("Decimeters"          , "Decimeters" );
-		public static readonly STYLE_ID Centimeters        = new STYLE_ID("CentiMeters"         , "CentiMeters");
-		public static readonly STYLE_ID Millimeters        = new STYLE_ID("MilliMeters"         , "MilliMeters");
-		public static readonly STYLE_ID MetersCentimeters  = new STYLE_ID("MetersCentimeters"   , "Meters and Centimeters");
+		public static readonly STYLE_DATA Invalid            = new STYLE_DATA(null                  , null                        , INLIST_UNDEFINED, INLIST_UNDEFINED, INLIST_UNDEFINED);
+		// public static readonly STYLE_DATA Control01          = new STYLE_DATA("Control_01"          , "Control_01"                , INLIST_UNDEFINED, INLIST_UNDEFINED, INLIST_UNDEFINED);
+		public static readonly STYLE_DATA Project            = new STYLE_DATA("General"             , "Project"                   , INLIST_DISABLED,  0,  0);
+		public static readonly STYLE_DATA FtDecIn            = new STYLE_DATA("Custom"              , "Feet and Decimal Inches"   , INLIST_DISABLED,  2,  3);
+		public static readonly STYLE_DATA FtFracIn           = new STYLE_DATA("FeetFractionalInches", "Feet and Fractional Inches",  2,  3,  4);
+		public static readonly STYLE_DATA UsSurvey           = new STYLE_DATA("UsSurveyFeet"        , "Survey Feet"               , INLIST_UNDEFINED, INLIST_UNDEFINED, INLIST_UNDEFINED);
+		public static readonly STYLE_DATA Feet               = new STYLE_DATA("Feet"                , "Decimal Feet"              ,  3,  4,  1);
+		public static readonly STYLE_DATA DecInches          = new STYLE_DATA("Inches"              , "Decimal Inches"            ,  1,  1,  2);
+		public static readonly STYLE_DATA FracInches         = new STYLE_DATA("FractionalInches"    , "Fractional Inches"         ,  0, INLIST_UNDEFINED, INLIST_UNDEFINED);
+		public static readonly STYLE_DATA Meters             = new STYLE_DATA("Meters"              , "Meters"                    , INLIST_UNDEFINED, INLIST_UNDEFINED, INLIST_UNDEFINED);
+		public static readonly STYLE_DATA Decimeters         = new STYLE_DATA("Decimeters"          , "Decimeters"                , INLIST_UNDEFINED, INLIST_UNDEFINED, INLIST_UNDEFINED);
+		public static readonly STYLE_DATA Centimeters        = new STYLE_DATA("CentiMeters"         , "CentiMeters"               , INLIST_UNDEFINED, INLIST_UNDEFINED, INLIST_UNDEFINED);
+		public static readonly STYLE_DATA Millimeters        = new STYLE_DATA("MilliMeters"         , "MilliMeters"               , INLIST_UNDEFINED, INLIST_UNDEFINED, INLIST_UNDEFINED);
+		public static readonly STYLE_DATA MetersCentimeters  = new STYLE_DATA("MetersCentimeters"   , "Meters and Centimeters"    , INLIST_UNDEFINED, INLIST_UNDEFINED, INLIST_UNDEFINED);
+
+
+		// public static readonly STYLE_DATA[] STYLE_INFO;
+		//
+		// private static void config()
+		// {
+		// 	STYLE_INFO[(int) UnitType.UT_INVALID] = new STYLE_DATA("asf", "asdf", -1, -1, -1);
+		// }
+
+
 	}
 
 	public class UnitsStdUStyles
@@ -71,22 +93,22 @@ namespace DeluxMeasure.UnitsUtil
 			Initialize();
 		}
 
-		public static Dictionary<string, UStyle> StdStyles { get; private set; }
+		public static Dictionary<string, UStyle> StdSysStyles { get; private set; }
 
 		public static void Initialize()
 		{
 
-			StdStyles = new Dictionary<string, UStyle>();
+			StdSysStyles = new Dictionary<string, UStyle>();
 
 			// 0
 			// project style
-			StdStyles.Add(STYLE_ID.Project.NameId, ProjStyle());
+			StdSysStyles.Add(STYLE_DATA.Project.NameId, ProjStyle());
 
 			addStandard();
 
-			UStyle us = CtrlStyle("SvdStyles", "Show Selected Saved Style", 1);
+			// UStyle us = CtrlStyle(STYLE_DATA.Control01.NameId, "Show Selected Saved Style", -1);
 
-			StdStyles.Add(us.Name, us);
+			// StdSysStyles.Add(us.Name, us);
 		}
 
 		// Show Selected Saved Style 
@@ -102,57 +124,65 @@ namespace DeluxMeasure.UnitsUtil
 			string id;
 			string name;
 
-			//1
-			// id = STYLE_ID_FT_FRAC_IN;
-			name = "Feet and Fractional Inches";
-			StdStyles.Add(STYLE_ID.FtFracIn.NameId, new UStyle(UnitClass.CL_ORDINARY, // locked
-				STYLE_ID.FtFracIn.TypeId,
-				STYLE_ID.FtFracIn.NameId,
-				$"{name} Unit Style", 
-				UnitsSupport.UnitCat.UC_FT_IN_FRAC, 
-				UnitsSupport.UnitSys.US_IMPERIAL,
-				1.0 / 64.0, 
-				// nothing allowed
-				null,
-				null, true, null, true, true,
-				-1, -1, -1, 
-				11.2345,
-				"Delux Measure ft-frac-in 32.png"));
-
-			// 2
+			// 1
 			// id = STYLE_ID_FT_DEC_IN;
 			name = "Feet and Decimal Inches";
-			StdStyles.Add(STYLE_ID.FtDecIn.NameId, 
+			StdSysStyles.Add(STYLE_DATA.FtDecIn.NameId, 
 				new UStyle(UnitClass.CL_FT_DEC_IN, // locked
-				STYLE_ID.FtDecIn.TypeId,
-				STYLE_ID.FtDecIn.NameId,
+				STYLE_DATA.FtDecIn.TypeId,
+				STYLE_DATA.FtDecIn.NameId,
 				$"{name} Unit Style", 
-				UnitsSupport.UnitCat.UC_FT_IN_DEC, 
-				UnitsSupport.UnitSys.US_IMPERIAL,
+				UnitCat.UC_FT_IN_DEC, 
+				UnitSys.US_IMPERIAL,
 				0.001, 
 				// nothing allowed
 				null,
 				true, false, null, true, false,
-				-1, -1, -1, 
+				STYLE_DATA.FtDecIn.InRibbonPos, 
+				STYLE_DATA.FtDecIn.InDlgLeftPos, 
+				STYLE_DATA.FtDecIn.InDlgRightPos, 
 				22.3455,
 				"Delux Measure ft-dec-in 32.png"));
+
+
+			// 2
+			// id = STYLE_ID_FT_FRAC_IN;
+			name = "Feet and Fractional Inches";
+			StdSysStyles.Add(STYLE_DATA.FtFracIn.NameId, new UStyle(UnitClass.CL_ORDINARY, // locked
+				STYLE_DATA.FtFracIn.TypeId,
+				STYLE_DATA.FtFracIn.NameId,
+				$"{name} Unit Style", 
+				UnitCat.UC_FT_IN_FRAC, 
+				UnitSys.US_IMPERIAL,
+				1.0 / 64.0, 
+				// nothing allowed
+				null,
+				null, true, null, true, true,
+				STYLE_DATA.FtFracIn.InRibbonPos, 
+				STYLE_DATA.FtFracIn.InDlgLeftPos, 
+				STYLE_DATA.FtFracIn.InDlgRightPos, 
+				11.2345,
+				"Delux Measure ft-frac-in 32.png"));
+
 
 			// 3
 			// same as decimal feet
 			// id = STYLE_ID_US_SURVEY;
 			name = "Survey Feet";
-			StdStyles.Add(STYLE_ID.UsSurvey.NameId, 
+			StdSysStyles.Add(STYLE_DATA.UsSurvey.NameId, 
 				new UStyle(UnitClass.CL_ORDINARY, 
-				STYLE_ID.UsSurvey.TypeId,
-				STYLE_ID.UsSurvey.NameId,
+				STYLE_DATA.UsSurvey.TypeId,
+				STYLE_DATA.UsSurvey.NameId,
 				$"{name} Unit Style", 
-				UnitsSupport.UnitCat.UC_DECIMAL, 
-				UnitsSupport.UnitSys.US_IMPERIAL,
+				UnitCat.UC_DECIMAL, 
+				UnitSys.US_IMPERIAL,
 				0.001, 
 				// "USft" or "" (use "none")
 				"none",
 				true, null, null, true, null,
-				-1, -1, -1, 
+				STYLE_DATA.UsSurvey.InRibbonPos, 
+				STYLE_DATA.UsSurvey.InDlgLeftPos, 
+				STYLE_DATA.UsSurvey.InDlgRightPos, 
 				33.4567,
 				"Delux Measure us-ft 32.png"));
 
@@ -160,17 +190,19 @@ namespace DeluxMeasure.UnitsUtil
 			// decimal feet
 			// id = STYLE_ID_FEET;
 			name = "Decimal Feet";
-			StdStyles.Add(STYLE_ID.Feet.NameId, new UStyle(UnitClass.CL_ORDINARY,
-				STYLE_ID.Feet.TypeId,
-				STYLE_ID.Feet.NameId,
+			StdSysStyles.Add(STYLE_DATA.Feet.NameId, new UStyle(UnitClass.CL_ORDINARY,
+				STYLE_DATA.Feet.TypeId,
+				STYLE_DATA.Feet.NameId,
 				$"{name} Unit Style", 
-				UnitsSupport.UnitCat.UC_DECIMAL, 
-				UnitsSupport.UnitSys.US_IMPERIAL,
+				UnitCat.UC_DECIMAL, 
+				UnitSys.US_IMPERIAL,
 				0.0001, 
 				// ' or ft or LF or "" (use "none")
 				"'", 
 				true, null, null, true, null,
-				-1, -1, -1, 
+				STYLE_DATA.Feet.InRibbonPos, 
+				STYLE_DATA.Feet.InDlgLeftPos, 
+				STYLE_DATA.Feet.InDlgRightPos, 
 				44.5678,
 				"Delux Measure dec-ft 32.png"));
 
@@ -178,17 +210,19 @@ namespace DeluxMeasure.UnitsUtil
 			// decimal inches
 			// id = STYLE_ID_DEC_INCHES;
 			name = "Decimal Inches";
-			StdStyles.Add(STYLE_ID.DecInches.NameId, new UStyle(UnitClass.CL_ORDINARY,
-				STYLE_ID.DecInches.TypeId,
-				STYLE_ID.DecInches.NameId,
+			StdSysStyles.Add(STYLE_DATA.DecInches.NameId, new UStyle(UnitClass.CL_ORDINARY,
+				STYLE_DATA.DecInches.TypeId,
+				STYLE_DATA.DecInches.NameId,
 				$"{name} Unit Style", 
-				UnitsSupport.UnitCat.UC_IN_DEC, 
-				UnitsSupport.UnitSys.US_IMPERIAL,
+				UnitCat.UC_IN_DEC, 
+				UnitSys.US_IMPERIAL,
 				0.0001, 
 				// " or in or ""
 				"\"",
 				true, null, null, true, null,
-				-1, -1, -1, 
+				STYLE_DATA.DecInches.InRibbonPos, 
+				STYLE_DATA.DecInches.InDlgLeftPos, 
+				STYLE_DATA.DecInches.InDlgRightPos, 
 				55.6789,
 				"Delux Measure dec-in 32.png"));
 
@@ -196,17 +230,19 @@ namespace DeluxMeasure.UnitsUtil
 			// fractional inches
 			// id = STYLE_ID_FRAC_INCHES;
 			name = "Fractional Inches";
-			StdStyles.Add(STYLE_ID.FracInches.NameId, new UStyle(UnitClass.CL_ORDINARY,
-				STYLE_ID.FracInches.TypeId,
-				STYLE_ID.FracInches.NameId,
+			StdSysStyles.Add(STYLE_DATA.FracInches.NameId, new UStyle(UnitClass.CL_ORDINARY,
+				STYLE_DATA.FracInches.TypeId,
+				STYLE_DATA.FracInches.NameId,
 				$"{name} Unit Style", 
-				UnitsSupport.UnitCat.UC_IN_FRAC, 
-				UnitsSupport.UnitSys.US_IMPERIAL,
+				UnitCat.UC_IN_FRAC, 
+				UnitSys.US_IMPERIAL,
 				1.0/256, 
 				// nothing allowed
 				null,
 				null, null, null, true, null,
-				-1, -1, -1, 
+				STYLE_DATA.FracInches.InRibbonPos, 
+				STYLE_DATA.FracInches.InDlgLeftPos, 
+				STYLE_DATA.FracInches.InDlgRightPos, 
 				66.7891,
 				"Delux Measure frac-in 32.png"));
 
@@ -216,17 +252,19 @@ namespace DeluxMeasure.UnitsUtil
 			// meters
 			// id = STYLE_ID_METERS;
 			name = "Meters";
-			StdStyles.Add(STYLE_ID.Meters.NameId, new UStyle(UnitClass.CL_ORDINARY,
-				STYLE_ID.Meters.TypeId,
-				STYLE_ID.Meters.NameId,
+			StdSysStyles.Add(STYLE_DATA.Meters.NameId, new UStyle(UnitClass.CL_ORDINARY,
+				STYLE_DATA.Meters.TypeId,
+				STYLE_DATA.Meters.NameId,
 				$"{name} Unit Style", 
-				UnitsSupport.UnitCat.UC_DECIMAL, 
-				UnitsSupport.UnitSys.US_METRIC,
+				UnitCat.UC_DECIMAL, 
+				UnitSys.US_METRIC,
 				2.0, 
 				// "m" or ""
 				"m",
 				true, null, null, true, null,
-				-1, -1, -1, 
+				STYLE_DATA.Meters.InRibbonPos, 
+				STYLE_DATA.Meters.InDlgLeftPos, 
+				STYLE_DATA.Meters.InDlgRightPos, 
 				77.8912,
 				"Delux Measure m 32.png"));
 
@@ -234,17 +272,19 @@ namespace DeluxMeasure.UnitsUtil
 			// decimeters
 			// id = STYLE_ID_DECIMETERS;
 			name = "Decimeters";
-			StdStyles.Add(STYLE_ID.Decimeters.NameId, new UStyle(UnitClass.CL_ORDINARY,
-				STYLE_ID.Decimeters.TypeId,
-				STYLE_ID.Decimeters.NameId,
+			StdSysStyles.Add(STYLE_DATA.Decimeters.NameId, new UStyle(UnitClass.CL_ORDINARY,
+				STYLE_DATA.Decimeters.TypeId,
+				STYLE_DATA.Decimeters.NameId,
 				$"{name} Unit Style", 
-				UnitsSupport.UnitCat.UC_DECIMAL, 
-				UnitsSupport.UnitSys.US_METRIC,
+				UnitCat.UC_DECIMAL, 
+				UnitSys.US_METRIC,
 				10.0, 
 				// "dm" or ""
 				"dm",
 				true, null, null, true, null,
-				-1, -1, -1, 
+				STYLE_DATA.Decimeters.InRibbonPos, 
+				STYLE_DATA.Decimeters.InDlgLeftPos, 
+				STYLE_DATA.Decimeters.InDlgRightPos, 
 				88.9123,
 				"Delux Measure dm 32.png"));
 
@@ -252,17 +292,19 @@ namespace DeluxMeasure.UnitsUtil
 			// centimeters
 			// id = STYLE_ID_CENTIMETERS;
 			name = "Centimeters";
-			StdStyles.Add(STYLE_ID.Centimeters.NameId, new UStyle(UnitClass.CL_ORDINARY,
-				STYLE_ID.Centimeters.TypeId,
-				STYLE_ID.Centimeters.NameId,
+			StdSysStyles.Add(STYLE_DATA.Centimeters.NameId, new UStyle(UnitClass.CL_ORDINARY,
+				STYLE_DATA.Centimeters.TypeId,
+				STYLE_DATA.Centimeters.NameId,
 				$"{name} Unit Style", 
-				UnitsSupport.UnitCat.UC_DECIMAL, 
-				UnitsSupport.UnitSys.US_METRIC,
+				UnitCat.UC_DECIMAL, 
+				UnitSys.US_METRIC,
 				0.1, 
 				// "cm" or "" 
 				"cm",
 				true, null, null, true, null,
-				-1, -1, -1, 
+				STYLE_DATA.Centimeters.InRibbonPos, 
+				STYLE_DATA.Centimeters.InDlgLeftPos, 
+				STYLE_DATA.Centimeters.InDlgRightPos, 
 				99.1234,
 				"Delux Measure cm 32.png"));
 
@@ -270,17 +312,19 @@ namespace DeluxMeasure.UnitsUtil
 			// millimeters
 			// id = STYLE_ID_MILLIMETERS;
 			name = "Millimeters";
-			StdStyles.Add(STYLE_ID.Millimeters.NameId, new UStyle(UnitClass.CL_ORDINARY,
-				STYLE_ID.Millimeters.TypeId,
-				STYLE_ID.Millimeters.NameId,
+			StdSysStyles.Add(STYLE_DATA.Millimeters.NameId, new UStyle(UnitClass.CL_ORDINARY,
+				STYLE_DATA.Millimeters.TypeId,
+				STYLE_DATA.Millimeters.NameId,
 				$"{name} Unit Style", 
-				UnitsSupport.UnitCat.UC_DECIMAL, 
-				UnitsSupport.UnitSys.US_METRIC,
+				UnitCat.UC_DECIMAL, 
+				UnitSys.US_METRIC,
 				0.01, 
 				// "mm" or ""
 				"mm",
 				true, null, null, true, null,
-				-1, -1, -1, 
+				STYLE_DATA.Millimeters.InRibbonPos, 
+				STYLE_DATA.Millimeters.InDlgLeftPos, 
+				STYLE_DATA.Millimeters.InDlgRightPos, 
 				110.2345,
 				"Delux Measure mm 32.png"));
 
@@ -288,17 +332,19 @@ namespace DeluxMeasure.UnitsUtil
 			// Meters-Centimeters
 			// id = STYLE_ID_METERS_CENTIMETERS;
 			name = "Meters and Centimeters";
-			StdStyles.Add(STYLE_ID.MetersCentimeters.NameId, new UStyle(UnitClass.CL_ORDINARY,
-				STYLE_ID.MetersCentimeters.TypeId,
-				STYLE_ID.MetersCentimeters.NameId,
+			StdSysStyles.Add(STYLE_DATA.MetersCentimeters.NameId, new UStyle(UnitClass.CL_ORDINARY,
+				STYLE_DATA.MetersCentimeters.TypeId,
+				STYLE_DATA.MetersCentimeters.NameId,
 				$"{name} Unit Style", 
-				UnitsSupport.UnitCat.UC_METER_CM, 
-				UnitsSupport.UnitSys.US_METRIC,
+				UnitCat.UC_METER_CM, 
+				UnitSys.US_METRIC,
 				0.001, 
 				// nothing allowed
 				null,
 				null, null, null, true, null,
-				-1, -1, -1, 
+				STYLE_DATA.MetersCentimeters.InRibbonPos, 
+				STYLE_DATA.MetersCentimeters.InDlgLeftPos, 
+				STYLE_DATA.MetersCentimeters.InDlgRightPos, 
 				111.3456,
 				"Delux Measure m-cm 32.png"));
 		}
@@ -316,11 +362,11 @@ namespace DeluxMeasure.UnitsUtil
 		{
 			return new UStyle(                      // which from this or reference
 				UnitClass.CL_PROJECT,               // this
-				STYLE_ID.Project.TypeId,            // ref
-				STYLE_ID.Project.NameId,            // ref
+				STYLE_DATA.Project.TypeId,            // ref
+				STYLE_DATA.Project.NameId,            // ref
 				"Current Project Units",            // ref
-				UnitsSupport.UnitCat.UC_FT_IN_FRAC, // ref
-				UnitsSupport.UnitSys.US_IMPERIAL,   // ref
+				UnitCat.UC_FT_IN_FRAC, // ref
+				UnitSys.US_IMPERIAL,   // ref
 				1.0 / 64.0,                         // ref
 				null,                               // ref
 				null,                               // ref
@@ -328,37 +374,37 @@ namespace DeluxMeasure.UnitsUtil
 				null,                               // ref
 				true,                               // ref
 				true,                               // ref
-				1,                                  // this
-				1,                                  // this
-				1,                                  // this
+				STYLE_DATA.Project.InRibbonPos, 
+				STYLE_DATA.Project.InDlgLeftPos, 
+				STYLE_DATA.Project.InDlgRightPos, 
 				112.4567,                           // this
 				"Delux Measure dec-ft 32.png");
 				
 		}
 		
-		public static UStyle CtrlStyle(string name, string desc, int order)
-		{
-			return new UStyle(                      // which from this or reference
-				UnitClass.CL_CONTROL,               // this
-				STYLE_ID.Control.TypeId,            // ref
-				$"control|{name}",                  // ref
-				desc,                               // ref
-				UnitsSupport.UnitCat.UC_NONE,       // ref
-				UnitsSupport.UnitSys.US_IMPERIAL,   // ref
-				1,                                  // ref
-				null,                               // ref
-				null,                               // ref
-				null,                               // ref
-				null,                               // ref
-				null,                               // ref
-				null,                               // ref
-				order,                              // this
-				0,                                  // this
-				0,                                  // this
-				0,                                  // this
-				null);
-				
-		}
+		// public static UStyle CtrlStyle(string name, string desc, int order)
+		// {
+		// 	return new UStyle(                      // which from this or reference
+		// 		UnitClass.CL_CONTROL,               // this
+		// 		STYLE_DATA.Control01.TypeId,          // ref
+		// 		name,                               // ref
+		// 		desc,                               // ref
+		// 		UnitCat.UC_NONE,                    // ref
+		// 		UnitSys.US_IMPERIAL,                // ref
+		// 		1,                                  // ref
+		// 		null,                               // ref
+		// 		null,                               // ref
+		// 		null,                               // ref
+		// 		null,                               // ref
+		// 		null,                               // ref
+		// 		null,                               // ref
+		// 		order,                              // this
+		// 		-1,                                 // this
+		// 		-1,                                 // this
+		// 		1,                                  // this
+		// 		null);
+		// 		
+		// }
 
 		
 

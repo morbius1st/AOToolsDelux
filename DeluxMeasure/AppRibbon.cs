@@ -75,19 +75,9 @@ namespace DeluxMeasure
 				Debug.WriteLine($"@AppRibbon: OnStartup:");
 			#endif
 
-				UnitsSupport u = new UnitsSupport();
-
-				UnitsDataD udd = new UnitsDataD(STYLE_ID.Project.NameId, "sample", UnitsStdUStyles.ProjStyle());
-
-				string s = udd.Symbol;
-
 				uMgr = UnitsManager.Instance;
 
-
-
-				uMgr.ReadUnitSettings();
-
-				// uMgr.StyleList = usx.GetStyles();
+				uMgr.Config();
 
 				app.ControlledApplication.ApplicationInitialized += OnAppInitalized;
 
@@ -251,11 +241,17 @@ namespace DeluxMeasure
 			UStyle us;
 			// UnitsData.UnitInfo ui;
 
-			int max = uMgr.StyleList.Count > UnitStyleCmd.MAX_STYLE_CMDS ? UnitStyleCmd.MAX_STYLE_CMDS : uMgr.StyleList.Count;
+			int max = uMgr.UsrStyleList.Count > UnitStyleCmd.MAX_STYLE_CMDS ? UnitStyleCmd.MAX_STYLE_CMDS : uMgr.UsrStyleList.Count;
 			int i = 0;
 
-			foreach (UnitsDataR udr in uMgr.StyleList)
+			foreach (UnitsDataR udr in uMgr.InListViewRibbon)
 			{
+				
+			// }
+			//
+			//
+			// foreach (UnitsDataR udr in uMgr.StyleList)
+			// {
 				us = udr.Ustyle;
 
 				string cmdName = $"UnitStyleCmd{i}";

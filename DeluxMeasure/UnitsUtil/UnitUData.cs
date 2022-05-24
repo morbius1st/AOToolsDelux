@@ -51,8 +51,11 @@ namespace DeluxMeasure.UnitsUtil
 		[IgnoreDataMember]
 		public int InitialSequence { get; set; }
 
-			[DataMember(Order = 2)]
+		[DataMember(Order = 2)]
 		public abstract T Id { get; set; }
+
+		[IgnoreDataMember]
+		public abstract string Name { get; }
 
 		[DataMember(Order = 4)]
 		public abstract T Symbol { get; set;  }
@@ -268,6 +271,8 @@ namespace DeluxMeasure.UnitsUtil
 
 		public override string Id { get; set; }
 
+		public override string Name => Ustyle.Name;
+
 		public override string Symbol { get; set; }
 
 		private string Sample { get; set; }
@@ -322,7 +327,7 @@ namespace DeluxMeasure.UnitsUtil
 
 			if (Ustyle.Precision < 0) return "*invalid";
 
-			if (Ustyle.UnitCat == UnitsSupport.UnitCat.UC_DECIMAL)
+			if (Ustyle.UnitCat == UnitCat.UC_DECIMAL)
 			{
 				uSym = USystem.Equals("US_METRIC") ? " " : "";
 				uSym += fmtSymbol();
@@ -350,7 +355,7 @@ namespace DeluxMeasure.UnitsUtil
 		private ForgeTypeId symbol;
 		private UStyle ustyle;
 
-		// private BitmapImage bx;
+		protected UnitsDataR() { }
 
 		public UnitsDataR(ForgeTypeId id,
 			ForgeTypeId symbol,
@@ -376,6 +381,9 @@ namespace DeluxMeasure.UnitsUtil
 				OnPropertyChanged();
 			}
 		}
+
+		[IgnoreDataMember]
+		public override string Name => Ustyle.Name;
 
 		[DataMember(Order = 4)]
 		public override ForgeTypeId Symbol
@@ -403,19 +411,6 @@ namespace DeluxMeasure.UnitsUtil
 			}
 		}
 
-		// public string DropDownName
-		// {
-		// 	get
-		// 	{
-		// 		if (ustyle.IsControl)
-		// 		{
-		// 			return Ustyle.Description;
-		// 		}
-		// 		// 
-		// 		return $"Std. Style: {Ustyle.Name}";
-		// 	}
-		// }
-
 		protected override string formatSymbol()
 		{
 			return UnitsSupport.GetSymbol(Symbol, Ustyle.UnitCat);
@@ -427,7 +422,7 @@ namespace DeluxMeasure.UnitsUtil
 
 			if (Ustyle.Precision < 0) return "*invalid";
 
-			if (Ustyle.UnitCat == UnitsSupport.UnitCat.UC_DECIMAL)
+			if (Ustyle.UnitCat == UnitCat.UC_DECIMAL)
 			{
 				uSym = USystem == UnitSystem.Metric ? " " : "";
 				uSym += formatSymbol();
@@ -541,13 +536,13 @@ namespace DeluxMeasure.UnitsUtil
 			return 0;
 		}
 
-		private static void addStyleItem(int i, STYLE_ID sid, string sample)
+		private static void addStyleItem(int i, STYLE_DATA sid, string sample)
 		{
 			UnitsDataD udd;
 
 			udd = new UnitsDataD(
 				sid.TypeId, sample,
-				UnitsStdUStyles.StdStyles[sid.NameId]);
+				UnitsStdUStyles.StdSysStyles[sid.NameId]);
 			udd.Sequence = i;
 			ListD.Add(udd);
 			SStdStyles.Add(udd.Ustyle.Name, udd);
@@ -560,7 +555,7 @@ namespace DeluxMeasure.UnitsUtil
 
 			int i = 0;
 
-			addStyleItem(i++, STYLE_ID.Project, "1,123'-11 255/256\"");
+			addStyleItem(i++, STYLE_DATA.Project, "1,123'-11 255/256\"");
 			// udd = new UnitsDataD(
 			// 	STYLE_ID_PROJECT, "1,123'-11 255/256\"",
 			// 	UnitsStdUStyles.StdStyles[STYLE_ID_PROJECT]);
@@ -569,7 +564,7 @@ namespace DeluxMeasure.UnitsUtil
 			// SStdStyles.Add(udd.Ustyle.Name, udd);
 
 
-			addStyleItem(i++, STYLE_ID.FtFracIn, "123'-4 5/8\"");
+			addStyleItem(i++, STYLE_DATA.FtFracIn, "123'-4 5/8\"");
 			// udd = new UnitsDataD(
 			// 	STYLE_ID_FT_FRAC_IN, "123'-4 5/8\"",
 			// 	UnitsStdUStyles.StdStyles[STYLE_ID_FT_FRAC_IN]);
@@ -578,7 +573,7 @@ namespace DeluxMeasure.UnitsUtil
 			//  SStdStyles.Add(udd.Ustyle.Name, udd);
 
 
-			addStyleItem(i++, STYLE_ID.FtDecIn, "123'-4.625\"");
+			addStyleItem(i++, STYLE_DATA.FtDecIn, "123'-4.625\"");
 			// udd = new UnitsDataD(
 			// 	STYLE_ID_FT_DEC_IN, "123'-4.625\"",
 			// 	UnitsStdUStyles.StdStyles[STYLE_ID_FT_DEC_IN]);
@@ -587,7 +582,7 @@ namespace DeluxMeasure.UnitsUtil
 			//  SStdStyles.Add(udd.Ustyle.Name, udd);
 
 
-			addStyleItem(i++, STYLE_ID.UsSurvey, "123'-4 5/8\"");
+			addStyleItem(i++, STYLE_DATA.UsSurvey, "123'-4 5/8\"");
 			// udd = new UnitsDataD(
 			// 	STYLE_ID_US_SURVEY, "123'-4 5/8\"",
 			// 	UnitsStdUStyles.StdStyles[STYLE_ID_US_SURVEY]);
@@ -595,7 +590,7 @@ namespace DeluxMeasure.UnitsUtil
 			//  SStdStyles.Add(udd.Ustyle.Name, udd);
 
 
-			addStyleItem(i++, STYLE_ID.Feet, "1,234.567'");
+			addStyleItem(i++, STYLE_DATA.Feet, "1,234.567'");
 			// udd = new UnitsDataD(
 			// 	STYLE_ID_FEET, "1,234.567'",
 			// 	UnitsStdUStyles.StdStyles[STYLE_ID_FEET]);
@@ -604,7 +599,7 @@ namespace DeluxMeasure.UnitsUtil
 			//  SStdStyles.Add(udd.Ustyle.Name, udd);
 
 
-			addStyleItem(i++, STYLE_ID.DecInches, "123.456\"");
+			addStyleItem(i++, STYLE_DATA.DecInches, "123.456\"");
 			// udd = new UnitsDataD(
 			// 	STYLE_ID_DEC_INCHES, "123.456\"",
 			// 	UnitsStdUStyles.StdStyles[STYLE_ID_DEC_INCHES]);
@@ -613,7 +608,7 @@ namespace DeluxMeasure.UnitsUtil
 			//  SStdStyles.Add(udd.Ustyle.Name, udd);
 
 
-			addStyleItem(i++, STYLE_ID.FracInches, "14 129/256\"");
+			addStyleItem(i++, STYLE_DATA.FracInches, "14 129/256\"");
 			// udd = new UnitsDataD(
 			// 	STYLE_ID_FRAC_INCHES, "14 129/256\"",
 			// 	UnitsStdUStyles.StdStyles[STYLE_ID_FRAC_INCHES]);
@@ -622,7 +617,7 @@ namespace DeluxMeasure.UnitsUtil
 			//  SStdStyles.Add(udd.Ustyle.Name, udd);
 
 
-			addStyleItem(i++, STYLE_ID.Meters, "123.456m");
+			addStyleItem(i++, STYLE_DATA.Meters, "123.456m");
 			// udd = new UnitsDataD(
 			// 	STYLE_ID_METERS, "123.456m",
 			// 	UnitsStdUStyles.StdStyles[STYLE_ID_METERS]);
@@ -631,7 +626,7 @@ namespace DeluxMeasure.UnitsUtil
 			//  SStdStyles.Add(udd.Ustyle.Name, udd);
 
 
-			addStyleItem(i++, STYLE_ID.Decimeters, "123.456dm");
+			addStyleItem(i++, STYLE_DATA.Decimeters, "123.456dm");
 			// udd = new UnitsDataD(
 			// 	STYLE_ID_DECIMETERS, "123.456dm",
 			// 	UnitsStdUStyles.StdStyles[STYLE_ID_DECIMETERS]);
@@ -640,7 +635,7 @@ namespace DeluxMeasure.UnitsUtil
 			//  SStdStyles.Add(udd.Ustyle.Name, udd);
 
 
-			addStyleItem(i++, STYLE_ID.Centimeters, "123.456cm");
+			addStyleItem(i++, STYLE_DATA.Centimeters, "123.456cm");
 			// udd = new UnitsDataD(
 			// 	STYLE_ID_CENTIMETERS, "123.456cm",
 			// 	UnitsStdUStyles.StdStyles[STYLE_ID_CENTIMETERS]);
@@ -649,7 +644,7 @@ namespace DeluxMeasure.UnitsUtil
 			//  SStdStyles.Add(udd.Ustyle.Name, udd);
 
 
-			addStyleItem(i++, STYLE_ID.Millimeters, "123.456mm");
+			addStyleItem(i++, STYLE_DATA.Millimeters, "123.456mm");
 			// udd = new UnitsDataD(
 			// 	STYLE_ID_MILLIMETERS, "123.456mm",
 			// 	UnitsStdUStyles.StdStyles[STYLE_ID_MILLIMETERS]);
@@ -658,7 +653,7 @@ namespace DeluxMeasure.UnitsUtil
 			//  SStdStyles.Add(udd.Ustyle.Name, udd);
 
 
-			addStyleItem(i++, STYLE_ID.MetersCentimeters, "123m 456cm");
+			addStyleItem(i++, STYLE_DATA.MetersCentimeters, "123m 456cm");
 			// udd = new UnitsDataD(
 			// 	STYLE_ID_METERS_CENTIMETERS, "123m 456cm",
 			// 	UnitsStdUStyles.StdStyles[STYLE_ID_METERS_CENTIMETERS]);
@@ -683,7 +678,6 @@ namespace DeluxMeasure.UnitsUtil
 
 		[DataMember(Order = 2)]
 		public override Dictionary<string, UnitsDataR> StdStyles { get; protected set; }
-		// public Dictionary<ForgeTypeId, UnitsDataR> StdStyles { get; protected set; }
 
 		[IgnoreDataMember]
 		public new ICollectionView List
@@ -698,7 +692,7 @@ namespace DeluxMeasure.UnitsUtil
 
 		private void addStyleItem(int i, ForgeTypeId uid, ForgeTypeId sid,	string name) 
 		{
-			UnitsDataR udr = new UnitsDataR(uid, sid, UnitsStdUStyles.StdStyles[name]);
+			UnitsDataR udr = new UnitsDataR(uid, sid, UnitsStdUStyles.StdSysStyles[name]);
 			udr.Sequence = i++;
 			StdStyles.Add(udr.Ustyle.Name, udr);
 		}
@@ -711,14 +705,14 @@ namespace DeluxMeasure.UnitsUtil
 
 			UnitsDataR udr;
 
-			addStyleItem(i++, UnitTypeId.General, null, STYLE_ID.Project.NameId);
+			addStyleItem(i++, UnitTypeId.General, null, STYLE_DATA.Project.NameId);
 
 
 			// udr = new UnitsDataR(UnitTypeId.General, null, UnitsStdUStyles.StdStyles[STYLE_ID_PROJECT]);
 			// udr.Sequence = i++;
 			// StdStyles.Add(udr.Ustyle.Name, udr);
 			//
-			addStyleItem(i++, UnitTypeId.FeetFractionalInches, null, STYLE_ID.FtFracIn.NameId);
+			addStyleItem(i++, UnitTypeId.FeetFractionalInches, null, STYLE_DATA.FtFracIn.NameId);
 			//
 			// udr = new UnitsDataR(
 			// 	UnitTypeId.FeetFractionalInches, null,
@@ -726,7 +720,7 @@ namespace DeluxMeasure.UnitsUtil
 			// udr.Sequence = i++;
 			// StdStyles.Add(STYLE_ID_FT_FRAC_IN, udr);
 			//
-			addStyleItem(i++, UnitTypeId.Custom, null, STYLE_ID.FtDecIn.NameId);
+			addStyleItem(i++, UnitTypeId.Custom, null, STYLE_DATA.FtDecIn.NameId);
 			//
 			// udr = new UnitsDataR(
 			// 	UnitTypeId.Custom, null,
@@ -734,7 +728,7 @@ namespace DeluxMeasure.UnitsUtil
 			// udr.Sequence = i++;
 			// StdStyles.Add(STYLE_ID_FT_DEC_IN, udr);
 			//
-			addStyleItem(i++, UnitTypeId.UsSurveyFeet, SymbolTypeId.Usft, STYLE_ID.UsSurvey.NameId);
+			addStyleItem(i++, UnitTypeId.UsSurveyFeet, SymbolTypeId.Usft, STYLE_DATA.UsSurvey.NameId);
 			//
 			// udr = new UnitsDataR(
 			// 	UnitTypeId.UsSurveyFeet, SymbolTypeId.Usft,
@@ -742,7 +736,7 @@ namespace DeluxMeasure.UnitsUtil
 			// udr.Sequence = i++;
 			// StdStyles.Add(STYLE_ID_US_SURVEY, udr);
 			//
-			addStyleItem(i++, UnitTypeId.Feet, SymbolTypeId.Ft, STYLE_ID.Feet.NameId);
+			addStyleItem(i++, UnitTypeId.Feet, SymbolTypeId.Ft, STYLE_DATA.Feet.NameId);
 			//
 			// udr = new UnitsDataR(
 			// 	UnitTypeId.Feet, SymbolTypeId.Ft,
@@ -750,7 +744,7 @@ namespace DeluxMeasure.UnitsUtil
 			// udr.Sequence = i++;
 			// StdStyles.Add(STYLE_ID_FEET, udr);
 			//
-			addStyleItem(i++, UnitTypeId.Inches, SymbolTypeId.InchDoubleQuote, STYLE_ID.DecInches.NameId);
+			addStyleItem(i++, UnitTypeId.Inches, SymbolTypeId.InchDoubleQuote, STYLE_DATA.DecInches.NameId);
 			//
 			// udr = new UnitsDataR(
 			// 	UnitTypeId.Inches, SymbolTypeId.InchDoubleQuote,
@@ -758,7 +752,7 @@ namespace DeluxMeasure.UnitsUtil
 			// udr.Sequence = i++;
 			// StdStyles.Add(STYLE_ID_DEC_INCHES, udr);
 			//
-			addStyleItem(i++, UnitTypeId.FractionalInches, null, STYLE_ID.FracInches.NameId);
+			addStyleItem(i++, UnitTypeId.FractionalInches, null, STYLE_DATA.FracInches.NameId);
 			//
 			// udr = new UnitsDataR(
 			// 	UnitTypeId.FractionalInches, null,
@@ -766,7 +760,7 @@ namespace DeluxMeasure.UnitsUtil
 			// udr.Sequence = i++;
 			// StdStyles.Add(STYLE_ID_FRAC_INCHES, udr);
 			//
-			addStyleItem(i++, UnitTypeId.Meters, SymbolTypeId.Meter, STYLE_ID.Meters.NameId);
+			addStyleItem(i++, UnitTypeId.Meters, SymbolTypeId.Meter, STYLE_DATA.Meters.NameId);
 			//
 			// udr = new UnitsDataR(
 			// 	UnitTypeId.Meters, SymbolTypeId.Meter,
@@ -774,7 +768,7 @@ namespace DeluxMeasure.UnitsUtil
 			// udr.Sequence = i++;
 			// StdStyles.Add(STYLE_ID_METERS, udr);
 			//
-			addStyleItem(i++, UnitTypeId.Decimeters, SymbolTypeId.Dm, STYLE_ID.Decimeters.NameId);
+			addStyleItem(i++, UnitTypeId.Decimeters, SymbolTypeId.Dm, STYLE_DATA.Decimeters.NameId);
 			//
 			// udr = new UnitsDataR(
 			// 	UnitTypeId.Decimeters, SymbolTypeId.Dm,
@@ -782,7 +776,7 @@ namespace DeluxMeasure.UnitsUtil
 			// udr.Sequence = i++;
 			// StdStyles.Add(STYLE_ID_DECIMETERS, udr);
 			//
-			addStyleItem(i++, UnitTypeId.Centimeters, SymbolTypeId.Cm, STYLE_ID.Centimeters.NameId);
+			addStyleItem(i++, UnitTypeId.Centimeters, SymbolTypeId.Cm, STYLE_DATA.Centimeters.NameId);
 			//
 			// udr = new UnitsDataR(
 			// 	UnitTypeId.Centimeters, SymbolTypeId.Cm,
@@ -790,7 +784,7 @@ namespace DeluxMeasure.UnitsUtil
 			// udr.Sequence = i++;
 			// StdStyles.Add(STYLE_ID_CENTIMETERS, udr);
 			//
-			addStyleItem(i++, UnitTypeId.Millimeters, SymbolTypeId.Mm, STYLE_ID.Millimeters.NameId);
+			addStyleItem(i++, UnitTypeId.Millimeters, SymbolTypeId.Mm, STYLE_DATA.Millimeters.NameId);
 			//
 			// udr = new UnitsDataR(
 			// 	UnitTypeId.Millimeters, SymbolTypeId.Mm,
@@ -799,13 +793,15 @@ namespace DeluxMeasure.UnitsUtil
 			// StdStyles.Add(STYLE_ID_MILLIMETERS, udr);
 			//
 			//
-			addStyleItem(i++, UnitTypeId.MetersCentimeters, null, STYLE_ID.MetersCentimeters.NameId);
+			addStyleItem(i++, UnitTypeId.MetersCentimeters, null, STYLE_DATA.MetersCentimeters.NameId);
 			//
 			// udr = new UnitsDataR(
 			// 	UnitTypeId.MetersCentimeters, null,
 			// 	UnitsStdUStyles.StdStyles[STYLE_ID_METERS_CENTIMETERS]);
 			// udr.Sequence = i++;
 			// StdStyles.Add(STYLE_ID_METERS_CENTIMETERS, udr);
+
+			// addStyleItem(i++, UnitTypeId.Custom, null, STYLE_DATA.Control01.NameId);
 
 			List = CollectionViewSource.GetDefaultView(StdStyles);
 

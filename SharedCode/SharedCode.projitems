@@ -41,6 +41,9 @@
     <Compile Include="\\CRONOS\Users\jeffs\Documents\Programming\VisualStudioProjects\UtilityLibrary\UtilityLibrary\CsUtilitiesMedia.cs">
       <Link>.Linked\CsUtilitiesMedia.cs</Link>
     </Compile>
+		    <Compile Include="\\CRONOS\Users\jeffs\Documents\Programming\VisualStudioProjects\UtilityLibrary\UtilityLibrary\CsWpfUtilities.cs">
+      <Link>.Linked\CsWpfUtilities.cs</Link>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <Folder Include="$(MSBuildThisFileDirectory)Fields\SchemaInfo\SchemaSupport\" />

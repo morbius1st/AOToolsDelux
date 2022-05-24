@@ -32,8 +32,8 @@ namespace DeluxMeasure.Windows.Support
 			ElementSet elements)
 		{
 			Document doc = commandData.Application.ActiveUIDocument.Document;
-
-			return SetUnit( doc, UnitsManager.StyleList[Index]);
+			UnitsDataR udr = (UnitsDataR) UnitsManager.InListViewRibbon.GetItemAt(Index);
+			return SetUnit( doc, (UnitsDataR) UnitsManager.InListViewRibbon.GetItemAt(Index));
 		}
 
 		private Result SetUnit( Document doc, UnitsDataR udr)
@@ -224,9 +224,10 @@ namespace DeluxMeasure.Windows.Support
 
 			Window w = RevitLibrary.RvtLibrary.WindowHandle(h);
 
-			UnitStylesManager usMgr = new UnitStylesManager();
+			// UnitStylesManager usMgr = new UnitStylesManager();
+			Test usMgr = new Test();
 
-			usMgr.SetPosition(w);
+			// usMgr.SetPosition(w);
 
 			usMgr.ShowDialog();
 	

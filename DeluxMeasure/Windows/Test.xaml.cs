@@ -19,6 +19,10 @@ namespace DeluxMeasure.Windows
 	/// </summary>
 	public partial class Test : Window
 	{
+		// public static bool? IsEditing { get; set; } = null;
+
+
+
 		public Test()
 		{
 			InitializeComponent();

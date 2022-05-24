@@ -14,60 +14,17 @@ using static DeluxMeasure.UnitsUtil.UnitsStdUStyles;
 
 namespace DeluxMeasure.UnitsUtil
 {
-	public enum UnitClass
+	public partial class UnitsSupport
 	{
-		CL_CONTROL,   // special & locked
-		CL_PROJECT,   // special & locked
-		CL_ORDINARY,   // not special & not locked
-		CL_FT_DEC_IN, // special & not-locked
-	}
-
-	public class UnitsSupport
-	{
-
 		public const string DEFAULT_UNIT_ICON_NAME = "information32.png";
 
-		public enum ListToShowIn
-		{
-			RIBBON = 0,
-			DIALOG_LEFT = 1,
-			DIALOG_RIGHT = 2,
-		}
-
-		public enum UnitCat
-		{
-			UC_METER_CM,
-			UC_FT_IN_FRAC,
-			UC_FT_IN_DEC,
-			UC_DECIMAL,
-			UC_IN_DEC,
-			UC_IN_FRAC,
-			UC_FT_FRAC,
-			UC_NONE
-		}
-
-		public enum PrecXref
-		{
-			XR_FRAC_IN ,
-			XR_FRAC_FT,
-			XR_DEC,
-			XR_M_CM
-		}
-
-		private static readonly int UCAT_COUNT = Enum.GetValues(typeof(UnitCat)).Length;
-
-
-		public enum UnitSys
-		{
-			US_METRIC = 0,
-			US_IMPERIAL = 1
-		}
+		
 
 
 	#region private fields
 
-		private static Dictionary<ForgeTypeId, STYLE_ID> UnitTypeToString;
-		private static Dictionary<STYLE_ID, ForgeTypeId> StringToUnitType;
+		private static Dictionary<ForgeTypeId, STYLE_DATA> UnitTypeToString;
+		private static Dictionary<STYLE_DATA, ForgeTypeId> StringToUnitType;
 
 		private static Dictionary<string, double>[] precisions;
 		private static Dictionary<string, double> precDecimal;
@@ -254,9 +211,9 @@ namespace DeluxMeasure.UnitsUtil
 		}
 
 		// return the name field
-		public static STYLE_ID GetTypeIdAsStyleId(ForgeTypeId key)
+		public static STYLE_DATA GetTypeIdAsStyleId(ForgeTypeId key)
 		{
-			if (!UnitTypeToString.ContainsKey(key)) return STYLE_ID.Invalid;
+			if (!UnitTypeToString.ContainsKey(key)) return STYLE_DATA.Invalid;
 		
 			return UnitTypeToString[key];
 		}
@@ -301,7 +258,7 @@ namespace DeluxMeasure.UnitsUtil
 
 			if (doc == null)
 			{
-				return UnitsManager.Instance.StdStyles[STYLE_ID.Project.NameId];
+				return UnitsManager.Instance.StdStyles[STYLE_DATA.Project.NameId];
 				// return UnitsManager.Instance.StdStyles[
 				// 	StringToUnitType[UnitsStdUStyles.STYLE_ID_PROJECT]];
 			}
@@ -340,7 +297,7 @@ namespace DeluxMeasure.UnitsUtil
 			ForgeTypeId id = fo.GetUnitTypeId();
 			ForgeTypeId symbol = fo.GetSymbolTypeId();
 
-			STYLE_ID sid =GetTypeIdAsStyleId(id);
+			STYLE_DATA sid =GetTypeIdAsStyleId(id);
 
 			UStyle baseUs = UnitsManager.Instance.StdStyles[sid.NameId].Ustyle;
 
@@ -368,6 +325,18 @@ namespace DeluxMeasure.UnitsUtil
 		private bool? getBool(bool? baseUs, bool? fo)
 		{
 			return baseUs.HasValue ? fo : null;
+		}
+
+		public UnitsDataR UDRClone(UnitsDataR orig, 
+			string name, string desc, int seq)
+		{
+			UnitsDataR udr = new UnitsDataR(orig.Id, orig.Symbol, orig.Ustyle.Clone());
+
+			udr.Ustyle.Name = name;
+			udr.Ustyle.Description = desc;
+			udr.Sequence = seq;
+
+			return udr;
 		}
 
 	#endregion
@@ -482,7 +451,7 @@ namespace DeluxMeasure.UnitsUtil
 
 		private static void assignSymbols()
 		{
-			symbolStrings = new string[UCAT_COUNT][];
+			symbolStrings = new string[UnitData.UCAT_COUNT][];
 
 			symbolStrings[(int) UnitCat.UC_METER_CM] = new string[2];
 			symbolStrings[(int) UnitCat.UC_METER_CM][0] = "m";
@@ -502,79 +471,79 @@ namespace DeluxMeasure.UnitsUtil
 
 		private static void assignUnitTypesAndStrings()
 		{
-			UnitTypeToString = new Dictionary<ForgeTypeId, STYLE_ID>(12);
+			UnitTypeToString = new Dictionary<ForgeTypeId, STYLE_DATA>(12);
 		
-			StringToUnitType = new Dictionary<STYLE_ID, ForgeTypeId>(12);
+			StringToUnitType = new Dictionary<STYLE_DATA, ForgeTypeId>(12);
 		
 			ForgeTypeId fid;
-			STYLE_ID sid;
+			STYLE_DATA sid;
 		
 			fid = UnitTypeId.Custom;
-			sid = STYLE_ID.FtDecIn;
+			sid = STYLE_DATA.FtDecIn;
 			UnitTypeToString.Add(fid, sid);
 			StringToUnitType.Add(sid, fid);
 		
 			fid = UnitTypeId.General;
-			sid = STYLE_ID.Project;
+			sid = STYLE_DATA.Project;
 			UnitTypeToString.Add(fid, sid);
 			StringToUnitType.Add(sid, fid);
 		
 			fid = UnitTypeId.FeetFractionalInches;
-			sid = STYLE_ID.FtFracIn;
+			sid = STYLE_DATA.FtFracIn;
 			UnitTypeToString.Add(fid, sid);
 			StringToUnitType.Add(sid, fid);
 		
 			fid = UnitTypeId.UsSurveyFeet;
-			sid = STYLE_ID.UsSurvey;
+			sid = STYLE_DATA.UsSurvey;
 			UnitTypeToString.Add(fid, sid);
 			StringToUnitType.Add(sid, fid);
 			
 			fid = UnitTypeId.Feet;
-			sid = STYLE_ID.Feet;
+			sid = STYLE_DATA.Feet;
 			UnitTypeToString.Add(fid, sid);
 			StringToUnitType.Add(sid, fid);
 
 			fid = UnitTypeId.Inches;
-			sid = STYLE_ID.DecInches;
+			sid = STYLE_DATA.DecInches;
 			UnitTypeToString.Add(fid, sid);
 			StringToUnitType.Add(sid, fid);
 			
 			fid = UnitTypeId.FractionalInches;
-			sid = STYLE_ID.FracInches;
+			sid = STYLE_DATA.FracInches;
 			UnitTypeToString.Add(fid, sid);
 			StringToUnitType.Add(sid, fid);
 			
 
 
 			fid = UnitTypeId.Meters;
-			sid = STYLE_ID.Meters;
+			sid = STYLE_DATA.Meters;
 			UnitTypeToString.Add(fid, sid);
 			StringToUnitType.Add(sid, fid);
 			
 			fid = UnitTypeId.Decimeters;
-			sid = STYLE_ID.Decimeters;
+			sid = STYLE_DATA.Decimeters;
 			UnitTypeToString.Add(fid, sid);
 			StringToUnitType.Add(sid, fid);
 			
 			fid = UnitTypeId.Centimeters;
-			sid = STYLE_ID.Centimeters;
+			sid = STYLE_DATA.Centimeters;
 			UnitTypeToString.Add(fid, sid);
 			StringToUnitType.Add(sid, fid);
 			
 			fid = UnitTypeId.Millimeters;
-			sid = STYLE_ID.Millimeters;
+			sid = STYLE_DATA.Millimeters;
 			UnitTypeToString.Add(fid, sid);
 			StringToUnitType.Add(sid, fid);
 		
 			fid = UnitTypeId.MetersCentimeters;
-			sid = STYLE_ID.MetersCentimeters;
+			sid = STYLE_DATA.MetersCentimeters;
 			UnitTypeToString.Add(fid, sid);
 			StringToUnitType.Add(sid, fid);
 		}
 
 		private static void assignPricTableXref()
 		{
-			pricXref = new Dictionary<UnitCat, int>(UCAT_COUNT);
+			pricXref = new Dictionary<UnitCat, int>(UnitData.UCAT_COUNT);
 
 			// cross ref if uCat is this      | then use this table
 			pricXref.Add(UnitCat.UC_METER_CM  , (int) PrecXref.XR_M_CM);
@@ -601,7 +570,7 @@ namespace DeluxMeasure.UnitsUtil
 
 		private static void assignPrecStrings()
 		{
-			precisions = new Dictionary<string, double>[UCAT_COUNT];
+			precisions = new Dictionary<string, double>[UnitData.UCAT_COUNT];
 
 			precInFrac = new Dictionary<string, double>()
 			{
@@ -642,7 +611,7 @@ namespace DeluxMeasure.UnitsUtil
 
 		private static void assignPrecStrings2()
 		{
-			precisions2 = new Dictionary<double, string>[UCAT_COUNT];
+			precisions2 = new Dictionary<double, string>[UnitData.UCAT_COUNT];
 
 			precInFrac2 = new Dictionary<double, string>()
 			{

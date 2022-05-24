@@ -279,4 +279,40 @@
 
 	<!--#endregion-->
 
+	
+	<ControlTemplate x:Key="Button.Stealth.ControlTemplate"
+			TargetType="Button"
+			>
+		<Border x:Name="border"
+				Background="{TemplateBinding Background}"
+				BorderBrush="{TemplateBinding BorderBrush}"
+				BorderThickness="{TemplateBinding BorderThickness}"
+				Padding="{TemplateBinding Padding}"
+				CornerRadius="4"
+				SnapsToDevicePixels="True"
+				VerticalAlignment="Center"
+				>
+			<Border x:Name="bdr1"
+					BorderBrush="Transparent"
+					BorderThickness="{StaticResource Normal.Default.BorderThickness.Inner}"
+					Margin="{TemplateBinding Padding}"
+					VerticalAlignment="Center"
+			>
+
+				<ContentPresenter x:Name="contentPresenter"
+						Content="{TemplateBinding Content}"
+						ContentStringFormat="{TemplateBinding ContentStringFormat}"
+						ContentTemplate="{TemplateBinding ContentTemplate}"
+						Focusable="False"
+						HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+						RecognizesAccessKey="True"
+						SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
+						VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+				/>
+				<!--  HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"  -->
+			</Border>
+		</Border>
+	
+	</ControlTemplate>
+
 </ResourceDictionary>

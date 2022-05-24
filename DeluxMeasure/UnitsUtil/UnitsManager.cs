@@ -2,9 +2,9 @@
 
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Windows.Data;
 using Autodesk.Revit.DB;
-
 using static Autodesk.Revit.DB.FormatOptions;
 using SettingsManager;
 
@@ -78,7 +78,6 @@ namespace DeluxMeasure.UnitsUtil
 {
 	public class UnitsManager
 	{
-
 	#region private fields
 
 		private static readonly Lazy<UnitsManager> instance =
@@ -90,6 +89,8 @@ namespace DeluxMeasure.UnitsUtil
 		private UnitsSettings uStg;
 		private UnitsSupport uSup;
 
+		private ListCollectionView[] inListViews;
+
 	#endregion
 
 	#region ctor
@@ -99,21 +100,22 @@ namespace DeluxMeasure.UnitsUtil
 		#if PATH
 			MethodBase mb = new StackTrace().GetFrame(1).GetMethod();
 			Debug.WriteLine($"@UnitsManager: ctor: {(mb.ReflectedType?.FullName ?? "is null")} > {mb.Name}");
-			#endif
+		#endif
 
 			uSup = new UnitsSupport();
 			uStg = new UnitsSettings();
+
+			inListViews = new ListCollectionView[UnitData.INLIST_COUNT];
 		}
 
 	#endregion
 
 	#region public properties
 
-		public static UnitsManager Instance {
-			
+		public static UnitsManager Instance
+		{
 			get
 			{
-
 			#if PATH
 				MethodBase mb = new StackTrace().GetFrame(1).GetMethod();
 				Debug.WriteLine($"@UnitsManager: Instance: {(mb.ReflectedType?.FullName ?? "is null")} > {mb.Name}");
@@ -121,9 +123,13 @@ namespace DeluxMeasure.UnitsUtil
 
 				return instance.Value;
 			}
-	}
+		}
 
-		public List<UnitsDataR> StyleList
+		public ListCollectionView InListViewRibbon => inListViews[(int) InList.RIBBON];
+		public ListCollectionView InListViewDlgLeft => inListViews[(int) InList.DIALOG_LEFT];
+		public ListCollectionView InListViewDlgRight => inListViews[(int) InList.DIALOG_RIGHT];
+
+		public List<UnitsDataR> UsrStyleList
 		{
 			get
 			{
@@ -155,24 +161,60 @@ namespace DeluxMeasure.UnitsUtil
 
 	#region public methods
 
+		public void Config()
+		{
+			ReadUnitSettings();
+			UpdateNameLists();
+		}
+
+		public void UpdateNameLists()
+		{
+			foreach (InList inListEnum in Enum.GetValues(typeof(InList)))
+			{
+				InitInRibbonNameList(inListEnum);
+			}
+		}
+
+		public void InitInRibbonNameList(InList which)
+		{
+			int order = (int) which;
+
+			if (UsrStyleList == null || UsrStyleList.Count == 0) return;
+
+			// inListNames[order] = (ListCollectionView) CollectionViewSource.GetDefaultView(StyleList);
+			inListViews[order] =new ListCollectionView(UsrStyleList);
+
+			inListViews[order].SortDescriptions.Clear();
+			inListViews[order].SortDescriptions.Add(
+				new SortDescription(UStyle.INLIST_PROP_NAMES[order], ListSortDirection.Ascending));
+				// new SortDescription("Ustyle.OrderInRibbon", ListSortDirection.Ascending));
+
+			inListViews[order].Filter = o =>
+			{
+				return o is UnitsDataR udr && udr.Ustyle.ShowIn(order);
+			};
+
+			inListViews[order].IsLiveSorting = true;
+		}
+
 		public void SetInitialSequence()
 		{
-			uSup.SetInitialSequence(StyleList);
+			uSup.SetInitialSequence(UsrStyleList);
 		}
-		
+
 		public void ResetInitialSequence()
 		{
-			uSup.ResetInitialSequence(StyleList);
+			uSup.ResetInitialSequence(UsrStyleList);
 		}
 
 		public void UnDelete()
 		{
-			uSup.UnDelete(StyleList);
+			uSup.UnDelete(UsrStyleList);
 		}
 
 		public void WriteUser()
 		{
-			uSup.RemoveDeleted(StyleList);
+			uSup.RemoveDeleted(UsrStyleList);
 
 			UserSettings.Admin.Write();
 		}
@@ -186,7 +228,6 @@ namespace DeluxMeasure.UnitsUtil
 
 		public void ReadUnitSettings()
 		{
-
 		#if PATH
 			MethodBase mb = new StackTrace().GetFrame(1).GetMethod();
 			Debug.WriteLine($"@UnitsManager: ReadUnitSettings: {(mb.ReflectedType?.FullName ?? "is null")} > {mb.Name}");
@@ -204,6 +245,14 @@ namespace DeluxMeasure.UnitsUtil
 			if (setUnit(Doc, units)) return true;
 
 			return false;
+		}
+
+		public UnitsDataR NewUDR(UnitsDataR orig, string name, string desc, int seq)
+		{
+			UnitsDataR udr = uSup.UDRClone(orig, name, desc, seq);
+			udr.Ustyle.UnitClass = UnitClass.CL_ORDINARY;
+			
+			return udr;
 		}
 
 		public string FormatLength(double value, UnitsDataR style)
@@ -263,6 +312,13 @@ namespace DeluxMeasure.UnitsUtil
 
 	#region private methods
 
+		private List<string> initList(int qty)
+		{
+			List<string> list = new List<string>(qty);
+
+			return list;
+		}
+
 		private bool setFmtOpt(bool? opt)
 		{
 			if (opt == null) return false;
@@ -280,7 +336,7 @@ namespace DeluxMeasure.UnitsUtil
 
 			return true;
 		}
-		
+
 		private Units makeStdLengthUnit(UnitsDataR udr)
 		{
 			// if (udr.Ustyle.IsLocked == null) return null;
@@ -302,7 +358,7 @@ namespace DeluxMeasure.UnitsUtil
 
 			return units;
 		}
-		
+
 
 		// private void populateDefaultStyleList()
 		// {
@@ -333,5 +389,4 @@ namespace DeluxMeasure.UnitsUtil
 
 	#endregion
 	}
-
 }

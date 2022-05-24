@@ -1,29 +1,103 @@
-﻿<Window x:Class="DeluxMeasure.Windows.Test"
+﻿<Window x:Name="win"
+		x:Class="DeluxMeasure.Windows.Test"
 		xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
 		xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
 		xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-		xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
 		xmlns:local="clr-namespace:DeluxMeasure.Windows"
+		xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
 		xmlns:sys="clr-namespace:System;assembly=mscorlib"
+		xmlns:ws="clr-namespace:DeluxMeasure.Windows.Support"
 		Title="Test"
-		Width="840"
-		Height="680"
-		mc:Ignorable="d"
-		FontSize="{DynamicResource FontSize.Normal}"
+		Height="1200"
+		Width="940"
 		Background="{DynamicResource Normal.Window.Background}"
+		DataContext="{Binding ElementName=win}"
+		FontSize="{DynamicResource FontSize.Normal}"
 		Foreground="White"
 		ResizeMode="NoResize"
+		mc:Ignorable="d"
 		>
 
 	<Window.Resources>
 
 		<ResourceDictionary>
+
 			<ResourceDictionary.MergedDictionaries>
 				<ResourceDictionary Source="ResourceFiles/XamlResources/MasterColorList.xaml" />
 				<ResourceDictionary Source="ResourceFiles/XamlResources/VisualStates.xaml" />
 				<!-- <ResourceDictionary Source="Support/CsScrollViewer.xaml" /> -->
 				<!-- <ResourceDictionary Source="Support/CsScrollBar.xaml" /> -->
 			</ResourceDictionary.MergedDictionaries>
+
+			<sys:Double x:Key="FontSize.XLarge">18</sys:Double>
+			<!--  header size  -->
+			<sys:Double x:Key="FontSize.Large">15</sys:Double>
+			<!--  typical font size  -->
+			<sys:Double x:Key="FontSize.Normal">13</sys:Double>
+			<sys:Double x:Key="FontSize.Smaller">12</sys:Double>
+			<sys:Double x:Key="FontSize.Small">11</sys:Double>
+			<sys:Double x:Key="FontSize.XSmall">10</sys:Double>
+
+			<GridLength x:Key="C1">220*</GridLength>
+			<GridLength x:Key="C2">620*</GridLength>
+
+			<GridLength x:Key="Lv1C1">620*</GridLength>
+			<GridLength x:Key="Lv1C2">620*</GridLength>
+
+			<!--  sample size  -->
+			<!-- <sys:Double x:Key="FontSize.XLarge">16</sys:Double> -->
+			<!--  header size  -->
+			<!-- <sys:Double x:Key="FontSize.Large">18</sys:Double> -->
+			<!--  typical font size  -->
+			<!-- <sys:Double x:Key="FontSize.Normal">16</sys:Double> -->
+
+			<sys:Double x:Key="Normal.CornerRad">6</sys:Double>
+			<sys:Double x:Key="Small.CornerRad">5</sys:Double>
+
+
+			<CornerRadius x:Key="Normal.CornerRadius"
+					BottomLeft="{StaticResource Normal.CornerRad}"
+					BottomRight="{StaticResource Normal.CornerRad}"
+					TopLeft="{StaticResource Normal.CornerRad}"
+					TopRight="{StaticResource Normal.CornerRad}"
+					/>
+
+			<CornerRadius x:Key="Right.CornerRadius"
+					BottomLeft="0"
+					BottomRight="{StaticResource Small.CornerRad}"
+					TopLeft="0"
+					TopRight="{StaticResource Small.CornerRad}"
+					/>
+
+			<CornerRadius x:Key="Left.CornerRadius"
+					BottomLeft="{StaticResource Small.CornerRad}"
+					BottomRight="0"
+					TopLeft="{StaticResource Small.CornerRad}"
+					TopRight="0"
+					/>
+
+			<Thickness x:Key="Hdr.Padding"
+					Bottom="3"
+					Left="5"
+					Right="0"
+					Top="0"
+					/>
+
+			<Thickness x:Key="Property.Padding.Left"
+					Bottom="3"
+					Left="5"
+					Right="5"
+					Top="0"
+					/>
+
+			<Thickness x:Key="Property.Padding.Right"
+					Bottom="3"
+					Left="5"
+					Right="5"
+					Top="0"
+					/>
+
+
 
 			<SolidColorBrush x:Key="Header.Background" Color="{StaticResource True.Green}" />
 
@@ -38,9 +112,9 @@
 			<SolidColorBrush x:Key="Lv.Item.control.Bkg" Color="#0070f0" />
 
 
-
 			<SolidColorBrush x:Key="Lv.Item.Panel.Bkg.Nml" Color="{StaticResource Blue.200}" />
 			<SolidColorBrush x:Key="Lv.Item.Panel.Bkg.Nml2" Color="{StaticResource Blue.150}" />
+			<SolidColorBrush x:Key="Lv.Item.CkBx.Bkg.Nml" Color="{StaticResource Gray.600}" />
 
 			<SolidColorBrush x:Key="Lv.Item.control.Bkg2" Color="{StaticResource Cool.Blue.450}" />
 			<SolidColorBrush x:Key="Lv.Item.control.Bkg3" Color="{StaticResource Cool.Blue.450}" />
@@ -56,70 +130,22 @@
 			<SolidColorBrush x:Key="Lv.Item.Important" Color="{StaticResource Deep.Orange.500}" />
 			<SolidColorBrush x:Key="Lv.Item.Important.Unfocused" Color="{StaticResource Deep.Orange.200}" />
 
-			<SolidColorBrush x:Key="Lv.Item.FG" Color="White" />
+			<SolidColorBrush x:Key="Lv.Item.Fg" Color="White" />
 			<SolidColorBrush x:Key="Lv.Item.FG.Unfocused" Color="{StaticResource Gray.650}" />
+			<SolidColorBrush x:Key="Lv.Item.Fg.UnSelected" Color="{StaticResource Gray.650}" />
 
+			<SolidColorBrush x:Key="OptionMark.Static.Border" Color="#FF707070" />
+			<SolidColorBrush x:Key="OptionMark.Static.Glyph" Color="#FF212121" />
+			<SolidColorBrush x:Key="OptionMark.MouseOver.Background" Color="#FFF3F9FF" />
+			<SolidColorBrush x:Key="OptionMark.MouseOver.Border" Color="#FF5593FF" />
+			<SolidColorBrush x:Key="OptionMark.MouseOver.Glyph" Color="#FF212121" />
+			<SolidColorBrush x:Key="OptionMark.Pressed.Background" Color="#FFD9ECFF" />
+			<SolidColorBrush x:Key="OptionMark.Pressed.Border" Color="#FF3C77DD" />
+			<SolidColorBrush x:Key="OptionMark.Pressed.Glyph" Color="#FF212121" />
+			<SolidColorBrush x:Key="OptionMark.Disabled.Background" Color="#FFE6E6E6" />
+			<SolidColorBrush x:Key="OptionMark.Disabled.Border" Color="#FFBCBCBC" />
+			<SolidColorBrush x:Key="OptionMark.Disabled.Glyph" Color="#FF707070" />
 
-
-
-			<GridLength x:Key="C1">220*</GridLength>
-			<GridLength x:Key="C2">620*</GridLength>
-
-			<GridLength x:Key="Lv1C1">620*</GridLength>
-			<GridLength x:Key="Lv1C2">620*</GridLength>
-
-			<!--  sample size  -->
-			<sys:Double x:Key="FontSize.XLarge">16</sys:Double>
-			<!--  header size  -->
-			<sys:Double x:Key="FontSize.Large">18</sys:Double>
-			<!--  typical font size  -->
-			<sys:Double x:Key="FontSize.Normal">16</sys:Double>
-
-			<sys:Double x:Key="Normal.CornerRad">6</sys:Double>
-			<sys:Double x:Key="Small.CornerRad">5</sys:Double>
-
-
-			<CornerRadius x:Key="Normal.CornerRadius"
-					BottomLeft="{StaticResource Normal.CornerRad}"
-					TopLeft="{StaticResource Normal.CornerRad}"
-					TopRight="{StaticResource Normal.CornerRad}"
-					BottomRight="{StaticResource Normal.CornerRad}"
-					/>
-
-			<CornerRadius x:Key="Right.CornerRadius"
-					BottomLeft="0"
-					TopLeft="0"
-					TopRight="{StaticResource Small.CornerRad}"
-					BottomRight="{StaticResource Small.CornerRad}"
-					/>
-
-			<CornerRadius x:Key="Left.CornerRadius"
-					BottomLeft="{StaticResource Small.CornerRad}"
-					TopLeft="{StaticResource Small.CornerRad}"
-					TopRight="0"
-					BottomRight="0"
-					/>
-
-			<Thickness x:Key="Hdr.Padding"
-					Left="5"
-					Top="0"
-					Right="0"
-					Bottom="3"
-					/>
-
-			<Thickness x:Key="Property.Padding.Left"
-					Left="5"
-					Top="0"
-					Right="5"
-					Bottom="3"
-					/>
-
-			<Thickness x:Key="Property.Padding.Right"
-					Left="5"
-					Top="0"
-					Right="5"
-					Bottom="3"
-					/>
 
 			<Style x:Key="BorderStyle"
 					TargetType="Border"
@@ -132,26 +158,2110 @@
 			</Style>
 
 			<Style x:Key="bs2"
-					TargetType="Border"
 					BasedOn="{StaticResource BorderStyle}"
+					TargetType="Border"
 					>
 				<Setter Property="Background" Value="#009090" />
 			</Style>
 
 			<Style x:Key="bs3"
-					TargetType="Border"
 					BasedOn="{StaticResource BorderStyle}"
+					TargetType="Border"
 					>
 				<Setter Property="Background" Value="#0070f0" />
 			</Style>
 
-			<Style x:Key="TblkSample"
+			<Style x:Key="OptionMarkFocusVisual">
+				<Setter Property="Control.Template">
+					<Setter.Value>
+						<ControlTemplate>
+							<Rectangle Margin="14,0,0,0"
+									SnapsToDevicePixels="true"
+									Stroke="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}"
+									StrokeDashArray="1 2"
+									StrokeThickness="1"
+									/>
+						</ControlTemplate>
+					</Setter.Value>
+				</Setter>
+			</Style>
+
+			<Style x:Key="CbxFocusVisual">
+				<Setter Property="Control.Template">
+					<Setter.Value>
+						<ControlTemplate>
+							<Rectangle Margin="2"
+									SnapsToDevicePixels="true"
+									Stroke="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}"
+									StrokeDashArray="1 2"
+									StrokeThickness="1"
+									/>
+						</ControlTemplate>
+					</Setter.Value>
+				</Setter>
+			</Style>
+
+
+			<Style x:Key="Lv1.CheckboxStyle"
+					TargetType="{x:Type CheckBox}"
+					>
+				<Setter Property="IsEnabled" Value="True" />
+				<Setter Property="Padding" Value="2,0,0,0" />
+				<Setter Property="Margin" Value="8,-2,8,2" />
+				<Setter Property="VerticalContentAlignment" Value="Center" />
+				<Setter Property="FontSize" Value="{StaticResource FontSize.Normal}" />
+				<Setter Property="FocusVisualStyle" Value="{StaticResource CbxFocusVisual}" />
+				<Setter Property="Background" Value="{StaticResource Lv.Item.CkBx.Bkg.Nml}" />
+				<Setter Property="BorderBrush" Value="{StaticResource OptionMark.Static.Border}" />
+				<Setter Property="Foreground" Value="{StaticResource Lv.Item.Fg}" />
+				<Setter Property="BorderThickness" Value="1" />
+				<Setter Property="Template">
+					<Setter.Value>
+						<ControlTemplate TargetType="{x:Type CheckBox}">
+							<Border x:Name="checkBoxControlBorder"
+									BorderBrush="Transparent"
+									BorderThickness="1"
+									CornerRadius="6"
+									Padding="{TemplateBinding Padding}"
+									>
+
+								<Grid x:Name="templateRoot"
+										Background="Transparent"
+										SnapsToDevicePixels="True"
+										>
+
+									<Grid.ColumnDefinitions>
+										<ColumnDefinition Width="12" />
+										<ColumnDefinition Width="*" />
+									</Grid.ColumnDefinitions>
+
+									<Border x:Name="checkBoxBorder"
+											Height="12"
+											BorderBrush="{TemplateBinding BorderBrush}"
+											BorderThickness="0"
+											>
+										<Grid x:Name="markGrid">
+											<Rectangle Fill="{TemplateBinding Background}"
+													Margin="1"
+													/>
+											<Path x:Name="optionMark"
+													Data="F1 M 9.97498,1.22334L 4.6983,9.09834L 4.52164,9.09834L 0,5.19331L 1.27664,3.52165L 4.255,6.08833L 8.33331,1.52588e-005L 9.97498,1.22334 Z "
+													Fill="{StaticResource OptionMark.Static.Glyph}"
+													HorizontalAlignment="Center"
+													Margin="0"
+													Opacity="0"
+													Stretch="UniformToFill"
+													VerticalAlignment="Center"
+													/>
+											<Rectangle x:Name="indeterminateMark"
+													Fill="{StaticResource OptionMark.Static.Glyph}"
+													Margin="0"
+													Opacity="0"
+													/>
+
+										</Grid>
+									</Border>
+									<ContentPresenter x:Name="contentPresenter"
+											Grid.Column="1"
+											Focusable="False"
+											HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+											Margin="5,0,0,1"
+											RecognizesAccessKey="True"
+											SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
+											VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+											/>
+								</Grid>
+							</Border>
+							<ControlTemplate.Triggers>
+
+								<DataTrigger Binding="{Binding RelativeSource={RelativeSource AncestorType={x:Type ListBoxItem}}, Path=IsSelected}" Value="False">
+									<Setter Property="Foreground" Value="{StaticResource Lv.Item.Fg.UnSelected}" />
+									<Setter Property="IsEnabled" Value="False" />
+								</DataTrigger>
+								<Trigger Property="HasContent" Value="true">
+									<Setter Property="FocusVisualStyle" Value="{StaticResource OptionMarkFocusVisual}" />
+								</Trigger>
+								<!-- <Setter Property="Padding" Value="4,-1,0,0" /> -->
+								<Trigger Property="IsMouseOver" Value="True">
+									<!--  <Setter  -->
+									<!--  Property="Background"  -->
+									<!--  TargetName="checkBoxBorder"  -->
+									<!--  Value="{StaticResource OptionMark.MouseOver.Background}"  -->
+									<!--  />  -->
+									<Setter Property="BorderBrush" TargetName="checkBoxControlBorder" Value="{StaticResource OptionMark.MouseOver.Border}" />
+									<!--  TargetName="checkBoxBorder"  -->
+									<Setter Property="Fill" TargetName="optionMark" Value="{StaticResource OptionMark.MouseOver.Glyph}" />
+									<Setter Property="Fill" TargetName="indeterminateMark" Value="{StaticResource OptionMark.MouseOver.Glyph}" />
+								</Trigger>
+								<Trigger Property="IsEnabled" Value="false">
+									<!-- <Setter TargetName="checkBoxBorder" Property="Background" Value="{StaticResource OptionMark.Disabled.Background}" /> -->
+									<!-- <Setter TargetName="checkBoxBorder" Property="BorderBrush" Value="{StaticResource OptionMark.Disabled.Border}" /> -->
+									<Setter Property="Fill" TargetName="optionMark" Value="{StaticResource OptionMark.Disabled.Glyph}" />
+									<Setter Property="Fill" TargetName="indeterminateMark" Value="{StaticResource OptionMark.Disabled.Glyph}" />
+								</Trigger>
+								<Trigger Property="IsPressed" Value="true">
+									<Setter Property="Background" TargetName="checkBoxBorder" Value="{StaticResource OptionMark.Pressed.Background}" />
+									<Setter Property="BorderBrush" TargetName="checkBoxBorder" Value="{StaticResource OptionMark.Pressed.Border}" />
+									<Setter Property="Fill" TargetName="optionMark" Value="{StaticResource OptionMark.Pressed.Glyph}" />
+									<Setter Property="Fill" TargetName="indeterminateMark" Value="{StaticResource OptionMark.Pressed.Glyph}" />
+								</Trigger>
+								<Trigger Property="IsChecked" Value="true">
+									<Setter Property="Opacity" TargetName="optionMark" Value="1" />
+									<Setter Property="Opacity" TargetName="indeterminateMark" Value="0" />
+								</Trigger>
+								<Trigger Property="IsChecked" Value="{x:Null}">
+									<Setter Property="Opacity" TargetName="optionMark" Value="0" />
+									<Setter Property="Opacity" TargetName="indeterminateMark" Value="1" />
+								</Trigger>
+							</ControlTemplate.Triggers>
+						</ControlTemplate>
+					</Setter.Value>
+				</Setter>
+			</Style>
+
+
+			<!--
+				conditions
+				
+				BASE:
+				not locked / is selected / not editing
+				(IsSelected == true && IsEditing == false)
+				
+				762
+				not locked / is selected / is editing
+				(IsSelected == true && IsEditing == true)
+				
+				981
+				not locked / not selected (na locked / na editable)
+				(IsSelected == false)
+				
+				1200
+				not locked / is selected / no editing
+				(IsSelected == true && NoEditing == true)
+				
+				1498
+				is locked / is selected / na editing
+				(IsSelected == true && IsLocked == true)
+			-->
+
+
+			<sys:Boolean x:Key="IsLocked">False</sys:Boolean>
+			<sys:Boolean x:Key="IsSelected">True</sys:Boolean>
+			<!-- <sys:Boolean x:Key="IsEditing">true</sys:Boolean> -->
+			<!-- <sys:Boolean x:Key="NoEditing">true</sys:Boolean> -->
+
+			<!-- <ws:NullableBool x:Key="IsEditing" b="{x:Null}"/> -->
+			<!-- <ws:NullableBool x:Key="IsEditing" b="True"/> -->
+			<ws:NullableBool x:Key="IsEditing"
+					b="true"
+					/>
+
+
+
+
+			<sys:Int32 x:Key="Hlight_Col">2</sys:Int32>
+			<sys:Int32 x:Key="Hlight_Row">2</sys:Int32>
+			<sys:Int32 x:Key="Image_Col">1</sys:Int32>
+			<sys:Int32 x:Key="Image_Row">3</sys:Int32>
+			<sys:Int32 x:Key="Action1_Col">1</sys:Int32>
+			<sys:Int32 x:Key="Action1_Row">2</sys:Int32>
+			<sys:Int32 x:Key="SubHdr_Col">0</sys:Int32>
+			<sys:Int32 x:Key="SubHdr_Row">1</sys:Int32>
+			<sys:Int32 x:Key="Ckbx1_Col">0</sys:Int32>
+			<sys:Int32 x:Key="Ckbx1_Row">2</sys:Int32>
+
+
+
+			<sys:Int32 x:Key="Ckbx2_Col">0</sys:Int32>
+			<sys:Int32 x:Key="Ckbx2_Row">2</sys:Int32>
+
+			<sys:Int32 x:Key="Action2_Col">0</sys:Int32>
+			<sys:Int32 x:Key="Action2_Row">3</sys:Int32>
+			<sys:Int32 x:Key="Cbx_Col">1</sys:Int32>
+			<sys:Int32 x:Key="Cbx_Row">3</sys:Int32>
+
+
+
+
+			<SolidColorBrush x:Key="Undecided" Color="Red" />
+
+
+			<ws:CsColor x:Key="Base.Bkg"
+					Color="{StaticResource Blue.400}"
+					/>
+			<ws:CsColor x:Key="Fg.NotSel"
+					Color="{StaticResource Gray.650}"
+					/>
+
+			<SolidColorBrush x:Key="Fg.MouseOver" Color="White" />
+
+			<!--  editable field  -->
+			<SolidColorBrush x:Key="Fg.IsSel.IsEdit" Color="White" />
+			<SolidColorBrush x:Key="Fg.IsSel.CanEdit" Color="{StaticResource Cool.Blue.850}" />
+			<SolidColorBrush x:Key="Fg.IsSel.NoEdit" Color="{StaticResource Cool.Blue.760}" />
+			<SolidColorBrush x:Key="Fg.IsSel.NoEdit.Alt" Color="{StaticResource Blue.Gray.600}" />
+			<SolidColorBrush x:Key="Fg.NotSel.CanEdit" Color="{StaticResource Fg.NotSel}" />
+
+			<SolidColorBrush x:Key="Bdr.Bkg.IsSel.CanEdit" Color="{StaticResource Base.Bkg}" />
+			<SolidColorBrush x:Key="Bdr.Bdr.IsSel.CanEdit" Color="{StaticResource Base.Bkg}" />
+			<SolidColorBrush x:Key="Bdr.Bkg.NotSel.CanEdit" Color="{StaticResource Blue.250}" />
+			<SolidColorBrush x:Key="Bdr.Bdr.NotSel.CanEdit" Color="{StaticResource Blue.250}" />
+			<SolidColorBrush x:Key="Bdr.Bkg.IsSel.IsEdit" Color="{StaticResource Deep.Purple.450}" />
+			<SolidColorBrush x:Key="Bdr.Bdr.IsSel.IsEdit" Color="{StaticResource Deep.Purple.700}" />
+
+
+			<!--  title N field  to not editable field  -->
+			<SolidColorBrush x:Key="Fg.IsSel.NoEdTitleN" Color="White" />
+			<SolidColorBrush x:Key="Fg.NotSel.TitleN" Color="{StaticResource Fg.NotSel}" />
+
+			<SolidColorBrush x:Key="Bdr.Bkg.IsSel.TitleN" Color="{StaticResource Light.Blue.550}" />
+			<SolidColorBrush x:Key="Bdr.Bkg.NotSel.TitleN" Color="{StaticResource Light.Blue.300}" />
+
+			<!--  title E field  to an editable field  -->
+			<SolidColorBrush x:Key="Fg.IsSel.TitleE" Color="White" />
+			<SolidColorBrush x:Key="Fg.NotSel.TitleE" Color="{StaticResource Fg.NotSel}" />
+
+			<SolidColorBrush x:Key="Bdr.Bkg.IsSel.TitleE" Color="{StaticResource Light.Blue.550}" />
+			<SolidColorBrush x:Key="Bdr.Bkg.NotSel.Title.Ed" Color="{StaticResource Light.Blue.300}" />
+
+			<!--  action 1 field  -->
+			<SolidColorBrush x:Key="Fg.IsSel.Action1" Color="White" />
+			<SolidColorBrush x:Key="Fg.NotSel.Action1" Color="{StaticResource Fg.NotSel}" />
+			<SolidColorBrush x:Key="Fg.IsLocked.Action1" Color="{StaticResource Cool.Blue.850}" />
+
+			<SolidColorBrush x:Key="Bdr.Bkg.IsSel.Action1" Color="{StaticResource Teal.500}" />
+			<SolidColorBrush x:Key="Bdr.Bkg.NotSel.Action1" Color="{StaticResource Teal.300}" />
+
+			<!--  sub-header field  -->
+			<SolidColorBrush x:Key="Fg.IsSel.SubHdr" Color="White" />
+			<SolidColorBrush x:Key="Fg.NotSel.SubHdr" Color="{StaticResource Fg.NotSel}" />
+			<SolidColorBrush x:Key="Fg.IsLocked.SubHdr" Color="{StaticResource Cool.Blue.900}" />
+
+			<SolidColorBrush x:Key="Bdr.Bkg.IsSel.SubHdr" Color="{StaticResource Teal.500}" />
+			<SolidColorBrush x:Key="Bdr.Bkg.NotSel.SubHdr" Color="{StaticResource Teal.300}" />
+
+			<!--  action 2 field  -->
+			<SolidColorBrush x:Key="Fg.IsSel.Action2" Color="White" />
+			<SolidColorBrush x:Key="Fg.NotSel.Action2" Color="{StaticResource Fg.NotSel}" />
+			<SolidColorBrush x:Key="Fg.IsLocked.Action2" Color="{StaticResource Cool.Blue.850}" />
+
+			<SolidColorBrush x:Key="Bdr.Bkg.IsSel.Action2" Color="{StaticResource Cool.Blue.450}" />
+			<SolidColorBrush x:Key="Bdr.Bkg.IsEdit.Action2" Color="{StaticResource Deep.Purple.400}" />
+			<SolidColorBrush x:Key="Bdr.Bkg.NotSel.Action2" Color="{StaticResource Cool.Blue.250}" />
+
+			<!--  info field  -->
+			<SolidColorBrush x:Key="Fg.IsSel.Info" Color="{StaticResource Cool.Blue.850}" />
+			<SolidColorBrush x:Key="Fg.NoSel.Info" Color="{StaticResource Cool.Blue.850}" />
+			<SolidColorBrush x:Key="Fg.NotSel.Info" Color="{StaticResource Fg.NotSel}" />
+
+			<SolidColorBrush x:Key="Bdr.Bkg.IsSel.Info" Color="{StaticResource Base.Bkg}" />
+			<SolidColorBrush x:Key="Bdr.Bkg.NotSel.Info" Color="{StaticResource Blue.250}" />
+
+			<!--  highlight field  -->
+			<SolidColorBrush x:Key="Fg.IsSel.Hlight" Color="White" />
+			<SolidColorBrush x:Key="Fg.NotSel.Hlight" Color="{StaticResource Fg.NotSel}" />
+
+			<SolidColorBrush x:Key="Bdr.Bkg.IsSel.Hlight" Color="{StaticResource Deep.Orange.500}" />
+			<SolidColorBrush x:Key="Bdr.Bkg.NotSel.Hlight" Color="{StaticResource Deep.Orange.300}" />
+
+			<!--  highlight field  -->
+			<SolidColorBrush x:Key="Bdr.Bkg.IsSel.Image1" Color="LightGray" />
+			<SolidColorBrush x:Key="Bdr.Bkg.NotSel.Image1" Color="{StaticResource Gray.500}" />
+
+
+			<Style x:Key="BtnBase"
+					TargetType="Button"
+					>
+				<Setter Property="FontSize" Value="14" />
+				<Setter Property="Foreground" Value="white" />
+			</Style>
+
+			<Style x:Key="BtnEdit"
+					BasedOn="{StaticResource BtnBase}"
+					TargetType="Button"
+					>
+				<Setter Property="Background" Value="Transparent" />
+				<Setter Property="BorderThickness" Value="0" />
+				<Setter Property="Padding" Value="0,-1,0,-4" />
+				<Setter Property="Visibility" Value="Visible" />
+				<Setter Property="FontFamily" Value="Segoe UI Symbol" />
+				<Setter Property="Template" Value="{DynamicResource Button.Stealth.ControlTemplate}" />
+			</Style>
+
+
+			<!--
+				field types
+				header
+				
+				(Bdr/Tblk).Title.NoEd : for not editable field
+				
+				(Bdr/Tblk).Text.NoEd : not editable text field (info)
+				
+				(Bdr/Tblk).Title.Ed : to editable field
+				
+				(Bdr/Tbx).Text.Ed : editable text field (textbox)  (NoEdit / CanEdit / IsEdit)
+				
+				(Bdr).Image : field
+				
+				(Bdr/Tblk).Action1 : field (individual actions: date control, spinner control)
+				
+				(Bdr)Action2.Hdr : field sub-header (for grouped controls - check box group or radio button group)
+				(Bdr/Tblk).Action2 : field
+				
+				(Bdr)Action3 : field (combo actions: combobox, sub-list view)
+				
+				(Bdr/Tblk).Info.help : (tool tip / balloon)
+				
+				(Bdr/Tblk).Info.Directions : (pop-up?)
+				
+				(Bdr/Tblk).Hlight : field
+			-->
+
+
+			<Style x:Key="TbxBase"
+					TargetType="TextBox"
+					>
+				<Setter Property="Padding" Value="5,0,0,2" />
+				<Setter Property="Margin" Value="0" />
+				<Setter Property="FontSize" Value="{StaticResource FontSize.Normal}" />
+				<Setter Property="Foreground" Value="White" />
+
+			</Style>
+
+
+
+			<Style x:Key="TbxNotSelected"
+					BasedOn="{StaticResource TbxBase}"
+					TargetType="TextBox"
+					>
+				<Setter Property="Foreground" Value="{StaticResource Fg.IsSel.Info}" />
+			</Style>
+
+
+
+			<Style x:Key="TblkRoot"
+					TargetType="TextBlock"
+					>
+				<Setter Property="Padding" Value="0" />
+				<Setter Property="Margin" Value="0" />
+				<Setter Property="FontSize" Value="{StaticResource FontSize.Normal}" />
+			</Style>
+
+			<Style x:Key="TblkBase"
+					BasedOn="{StaticResource TblkRoot}"
 					TargetType="TextBlock"
 					>
 				<Setter Property="Padding" Value="5,0,0,2" />
-				<Setter Property="Margin" Value="0,0,0,2" />
-				<Setter Property="Foreground" Value="{StaticResource Lv.Item.FG}" />
+				<Setter Property="Margin" Value="1" />
 			</Style>
+
+
+			<Style x:Key="Tblk.Lv.TitleN"
+					BasedOn="{StaticResource TblkBase}"
+					TargetType="TextBlock"
+					>
+				<Setter Property="Padding" Value="5,0,0,2" />
+				<Setter Property="Margin" Value="1" />
+			</Style>
+
+
+
+
+
+
+			<!--  not locked / is selected / not editing  -->
+			<Border x:Key="NotLockedIsSelectedNotEditing"
+					CornerRadius="4"
+					Padding="4"
+					>
+				<Border.Style>
+					<Style TargetType="Border">
+						<Setter Property="IsEnabled" Value="True" />
+						<Setter Property="Background" Value="{StaticResource Lv.Item.Panel.Bkg.Nml}" />
+					</Style>
+				</Border.Style>
+				<Grid>
+					<Grid.ColumnDefinitions>
+						<ColumnDefinition Width="2*" />
+						<ColumnDefinition Width="2*" />
+						<ColumnDefinition Width="2*" />
+					</Grid.ColumnDefinitions>
+
+					<Grid.RowDefinitions>
+						<RowDefinition Height="Auto" />
+						<RowDefinition Height="Auto" />
+						<RowDefinition Height="Auto" />
+						<RowDefinition Height="Auto" />
+
+					</Grid.RowDefinitions>
+
+					<TextBlock Grid.Column="0"
+							Grid.Row="0"
+							Background="{StaticResource Header.Background}"
+							Foreground="Black"
+							Text="not locked / is selected / not editing"
+							Style="{StaticResource TblkBase}"
+							/>
+
+
+
+					<TextBlock Grid.Column="1"
+							Grid.Row="0"
+							Background="{StaticResource Bdr.Bkg.IsSel.TitleN}"
+							Foreground="{StaticResource Fg.IsSel.NoEdTitleN}"
+							Text="title text/not editable field"
+							Style="{StaticResource TblkBase}"
+							/>
+
+					<TextBlock Grid.Column="2"
+							Grid.Row="0"
+							Background="{StaticResource Bdr.Bkg.IsSel.Info}"
+							Foreground="{StaticResource Fg.IsSel.Info}"
+							Text="(Tblk) text/not editable"
+							Style="{StaticResource TblkBase}"
+							/>
+
+					<TextBlock Grid.Column="1"
+							Grid.Row="1"
+							Background="{StaticResource Bdr.Bkg.IsSel.TitleN}"
+							Foreground="{StaticResource Fg.IsSel.NoEdTitleN}"
+							Text="title text/editable field"
+							Style="{StaticResource TblkBase}"
+							/>
+
+
+					<Border Grid.Column="2"
+							Grid.Row="1"
+							Background="{StaticResource Bdr.Bkg.IsSel.CanEdit}"
+							BorderBrush="{StaticResource Bdr.Bdr.IsSel.CanEdit}"
+							BorderThickness="1"
+							CornerRadius="6"
+							Margin="1"
+							>
+						<DockPanel HorizontalAlignment="Stretch">
+
+							<TextBox DockPanel.Dock="Left"
+									Background="Transparent"
+									BorderThickness="0"
+									Foreground="{StaticResource Fg.IsSel.CanEdit}"
+									Text="(Tbx) text/editable"
+									TextAlignment="left"
+									Style="{StaticResource TbxBase}"
+									/>
+
+							<TextBlock DockPanel.Dock="Right"
+									FontFamily="Segoe UI Symbol"
+									Foreground="{StaticResource Fg.IsSel.CanEdit}"
+									HorizontalAlignment="Right"
+									Margin="0,1,3,-1"
+									Padding="0"
+									Text=""
+									/>
+
+							<Button Content=""
+									DockPanel.Dock="Right"
+									Foreground="{StaticResource Fg.IsSel.CanEdit}"
+									HorizontalAlignment="Right"
+									Visibility="Collapsed"
+									Style="{StaticResource BtnEdit}"
+									/>
+
+						</DockPanel>
+
+					</Border>
+
+
+					<TextBlock Grid.Column="{StaticResource Hlight_Col}"
+							Grid.Row="{StaticResource Hlight_Row}"
+							Background="{StaticResource Bdr.Bkg.IsSel.Hlight}"
+							Foreground="{StaticResource Fg.IsSel.Hlight}"
+							Text="Highlighted item"
+							Style="{StaticResource TblkBase}"
+							/>
+
+					<TextBlock Grid.Column="{StaticResource Image_Col}"
+							Grid.Row="{StaticResource Image_Row}"
+							Background="{StaticResource Bdr.Bkg.IsSel.Image1}"
+							Foreground="Black"
+							Text="image field"
+							Style="{StaticResource TblkBase}"
+							/>
+
+
+					<TextBlock Grid.Column="{StaticResource Action1_Col}"
+							Grid.Row="{StaticResource Action1_Row}"
+							Background="{StaticResource Bdr.Bkg.IsSel.Action1}"
+							Foreground="{StaticResource Fg.IsSel.Action1}"
+							Text="action field"
+							Style="{StaticResource TblkBase}"
+							/>
+
+					<TextBlock Grid.Column="{StaticResource SubHdr_Col}"
+							Grid.Row="{StaticResource SubHdr_Row}"
+							Background="{StaticResource Bdr.Bkg.IsSel.SubHdr}"
+							Foreground="{StaticResource Fg.IsSel.SubHdr}"
+							Margin="1,1,1,0"
+							Text="action field sub-header"
+							Style="{StaticResource TblkBase}"
+							/>
+
+
+
+					<StackPanel Grid.Column="{StaticResource Ckbx1_Col}"
+							Grid.Row="{StaticResource Ckbx1_Row}"
+							Grid.RowSpan="2"
+							Margin="1,0,1,1"
+							>
+						<StackPanel.Background>
+							<SolidColorBrush Color="{StaticResource Teal.300}" />
+						</StackPanel.Background>
+
+						<Border Background="{StaticResource Bdr.Bkg.IsSel.Action2}"
+								CornerRadius="6"
+								Margin="5,3,5,0"
+								>
+							<DockPanel HorizontalAlignment="Stretch">
+								<TextBlock DockPanel.Dock="Right"
+										FontFamily="Segoe UI Symbol"
+										Foreground="{StaticResource Fg.IsSel.CanEdit}"
+										HorizontalAlignment="Right"
+										Margin="0,1,3,-1"
+										Padding="0"
+										Text=""
+										/>
+
+								<CheckBox Content="checkbox text"
+										DockPanel.Dock="Left"
+										FontSize="{StaticResource FontSize.Normal}"
+										Foreground="{StaticResource Fg.IsSel.CanEdit}"
+										HorizontalAlignment="Left"
+										IsChecked="True"
+										Margin="5,0,0,0"
+										Padding="0"
+										VerticalAlignment="Center"
+										>
+
+									<CheckBox.Style>
+										<Style BasedOn="{StaticResource Lv1.CheckboxStyle}"
+												TargetType="CheckBox"
+												/>
+									</CheckBox.Style>
+								</CheckBox>
+							</DockPanel>
+						</Border>
+
+						<Border Background="{StaticResource Bdr.Bkg.IsSel.Action2}"
+								CornerRadius="6"
+								Margin="5,3,5,3"
+								>
+							<DockPanel HorizontalAlignment="Stretch">
+								<TextBlock DockPanel.Dock="Right"
+										FontFamily="Segoe UI Symbol"
+										Foreground="{StaticResource Fg.IsSel.CanEdit}"
+										HorizontalAlignment="Right"
+										Margin="0,1,3,-1"
+										Padding="0"
+										Text=""
+										/>
+
+								<CheckBox Content="checkbox text"
+										DockPanel.Dock="Left"
+										FontSize="{StaticResource FontSize.Normal}"
+										Foreground="{StaticResource Fg.IsSel.CanEdit}"
+										HorizontalAlignment="Left"
+										IsChecked="True"
+										Margin="5,0,0,0"
+										Padding="0"
+										VerticalAlignment="Center"
+										>
+
+									<CheckBox.Style>
+										<Style BasedOn="{StaticResource Lv1.CheckboxStyle}"
+												TargetType="CheckBox"
+												/>
+									</CheckBox.Style>
+								</CheckBox>
+							</DockPanel>
+						</Border>
+
+					</StackPanel>
+
+				</Grid>
+
+			</Border>
+
+			<!--  not locked / is selected / is editing  -->
+			<Border x:Key="NotLockedIsSelectedIsEditing"
+					CornerRadius="4"
+					Padding="4"
+					>
+				<Border.Style>
+					<Style TargetType="Border">
+						<Setter Property="IsEnabled" Value="True" />
+						<Setter Property="Background" Value="{StaticResource Lv.Item.Panel.Bkg.Nml}" />
+					</Style>
+				</Border.Style>
+				<Grid>
+					<Grid.ColumnDefinitions>
+						<ColumnDefinition Width="2*" />
+						<ColumnDefinition Width="2*" />
+						<ColumnDefinition Width="2*" />
+					</Grid.ColumnDefinitions>
+
+					<Grid.RowDefinitions>
+						<RowDefinition Height="Auto" />
+						<RowDefinition Height="Auto" />
+						<RowDefinition Height="Auto" />
+						<RowDefinition Height="Auto" />
+					</Grid.RowDefinitions>
+
+					<TextBlock Grid.Column="0"
+							Grid.Row="0"
+							Background="{StaticResource Header.Background}"
+							Foreground="Black"
+							Text="not locked / is selected / is editing"
+							Style="{StaticResource TblkBase}"
+							/>
+
+
+
+					<TextBlock Grid.Column="1"
+							Grid.Row="0"
+							Background="{StaticResource Bdr.Bkg.IsSel.TitleN}"
+							Foreground="{StaticResource Fg.IsSel.NoEdTitleN}"
+							Text="title text/not editable field"
+							Style="{StaticResource TblkBase}"
+							/>
+
+					<TextBlock Grid.Column="2"
+							Grid.Row="0"
+							Background="{StaticResource Bdr.Bkg.IsSel.Info}"
+							Foreground="{StaticResource Fg.IsSel.Info}"
+							Text="(Tblk) text/not editable"
+							Style="{StaticResource TblkBase}"
+							/>
+
+					<TextBlock Grid.Column="1"
+							Grid.Row="1"
+							Background="{StaticResource Bdr.Bkg.IsSel.TitleN}"
+							Foreground="{StaticResource Fg.IsSel.NoEdTitleN}"
+							Text="title text/editable field"
+							Style="{StaticResource TblkBase}"
+							/>
+
+
+					<Border Grid.Column="2"
+							Grid.Row="1"
+							Background="{StaticResource Bdr.Bkg.IsSel.IsEdit}"
+							BorderBrush="{StaticResource Bdr.Bdr.IsSel.IsEdit}"
+							BorderThickness="1"
+							CornerRadius="6"
+							Margin="1"
+							>
+						<DockPanel HorizontalAlignment="Stretch">
+
+							<TextBox DockPanel.Dock="Left"
+									Background="Transparent"
+									BorderThickness="0"
+									Foreground="{StaticResource Fg.IsSel.IsEdit}"
+									Text="(Tbx) text/editable"
+									TextAlignment="left"
+									Style="{StaticResource TbxBase}"
+									/>
+
+							<TextBlock DockPanel.Dock="Right"
+									FontFamily="Segoe UI Symbol"
+									FontSize="{StaticResource FontSize.XLarge}"
+									Foreground="{StaticResource Fg.IsSel.IsEdit}"
+									HorizontalAlignment="Right"
+									Margin="0,-3,2,-1"
+									Padding="0"
+									Text="🛈"
+									/>
+
+							<Button Content=""
+									DockPanel.Dock="Right"
+									Foreground="{StaticResource Fg.IsSel.IsEdit}"
+									HorizontalAlignment="Right"
+									Visibility="Visible"
+									Style="{StaticResource BtnEdit}"
+									/>
+
+						</DockPanel>
+
+					</Border>
+
+					<TextBlock Grid.Column="{StaticResource Hlight_Col}"
+							Grid.Row="{StaticResource Hlight_Row}"
+							Background="{StaticResource Bdr.Bkg.IsSel.Hlight}"
+							Foreground="{StaticResource Fg.IsSel.Hlight}"
+							Text="Highlighted item"
+							Style="{StaticResource TblkBase}"
+							/>
+
+					<TextBlock Grid.Column="{StaticResource Image_Col}"
+							Grid.Row="{StaticResource Image_Row}"
+							Background="{StaticResource Bdr.Bkg.IsSel.Image1}"
+							Foreground="Black"
+							Text="image field"
+							Style="{StaticResource TblkBase}"
+							/>
+
+					<TextBlock Grid.Column="{StaticResource Action1_Col}"
+							Grid.Row="{StaticResource Action1_Row}"
+							Background="{StaticResource Bdr.Bkg.IsSel.Action1}"
+							Foreground="{StaticResource Fg.IsSel.Action1}"
+							Text="action field"
+							Style="{StaticResource TblkBase}"
+							/>
+
+
+					<TextBlock Grid.Column="{StaticResource SubHdr_Col}"
+							Grid.Row="{StaticResource SubHdr_Row}"
+							Background="{StaticResource Bdr.Bkg.IsSel.SubHdr}"
+							Foreground="{StaticResource Fg.IsSel.SubHdr}"
+							Margin="1,1,1,0"
+							Text="action field sub-header"
+							Style="{StaticResource TblkBase}"
+							/>
+
+					<StackPanel Grid.Column="{StaticResource Ckbx1_Col}"
+							Grid.Row="{StaticResource Ckbx1_Row}"
+							Grid.RowSpan="2"
+							Margin="1,0,1,1"
+							>
+						<StackPanel.Background>
+							<SolidColorBrush Color="{StaticResource Teal.300}" />
+						</StackPanel.Background>
+
+						<Border Background="{StaticResource Bdr.Bkg.IsEdit.Action2}"
+								CornerRadius="6"
+								Margin="5,3,5,0"
+								>
+
+							<DockPanel HorizontalAlignment="Stretch">
+								<TextBlock DockPanel.Dock="Right"
+										FontFamily="Segoe UI Symbol"
+										Foreground="{StaticResource Fg.IsSel.IsEdit}"
+										HorizontalAlignment="Right"
+										Margin="0,1,3,-1"
+										Padding="0"
+										Text=""
+										/>
+
+								<CheckBox Content="checkbox text"
+										FontSize="{StaticResource FontSize.Normal}"
+										Foreground="{StaticResource Fg.IsSel.Action2}"
+										IsChecked="True"
+										Margin="5,0,0,0"
+										Padding="0"
+										VerticalAlignment="Center"
+										>
+
+									<CheckBox.Style>
+										<Style BasedOn="{StaticResource Lv1.CheckboxStyle}"
+												TargetType="CheckBox"
+												/>
+									</CheckBox.Style>
+								</CheckBox>
+							</DockPanel>
+						</Border>
+
+
+						<Border Background="{StaticResource Bdr.Bkg.IsEdit.Action2}"
+								CornerRadius="6"
+								Margin="5,3,5,3"
+								>
+
+							<DockPanel HorizontalAlignment="Stretch">
+								<TextBlock DockPanel.Dock="Right"
+										FontFamily="Segoe UI Symbol"
+										Foreground="{StaticResource Fg.IsSel.IsEdit}"
+										HorizontalAlignment="Right"
+										Margin="0,1,3,-1"
+										Padding="0"
+										Text=""
+										/>
+
+								<CheckBox Content="checkbox text"
+										FontSize="{StaticResource FontSize.Normal}"
+										Foreground="{StaticResource Fg.IsSel.Action2}"
+										IsChecked="True"
+										Margin="5,0,0,0"
+										Padding="0"
+										VerticalAlignment="Center"
+										>
+
+									<CheckBox.Style>
+										<Style BasedOn="{StaticResource Lv1.CheckboxStyle}"
+												TargetType="CheckBox"
+												/>
+									</CheckBox.Style>
+								</CheckBox>
+							</DockPanel>
+						</Border>
+
+					</StackPanel>
+				</Grid>
+
+			</Border>
+
+
+			<!--  not locked / not selected / na editing  -->
+			<Border x:Key="NotLockedNotSelectedNaEditing"
+					CornerRadius="4"
+					Padding="4"
+					>
+				<Border.Style>
+					<Style TargetType="Border">
+						<Setter Property="IsEnabled" Value="True" />
+						<Setter Property="Background" Value="{StaticResource Lv.Item.Panel.Bkg.Nml}" />
+					</Style>
+				</Border.Style>
+				<Grid>
+					<Grid.ColumnDefinitions>
+						<ColumnDefinition Width="2*" />
+						<ColumnDefinition Width="2*" />
+						<ColumnDefinition Width="2*" />
+					</Grid.ColumnDefinitions>
+
+					<Grid.RowDefinitions>
+						<RowDefinition Height="Auto" />
+						<RowDefinition Height="Auto" />
+						<RowDefinition Height="Auto" />
+						<RowDefinition Height="Auto" />
+					</Grid.RowDefinitions>
+
+					<TextBlock Grid.Column="0"
+							Grid.Row="0"
+							Foreground="Black"
+							Text="na locked / not selected / na editing"
+							Style="{StaticResource TblkBase}"
+							>
+						<TextBlock.Background>
+							<SolidColorBrush Color="{StaticResource Green.400}" />
+						</TextBlock.Background>
+					</TextBlock>
+
+					<TextBlock Grid.Column="1"
+							Grid.Row="0"
+							Background="{StaticResource Bdr.Bkg.NotSel.TitleN}"
+							Foreground="{StaticResource Fg.NotSel.TitleN}"
+							Text="title text/not editable field"
+							Style="{StaticResource TblkBase}"
+							/>
+
+					<TextBlock Grid.Column="2"
+							Grid.Row="0"
+							Background="{StaticResource Bdr.Bkg.NotSel.Info}"
+							Foreground="{StaticResource Fg.NotSel.Info}"
+							Text="(Tblk) text/not editable"
+							Style="{StaticResource TblkBase}"
+							/>
+
+					<TextBlock Grid.Column="1"
+							Grid.Row="1"
+							Background="{StaticResource Bdr.Bkg.NotSel.TitleN}"
+							Foreground="{StaticResource Fg.NotSel.TitleN}"
+							Text="title text/editable field"
+							Style="{StaticResource TblkBase}"
+							/>
+
+
+					<Border Grid.Column="2"
+							Grid.Row="1"
+							Background="{StaticResource Bdr.Bkg.NotSel.CanEdit}"
+							BorderBrush="{StaticResource Bdr.Bdr.NotSel.CanEdit}"
+							BorderThickness="1"
+							CornerRadius="6"
+							Margin="1"
+							>
+						<DockPanel HorizontalAlignment="Stretch">
+
+							<TextBox DockPanel.Dock="Left"
+									Background="Transparent"
+									BorderThickness="0"
+									Foreground="{StaticResource Fg.NotSel.CanEdit}"
+									Text="(Tbx) text/editable"
+									TextAlignment="left"
+									Style="{StaticResource TbxBase}"
+									/>
+
+							<TextBlock DockPanel.Dock="Right"
+									FontFamily="Segoe UI Symbol"
+									Foreground="{StaticResource Fg.NotSel.CanEdit}"
+									HorizontalAlignment="Right"
+									Margin="0,1,3,-1"
+									Padding="0"
+									Text=""
+									/>
+
+							<Button Content=""
+									DockPanel.Dock="Right"
+									Foreground="{StaticResource Fg.NotSel.CanEdit}"
+									HorizontalAlignment="Right"
+									Visibility="Collapsed"
+									Style="{StaticResource BtnEdit}"
+									/>
+
+						</DockPanel>
+
+					</Border>
+
+					<TextBlock Grid.Column="{StaticResource Hlight_Col}"
+							Grid.Row="{StaticResource Hlight_Row}"
+							Background="{StaticResource Bdr.Bkg.NotSel.Hlight}"
+							Foreground="{StaticResource Fg.NotSel.Hlight}"
+							Text="Highlighted item"
+							Style="{StaticResource TblkBase}"
+							/>
+
+					<TextBlock Grid.Column="{StaticResource Image_Col}"
+							Grid.Row="{StaticResource Image_Row}"
+							Background="{StaticResource Bdr.Bkg.NotSel.Image1}"
+							Foreground="Black"
+							Text="image field"
+							Style="{StaticResource TblkBase}"
+							/>
+
+
+					<TextBlock Grid.Column="{StaticResource Action1_Col}"
+							Grid.Row="{StaticResource Action1_Row}"
+							Background="{StaticResource Bdr.Bkg.NotSel.Action1}"
+							Foreground="{StaticResource Fg.NotSel.Action1}"
+							Text="action field"
+							Style="{StaticResource TblkBase}"
+							/>
+
+
+					<TextBlock Grid.Column="{StaticResource SubHdr_Col}"
+							Grid.Row="{StaticResource SubHdr_Row}"
+							Background="{StaticResource Bdr.Bkg.NotSel.SubHdr}"
+							Foreground="{StaticResource Fg.NotSel.SubHdr}"
+							Margin="1,1,1,0"
+							Text="action field sub-header"
+							Style="{StaticResource TblkBase}"
+							/>
+
+					<StackPanel Grid.Column="{StaticResource Ckbx1_Col}"
+							Grid.Row="{StaticResource Ckbx1_Row}"
+							Grid.RowSpan="2"
+							Margin="1,0,1,1"
+							>
+						<StackPanel.Background>
+							<SolidColorBrush Color="{StaticResource Teal.300}" />
+						</StackPanel.Background>
+
+						<Border Background="{StaticResource Bdr.Bkg.NotSel.Action2}"
+								CornerRadius="6"
+								Margin="5,3,5,0"
+								>
+
+							<DockPanel HorizontalAlignment="Stretch">
+								<TextBlock DockPanel.Dock="Right"
+										FontFamily="Segoe UI Symbol"
+										Foreground="{StaticResource Fg.NotSel.CanEdit}"
+										HorizontalAlignment="Right"
+										Margin="0,1,3,-1"
+										Padding="0"
+										Text=""
+										/>
+								<CheckBox Content="checkbox text"
+										FontSize="{StaticResource FontSize.Normal}"
+										Foreground="{StaticResource Fg.NotSel.Action2}"
+										IsChecked="True"
+										Margin="5,0,0,0"
+										Padding="0"
+										VerticalAlignment="Center"
+										>
+
+									<CheckBox.Style>
+										<Style BasedOn="{StaticResource Lv1.CheckboxStyle}"
+												TargetType="CheckBox"
+												/>
+									</CheckBox.Style>
+								</CheckBox>
+							</DockPanel>
+						</Border>
+
+						<Border Background="{StaticResource Bdr.Bkg.NotSel.Action2}"
+								CornerRadius="6"
+								Margin="5,3,5,3"
+								>
+
+							<DockPanel HorizontalAlignment="Stretch">
+								<TextBlock DockPanel.Dock="Right"
+										FontFamily="Segoe UI Symbol"
+										Foreground="{StaticResource Fg.NotSel.CanEdit}"
+										HorizontalAlignment="Right"
+										Margin="0,1,3,-1"
+										Padding="0"
+										Text=""
+										/>
+								<CheckBox Content="checkbox text"
+										FontSize="{StaticResource FontSize.Normal}"
+										Foreground="{StaticResource Fg.NotSel.Action2}"
+										IsChecked="True"
+										Margin="5,0,0,0"
+										Padding="0"
+										VerticalAlignment="Center"
+										>
+
+									<CheckBox.Style>
+										<Style BasedOn="{StaticResource Lv1.CheckboxStyle}"
+												TargetType="CheckBox"
+												/>
+									</CheckBox.Style>
+								</CheckBox>
+							</DockPanel>
+						</Border>
+
+					</StackPanel>
+				</Grid>
+
+			</Border>
+
+
+			<!--  is locked / is selected / na editing  -->
+			<Border x:Key="NotLockedIsSelectedNoEditing"
+					CornerRadius="4"
+					Padding="4"
+					>
+				<Border.Style>
+					<Style TargetType="Border">
+						<Setter Property="IsEnabled" Value="True" />
+						<Setter Property="Background" Value="{StaticResource Lv.Item.Panel.Bkg.Nml}" />
+					</Style>
+				</Border.Style>
+				<Grid>
+					<Grid.ColumnDefinitions>
+						<ColumnDefinition Width="2*" />
+						<ColumnDefinition Width="2*" />
+						<ColumnDefinition Width="2*" />
+					</Grid.ColumnDefinitions>
+
+					<Grid.RowDefinitions>
+						<RowDefinition Height="Auto" />
+						<RowDefinition Height="Auto" />
+						<RowDefinition Height="Auto" />
+						<RowDefinition Height="Auto" />
+
+					</Grid.RowDefinitions>
+
+					<TextBlock Grid.Column="0"
+							Grid.Row="0"
+							Background="{StaticResource Header.Background}"
+							Foreground="Black"
+							Text="Not locked / is selected / no editing"
+							Style="{StaticResource TblkBase}"
+							/>
+
+					<TextBlock Grid.Column="1"
+							Grid.Row="0"
+							Background="{StaticResource Bdr.Bkg.IsSel.TitleN}"
+							Foreground="{StaticResource Fg.IsSel.NoEdTitleN}"
+							Text="title text/not editable field"
+							Style="{StaticResource TblkBase}"
+							/>
+
+					<TextBlock Grid.Column="2"
+							Grid.Row="0"
+							Background="{StaticResource Bdr.Bkg.IsSel.Info}"
+							Foreground="{StaticResource Fg.IsSel.Info}"
+							Text="(Tblk) text/not editable"
+							Style="{StaticResource TblkBase}"
+							/>
+
+					<TextBlock Grid.Column="1"
+							Grid.Row="1"
+							Background="{StaticResource Bdr.Bkg.IsSel.TitleN}"
+							Foreground="{StaticResource Fg.IsSel.NoEdTitleN}"
+							Text="title text/editable field"
+							Style="{StaticResource TblkBase}"
+							/>
+
+
+					<Border Grid.Column="2"
+							Grid.Row="1"
+							Background="{StaticResource Bdr.Bkg.IsSel.CanEdit}"
+							BorderBrush="{StaticResource Bdr.Bdr.IsSel.CanEdit}"
+							BorderThickness="1"
+							CornerRadius="6"
+							Margin="1"
+							>
+						<DockPanel HorizontalAlignment="Stretch">
+
+
+							<TextBox DockPanel.Dock="Left"
+									Background="Transparent"
+									BorderThickness="0"
+									Text="(Tbx) text/editable"
+									TextAlignment="left"
+									Style="{StaticResource TbxBase}"
+									/>
+							<!--  Foreground="{StaticResource Fg.IsSel.NoEdit}"  -->
+
+							<TextBlock DockPanel.Dock="Right">
+
+								<TextBlock.Style>
+									<Style TargetType="TextBlock">
+										<Setter Property="FontFamily" Value="Segoe UI Symbol" />
+										<Setter Property="Foreground" Value="{StaticResource Fg.IsSel.CanEdit}" />
+										<Setter Property="HorizontalAlignment" Value="Right" />
+										<Setter Property="Margin" Value="0,-1,10,-3" />
+										<Setter Property="Padding" Value="0" />
+										<Setter Property="FontSize" Value="{StaticResource FontSize.Large}" />
+										<Setter Property="Text" Value="&#x20E0;" />
+
+
+										<Setter Property="Foreground" Value="Aqua" />
+										<Style.Triggers>
+											<DataTrigger Binding="{Binding ElementName=win, Path=Resources[IsEditing]}" Value="{x:Null}">
+												<Setter Property="Foreground" Value="Blue" />
+											</DataTrigger>
+											<DataTrigger Binding="{Binding ElementName=win, Path=Resources[IsEditing]}" Value="false">
+												<Setter Property="Foreground" Value="LawnGreen" />
+											</DataTrigger>
+											<DataTrigger Binding="{Binding ElementName=win, Path=Resources[IsEditing]}" Value="true">
+												<Setter Property="Foreground" Value="Red" />
+											</DataTrigger>
+											<!-- sadf
+											<DataTrigger Binding="{Binding Source={x:Static local:Test.IsEditing}}" Value="{x:Null}">
+												<Setter Property="Foreground" Value="blue"></Setter>
+											</DataTrigger>
+											<DataTrigger Binding="{Binding Source={x:Static local:Test.IsEditing}}" Value="false">
+												<Setter Property="Foreground" Value="LawnGreen"></Setter>
+											</DataTrigger>
+											<DataTrigger Binding="{Binding Source={x:Static local:Test.IsEditing}}" Value="true">
+												<Setter Property="Foreground" Value="red"></Setter>
+											</DataTrigger>											-->
+
+										</Style.Triggers>
+
+									</Style>
+								</TextBlock.Style>
+
+							</TextBlock>
+
+							<!--
+							<Grid DockPanel.Dock="Right"
+									HorizontalAlignment="Right"
+									Margin="0"
+									VerticalAlignment="Center"
+									>
+								<Grid.ColumnDefinitions>
+									<ColumnDefinition Width="16" />
+								</Grid.ColumnDefinitions>
+
+								<Grid.RowDefinitions>
+									<RowDefinition Height="16" />
+								</Grid.RowDefinitions>
+
+								circle slash
+								<Path Grid.Column="0"
+										Data="F0 M 18.886719 14.208984 C 18.886719 16.656902 18.019205 18.75 16.28418 20.488281 C 14.549153 22.226562 12.457682 23.095703 10.009766 23.095703 C 7.555339 23.095703 5.460612 22.226562 3.725586 20.488281 C 1.990561 18.75 1.123047 16.656902 1.123047 14.208984 C 1.123047 11.761068 1.990561 9.671225 3.725586 7.939453 C 5.460612 6.207683 7.555339 5.341797 10.009766 5.341797 C 12.457682 5.341797 14.549153 6.207683 16.28418 7.939453 C 18.019205 9.671225 18.886719 11.761068 18.886719 14.208984 Z M 10 7.021484 C 8.333334 7.021485 6.852214 7.535809 5.556641 8.564453 L 15.654297 18.671875 C 16.676432 17.376303 17.1875 15.888672 17.1875 14.208984 C 17.1875 12.223308 16.487629 10.528972 15.087891 9.125977 C 13.68815 7.722982 11.992188 7.021485 10 7.021484 Z M 4.365234 9.755859 C 3.323568 11.057943 2.802734 12.542318 2.802734 14.208984 C 2.802734 16.207684 3.505859 17.9069 4.912109 19.306641 C 6.318359 20.706381 8.014323 21.40625 10 21.40625 C 11.666666 21.40625 13.157552 20.888672 14.472656 19.853516 Z "
+										Fill="{StaticResource Fg.IsSel.NoEdit}"
+										HorizontalAlignment="Center"
+										RenderTransformOrigin="0.5,0.5"
+										Stretch="UniformToFill"
+										VerticalAlignment="Center"
+										/>
+
+								pen
+								<Path Grid.Column="0"
+										Data="F0 M 17.93457 5.087891 C 18.188477 5.335287 18.362629 5.581055 18.457031 5.825195 C 18.551432 6.069336 18.598633 6.295573 18.598633 6.503906 C 18.598633 6.679688 18.574219 6.839193 18.525391 6.982422 C 18.476562 7.125652 18.426105 7.24935 18.374023 7.353516 C 18.302408 7.470703 18.227539 7.578125 18.149414 7.675781 C 18.110352 7.727865 18.055012 7.794598 17.983398 7.875977 C 17.911783 7.957357 17.836914 8.041992 17.758789 8.129883 C 17.680664 8.217773 17.604166 8.302409 17.529297 8.383789 C 17.454426 8.46517 17.394205 8.531901 17.348633 8.583984 C 17.244465 8.675131 17.127277 8.720704 16.99707 8.720703 C 16.866861 8.720704 16.743164 8.668621 16.625977 8.564453 L 14.604492 6.552734 C 14.500324 6.448568 14.448242 6.32487 14.448242 6.181641 C 14.448242 6.044922 14.49707 5.927734 14.594727 5.830078 C 14.640299 5.784506 14.70052 5.722657 14.775391 5.644531 C 14.85026 5.566406 14.930012 5.488281 15.014648 5.410156 C 15.099283 5.332031 15.180664 5.257162 15.258789 5.185547 C 15.336914 5.113934 15.405273 5.05534 15.463867 5.009766 C 15.568033 4.912109 15.685221 4.824219 15.81543 4.746094 C 15.926105 4.68099 16.056314 4.62077 16.206055 4.56543 C 16.355793 4.510092 16.518555 4.482422 16.694336 4.482422 C 16.876627 4.482422 17.071939 4.526367 17.280273 4.614258 C 17.488605 4.702148 17.706705 4.860027 17.93457 5.087891 Z M 15.756836 10.3125 L 6.176758 19.892578 L 3.305664 17.021484 L 12.885742 7.441406 Z M 1.391602 21.806641 L 2.368164 18.945312 L 4.243164 20.917969 Z"
+										Fill="{StaticResource Fg.IsSel.NoEdit}"
+										HorizontalAlignment="Center"
+										Stretch="UniformToFill"
+										VerticalAlignment="Center"
+										>
+									<Path.RenderTransform>
+										<ScaleTransform CenterX="8"
+												CenterY="8"
+												ScaleX="0.75"
+												ScaleY="0.75"
+												/>
+									</Path.RenderTransform>
+								</Path>
+
+							<Button Content=""
+									DockPanel.Dock="Right"
+									Foreground="{StaticResource Fg.IsSel.CanEdit}"
+									HorizontalAlignment="Right"
+									Visibility="Collapsed"
+									Style="{StaticResource BtnEdit}"
+									/>
+
+							</Grid>							-->
+
+							<Button Content=""
+									DockPanel.Dock="Right"
+									Foreground="{StaticResource Fg.IsSel.CanEdit}"
+									HorizontalAlignment="Right"
+									Visibility="Collapsed"
+									Style="{StaticResource BtnEdit}"
+									/>
+
+						</DockPanel>
+					</Border>
+
+
+					<TextBlock Grid.Column="{StaticResource Hlight_Col}"
+							Grid.Row="{StaticResource Hlight_Row}"
+							Background="{StaticResource Bdr.Bkg.IsSel.Hlight}"
+							Foreground="{StaticResource Fg.IsSel.Hlight}"
+							Text="Highlighted item"
+							Style="{StaticResource TblkBase}"
+							/>
+
+					<TextBlock Grid.Column="{StaticResource Image_Col}"
+							Grid.Row="{StaticResource Image_Row}"
+							Background="{StaticResource Bdr.Bkg.IsSel.Image1}"
+							Foreground="Black"
+							Text="image field"
+							Style="{StaticResource TblkBase}"
+							/>
+
+
+					<TextBlock Grid.Column="{StaticResource Action1_Col}"
+							Grid.Row="{StaticResource Action1_Row}"
+							Background="{StaticResource Bdr.Bkg.IsSel.Action1}"
+							Foreground="{StaticResource Fg.IsLocked.Action1}"
+							Text="action field"
+							Style="{StaticResource TblkBase}"
+							/>
+
+					<TextBlock Grid.Column="{StaticResource SubHdr_Col}"
+							Grid.Row="{StaticResource SubHdr_Row}"
+							Background="{StaticResource Bdr.Bkg.IsSel.SubHdr}"
+							Foreground="{StaticResource Fg.IsLocked.SubHdr}"
+							Margin="1,1,1,0"
+							Text="action field sub-header"
+							Style="{StaticResource TblkBase}"
+							/>
+
+					<StackPanel Grid.Column="{StaticResource Ckbx1_Col}"
+							Grid.Row="{StaticResource Ckbx1_Row}"
+							Grid.RowSpan="2"
+							Margin="1,0,1,1"
+							>
+						<StackPanel.Background>
+							<SolidColorBrush Color="{StaticResource Teal.300}" />
+						</StackPanel.Background>
+
+						<Border Background="{StaticResource Bdr.Bkg.IsSel.Action2}"
+								CornerRadius="6"
+								Margin="5,3,5,0"
+								>
+							<DockPanel HorizontalAlignment="Stretch">
+								<TextBlock DockPanel.Dock="Right"
+										FontFamily="Segoe UI Symbol"
+										Foreground="{StaticResource Fg.IsSel.CanEdit}"
+										HorizontalAlignment="Right"
+										Margin="0,1,3,-1"
+										Padding="0"
+										Text="🔒"
+										/>
+
+								<CheckBox Content="checkbox text"
+										DockPanel.Dock="Left"
+										FontSize="{StaticResource FontSize.Normal}"
+										Foreground="{StaticResource Fg.IsLocked.Action2}"
+										HorizontalAlignment="Left"
+										IsChecked="True"
+										Margin="5,0,0,0"
+										Padding="0"
+										VerticalAlignment="Center"
+										>
+
+									<CheckBox.Style>
+										<Style BasedOn="{StaticResource Lv1.CheckboxStyle}"
+												TargetType="CheckBox"
+												/>
+									</CheckBox.Style>
+								</CheckBox>
+							</DockPanel>
+						</Border>
+
+						<Border Background="{StaticResource Bdr.Bkg.IsSel.Action2}"
+								CornerRadius="6"
+								Margin="5,3,5,3"
+								>
+							<DockPanel HorizontalAlignment="Stretch">
+								<TextBlock DockPanel.Dock="Right"
+										FontFamily="Segoe UI Symbol"
+										Foreground="{StaticResource Fg.IsSel.CanEdit}"
+										HorizontalAlignment="Right"
+										Margin="0,1,3,-1"
+										Padding="0"
+										Text="🔒"
+										/>
+
+								<CheckBox Content="checkbox text"
+										DockPanel.Dock="Left"
+										FontSize="{StaticResource FontSize.Normal}"
+										Foreground="{StaticResource Fg.IsLocked.Action2}"
+										HorizontalAlignment="Left"
+										IsChecked="True"
+										Margin="5,0,0,0"
+										Padding="0"
+										VerticalAlignment="Center"
+										>
+
+									<CheckBox.Style>
+										<Style BasedOn="{StaticResource Lv1.CheckboxStyle}"
+												TargetType="CheckBox"
+												/>
+									</CheckBox.Style>
+								</CheckBox>
+							</DockPanel>
+						</Border>
+
+					</StackPanel>
+
+				</Grid>
+
+			</Border>
+
+
+			<!--  is locked / is selected / na editing  -->
+			<Border x:Key="IsLockedIsSelectedNaEditing"
+					CornerRadius="4"
+					Padding="4"
+					>
+				<Border.Style>
+					<Style TargetType="Border">
+						<Setter Property="IsEnabled" Value="True" />
+						<Setter Property="Background" Value="{StaticResource Lv.Item.Panel.Bkg.Nml}" />
+					</Style>
+				</Border.Style>
+				<Grid>
+					<Grid.ColumnDefinitions>
+						<ColumnDefinition Width="2*" />
+						<ColumnDefinition Width="2*" />
+						<ColumnDefinition Width="2*" />
+					</Grid.ColumnDefinitions>
+
+					<Grid.RowDefinitions>
+						<RowDefinition Height="Auto" />
+						<RowDefinition Height="Auto" />
+						<RowDefinition Height="Auto" />
+						<RowDefinition Height="Auto" />
+
+					</Grid.RowDefinitions>
+
+					<TextBlock Grid.Column="0"
+							Grid.Row="0"
+							Background="{StaticResource Header.Background}"
+							Foreground="Black"
+							Text="Is locked / is selected / na editing"
+							Style="{StaticResource TblkBase}"
+							/>
+
+					<TextBlock Grid.Column="1"
+							Grid.Row="0"
+							Background="{StaticResource Bdr.Bkg.IsSel.TitleN}"
+							Foreground="{StaticResource Fg.IsSel.NoEdTitleN}"
+							Text="title text/not editable field"
+							Style="{StaticResource TblkBase}"
+							/>
+
+					<TextBlock Grid.Column="2"
+							Grid.Row="0"
+							Background="{StaticResource Bdr.Bkg.IsSel.Info}"
+							Foreground="{StaticResource Fg.IsSel.Info}"
+							Text="(Tblk) text/not editable"
+							Style="{StaticResource TblkBase}"
+							/>
+
+					<TextBlock Grid.Column="1"
+							Grid.Row="1"
+							Background="{StaticResource Bdr.Bkg.IsSel.TitleN}"
+							Foreground="{StaticResource Fg.IsSel.NoEdTitleN}"
+							Text="title text/editable field"
+							Style="{StaticResource TblkBase}"
+							/>
+
+
+					<Border Grid.Column="2"
+							Grid.Row="1"
+							Background="{StaticResource Bdr.Bkg.IsSel.CanEdit}"
+							BorderBrush="{StaticResource Bdr.Bdr.IsSel.CanEdit}"
+							BorderThickness="1"
+							CornerRadius="6"
+							Margin="1"
+							>
+						<DockPanel HorizontalAlignment="Stretch">
+
+							<TextBox DockPanel.Dock="Left"
+									Background="Transparent"
+									BorderThickness="0"
+									Foreground="{StaticResource Fg.IsSel.CanEdit}"
+									Text="(Tbx) text/editable"
+									TextAlignment="left"
+									Style="{StaticResource TbxBase}"
+									/>
+
+							<TextBlock DockPanel.Dock="Right"
+									FontFamily="Segoe UI Symbol"
+									Foreground="{StaticResource Fg.IsSel.CanEdit}"
+									HorizontalAlignment="Right"
+									Margin="0,1,3,-1"
+									Padding="0"
+									Text="🔒"
+									/>
+
+							<Button Content=""
+									DockPanel.Dock="Right"
+									Foreground="{StaticResource Fg.IsSel.CanEdit}"
+									HorizontalAlignment="Right"
+									Visibility="Collapsed"
+									Style="{StaticResource BtnEdit}"
+									/>
+
+						</DockPanel>
+
+					</Border>
+
+
+					<TextBlock Grid.Column="{StaticResource Hlight_Col}"
+							Grid.Row="{StaticResource Hlight_Row}"
+							Background="{StaticResource Bdr.Bkg.IsSel.Hlight}"
+							Foreground="{StaticResource Fg.IsSel.Hlight}"
+							Text="Highlighted item"
+							Style="{StaticResource TblkBase}"
+							/>
+
+					<TextBlock Grid.Column="{StaticResource Image_Col}"
+							Grid.Row="{StaticResource Image_Row}"
+							Background="{StaticResource Bdr.Bkg.IsSel.Image1}"
+							Foreground="Black"
+							Text="image field"
+							Style="{StaticResource TblkBase}"
+							/>
+
+
+					<TextBlock Grid.Column="{StaticResource Action1_Col}"
+							Grid.Row="{StaticResource Action1_Row}"
+							Background="{StaticResource Bdr.Bkg.IsSel.Action1}"
+							Foreground="{StaticResource Fg.IsLocked.Action1}"
+							Text="action field"
+							Style="{StaticResource TblkBase}"
+							/>
+
+					<TextBlock Grid.Column="{StaticResource SubHdr_Col}"
+							Grid.Row="{StaticResource SubHdr_Row}"
+							Background="{StaticResource Bdr.Bkg.IsSel.SubHdr}"
+							Foreground="{StaticResource Fg.IsLocked.SubHdr}"
+							Margin="1,1,1,0"
+							Text="action field sub-header"
+							Style="{StaticResource TblkBase}"
+							/>
+
+					<StackPanel Grid.Column="{StaticResource Ckbx1_Col}"
+							Grid.Row="{StaticResource Ckbx1_Row}"
+							Grid.RowSpan="2"
+							Margin="1,0,1,1"
+							>
+						<StackPanel.Background>
+							<SolidColorBrush Color="{StaticResource Teal.300}" />
+						</StackPanel.Background>
+
+						<Border Background="{StaticResource Bdr.Bkg.IsSel.Action2}"
+								CornerRadius="6"
+								Margin="5,3,5,0"
+								>
+							<DockPanel HorizontalAlignment="Stretch">
+								<TextBlock DockPanel.Dock="Right"
+										FontFamily="Segoe UI Symbol"
+										Foreground="{StaticResource Fg.IsSel.CanEdit}"
+										HorizontalAlignment="Right"
+										Margin="0,1,3,-1"
+										Padding="0"
+										Text="🔒"
+										/>
+
+								<CheckBox Content="checkbox text"
+										DockPanel.Dock="Left"
+										FontSize="{StaticResource FontSize.Normal}"
+										Foreground="{StaticResource Fg.IsLocked.Action2}"
+										HorizontalAlignment="Left"
+										IsChecked="True"
+										Margin="5,0,0,0"
+										Padding="0"
+										VerticalAlignment="Center"
+										>
+
+									<CheckBox.Style>
+										<Style BasedOn="{StaticResource Lv1.CheckboxStyle}"
+												TargetType="CheckBox"
+												/>
+									</CheckBox.Style>
+								</CheckBox>
+							</DockPanel>
+						</Border>
+
+						<Border Background="{StaticResource Bdr.Bkg.IsSel.Action2}"
+								CornerRadius="6"
+								Margin="5,3,5,3"
+								>
+							<DockPanel HorizontalAlignment="Stretch">
+								<TextBlock DockPanel.Dock="Right"
+										FontFamily="Segoe UI Symbol"
+										Foreground="{StaticResource Fg.IsSel.CanEdit}"
+										HorizontalAlignment="Right"
+										Margin="0,1,3,-1"
+										Padding="0"
+										Text="🔒"
+										/>
+
+								<CheckBox Content="checkbox text"
+										DockPanel.Dock="Left"
+										FontSize="{StaticResource FontSize.Normal}"
+										Foreground="{StaticResource Fg.IsLocked.Action2}"
+										HorizontalAlignment="Left"
+										IsChecked="True"
+										Margin="5,0,0,0"
+										Padding="0"
+										VerticalAlignment="Center"
+										>
+
+									<CheckBox.Style>
+										<Style BasedOn="{StaticResource Lv1.CheckboxStyle}"
+												TargetType="CheckBox"
+												/>
+									</CheckBox.Style>
+								</CheckBox>
+							</DockPanel>
+						</Border>
+
+					</StackPanel>
+
+				</Grid>
+
+			</Border>
+
+
+			<!--  not locked / is selected / not editing  -->
+			<!--  base values  -->
+			<Border x:Key="Base"
+					CornerRadius="4"
+					Padding="4"
+					>
+				<Border.Style>
+					<Style TargetType="Border">
+						<Setter Property="IsEnabled" Value="True" />
+						<Setter Property="Background" Value="{StaticResource Lv.Item.Panel.Bkg.Nml}" />
+					</Style>
+				</Border.Style>
+				<Grid>
+					<Grid.ColumnDefinitions>
+						<ColumnDefinition Width="2*" />
+						<ColumnDefinition Width="2*" />
+						<ColumnDefinition Width="2*" />
+					</Grid.ColumnDefinitions>
+
+					<Grid.RowDefinitions>
+						<RowDefinition Height="Auto" />
+						<RowDefinition Height="Auto" />
+						<RowDefinition Height="Auto" />
+						<RowDefinition Height="Auto" />
+
+					</Grid.RowDefinitions>
+
+					<TextBlock Grid.Column="0"
+							Grid.Row="0"
+							Text="(Base) not locked / is selected / not editing"
+							>
+						<TextBlock.Style>
+							<Style BasedOn="{StaticResource TblkBase}"
+									TargetType="TextBlock"
+									>
+								<Setter Property="Background" Value="{StaticResource Header.Background}" />
+								<Setter Property="Foreground" Value="Black" />
+							</Style>
+						</TextBlock.Style>
+					</TextBlock>
+
+
+
+					<TextBlock Tag=""
+							Grid.Column="1"
+							Grid.Row="0"
+							Text="title text/not editable field"
+							>
+						<TextBlock.Style>
+							<Style BasedOn="{StaticResource TblkBase}"
+									TargetType="TextBlock"
+									>
+								<Setter Property="Background" Value="{StaticResource Bdr.Bkg.IsSel.TitleN}" />
+								<Setter Property="Foreground" Value="{StaticResource Fg.IsSel.NoEdTitleN}" />
+								<Style.Triggers>
+									<!--  not locked / is selected / is editing  -->
+									<DataTrigger Binding="{Binding ElementName=win, Path=Resources[IsEditing]}" Value="True">
+										<Setter Property="Background" Value="{StaticResource Bdr.Bkg.IsSel.TitleN}" />
+										<Setter Property="Foreground" Value="{StaticResource Fg.IsSel.NoEdTitleN}" />
+									</DataTrigger>
+									<!--  not locked / not selected (na locked / na editable)  -->
+									<DataTrigger Binding="{Binding ElementName=win, Path=Resources[IsSelected]}" Value="False">
+										<Setter Property="Background" Value="{StaticResource Bdr.Bkg.NotSel.TitleN}" />
+										<Setter Property="Foreground" Value="{StaticResource Fg.NotSel.TitleN}" />
+									</DataTrigger>
+
+								</Style.Triggers>
+							</Style>
+						</TextBlock.Style>
+					</TextBlock>
+
+
+					<TextBlock Grid.Column="2"
+							Grid.Row="0"
+							Background="{StaticResource Bdr.Bkg.IsSel.Info}"
+							Foreground="{StaticResource Fg.IsSel.Info}"
+							Text="(Tblk) text/not editable"
+							Style="{StaticResource TblkBase}"
+							/>
+
+					<Border x:Name="BdrTblkInfo"
+							Grid.Column="1"
+							Grid.Row="1"
+							Background="{StaticResource Bdr.Bkg.IsSel.TitleE}"
+							CornerRadius="6"
+							>
+						<TextBlock Foreground="{StaticResource Fg.IsSel.TitleE}"
+								Text="title text/editable field"
+								Style="{StaticResource TblkBase}"
+								/>
+					</Border>
+
+
+					<Border Grid.Column="2"
+							Grid.Row="1"
+							Background="{StaticResource Bdr.Bkg.IsSel.CanEdit}"
+							BorderBrush="{StaticResource Bdr.Bdr.IsSel.CanEdit}"
+							BorderThickness="1"
+							CornerRadius="6"
+							Margin="1"
+							>
+						<DockPanel HorizontalAlignment="Stretch">
+
+							<TextBox DockPanel.Dock="Left"
+									Background="Transparent"
+									BorderThickness="0"
+									Foreground="{StaticResource Fg.IsSel.CanEdit}"
+									Text="(Tbx) text/editable"
+									TextAlignment="left"
+									Style="{StaticResource TbxBase}"
+									/>
+
+							<TextBlock DockPanel.Dock="Right"
+									FontFamily="Segoe UI Symbol"
+									Foreground="{StaticResource Fg.IsSel.CanEdit}"
+									HorizontalAlignment="Right"
+									Margin="0,1,3,-1"
+									Padding="0"
+									Text=""
+									/>
+
+							<Button Content=""
+									DockPanel.Dock="Right"
+									Foreground="{StaticResource Fg.IsSel.CanEdit}"
+									HorizontalAlignment="Right"
+									Visibility="Collapsed"
+									Style="{StaticResource BtnEdit}"
+									/>
+
+						</DockPanel>
+
+					</Border>
+
+
+					<TextBlock Grid.Column="{StaticResource Hlight_Col}"
+							Grid.Row="{StaticResource Hlight_Row}"
+							Background="{StaticResource Bdr.Bkg.IsSel.Hlight}"
+							Foreground="{StaticResource Fg.IsSel.Hlight}"
+							Text="Highlighted item"
+							Style="{StaticResource TblkBase}"
+							/>
+
+					<TextBlock Grid.Column="{StaticResource Image_Col}"
+							Grid.Row="{StaticResource Image_Row}"
+							Background="{StaticResource Bdr.Bkg.IsSel.Image1}"
+							Foreground="Black"
+							Text="image field"
+							Style="{StaticResource TblkBase}"
+							/>
+
+
+					<TextBlock Grid.Column="{StaticResource Action1_Col}"
+							Grid.Row="{StaticResource Action1_Row}"
+							Background="{StaticResource Bdr.Bkg.IsSel.Action1}"
+							Foreground="{StaticResource Fg.IsSel.Action1}"
+							Text="action field"
+							Style="{StaticResource TblkBase}"
+							/>
+
+					<TextBlock Grid.Column="{StaticResource SubHdr_Col}"
+							Grid.Row="{StaticResource SubHdr_Row}"
+							Background="{StaticResource Bdr.Bkg.IsSel.SubHdr}"
+							Foreground="{StaticResource Fg.IsSel.SubHdr}"
+							Margin="1,1,1,0"
+							Text="action field sub-header"
+							Style="{StaticResource TblkBase}"
+							/>
+
+
+
+					<StackPanel Grid.Column="{StaticResource Ckbx1_Col}"
+							Grid.Row="{StaticResource Ckbx1_Row}"
+							Grid.RowSpan="2"
+							Margin="1,0,1,1"
+							>
+						<StackPanel.Background>
+							<SolidColorBrush Color="{StaticResource Teal.300}" />
+						</StackPanel.Background>
+
+						<Border Background="{StaticResource Bdr.Bkg.IsSel.Action2}"
+								CornerRadius="6"
+								Margin="5,3,5,0"
+								>
+							<DockPanel HorizontalAlignment="Stretch">
+								<TextBlock DockPanel.Dock="Right"
+										FontFamily="Segoe UI Symbol"
+										Foreground="{StaticResource Fg.IsSel.CanEdit}"
+										HorizontalAlignment="Right"
+										Margin="0,1,3,-1"
+										Padding="0"
+										Text=""
+										/>
+
+								<CheckBox Content="checkbox text"
+										DockPanel.Dock="Left"
+										FontSize="{StaticResource FontSize.Normal}"
+										Foreground="{StaticResource Fg.IsSel.CanEdit}"
+										HorizontalAlignment="Left"
+										IsChecked="True"
+										Margin="5,0,0,0"
+										Padding="0"
+										VerticalAlignment="Center"
+										>
+
+									<CheckBox.Style>
+										<Style BasedOn="{StaticResource Lv1.CheckboxStyle}"
+												TargetType="CheckBox"
+												/>
+									</CheckBox.Style>
+								</CheckBox>
+							</DockPanel>
+						</Border>
+
+						<Border Background="{StaticResource Bdr.Bkg.IsSel.Action2}"
+								CornerRadius="6"
+								Margin="5,3,5,3"
+								>
+							<DockPanel HorizontalAlignment="Stretch">
+								<TextBlock DockPanel.Dock="Right"
+										FontFamily="Segoe UI Symbol"
+										Foreground="{StaticResource Fg.IsSel.CanEdit}"
+										HorizontalAlignment="Right"
+										Margin="0,1,3,-1"
+										Padding="0"
+										Text=""
+										/>
+
+								<CheckBox Content="checkbox text"
+										DockPanel.Dock="Left"
+										FontSize="{StaticResource FontSize.Normal}"
+										Foreground="{StaticResource Fg.IsSel.CanEdit}"
+										HorizontalAlignment="Left"
+										IsChecked="True"
+										Margin="5,0,0,0"
+										Padding="0"
+										VerticalAlignment="Center"
+										>
+
+									<CheckBox.Style>
+										<Style BasedOn="{StaticResource Lv1.CheckboxStyle}"
+												TargetType="CheckBox"
+												/>
+									</CheckBox.Style>
+								</CheckBox>
+							</DockPanel>
+						</Border>
+
+					</StackPanel>
+
+				</Grid>
+
+			</Border>
+
+			<!--  not locked / is selected / not editing  -->
+			<!--  base values  -->
+			<DataTemplate x:Key="Base2">
+
+				<Border CornerRadius="4"
+						Padding="4"
+						>
+					<Border.Style>
+						<Style TargetType="{x:Type Border}">
+							<Setter Property="IsEnabled" Value="True" />
+							<Setter Property="Background" Value="{StaticResource Lv.Item.Panel.Bkg.Nml}" />
+						</Style>
+					</Border.Style>
+					<Grid>
+						<Grid.ColumnDefinitions>
+							<ColumnDefinition Width="2*" />
+							<ColumnDefinition Width="2*" />
+							<ColumnDefinition Width="2*" />
+						</Grid.ColumnDefinitions>
+
+						<Grid.RowDefinitions>
+							<RowDefinition Height="Auto" />
+							<RowDefinition Height="Auto" />
+							<RowDefinition Height="Auto" />
+							<RowDefinition Height="Auto" />
+
+						</Grid.RowDefinitions>
+
+						<TextBlock Grid.Column="0"
+								Grid.Row="0"
+								Text="(Basex) not locked / is selected / not editing"
+								>
+							<TextBlock.Style>
+								<Style BasedOn="{StaticResource TblkBase}"
+										TargetType="{x:Type TextBlock}"
+										>
+									<Setter Property="Background" Value="{StaticResource Header.Background}" />
+									<Setter Property="Foreground" Value="Black" />
+								</Style>
+							</TextBlock.Style>
+						</TextBlock>
+
+
+
+						<TextBlock Tag=""
+								Grid.Column="1"
+								Grid.Row="0"
+								Text="title text/not editable field"
+								>
+							<TextBlock.Style>
+								<Style BasedOn="{StaticResource TblkBase}"
+										TargetType="{x:Type TextBlock}"
+										>
+									<Setter Property="Background" Value="{StaticResource Bdr.Bkg.IsSel.TitleN}" />
+									<Setter Property="Foreground" Value="{StaticResource Fg.IsSel.NoEdTitleN}" />
+									<Style.Triggers>
+										<!--  not locked / is selected / is editing  -->
+										<DataTrigger Binding="{Binding Resources[IsEditing], ElementName=win}" Value="True">
+											<Setter Property="Background" Value="{StaticResource Bdr.Bkg.IsSel.TitleN}" />
+											<Setter Property="Foreground" Value="{StaticResource Fg.IsSel.NoEdTitleN}" />
+										</DataTrigger>
+										<!--  not locked / not selected (na locked / na editable)  -->
+										<DataTrigger Binding="{Binding Resources[IsSelected], ElementName=win}" Value="False">
+											<Setter Property="Background" Value="{StaticResource Bdr.Bkg.NotSel.TitleN}" />
+											<Setter Property="Foreground" Value="{StaticResource Fg.NotSel.TitleN}" />
+										</DataTrigger>
+
+									</Style.Triggers>
+								</Style>
+							</TextBlock.Style>
+						</TextBlock>
+
+
+						<TextBlock Grid.Column="2"
+								Grid.Row="0"
+								Background="{StaticResource Bdr.Bkg.IsSel.Info}"
+								Foreground="{StaticResource Fg.IsSel.Info}"
+								Text="(Tblk) text/not editable"
+								Style="{StaticResource TblkBase}"
+								/>
+
+						<Border x:Name="BdrTblkInfo"
+								Grid.Column="1"
+								Grid.Row="1"
+								CornerRadius="6"
+								>
+							<Border.Style>
+								<Style TargetType="Border">
+									<Setter Property="Background" Value="{StaticResource Bdr.Bkg.IsSel.TitleE}" />
+									<Style.Triggers>
+
+									</Style.Triggers>
+								</Style>
+							</Border.Style>
+							<TextBlock Foreground="{StaticResource Fg.IsSel.TitleE}"
+									Text="title text/editable field"
+									Style="{StaticResource TblkBase}"
+									/>
+						</Border>
+
+
+						<Border Grid.Column="2"
+								Grid.Row="1"
+								Background="{StaticResource Bdr.Bkg.IsSel.CanEdit}"
+								BorderBrush="{StaticResource Bdr.Bdr.IsSel.CanEdit}"
+								BorderThickness="1"
+								CornerRadius="6"
+								Margin="1"
+								>
+							<DockPanel HorizontalAlignment="Stretch">
+
+								<TextBox DockPanel.Dock="Left"
+										Background="Transparent"
+										BorderThickness="0"
+										Foreground="{StaticResource Fg.IsSel.CanEdit}"
+										Text="(Tbx) text/editable"
+										TextAlignment="left"
+										Style="{StaticResource TbxBase}"
+										/>
+
+								<TextBlock DockPanel.Dock="Right"
+										FontFamily="Segoe UI Symbol"
+										Foreground="{StaticResource Fg.IsSel.CanEdit}"
+										HorizontalAlignment="Right"
+										Margin="0,1,3,-1"
+										Padding="0"
+										Text="&#xE104;"
+										/>
+
+								<Button Content="&#xE106;"
+										DockPanel.Dock="Right"
+										Foreground="{StaticResource Fg.IsSel.CanEdit}"
+										HorizontalAlignment="Right"
+										Visibility="Collapsed"
+										Style="{StaticResource BtnEdit}"
+										/>
+
+							</DockPanel>
+
+						</Border>
+
+
+						<TextBlock Grid.Column="{StaticResource Hlight_Col}"
+								Grid.Row="{StaticResource Hlight_Row}"
+								Background="{StaticResource Bdr.Bkg.IsSel.Hlight}"
+								Foreground="{StaticResource Fg.IsSel.Hlight}"
+								Text="Highlighted item"
+								Style="{StaticResource TblkBase}"
+								/>
+
+						<TextBlock Grid.Column="{StaticResource Image_Col}"
+								Grid.Row="{StaticResource Image_Row}"
+								Background="{StaticResource Bdr.Bkg.IsSel.Image1}"
+								Foreground="Black"
+								Text="image field"
+								Style="{StaticResource TblkBase}"
+								/>
+
+
+						<TextBlock Grid.Column="{StaticResource Action1_Col}"
+								Grid.Row="{StaticResource Action1_Row}"
+								Background="{StaticResource Bdr.Bkg.IsSel.Action1}"
+								Foreground="{StaticResource Fg.IsSel.Action1}"
+								Text="action field"
+								Style="{StaticResource TblkBase}"
+								/>
+
+						<TextBlock Grid.Column="{StaticResource SubHdr_Col}"
+								Grid.Row="{StaticResource SubHdr_Row}"
+								Background="{StaticResource Bdr.Bkg.IsSel.SubHdr}"
+								Foreground="{StaticResource Fg.IsSel.SubHdr}"
+								Margin="1,1,1,0"
+								Text="action field sub-header"
+								Style="{StaticResource TblkBase}"
+								/>
+
+
+
+						<StackPanel Grid.Column="{StaticResource Ckbx1_Col}"
+								Grid.Row="{StaticResource Ckbx1_Row}"
+								Grid.RowSpan="2"
+								Margin="1,0,1,1"
+								>
+							<StackPanel.Background>
+								<SolidColorBrush Color="{StaticResource Teal.300}" />
+							</StackPanel.Background>
+
+							<Border Background="{StaticResource Bdr.Bkg.IsSel.Action2}"
+									CornerRadius="6"
+									Margin="5,3,5,0"
+									>
+								<DockPanel HorizontalAlignment="Stretch">
+									<TextBlock DockPanel.Dock="Right"
+											FontFamily="Segoe UI Symbol"
+											Foreground="{StaticResource Fg.IsSel.CanEdit}"
+											HorizontalAlignment="Right"
+											Margin="0,1,3,-1"
+											Padding="0"
+											Text="&#xE104;"
+											/>
+
+									<CheckBox Content="checkbox text"
+											DockPanel.Dock="Left"
+											FontSize="{StaticResource FontSize.Normal}"
+											Foreground="{StaticResource Fg.IsSel.CanEdit}"
+											HorizontalAlignment="Left"
+											IsChecked="True"
+											Margin="5,0,0,0"
+											Padding="0"
+											VerticalAlignment="Center"
+											>
+
+										<CheckBox.Style>
+											<Style BasedOn="{StaticResource Lv1.CheckboxStyle}"
+													TargetType="{x:Type CheckBox}"
+													/>
+										</CheckBox.Style>
+									</CheckBox>
+								</DockPanel>
+							</Border>
+
+							<Border Background="{StaticResource Bdr.Bkg.IsSel.Action2}"
+									CornerRadius="6"
+									Margin="5,3,5,3"
+									>
+								<DockPanel HorizontalAlignment="Stretch">
+									<TextBlock DockPanel.Dock="Right"
+											FontFamily="Segoe UI Symbol"
+											Foreground="{StaticResource Fg.IsSel.CanEdit}"
+											HorizontalAlignment="Right"
+											Margin="0,1,3,-1"
+											Padding="0"
+											Text="&#xE104;"
+											/>
+
+									<CheckBox Content="checkbox text"
+											DockPanel.Dock="Left"
+											FontSize="{StaticResource FontSize.Normal}"
+											Foreground="{StaticResource Fg.IsSel.CanEdit}"
+											HorizontalAlignment="Left"
+											IsChecked="True"
+											Margin="5,0,0,0"
+											Padding="0"
+											VerticalAlignment="Center"
+											>
+
+										<CheckBox.Style>
+											<Style BasedOn="{StaticResource Lv1.CheckboxStyle}"
+													TargetType="{x:Type CheckBox}"
+													/>
+										</CheckBox.Style>
+									</CheckBox>
+								</DockPanel>
+							</Border>
+
+						</StackPanel>
+
+					</Grid>
+
+				</Border>
+
+
+			</DataTemplate>
+
+
+
+
 
 		</ResourceDictionary>
 
@@ -166,6 +2276,48 @@
 			<ColumnDefinition Width="{StaticResource C2}" />
 		</Grid.ColumnDefinitions>
 
+		<Grid.RowDefinitions>
+			<RowDefinition Height="*" />
+			<RowDefinition Height="Auto" />
+		</Grid.RowDefinitions>
+
+		<!--#region > dialog controls-->
+
+		<StackPanel x:Name="DialogControls"
+				DockPanel.Dock="Bottom"
+				Grid.Column="0"
+				Grid.Row="1"
+				Grid.ColumnSpan="2"
+				HorizontalAlignment="Right"
+				Orientation="Horizontal"
+				VerticalAlignment="Bottom"
+				>
+
+			<Button Content="Cancel"
+					FontSize="{StaticResource FontSize.Normal}"
+					HorizontalAlignment="Right"
+					Margin="5,10,0,0"
+					MinHeight="28"
+					MinWidth="90"
+					Padding="5"
+					Style="{StaticResource Button.Normal.Style}"
+					/>
+
+			<Button Content="Done"
+					FontSize="{StaticResource FontSize.Normal}"
+					HorizontalAlignment="Right"
+					Margin="5,10,0,0"
+					MinHeight="28"
+					MinWidth="90"
+					Padding="5"
+					Style="{StaticResource Button.Normal.Style}"
+					/>
+
+		</StackPanel>
+
+		<!--#endregion-->
+
+		<!--#region > column left-->
 
 		<DockPanel x:Name="ColumnLeft"
 				Grid.Column="0"
@@ -173,51 +2325,52 @@
 				Margin="0,0,5,0"
 				>
 
-			<Border Margin="0,0,0,3"
-					VerticalAlignment="Top"
+			<Border x:Name="Header_1L"
+					DockPanel.Dock="Top"
 					Background="DimGray"
 					BorderThickness="0"
-					DockPanel.Dock="Top"
 					CornerRadius="{StaticResource Normal.CornerRadius}"
+					Margin="0,0,0,3"
+					VerticalAlignment="Top"
 					>
-				<TextBlock Padding="{StaticResource Hdr.Padding}"
-						FontSize="{StaticResource FontSize.Large}"
+				<TextBlock FontSize="{StaticResource FontSize.Large}"
+						Padding="{StaticResource Hdr.Padding}"
 						Text="Header 1"
 						/>
 			</Border>
 
 			<StackPanel x:Name="Properties"
-					Orientation="Vertical"
 					DockPanel.Dock="Top"
+					Orientation="Vertical"
 					>
 
 				<StackPanel x:Name="property1"
 						Orientation="Horizontal"
 						>
-					<Border Margin="0,3,2,0"
-							HorizontalAlignment="Left"
-							VerticalAlignment="Top"
+					<Border DockPanel.Dock="Top"
 							Background="LightSeaGreen"
 							BorderThickness="0"
-							DockPanel.Dock="Top"
 							CornerRadius="{StaticResource Left.CornerRadius}"
+							HorizontalAlignment="Left"
+							Margin="0,3,2,0"
+							VerticalAlignment="Top"
 							>
-						<TextBlock Padding="{StaticResource Property.Padding.Left}"
-								FontSize="{StaticResource FontSize.Normal}"
+						<TextBlock FontSize="{StaticResource FontSize.Normal}"
+								Padding="{StaticResource Property.Padding.Left}"
 								Text="Property title 1"
 								/>
 					</Border>
 
-					<Border Margin="0,3,2,0"
-							HorizontalAlignment="Left"
-							VerticalAlignment="Top"
+					<Border DockPanel.Dock="Top"
 							Background="CadetBlue"
 							BorderThickness="0"
-							DockPanel.Dock="Top"
 							CornerRadius="{StaticResource Right.CornerRadius}"
+							HorizontalAlignment="Left"
+							Margin="0,3,2,0"
+							VerticalAlignment="Top"
 							>
-						<TextBlock Padding="{StaticResource Property.Padding.Right}"
-								FontSize="{StaticResource FontSize.Normal}"
+						<TextBlock FontSize="{StaticResource FontSize.Normal}"
+								Padding="{StaticResource Property.Padding.Right}"
 								Text="Property Value 1"
 								/>
 					</Border>
@@ -226,30 +2379,30 @@
 				<StackPanel x:Name="property2"
 						Orientation="Horizontal"
 						>
-					<Border Margin="0,3,2,0"
-							HorizontalAlignment="Left"
-							VerticalAlignment="Top"
+					<Border DockPanel.Dock="Top"
 							Background="LightSeaGreen"
 							BorderThickness="0"
-							DockPanel.Dock="Top"
 							CornerRadius="{StaticResource Left.CornerRadius}"
+							HorizontalAlignment="Left"
+							Margin="0,3,2,0"
+							VerticalAlignment="Top"
 							>
-						<TextBlock Padding="{StaticResource Property.Padding.Left}"
-								FontSize="{StaticResource FontSize.Normal}"
+						<TextBlock FontSize="{StaticResource FontSize.Normal}"
+								Padding="{StaticResource Property.Padding.Left}"
 								Text="Property title 2"
 								/>
 					</Border>
 
-					<Border Margin="0,3,2,0"
-							HorizontalAlignment="Left"
-							VerticalAlignment="Top"
+					<Border DockPanel.Dock="Top"
 							Background="CadetBlue"
 							BorderThickness="0"
-							DockPanel.Dock="Top"
 							CornerRadius="{StaticResource Right.CornerRadius}"
+							HorizontalAlignment="Left"
+							Margin="0,3,2,0"
+							VerticalAlignment="Top"
 							>
-						<TextBlock Padding="{StaticResource Property.Padding.Right}"
-								FontSize="{StaticResource FontSize.Normal}"
+						<TextBlock FontSize="{StaticResource FontSize.Normal}"
+								Padding="{StaticResource Property.Padding.Right}"
 								Text="Property Value 2"
 								/>
 					</Border>
@@ -258,30 +2411,30 @@
 			</StackPanel>
 
 			<DockPanel x:Name="AddCurrent"
-					VerticalAlignment="Bottom"
 					DockPanel.Dock="Bottom"
+					VerticalAlignment="Bottom"
 					>
 				<StackPanel Orientation="Vertical">
-					<TextBlock Margin="0,0,0,5"
-							VerticalAlignment="Top"
+					<TextBlock DockPanel.Dock="Top"
 							FontSize="{StaticResource FontSize.Normal}"
-							DockPanel.Dock="Top"
-							TextWrapping="Wrap"
+							Margin="0,0,0,5"
 							Text="Add the above project length unit as a new style?"
+							TextWrapping="Wrap"
+							VerticalAlignment="Top"
 							/>
 
-					<TextBlock Margin="0,0,0,5"
-							VerticalAlignment="Top"
+					<TextBlock DockPanel.Dock="Top"
 							FontSize="{StaticResource FontSize.Normal}"
-							DockPanel.Dock="Top"
-							TextWrapping="Wrap"
+							Margin="0,0,0,5"
 							Text="Provide a name for the new style:"
+							TextWrapping="Wrap"
+							VerticalAlignment="Top"
 							/>
-					<TextBox Margin="0,0,0,5"
-							Padding="3,1,0,4"
+					<TextBox Background="DimGray"
 							FontSize="{StaticResource FontSize.Normal}"
-							Background="DimGray"
 							Foreground="White"
+							Margin="0,0,0,5"
+							Padding="3,1,0,4"
 							Text="sample"
 							/>
 
@@ -297,47 +2450,41 @@
 
 						<ComboBox Grid.Column="0"
 								Grid.Row="0"
-								Margin="0,0,3,0"
-								HorizontalContentAlignment="Center"
-								FontSize="{StaticResource FontSize.Normal}"
 								Background="DarkSlateBlue"
+								FontSize="{StaticResource FontSize.Normal}"
 								Foreground="Black"
+								HorizontalContentAlignment="Center"
+								Margin="0,0,3,0"
 								SelectedIndex="0"
 								>
 
-							<ComboBox.Items>
-								<ComboBoxItem Content="Before" />
-							</ComboBox.Items>
+							<ComboBoxItem Content="Before" />
 						</ComboBox>
 
 						<ComboBox Grid.Column="1"
 								Grid.Row="0"
-								Margin="3,0,0,0"
-								HorizontalContentAlignment="Center"
-								FontSize="{StaticResource FontSize.Normal}"
 								Background="DarkSlateBlue"
+								FontSize="{StaticResource FontSize.Normal}"
 								Foreground="Black"
+								HorizontalContentAlignment="Center"
+								Margin="3,0,0,0"
 								SelectedIndex="0"
 								>
 
-							<ComboBox.Items>
-								<ComboBoxItem Content="Item 1" />
-							</ComboBox.Items>
+							<ComboBoxItem Content="Item 1" />
 						</ComboBox>
 
 					</Grid>
 
 					<Button Content="Add"
-							Margin="0,10,0,0"
-							MinWidth="90"
-							MinHeight="28"
-							Padding="5"
-							HorizontalAlignment="Right"
 							FontSize="{StaticResource FontSize.Normal}"
+							HorizontalAlignment="Right"
+							Margin="0,10,0,0"
+							MinHeight="28"
+							MinWidth="90"
+							Padding="5"
 							Style="{StaticResource Button.Normal.Style}"
-							>
-
-					</Button>
+							/>
 
 				</StackPanel>
 
@@ -345,361 +2492,293 @@
 
 		</DockPanel>
 
-		<DockPanel Grid.Column="1"
+		<!--#endregion-->
+
+		<!--#region > column right-->
+
+		<DockPanel x:Name="ColumnRight"
+				Grid.Column="1"
 				Grid.Row="0"
 				>
 
-			<Border Margin="0,0,0,3"
-					VerticalAlignment="Top"
+			<Border x:Name="Header_1R"
+					DockPanel.Dock="Top"
 					Background="DimGray"
 					BorderThickness="0"
-					DockPanel.Dock="Top"
 					CornerRadius="{StaticResource Normal.CornerRadius}"
+					Margin="0,0,0,3"
+					VerticalAlignment="Top"
 					>
-				<TextBlock Padding="{StaticResource Hdr.Padding}"
-						FontSize="{StaticResource FontSize.Large}"
+				<TextBlock FontSize="{StaticResource FontSize.Large}"
+						Padding="{StaticResource Hdr.Padding}"
 						Text="Header 1"
 						/>
 			</Border>
 
-			<StackPanel HorizontalAlignment="Right"
-					VerticalAlignment="Bottom"
-					DockPanel.Dock="Bottom"
-					Orientation="Horizontal"
-					>
-
-				<Button Content="Cancel"
-						Margin="5,10,0,0"
-						MinWidth="90"
-						MinHeight="28"
-						Padding="5"
-						HorizontalAlignment="Right"
-						FontSize="{StaticResource FontSize.Normal}"
-						Style="{StaticResource Button.Normal.Style}"
-						/>
-
-				<Button Content="Done"
-						Margin="5,10,0,0"
-						MinWidth="90"
-						MinHeight="28"
-						Padding="5"
-						HorizontalAlignment="Right"
-						FontSize="{StaticResource FontSize.Normal}"
-						Style="{StaticResource Button.Normal.Style}"
-						/>
-
-			</StackPanel>
-
-			<Grid Margin="0,0,0,5"
-					Height="Auto"
-					VerticalAlignment="Top"
-					Background="#333333"
-					DockPanel.Dock="Top"
-					>
-
-				<Grid.ColumnDefinitions>
-					<ColumnDefinition Width="78" />
-					<ColumnDefinition Width="86" />
-					<ColumnDefinition Width="3*" />
-					<ColumnDefinition Width="4*" />
-					<ColumnDefinition Width="3*" />
-				</Grid.ColumnDefinitions>
+			<Grid x:Name="ItemSamples">
 
 				<Grid.RowDefinitions>
-					<RowDefinition Height="*" />
-					<RowDefinition Height="*" />
-					<RowDefinition Height="*" />
+					<RowDefinition Height="24" />
+					<RowDefinition Height="34" />
+					<RowDefinition Height="96" />
+					<RowDefinition Height="104" />
+					<RowDefinition Height="104" />
+					<RowDefinition Height="104" />
+					<RowDefinition Height="104" />
+					<RowDefinition Height="104" />
+					<RowDefinition Height="104" />
+					<RowDefinition Height="104" />
+					<RowDefinition Height="104" />
+					<RowDefinition Height="104" />
 				</Grid.RowDefinitions>
 
-				<Border Grid.Column="0"
+				<TextBlock x:Name="Header_2R"
+						Grid.Column="0"
 						Grid.Row="0"
-						Grid.RowSpan="3"
-						Padding="0"
-						Style="{StaticResource BorderStyle}"
-						>
-
-								<!-- Grid.RowSpan="3" -->
-						<TextBlock Grid.Column="0"
-								Grid.Row="1"
-								Margin="0,0,0,4"
-								Padding="0"
-								HorizontalAlignment="Center"
-								VerticalAlignment="Center"
-								FontSize="38"
-								FontWeight="DemiBold"
-								Text="01"
-								/>
-				</Border>
-
-						<Border Grid.Column="0"
-								Grid.Row="2"
-								Margin="0,0,0,5"
-								Padding="0"
-								HorizontalAlignment="Center"
-								VerticalAlignment="Bottom"
-								Background="OrangeRed"
-								Visibility="Visible"
-								Style="{StaticResource BorderStyle}"
-								>
-							<TextBlock 
-									Margin="0,-2,0,0"
-									Padding="8,1,8,1"
-									FontSize="9"
-									TextAlignment="Center"
-									Text="Locked"
-									/>
-						</Border>
-
-					<!-- <Grid> -->
-					<!-- 	<Grid.RowDefinitions> -->
-					<!-- 		<RowDefinition Height="*" /> -->
-					<!-- 		<RowDefinition Height="16" /> -->
-					<!-- 	</Grid.RowDefinitions> -->
-					<!-- -->
-					<!-- -->
-					<!-- -->
-					<!-- -->
-					<!-- </Grid> -->
-
-
-				<Border Grid.Column="1"
-						Grid.Row="0"
-						Grid.RowSpan="3"
-						Background="LightGray"
-						Style="{StaticResource BorderStyle}"
-						>
-
-				</Border>
-
-				<Border Grid.Column="2"
-						Grid.Row="0"
-						Grid.ColumnSpan="2"
-						Style="{StaticResource BorderStyle}"
-						>
-					<TextBlock Text="This is the unit name" />
-				</Border>
-
-				<Border Grid.Column="2"
-						Grid.Row="1"
-						Grid.ColumnSpan="2"
-						Style="{StaticResource BorderStyle}"
-						>
-					<TextBlock Text="This is the unit Description" />
-				</Border>
-
-
-
-				<Border Grid.Column="2"
-						Grid.Row="2"
-						HorizontalAlignment="Stretch"
-						Style="{StaticResource bs2}"
-						>
-					<TextBlock Padding="0,0,10,0"
-							TextAlignment="Center"
-							Text="Example"
-							/>
-				</Border>
-
-				<Border Grid.Column="3"
-						Grid.Row="2"
-						Style="{StaticResource bs3}"
-						>
-					<TextBlock Padding="0,0,10,0"
-							TextAlignment="Center"
-							Text="1,234' - 255/256&quot;"
-							/>
-				</Border>
-
-				<!--  <Border Grid.Column="5"  -->
-				<!--  Grid.Row="2"  -->
-				<!--  Style="{StaticResource bs3}"  -->
-				<!--  >  -->
-				<!--  <CheckBox Content="Dialog Right"  -->
-				<!--  VerticalContentAlignment="Center"  -->
-				<!--  Background="#666666"  -->
-				<!--  Foreground="White"  -->
-				<!--  IsChecked="True"  -->
-				<!--  />  -->
-				<!-- </Border> -->
-
-
-				<Border Grid.Column="4"
-						Grid.Row="0"
-						Grid.RowSpan="3"
-						HorizontalAlignment="Stretch"
-						VerticalAlignment="Stretch"
-						Style="{StaticResource BorderStyle}"
-						>
-					<Grid>
-
-						<Grid.ColumnDefinitions>
-							<ColumnDefinition Width="*" />
-
-						</Grid.ColumnDefinitions>
-
-						<Grid.RowDefinitions>
-							<RowDefinition Height="*" />
-							<RowDefinition Height="*" />
-							<RowDefinition Height="*" />
-							<RowDefinition Height="*" />
-						</Grid.RowDefinitions>
-
-						<TextBlock HorizontalAlignment="Stretch"
-								VerticalAlignment="Center"
-								FontSize="14"
-								TextAlignment="Left"
-								Text="Show in this list"
-								Margin="5,0,0,0"
-								/>
-
-
-						<CheckBox Content="Favs"
-								Grid.Column="0"
-								Grid.Row="1"
-								Margin="5,0,0,0"
-								VerticalContentAlignment="Center"
-								FontSize="14"
-								Background="#666666"
-								Foreground="White"
-								IsChecked="True"
-								/>
-						<CheckBox Content="Dialog left"
-								Grid.Column="0"
-								Grid.Row="2"
-								Margin="5,0,0,0"
-								VerticalContentAlignment="Center"
-								FontSize="14"
-								Background="#666666"
-								Foreground="White"
-								IsChecked="True"
-								/>
-						<CheckBox Content="Dialog Right"
-								Grid.Column="0"
-								Grid.Row="3"
-								Margin="5,0,0,0"
-								VerticalContentAlignment="Center"
-								FontSize="14"
-								Background="#666666"
-								Foreground="White"
-								IsChecked="True"
-								/>
-
-
-					</Grid>
-
-				</Border>
-
-
-
-			</Grid>
-
-
-			<Grid VerticalAlignment="Top"
-					DockPanel.Dock="Top"
-					>
-				<Grid.ColumnDefinitions>
-					<ColumnDefinition Width="*" />
-					<ColumnDefinition Width="*" />
-					<ColumnDefinition Width="*" />
-				</Grid.ColumnDefinitions>
-
-				<Grid.RowDefinitions>
-					<RowDefinition Height="*" />
-					<RowDefinition Height="*" />
-					<RowDefinition Height="Auto" />
-					<RowDefinition Height="Auto" />
-					<RowDefinition Height="Auto" />
-					<RowDefinition Height="Auto" />
-				</Grid.RowDefinitions>
-
-				<TextBlock Grid.Column="0"
-						Grid.Row="0"
-						Grid.ColumnSpan="3"
 						Background="{StaticResource Header.Background}"
 						Foreground="Black"
 						Text="This is header text"
-						Style="{StaticResource TblkSample}"
+						Style="{StaticResource TblkBase}"
 						/>
 
-				<TextBlock Grid.Column="0"
+				<StackPanel x:Name="Samples1"
+						Grid.Column="0"
 						Grid.Row="1"
-						Background="{StaticResource Desc.Background}"
-						Text="This is title text"
-						Style="{StaticResource TblkSample}"
-						/>
-				<TextBlock Grid.Column="1"
-						Grid.Row="1"
-						Background="{StaticResource Value.Background}"
-						Text="This is value text"
-						Style="{StaticResource TblkSample}"
-						/>
-
-
-				<Border Grid.Column="0"
-						Grid.Row="2"
-						Grid.ColumnSpan="3"
-						Padding="7"
-						Background="{StaticResource Lv.Item.Panel.Bkg.Nml}"
-						Visibility="Collapsed"
-						CornerRadius="4"
+						Margin="0,0,0,10"
+						Orientation="Horizontal"
 						>
-					<Grid>
-						<Grid.ColumnDefinitions>
-							<ColumnDefinition Width="*" />
-							<ColumnDefinition Width="*" />
-							<ColumnDefinition Width="*" />
-						</Grid.ColumnDefinitions>
+					<TextBlock Background="{StaticResource Desc.Background}"
+							Text="This is title text"
+							Style="{StaticResource TblkBase}"
+							/>
+					<TextBlock Background="{StaticResource Value.Background}"
+							Text="This is value text"
+							Style="{StaticResource TblkBase}"
+							/>
+				</StackPanel>
 
-						<Grid.RowDefinitions>
-							<RowDefinition Height="*" />
-							<RowDefinition Height="*" />
-							<RowDefinition Height="*" />
-							<RowDefinition Height="*" />
-							<RowDefinition Height="*" />
-							<RowDefinition Height="*" />
-						</Grid.RowDefinitions>
+				<Grid x:Name="Item_Layout_1"
+						Grid.Column="0"
+						Grid.Row="2"
+						Height="Auto"
+						Background="#333333"
+						Margin="0,0,0,5"
+						VerticalAlignment="Top"
+						>
+
+					<Grid.ColumnDefinitions>
+						<ColumnDefinition Width="78" />
+						<ColumnDefinition Width="86" />
+						<ColumnDefinition Width="3*" />
+						<ColumnDefinition Width="4*" />
+						<ColumnDefinition Width="3*" />
+					</Grid.ColumnDefinitions>
+
+					<Grid.RowDefinitions>
+						<RowDefinition Height="*" />
+						<RowDefinition Height="*" />
+						<RowDefinition Height="*" />
+					</Grid.RowDefinitions>
+
+					<Border Grid.Column="0"
+							Grid.Row="0"
+							Grid.RowSpan="3"
+							Padding="0"
+							Style="{StaticResource BorderStyle}"
+							>
+
+						<!--  Grid.RowSpan="3"  -->
 						<TextBlock Grid.Column="0"
-								Grid.Row="0"
-								Background="{StaticResource Lv.Item.Bkg}"
-								Text="This is title text prime"
-								Style="{StaticResource TblkSample}"
+								Grid.Row="1"
+								FontSize="38"
+								FontWeight="DemiBold"
+								HorizontalAlignment="Center"
+								Margin="0,0,0,4"
+								Padding="0"
+								Text="01"
+								VerticalAlignment="Center"
 								/>
-						<TextBlock Grid.Column="1"
-								Grid.Row="0"
-								Background="{StaticResource Lv.Item.Bkg}"
-								Text="This is value text 2ndry"
-								Style="{StaticResource TblkSample}"
-								/>
-						<TextBlock Grid.Column="2"
-								Grid.Row="0"
-								Background="{StaticResource Lv.Item.Bkg}"
+					</Border>
+
+					<Border Grid.Column="0"
+							Grid.Row="2"
+							Background="OrangeRed"
+							HorizontalAlignment="Center"
+							Margin="0,0,0,5"
+							Padding="0"
+							VerticalAlignment="Bottom"
+							Visibility="Visible"
+							Style="{StaticResource BorderStyle}"
+							>
+						<TextBlock FontSize="9"
+								Margin="0,-2,0,0"
+								Padding="8,1,8,1"
+								Text="Locked"
 								TextAlignment="Center"
+								/>
+					</Border>
+
+					<Border Grid.Column="1"
+							Grid.Row="0"
+							Grid.RowSpan="3"
+							Background="LightGray"
+							Style="{StaticResource BorderStyle}"
+							/>
+
+					<Border Grid.Column="2"
+							Grid.Row="0"
+							Grid.ColumnSpan="2"
+							Style="{StaticResource BorderStyle}"
+							>
+						<TextBlock Text="This is the unit name" />
+					</Border>
+
+					<Border Grid.Column="2"
+							Grid.Row="1"
+							Grid.ColumnSpan="2"
+							Style="{StaticResource BorderStyle}"
+							>
+						<TextBlock Text="This is the unit Description" />
+					</Border>
+
+					<Border Grid.Column="2"
+							Grid.Row="2"
+							HorizontalAlignment="Stretch"
+							Style="{StaticResource bs2}"
+							>
+						<TextBlock Padding="0,0,10,0"
 								Text="Example"
-								Style="{StaticResource TblkSample}"
+								TextAlignment="Center"
 								/>
+					</Border>
 
-						<TextBlock Grid.Column="0"
-								Grid.Row="1"
-								Background="{StaticResource Lv.Item.SubHdr.Bkg}"
-								Text="This is sub-header 2"
-								Style="{StaticResource TblkSample}"
+					<Border Grid.Column="3"
+							Grid.Row="2"
+							Style="{StaticResource bs3}"
+							>
+						<TextBlock Padding="0,0,10,0"
+								Text="1,234' - 255/256&quot;"
+								TextAlignment="Center"
 								/>
-						<TextBlock Grid.Column="1"
-								Grid.Row="1"
-								Background="{StaticResource Lv.Item.control.Bkg}"
-								Text="This is editable text 2"
-								Style="{StaticResource TblkSample}"
-								/>
-					</Grid>
-				</Border>
+					</Border>
+
+					<Border Grid.Column="4"
+							Grid.Row="0"
+							Grid.RowSpan="3"
+							HorizontalAlignment="Stretch"
+							VerticalAlignment="Stretch"
+							Style="{StaticResource BorderStyle}"
+							>
+						<Grid>
+
+							<Grid.ColumnDefinitions>
+								<ColumnDefinition Width="*" />
+
+							</Grid.ColumnDefinitions>
+
+							<Grid.RowDefinitions>
+								<RowDefinition Height="*" />
+								<RowDefinition Height="*" />
+								<RowDefinition Height="*" />
+								<RowDefinition Height="*" />
+							</Grid.RowDefinitions>
+
+							<TextBlock FontSize="14"
+									HorizontalAlignment="Stretch"
+									Margin="5,0,0,0"
+									Text="Show in this list"
+									TextAlignment="Left"
+									VerticalAlignment="Center"
+									/>
 
 
-				<Border Grid.Column="0"
+							<CheckBox Content="Favs"
+									Grid.Column="0"
+									Grid.Row="1"
+									Background="#666666"
+									FontSize="14"
+									Foreground="White"
+									IsChecked="True"
+									Margin="5,0,0,0"
+									VerticalContentAlignment="Center"
+									/>
+							<CheckBox Content="Dialog left"
+									Grid.Column="0"
+									Grid.Row="2"
+									Background="#666666"
+									FontSize="14"
+									Foreground="White"
+									IsChecked="True"
+									Margin="5,0,0,0"
+									VerticalContentAlignment="Center"
+									/>
+							<CheckBox Content="Dialog Right"
+									Grid.Column="0"
+									Grid.Row="3"
+									Background="#666666"
+									FontSize="14"
+									Foreground="White"
+									IsChecked="True"
+									Margin="5,0,0,0"
+									VerticalContentAlignment="Center"
+									/>
+
+
+						</Grid>
+
+					</Border>
+
+				</Grid>
+
+				<ContentControl x:Name="Row3"
+						Content="{StaticResource NotLockedIsSelectedNotEditing}"
+						Grid.Column="0"
 						Grid.Row="3"
-						Grid.ColumnSpan="3"
-						Padding="7"
+						/>
+
+				<ContentControl x:Name="Row4"
+						Content="{StaticResource NotLockedIsSelectedIsEditing}"
+						Grid.Column="0"
+						Grid.Row="4"
+						/>
+
+				<ContentControl x:Name="Row5"
+						Content="{StaticResource NotLockedNotSelectedNaEditing}"
+						Grid.Column="0"
+						Grid.Row="5"
+						/>
+
+				<ContentControl x:Name="Row6"
+						Content="{StaticResource NotLockedIsSelectedNoEditing}"
+						Grid.Column="0"
+						Grid.Row="6"
+						/>
+
+				<ContentControl x:Name="Row7"
+						Content="{StaticResource IsLockedIsSelectedNaEditing}"
+						Grid.Column="0"
+						Grid.Row="7"
+						/>
+
+
+				<!--<ContentControl
+					x:Name="Base"
+					Grid.Row="8"
+					Grid.Column="0"
+					Content="{StaticResource Base}" />-->
+
+				<ContentControl x:Name="Base2"
+						Grid.Column="0"
+						Grid.Row="8"
+						ContentTemplate="{StaticResource Base2}"
+						/>
+
+				<Border x:Name="Layout_9"
+						Grid.Column="0"
+						Grid.Row="10"
 						Background="{StaticResource Lv.Item.Panel.Bkg.Nml}"
 						CornerRadius="4"
+						Padding="7"
 						>
 					<Grid>
 						<Grid.ColumnDefinitions>
@@ -721,39 +2800,39 @@
 								Grid.Row="0"
 								Background="{StaticResource Lv.Item.Bkg2}"
 								Text="This is title / info text"
-								Style="{StaticResource TblkSample}"
+								Style="{StaticResource TblkBase}"
 								/>
 						<TextBlock Grid.Column="1"
 								Grid.Row="0"
 								Background="{StaticResource Lv.Item.Bkg3}"
 								Text="This is title / info text"
-								Style="{StaticResource TblkSample}"
+								Style="{StaticResource TblkBase}"
 								/>
 						<TextBlock Grid.Column="2"
 								Grid.Row="0"
 								Background="{StaticResource Lv.Item.Bkg2}"
-								TextAlignment="Center"
 								Text="Example"
-								Style="{StaticResource TblkSample}"
+								TextAlignment="Center"
+								Style="{StaticResource TblkBase}"
 								/>
 
 						<TextBlock Grid.Column="0"
 								Grid.Row="1"
 								Background="{StaticResource Lv.Item.SubHdr.Bkg2}"
 								Text="This is editable text&#x9;"
-								Style="{StaticResource TblkSample}"
+								Style="{StaticResource TblkBase}"
 								/>
 						<TextBlock Grid.Column="1"
 								Grid.Row="1"
 								Background="{StaticResource Lv.Item.control.Bkg2}"
 								Text="This is changable (drop)"
-								Style="{StaticResource TblkSample}"
+								Style="{StaticResource TblkBase}"
 								/>
 						<TextBlock Grid.Column="2"
 								Grid.Row="1"
 								Background="{StaticResource Lv.Item.control.Bkg3}"
 								Text="This is changable (drop)"
-								Style="{StaticResource TblkSample}"
+								Style="{StaticResource TblkBase}"
 								/>
 
 
@@ -761,18 +2840,19 @@
 								Grid.Row="2"
 								Background="{StaticResource Lv.Item.Important}"
 								Text="Highlighted item"
-								Style="{StaticResource TblkSample}"
+								Style="{StaticResource TblkBase}"
 								/>
 
 
 					</Grid>
 				</Border>
-				<Border Grid.Column="0"
-						Grid.Row="4"
-						Grid.ColumnSpan="3"
-						Padding="7"
+
+				<Border x:Name="Layout_10"
+						Grid.Column="0"
+						Grid.Row="11"
 						Background="{StaticResource Lv.Item.Panel.Bkg.Nml2}"
 						CornerRadius="4"
+						Padding="7"
 						>
 					<Grid>
 						<Grid.ColumnDefinitions>
@@ -795,22 +2875,22 @@
 								Background="{StaticResource Lv.Item.Bkg2.Unfocused}"
 								Foreground="{StaticResource Lv.Item.FG.Unfocused}"
 								Text="This is title text prime"
-								Style="{StaticResource TblkSample}"
+								Style="{StaticResource TblkBase}"
 								/>
 						<TextBlock Grid.Column="1"
 								Grid.Row="3"
 								Background="{StaticResource Lv.Item.Bkg2.Unfocused}"
 								Foreground="{StaticResource Lv.Item.FG.Unfocused}"
 								Text="This is value text 2ndry"
-								Style="{StaticResource TblkSample}"
+								Style="{StaticResource TblkBase}"
 								/>
 						<TextBlock Grid.Column="2"
 								Grid.Row="3"
 								Background="{StaticResource Lv.Item.Bkg2.Unfocused}"
 								Foreground="{StaticResource Lv.Item.FG.Unfocused}"
-								TextAlignment="Center"
 								Text="Example"
-								Style="{StaticResource TblkSample}"
+								TextAlignment="Center"
+								Style="{StaticResource TblkBase}"
 								/>
 
 						<TextBlock Grid.Column="0"
@@ -818,7 +2898,7 @@
 								Background="{StaticResource Lv.Item.SubHdr.Bkg2.Unfocused}"
 								Foreground="{StaticResource Lv.Item.FG.Unfocused}"
 								Text="This is editable text"
-								Style="{StaticResource TblkSample}"
+								Style="{StaticResource TblkBase}"
 								/>
 
 						<TextBlock Grid.Column="1"
@@ -826,7 +2906,7 @@
 								Background="{StaticResource Lv.Item.control.Bkg2.unfocused}"
 								Foreground="{StaticResource Lv.Item.FG.Unfocused}"
 								Text="This is changable (drop)"
-								Style="{StaticResource TblkSample}"
+								Style="{StaticResource TblkBase}"
 								/>
 
 						<TextBlock Grid.Column="0"
@@ -834,20 +2914,18 @@
 								Background="{StaticResource Lv.Item.Important.Unfocused}"
 								Foreground="{StaticResource Lv.Item.FG.Unfocused}"
 								Text="Highlighted item"
-								Style="{StaticResource TblkSample}"
+								Style="{StaticResource TblkBase}"
 								/>
 
 					</Grid>
 				</Border>
 
-
 			</Grid>
-
 
 
 		</DockPanel>
 
-
+		<!--#endregion-->
 
 	</Grid>
 
