@@ -35,6 +35,27 @@ namespace CSToolsStudies.Windows.Support
 
 	#endregion
 
+		
+	#region checkbox check margin
+
+		public static readonly DependencyProperty 
+			CheckBoxCheckMarginProperty = DependencyProperty.RegisterAttached(
+				"CheckBoxCheckMargin", typeof(Thickness), 
+				typeof(CsCheckBoxAp), new FrameworkPropertyMetadata(new Thickness(0), 
+					FrameworkPropertyMetadataOptions.Inherits));
+
+		public static void SetCheckBoxCheckMargin(UIElement e, Thickness value)
+		{
+			e.SetValue(CheckBoxCheckMarginProperty, value);
+		}
+
+		public static Thickness GetCheckBoxCheckMargin(UIElement e)
+		{
+			return (Thickness) e.GetValue(CheckBoxCheckMarginProperty);
+		}
+
+	#endregion
+
 
 	}
 }

@@ -1,17 +1,26 @@
-﻿<Application
-	x:Class="CSToolsStudies.AppRibbon"
-	xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-	xmlns:local="clr-namespace:CSToolsStudies"
-	StartupUri="Windows/Test1.xaml">
+﻿<Application x:Class="CSToolsStudies.AppRibbon"
+		xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+		xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+		xmlns:local="clr-namespace:CSToolsStudies"
+		xmlns:res="clr-namespace:CSToolsStudies.Windows.ResourceFiles.XamlResources"
+		ShutdownMode="OnExplicitShutdown"
+		Startup="appStart"
+		>
+	<!--  StartupUri="/Windows/Test1.xaml"  -->
 	<Application.Resources>
 
 		<ResourceDictionary>
 			<ResourceDictionary.MergedDictionaries>
-				<ResourceDictionary Source="Windows/ResourceFiles/XamlResources/MasterColorList.xaml" />
-				<ResourceDictionary Source="Windows/ResourceFiles/XamlResources/VisualStates.xaml" />
+				<ResourceDictionary Source="/Windows/ResourceFiles/XamlResources/MasterColorList.xaml" />
+				<ResourceDictionary Source="/Windows/ResourceFiles/XamlResources/VisualStates.xaml" />
+				<res:SkinResourceDictionary FluentSkinSource="pack://Application:,,,/CSToolsStudies;component/Windows/ResourceFiles/XamlResources/FluentSkin.xaml"
+						JeffSkinSource="pack://Application:,,,/CSToolsStudies;component/Windows/ResourceFiles/XamlResources/JeffSkin.xaml"
+						/>
+
 			</ResourceDictionary.MergedDictionaries>
 		</ResourceDictionary>
+
+
 
 	</Application.Resources>
 </Application>

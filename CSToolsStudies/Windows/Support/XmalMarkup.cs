@@ -1,7 +1,9 @@
 ﻿#region + Using Directives
 
 using System;
+using System.ComponentModel;
 using System.Diagnostics;
+using System.Runtime.CompilerServices;
 using System.Windows.Markup;
 using System.Windows.Media;
 using EnvDTE;
@@ -18,43 +20,43 @@ namespace CSToolsStudies.Windows.Support
 {
 	
 	[MarkupExtensionReturnType(typeof(System.Windows.Media.Color))]
-	public class CsColor : MarkupExtension
+	public class CsColor : MarkupExtension, INotifyPropertyChanged
 	{
-		private System.Windows.Media.Color? c;
+		private System.Windows.Media.Color c;
 
 		public CsColor() { }
 
-		public System.Windows.Media.Color Color
+		public System.Windows.Media.Color Color 
 		{
-			get => c.Value;
+			get => c;
 			set
 			{
 				c = value;
+				OnPropertyChanged();
 			}
 		}
 
-		// public Color C
-		// {
-			// get
-			// {
-				// return c.value;
-			// }
-			// set
-			// {
-				// c = value;
-			// }
-		// }
-
-		public System.Windows.Media.Color ToColor()
+		public System.Windows.Media.Color ColorX
 		{
-			return c.Value;
-
+			get => c;
+			set
+			{
+				c = value;
+				OnPropertyChanged();
+			}
 		}
+
 
 		public override object ProvideValue(IServiceProvider serviceProvider)
 		{
-			return (System.Windows.Media.Color)ToColor();
-			
+			return (System.Windows.Media.Color) Color;
+		}
+
+		public event PropertyChangedEventHandler PropertyChanged;
+
+		private void OnPropertyChanged([CallerMemberName] string memberName = "")
+		{
+			PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(memberName));
 		}
 	}
 

@@ -4,8 +4,10 @@
 		xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
 		xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
 		xmlns:local="clr-namespace:CSToolsStudies.Windows"
+		xmlns:c="clr-namespace:CSToolsStudies"
 		xmlns:cs="clr-namespace:CSToolsStudies.Windows.Support"
 		xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+		xmlns:res="clr-namespace:CSToolsStudies.Windows.ResourceFiles.XamlResources"
 		xmlns:sys="clr-namespace:System;assembly=mscorlib"
 		xmlns:ws="clr-namespace:CSToolsStudies.Windows.Support"
 		Title="Test1"
@@ -18,14 +20,33 @@
 		Loaded="win_Loaded"
 		LocationChanged="win_LocationChanged"
 		ResizeMode="NoResize"
+		WindowStyle="SingleBorderWindow"
 		mc:Ignorable="d"
+		
 		>
+
+
+	<!-- <Window.Triggers> -->
+	<!-- 	<EventTrigger RoutedEvent="Window.Loaded"> -->
+	<!-- 		<BeginStoryboard> -->
+	<!-- 			<Storyboard> -->
+	<!--  <DoubleAnimation Storyboard.TargetProperty="Opacity"  -->
+	<!--  From="0" To="1" Duration="0:0:2"  -->
+	<!--  FillBehavior="HoldEnd"  -->
+	<!--  AutoReverse="False"  -->
+	<!--  />  -->
+	<!-- 			</Storyboard> -->
+	<!-- 		</BeginStoryboard> -->
+	<!-- 	</EventTrigger> -->
+	<!-- </Window.Triggers> -->
 
 	<Window.Resources>
 		<ResourceDictionary>
 			<ResourceDictionary.MergedDictionaries>
-				<ResourceDictionary Source="ResourceFiles/XamlResources/MasterColorList.xaml" />
-				<ResourceDictionary Source="ResourceFiles/XamlResources/VisualStates.xaml" />
+
+				<!-- <ResourceDictionary Source="ResourceFiles/XamlResources/MasterColorList.xaml" /> -->
+				<!-- <ResourceDictionary Source="ResourceFiles/XamlResources/VisualStates.xaml" /> -->
+
 				<!-- <ResourceDictionary Source="Support/CsScrollViewer.xaml" /> -->
 				<!-- <ResourceDictionary Source="Support/CsScrollBar.xaml" /> -->
 			</ResourceDictionary.MergedDictionaries>
@@ -55,14 +76,24 @@
 				(IsSelected == true && IsLocked == true)
 			-->
 
+			<Style x:Key="TestBorderStyle"
+					TargetType="Border"
+					>
+				<Setter Property="CornerRadius" Value="{StaticResource NormalRr}" />
+				<Setter Property="BorderThickness" Value="8" />
+				<Setter Property="BorderBrush" Value="{StaticResource TestBorderBrush}" />
+			</Style>
+
+
+
+			<cs:SubtractConverter x:Key="sub">
+			</cs:SubtractConverter>
+
+
 			<!--#region > values-->
 
-			<sys:Boolean x:Key="IsLocked">
-				False
-			</sys:Boolean>
-			<sys:Boolean x:Key="IsSelected">
-				False
-			</sys:Boolean>
+			<sys:Boolean x:Key="IsLocked">False</sys:Boolean>
+			<sys:Boolean x:Key="IsSelected">False</sys:Boolean>
 			<ws:NullableBool x:Key="IsEditing"
 					b="true"
 					/>
@@ -71,9 +102,7 @@
 				18
 			</sys:Double>
 			<!--  header size  -->
-			<sys:Double x:Key="FontSize.Large">
-				15
-			</sys:Double>
+			<sys:Double x:Key="FontSize.Large">15</sys:Double>
 			<!--  typical font size  -->
 			<sys:Double x:Key="FontSize.Normal">
 				13
@@ -107,8 +136,6 @@
 					/>
 
 
-
-
 			<SolidColorBrush x:Key="Header.Background" Color="{StaticResource True.Green}" />
 
 			<SolidColorBrush x:Key="Lv1.Item.Panel.Bkg.Nml" Color="{StaticResource Blue.200}" />
@@ -121,15 +148,17 @@
 			<SolidColorBrush x:Key="OptionMark.Static.Border" Color="#FF707070" />
 			<SolidColorBrush x:Key="OptionMark.Static.Background" Color="{StaticResource Gray.600}" />
 			<SolidColorBrush x:Key="OptionMark.Static.Glyph" Color="#FF212121" />
+			<SolidColorBrush x:Key="OptionMark.Indeterminant.Fill" Color="#FF444444" />
 			<SolidColorBrush x:Key="OptionMark.MouseOver.Background" Color="#FFF3F9FF" />
 			<SolidColorBrush x:Key="OptionMark.MouseOver.Border" Color="#FF5593FF" />
 			<SolidColorBrush x:Key="OptionMark.MouseOver.Glyph" Color="#FF212121" />
 			<SolidColorBrush x:Key="OptionMark.Pressed.Background" Color="#FFD9ECFF" />
 			<SolidColorBrush x:Key="OptionMark.Pressed.Border" Color="#FF3C77DD" />
 			<SolidColorBrush x:Key="OptionMark.Pressed.Glyph" Color="#FF212121" />
-			<SolidColorBrush x:Key="OptionMark.Disabled.Background" Color="#FFE6E6E6" />
+			<SolidColorBrush x:Key="OptionMark.Disabled.Background" Color="#FFbbbbbb" />
+			<!-- <SolidColorBrush x:Key="OptionMark.Disabled.Background" Color="#FFE6E6E6" /> -->
 			<SolidColorBrush x:Key="OptionMark.Disabled.Border" Color="#FFBCBCBC" />
-			<SolidColorBrush x:Key="OptionMark.Disabled.Glyph" Color="#FF707070" />
+			<SolidColorBrush x:Key="OptionMark.Disabled.Glyph" Color="#FF606060" />
 
 
 
@@ -190,10 +219,11 @@
 								<Grid x:Name="templateRoot"
 										Background="Transparent"
 										SnapsToDevicePixels="True"
+										HorizontalAlignment="Left"
 										>
 
 									<Grid.ColumnDefinitions>
-										<ColumnDefinition Width="*" />
+										<ColumnDefinition Width="Auto" />
 										<ColumnDefinition Width="*" />
 									</Grid.ColumnDefinitions>
 
@@ -204,33 +234,31 @@
 											Background="{TemplateBinding Background}"
 											BorderBrush="{TemplateBinding BorderBrush}"
 											BorderThickness="0"
-											HorizontalAlignment="Stretch"
-											Margin="{Binding TemplatedParent.(cs:CsCheckBoxAp.CheckBoxBoxMargin),
-																			 FallbackValue='4'}"
+
+											Margin="{Binding RelativeSource={RelativeSource Self},	Path=(cs:CsCheckBoxAp.CheckBoxBoxMargin)}"
 											VerticalAlignment="Stretch"
 											>
 
 									</Border>
 
-									<Grid x:Name="markGrid">
-
-										<!--<Rectangle Width="{Binding RelativeSource={RelativeSource Self},
-																				Path=Height}"
-												Fill="{TemplateBinding Background}"
-												/>-->
+									<Grid 
+											Grid.Column="0"
+											x:Name="markGrid">
 										<Path x:Name="optionMark"
 												Data="F0 M 9.97498,1.22334L 4.6983,9.09834L 4.52164,9.09834L 0,5.19331L 1.27664,3.52165L 4.255,6.08833L 8.33331,1.52588e-005L 9.97498,1.22334 Z "
 												Fill="{StaticResource OptionMark.Static.Glyph}"
-												HorizontalAlignment="Stretch"
-												Margin="1.5"
 												Opacity="0"
 												Stretch="Uniform"
 												VerticalAlignment="Stretch"
+
+												Margin="{Binding RelativeSource={RelativeSource Self},	Path=(cs:CsCheckBoxAp.CheckBoxCheckMargin)}"
 												/>
 										<Rectangle x:Name="indeterminateMark"
-												Fill="{StaticResource OptionMark.Static.Glyph}"
-												Margin="0"
+												Fill="{StaticResource OptionMark.Indeterminant.Fill}"
 												Opacity="0"
+												VerticalAlignment="Stretch"
+
+												Margin="{Binding RelativeSource={RelativeSource Self},	Path=(cs:CsCheckBoxAp.CheckBoxBoxMargin)}"
 												/>
 
 									</Grid>
@@ -248,10 +276,11 @@
 							</Border>
 							<ControlTemplate.Triggers>
 
-								<DataTrigger Binding="{Binding RelativeSource={RelativeSource AncestorType={x:Type ListBoxItem}}, Path=IsSelected}" Value="False">
-									<Setter Property="Foreground" Value="{StaticResource Foreground.Unselected}" />
-									<Setter Property="IsEnabled" Value="False" />
-								</DataTrigger>
+								<!-- <DataTrigger Binding="{Binding RelativeSource={RelativeSource AncestorType={x:Type ListBoxItem}}, Path=IsSelected}" Value="False"> -->
+								<!-- <DataTrigger Binding="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=IsEnabled}" Value="False"> -->
+								<!-- 	 -->
+								<!-- -->
+								<!-- </DataTrigger> -->
 								<Trigger Property="HasContent" Value="true">
 									<Setter Property="FocusVisualStyle" Value="{StaticResource OptionMarkFocusVisual}" />
 								</Trigger>
@@ -263,6 +292,7 @@
 									<Setter Property="Background" Value="{StaticResource OptionMark.MouseOver.Background}" />
 								</Trigger>
 								<Trigger Property="IsEnabled" Value="false">
+									<Setter Property="Foreground" Value="{StaticResource Foreground.Unselected}" />
 									<Setter Property="Fill" TargetName="optionMark" Value="{StaticResource OptionMark.Disabled.Glyph}" />
 									<Setter Property="Fill" TargetName="indeterminateMark" Value="{StaticResource OptionMark.Disabled.Glyph}" />
 									<Setter Property="Background" Value="{StaticResource OptionMark.Disabled.Background}" />
@@ -301,9 +331,7 @@
 			<sys:Int32 x:Key="Image_Row">
 				3
 			</sys:Int32>
-			<sys:Int32 x:Key="Action1_Col">
-				1
-			</sys:Int32>
+			<sys:Int32 x:Key="Action1_Col">1</sys:Int32>
 			<sys:Int32 x:Key="Action1_Row">
 				2
 			</sys:Int32>
@@ -337,6 +365,10 @@
 				1
 			</sys:Int32>
 			<sys:Int32 x:Key="Cbx_Row">3</sys:Int32>
+
+			<sys:Double x:Key="PopupOffset">6</sys:Double>
+
+
 			<!--#endregion-->
 
 
@@ -360,24 +392,23 @@
 				F0 M 14.638672 12.314453 C 14.820963 12.314453 14.996744 12.350261 15.166016 12.421875 C 15.335286 12.49349 15.483398 12.589519 15.610352 12.709961 C 15.737305 12.830404 15.838216 12.970378 15.913086 13.129883 C 15.987955 13.289389 16.025391 13.457031 16.025391 13.632812 L 16.025391 20.986328 C 16.025391 21.175131 15.99121 21.350912 15.922852 21.513672 C 15.854491 21.676432 15.758463 21.821289 15.634766 21.948242 C 15.511067 22.075195 15.367838 22.174479 15.205078 22.246094 C 15.042317 22.317709 14.869791 22.353516 14.6875 22.353516 L 5.341797 22.353516 C 5.152995 22.353516 4.975586 22.317709 4.80957 22.246094 C 4.643555 22.174479 4.498698 22.075195 4.375 21.948242 C 4.251302 21.821289 4.153646 21.676432 4.082031 21.513672 C 4.010417 21.350912 3.974609 21.175131 3.974609 20.986328 L 3.974609 13.632812 C 3.974609 13.457031 4.012044 13.289389 4.086914 13.129883 C 4.161784 12.970378 4.262695 12.830404 4.389648 12.709961 C 4.516602 12.589519 4.661458 12.49349 4.824219 12.421875 C 4.986979 12.350261 5.159505 12.314453 5.341797 12.314453 L 5.341797 10.732422 C 5.341797 10.068359 5.397135 9.44987 5.507812 8.876953 C 5.618489 8.304037 5.841471 7.807618 6.176758 7.387695 C 6.512044 6.967774 6.984049 6.638998 7.592773 6.401367 C 8.201497 6.163737 9.003906 6.044922 10 6.044922 C 11.002604 6.044922 11.808268 6.163737 12.416992 6.401367 C 13.025715 6.638998 13.494465 6.967774 13.823242 7.387695 C 14.152018 7.807618 14.370117 8.304037 14.477539 8.876953 C 14.584961 9.44987 14.638672 10.068359 14.638672 10.732422 Z M 7.333984 10.732422 L 7.333984 12.265625 L 12.666016 12.265625 L 12.666016 10.732422 C 12.666016 10.237631 12.646484 9.819336 12.607422 9.477539 C 12.568359 9.135742 12.462564 8.860678 12.290039 8.652344 C 12.117513 8.444012 11.852213 8.294271 11.494141 8.203125 C 11.136067 8.111979 10.638021 8.066406 10 8.066406 C 9.368489 8.066406 8.875325 8.111979 8.520508 8.203125 C 8.165689 8.294271 7.900391 8.444012 7.724609 8.652344 C 7.548828 8.860678 7.439778 9.135742 7.397461 9.477539 C 7.355143 9.819336 7.333984 10.237631 7.333984 10.732422 Z
 			</Geometry>
 
+			<Geometry x:Key="IconGeomClose">
+				F0 M 0.996094 5.722656 L 19.013672 5.722656 L 19.013672 22.578125 L 0.996094 22.578125 Z M 2.011719 20.048828 L 4.0625 22.080078 L 10 16.152344 L 15.947266 22.080078 L 17.998047 20.048828 L 12.041016 14.091797 L 17.998047 8.144531 L 15.947266 6.113281 L 10 12.080078 L 4.0625 6.113281 L 2.011719 8.144531 L 7.958984 14.091797 Z
+			</Geometry>
+
 
 			<!--#region > colors-->
 
 			<SolidColorBrush x:Key="Undecided" Color="Red" />
 
+			<!-- <ws:CsColor x:Key="Fg.NotSel" Color="{StaticResource Gray.650}" /> -->
 
-			<ws:CsColor x:Key="Base.Bkg"
-					Color="{StaticResource Blue.400}"
-					/>
-			<ws:CsColor x:Key="Fg.NotSel"
-					Color="{StaticResource Gray.650}"
-					/>
-			<ws:CsColor x:Key="Mo.IsEditing"
-					Color="{StaticResource Deep.Purple.500}"
-					/>
-			<ws:CsColor x:Key="Mo.Icon.IsEditing"
-					Color="{StaticResource Deep.Purple.600}"
-					/>
+
+			<SolidColorBrush x:Key="Fg.NotSel" Color="{StaticResource Gray.650}" />
+			<SolidColorBrush x:Key="Base.Bkg" Color="{StaticResource Blue.400}" />
+			<SolidColorBrush x:Key="Mo.IsEditing" Color="{StaticResource Deep.Purple.500}" />
+			<SolidColorBrush x:Key="Mo.Icon.IsEditing" Color="{StaticResource Deep.Purple.600}" />
+
 
 			<SolidColorBrush x:Key="Fg.MouseOver" Color="White" />
 
@@ -385,23 +416,23 @@
 
 			<!--  (A) Not Selected  -->
 			<!--  Id  -->
-			<SolidColorBrush x:Key="Id.Fg.NotSel" Color="{StaticResource Fg.NotSel}" />
+			<SolidColorBrush x:Key="Id.Fg.NotSel" Color="{Binding Color, Source={StaticResource Fg.NotSel}}" />
 			<SolidColorBrush x:Key="Id.Bg.NotSel" Color="{StaticResource Light.Blue.300}" />
 
 			<!--  Id Icon  -->
 			<SolidColorBrush x:Key="IdIcon.Fg.NotSel" Color="{StaticResource Deep.Orange.300}" />
 
 			<!--  A  -->
-			<SolidColorBrush x:Key="TitleNoEdit.Fg.NotSel" Color="{StaticResource Fg.NotSel}" />
+			<SolidColorBrush x:Key="TitleNoEdit.Fg.NotSel" Color="{Binding Color, Source={StaticResource Fg.NotSel}}" />
 			<SolidColorBrush x:Key="TitleNoEdit.Bg.NotSel" Color="{StaticResource Light.Blue.300}" />
 			<!--  B  -->
-			<SolidColorBrush x:Key="TitleCanEdit.Fg.NotSel" Color="{StaticResource Fg.NotSel}" />
+			<SolidColorBrush x:Key="TitleCanEdit.Fg.NotSel" Color="{Binding Color, Source={StaticResource Fg.NotSel}}" />
 			<SolidColorBrush x:Key="TitleCanEdit.Bg.NotSel" Color="{StaticResource Light.Blue.300}" />
 			<!--  C  -->
-			<SolidColorBrush x:Key="NoEdit.Fg.NotSel" Color="{StaticResource Fg.NotSel}" />
+			<SolidColorBrush x:Key="NoEdit.Fg.NotSel" Color="{Binding Color, Source={StaticResource Fg.NotSel}}" />
 			<SolidColorBrush x:Key="NoEdit.Bg.NotSel" Color="{StaticResource Blue.250}" />
 			<!--  D  -->
-			<SolidColorBrush x:Key="CanEdit.Fg.NotSel" Color="{StaticResource Fg.NotSel}" />
+			<SolidColorBrush x:Key="CanEdit.Fg.NotSel" Color="{Binding Color, Source={StaticResource Fg.NotSel}}" />
 			<SolidColorBrush x:Key="CanEdit.Bg.NotSel" Color="{StaticResource Blue.250}" />
 			<!--  E  -->
 			<SolidColorBrush x:Key="Action1.Fg.NotSel" Color="{StaticResource Cool.Blue.850}" />
@@ -411,12 +442,12 @@
 			<SolidColorBrush x:Key="SubTitle.Bg.NotSel" Color="{StaticResource Real.Green.250}" />
 			<SolidColorBrush x:Key="SubTitle.Gb.NotSel" Color="{StaticResource Real.Green.200}" />
 			<!--  G  -->
-			<SolidColorBrush x:Key="Action2.Fg.NotSel" Color="{StaticResource Fg.NotSel}" />
-			<SolidColorBrush x:Key="Action2.Bg.NotSel" Color="{StaticResource Cool.Blue.250}" />
+			<SolidColorBrush x:Key="Action2.Fg.NotSel" Color="{Binding Color, Source={StaticResource Fg.NotSel}}" />
+			<SolidColorBrush x:Key="Action2.Bg.NotSel" Color="{StaticResource Cool.Blue.300}" />
 			<!--  I  -->
 			<SolidColorBrush x:Key="Image1.Bg.NotSel" Color="{StaticResource Gray.500}" />
 			<!--  J  -->
-			<SolidColorBrush x:Key="Hlight.Fg.NotSel" Color="{StaticResource Fg.NotSel}" />
+			<SolidColorBrush x:Key="Hlight.Fg.NotSel" Color="{Binding Color, Source={StaticResource Fg.NotSel}}" />
 			<SolidColorBrush x:Key="Hlight.Bg.NotSel" Color="{StaticResource Deep.Orange.300}" />
 
 
@@ -472,13 +503,14 @@
 			<SolidColorBrush x:Key="CanEdit.Fg.IsEditg" Color="White" />
 			<SolidColorBrush x:Key="CanEdit.Bg.IsEditg" Color="{StaticResource Deep.Purple.450}" />
 			<SolidColorBrush x:Key="CanEdit.Bdr.IsEditg" Color="{StaticResource Deep.Purple.700}" />
-			<SolidColorBrush x:Key="CanEdit.Mo.IsEditg" Color="{StaticResource Mo.IsEditing}" />
-			<SolidColorBrush x:Key="CanEdit.Icon.Mo.IsEditg" Color="{StaticResource Mo.Icon.IsEditing}" />
+
+			<SolidColorBrush x:Key="CanEdit.Mo.IsEditg" Color="{Binding Color, Source={StaticResource Mo.IsEditing}}" />
+			<SolidColorBrush x:Key="CanEdit.Icon.Mo.IsEditg" Color="{Binding Color, Source={StaticResource Mo.Icon.IsEditing}}" />
 			<!--  E  -->
 			<SolidColorBrush x:Key="Action1.Fg.IsEditg" Color="White" />
 			<SolidColorBrush x:Key="Action1.Bg.IsEditg" Color="{StaticResource Deep.Purple.450}" />
-			<SolidColorBrush x:Key="Action1.Mo.IsEditg" Color="{StaticResource Mo.IsEditing}" />
-			<SolidColorBrush x:Key="Action1.Icon.Mo.IsEditg" Color="{StaticResource Mo.Icon.IsEditing}" />
+			<SolidColorBrush x:Key="Action1.Mo.IsEditg" Color="{Binding Color, Source={StaticResource Mo.IsEditing}}" />
+			<SolidColorBrush x:Key="Action1.Icon.Mo.IsEditg" Color="{Binding Color, Source={StaticResource Mo.Icon.IsEditing}}" />
 			<!--  F  -->
 			<SolidColorBrush x:Key="SubTitle.Fg.IsEditg" Color="White" />
 			<SolidColorBrush x:Key="SubTitle.Bg.IsEditg" Color="{StaticResource Real.Green.350}" />
@@ -487,8 +519,8 @@
 			<SolidColorBrush x:Key="Action2.Fg.IsEditg" Color="White" />
 			<SolidColorBrush x:Key="Action2.Bg.IsEditg" Color="{StaticResource Deep.Purple.400}" />
 			<SolidColorBrush x:Key="Action2.Bdr.IsEditg" Color="{StaticResource Deep.Purple.700}" />
-			<SolidColorBrush x:Key="Action2.Mo.IsEditg" Color="{StaticResource Mo.IsEditing}" />
-			<SolidColorBrush x:Key="Action2.Icon.Mo.IsEditg" Color="{StaticResource Mo.Icon.IsEditing}" />
+			<SolidColorBrush x:Key="Action2.Mo.IsEditg" Color="{Binding Color, Source={StaticResource Mo.IsEditing}}" />
+			<SolidColorBrush x:Key="Action2.Icon.Mo.IsEditg" Color="{Binding Color, Source={StaticResource Mo.Icon.IsEditing}}" />
 
 
 			<!--  (D) No Editing  -->
@@ -530,7 +562,8 @@
 			<SolidColorBrush x:Key="NoEdit.Bg.IsLocked" Color="{StaticResource Blue.400}" />
 			<!--  D  -->
 			<SolidColorBrush x:Key="CanEdit.Fg.IsLocked" Color="{StaticResource Cool.Blue.800}" />
-			<SolidColorBrush x:Key="CanEdit.Bg.IsLocked" Color="{StaticResource Base.Bkg}" />
+
+			<SolidColorBrush x:Key="CanEdit.Bg.IsLocked" Color="{Binding Color, Source={StaticResource Base.Bkg}}" />
 			<!--  E  -->
 			<SolidColorBrush x:Key="Action1.Fg.IsLocked" Color="{StaticResource Cool.Blue.850}" />
 			<SolidColorBrush x:Key="Action1.Bg.IsLocked" Color="{StaticResource Real.Green.250}" />
@@ -2761,101 +2794,121 @@
 			</Border>
 
 			<!--#endregion-->
+			<ContentControl x:Key="HelpPopup"
+					x:Shared="False"
+					>
+				<ContentControl.ContentTemplate>
 
-			<DataTemplate x:Key="HelpPopup">
+					<DataTemplate>
 
-				<Grid x:Name="PopupGrid"
-						Background="Transparent"
-						>
-					<Grid.ColumnDefinitions>
-						<ColumnDefinition Width="*" />
-						<ColumnDefinition Width="18" />
-					</Grid.ColumnDefinitions>
+						<Grid x:Name="PopupGrid"
+								Width="{TemplateBinding Width}"
+								Background="Transparent"
+								HorizontalAlignment="Stretch"
+								>
+							<Grid.ColumnDefinitions>
+								<ColumnDefinition Width="*" />
+								<ColumnDefinition Width="18" />
+							</Grid.ColumnDefinitions>
 
-					<Grid.RowDefinitions>
-						<RowDefinition Height="18" />
-						<RowDefinition Height="Auto" />
-					</Grid.RowDefinitions>
+							<Grid.RowDefinitions>
+								<RowDefinition Height="*" />
+								<RowDefinition Height="Auto" />
 
-					<TextBlock Grid.Column="0"
-							Grid.Row="0"
-							Background="DimGray"
-							FontSize="{StaticResource FontSize.Large}"
-							Foreground="White"
-							Text="{Binding RelativeSource={RelativeSource Self},
-														 Path=(cs:TestVisualStates.TitleText)}"
-							/>
-
-					<Rectangle Grid.Column="1"
-							Grid.Row="1"
-							Fill="Transparent"
-							HorizontalAlignment="Stretch"
-							VerticalAlignment="Stretch"
-							/>
-
-					<Button x:Name="BtnClosePopup"
-							Content="X"
-							Grid.Column="1"
-							Grid.Row="0"
-							Background="DimGray"
-							Foreground="White"
-							>
-					</Button>
-
-					<TextBox Grid.Column="0"
-							Grid.Row="1"
-							Width="200"
-							Background="DimGray"
-							FontSize="{StaticResource FontSize.Large}"
-							Foreground="White"
-							IsReadOnly="True"
-							Text="{Binding RelativeSource={RelativeSource Self},
-														 Path=(cs:TestVisualStates.MainContent)}"
-							TextAlignment="Left"
-							TextWrapping="Wrap"
-							/>
-
-					<!--  <FlowDocumentScrollViewer  -->
-					<!--  Margin="5"  -->
-					<!--  Foreground="White"  -->
-					<!--  BorderThickness="1"  -->
-					<!--  BorderBrush="White"  -->
-					<!--  Background="DimGray"  -->
-					<!--  Width="200"  -->
-					<!--    -->
-					<!--  >  -->
-					<!--  <FlowDocument  -->
-					<!--    -->
-					<!--  >  -->
-					<!--  <Paragraph  -->
-					<!--  FontSize="{StaticResource FontSize.Normal}"  -->
-					<!--  Foreground="White"  -->
-					<!--  >  -->
-					<!-- 			<Run Text="{Binding RelativeSource={RelativeSource Self}, Path=(cs:TestVisualStates.MainContent)}"/> -->
-					<!-- 		</Paragraph> -->
-					<!-- 	</FlowDocument> -->
-					<!--    -->
-					<!-- </FlowDocumentScrollViewer> -->
+							</Grid.RowDefinitions>
 
 
-					<!--  <TextBlock x:Name="tbx1"  -->
-					<!--  Grid.Column="0"  -->
-					<!--  Grid.Row="1"  -->
-					<!--  Grid.ColumnSpan="2"  -->
-					<!--  Width="100"  -->
-					<!--  Background="BurlyWood"  -->
-					<!--  Focusable="False"  -->
-					<!--  Foreground="Black"  -->
-					<!--  Text="{Binding RelativeSource={RelativeSource Self}, Path=(cs:TestVisualStates.MainContent)}"  -->
-					<!--  TextWrapping="Wrap"  -->
-					<!--  />  -->
+							<Border Grid.Column="0"
+									Grid.Row="0"
+									Background="#e100FF00"
+									BorderBrush="#e100FF00"
+									BorderThickness="0,0,0,0"
+									CornerRadius="12,12,0,0"
+									Margin="0,0,3,0"
+									Padding="13,0,2,0"
+									>
+								<TextBlock Background="Transparent"
+										FontSize="{StaticResource FontSize.Normal}"
+										Foreground="Black"
+										HorizontalAlignment="Stretch"
+										Margin="0"
+										Text="{Binding RelativeSource={RelativeSource Self},
+																	 Path=(cs:TestVisualStates.TitleText),
+																	 FallbackValue='This IsEnabled Title Text'}"
+										/>
+							</Border>
+							<!--  <Rectangle  -->
+							<!--  Grid.Column="1"  -->
+							<!--  Grid.Row="1"  -->
+							<!--  HorizontalAlignment="Stretch"  -->
+							<!--  VerticalAlignment="Stretch"  -->
+							<!--  Fill="Transparent"  -->
+							<!--  />  -->
+
+							<Button x:Name="BtnClosePopup"
+									Grid.Column="1"
+									Grid.Row="0"
+									Background="LimeGreen"
+									FontFamily="Segoe UI Symbol"
+									Foreground="White"
+									>
+								<Button.Content>
+									<Path Data="{StaticResource IconGeomClose}"
+											Fill="White"
+											Stretch="Uniform"
+											/>
+								</Button.Content>
+							</Button>
+
+							<Border Grid.Column="0"
+									Grid.Row="1"
+									BorderThickness="0"
+									CornerRadius="0,0,12,12"
+									Margin="0,0,3,0"
+									Padding="10,0,4,4"
+									>
+								<Border.Background>
+									<LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+										<GradientStop Color="#E100FF00" Offset="0" />
+										<GradientStop Color="#FF00C400" Offset="1" />
+										<GradientStop Color="#FB003800" Offset="0.9" />
+									</LinearGradientBrush>
+								</Border.Background>
+								<!-- <Border.BorderBrush> -->
+								<!-- 	<LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0"> -->
+								<!-- 		<GradientStop Color="#E100FF00" Offset="0"/> -->
+								<!-- 		<GradientStop Color="#FF00C400" Offset="1"/> -->
+								<!-- 		<GradientStop Color="#FB003800" Offset="0.9"/> -->
+								<!-- 	</LinearGradientBrush> -->
+								<!-- </Border.BorderBrush> -->
+								<TextBox Background="WhiteSmoke"
+										BorderThickness="0"
+										FontSize="{StaticResource FontSize.Normal}"
+										Foreground="Black"
+										HorizontalAlignment="Stretch"
+										IsReadOnly="True"
+										Padding="2"
+										Text="{Binding RelativeSource={RelativeSource Self},
+																	 Path=(cs:TestVisualStates.MainContent),
+																	 FallbackValue='Fallback text this is a second line of help text'}"
+										TextAlignment="Left"
+										TextWrapping="Wrap"
+										>
+									<TextBox.Resources>
+										<Style TargetType="{x:Type Border}">
+											<Setter Property="CornerRadius" Value="8">
+											</Setter>
+										</Style>
+									</TextBox.Resources>
+								</TextBox>
+
+							</Border>
 
 
-
-				</Grid>
-			</DataTemplate>
-
-
+						</Grid>
+					</DataTemplate>
+				</ContentControl.ContentTemplate>
+			</ContentControl>
 
 
 			<!-- </DataTemplate> -->
@@ -2867,7 +2920,8 @@
 				<StackPanel x:Name="stackPanel"
 						DataContext="{Binding ElementName=win}"
 						Orientation="Vertical"
-						>
+
+				>
 
 					<!--#region > settings info-->
 
@@ -2966,13 +3020,17 @@
 
 					<!--#endregion-->
 
-					<Border CornerRadius="4"
-							IsEnabled="{Binding ElementName=win,
+					<Border x:Name="BdrListItem"
+							CornerRadius="4"
+							IsEnabled="{Binding 
 																	Path=IsSelected}"
 							Padding="4"
 							>
 
-						<Grid>
+						<Grid x:Name="GrdListItem"
+								DataContext="{Binding ElementName=BdrListItem}"
+								
+								>
 
 							<Grid.ColumnDefinitions>
 								<ColumnDefinition Width="1*" />
@@ -3022,7 +3080,7 @@
 											FontSize="40"
 											HorizontalAlignment="Center"
 											Margin="0,-4,0,4"
-											Text="1"
+											Text="01"
 											VerticalAlignment="Center"
 											cs:TestVisualStates.FgDefault="{StaticResource Id.Fg.NotSel}"
 											cs:TestVisualStates.FgIsSelected="{StaticResource Id.Fg.IsSel}"
@@ -3056,9 +3114,11 @@
 
 								<TextBlock x:Name="TblkTitleNoEd"
 										Text="A title text/not editable field"
+										
 										Style="{StaticResource TblkAllTrigTitleNoEd}"
 										>
 									<!--  Style="{StaticResource TblkAllTriggers}"  -->
+
 								</TextBlock>
 							</Border>
 
@@ -3093,20 +3153,8 @@
 							</Border>
 
 							<!--  D  -->
-							<!--  <Border x:Name="BdrCanEdit"  -->
-							<!--  Grid.Column="3"  -->
-							<!--  Grid.Row="1"  -->
-							<!--  cs:TestVisualStates.BgDefault="{StaticResource CanEdit.Bg.NotSel}"  -->
-							<!--  cs:TestVisualStates.BgIsEditing="{StaticResource CanEdit.Bg.IsEditg}"  -->
-							<!--  cs:TestVisualStates.BgIsLocked="{StaticResource CanEdit.Bg.IsLocked}"  -->
-							<!--  cs:TestVisualStates.BgIsSelected="{StaticResource CanEdit.Bg.IsSel}"  -->
-							<!--  cs:TestVisualStates.BgNoEditing="{StaticResource CanEdit.Bg.NoEditg}"  -->
-							<!--    -->
-							<!--  Style="{StaticResource BdrAllTriggers}"  -->
-							<!--  >  -->
-
-
-							<Grid Grid.Column="3"
+							<Grid x:Name="GrdCanEdit"
+									Grid.Column="3"
 									Grid.Row="1"
 									HorizontalAlignment="Stretch"
 									VerticalAlignment="Center"
@@ -3129,32 +3177,37 @@
 									<StackPanel>
 
 										<TextBox x:Name="TbxCanEdit"
+												HorizontalAlignment="Stretch"
 												Text="D (Tbx) text/editable"
 												Style="{StaticResource TbxAllTrigsCanEdit}"
 												/>
 
-
+										<!--  DataContext="{Binding DataContext,  -->
+										<!--  ElementName=stackPanel}"  -->
 										<Popup Name="PuCanEdit"
+												Width="{Binding ElementName=GrdCanEdit,
+																				Path=ActualWidth,
+																				Converter={StaticResource sub},
+																				ConverterParameter={StaticResource PopupOffset}}"
 												AllowsTransparency="True"
 												Button.Click="BtnPopupClose_OnClick"
-												DataContext="{Binding DataContext,
-																							ElementName=stackPanel}"
+												Child="{StaticResource HelpPopup}"
 												HorizontalAlignment="Right"
 												HorizontalOffset="4"
-												Margin="10"
 												MouseEnter="Popup_OnMouseEnter"
 												MouseLeave="Popup_OnMouseLeave"
 												Placement="Bottom"
 												PlacementTarget="{Binding ElementName=TbxCanEdit,
 																									Mode=OneWay}"
-												VerticalOffset="2"
-												cs:TestVisualStates.MainContent="This is the main content and help information\nfirst item\nthis is the first item of help"
+												VerticalOffset="{StaticResource PopupOffset}"
+												cs:TestVisualStates.MainContent="Provide the name for the subject following these requirements&#013;&#x25CF;  Must Being with an Alpha&#013;    Character&#013;&#x25CF;  Minimum of 4 Characters&#013;&#x25CF;  Only Numbers and letters"
 												cs:TestVisualStates.TitleText="Can Edit Help"
 												>
-
-
-												<ContentPresenter Content="{StaticResource HelpPopup}"></ContentPresenter>
-
+											<Popup.Effect>
+												<DropShadowEffect BlurRadius="20"
+														ShadowDepth="20"
+														/>
+											</Popup.Effect>
 										</Popup>
 
 									</StackPanel>
@@ -3207,7 +3260,7 @@
 										BorderThickness="0,1,1,1"
 										CornerRadius="0,6,6,0"
 										Margin="0,1,1,1"
-										MouseDown="PopupCanEdit_MouseDown"
+										MouseDown="CanEditInfo_MouseDown"
 										Style="{StaticResource BdrAllTrigCanEditIcon}"
 										>
 
@@ -3236,8 +3289,12 @@
 									cs:TestVisualStates.DoesMouseOver="True"
 									cs:TestVisualStates.MoIsEditing="{StaticResource Action1.Mo.IsEditg}"
 									Style="{StaticResource BdrAllTriggers}"
-									>							-->
-							<Grid Grid.Column="2"
+									>	
+									-->
+
+							<!--  E  -->
+							<Grid x:Name="GrdAction1"
+									Grid.Column="2"
 									Grid.Row="2"
 									>
 								<Grid.ColumnDefinitions>
@@ -3262,6 +3319,7 @@
 									<!--  Style="{StaticResource BdrAllTriggers}"  -->
 									<!--  >  -->
 									<StackPanel>
+
 										<TextBlock x:Name="TblkAction1"
 												Text="E action field"
 												Style="{StaticResource TblkAllTrigAction1}"
@@ -3272,8 +3330,7 @@
 										<Popup Name="PuAction1"
 												AllowsTransparency="True"
 												Button.Click="BtnPopupClose_OnClick"
-												DataContext="{Binding DataContext,
-																							ElementName=stackPanel}"
+												Child="{StaticResource HelpPopup}"
 												HorizontalAlignment="Right"
 												HorizontalOffset="4"
 												Margin="10"
@@ -3283,25 +3340,11 @@
 												PlacementTarget="{Binding ElementName=TblkAction1,
 																									Mode=OneWay}"
 												VerticalOffset="2"
-												cs:TestVisualStates.MainContent="This is the main content and help              information for action1&#013;first item&#013;this is              the first item of help"
+												cs:TestVisualStates.MainContent="Provide the name for the subject following these requirements&#013;&#x25CF;  Must Being with an Alpha&#013;    Character&#013;&#x25CF;  Minimum of 4 Characters&#013;&#x25CF;  Only Numbers and letters"
 												cs:TestVisualStates.TitleText="Action1 Help"
 												>
-											<Popup.Effect>
-												<DropShadowEffect BlurRadius="50"
-														Color="Black"
-														ShadowDepth="20"
-														/>
-											</Popup.Effect>
-
-											<Popup.Child>
-														<ContentControl Content="{StaticResource HelpPopup}" />
-											</Popup.Child>
 
 										</Popup>
-
-
-
-
 
 									</StackPanel>
 								</Border>
@@ -3311,7 +3354,7 @@
 										BorderThickness="0,1,1,1"
 										CornerRadius="0,6,6,0"
 										Margin="0,1,1,1"
-										MouseDown="PopupAction1_MouseDown"
+										MouseDown="Action1Info_MouseDown"
 										Style="{StaticResource BdrAllTrigAction1Icon}"
 										>
 									<!--  cs:TestVisualStates.BgDefault    ="{StaticResource Action1.Bg.NotSel}"  -->
@@ -3338,8 +3381,8 @@
 
 							<!-- </Border> -->
 
-							<!--  G  -->
-							<StackPanel x:Name="SpAction2"
+							<!--  F and G  -->
+							<StackPanel x:Name="SpSubTitleAndAction2"
 									Grid.Column="1"
 									Grid.Row="1"
 									Grid.RowSpan="3"
@@ -3366,6 +3409,7 @@
 									<TextBlock x:Name="TblkSubTitle"
 											Margin="1,1,1,0"
 											Text="F action field sub-header"
+											
 											Style="{StaticResource TblkAllTrigSubTitle}"
 											/>
 									<!--  Style="{StaticResource TblkAllTriggers}"  -->
@@ -3414,9 +3458,11 @@
 										<!--  G  -->
 										<CheckBox x:Name="CbxAction2_1"
 												Content="G checkbox text"
-												IsChecked="True"
-												Margin="6,0,0,0"
-												cs:CsCheckBoxAp.CheckBoxBoxMargin="0,0,10,0"
+												IsChecked="{Binding IsEnabled}"
+												
+												Margin="4,0,0,0"
+												cs:CsCheckBoxAp.CheckBoxCheckMargin="-2"
+												cs:CsCheckBoxAp.CheckBoxBoxMargin="0,4,0,4"
 												Style="{StaticResource CbxAllTriggersCbx}"
 												/>
 										<!--  cs:TestVisualStates.DoesMouseOver="True"  -->
@@ -3509,9 +3555,11 @@
 										<CheckBox x:Name="CbxAction2_2"
 												Content="G checkbox text"
 												DockPanel.Dock="Left"
-												IsChecked="True"
-												Margin="6,0,0,0"
-												cs:CsCheckBoxAp.CheckBoxBoxMargin="0,0,10,0"
+												IsChecked="true"
+												
+												Margin="4,0,0,0"
+												cs:CsCheckBoxAp.CheckBoxCheckMargin="-2"
+												cs:CsCheckBoxAp.CheckBoxBoxMargin="0,4,0,4"
 												Style="{StaticResource CbxAllTriggersCbx}"
 												/>
 										<!--  cs:TestVisualStates.FgDefault="{StaticResource Action2.Fg.NotSel}"  -->
@@ -3555,7 +3603,6 @@
 
 
 							</StackPanel>
-
 
 							<!--  I  (done)  -->
 							<Border x:Name="BdrImage"
@@ -3603,6 +3650,7 @@
 		</ResourceDictionary>
 
 	</Window.Resources>
+
 
 	<Grid x:Name="PrimeGrid"
 			Margin="10"
@@ -3688,7 +3736,12 @@
 							Content="Is Selected?"
 							Height="34"
 							FontSize="24"
+							HorizontalAlignment="Left"
+							d:IsChecked="True"
+							d:IsEnabled ="false"
 							IsChecked="{Binding IsSelected}"
+							cs:CsCheckBoxAp.CheckBoxCheckMargin="-2,0,0,0"
+							cs:CsCheckBoxAp.CheckBoxBoxMargin="0,4,4,4"
 							Style="{StaticResource Lv1.CheckboxStyle}"
 							/>
 
@@ -3696,7 +3749,10 @@
 							Content="Is Editing?"
 							Height="34"
 							FontSize="24"
+							HorizontalAlignment="Left"
 							IsChecked="{Binding IsEditing}"
+							cs:CsCheckBoxAp.CheckBoxCheckMargin="0"
+							cs:CsCheckBoxAp.CheckBoxBoxMargin="0,4,4,4"
 							Style="{StaticResource Lv1.CheckboxStyle}"
 							/>
 
@@ -3704,7 +3760,10 @@
 							Content="Is NoEditing?"
 							Height="34"
 							FontSize="24"
+							HorizontalAlignment="Left"
 							IsChecked="{Binding NoEditing}"
+							cs:CsCheckBoxAp.CheckBoxCheckMargin="0"
+							cs:CsCheckBoxAp.CheckBoxBoxMargin="0,4,4,4"
 							Style="{StaticResource Lv1.CheckboxStyle}"
 							/>
 
@@ -3712,9 +3771,35 @@
 							Content="Is Locked?"
 							Height="34"
 							FontSize="24"
+							HorizontalAlignment="Left"
 							IsChecked="{Binding IsLocked}"
+							cs:CsCheckBoxAp.CheckBoxCheckMargin="0"
+							cs:CsCheckBoxAp.CheckBoxBoxMargin="0,4,4,4"
 							Style="{StaticResource Lv1.CheckboxStyle}"
 							/>
+
+					<Button x:Name="BtnChangeSkin"
+							Content="Change Skin"
+							Height="34"
+							Width="Auto"
+							FontSize="24"
+							HorizontalAlignment="Left"
+							Margin="11,15,0,0"
+							Click="BtnChangeSkin_OnClick"
+							/>
+
+					<Border x:Name="SkinBorder"
+							Height="100"
+							Width="100"
+							HorizontalAlignment="Left"
+							Margin="0,20,0,0"
+							Style="{StaticResource TestBorderStyle}"
+							>
+						<Rectangle x:Name="SkinRectangle"
+								Fill="{StaticResource TestBackground}"
+								/>
+
+					</Border>
 
 				</StackPanel>
 
@@ -3736,11 +3821,11 @@
 					DockPanel.Dock="Top"
 					Background="DimGray"
 					BorderThickness="0"
-					CornerRadius="{StaticResource Normal.CornerRadius}"
+					CornerRadius="{DynamicResource Normal.CornerRadius}"
 					Margin="0,0,0,3"
 					VerticalAlignment="Top"
 					>
-				<TextBlock FontSize="{StaticResource FontSize.Large}"
+				<TextBlock FontSize="{DynamicResource FontSize.Large}"
 						Padding="5,0,0,3"
 						Text="Header 1"
 						/>
@@ -3780,6 +3865,22 @@
 				<ContentControl x:Name="Row7"
 						Content="{StaticResource IsSelectedIsLockedNaEditing}"
 						/>
+				<Border BorderBrush="White"
+						BorderThickness="0"
+						CornerRadius="6"
+						HorizontalAlignment="Center"
+						Padding="10"
+						>
+					<ContentControl x:Name="Row8"
+							Content="{StaticResource HelpPopup}"
+							Width="250"
+							cs:TestVisualStates.MainContent="Provide the name for the subject following these requirements&#013;&#x25CF;  Must Being with an Alpha&#013;    Character&#013;&#x25CF;  Minimum of 4 Characters&#013;&#x25CF;  Only Numbers and letters"
+							cs:TestVisualStates.TitleText="Action1 Help"
+							>
+						<!--  cs:TestVisualStates.MainContent="This is the main content and help information for action 1 &#013;&#x25CF;&#009;first item&#013;this is the first item of help"  -->
+					</ContentControl>
+
+				</Border>
 
 				<!--<ContentControl
 					x:Name="Base"
