@@ -386,12 +386,17 @@
 			<SolidColorBrush x:Key="Undecided" Color="Red" />
 
 
-			<ws:CsColor x:Key="Base.Bkg"
-					Color="{StaticResource Blue.400}"
-					/>
-			<ws:CsColor x:Key="Fg.NotSel"
-					Color="{StaticResource Gray.650}"
-					/>
+			<!-- <ws:CsColor x:Key="Base.Bkg" -->
+			<!-- 		Color="{StaticResource Blue.400}" -->
+			<!-- 		/> -->
+			<!-- <ws:CsColor x:Key="Fg.NotSel" -->
+			<!-- 		Color="{StaticResource Gray.650}" -->
+			<!-- 		/> -->
+
+
+			<SolidColorBrush x:Key="Base.Bkg" Color="{StaticResource Blue.400}"/>
+			<SolidColorBrush x:Key="Fg.NotSel" Color="{StaticResource Gray.650}"/>
+
 
 			<SolidColorBrush x:Key="Fg.MouseOver" Color="White" />
 
@@ -400,10 +405,10 @@
 			<SolidColorBrush x:Key="Fg.IsSel.CanEdit" Color="{StaticResource Cool.Blue.850}" />
 			<SolidColorBrush x:Key="Fg.IsSel.NoEdit" Color="{StaticResource Cool.Blue.760}" />
 			<SolidColorBrush x:Key="Fg.IsSel.NoEdit.Alt" Color="{StaticResource Blue.Gray.600}" />
-			<SolidColorBrush x:Key="Fg.NotSel.CanEdit" Color="{StaticResource Fg.NotSel}" />
+			<SolidColorBrush x:Key="Fg.NotSel.CanEdit" Color="{Binding Color, Source={StaticResource Fg.NotSel}}" />
 
-			<SolidColorBrush x:Key="Bdr.Bkg.IsSel.CanEdit" Color="{StaticResource Base.Bkg}" />
-			<SolidColorBrush x:Key="Bdr.Bdr.IsSel.CanEdit" Color="{StaticResource Base.Bkg}" />
+			<SolidColorBrush x:Key="Bdr.Bkg.IsSel.CanEdit" Color="{Binding Color, Source={StaticResource Base.Bkg}}" />
+			<SolidColorBrush x:Key="Bdr.Bdr.IsSel.CanEdit" Color="{Binding Color, Source={StaticResource Base.Bkg}}" />
 			<SolidColorBrush x:Key="Bdr.Bkg.NotSel.CanEdit" Color="{StaticResource Blue.250}" />
 			<SolidColorBrush x:Key="Bdr.Bdr.NotSel.CanEdit" Color="{StaticResource Blue.250}" />
 			<SolidColorBrush x:Key="Bdr.Bkg.IsSel.IsEdit" Color="{StaticResource Deep.Purple.450}" />
@@ -412,21 +417,21 @@
 
 			<!--  title N field  to not editable field  -->
 			<SolidColorBrush x:Key="Fg.IsSel.NoEdTitleN" Color="White" />
-			<SolidColorBrush x:Key="Fg.NotSel.TitleN" Color="{StaticResource Fg.NotSel}" />
+			<SolidColorBrush x:Key="Fg.NotSel.TitleN" Color="{Binding Color, Source={StaticResource Fg.NotSel}}" />
 
 			<SolidColorBrush x:Key="Bdr.Bkg.IsSel.TitleN" Color="{StaticResource Light.Blue.550}" />
 			<SolidColorBrush x:Key="Bdr.Bkg.NotSel.TitleN" Color="{StaticResource Light.Blue.300}" />
 
 			<!--  title E field  to an editable field  -->
 			<SolidColorBrush x:Key="Fg.IsSel.TitleE" Color="White" />
-			<SolidColorBrush x:Key="Fg.NotSel.TitleE" Color="{StaticResource Fg.NotSel}" />
+			<SolidColorBrush x:Key="Fg.NotSel.TitleE" Color="{Binding Color, Source={StaticResource Fg.NotSel}}" />
 
 			<SolidColorBrush x:Key="Bdr.Bkg.IsSel.TitleE" Color="{StaticResource Light.Blue.550}" />
 			<SolidColorBrush x:Key="Bdr.Bkg.NotSel.Title.Ed" Color="{StaticResource Light.Blue.300}" />
 
 			<!--  action 1 field  -->
 			<SolidColorBrush x:Key="Fg.IsSel.Action1" Color="White" />
-			<SolidColorBrush x:Key="Fg.NotSel.Action1" Color="{StaticResource Fg.NotSel}" />
+			<SolidColorBrush x:Key="Fg.NotSel.Action1" Color="{Binding Color, Source={StaticResource Fg.NotSel}}" />
 			<SolidColorBrush x:Key="Fg.IsLocked.Action1" Color="{StaticResource Cool.Blue.850}" />
 
 			<SolidColorBrush x:Key="Bdr.Bkg.IsSel.Action1" Color="{StaticResource Teal.500}" />
@@ -434,7 +439,7 @@
 
 			<!--  sub-header field  -->
 			<SolidColorBrush x:Key="Fg.IsSel.SubHdr" Color="White" />
-			<SolidColorBrush x:Key="Fg.NotSel.SubHdr" Color="{StaticResource Fg.NotSel}" />
+			<SolidColorBrush x:Key="Fg.NotSel.SubHdr" Color="{Binding Color, Source={StaticResource Fg.NotSel}}" />
 			<SolidColorBrush x:Key="Fg.IsLocked.SubHdr" Color="{StaticResource Cool.Blue.900}" />
 
 			<SolidColorBrush x:Key="Bdr.Bkg.IsSel.SubHdr" Color="{StaticResource Teal.500}" />
@@ -442,7 +447,7 @@
 
 			<!--  action 2 field  -->
 			<SolidColorBrush x:Key="Fg.IsSel.Action2" Color="White" />
-			<SolidColorBrush x:Key="Fg.NotSel.Action2" Color="{StaticResource Fg.NotSel}" />
+			<SolidColorBrush x:Key="Fg.NotSel.Action2" Color="{Binding Color, Source={StaticResource Fg.NotSel}}" />
 			<SolidColorBrush x:Key="Fg.IsLocked.Action2" Color="{StaticResource Cool.Blue.850}" />
 
 			<SolidColorBrush x:Key="Bdr.Bkg.IsSel.Action2" Color="{StaticResource Cool.Blue.450}" />
@@ -452,14 +457,14 @@
 			<!--  info field  -->
 			<SolidColorBrush x:Key="Fg.IsSel.Info" Color="{StaticResource Cool.Blue.850}" />
 			<SolidColorBrush x:Key="Fg.NoSel.Info" Color="{StaticResource Cool.Blue.850}" />
-			<SolidColorBrush x:Key="Fg.NotSel.Info" Color="{StaticResource Fg.NotSel}" />
+			<SolidColorBrush x:Key="Fg.NotSel.Info" Color="{Binding Color, Source={StaticResource Fg.NotSel}}" />
 
-			<SolidColorBrush x:Key="Bdr.Bkg.IsSel.Info" Color="{StaticResource Base.Bkg}" />
+			<SolidColorBrush x:Key="Bdr.Bkg.IsSel.Info" Color="{Binding Color, Source={StaticResource Base.Bkg}}" />
 			<SolidColorBrush x:Key="Bdr.Bkg.NotSel.Info" Color="{StaticResource Blue.250}" />
 
 			<!--  highlight field  -->
 			<SolidColorBrush x:Key="Fg.IsSel.Hlight" Color="White" />
-			<SolidColorBrush x:Key="Fg.NotSel.Hlight" Color="{StaticResource Fg.NotSel}" />
+			<SolidColorBrush x:Key="Fg.NotSel.Hlight" Color="{Binding Color, Source={StaticResource Fg.NotSel}}" />
 
 			<SolidColorBrush x:Key="Bdr.Bkg.IsSel.Hlight" Color="{StaticResource Deep.Orange.500}" />
 			<SolidColorBrush x:Key="Bdr.Bkg.NotSel.Hlight" Color="{StaticResource Deep.Orange.300}" />
