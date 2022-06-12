@@ -171,11 +171,8 @@
 					SelectedIndex="0"
 					VerticalAlignment="Top"
 					custom:CsComboBoxAp.ComboBoxBdrRadius="6.0"
-					custom:CsComboBoxAp.DropDownBrushh="{StaticResource ItemsControl.ListItem.Background.Normal}"
+					custom:CsComboBoxAp.DropDownBrush="{StaticResource ItemsControl.ListItem.Background.Normal}"
 					custom:CsComboBoxAp.DropDownMaxWidth="240.0"
-					custom:CsComboBoxAp.DropDownWidthAdjustment="0.0"
-					custom:CsComboBoxAp.MouseOverBrush="{StaticResource ItemsControl.Subject.Background.MouseOver}"
-					custom:CsComboBoxAp.NotEnabledBrush="{StaticResource ItemsControl.Subject.Background.Disabled}"
 					custom:CsScrollBarAp.ScrollBarWidth="15"
 					Style="{StaticResource CsComboBoxStyle}"
 					>

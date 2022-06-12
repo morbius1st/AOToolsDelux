@@ -1,11 +1,69 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
 		xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-		xmlns:system="clr-namespace:System;assembly=mscorlib"
-		xmlns:cs="clr-namespace:CSToolsStudies.Windows.Support">
+		xmlns:cs="clr-namespace:CSToolsStudies.Windows.Support"
+		xmlns:sys="clr-namespace:System;assembly=mscorlib"
+		>
+
+	<ResourceDictionary.MergedDictionaries>
+		<ResourceDictionary Source="/Windows/ResourceFiles/XamlResources/MasterColorList.xaml" />
+	</ResourceDictionary.MergedDictionaries>
+
+
+	<!--
+		naming
+		
+		(has been used in-consistently
+		
+		for specific fields
+		obj[.sub-obj].aspect.state[.sub-state]
+		e.g.
+		AddUnit.Fg.Sel [.MouseOver]
+		AddUnit.Bg.Sel [.MouseOver]
+		AddUnit.Icon.Fg.Sel [.MouseOver]
+		
+		for specific objects / for several objects
+		Tbx.Fg.Sel [.MouseOver]
+		
+		for general
+		Fg.Sel [.MouseOver]
+		
+		states
+		Sel (or Enabled) - (enabled and selected)
+		NotSel (or Disabled) - (enabled [or disabled] and not selected)
+		
+		IsEditg - (enabled, selected, being modified) (but not being changed as in selecting from a drop down)
+		ReadOnly - (enabled [modifying is disallowed] or disabled)
+		Locked - (enabled but modifying is disallowed)
+		
+		
+		aspects
+		Fg - Foreground
+		Bg - Background
+		Fl - Fill
+		Bdr- Border
+		Gb - Group (border)
+	-->
 
 
 	<GridLength x:Key="Lv1RowHeight">26</GridLength>
 
+	<!--  id size  -->
+	<sys:Double x:Key="FontSize.XLarge">18</sys:Double>
+	<!--  header size  -->
+	<sys:Double x:Key="FontSize.Large">15</sys:Double>
+	<!--  typical font size  -->
+	<sys:Double x:Key="FontSize.Normal">13</sys:Double>
+	<sys:Double x:Key="FontSize.Smaller">12</sys:Double>
+	<sys:Double x:Key="FontSize.Small">11</sys:Double>
+	<sys:Double x:Key="FontSize.XSmall">10</sys:Double>
+
+	<sys:Double x:Key="Normal.CornerRad">6</sys:Double>
+	<sys:Double x:Key="Small.CornerRad">5</sys:Double>
+
+
+	<CornerRadius x:Key="CornerRadius.Lg">10</CornerRadius>
+	<CornerRadius x:Key="CornerRadius.Std">6</CornerRadius>
+	<CornerRadius x:Key="CornerRadius.Sm">4</CornerRadius>
 
 	<!--  icons  -->
 
@@ -29,13 +87,183 @@
 		F0 M 0.996094 5.722656 L 19.013672 5.722656 L 19.013672 22.578125 L 0.996094 22.578125 Z M 2.011719 20.048828 L 4.0625 22.080078 L 10 16.152344 L 15.947266 22.080078 L 17.998047 20.048828 L 12.041016 14.091797 L 17.998047 8.144531 L 15.947266 6.113281 L 10 12.080078 L 4.0625 6.113281 L 2.011719 8.144531 L 7.958984 14.091797 Z
 	</Geometry>
 
+	<!--#region > general - app colors-->
 
-	<!--#region > colors-->
+	<!--  colors needed (L2): Disabled / NotSel / IsSel / IsEditg / IsReadOnly / IsLocked  -->
+	<!--  colors needed (L1): Disabled / NotSel / IsSel  -->
 
-	<!-- <ws:CsColor x:Key="Fg.NotSel" Color="{StaticResource Gray.650}" /> -->
+
+	<SolidColorBrush x:Key="Window.Bg.IsSel" Color="{StaticResource Gray.200}" />
+
+	<SolidColorBrush x:Key="Fg.Disabled.DkBg" Color="{StaticResource Gray.450}" />
+	<SolidColorBrush x:Key="Fg.Disabled.LtBg" Color="{StaticResource Gray.550}" />
+	<SolidColorBrush x:Key="Fg.NotSel" Color="{StaticResource Gray.600}" />
+	<SolidColorBrush x:Key="Fg.IsSel" Color="{StaticResource Gray.730}" />
+	<SolidColorBrush x:Key="Fg.IsEditg" Color="White" />
+	<SolidColorBrush x:Key="Fg.ReadOnly" Color="{StaticResource Gray.600}" />
+	<SolidColorBrush x:Key="Fg.Locked" Color="{StaticResource Gray.500}" />
+
+	<SolidColorBrush x:Key="Fg.IsSel.MouseOver" Color="White" />
+
+	<SolidColorBrush x:Key="Header.Bg.IsSel" Color="{StaticResource True.Green}" />
+	<SolidColorBrush x:Key="Header.Fg.IsSel" Color="Black" />
+
+	<SolidColorBrush x:Key="Bdr.Good" Color="{StaticResource True.Green}" />
+	<SolidColorBrush x:Key="Bdr.Bad" Color="{StaticResource True.Red}" />
 
 
-	<SolidColorBrush x:Key="Fg.NotSel" Color="{StaticResource Gray.650}" />
+
+	<SolidColorBrush x:Key="Lv1.Item.Panel.Bkg.Nml" Color="{StaticResource Blue.200}" />
+
+	<!--#endregion-->
+
+	<!--#region > element and control colors-->
+
+	<!--  these colors need / may need to be skinned  -->
+
+
+	<!--#region > unit value / unit setting colors-->
+
+	<!--  for unit values / current unit settings  -->
+	<!--  for unit values / title  -->
+	<CornerRadius x:Key="UnitValTitle.CornerRadius">4,0,0,4</CornerRadius>
+	<Thickness x:Key="UnitValTitle.BorderThk">0,0,0,0</Thickness>
+	<SolidColorBrush x:Key="UnitValTitle.Bg.IsSel" Color="{StaticResource Light.Blue.550}" />
+	<SolidColorBrush x:Key="UnitValTitle.Bdr.IsSel" Color="{StaticResource Light.Blue.550}" />
+	<SolidColorBrush x:Key="UnitValTitle.Fg.IsSel" Color="{Binding Color, Source={StaticResource Fg.IsSel}}" />
+
+	<CornerRadius x:Key="UnitValue.CornerRadius">0,4,4,0</CornerRadius>
+	<Thickness x:Key="UnitValue.BorderThk">0,0,0,0</Thickness>
+	<SolidColorBrush x:Key="UnitValue.Bg.IsSel" Color="{StaticResource Light.Blue.300}" />
+	<SolidColorBrush x:Key="UnitValue.Bdr.IsSel" Color="{StaticResource Light.Blue.300}" />
+	<SolidColorBrush x:Key="UnitValue.Fg.IsSel" Color="{Binding Color, Source={StaticResource Fg.IsSel}}" />
+
+	<!--#endregion-->
+
+
+	<!--#region > add unit colors-->
+
+	<!--  add unit - grouping border  -->
+	<!--  colors needed (L1): Disabled / NotSel / IsSel  -->
+	<SolidColorBrush x:Key="AddUnit.Gbdr.Disabled" Color="{StaticResource Gray.250}" />
+	<SolidColorBrush x:Key="AddUnit.Gbdr.NotSel" Color="{StaticResource Gray.300}" />
+	<SolidColorBrush x:Key="AddUnit.Gbdr.IsSel" Color="{StaticResource Gray.350}" />
+
+
+	<!--  colors needed (L1): Disabled / NotSel / IsSel  -->
+
+	<SolidColorBrush x:Key="AddUnit.Title.Fg.Disabled" Color="{Binding Color, Source={StaticResource Fg.Disabled.LtBg}}" />
+	<SolidColorBrush x:Key="AddUnit.Title.Fg.IsSel" Color="{Binding Color, Source={StaticResource Fg.IsSel}}" />
+	<SolidColorBrush x:Key="AddUnit.Title.Fg.NotSel" Color="{Binding Color, Source={StaticResource Fg.NotSel}}" />
+
+	<SolidColorBrush x:Key="AddUnit.Title.Bg.Disabled" Color="{StaticResource Cool.Blue.250}" />
+	<SolidColorBrush x:Key="AddUnit.Title.Bg.IsSel" Color="{StaticResource Cool.Blue.450}" />
+	<SolidColorBrush x:Key="AddUnit.Title.Bg.NotSel" Color="{StaticResource Cool.Blue.300}" />
+
+
+	<SolidColorBrush x:Key="AddUnit.SubTitle.Fg.Disabled" Color="{Binding Color, Source={StaticResource Fg.Disabled.LtBg}}" />
+	<SolidColorBrush x:Key="AddUnit.SubTitle.Fg.IsSel" Color="{Binding Color, Source={StaticResource Fg.IsSel}}" />
+	<SolidColorBrush x:Key="AddUnit.SubTitle.Fg.NotSel" Color="{Binding Color, Source={StaticResource Fg.NotSel}}" />
+
+	<SolidColorBrush x:Key="AddUnit.SubTitle.Bg.Disabled" Color="{StaticResource Cool.Blue.250}" />
+	<SolidColorBrush x:Key="AddUnit.SubTitle.Bg.IsSel" Color="{StaticResource Cool.Blue.350}" />
+	<SolidColorBrush x:Key="AddUnit.SubTitle.Bg.NotSel" Color="{StaticResource Cool.Blue.300}" />
+
+
+
+	<!--  for value entry box (L2 trigger)  -->
+	<!--  colors needed (L2): Disabled / NotSel / IsSel / IsEditg / IsReadOnly / IsLocked  -->
+	<SolidColorBrush x:Key="ValEntry.Bg.Disabled" Color="{StaticResource Gray.200}" />
+	<SolidColorBrush x:Key="ValEntry.Bg.NotSel" Color="{StaticResource Gray.200}" />
+	<SolidColorBrush x:Key="ValEntry.Bg.IsSel" Color="{StaticResource Gray.250}" />
+	<SolidColorBrush x:Key="ValEntry.Bg.IsEditg" Color="{StaticResource Purple.400}" />
+	<SolidColorBrush x:Key="ValEntry.Bg.IsReadOnly" Color="{StaticResource Gray.200}" />
+	<SolidColorBrush x:Key="ValEntry.Bg.IsLocked" Color="{StaticResource Gray.150}" />
+
+	<SolidColorBrush x:Key="ValEntry.Fg.Disabled" Color="{Binding Color, Source={StaticResource Fg.Disabled.DkBg}}" />
+	<SolidColorBrush x:Key="ValEntry.Fg.NotSel" Color="{Binding Color, Source={StaticResource Fg.NotSel}}" />
+	<SolidColorBrush x:Key="ValEntry.Fg.IsSel" Color="{Binding Color, Source={StaticResource Fg.IsSel}}" />
+	<SolidColorBrush x:Key="ValEntry.Fg.IsEditg" Color="{Binding Color, Source={StaticResource Fg.IsEditg}}" />
+	<SolidColorBrush x:Key="ValEntry.Fg.IsReadOnly" Color="{Binding Color, Source={StaticResource Fg.ReadOnly}}" />
+	<SolidColorBrush x:Key="ValEntry.Fg.IsLocked" Color="{Binding Color, Source={StaticResource Fg.ReadOnly}}" />
+
+	<SolidColorBrush x:Key="ValEntry.Bdr.Disabled" Color="{StaticResource Gray.500}" />
+	<SolidColorBrush x:Key="ValEntry.Bdr.NotSel" Color="{StaticResource Gray.550}" />
+	<SolidColorBrush x:Key="ValEntry.Bdr.IsSel" Color="{StaticResource Gray.650}" />
+	<SolidColorBrush x:Key="ValEntry.Bdr.IsEditg" Color="{StaticResource Gray.800}" />
+	<SolidColorBrush x:Key="ValEntry.Bdr.IsReadOnly" Color="{StaticResource Gray.400}" />
+	<SolidColorBrush x:Key="ValEntry.Bdr.IsLocked" Color="{StaticResource Gray.400}" />
+
+	<SolidColorBrush x:Key="ValEntry.Bg.NotEditg.MouseOver" Color="{StaticResource Gray.200}" />
+	<SolidColorBrush x:Key="ValEntry.Bg.IsEditg.MouseOver" Color="{StaticResource Deep.Purple.450}" />
+
+	<SolidColorBrush x:Key="ValEntry.Fg.NotEditg.MouseOver" Color="{StaticResource Gray.800}" />
+	<SolidColorBrush x:Key="ValEntry.Fg.IsEditg.MouseOver" Color="{StaticResource Deep.Purple.900}" />
+
+	<SolidColorBrush x:Key="ValEntry.Bdr.NotEditg.MouseOver" Color="{StaticResource Gray.760}" />
+	<SolidColorBrush x:Key="ValEntry.Bdr.IsEditg.MouseOver" Color="{StaticResource Deep.Purple.800}" />
+
+	<!--  colors needed (L2) (inner button): IsEditg -->
+	<SolidColorBrush x:Key="ValEntry.BtnClr.Fg.IsEditg" Color="{Binding Color, Source={StaticResource Fg.IsEditg}}" />
+	<SolidColorBrush x:Key="ValEntry.BtnClr.Bg.IsEditg" Color="{StaticResource Deep.Purple.600}" />
+
+	<!--#endregion-->
+
+	<!--#region > combobox-->
+
+	<!--  needs to be trigger adjusted  -->
+	<!--  combobox  -->
+
+	<SolidColorBrush x:Key="Cbx.Bg.Disabled" Color="{StaticResource Cool.Blue.200}" />
+	<SolidColorBrush x:Key="Cbx.Bg.NotSel" Color="{StaticResource Cool.Blue.300}" />
+	<SolidColorBrush x:Key="Cbx.Bg.IsSel" Color="{StaticResource Cool.Blue.450}" />
+	<SolidColorBrush x:Key="Cbx.Bg.IsEditg" Color="{StaticResource Purple.400}" />
+	<SolidColorBrush x:Key="Cbx.Bg.IsReadOnly" Color="{StaticResource Cool.Blue.200}" />
+	<SolidColorBrush x:Key="Cbx.Bg.IsLocked" Color="{StaticResource Cool.Blue.150}" />
+
+	<SolidColorBrush x:Key="Cbx.Fg.Disabled" Color="{Binding Color, Source={StaticResource Fg.Disabled.DkBg}}" />
+	<SolidColorBrush x:Key="Cbx.Fg.NotSel" Color="{Binding Color, Source={StaticResource Fg.NotSel}}" />
+	<SolidColorBrush x:Key="Cbx.Fg.IsSel" Color="{Binding Color, Source={StaticResource Fg.IsSel}}" />
+	<SolidColorBrush x:Key="Cbx.Fg.IsEditg" Color="{Binding Color, Source={StaticResource Fg.IsEditg}}" />
+	<SolidColorBrush x:Key="Cbx.Fg.IsReadOnly" Color="{Binding Color, Source={StaticResource Fg.ReadOnly}}" />
+	<SolidColorBrush x:Key="Cbx.Fg.IsLocked" Color="{Binding Color, Source={StaticResource Fg.Locked}}" />
+
+	<SolidColorBrush x:Key="Cbx.Bdr.Disabled" Color="{Binding Color, Source={StaticResource Fg.Disabled.DkBg}}" />
+	<SolidColorBrush x:Key="Cbx.Bdr.NotSel" Color="{Binding Color, Source={StaticResource Fg.NotSel}}" />
+	<SolidColorBrush x:Key="Cbx.Bdr.IsSel" Color="{Binding Color, Source={StaticResource Fg.IsSel}}" />
+	<SolidColorBrush x:Key="Cbx.Bdr.IsEditg" Color="{Binding Color, Source={StaticResource Fg.IsEditg}}" />
+	<SolidColorBrush x:Key="Cbx.Bdr.IsReadOnly" Color="{Binding Color, Source={StaticResource Fg.ReadOnly}}" />
+	<SolidColorBrush x:Key="Cbx.Bdr.IsLocked" Color="{Binding Color, Source={StaticResource Fg.Locked}}" />
+
+
+	<SolidColorBrush x:Key="Cbx.Bg.NotEditg.MouseOver" Color="{StaticResource Cool.Blue.400}" />
+	<SolidColorBrush x:Key="Cbx.Bg.IsEditg.MouseOver" Color="{StaticResource Deep.Purple.450}" />
+
+	<SolidColorBrush x:Key="Cbx.Fg.NotEditg.MouseOver" Color="{StaticResource Cool.Blue.820}" />
+	<SolidColorBrush x:Key="Cbx.Fg.IsEditg.MouseOver" Color="White" />
+
+	<SolidColorBrush x:Key="Cbx.Bdr.NotEditg.MouseOver" Color="{StaticResource Gray.800}" />
+	<SolidColorBrush x:Key="Cbx.Bdr.IsEditg.MouseOver" Color="White" />
+
+	<SolidColorBrush x:Key="Cbx.DropDown.Bg.IsSel" Color="{StaticResource Deep.Purple.450}" />
+
+
+	<!--  items in drop down list highlighting  -->
+	<!--  sel / mouse not over  -->
+
+	<SolidColorBrush x:Key="Cbx.DropDownItem.Bg.Sel" Color="#30FFFFFF" />
+	<SolidColorBrush x:Key="Cbx.DropDownItem.Bg.NotSel.MouseOver" Color="#2FFFFFFF" />
+	<SolidColorBrush x:Key="Cbx.DropDownItem.Bg.Sel.MouseOver" Color="#1AFFFFFF" />
+
+	<SolidColorBrush x:Key="Cbx.DropDownItem.Bdr.Sel" Color="#BFFFFFFF" />
+	<SolidColorBrush x:Key="Cbx.DropDownItem.Bdr.NotSel.MouseOver" Color="#7FFFFFFF" />
+	<SolidColorBrush x:Key="Cbx.DropDownItem.Bdr.Sel.MouseOver" Color="#7FFFFFFF" />
+
+
+	<!--#region > selection list colors-->
+
+	<!--  field colors  -->
+
 	<SolidColorBrush x:Key="Base.Bkg" Color="{StaticResource Blue.400}" />
 	<SolidColorBrush x:Key="Mo.IsEditing" Color="{StaticResource Deep.Purple.500}" />
 	<SolidColorBrush x:Key="Mo.Icon.IsEditing" Color="{StaticResource Deep.Purple.600}" />
@@ -80,7 +308,7 @@
 
 	<!--  (B) Is Selected  -->
 	<!--  Id  -->
-	<SolidColorBrush x:Key="Id.Fg.IsSel" Color="{StaticResource Cool.Blue.950}" />
+	<SolidColorBrush x:Key="Id.Fg.IsSel" Color="{Binding Color, Source={StaticResource Fg.IsSel}}" />
 	<SolidColorBrush x:Key="Id.Bg.IsSel" Color="{StaticResource Blue.600}" />
 
 	<!--  Id Icon  -->
@@ -107,7 +335,7 @@
 	<SolidColorBrush x:Key="SubTitle.Bg.IsSel" Color="{StaticResource Real.Green.350}" />
 	<SolidColorBrush x:Key="SubTitle.Gb.IsSel" Color="{StaticResource Real.Green.250}" />
 	<!--  G  -->
-	<SolidColorBrush x:Key="Action2.Fg.IsSel" Color="{StaticResource Cool.Blue.850}" />
+	<SolidColorBrush x:Key="Action2.Fg.IsSel" Color="{StaticResource Cool.Blue.950}" />
 	<SolidColorBrush x:Key="Action2.Bg.IsSel" Color="{StaticResource Cool.Blue.450}" />
 	<!--  I  -->
 	<SolidColorBrush x:Key="Image1.Bg.IsSel" Color="LightGray" />
@@ -205,57 +433,73 @@
 	<!--#endregion-->
 
 
-	
-			<!--  id size  -->
-			<system:Double x:Key="FontSize.XLarge">18</system:Double>
-			<!--  header size  -->
-			<system:Double x:Key="FontSize.Large">15</system:Double>
-			<!--  typical font size  -->
-			<system:Double x:Key="FontSize.Normal">13</system:Double>
-			<system:Double x:Key="FontSize.Smaller">12</system:Double>
-			<system:Double x:Key="FontSize.Small">11</system:Double>
-			<system:Double x:Key="FontSize.XSmall">10</system:Double>
+	<!--#region > interior / component colors-->
 
-			<system:Double x:Key="Normal.CornerRad">6</system:Double>
-			<system:Double x:Key="Small.CornerRad">5</system:Double>
+	<!--#region > checkbox interior colors-->
+
+	<SolidColorBrush x:Key="OptionMark.Static.Border" Color="{StaticResource Gray.200}" />
+	<SolidColorBrush x:Key="OptionMark.Static.Background" Color="{StaticResource Gray.700}" />
+	<SolidColorBrush x:Key="OptionMark.Static.Glyph" Color="{StaticResource Gray.150}" />
+	<SolidColorBrush x:Key="OptionMark.Indeterminant.Fill" Color="#FF444444" />
+
+	<SolidColorBrush x:Key="OptionMark.MouseOver.Background" Color="#FFF3F9FF" />
+	<SolidColorBrush x:Key="OptionMark.MouseOver.Border" Color="#FF5593FF" />
+	<SolidColorBrush x:Key="OptionMark.MouseOver.Glyph" Color="#FF212121" />
+
+	<SolidColorBrush x:Key="OptionMark.Pressed.Background" Color="#FFD9ECFF" />
+	<SolidColorBrush x:Key="OptionMark.Pressed.Border" Color="#FF3C77DD" />
+	<SolidColorBrush x:Key="OptionMark.Pressed.Glyph" Color="#FF212121" />
+
+	<SolidColorBrush x:Key="OptionMark.Disabled.Border" Color="{StaticResource Gray.400}" />
+	<SolidColorBrush x:Key="OptionMark.Disabled.Background" Color="{StaticResource Gray.250}" />
+	<SolidColorBrush x:Key="OptionMark.Disabled.Glyph" Color="{StaticResource Gray.650}" />
+
+	<!--#endregion-->
 
 
-			<CornerRadius x:Key="Normal.CornerRadius"
-					BottomLeft="{StaticResource Normal.CornerRad}"
-					BottomRight="{StaticResource Normal.CornerRad}"
-					TopLeft="{StaticResource Normal.CornerRad}"
-					TopRight="{StaticResource Normal.CornerRad}"
-					/>
+	<!--#endregion-->
 
 
-			<SolidColorBrush x:Key="Header.Background" Color="{StaticResource True.Green}" />
+	<!--  not verified colors  -->
 
-			<SolidColorBrush x:Key="Lv1.Item.Panel.Bkg.Nml" Color="{StaticResource Blue.200}" />
 
-			<SolidColorBrush x:Key="Foreground.Normal" Color="White" />
-			<SolidColorBrush x:Key="Foreground.Unselected" Color="{StaticResource Gray.650}" />
+	<!--#region > buttons-->
 
-			<!--#region > checkbox colors  -->
+	<!--  for button  -->
 
-			<SolidColorBrush x:Key="OptionMark.Static.Border" Color="{StaticResource Gray.200}" />
-			<SolidColorBrush x:Key="OptionMark.Static.Background" Color="{StaticResource Gray.700}" />
-			<SolidColorBrush x:Key="OptionMark.Static.Glyph" Color="{StaticResource Gray.150}" />
-			<SolidColorBrush x:Key="OptionMark.Indeterminant.Fill" Color="#FF444444" />
+	<sys:Double x:Key="Btn.Height.Std">26</sys:Double>
+	<sys:Double x:Key="Btn.Width.Std">92</sys:Double>
 
-			<SolidColorBrush x:Key="OptionMark.MouseOver.Background" Color="#FFF3F9FF" />
-			<SolidColorBrush x:Key="OptionMark.MouseOver.Border" Color="#FF5593FF" />
-			<SolidColorBrush x:Key="OptionMark.MouseOver.Glyph" Color="#FF212121" />
+	<SolidColorBrush x:Key="Btn.Bg.IsSel" Color="{StaticResource Gray.970}" />
+	<SolidColorBrush x:Key="Btn.Fg.IsSel" Color="{StaticResource Gray.100}" />
+	<SolidColorBrush x:Key="Btn.Bdr.IsSel" Color="{StaticResource True.Black}" />
 
-			<SolidColorBrush x:Key="OptionMark.Pressed.Background" Color="#FFD9ECFF" />
-			<SolidColorBrush x:Key="OptionMark.Pressed.Border" Color="#FF3C77DD" />
-			<SolidColorBrush x:Key="OptionMark.Pressed.Glyph" Color="#FF212121" />
+	<!-- <SolidColorBrush x:Key="Btn.Bg.IsDefault" Color="White" /> -->
+	<SolidColorBrush x:Key="Btn.Bg.IsDefault" Color="{StaticResource Gray.800}" />
+	<SolidColorBrush x:Key="Btn.Bdr.Inner.IsDefault" Color="{StaticResource Blue.400}" />
 
-			<SolidColorBrush x:Key="OptionMark.Disabled.Border" Color="{StaticResource Gray.400}" />
-			<SolidColorBrush x:Key="OptionMark.Disabled.Background" Color="{StaticResource Gray.250}" />
-			<SolidColorBrush x:Key="OptionMark.Disabled.Glyph" Color="{StaticResource Gray.650}" />
+	<SolidColorBrush x:Key="Btn.Fg.MouseOver" Color="{Binding Color, Source={StaticResource Btn.Fg.IsSel}}" />
+	<SolidColorBrush x:Key="Btn.Bg.MouseOver" Color="{StaticResource Light.Blue.900}" />
+	<SolidColorBrush x:Key="Btn.Bdr.MouseOver" Color="{StaticResource Light.Blue.700}" />
 
-			<!--#endregion -->
+	<SolidColorBrush x:Key="Btn.Bg.Pressed" Color="{StaticResource Light.Blue.900}" />
+	<SolidColorBrush x:Key="Btn.Fg.Pressed" Color="{Binding Color, Source={StaticResource Btn.Fg.IsSel}}" />
+	<SolidColorBrush x:Key="Btn.Bdr.Pressed" Color="{StaticResource Light.Blue.400}" />
+	<SolidColorBrush x:Key="Btn.Bdr.Inner.Pressed" Color="{StaticResource Light.Blue.300}" />
 
+	<SolidColorBrush x:Key="Btn.Bg.NotSel" Color="{StaticResource Gray.800}" />
+	<SolidColorBrush x:Key="Btn.Fg.NotSel" Color="{StaticResource Gray.500}" />
+	<SolidColorBrush x:Key="Btn.Bdr.NotSel" Color="{StaticResource Gray.700}" />
+	<SolidColorBrush x:Key="Btn.Bdr.NotSel.Inner" Color="{StaticResource Gray.700}" />
+
+
+	<!--#endregion-->
+
+
+
+
+
+	<!--#endregion-->
 
 
 </ResourceDictionary>

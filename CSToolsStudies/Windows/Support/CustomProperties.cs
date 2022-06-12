@@ -87,17 +87,17 @@ namespace CSToolsStudies.Windows.Support
 	//
 	// #region MouseOverBrush
 	//
-	// 	public static readonly DependencyProperty MouseOverBrushProperty = DependencyProperty.RegisterAttached(
+	// 	public static readonly DependencyProperty MouseOverBgBrushProperty = DependencyProperty.RegisterAttached(
 	// 		"MouseOverBrush", typeof(SolidColorBrush), typeof(CustomProperties), new PropertyMetadata(default(SolidColorBrush)));
 	//
-	// 	public static void SetMouseOverBrush(UIElement e, SolidColorBrush value)
+	// 	public static void SetMouseOverBgBrush(UIElement e, SolidColorBrush value)
 	// 	{
-	// 		e.SetValue(MouseOverBrushProperty, value);
+	// 		e.SetValue(MouseOverBgBrushProperty, value);
 	// 	}
 	//
-	// 	public static SolidColorBrush GetMouseOverBrush(UIElement e)
+	// 	public static SolidColorBrush GetMouseOverBgBrush(UIElement e)
 	// 	{
-	// 		return (SolidColorBrush) e.GetValue(MouseOverBrushProperty);
+	// 		return (SolidColorBrush) e.GetValue(MouseOverBgBrushProperty);
 	// 	}
 	//
 	// #endregion

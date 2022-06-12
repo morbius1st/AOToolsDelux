@@ -30,9 +30,6 @@ namespace CSToolsStudies.Windows.Support
 
 	#endregion
 
-		// drop down border thickness
-		// drop down border brush
-		// drop down border radius
 	#region drop down Border Brush
 
 		public static readonly DependencyProperty DropDownBdrBrushProperty = DependencyProperty.RegisterAttached(
@@ -85,20 +82,19 @@ namespace CSToolsStudies.Windows.Support
 
 	#endregion
 
+	#region DropDownMinWidth
 
-	#region DropDownWidthAdjustment
+		public static readonly DependencyProperty DropDownMinWidthProperty = DependencyProperty.RegisterAttached(
+			"DropDownMinWidth", typeof(double), typeof(CsComboBoxAp), new FrameworkPropertyMetadata(Double.PositiveInfinity, FrameworkPropertyMetadataOptions.Inherits));
 
-		public static readonly DependencyProperty DropDownWidthAdjustmentProperty = DependencyProperty.RegisterAttached(
-			"DropDownWidthAdjustment", typeof(double), typeof(CsComboBoxAp), new FrameworkPropertyMetadata(0.0, FrameworkPropertyMetadataOptions.Inherits));
-
-		public static void SetDropDownWidthAdjustment(UIElement e, double value)
+		public static void SetDropDownMinWidth(UIElement e, double value)
 		{
-			e.SetValue(DropDownWidthAdjustmentProperty, value);
+			e.SetValue(DropDownMinWidthProperty, value);
 		}
 
-		public static double GetDropDownWidthAdjustment(UIElement e)
+		public static double GetDropDownMinWidth(UIElement e)
 		{
-			return (double) e.GetValue(DropDownWidthAdjustmentProperty);
+			return (double) e.GetValue(DropDownMinWidthProperty);
 		}
 
 	#endregion
@@ -120,29 +116,12 @@ namespace CSToolsStudies.Windows.Support
 
 	#endregion
 
-	#region MouseOverBrush
-
-		public static readonly DependencyProperty MouseOverBrushProperty = DependencyProperty.RegisterAttached(
-			"MouseOverBrush", typeof(SolidColorBrush), typeof(CsComboBoxAp), new FrameworkPropertyMetadata(default(SolidColorBrush), FrameworkPropertyMetadataOptions.Inherits));
-
-		public static void SetMouseOverBrush(UIElement e, SolidColorBrush value)
-		{
-			e.SetValue(MouseOverBrushProperty, value);
-		}
-
-		public static SolidColorBrush GetMouseOverBrush(UIElement e)
-		{
-			return (SolidColorBrush) e.GetValue(MouseOverBrushProperty);
-		}
-
-	#endregion
-		
 	#region DropDownBrush
 
 		public static readonly DependencyProperty  DropDownBrushProperty = DependencyProperty.RegisterAttached(
 			"DropDownBrush", typeof(SolidColorBrush), typeof(CsComboBoxAp), new FrameworkPropertyMetadata(default(SolidColorBrush), FrameworkPropertyMetadataOptions.Inherits));
 
-		public static void SetDropDownBrushh(UIElement e, SolidColorBrush value)
+		public static void SetDropDownBrush(UIElement e, SolidColorBrush value)
 		{
 			e.SetValue(DropDownBrushProperty, value);
 		}
@@ -154,23 +133,59 @@ namespace CSToolsStudies.Windows.Support
 
 	#endregion
 
-	#region NotEnabledBrush
 
-		public static readonly DependencyProperty NotEnabledBrushProperty = DependencyProperty.RegisterAttached(
-			"NotEnabledBrush", typeof(SolidColorBrush), typeof(CsComboBoxAp), new FrameworkPropertyMetadata(default(SolidColorBrush), FrameworkPropertyMetadataOptions.Inherits));
+	// #region MouseOverBgBrush
+	//
+	// 	public static readonly DependencyProperty MouseOverBgBrushProperty = DependencyProperty.RegisterAttached(
+	// 		"MouseOverBgBrush", typeof(SolidColorBrush), typeof(CsComboBoxAp), new FrameworkPropertyMetadata(default(SolidColorBrush), FrameworkPropertyMetadataOptions.Inherits));
+	//
+	// 	public static void SetMouseOverBgBrush(UIElement e, SolidColorBrush value)
+	// 	{
+	// 		e.SetValue(MouseOverBgBrushProperty, value);
+	// 	}
+	//
+	// 	public static SolidColorBrush GetMouseOverBgBrush(UIElement e)
+	// 	{
+	// 		return (SolidColorBrush) e.GetValue(MouseOverBgBrushProperty);
+	// 	}
+	//
+	// #endregion
 
-		public static void SetNotEnabledBrush(UIElement e, SolidColorBrush value)
-		{
-			e.SetValue(NotEnabledBrushProperty, value);
-		}
+	// #region MouseOverFgBrush
+	//
+	// 	public static readonly DependencyProperty MouseOverFgBrushProperty = DependencyProperty.RegisterAttached(
+	// 		"MouseOverFgBrush", typeof(SolidColorBrush), typeof(CsComboBoxAp), new FrameworkPropertyMetadata(default(SolidColorBrush), FrameworkPropertyMetadataOptions.Inherits));
+	//
+	// 	public static void SetMouseOverFgBrush(UIElement e, SolidColorBrush value)
+	// 	{
+	// 		e.SetValue(MouseOverFgBrushProperty, value);
+	// 	}
+	//
+	// 	public static SolidColorBrush GetMouseOverFgBrush(UIElement e)
+	// 	{
+	// 		return (SolidColorBrush) e.GetValue(MouseOverFgBrushProperty);
+	// 	}
+	//
+	// #endregion
+		
 
-		public static SolidColorBrush GetNotEnabledBrush(UIElement e)
-		{
-			return (SolidColorBrush) e.GetValue(NotEnabledBrushProperty);
-		}
 
-	#endregion
-
+	// #region NotEnabledBrush
+	//
+	// 	public static readonly DependencyProperty NotEnabledBrushProperty = DependencyProperty.RegisterAttached(
+	// 		"NotEnabledBrush", typeof(SolidColorBrush), typeof(CsComboBoxAp), new FrameworkPropertyMetadata(default(SolidColorBrush), FrameworkPropertyMetadataOptions.Inherits));
+	//
+	// 	public static void SetNotEnabledBrush(UIElement e, SolidColorBrush value)
+	// 	{
+	// 		e.SetValue(NotEnabledBrushProperty, value);
+	// 	}
+	//
+	// 	public static SolidColorBrush GetNotEnabledBrush(UIElement e)
+	// 	{
+	// 		return (SolidColorBrush) e.GetValue(NotEnabledBrushProperty);
+	// 	}
+	//
+	// #endregion
 
 	}
 }

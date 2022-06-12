@@ -11,16 +11,29 @@
 
 		<ResourceDictionary>
 			<ResourceDictionary.MergedDictionaries>
-				<ResourceDictionary Source="/Windows/ResourceFiles/XamlResources/MasterColorList.xaml" />
-				<ResourceDictionary Source="/Windows/ResourceFiles/XamlResources/VisualStates.xaml" />
-				<res:SkinResourceDictionary FluentSkinSource="pack://Application:,,,/CSToolsStudies;component/Windows/ResourceFiles/XamlResources/FluentSkin.xaml"
-						JeffSkinSource="pack://Application:,,,/CSToolsStudies;component/Windows/ResourceFiles/XamlResources/JeffSkin.xaml"
-						/>
+				<!-- <ResourceDictionary Source="/Windows/ResourceFiles/XamlResources/MasterColorList.xaml" /> -->
+				<!-- <ResourceDictionary Source="/Windows/ResourceFiles/XamlResources/VisualStates.xaml" /> -->
+				<res:SkinResourceDictionary FluentSkinSource="pack://Application:,,,/CSToolsStudies;component/Windows/ResourceFiles/XamlResources/FluentSkin.xaml" JeffSkinSource="pack://Application:,,,/CSToolsStudies;component/Windows/ResourceFiles/XamlResources/JeffSkin.xaml" />
 
 			</ResourceDictionary.MergedDictionaries>
+
+
+			<ControlTemplate x:Key="AppTextBoxCt" TargetType="TextBox">
+				<Border x:Name="border"
+						Background="{TemplateBinding Background}"
+						BorderBrush="{TemplateBinding BorderBrush}"
+						BorderThickness="{TemplateBinding BorderThickness}"
+						SnapsToDevicePixels="True"
+				>
+					<ScrollViewer x:Name="PART_ContentHost"
+							Focusable="false"
+							HorizontalScrollBarVisibility="Hidden"
+							VerticalScrollBarVisibility="Hidden"
+					/>
+				</Border>
+
+			</ControlTemplate>
 		</ResourceDictionary>
-
-
 
 	</Application.Resources>
 </Application>

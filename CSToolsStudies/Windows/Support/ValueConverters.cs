@@ -68,46 +68,7 @@ namespace CSToolsStudies.Windows.Support
 
 #endregion
 
-	
-#region double divider converter
 
-	[ValueConversion(typeof(double), typeof(double))]
-	public class SubtractConverter : IValueConverter
-	{
-		public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
-		{
-			double valu = (double) (value ?? 0.0);
-			double operand = 0.0;
-
-			bool result = false;
-			
-			if (parameter is string)
-			{
-				result = double.TryParse((string) (parameter ?? "1.0"), out operand);
-			}
-			else
-			{
-				if (parameter is double)
-				{
-					operand = (double) parameter;
-					result = true;
-				}
-			}
-			
-			if (!result) return valu;
-
-			return (valu - operand) < 0 ? 0 : valu - operand;
-		}
-
-		public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
-		{
-			return null;
-		}
-	}
-
-#endregion
-
-	
 #region double add converter
 
 	[ValueConversion(typeof(double), typeof(double))]
@@ -133,6 +94,45 @@ namespace CSToolsStudies.Windows.Support
 
 #endregion
 
+
+
+#region double subtract converter
+
+	[ValueConversion(typeof(double), typeof(double))]
+	public class SubtractConverter : IValueConverter
+	{
+		public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+		{
+			double valu = (double) (value ?? 0.0);
+			double operand = 0.0;
+
+			bool result = false;
+
+			if (parameter is string)
+			{
+				result = double.TryParse((string) (parameter ?? "1.0"), out operand);
+			}
+			else
+			{
+				if (parameter is double)
+				{
+					operand = (double) parameter;
+					result = true;
+				}
+			}
+
+			if (!result) return valu;
+
+			return (valu - operand) < 0 ? 0 : valu - operand;
+		}
+
+		public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+		{
+			return null;
+		}
+	}
+
+#endregion
 
 
 

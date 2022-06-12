@@ -18,11 +18,30 @@ namespace CSToolsStudies.Windows
 	/// </summary>
 	public partial class Test1 : Window, INotifyPropertyChanged
 	{
+		private bool expandWindow = true;
+
+	#region for item list
+
+		// control settings only for style list
 		private int isClosing = -1;
 		private bool isSelected = false;
 		private bool? isEditing = false;
-		private bool? noEditing = false;
+		private bool? isReadOnly = false;
 		private bool? isLocked = false;
+		
+	#endregion
+
+	#region for add unit
+
+		// control settings for add unit area
+		private bool addUnitEnabled = false;
+		private bool addUnitSelected = false;
+		private bool addUnitReadOnly = false;
+		private bool addUnitIsLocked = false;
+		private bool? isGoodOrBad = null;
+
+	#endregion
+
 
 		private bool winLocationChanged = false;
 
@@ -49,27 +68,23 @@ namespace CSToolsStudies.Windows
 			InitializeComponent();
 
 			IsClosing = 1;
+			IsGoodOrBad = null;
+
 		}
 
-		public bool IsSelected
+		public bool ExpandWindow
 		{
-			[DebuggerStepThrough]
-			get => isSelected;
+
+			get => expandWindow;
 
 			set
 			{
-				if (value == isSelected) return;
-				isSelected = value;
-
-				if (isSelected == false)
-				{
-					IsEditing = false;
-					NoEditing = false;
-				}
-
+				if (value == expandWindow) return;
+				expandWindow = value;
 				OnPropertyChanged();
 			}
 		}
+
 
 		public int IsClosing
 		{
@@ -83,6 +98,92 @@ namespace CSToolsStudies.Windows
 				OnPropertyChanged();
 			}
 		}
+
+		public bool? IsGoodOrBad
+		{
+			[DebuggerStepThrough]
+			get => isGoodOrBad;
+			[DebuggerStepThrough]
+			set
+			{
+				if (value == isGoodOrBad) return;
+				isGoodOrBad = value;
+				OnPropertyChanged();
+			}
+		}
+
+		public bool AddUnitEnabled
+		{
+			get => addUnitEnabled;
+
+			set
+			{
+				if (value == addUnitEnabled) return;
+				addUnitEnabled = value;
+				OnPropertyChanged();
+			}
+		}
+
+		public bool AddUnitSelected
+		{
+
+			get => addUnitSelected;
+
+			set
+			{
+				if (value == addUnitSelected) return;
+				addUnitSelected = value;
+				OnPropertyChanged();
+			}
+		}
+
+		public bool AddUnitReadOnly
+		{
+			[DebuggerStepThrough]
+			get => addUnitReadOnly;
+			[DebuggerStepThrough]
+			set
+			{
+				if (value == addUnitReadOnly) return;
+				addUnitReadOnly = value;
+				OnPropertyChanged();
+			}
+		}
+
+		public bool AddUnitIsLocked
+		{
+			[DebuggerStepThrough]
+			get => addUnitIsLocked;
+			[DebuggerStepThrough]
+			set
+			{
+				if (value == addUnitIsLocked) return;
+				addUnitIsLocked = value;
+				OnPropertyChanged();
+			}
+		}
+
+		public bool IsSelected
+		{
+			[DebuggerStepThrough]
+			get => isSelected;
+
+			set
+			{
+
+				if (value == isSelected) return;
+				isSelected = value;
+
+				if (isSelected == false)
+				{
+					IsEditing = false;
+					IsReadOnly = false;
+				}
+
+				OnPropertyChanged();
+			}
+		}
+
 
 		public bool? IsEditing
 		{
@@ -104,34 +205,34 @@ namespace CSToolsStudies.Windows
 
 					if (isEditing.HasValue && isEditing.Value)
 					{
-						noEditing = false;
+						isReadOnly = false;
 					}
 				}
 
 				OnPropertyChanged();
-				OnPropertyChanged(nameof(NoEditing));
+				OnPropertyChanged(nameof(IsReadOnly));
 			}
 		}
 
-		public bool? NoEditing
+		public bool? IsReadOnly
 		{
 			[DebuggerStepThrough]
-			get => noEditing;
+			get => isReadOnly;
 
 			set
 			{
-				if (value == noEditing) return;
+				if (value == isReadOnly) return;
 
 				if (isLocked.HasValue && isLocked.Value
 					|| !isSelected)
 				{
-					noEditing = false;
+					isReadOnly = false;
 				}
 				else
 				{
-					noEditing = value;
+					isReadOnly = value;
 
-					if (noEditing.HasValue && noEditing.Value)
+					if (isReadOnly.HasValue && isReadOnly.Value)
 					{
 						isEditing = false;
 					}
@@ -155,7 +256,7 @@ namespace CSToolsStudies.Windows
 				if (isLocked.HasValue == true && isLocked.Value)
 				{
 					IsEditing = false;
-					NoEditing = false;
+					IsReadOnly = false;
 				}
 
 				OnPropertyChanged();
@@ -363,8 +464,15 @@ namespace CSToolsStudies.Windows
 		}
 
 		private Skin skin { get; set; } = AppRibbon.Skin;
-		
 
+		private void TbxGetStyleName1_GotFocus(object sender, RoutedEventArgs e)
+		{
+			AddUnitSelected = true;
+		}
 
+		private void CbxUnitSelect2_DropDownOpened(object sender, EventArgs e)
+		{
+			AddUnitSelected = true;
+		}
 	}
 }

@@ -337,7 +337,7 @@
 				
 				1200
 				not locked / is selected / no editing
-				(IsSelected == true && NoEditing == true)
+				(IsSelected == true && ReadOnly == true)
 				
 				1498
 				is locked / is selected / na editing
@@ -348,7 +348,7 @@
 			<sys:Boolean x:Key="IsLocked">False</sys:Boolean>
 			<sys:Boolean x:Key="IsSelected">True</sys:Boolean>
 			<!-- <sys:Boolean x:Key="IsEditing">true</sys:Boolean> -->
-			<!-- <sys:Boolean x:Key="NoEditing">true</sys:Boolean> -->
+			<!-- <sys:Boolean x:Key="ReadOnly">true</sys:Boolean> -->
 
 			<!-- <ws:NullableBool x:Key="IsEditing" b="{x:Null}"/> -->
 			<!-- <ws:NullableBool x:Key="IsEditing" b="True"/> -->
@@ -403,8 +403,8 @@
 			<!--  editable field  -->
 			<SolidColorBrush x:Key="Fg.IsSel.IsEdit" Color="White" />
 			<SolidColorBrush x:Key="Fg.IsSel.CanEdit" Color="{StaticResource Cool.Blue.850}" />
-			<SolidColorBrush x:Key="Fg.IsSel.NoEdit" Color="{StaticResource Cool.Blue.760}" />
-			<SolidColorBrush x:Key="Fg.IsSel.NoEdit.Alt" Color="{StaticResource Blue.Gray.600}" />
+			<SolidColorBrush x:Key="Fg.IsSel.ReadOnly" Color="{StaticResource Cool.Blue.760}" />
+			<SolidColorBrush x:Key="Fg.IsSel.ReadOnly.Alt" Color="{StaticResource Blue.Gray.600}" />
 			<SolidColorBrush x:Key="Fg.NotSel.CanEdit" Color="{Binding Color, Source={StaticResource Fg.NotSel}}" />
 
 			<SolidColorBrush x:Key="Bdr.Bkg.IsSel.CanEdit" Color="{Binding Color, Source={StaticResource Base.Bkg}}" />
@@ -504,7 +504,7 @@
 				
 				(Bdr/Tblk).Title.Ed : to editable field
 				
-				(Bdr/Tbx).Text.Ed : editable text field (textbox)  (NoEdit / CanEdit / IsEdit)
+				(Bdr/Tbx).Text.Ed : editable text field (textbox)  (ReadOnly / CanEdit / IsEdit)
 				
 				(Bdr).Image : field
 				
@@ -1228,7 +1228,7 @@
 
 
 			<!--  is locked / is selected / na editing  -->
-			<Border x:Key="NotLockedIsSelectedNoEditing"
+			<Border x:Key="NotLockedIsSelectedReadOnly"
 					CornerRadius="4"
 					Padding="4"
 					>
@@ -1304,7 +1304,7 @@
 									TextAlignment="left"
 									Style="{StaticResource TbxBase}"
 									/>
-							<!--  Foreground="{StaticResource Fg.IsSel.NoEdit}"  -->
+							<!--  Foreground="{StaticResource Fg.IsSel.ReadOnly}"  -->
 
 							<TextBlock DockPanel.Dock="Right">
 
@@ -1365,7 +1365,7 @@
 								circle slash
 								<Path Grid.Column="0"
 										Data="F0 M 18.886719 14.208984 C 18.886719 16.656902 18.019205 18.75 16.28418 20.488281 C 14.549153 22.226562 12.457682 23.095703 10.009766 23.095703 C 7.555339 23.095703 5.460612 22.226562 3.725586 20.488281 C 1.990561 18.75 1.123047 16.656902 1.123047 14.208984 C 1.123047 11.761068 1.990561 9.671225 3.725586 7.939453 C 5.460612 6.207683 7.555339 5.341797 10.009766 5.341797 C 12.457682 5.341797 14.549153 6.207683 16.28418 7.939453 C 18.019205 9.671225 18.886719 11.761068 18.886719 14.208984 Z M 10 7.021484 C 8.333334 7.021485 6.852214 7.535809 5.556641 8.564453 L 15.654297 18.671875 C 16.676432 17.376303 17.1875 15.888672 17.1875 14.208984 C 17.1875 12.223308 16.487629 10.528972 15.087891 9.125977 C 13.68815 7.722982 11.992188 7.021485 10 7.021484 Z M 4.365234 9.755859 C 3.323568 11.057943 2.802734 12.542318 2.802734 14.208984 C 2.802734 16.207684 3.505859 17.9069 4.912109 19.306641 C 6.318359 20.706381 8.014323 21.40625 10 21.40625 C 11.666666 21.40625 13.157552 20.888672 14.472656 19.853516 Z "
-										Fill="{StaticResource Fg.IsSel.NoEdit}"
+										Fill="{StaticResource Fg.IsSel.ReadOnly}"
 										HorizontalAlignment="Center"
 										RenderTransformOrigin="0.5,0.5"
 										Stretch="UniformToFill"
@@ -1375,7 +1375,7 @@
 								pen
 								<Path Grid.Column="0"
 										Data="F0 M 17.93457 5.087891 C 18.188477 5.335287 18.362629 5.581055 18.457031 5.825195 C 18.551432 6.069336 18.598633 6.295573 18.598633 6.503906 C 18.598633 6.679688 18.574219 6.839193 18.525391 6.982422 C 18.476562 7.125652 18.426105 7.24935 18.374023 7.353516 C 18.302408 7.470703 18.227539 7.578125 18.149414 7.675781 C 18.110352 7.727865 18.055012 7.794598 17.983398 7.875977 C 17.911783 7.957357 17.836914 8.041992 17.758789 8.129883 C 17.680664 8.217773 17.604166 8.302409 17.529297 8.383789 C 17.454426 8.46517 17.394205 8.531901 17.348633 8.583984 C 17.244465 8.675131 17.127277 8.720704 16.99707 8.720703 C 16.866861 8.720704 16.743164 8.668621 16.625977 8.564453 L 14.604492 6.552734 C 14.500324 6.448568 14.448242 6.32487 14.448242 6.181641 C 14.448242 6.044922 14.49707 5.927734 14.594727 5.830078 C 14.640299 5.784506 14.70052 5.722657 14.775391 5.644531 C 14.85026 5.566406 14.930012 5.488281 15.014648 5.410156 C 15.099283 5.332031 15.180664 5.257162 15.258789 5.185547 C 15.336914 5.113934 15.405273 5.05534 15.463867 5.009766 C 15.568033 4.912109 15.685221 4.824219 15.81543 4.746094 C 15.926105 4.68099 16.056314 4.62077 16.206055 4.56543 C 16.355793 4.510092 16.518555 4.482422 16.694336 4.482422 C 16.876627 4.482422 17.071939 4.526367 17.280273 4.614258 C 17.488605 4.702148 17.706705 4.860027 17.93457 5.087891 Z M 15.756836 10.3125 L 6.176758 19.892578 L 3.305664 17.021484 L 12.885742 7.441406 Z M 1.391602 21.806641 L 2.368164 18.945312 L 4.243164 20.917969 Z"
-										Fill="{StaticResource Fg.IsSel.NoEdit}"
+										Fill="{StaticResource Fg.IsSel.ReadOnly}"
 										HorizontalAlignment="Center"
 										Stretch="UniformToFill"
 										VerticalAlignment="Center"
@@ -2754,7 +2754,7 @@
 						/>
 
 				<ContentControl x:Name="Row6"
-						Content="{StaticResource NotLockedIsSelectedNoEditing}"
+						Content="{StaticResource NotLockedIsSelectedReadOnly}"
 						Grid.Column="0"
 						Grid.Row="6"
 						/>

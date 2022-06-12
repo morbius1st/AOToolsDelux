@@ -44,12 +44,8 @@
 
 	<!--  normal / thicknesses  -->
 
-	<Thickness x:Key="Normal.BorderThickness">
-		2
-	</Thickness>
-	<Thickness x:Key="Normal.Default.BorderThickness.Inner">
-		0, 0, 0, 4
-	</Thickness>
+	<Thickness x:Key="Normal.BorderThickness">2</Thickness>
+	<Thickness x:Key="Normal.Default.BorderThickness.Inner">0, 0, 0, 4</Thickness>
 
 	<!--#endregion-->
 
@@ -70,8 +66,8 @@
 	<SolidColorBrush x:Key="Normal.Inactive.Foreground" Color="{StaticResource Gray.300}" />
 
 	<!--  mouseover = true  -->
-	<SolidColorBrush x:Key="Normal.MouseOver.Background" Color="{StaticResource Light.Blue.900}" />
 	<SolidColorBrush x:Key="Normal.MouseOver.Foreground" Color="{Binding Color, Source={StaticResource Normal.Foreground}}" />
+	<SolidColorBrush x:Key="Normal.MouseOver.Background" Color="{StaticResource Light.Blue.900}" />
 	<SolidColorBrush x:Key="Normal.MouseOver.Border" Color="{StaticResource Light.Blue.700}" />
 
 	<!--  pressed = true  -->

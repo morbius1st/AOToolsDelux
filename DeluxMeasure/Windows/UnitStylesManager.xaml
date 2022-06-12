@@ -6,7 +6,6 @@
 		xmlns:local="clr-namespace:DeluxMeasure.Windows"
 		xmlns:collections="clr-namespace:System.Collections.Specialized;assembly=System"
 		xmlns:custom="clr-namespace:DeluxMeasure.Windows.Support"
-		xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
 		xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
 		xmlns:support="clr-namespace:DeluxMeasure.Windows.Support"
 		xmlns:sys="clr-namespace:System;assembly=mscorlib"
@@ -75,9 +74,7 @@
 			<GridLength x:Key="Style.Chart.Cex">50*</GridLength>
 			<GridLength x:Key="Style.Chart.Csho">118</GridLength>
 
-			<sys:Double x:Key="R1">
-				24
-			</sys:Double>
+			<sys:Double x:Key="R1">24</sys:Double>
 
 			<CornerRadius x:Key="Normal.CornerRadius"
 					BottomLeft="4"
@@ -86,9 +83,7 @@
 					TopRight="4"
 					/>
 
-			<Thickness x:Key="Lv1.Padding.Nml">
-				8,2,5,4
-			</Thickness>
+			<Thickness x:Key="Lv1.Padding.Nml">8,2,5,4</Thickness>
 
 			<SolidColorBrush x:Key="Editbox.Clear.X.Disabled" Color="{StaticResource Gray.550}" />
 			<SolidColorBrush x:Key="Editbox.Clear.X.Enabled" Color="{StaticResource Gray.800}" />
@@ -165,7 +160,7 @@
 			<SolidColorBrush x:Key="ComboBox.Text.Normal" Color="{DynamicResource Gray.950}" />
 			<SolidColorBrush x:Key="ComboBox.Text.Disabled" Color="{DynamicResource Gray.600}" />
 			<SolidColorBrush x:Key="ComboBox.Subject.Background.Normal" Color="{DynamicResource Blue.450}" />
-			<!-- -->
+			<!--    -->
 			<!-- <SolidColorBrush x:Key="ComboBox.Subject.Background.MouseOver" Color="{DynamicResource Blue.600}" /> -->
 			<!-- <SolidColorBrush x:Key="ComboBox.Subject.Background.Disabled" Color="{DynamicResource Blue.300}" /> -->
 			<!-- <SolidColorBrush x:Key="ComboBox.ListItem.Background.Normal" Color="{DynamicResource Blue.400}" /> -->
@@ -233,14 +228,16 @@
 				</Style.Triggers>
 			</Style>
 
-			<!-- refer  to the surrounding border
-			for foreground setting -->
+			<!--
+				refer  to the surrounding border
+				for foreground setting
+			-->
 			<Style x:Key="Tblk.Lv1.StyleA"
 					BasedOn="{StaticResource Tblk.Base}"
 					TargetType="TextBlock"
-			>
+					>
 				<Setter Property="Padding" Value="{StaticResource Lv1.Padding.Nml}" />
-				
+
 				<Setter Property="TextWrapping" Value="Wrap" />
 				<!-- <Style.Triggers> -->
 				<!-- 	<DataTrigger Binding="{Binding RelativeSource={RelativeSource AncestorType={x:Type ListBoxItem}}, Path=IsSelected}" Value="True"> -->
@@ -335,7 +332,8 @@
 					<DataTrigger Binding="{Binding ElementName=WinUnitStyle, Path=CanEditStyle}" Value="True">
 						<Setter Property="Background">
 							<Setter.Value>
-								<SolidColorBrush Color="{StaticResource Teal.600}"></SolidColorBrush>
+								<SolidColorBrush Color="{StaticResource Teal.600}">
+								</SolidColorBrush>
 							</Setter.Value>
 						</Setter>
 					</DataTrigger>
@@ -402,29 +400,28 @@
 			</Style>
 
 
-			<!-- 
-			cases:
-			
-			locked / selected
-			 border: dk teal | text: unselected
-
-			locked / not selected
-			 border: dk teal 2 | text: unselected
-
-			 not selected / editable OR selected / not editable:
-			 border: dk teal 2 | text unselected
-
-			 selected / editable
-			 border: dk teal | text selected
-			
+			<!--
+				cases:
+				
+				locked / selected
+				border: dk teal | text: unselected
+				
+				locked / not selected
+				border: dk teal 2 | text: unselected
+				
+				not selected / editable OR selected / not editable:
+				border: dk teal 2 | text unselected
+				
+				selected / editable
+				border: dk teal | text selected
 			-->
 			<Style x:Key="Bdr.Lv1.Sub.HdrA"
 					BasedOn="{StaticResource Bdr.Lv1}"
 					TargetType="Border"
-			>
+					>
 				<Setter Property="Background" Value="{StaticResource Lv.Item.SubHdr.Bkg2.UnSelected}" />
 				<Setter Property="TextBlock.Foreground" Value="{StaticResource Lv.Item.Fg.UnSelected}" />
-				<Setter Property="IsEnabled" Value="False"/>
+				<Setter Property="IsEnabled" Value="False" />
 				<!-- <Setter Property="DataContext"> -->
 				<!-- 	<Setter.Value> -->
 				<!-- 		<Binding RelativeSource="{RelativeSource FindAncestor, AncestorType={x:Type ListBoxItem}}" Path="(unitsUtil:UnitsDataR.Ustyle)"></Binding> -->
@@ -438,12 +435,12 @@
 							<Condition Binding="{Binding Path=(unitsUtil:UnitsDataR.Ustyle).IsLocked}" Value="false" />
 						</MultiDataTrigger.Conditions>
 						<Setter Property="Background" Value="{StaticResource Lv.Item.SubHdr.Bkg2}" />
-						<Setter Property="TextBlock.Foreground" Value="White"/>
-						<Setter Property="IsEnabled" Value="True"/>
+						<Setter Property="TextBlock.Foreground" Value="White" />
+						<Setter Property="IsEnabled" Value="True" />
 					</MultiDataTrigger>
 
-					<DataTrigger Binding="{Binding Path=(unitsUtil:UnitsDataR.Ustyle).IsLocked}" Value="true" >
-					<Setter Property="TextBlock.Foreground" Value="{StaticResource Lv.Item.Fg.UnSelected}"/>
+					<DataTrigger Binding="{Binding Path=(unitsUtil:UnitsDataR.Ustyle).IsLocked}" Value="true">
+						<Setter Property="TextBlock.Foreground" Value="{StaticResource Lv.Item.Fg.UnSelected}" />
 					</DataTrigger>
 				</Style.Triggers>
 			</Style>
@@ -824,18 +821,18 @@
 					</Border>
 
 
-					
+
 					<Border x:Name="NameTitle"
 							Grid.Column="2"
 							Grid.Row="0"
 							Style="{StaticResource Bdr.Lv1.Sub.HdrA}"
-					>
+							>
 						<TextBlock FontSize="{StaticResource FontSize.Normal}"
 								Text="Name"
 								TextAlignment="Left"
 								Style="{StaticResource Tblk.Lv1.StyleA}"
-						/>
-						<!-- Style="{StaticResource Tblk.Lv1.Style}" -->
+								/>
+						<!--  Style="{StaticResource Tblk.Lv1.Style}"  -->
 					</Border>
 
 					<Border x:Name="Name"
@@ -844,23 +841,20 @@
 							Grid.ColumnSpan="1"
 							Style="{StaticResource Bdr.Lv1.Prime.Item}"
 							>
-						<TextBox Text="{Binding Path=Ustyle.Name}"
-								
-								/>
-						<!-- Style="{StaticResource Tblk.Lv1.Style}" -->
+						<TextBox Text="{Binding Path=Ustyle.Name}" />
+						<!--  Style="{StaticResource Tblk.Lv1.Style}"  -->
 					</Border>
 
 					<Border x:Name="DescTitle"
 							Grid.Column="2"
 							Grid.Row="1"
 							Style="{StaticResource Bdr.Lv1.Sub.HdrB}"
-					>
-						<TextBlock 
-								FontSize="{StaticResource FontSize.Normal}"
+							>
+						<TextBlock FontSize="{StaticResource FontSize.Normal}"
 								Text="Description"
 								TextAlignment="Left"
 								Style="{StaticResource Tblk.Lv1.StyleB}"
-						/>
+								/>
 					</Border>
 
 					<Border x:Name="Desc"
@@ -1138,7 +1132,8 @@
 								IsEditable="False"
 								IsReadOnly="True"
 								IsSynchronizedWithCurrentItem="True"
-								ItemsSource="{Binding Path=CbxList, Mode=OneWay}"
+								ItemsSource="{Binding Path=CbxList,
+																			Mode=OneWay}"
 								Margin="0,0,0,3"
 								MaxDropDownHeight="200"
 								Padding="3"
@@ -1148,7 +1143,7 @@
 								custom:CsComboBoxAp.ComboBoxBdrRadius="{StaticResource Normal.CornerRadius}"
 								custom:CsComboBoxAp.DropDownBdrBrush="{StaticResource ComboBox.ListItem.Background.Normal}"
 								custom:CsComboBoxAp.DropDownBdrRadius="4"
-								custom:CsComboBoxAp.DropDownBdrThickness="4"
+								custom:CsComboBoxAp.DropDownBdrThickness="1"
 								custom:CsComboBoxAp.DropDownBrush="{StaticResource ComboBox.Background.Normal}"
 								custom:CsComboBoxAp.DropDownWidthAdjustment="-10.0"
 								custom:CsComboBoxAp.MouseOverBrush="{StaticResource ComboBox.Subject.Background.MouseOver}"
@@ -1898,6 +1893,7 @@
 																			Path=StylesView}"
 								HorizontalAlignment="Stretch"
 								HorizontalContentAlignment="Stretch"
+								Initialized="lbx_Initialized"
 								IsSynchronizedWithCurrentItem="True"
 								ItemContainerStyle="{DynamicResource ListBoxItemContainerStyle1}"
 								ItemTemplate="{StaticResource Lv1ItemTemplate}"
@@ -1911,7 +1907,7 @@
 																			 Path=LbxSelItem,
 																			 Mode=OneWayToSource}"
 								VerticalAlignment="Top"
-								d:DataContext="{x:Static unitsUtil:UnitStdStylesD.ListD}" Initialized="lbx_Initialized"
+								d:DataContext="{x:Static unitsUtil:UnitStdStylesD.ListD}"
 								d:SelectedIndex="2"
 								>
 
