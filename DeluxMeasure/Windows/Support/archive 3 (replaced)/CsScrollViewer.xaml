@@ -38,19 +38,6 @@
 
 	<!--
 		custom properties
-		
-		ScrollViewerCornerRadius
-		ScrollViewerBorderThickness
-		ScrollViewerBorderColor
-		
-		CornerRectBkgBrush
-
-		CornerRect1BdrBrush
-		CornerRect1BdrThickness
-		CornerRect1BdrRadius
-		// the above for 1, 2, 3, & 4
-
-
 
 		custom:CsScrollViewerAp.ScrollViewerBorderColor="Aqua"
 		custom:CsScrollViewerAp.ScrollViewerBorderThickness="1"
@@ -64,7 +51,7 @@
 		// the above for rect 1, 2, 3, 4
 
 
-	-->
+-->
 
 
 	<!--
@@ -87,21 +74,7 @@
 			TargetType="ScrollBar"
 			>
 
-		<!-- 
-		<Setter Property="custom:CsScrollViewerAp.CornerRectBkgBrush" Value="{Binding RelativeSource={RelativeSource AncestorType={x:Type ScrollViewer}}, Path=(custom:CsScrollViewerAp.CornerRectBkgBrush)}" />
-		<Setter Property="custom:CsScrollBarAp.VerticalCornerRadius" Value="{Binding RelativeSource={RelativeSource AncestorType={x:Type ScrollViewer}}, Path=(custom:CsScrollBarAp.VerticalCornerRadius)}" />
-		<Setter Property="custom:CsScrollBarAp.HorizontalCornerRadius" Value="{Binding RelativeSource={RelativeSource AncestorType={x:Type ScrollViewer}}, Path=(custom:CsScrollBarAp.HorizontalCornerRadius)}" />
-		<Setter Property="custom:CsScrollBarAp.ThumbCornerRadius" Value="{Binding RelativeSource={RelativeSource AncestorType={x:Type ScrollViewer}}, Path=(custom:CsScrollBarAp.ThumbCornerRadius)}" />
-		<Setter Property="custom:CsScrollBarAp.ScrollBarWidth" Value="{Binding RelativeSource={RelativeSource AncestorType={x:Type ScrollViewer}}, Path=(custom:CsScrollBarAp.ScrollBarWidth)}" />
-		<Setter Property="custom:CsScrollBarAp.TrackWidth" Value="{Binding RelativeSource={RelativeSource AncestorType={x:Type ScrollViewer}}, Path=(custom:CsScrollBarAp.TrackWidth)}" />
-		<Setter Property="custom:CsScrollBarAp.RepeatButtonLength" Value="{Binding RelativeSource={RelativeSource AncestorType={x:Type ScrollViewer}}, Path=(custom:CsScrollBarAp.RepeatButtonLength)}" />
-		<Setter Property="custom:CsScrollBarAp.RepeatButtonIconLength" Value="{Binding RelativeSource={RelativeSource AncestorType={x:Type ScrollViewer}}, Path=(custom:CsScrollBarAp.RepeatButtonIconLength)}" />
-		<Setter Property="custom:CsScrollBarAp.RepeatButtonIconGirth" Value="{Binding RelativeSource={RelativeSource AncestorType={x:Type ScrollViewer}}, Path=(custom:CsScrollBarAp.RepeatButtonIconGirth)}" />
-		<Setter Property="custom:CsScrollBarAp.IconMarginTopEnd" Value="{Binding RelativeSource={RelativeSource AncestorType={x:Type ScrollViewer}}, Path=(custom:CsScrollBarAp.IconMarginTopEnd)}" />
-		<Setter Property="custom:CsScrollBarAp.IconMarginBottomEnd" Value="{Binding RelativeSource={RelativeSource AncestorType={x:Type ScrollViewer}}, Path=(custom:CsScrollBarAp.IconMarginBottomEnd)}" />
-		<Setter Property="custom:CsScrollBarAp.IconMarginLeftEnd" Value="{Binding RelativeSource={RelativeSource AncestorType={x:Type ScrollViewer}}, Path=(custom:CsScrollBarAp.IconMarginLeftEnd)}" />
-		<Setter Property="custom:CsScrollBarAp.IconMarginRightEnd" Value="{Binding RelativeSource={RelativeSource AncestorType={x:Type ScrollViewer}}, Path=(custom:CsScrollBarAp.IconMarginRightEnd)}" />
--->
+
 	</Style>
 
 	<Style x:Key="ScrollBarVert"

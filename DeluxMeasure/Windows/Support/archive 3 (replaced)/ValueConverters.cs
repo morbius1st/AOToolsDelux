@@ -53,9 +53,7 @@ namespace DeluxMeasure.Windows.Support
 		{
 			double valu = (double) (value ?? 0.0);
 
-			bool result = double.TryParse((string) (parameter ?? "1.0"), out double divisor);
-
-			if (!result || divisor == 0) return valu;
+			Double.TryParse((string) (parameter ?? "1.0"), out double divisor);
 
 			return valu / divisor;
 		}
@@ -65,6 +63,29 @@ namespace DeluxMeasure.Windows.Support
 			return null;
 		}
 	}
+
+// #region bool to visibility value converter
+//
+// 	// yes = visible
+// 	// no = hidden
+// 	[ValueConversion(typeof(bool), typeof(Visibility))]
+// 	public class BoolToVisibilityConverter : IValueConverter
+// 	{
+// 		public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+// 		{
+// 			// if (targetType != typeof(object))
+// 			// 	throw new InvalidOperationException("The target must be an object");
+// 			return ((bool) (value ?? false)) ? Visibility.Visible : Visibility.Hidden;
+// 		}
+//
+// 		public object ConvertBack(object value, Type targetType, object parameter,
+// 			System.Globalization.CultureInfo culture)
+// 		{
+// 			throw new NotSupportedException();
+// 		}
+// 	}
+//
+// #endregion
 
 #endregion
 
@@ -94,48 +115,6 @@ namespace DeluxMeasure.Windows.Support
 
 #endregion
 
-
-
-#region double subtract converter
-
-	[ValueConversion(typeof(double), typeof(double))]
-	public class SubtractConverter : IValueConverter
-	{
-		public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
-		{
-			double valu = (double) (value ?? 0.0);
-			double operand = 0.0;
-
-			bool result = false;
-
-			if (parameter is string)
-			{
-				result = double.TryParse((string) (parameter ?? "1.0"), out operand);
-			}
-			else
-			{
-				if (parameter is double)
-				{
-					operand = (double) parameter;
-					result = true;
-				}
-			}
-
-			if (!result) return valu;
-
-			return (valu - operand) < 0 ? 0 : valu - operand;
-		}
-
-		public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
-		{
-			return null;
-		}
-	}
-
-#endregion
-
-
-
 #region pass-through converter
 
 	// for debugging only
@@ -155,30 +134,6 @@ namespace DeluxMeasure.Windows.Support
 	}
 
 #endregion
-
-
-// #region bool to visibility value converter
-//
-// 	// yes = visible
-// 	// no = hidden
-// 	[ValueConversion(typeof(bool), typeof(Visibility))]
-// 	public class BoolToVisibilityConverter : IValueConverter
-// 	{
-// 		public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
-// 		{
-// 			// if (targetType != typeof(object))
-// 			// 	throw new InvalidOperationException("The target must be an object");
-// 			return ((bool) (value ?? false)) ? Visibility.Visible : Visibility.Hidden;
-// 		}
-//
-// 		public object ConvertBack(object value, Type targetType, object parameter,
-// 			System.Globalization.CultureInfo culture)
-// 		{
-// 			throw new NotSupportedException();
-// 		}
-// 	}
-//
-// #endregion
 //
 // #region bool to "On" / "Off" string value converter
 //

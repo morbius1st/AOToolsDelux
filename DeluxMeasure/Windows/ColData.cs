@@ -1,5 +1,5 @@
 ﻿// Solution:     AOToolsDelux
-// Project:       CSToolsStudies
+// Project:       DeluxMeasure
 // File:             ColData.cs
 // Created:      2022-01-29 (6:32 PM)
 

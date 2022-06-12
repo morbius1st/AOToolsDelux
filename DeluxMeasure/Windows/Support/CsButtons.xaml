@@ -45,8 +45,8 @@
 
 			<!-- true -->
 			<Trigger Property="IsDefault" Value="true">
-				<Setter Property="BorderBrush" TargetName="bdr1" Value="{StaticResource Btn.Bdr.Inner.Disabled}" />
-				<Setter Property="Background" TargetName="border" Value="{StaticResource Btn.Bg.Disabled}" />
+				<Setter Property="BorderBrush" TargetName="bdr1" Value="{StaticResource Btn.Bdr.Inner.IsDefault}" />
+				<Setter Property="Background" TargetName="border" Value="{StaticResource Btn.Bg.IsDefault}" />
 
 				<!-- false -->
 			</Trigger>
@@ -70,7 +70,7 @@
 
 			<Trigger Property="IsEnabled" Value="False">
 				<Setter Property="Foreground" Value="{DynamicResource Btn.Fg.NotSel}" />
-				<Setter Property="BorderBrush" TargetName="bdr1" Value="{DynamicResource Btn.Bdr.Inner.NotSel}" />
+				<Setter Property="BorderBrush" TargetName="bdr1" Value="{DynamicResource Btn.Bdr.NotSel.Inner}" />
 				<Setter Property="Background" TargetName="border" Value="{DynamicResource Btn.Bg.NotSel}" />
 				<Setter Property="BorderBrush" TargetName="border" Value="{DynamicResource Btn.Bdr.NotSel}" />
 			</Trigger>

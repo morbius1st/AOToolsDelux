@@ -28,14 +28,9 @@ Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "SharedRevitCode", "SharedRe
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DeluxMeasure", "DeluxMeasure\DeluxMeasure.csproj", "{3872BF2E-9458-4C6C-BAC7-40A6CD14C397}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DeluxMeasureStudies", "DeluxMeasureStudies\DeluxMeasureStudies.csproj", "{868CD99E-E6AF-4FA1-B49C-17A1FE941F0D}"
+EndProject
 Global
-	GlobalSection(SharedMSBuildProjectFiles) = preSolution
-		SharedRevitCode\SharedRevitCode.projitems*{39a4d97c-8d2e-44a7-ada6-e6f6f3afdb5c}*SharedItemsImports = 13
-		SharedCode\SharedCode.projitems*{8d6dbac0-6821-42bc-a690-e88844968d90}*SharedItemsImports = 4
-		SharedRevitCode\SharedRevitCode.projitems*{8d6dbac0-6821-42bc-a690-e88844968d90}*SharedItemsImports = 4
-		SharedCode\SharedCode.projitems*{b822992c-8e9f-4073-a9b5-7a9b87961745}*SharedItemsImports = 13
-		SharedCode\SharedCode.projitems*{bc068b64-b232-4a08-82b6-2889ec04e345}*SharedItemsImports = 4
-	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		AOPvDbg|Any CPU = AOPvDbg|Any CPU
 		AOPvDbg|x64 = AOPvDbg|x64
@@ -574,11 +569,90 @@ Global
 		{3872BF2E-9458-4C6C-BAC7-40A6CD14C397}.ToolsDlxRel2018|Any CPU.Build.0 = Debug|Any CPU
 		{3872BF2E-9458-4C6C-BAC7-40A6CD14C397}.ToolsDlxRel2018|x64.ActiveCfg = Debug|Any CPU
 		{3872BF2E-9458-4C6C-BAC7-40A6CD14C397}.ToolsDlxRel2018|x64.Build.0 = Debug|Any CPU
+		{868CD99E-E6AF-4FA1-B49C-17A1FE941F0D}.AOPvDbg|Any CPU.ActiveCfg = Debug|Any CPU
+		{868CD99E-E6AF-4FA1-B49C-17A1FE941F0D}.AOPvDbg|Any CPU.Build.0 = Debug|Any CPU
+		{868CD99E-E6AF-4FA1-B49C-17A1FE941F0D}.AOPvDbg|x64.ActiveCfg = Debug|Any CPU
+		{868CD99E-E6AF-4FA1-B49C-17A1FE941F0D}.AOPvDbg|x64.Build.0 = Debug|Any CPU
+		{868CD99E-E6AF-4FA1-B49C-17A1FE941F0D}.AOPvRel|Any CPU.ActiveCfg = Debug|Any CPU
+		{868CD99E-E6AF-4FA1-B49C-17A1FE941F0D}.AOPvRel|Any CPU.Build.0 = Debug|Any CPU
+		{868CD99E-E6AF-4FA1-B49C-17A1FE941F0D}.AOPvRel|x64.ActiveCfg = Debug|Any CPU
+		{868CD99E-E6AF-4FA1-B49C-17A1FE941F0D}.AOPvRel|x64.Build.0 = Debug|Any CPU
+		{868CD99E-E6AF-4FA1-B49C-17A1FE941F0D}.AOTVuDbg|Any CPU.ActiveCfg = Debug|Any CPU
+		{868CD99E-E6AF-4FA1-B49C-17A1FE941F0D}.AOTVuDbg|Any CPU.Build.0 = Debug|Any CPU
+		{868CD99E-E6AF-4FA1-B49C-17A1FE941F0D}.AOTVuDbg|x64.ActiveCfg = Debug|Any CPU
+		{868CD99E-E6AF-4FA1-B49C-17A1FE941F0D}.AOTVuDbg|x64.Build.0 = Debug|Any CPU
+		{868CD99E-E6AF-4FA1-B49C-17A1FE941F0D}.AOTVuRel|Any CPU.ActiveCfg = Debug|Any CPU
+		{868CD99E-E6AF-4FA1-B49C-17A1FE941F0D}.AOTVuRel|Any CPU.Build.0 = Debug|Any CPU
+		{868CD99E-E6AF-4FA1-B49C-17A1FE941F0D}.AOTVuRel|x64.ActiveCfg = Debug|Any CPU
+		{868CD99E-E6AF-4FA1-B49C-17A1FE941F0D}.AOTVuRel|x64.Build.0 = Debug|Any CPU
+		{868CD99E-E6AF-4FA1-B49C-17A1FE941F0D}.CsToolsStudy|Any CPU.ActiveCfg = Debug|Any CPU
+		{868CD99E-E6AF-4FA1-B49C-17A1FE941F0D}.CsToolsStudy|Any CPU.Build.0 = Debug|Any CPU
+		{868CD99E-E6AF-4FA1-B49C-17A1FE941F0D}.CsToolsStudy|x64.ActiveCfg = Debug|Any CPU
+		{868CD99E-E6AF-4FA1-B49C-17A1FE941F0D}.CsToolsStudy|x64.Build.0 = Debug|Any CPU
+		{868CD99E-E6AF-4FA1-B49C-17A1FE941F0D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{868CD99E-E6AF-4FA1-B49C-17A1FE941F0D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{868CD99E-E6AF-4FA1-B49C-17A1FE941F0D}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{868CD99E-E6AF-4FA1-B49C-17A1FE941F0D}.Debug|x64.Build.0 = Debug|Any CPU
+		{868CD99E-E6AF-4FA1-B49C-17A1FE941F0D}.DeluxMeasure|Any CPU.ActiveCfg = Debug|Any CPU
+		{868CD99E-E6AF-4FA1-B49C-17A1FE941F0D}.DeluxMeasure|Any CPU.Build.0 = Debug|Any CPU
+		{868CD99E-E6AF-4FA1-B49C-17A1FE941F0D}.DeluxMeasure|x64.ActiveCfg = Debug|Any CPU
+		{868CD99E-E6AF-4FA1-B49C-17A1FE941F0D}.DeluxMeasure|x64.Build.0 = Debug|Any CPU
+		{868CD99E-E6AF-4FA1-B49C-17A1FE941F0D}.DxMeasureDbg2017|Any CPU.ActiveCfg = Debug|Any CPU
+		{868CD99E-E6AF-4FA1-B49C-17A1FE941F0D}.DxMeasureDbg2017|Any CPU.Build.0 = Debug|Any CPU
+		{868CD99E-E6AF-4FA1-B49C-17A1FE941F0D}.DxMeasureDbg2017|x64.ActiveCfg = Debug|Any CPU
+		{868CD99E-E6AF-4FA1-B49C-17A1FE941F0D}.DxMeasureDbg2017|x64.Build.0 = Debug|Any CPU
+		{868CD99E-E6AF-4FA1-B49C-17A1FE941F0D}.DxMeasureDbg2018|Any CPU.ActiveCfg = Debug|Any CPU
+		{868CD99E-E6AF-4FA1-B49C-17A1FE941F0D}.DxMeasureDbg2018|Any CPU.Build.0 = Debug|Any CPU
+		{868CD99E-E6AF-4FA1-B49C-17A1FE941F0D}.DxMeasureDbg2018|x64.ActiveCfg = Debug|Any CPU
+		{868CD99E-E6AF-4FA1-B49C-17A1FE941F0D}.DxMeasureDbg2018|x64.Build.0 = Debug|Any CPU
+		{868CD99E-E6AF-4FA1-B49C-17A1FE941F0D}.DxMeasureDbg2019|Any CPU.ActiveCfg = Debug|Any CPU
+		{868CD99E-E6AF-4FA1-B49C-17A1FE941F0D}.DxMeasureDbg2019|Any CPU.Build.0 = Debug|Any CPU
+		{868CD99E-E6AF-4FA1-B49C-17A1FE941F0D}.DxMeasureDbg2019|x64.ActiveCfg = Debug|Any CPU
+		{868CD99E-E6AF-4FA1-B49C-17A1FE941F0D}.DxMeasureDbg2019|x64.Build.0 = Debug|Any CPU
+		{868CD99E-E6AF-4FA1-B49C-17A1FE941F0D}.DxMeasureDbg2020|Any CPU.ActiveCfg = Debug|Any CPU
+		{868CD99E-E6AF-4FA1-B49C-17A1FE941F0D}.DxMeasureDbg2020|Any CPU.Build.0 = Debug|Any CPU
+		{868CD99E-E6AF-4FA1-B49C-17A1FE941F0D}.DxMeasureDbg2020|x64.ActiveCfg = Debug|Any CPU
+		{868CD99E-E6AF-4FA1-B49C-17A1FE941F0D}.DxMeasureDbg2020|x64.Build.0 = Debug|Any CPU
+		{868CD99E-E6AF-4FA1-B49C-17A1FE941F0D}.DxMeasureRel2018|Any CPU.ActiveCfg = Debug|Any CPU
+		{868CD99E-E6AF-4FA1-B49C-17A1FE941F0D}.DxMeasureRel2018|Any CPU.Build.0 = Debug|Any CPU
+		{868CD99E-E6AF-4FA1-B49C-17A1FE941F0D}.DxMeasureRel2018|x64.ActiveCfg = Debug|Any CPU
+		{868CD99E-E6AF-4FA1-B49C-17A1FE941F0D}.DxMeasureRel2018|x64.Build.0 = Debug|Any CPU
+		{868CD99E-E6AF-4FA1-B49C-17A1FE941F0D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{868CD99E-E6AF-4FA1-B49C-17A1FE941F0D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{868CD99E-E6AF-4FA1-B49C-17A1FE941F0D}.Release|x64.ActiveCfg = Release|Any CPU
+		{868CD99E-E6AF-4FA1-B49C-17A1FE941F0D}.Release|x64.Build.0 = Release|Any CPU
+		{868CD99E-E6AF-4FA1-B49C-17A1FE941F0D}.ToolsDlxDbg2017|Any CPU.ActiveCfg = Debug|Any CPU
+		{868CD99E-E6AF-4FA1-B49C-17A1FE941F0D}.ToolsDlxDbg2017|Any CPU.Build.0 = Debug|Any CPU
+		{868CD99E-E6AF-4FA1-B49C-17A1FE941F0D}.ToolsDlxDbg2017|x64.ActiveCfg = Debug|Any CPU
+		{868CD99E-E6AF-4FA1-B49C-17A1FE941F0D}.ToolsDlxDbg2017|x64.Build.0 = Debug|Any CPU
+		{868CD99E-E6AF-4FA1-B49C-17A1FE941F0D}.ToolsDlxDbg2018|Any CPU.ActiveCfg = Debug|Any CPU
+		{868CD99E-E6AF-4FA1-B49C-17A1FE941F0D}.ToolsDlxDbg2018|Any CPU.Build.0 = Debug|Any CPU
+		{868CD99E-E6AF-4FA1-B49C-17A1FE941F0D}.ToolsDlxDbg2018|x64.ActiveCfg = Debug|Any CPU
+		{868CD99E-E6AF-4FA1-B49C-17A1FE941F0D}.ToolsDlxDbg2018|x64.Build.0 = Debug|Any CPU
+		{868CD99E-E6AF-4FA1-B49C-17A1FE941F0D}.ToolsDlxDbg2019|Any CPU.ActiveCfg = Debug|Any CPU
+		{868CD99E-E6AF-4FA1-B49C-17A1FE941F0D}.ToolsDlxDbg2019|Any CPU.Build.0 = Debug|Any CPU
+		{868CD99E-E6AF-4FA1-B49C-17A1FE941F0D}.ToolsDlxDbg2019|x64.ActiveCfg = Debug|Any CPU
+		{868CD99E-E6AF-4FA1-B49C-17A1FE941F0D}.ToolsDlxDbg2019|x64.Build.0 = Debug|Any CPU
+		{868CD99E-E6AF-4FA1-B49C-17A1FE941F0D}.ToolsDlxDbg2020|Any CPU.ActiveCfg = Debug|Any CPU
+		{868CD99E-E6AF-4FA1-B49C-17A1FE941F0D}.ToolsDlxDbg2020|Any CPU.Build.0 = Debug|Any CPU
+		{868CD99E-E6AF-4FA1-B49C-17A1FE941F0D}.ToolsDlxDbg2020|x64.ActiveCfg = Debug|Any CPU
+		{868CD99E-E6AF-4FA1-B49C-17A1FE941F0D}.ToolsDlxDbg2020|x64.Build.0 = Debug|Any CPU
+		{868CD99E-E6AF-4FA1-B49C-17A1FE941F0D}.ToolsDlxRel2018|Any CPU.ActiveCfg = Debug|Any CPU
+		{868CD99E-E6AF-4FA1-B49C-17A1FE941F0D}.ToolsDlxRel2018|Any CPU.Build.0 = Debug|Any CPU
+		{868CD99E-E6AF-4FA1-B49C-17A1FE941F0D}.ToolsDlxRel2018|x64.ActiveCfg = Debug|Any CPU
+		{868CD99E-E6AF-4FA1-B49C-17A1FE941F0D}.ToolsDlxRel2018|x64.Build.0 = Debug|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {3CA417EF-B7B4-439E-9323-A61FC17E4CE6}
+	EndGlobalSection
+	GlobalSection(SharedMSBuildProjectFiles) = preSolution
+		SharedRevitCode\SharedRevitCode.projitems*{39a4d97c-8d2e-44a7-ada6-e6f6f3afdb5c}*SharedItemsImports = 13
+		SharedCode\SharedCode.projitems*{8d6dbac0-6821-42bc-a690-e88844968d90}*SharedItemsImports = 4
+		SharedRevitCode\SharedRevitCode.projitems*{8d6dbac0-6821-42bc-a690-e88844968d90}*SharedItemsImports = 4
+		SharedCode\SharedCode.projitems*{b822992c-8e9f-4073-a9b5-7a9b87961745}*SharedItemsImports = 13
+		SharedCode\SharedCode.projitems*{bc068b64-b232-4a08-82b6-2889ec04e345}*SharedItemsImports = 4
 	EndGlobalSection
 EndGlobal

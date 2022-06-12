@@ -160,6 +160,7 @@
 			<SolidColorBrush x:Key="ComboBox.Text.Normal" Color="{DynamicResource Gray.950}" />
 			<SolidColorBrush x:Key="ComboBox.Text.Disabled" Color="{DynamicResource Gray.600}" />
 			<SolidColorBrush x:Key="ComboBox.Subject.Background.Normal" Color="{DynamicResource Blue.450}" />
+			<SolidColorBrush x:Key="ComboBox.Background.Normal" Color="{DynamicResource Blue.450}" />
 			<!--    -->
 			<!-- <SolidColorBrush x:Key="ComboBox.Subject.Background.MouseOver" Color="{DynamicResource Blue.600}" /> -->
 			<!-- <SolidColorBrush x:Key="ComboBox.Subject.Background.Disabled" Color="{DynamicResource Blue.300}" /> -->
@@ -1145,14 +1146,15 @@
 								custom:CsComboBoxAp.DropDownBdrRadius="4"
 								custom:CsComboBoxAp.DropDownBdrThickness="1"
 								custom:CsComboBoxAp.DropDownBrush="{StaticResource ComboBox.Background.Normal}"
-								custom:CsComboBoxAp.DropDownWidthAdjustment="-10.0"
-								custom:CsComboBoxAp.MouseOverBrush="{StaticResource ComboBox.Subject.Background.MouseOver}"
-								custom:CsComboBoxAp.NotEnabledBrush="{StaticResource ComboBox.Subject.Background.Disabled}"
+
 								d:DisplayMemberPath="Value.DropDownName"
 								d:ItemsSource="{x:Static unitsUtil:UnitStdStylesD.SStdStyles}"
 								d:SelectedIndex="0"
 								Style="{StaticResource CsComboBoxStyle}"
 								>
+							<!-- custom:CsComboBoxAp.DropDownWidthAdjustment="-10.0" -->
+							<!-- custom:CsComboBoxAp.MouseOverBrush="{StaticResource ComboBox.Subject.Background.MouseOver}" -->
+							<!-- custom:CsComboBoxAp.NotEnabledBrush="{StaticResource ComboBox.Subject.Background.Disabled}" -->
 
 						</ComboBox>
 

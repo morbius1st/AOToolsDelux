@@ -1,9 +1,7 @@
 ﻿#region + Using Directives
 
 using System;
-using System.ComponentModel;
 using System.Diagnostics;
-using System.Runtime.CompilerServices;
 using System.Windows.Markup;
 using System.Windows.Media;
 using EnvDTE;
@@ -20,43 +18,43 @@ namespace DeluxMeasure.Windows.Support
 {
 	
 	[MarkupExtensionReturnType(typeof(System.Windows.Media.Color))]
-	public class CsColor : MarkupExtension, INotifyPropertyChanged
+	public class CsColor : MarkupExtension
 	{
-		private System.Windows.Media.Color c;
+		private System.Windows.Media.Color? c;
 
 		public CsColor() { }
 
-		public System.Windows.Media.Color Color 
+		public System.Windows.Media.Color Color
 		{
-			get => c;
+			get => c.Value;
 			set
 			{
 				c = value;
-				OnPropertyChanged();
 			}
 		}
 
-		public System.Windows.Media.Color ColorX
+		// public Color C
+		// {
+			// get
+			// {
+				// return c.value;
+			// }
+			// set
+			// {
+				// c = value;
+			// }
+		// }
+
+		public System.Windows.Media.Color ToColor()
 		{
-			get => c;
-			set
-			{
-				c = value;
-				OnPropertyChanged();
-			}
-		}
+			return c.Value;
 
+		}
 
 		public override object ProvideValue(IServiceProvider serviceProvider)
 		{
-			return (System.Windows.Media.Color) Color;
-		}
-
-		public event PropertyChangedEventHandler PropertyChanged;
-
-		private void OnPropertyChanged([CallerMemberName] string memberName = "")
-		{
-			PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(memberName));
+			return (System.Windows.Media.Color)ToColor();
+			
 		}
 	}
 

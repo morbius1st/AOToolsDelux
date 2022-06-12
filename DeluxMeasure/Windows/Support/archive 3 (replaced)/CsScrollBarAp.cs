@@ -70,17 +70,17 @@ namespace DeluxMeasure.Windows.Support
 
 	#region vertical corner radius
 
-		public static readonly DependencyProperty VerticalCornerRadiusProperty = DependencyProperty.RegisterAttached(
-			"VerticalCornerRadius", typeof(CornerRadius), typeof(CsScrollBarAp), new FrameworkPropertyMetadata(new CornerRadius(0), FrameworkPropertyMetadataOptions.Inherits));
+		public static readonly DependencyProperty VertCornerRadiusProperty = DependencyProperty.RegisterAttached(
+			"VertCornerRadius", typeof(CornerRadius), typeof(CsScrollBarAp), new FrameworkPropertyMetadata(new CornerRadius(0), FrameworkPropertyMetadataOptions.Inherits));
 
-		public static void SetVerticalCornerRadius(UIElement element, CornerRadius value)
+		public static void SetVertCornerRadius(UIElement element, CornerRadius value)
 		{
-			element.SetValue(VerticalCornerRadiusProperty, value);
+			element.SetValue(VertCornerRadiusProperty, value);
 		}
 
-		public static CornerRadius GetVerticalCornerRadius(UIElement element)
+		public static CornerRadius GetVertCornerRadius(UIElement element)
 		{
-			return (CornerRadius) element.GetValue(VerticalCornerRadiusProperty);
+			return (CornerRadius) element.GetValue(VertCornerRadiusProperty);
 		}
 
 	#endregion
@@ -122,17 +122,17 @@ namespace DeluxMeasure.Windows.Support
 
 	#region horizontal corner radius
 
-		public static readonly DependencyProperty HorizontalCornerRadiusProperty = DependencyProperty.RegisterAttached(
-			"HorizontalCornerRadius", typeof(CornerRadius), typeof(CsScrollBarAp), new FrameworkPropertyMetadata(new CornerRadius(0), FrameworkPropertyMetadataOptions.Inherits));
+		public static readonly DependencyProperty HorizCornerRadiusProperty = DependencyProperty.RegisterAttached(
+			"HorizCornerRadius", typeof(CornerRadius), typeof(CsScrollBarAp), new FrameworkPropertyMetadata(new CornerRadius(0), FrameworkPropertyMetadataOptions.Inherits));
 
-		public static void SetHorizontalCornerRadius(UIElement element, CornerRadius value)
+		public static void SetHorizCornerRadius(UIElement element, CornerRadius value)
 		{
-			element.SetValue(HorizontalCornerRadiusProperty, value);
+			element.SetValue(HorizCornerRadiusProperty, value);
 		}
 
-		public static CornerRadius GetHorizontalCornerRadius(UIElement element)
+		public static CornerRadius GetHorizCornerRadius(UIElement element)
 		{
-			return (CornerRadius) element.GetValue(HorizontalCornerRadiusProperty);
+			return (CornerRadius) element.GetValue(HorizCornerRadiusProperty);
 		}
 
 	#endregion

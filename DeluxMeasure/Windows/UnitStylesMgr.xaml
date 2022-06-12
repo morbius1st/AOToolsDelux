@@ -1,0 +1,43 @@
+﻿<Window x:Class="DeluxMeasure.Windows.UnitStylesMgr"
+		xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+		xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+		xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+		xmlns:local="clr-namespace:DeluxMeasure.Windows"
+		xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+		xmlns:cs="clr-namespace:DeluxMeasure.Windows.Support"
+		xmlns:sys="clr-namespace:System;assembly=mscorlib"
+		xmlns:util="clr-namespace:DeluxMeasure.UnitsUtil"
+		Title="Unit Styles Manager"
+		Height="740"
+		Width="960"
+		mc:Ignorable="d"
+		>
+	<Window.Resources>
+		<ResourceDictionary>
+			<ResourceDictionary.MergedDictionaries>
+				<ResourceDictionary Source="/Windows/ResourceFiles/XamlResources/MasterColorList.xaml" />
+				<ResourceDictionary Source="/Windows/ResourceFiles/XamlResources/VisualStates.xaml" />
+				<ResourceDictionary Source="/Windows/Skin/CyberStudioSkin.xaml" />
+				<ResourceDictionary Source="/Windows/Support/CsExpander.xaml" />
+				<ResourceDictionary Source="/Windows/Support/CsScrollBar.xaml" />
+				<ResourceDictionary Source="/Windows/Support/CsScrollViewer.xaml" />
+				<ResourceDictionary Source="/Windows/Support/CsComboBox.xaml" />
+				<ResourceDictionary Source="/Windows/Support/CsButtons.xaml" />
+			</ResourceDictionary.MergedDictionaries>
+
+
+
+
+
+
+
+			</ResourceDictionary>
+
+	</Window.Resources>
+
+	<Grid
+			Margin="15, 12, 8, 8"
+			>
+
+	</Grid>
+</Window>
