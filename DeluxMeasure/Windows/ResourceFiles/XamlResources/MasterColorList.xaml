@@ -318,6 +318,7 @@
 
 
 	<!--  light.blue color range  -->
+	<Color x:Key="Light.Blue.990">#D3ECFF</Color>
 	<Color x:Key="Light.Blue.970">#C8E8FF</Color>
 	<Color x:Key="Light.Blue.950">#C0E5FF</Color>
 	<Color x:Key="Light.Blue.900">#B7E1FF</Color>

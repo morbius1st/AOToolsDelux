@@ -686,8 +686,7 @@
 					BasedOn="{StaticResource BtnBase}"
 					TargetType="Button"
 					>
-				<Setter Property="Margin" Value="5,0,0,0">
-				</Setter>
+				<Setter Property="Margin" Value="5,0,0,0"/>
 				<Setter Property="HorizontalAlignment" Value="Right" />
 				<Setter Property="VerticalAlignment" Value="Bottom" />
 				<Setter Property="Padding" Value="3,0,3,3" />

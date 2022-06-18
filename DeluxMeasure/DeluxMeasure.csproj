@@ -121,6 +121,7 @@
     <Compile Include="..\..\LibraryRevit\LibraryRevit\RevitLibrary.cs">
       <Link>.Linked\RevitLibrary.cs</Link>
     </Compile>
+    <Compile Include="Properties\Annotations.cs" />
     <Compile Include="Settings\AppSettings.cs" />
     <Compile Include="Settings\DataSet.cs" />
     <Compile Include="Settings\HeadingSetting.cs" />

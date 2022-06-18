@@ -1,0 +1,1714 @@
+﻿<Window x:Name="win"
+		x:Class="DeluxMeasureStudies.Windows.Test"
+		xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+		xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+		xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+		xmlns:local="clr-namespace:DeluxMeasureStudies.Windows"
+		xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+		xmlns:sys="clr-namespace:System;assembly=mscorlib"
+		xmlns:cs="clr-namespace:DeluxMeasure.Windows.Support"
+		xmlns:cx="clr-namespace:DeluxMeasureStudies.Windows.Support"
+		Title="Styles"
+		Height="1300"
+		Width="1200"
+		Background="{DynamicResource Normal.Window.Background}"
+		DataContext="{Binding ElementName=win}"
+		FontSize="{DynamicResource FontSize.Normal}"
+		Foreground="{DynamicResource Window.Fg.IsSel}"
+		ResizeMode="NoResize"
+		mc:Ignorable="d"
+		>
+
+	<Window.Resources>
+
+		<ResourceDictionary>
+
+			<ResourceDictionary.MergedDictionaries>
+				<ResourceDictionary Source="C:\Users\jeffs\Documents\Programming\VisualStudioProjects\RevitProjects\AOToolsDelux\DeluxMeasure\Windows\ResourceFiles\XamlResources\MasterColorList.xaml" />
+				<ResourceDictionary Source="C:\Users\jeffs\Documents\Programming\VisualStudioProjects\RevitProjects\AOToolsDelux\DeluxMeasure\Windows\ResourceFiles\XamlResources\VisualStates.xaml" />
+				<ResourceDictionary Source="C:\Users\jeffs\Documents\Programming\VisualStudioProjects\RevitProjects\AOToolsDelux\DeluxMeasure\Windows\Skin\CyberStudioSkin.xaml" />
+				<ResourceDictionary Source="/Windows/Support/CsExpander.xaml" />
+				<ResourceDictionary Source="/Windows/Support/CsScrollBar.xaml" />
+				<ResourceDictionary Source="/Windows/Support/CsScrollViewer.xaml" />
+				<ResourceDictionary Source="/Windows/Support/CsComboBox.xaml" />
+				<ResourceDictionary Source="/Windows/Support/CsButtons.xaml" />
+			</ResourceDictionary.MergedDictionaries>
+
+			<sys:Double x:Key="FontSize.XLarge">18</sys:Double>
+			<!--  header size  -->
+			<sys:Double x:Key="FontSize.Large">15</sys:Double>
+			<!--  typical font size  -->
+			<sys:Double x:Key="FontSize.Normal">13</sys:Double>
+			<sys:Double x:Key="FontSize.Smaller">12</sys:Double>
+			<sys:Double x:Key="FontSize.Small">11</sys:Double>
+			<sys:Double x:Key="FontSize.XSmall">10</sys:Double>
+
+
+
+			<sys:Double x:Key="TitleWidth">200</sys:Double>
+			<sys:Double x:Key="SampleWidth">100</sys:Double>
+
+			<Thickness x:Key="SampleMarginField1"
+					Bottom="0"
+					Left="0"
+					Right="10"
+					Top="0"
+					>
+			</Thickness>
+
+			<cs:AddConverter x:Key="AddConverter" />
+
+
+			<Style x:Key="RowTitleBorder"
+					TargetType="Border"
+					>
+				<Setter Property="BorderThickness" Value="0,0,1,0" />
+				<Setter Property="BorderBrush" Value="White" />
+				<Setter Property="Padding" Value="0,0,5,0" />
+				<Setter Property="Margin" Value="0,0,15,0" />
+			</Style>
+
+			<Style x:Key="RowTitle"
+					TargetType="TextBlock"
+					>
+				<Setter Property="VerticalAlignment" Value="Top">
+				</Setter>
+				<Setter Property="TextAlignment" Value="Right" />
+				<Setter Property="Margin" Value="0,0,0,0" />
+				<Setter Property="Padding" Value="0" />
+			</Style>
+
+
+			<Style x:Key="SampleTextBase"
+					TargetType="TextBlock"
+					>
+				<Setter Property="FontSize" Value="{StaticResource FontSize.Normal}" />
+				<Setter Property="Margin" Value="0,0,0,0" />
+				<Setter Property="Padding" Value="0,0,0,0" />
+			</Style>
+
+			<Style x:Key="SampleTextLeft"
+					TargetType="TextBlock"
+					BasedOn="{StaticResource SampleTextBase}"
+					>
+				<Setter Property="TextAlignment" Value="Left" />
+				<Setter Property="Padding" Value="8,0,0,3" />
+			</Style>
+
+
+			<Style x:Key="SampleBorderBase"
+					TargetType="Border"
+					>
+				<Setter Property="BorderThickness" Value="0" />
+				<Setter Property="HorizontalAlignment" Value="Stretch" />
+				<Setter Property="CornerRadius" Value="{StaticResource CornerRadius.Std}" />
+
+			</Style>
+
+			<Style x:Key="SampleBorder"
+					TargetType="Border"
+					BasedOn="{StaticResource SampleBorderBase}"
+					>
+				<Setter Property="Width" Value="{StaticResource SampleWidth}" />
+			</Style>
+
+
+			<Style x:Key="SampleBorderWithin"
+					TargetType="Border"
+					BasedOn="{StaticResource SampleBorderBase}"
+					>
+			</Style>
+
+
+			<Style x:Key="SampleBorderContainer"
+					TargetType="Border"
+					BasedOn="{StaticResource SampleBorderBase}"
+					>
+				<Setter Property="Padding" Value="5" />
+
+			</Style>
+
+			<DataTemplate x:Key="SectionTitle">
+
+				<DockPanel VerticalAlignment="Center">
+
+					<Border Height="1"
+							Background="White"
+							HorizontalAlignment="Left"
+							Margin="10,0,-5,0"
+							>
+						<Border.Width>
+							<MultiBinding Converter="{StaticResource AddConverter}">
+								<Binding Path="." Source="{StaticResource TitleWidth}" />
+								<Binding>
+									<Binding.Source>
+										<sys:Double>-5.0</sys:Double>
+									</Binding.Source>
+								</Binding>
+							</MultiBinding>
+						</Border.Width>
+
+					</Border>
+
+					<TextBlock Margin="20,0,10,5"
+							Text="{Binding RelativeSource={RelativeSource AncestorType={x:Type ContentControl}}, Path=(cs:CustomProperties.GenericStringOne)}"
+							/>
+
+					<Border Height="1"
+							Background="White"
+							HorizontalAlignment="Stretch"
+							Margin="0,0,20,0"
+							/>
+
+				</DockPanel>
+
+			</DataTemplate>
+
+			<DataTemplate x:Key="Field1">
+				<DockPanel Width="{Binding (cx:VisStates.DoubleGeneric), RelativeSource={RelativeSource AncestorType={x:Type ContentControl}}}"
+						VerticalAlignment="Center"
+						Margin="{StaticResource SampleMarginField1}"
+						>
+					<Border CornerRadius="{Binding (cx:VisStates.CornerRadiusOuterGeneric), RelativeSource={RelativeSource Self}, FallbackValue={StaticResource CornerRadius.Std}}"
+							BorderBrush="{Binding (cx:VisStates.BdrOuterGeneric), RelativeSource={RelativeSource Self}}"
+							Background="{Binding (cx:VisStates.BgOuterGeneric), RelativeSource={RelativeSource Self}}"
+							BorderThickness="{Binding (cx:VisStates.ThicknessOuterGeneric), RelativeSource={RelativeSource Self}}"
+							Style="{StaticResource SampleBorderContainer}"
+							>
+						<Border CornerRadius="{Binding (cx:VisStates.CornerRadiusInnerGeneric), RelativeSource={RelativeSource Self}, FallbackValue={StaticResource CornerRadius.Std}}"
+								BorderBrush="{Binding (cx:VisStates.BdrInnerGeneric), RelativeSource={RelativeSource Self}}"
+								Background="{Binding (cx:VisStates.BgInnerGeneric), RelativeSource={RelativeSource Self}}"
+								BorderThickness="{Binding (cx:VisStates.ThicknessInnerGeneric), RelativeSource={RelativeSource Self}}"
+								Style="{StaticResource SampleBorderWithin}"
+								>
+							<TextBlock Foreground="{Binding (cx:VisStates.FgGeneric), RelativeSource={RelativeSource Self}}"
+									Text="{Binding (cx:VisStates.StringGeneric), RelativeSource={RelativeSource Self}, FallbackValue='missing'}"
+									Style="{StaticResource SampleTextLeft}"
+									/>
+						</Border>
+					</Border>
+				</DockPanel>
+			</DataTemplate>
+
+
+			<DataTemplate x:Key="Field2">
+				<DockPanel Width="{Binding (cx:VisStates.DoubleGeneric), RelativeSource={RelativeSource AncestorType={x:Type ContentControl}}}"
+						VerticalAlignment="Center"
+						Margin="{StaticResource SampleMarginField1}"
+						>
+					<Border CornerRadius="{Binding (cx:VisStates.CornerRadiusInnerGeneric), RelativeSource={RelativeSource Self}, FallbackValue={StaticResource CornerRadius.Std}}"
+							BorderBrush="{Binding (cx:VisStates.BdrInnerGeneric), RelativeSource={RelativeSource Self}}"
+							Background="{Binding (cx:VisStates.BgInnerGeneric), RelativeSource={RelativeSource Self}}"
+							BorderThickness="{Binding (cx:VisStates.ThicknessInnerGeneric), RelativeSource={RelativeSource Self}}"
+							Style="{StaticResource SampleBorderWithin}"
+							>
+						<TextBlock Foreground="{Binding (cx:VisStates.FgGeneric), RelativeSource={RelativeSource Self}}"
+								Text="{Binding (cx:VisStates.StringGeneric), RelativeSource={RelativeSource Self}, FallbackValue='missing'}"
+								Style="{StaticResource SampleTextLeft}"
+								/>
+					</Border>
+
+				</DockPanel>
+			</DataTemplate>
+
+
+
+		</ResourceDictionary>
+
+	</Window.Resources>
+
+	<StackPanel x:Name="PrimeGrid"
+			Orientation="Vertical"
+			Margin="10"
+			>
+
+		<ContentControl x:Name="HeaderTitle"
+				ContentTemplate="{StaticResource SectionTitle}"
+				cs:CustomProperties.GenericStringOne="Headers"
+				/>
+
+		<DockPanel x:Name="HeaderTitle1"
+				HorizontalAlignment="Stretch"
+				Margin="0,0,0,10"
+				>
+			<Border Style="{StaticResource RowTitleBorder}">
+				<TextBlock Width="{StaticResource TitleWidth}"
+						Text="Header Title 1"
+						Style="{StaticResource RowTitle}"
+						/>
+			</Border>
+
+			<StackPanel Orientation="Horizontal">
+
+				<Border Background="DimGray"
+						Margin="{StaticResource SampleMarginField1}"
+						Style="{StaticResource SampleBorder}"
+						>
+					<TextBlock Text="Header 1"
+							FontSize="{StaticResource FontSize.Large}"
+							Style="{StaticResource SampleTextLeft}"
+							/>
+				</Border>
+
+			</StackPanel>
+
+		</DockPanel>
+
+		<DockPanel x:Name="HeaderTitle2"
+				HorizontalAlignment="Stretch"
+				Margin="0,0,0,10"
+				>
+
+			<Border Style="{StaticResource RowTitleBorder}">
+
+				<TextBlock Width="{StaticResource TitleWidth}"
+						Text="Header Title 2"
+						Style="{StaticResource RowTitle}"
+						/>
+			</Border>
+
+			<DockPanel HorizontalAlignment="Stretch">
+
+				<StackPanel Orientation="Horizontal">
+
+					<Border Background="{StaticResource Header.Bg.IsSel}"
+							Margin="{StaticResource SampleMarginField1}"
+							Style="{StaticResource SampleBorder}"
+							>
+						<TextBlock Foreground="{StaticResource Header.Fg.IsSel}"
+								Text="Header 2"
+								Style="{StaticResource SampleTextLeft}"
+								/>
+					</Border>
+
+				</StackPanel>
+
+				<StackPanel Orientation="Horizontal">
+
+				</StackPanel>
+
+			</DockPanel>
+
+		</DockPanel>
+
+		<ContentControl x:Name="UnitListTitle"
+				ContentTemplate="{StaticResource SectionTitle}"
+				cs:CustomProperties.GenericStringOne="Unit List"
+				/>
+
+		<DockPanel x:Name="Id"
+				HorizontalAlignment="Stretch"
+				Margin="0,0,0,10"
+				>
+
+			<Border Style="{StaticResource RowTitleBorder}">
+
+				<TextBlock Width="{StaticResource TitleWidth}"
+						Text="Id"
+						Style="{StaticResource RowTitle}"
+						/>
+			</Border>
+
+			<DockPanel HorizontalAlignment="Stretch">
+
+				<StackPanel Orientation="Horizontal">
+
+					<ContentControl cx:VisStates.DoubleGeneric="210.0"
+							ContentTemplate="{StaticResource Field1}"
+							cx:VisStates.BgOuterGeneric="{DynamicResource SelectionList.Bg.NotSel}"
+							cx:VisStates.BgInnerGeneric="{DynamicResource Id.Bg.NotSel}"
+							cx:VisStates.FgGeneric="{DynamicResource Id.Fg.NotSel}"
+							cx:VisStates.StringGeneric="NotSel"
+							/>
+
+					<ContentControl cx:VisStates.DoubleGeneric="430.0"
+							ContentTemplate="{StaticResource Field1}"
+							cx:VisStates.BgOuterGeneric="{DynamicResource SelectionList.Bg.IsSel}"
+							cx:VisStates.BgInnerGeneric="{DynamicResource Id.Bg.IsSel}"
+							cx:VisStates.FgGeneric="{DynamicResource Id.Fg.IsSel}"
+							cx:VisStates.StringGeneric="IsSel"
+							/>
+
+				</StackPanel>
+
+			</DockPanel>
+
+		</DockPanel>
+
+		<DockPanel x:Name="Id_Icon"
+				HorizontalAlignment="Stretch"
+				Margin="0,0,0,10"
+				>
+
+			<Border Style="{StaticResource RowTitleBorder}">
+
+				<TextBlock Width="{StaticResource TitleWidth}"
+						Text="Icon |  Id"
+						Style="{StaticResource RowTitle}"
+						/>
+			</Border>
+
+			<DockPanel HorizontalAlignment="Stretch">
+
+				<StackPanel Orientation="Horizontal">
+
+					<ContentControl cx:VisStates.DoubleGeneric="210.0"
+							ContentTemplate="{StaticResource Field1}"
+							cx:VisStates.BgOuterGeneric="{DynamicResource SelectionList.Bg.NotSel}"
+							cx:VisStates.BgInnerGeneric="{DynamicResource Id.Bg.NotSel}"
+							cx:VisStates.FgGeneric="{DynamicResource IdIcon.Fg.NotSel}"
+							cx:VisStates.StringGeneric="☹"
+							/>
+
+					<ContentControl cx:VisStates.DoubleGeneric="430.0"
+							ContentTemplate="{StaticResource Field1}"
+							cx:VisStates.BgOuterGeneric="{DynamicResource SelectionList.Bg.IsSel}"
+							cx:VisStates.BgInnerGeneric="{DynamicResource Id.Bg.IsSel}"
+							cx:VisStates.FgGeneric="{DynamicResource IdIcon.Fg.IsSel}"
+							cx:VisStates.StringGeneric="☺"
+							/>
+
+				</StackPanel>
+
+			</DockPanel>
+
+		</DockPanel>
+
+		<DockPanel x:Name="A_Title_ReadOnly"
+				HorizontalAlignment="Stretch"
+				Margin="0,0,0,10"
+				>
+
+			<Border Style="{StaticResource RowTitleBorder}">
+
+				<TextBlock Width="{StaticResource TitleWidth}"
+						Text="title text/not editable field |  A"
+						Style="{StaticResource RowTitle}"
+						/>
+			</Border>
+
+			<DockPanel HorizontalAlignment="Stretch">
+
+				<StackPanel Orientation="Horizontal">
+
+					<ContentControl ContentTemplate="{StaticResource Field1}"
+							cx:VisStates.BgOuterGeneric="{DynamicResource SelectionList.Bg.Disabled}"
+							cx:VisStates.BgInnerGeneric="{DynamicResource TitleReadOnly.Bg.Disabled}"
+							cx:VisStates.FgGeneric="{DynamicResource TitleReadOnly.Fg.Disabled}"
+							cx:VisStates.BdrOuterGeneric="Transparent"
+							cx:VisStates.BdrInnerGeneric="Transparent"
+							cx:VisStates.StringGeneric="Disabled"
+							cx:VisStates.ThicknessOuterGeneric="0"
+							cx:VisStates.ThicknessInnerGeneric="0"
+							cx:VisStates.DoubleGeneric="100.0"
+							/>
+
+					<ContentControl ContentTemplate="{StaticResource Field1}"
+							cx:VisStates.BgOuterGeneric="{DynamicResource SelectionList.Bg.NotSel}"
+							cx:VisStates.BgInnerGeneric="{DynamicResource TitleReadOnly.Bg.NotSel}"
+							cx:VisStates.FgGeneric="{DynamicResource TitleReadOnly.Fg.NotSel}"
+							cx:VisStates.StringGeneric="NotSel"
+							cx:VisStates.DoubleGeneric="100.0"
+							/>
+
+					<ContentControl ContentTemplate="{StaticResource Field1}"
+							cx:VisStates.BgOuterGeneric="{DynamicResource SelectionList.Bg.IsSel}"
+							cx:VisStates.BgInnerGeneric="{DynamicResource TitleReadOnly.Bg.IsSel}"
+							cx:VisStates.FgGeneric="{DynamicResource TitleReadOnly.Fg.IsSel}"
+							cx:VisStates.StringGeneric="IsSel"
+							cx:VisStates.DoubleGeneric="100.0"
+							/>
+
+					<ContentControl ContentTemplate="{StaticResource Field1}"
+							cx:VisStates.BgOuterGeneric="{DynamicResource SelectionList.Bg.IsSel}"
+							cx:VisStates.BgInnerGeneric="{DynamicResource TitleReadOnly.Bg.IsEditg}"
+							cx:VisStates.FgGeneric="{DynamicResource TitleReadOnly.Fg.IsEditg}"
+							cx:VisStates.StringGeneric="IsEditing"
+							cx:VisStates.DoubleGeneric="100.0"
+							/>
+
+					<ContentControl ContentTemplate="{StaticResource Field1}"
+							cx:VisStates.BgOuterGeneric="{DynamicResource SelectionList.Bg.NotSel}"
+							cx:VisStates.BgInnerGeneric="{DynamicResource TitleReadOnly.Bg.IsReadOnly}"
+							cx:VisStates.FgGeneric="{DynamicResource TitleReadOnly.Fg.IsReadOnly}"
+							cx:VisStates.StringGeneric="IsReadOnly"
+							cx:VisStates.DoubleGeneric="100.0"
+							/>
+
+					<ContentControl ContentTemplate="{StaticResource Field1}"
+							cx:VisStates.BgOuterGeneric="{DynamicResource SelectionList.Bg.NotSel}"
+							cx:VisStates.BgInnerGeneric="{DynamicResource TitleReadOnly.Bg.IsLocked}"
+							cx:VisStates.FgGeneric="{DynamicResource TitleReadOnly.Fg.IsLocked}"
+							cx:VisStates.StringGeneric="IsLocked"
+							cx:VisStates.DoubleGeneric="100.0"
+							/>
+
+				</StackPanel>
+
+			</DockPanel>
+
+		</DockPanel>
+
+		<DockPanel x:Name="C_TextBlock_ReadOnly"
+				HorizontalAlignment="Stretch"
+				Margin="0,0,0,10"
+				>
+
+			<Border Style="{StaticResource RowTitleBorder}">
+
+				<TextBlock Width="{StaticResource TitleWidth}"
+						Text="(Tblk) text/not editable |  C"
+						Style="{StaticResource RowTitle}"
+						/>
+			</Border>
+
+			<DockPanel HorizontalAlignment="Stretch">
+
+				<StackPanel Orientation="Horizontal">
+
+					<ContentControl cx:VisStates.DoubleGeneric="100.0"
+							ContentTemplate="{StaticResource Field1}"
+							cx:VisStates.BgOuterGeneric="{DynamicResource SelectionList.Bg.Disabled}"
+							cx:VisStates.BgInnerGeneric="{DynamicResource ReadOnly.Bg.Disabled}"
+							cx:VisStates.FgGeneric="{DynamicResource ReadOnly.Fg.Disabled}"
+							cx:VisStates.StringGeneric="Disabled"
+							/>
+
+					<ContentControl cx:VisStates.DoubleGeneric="100.0"
+							ContentTemplate="{StaticResource Field1}"
+							cx:VisStates.BgOuterGeneric="{DynamicResource SelectionList.Bg.NotSel}"
+							cx:VisStates.BgInnerGeneric="{DynamicResource ReadOnly.Bg.NotSel}"
+							cx:VisStates.FgGeneric="{DynamicResource ReadOnly.Fg.NotSel}"
+							cx:VisStates.StringGeneric="NotSel"
+							/>
+
+					<ContentControl cx:VisStates.DoubleGeneric="100.0"
+							ContentTemplate="{StaticResource Field1}"
+							cx:VisStates.BgOuterGeneric="{DynamicResource SelectionList.Bg.IsSel}"
+							cx:VisStates.BgInnerGeneric="{DynamicResource ReadOnly.Bg.IsSel}"
+							cx:VisStates.FgGeneric="{DynamicResource ReadOnly.Fg.IsSel}"
+							cx:VisStates.StringGeneric="IsSel"
+							/>
+
+					<ContentControl cx:VisStates.DoubleGeneric="100.0"
+							ContentTemplate="{StaticResource Field1}"
+							cx:VisStates.BgOuterGeneric="{DynamicResource SelectionList.Bg.IsSel}"
+							cx:VisStates.BgInnerGeneric="{DynamicResource ReadOnly.Bg.IsEditg}"
+							cx:VisStates.FgGeneric="{DynamicResource ReadOnly.Fg.IsEditg}"
+							cx:VisStates.StringGeneric="IsEditing"
+							/>
+
+					<ContentControl cx:VisStates.DoubleGeneric="100.0"
+							ContentTemplate="{StaticResource Field1}"
+							cx:VisStates.BgOuterGeneric="{DynamicResource SelectionList.Bg.NotSel}"
+							cx:VisStates.BgInnerGeneric="{DynamicResource ReadOnly.Bg.IsReadOnly}"
+							cx:VisStates.FgGeneric="{DynamicResource ReadOnly.Fg.IsReadOnly}"
+							cx:VisStates.StringGeneric="IsReadOnly"
+							/>
+
+					<ContentControl cx:VisStates.DoubleGeneric="100.0"
+							ContentTemplate="{StaticResource Field1}"
+							cx:VisStates.BgOuterGeneric="{DynamicResource SelectionList.Bg.NotSel}"
+							cx:VisStates.BgInnerGeneric="{DynamicResource ReadOnly.Bg.IsLocked}"
+							cx:VisStates.FgGeneric="{DynamicResource ReadOnly.Fg.IsLocked}"
+							cx:VisStates.StringGeneric="IsLocked"
+							/>
+
+				</StackPanel>
+
+			</DockPanel>
+
+		</DockPanel>
+
+		<DockPanel x:Name="B_Title_Editable"
+				HorizontalAlignment="Stretch"
+				Margin="0,0,0,10"
+				>
+
+			<Border Style="{StaticResource RowTitleBorder}">
+
+				<TextBlock Width="{StaticResource TitleWidth}"
+						Text="title text/editable field |  B"
+						Style="{StaticResource RowTitle}"
+						/>
+			</Border>
+
+			<DockPanel HorizontalAlignment="Stretch">
+
+				<StackPanel Orientation="Horizontal">
+
+					<ContentControl cx:VisStates.DoubleGeneric="100.0"
+							ContentTemplate="{StaticResource Field1}"
+							cx:VisStates.BgOuterGeneric="{DynamicResource SelectionList.Bg.Disabled}"
+							cx:VisStates.BgInnerGeneric="{DynamicResource TitleCanEdit.Bg.Disabled}"
+							cx:VisStates.FgGeneric="{DynamicResource TitleCanEdit.Fg.Disabled}"
+							cx:VisStates.StringGeneric="Disabled"
+							/>
+
+					<ContentControl cx:VisStates.DoubleGeneric="100.0"
+							ContentTemplate="{StaticResource Field1}"
+							cx:VisStates.BgOuterGeneric="{DynamicResource SelectionList.Bg.NotSel}"
+							cx:VisStates.BgInnerGeneric="{DynamicResource TitleCanEdit.Bg.NotSel}"
+							cx:VisStates.FgGeneric="{DynamicResource TitleCanEdit.Fg.NotSel}"
+							cx:VisStates.StringGeneric="NotSel"
+							/>
+
+					<ContentControl cx:VisStates.DoubleGeneric="100.0"
+							ContentTemplate="{StaticResource Field1}"
+							cx:VisStates.BgOuterGeneric="{DynamicResource SelectionList.Bg.IsSel}"
+							cx:VisStates.BgInnerGeneric="{DynamicResource TitleCanEdit.Bg.IsSel}"
+							cx:VisStates.FgGeneric="{DynamicResource TitleCanEdit.Fg.IsSel}"
+							cx:VisStates.StringGeneric="IsSel"
+							/>
+
+					<ContentControl cx:VisStates.DoubleGeneric="100.0"
+							ContentTemplate="{StaticResource Field1}"
+							cx:VisStates.BgOuterGeneric="{DynamicResource SelectionList.Bg.IsSel}"
+							cx:VisStates.BgInnerGeneric="{DynamicResource TitleCanEdit.Bg.IsEditg}"
+							cx:VisStates.FgGeneric="{DynamicResource TitleCanEdit.Fg.IsEditg}"
+							cx:VisStates.StringGeneric="IsEditing"
+							/>
+
+					<ContentControl cx:VisStates.DoubleGeneric="100.0"
+							ContentTemplate="{StaticResource Field1}"
+							cx:VisStates.BgOuterGeneric="{DynamicResource SelectionList.Bg.NotSel}"
+							cx:VisStates.BgInnerGeneric="{DynamicResource TitleCanEdit.Bg.IsReadOnly}"
+							cx:VisStates.FgGeneric="{DynamicResource TitleCanEdit.Fg.IsReadOnly}"
+							cx:VisStates.StringGeneric="IsReadOnly"
+							/>
+
+					<ContentControl cx:VisStates.DoubleGeneric="100.0"
+							ContentTemplate="{StaticResource Field1}"
+							cx:VisStates.BgOuterGeneric="{DynamicResource SelectionList.Bg.NotSel}"
+							cx:VisStates.BgInnerGeneric="{DynamicResource TitleCanEdit.Bg.IsLocked}"
+							cx:VisStates.FgGeneric="{DynamicResource TitleCanEdit.Fg.IsLocked}"
+							cx:VisStates.StringGeneric="IsLocked"
+							/>
+
+				</StackPanel>
+
+			</DockPanel>
+
+		</DockPanel>
+
+		<DockPanel x:Name="D_TextBox_Editable"
+				HorizontalAlignment="Stretch"
+				Margin="0,0,0,10"
+				>
+
+			<Border Style="{StaticResource RowTitleBorder}">
+
+				<TextBlock Width="{StaticResource TitleWidth}"
+						Text="(Tbx) text, can edit|  D|"
+						Style="{StaticResource RowTitle}"
+						/>
+			</Border>
+
+			<DockPanel HorizontalAlignment="Stretch">
+
+				<StackPanel DockPanel.Dock="Top"
+						Orientation="Horizontal"
+						>
+
+					<ContentControl cx:VisStates.DoubleGeneric="100.0"
+							ContentTemplate="{StaticResource Field1}"
+							cx:VisStates.BgOuterGeneric="{DynamicResource SelectionList.Bg.Disabled}"
+							cx:VisStates.BgInnerGeneric="{DynamicResource CanEdit.Bg.Disabled}"
+							cx:VisStates.FgGeneric="{DynamicResource CanEdit.Fg.Disabled}"
+							cx:VisStates.StringGeneric="Disabled"
+							/>
+
+					<ContentControl cx:VisStates.DoubleGeneric="100.0"
+							ContentTemplate="{StaticResource Field1}"
+							cx:VisStates.BgOuterGeneric="{DynamicResource SelectionList.Bg.NotSel}"
+							cx:VisStates.BgInnerGeneric="{DynamicResource CanEdit.Bg.NotSel}"
+							cx:VisStates.FgGeneric="{DynamicResource CanEdit.Fg.NotSel}"
+							cx:VisStates.StringGeneric="NotSel"
+							/>
+
+					<ContentControl cx:VisStates.DoubleGeneric="100.0"
+							ContentTemplate="{StaticResource Field1}"
+							cx:VisStates.BgOuterGeneric="{DynamicResource SelectionList.Bg.IsSel}"
+							cx:VisStates.BgInnerGeneric="{DynamicResource CanEdit.Bg.IsSel}"
+							cx:VisStates.FgGeneric="{DynamicResource CanEdit.Fg.IsSel}"
+							cx:VisStates.StringGeneric="IsSel"
+							/>
+
+					<ContentControl cx:VisStates.DoubleGeneric="100.0"
+							ContentTemplate="{StaticResource Field1}"
+							cx:VisStates.BgOuterGeneric="{DynamicResource SelectionList.Bg.IsSel}"
+							cx:VisStates.BgInnerGeneric="{DynamicResource CanEdit.Bg.IsEditg}"
+							cx:VisStates.FgGeneric="{DynamicResource CanEdit.Fg.IsEditg}"
+							cx:VisStates.StringGeneric="IsEditing"
+							/>
+
+					<ContentControl cx:VisStates.DoubleGeneric="100.0"
+							ContentTemplate="{StaticResource Field1}"
+							cx:VisStates.BgOuterGeneric="{DynamicResource SelectionList.Bg.NotSel}"
+							cx:VisStates.BgInnerGeneric="{DynamicResource CanEdit.Bg.IsReadOnly}"
+							cx:VisStates.FgGeneric="{DynamicResource CanEdit.Fg.IsReadOnly}"
+							cx:VisStates.StringGeneric="IsCanEdit"
+							/>
+
+					<ContentControl cx:VisStates.DoubleGeneric="100.0"
+							ContentTemplate="{StaticResource Field1}"
+							cx:VisStates.BgOuterGeneric="{DynamicResource SelectionList.Bg.NotSel}"
+							cx:VisStates.BgInnerGeneric="{DynamicResource CanEdit.Bg.IsLocked}"
+							cx:VisStates.FgGeneric="{DynamicResource CanEdit.Fg.IsLocked}"
+							cx:VisStates.StringGeneric="IsLocked"
+							/>
+
+				</StackPanel>
+
+				<StackPanel DockPanel.Dock="Bottom"
+						Orientation="Horizontal"
+						Margin="110,0,0,0"
+						>
+
+					<ContentControl HorizontalAlignment="Stretch"
+							HorizontalContentAlignment="Stretch"
+							ContentTemplate="{StaticResource Field1}"
+							cx:VisStates.BgOuterGeneric="{DynamicResource SelectionList.Bg.NotSel}"
+							cx:VisStates.BgInnerGeneric="{DynamicResource CanEdit.Bg.NotSel.MouseOver}"
+							cx:VisStates.BdrInnerGeneric="Transparent"
+							cx:VisStates.FgGeneric="{DynamicResource CanEdit.Fg.NotSel.MouseOver}"
+							cx:VisStates.StringGeneric="mo not select"
+							cx:VisStates.DoubleGeneric="210.0"
+							/>
+
+					<ContentControl cx:VisStates.DoubleGeneric="100.0"
+							ContentTemplate="{StaticResource Field1}"
+							cx:VisStates.FgGeneric="{DynamicResource CanEdit.Fg.IsEditg.MouseOver}"
+							cx:VisStates.BgOuterGeneric="{DynamicResource SelectionList.Bg.IsSel}"
+							cx:VisStates.BgInnerGeneric="{DynamicResource CanEdit.Bg.IsEditg.MouseOver}"
+							cx:VisStates.BdrInnerGeneric="Transparent"
+							cx:VisStates.StringGeneric="mo is editing"
+							/>
+
+				</StackPanel>
+
+			</DockPanel>
+
+		</DockPanel>
+
+		<DockPanel x:Name="E_Action1"
+				HorizontalAlignment="Stretch"
+				Margin="0,0,0,10"
+				>
+
+			<Border Style="{StaticResource RowTitleBorder}">
+
+				<TextBlock Width="{StaticResource TitleWidth}"
+						Text="action 1|  E|"
+						Style="{StaticResource RowTitle}"
+						/>
+			</Border>
+
+			<DockPanel HorizontalAlignment="Stretch">
+
+				<StackPanel DockPanel.Dock="Top"
+						Orientation="Horizontal"
+						>
+
+					<ContentControl cx:VisStates.DoubleGeneric="100.0"
+							ContentTemplate="{StaticResource Field1}"
+							cx:VisStates.BgOuterGeneric="{DynamicResource SelectionList.Bg.Disabled}"
+							cx:VisStates.BgInnerGeneric="{DynamicResource Action1.Bg.Disabled}"
+							cx:VisStates.FgGeneric="{DynamicResource Action1.Fg.Disabled}"
+							cx:VisStates.StringGeneric="Disabled"
+							/>
+
+					<ContentControl cx:VisStates.DoubleGeneric="100.0"
+							ContentTemplate="{StaticResource Field1}"
+							cx:VisStates.BgOuterGeneric="{DynamicResource SelectionList.Bg.NotSel}"
+							cx:VisStates.BgInnerGeneric="{DynamicResource Action1.Bg.NotSel}"
+							cx:VisStates.FgGeneric="{DynamicResource Action1.Fg.NotSel}"
+							cx:VisStates.StringGeneric="NotSel"
+							/>
+
+					<ContentControl cx:VisStates.DoubleGeneric="100.0"
+							ContentTemplate="{StaticResource Field1}"
+							cx:VisStates.BgOuterGeneric="{DynamicResource SelectionList.Bg.IsSel}"
+							cx:VisStates.BgInnerGeneric="{DynamicResource Action1.Bg.IsSel}"
+							cx:VisStates.FgGeneric="{DynamicResource Action1.Fg.IsSel}"
+							cx:VisStates.StringGeneric="IsSel"
+							/>
+
+					<ContentControl cx:VisStates.DoubleGeneric="100.0"
+							ContentTemplate="{StaticResource Field1}"
+							cx:VisStates.BgOuterGeneric="{DynamicResource SelectionList.Bg.IsSel}"
+							cx:VisStates.BgInnerGeneric="{DynamicResource Action1.Bg.IsEditg}"
+							cx:VisStates.FgGeneric="{DynamicResource Action1.Fg.IsEditg}"
+							cx:VisStates.StringGeneric="IsEditing"
+							/>
+
+					<ContentControl cx:VisStates.DoubleGeneric="100.0"
+							ContentTemplate="{StaticResource Field1}"
+							cx:VisStates.BgOuterGeneric="{DynamicResource SelectionList.Bg.NotSel}"
+							cx:VisStates.BgInnerGeneric="{DynamicResource Action1.Bg.IsReadOnly}"
+							cx:VisStates.FgGeneric="{DynamicResource Action1.Fg.IsReadOnly}"
+							cx:VisStates.StringGeneric="IsCanEdit"
+							/>
+
+					<ContentControl cx:VisStates.DoubleGeneric="100.0"
+							ContentTemplate="{StaticResource Field1}"
+							cx:VisStates.BgOuterGeneric="{DynamicResource SelectionList.Bg.NotSel}"
+							cx:VisStates.BgInnerGeneric="{DynamicResource Action1.Bg.IsLocked}"
+							cx:VisStates.FgGeneric="{DynamicResource Action1.Fg.IsLocked}"
+							cx:VisStates.StringGeneric="IsLocked"
+							/>
+
+				</StackPanel>
+
+				<StackPanel DockPanel.Dock="Bottom"
+						Orientation="Horizontal"
+						Margin="110,0,0,0"
+						>
+
+					<ContentControl HorizontalAlignment="Stretch"
+							HorizontalContentAlignment="Stretch"
+							ContentTemplate="{StaticResource Field1}"
+							cx:VisStates.BgOuterGeneric="{DynamicResource SelectionList.Bg.NotSel}"
+							cx:VisStates.BgInnerGeneric="{DynamicResource Action1.Bg.NotSel.MouseOver}"
+							cx:VisStates.BdrInnerGeneric="Transparent"
+							cx:VisStates.FgGeneric="{DynamicResource Action1.Fg.NotSel.MouseOver}"
+							cx:VisStates.StringGeneric="mo not select"
+							cx:VisStates.DoubleGeneric="210.0"
+							/>
+
+					<ContentControl cx:VisStates.DoubleGeneric="100.0"
+							ContentTemplate="{StaticResource Field1}"
+							cx:VisStates.BgOuterGeneric="{DynamicResource SelectionList.Bg.IsSel}"
+							cx:VisStates.BgInnerGeneric="{DynamicResource Action1.Bg.IsEditg.MouseOver}"
+							cx:VisStates.FgGeneric="{DynamicResource Action1.Fg.IsEditg.MouseOver}"
+							cx:VisStates.BdrInnerGeneric="Transparent"
+							cx:VisStates.StringGeneric="mo is editing"
+							/>
+
+				</StackPanel>
+
+			</DockPanel>
+
+		</DockPanel>
+
+		<DockPanel x:Name="E_Action1_Icon"
+				HorizontalAlignment="Stretch"
+				Margin="0,0,0,10"
+				>
+
+			<Border Style="{StaticResource RowTitleBorder}">
+
+				<TextBlock Width="{StaticResource TitleWidth}"
+						Text="icon action1|  E|"
+						Style="{StaticResource RowTitle}"
+						/>
+			</Border>
+
+			<DockPanel HorizontalAlignment="Stretch">
+
+				<StackPanel DockPanel.Dock="Top"
+						Orientation="Horizontal"
+						>
+
+					<ContentControl Margin="330,0,0,0"
+							HorizontalAlignment="Stretch"
+							HorizontalContentAlignment="Stretch"
+							ContentTemplate="{StaticResource Field1}"
+							cx:VisStates.BgOuterGeneric="{DynamicResource SelectionList.Bg.NotSel}"
+							cx:VisStates.BgInnerGeneric="{DynamicResource Action1.Icon.Bg.IsEditg.MouseOver}"
+							cx:VisStates.BdrInnerGeneric="Transparent"
+							cx:VisStates.FgGeneric="{DynamicResource Action1.Fg.IsEditg}"
+							cx:VisStates.StringGeneric="mo is editg"
+							cx:VisStates.DoubleGeneric="100.0"
+							/>
+
+				</StackPanel>
+
+
+			</DockPanel>
+
+		</DockPanel>
+
+		<DockPanel x:Name="F_SubTitle"
+				HorizontalAlignment="Stretch"
+				Margin="0,0,0,10"
+				>
+
+			<Border Style="{StaticResource RowTitleBorder}">
+
+				<TextBlock Width="{StaticResource TitleWidth}"
+						Text="sub-title|  F|"
+						Style="{StaticResource RowTitle}"
+						/>
+			</Border>
+
+			<DockPanel HorizontalAlignment="Stretch">
+
+				<StackPanel DockPanel.Dock="Top"
+						Orientation="Horizontal"
+						>
+
+					<ContentControl cx:VisStates.DoubleGeneric="100.0"
+							ContentTemplate="{StaticResource Field1}"
+							cx:VisStates.BgOuterGeneric="{DynamicResource SubTitle.Gb.Disabled}"
+							cx:VisStates.BgInnerGeneric="{DynamicResource SubTitle.Bg.Disabled}"
+							cx:VisStates.FgGeneric="{DynamicResource SubTitle.Fg.Disabled}"
+							cx:VisStates.StringGeneric="Disabled"
+							/>
+
+					<ContentControl cx:VisStates.DoubleGeneric="100.0"
+							ContentTemplate="{StaticResource Field1}"
+							cx:VisStates.BgOuterGeneric="{DynamicResource SubTitle.Gb.NotSel}"
+							cx:VisStates.BgInnerGeneric="{DynamicResource SubTitle.Bg.NotSel}"
+							cx:VisStates.FgGeneric="{DynamicResource SubTitle.Fg.NotSel}"
+							cx:VisStates.StringGeneric="NotSel"
+							/>
+
+					<ContentControl cx:VisStates.DoubleGeneric="100.0"
+							ContentTemplate="{StaticResource Field1}"
+							cx:VisStates.BgOuterGeneric="{DynamicResource SubTitle.Gb.IsSel}"
+							cx:VisStates.BgInnerGeneric="{DynamicResource SubTitle.Bg.IsSel}"
+							cx:VisStates.FgGeneric="{DynamicResource SubTitle.Fg.IsSel}"
+							cx:VisStates.StringGeneric="IsSel"
+							/>
+
+					<ContentControl cx:VisStates.DoubleGeneric="100.0"
+							ContentTemplate="{StaticResource Field1}"
+							cx:VisStates.BgOuterGeneric="{DynamicResource SubTitle.Gb.IsSel}"
+							cx:VisStates.BgInnerGeneric="{DynamicResource SubTitle.Bg.IsEditg}"
+							cx:VisStates.FgGeneric="{DynamicResource SubTitle.Fg.IsEditg}"
+							cx:VisStates.StringGeneric="IsEditing"
+							/>
+
+					<ContentControl cx:VisStates.DoubleGeneric="100.0"
+							ContentTemplate="{StaticResource Field1}"
+							cx:VisStates.BgOuterGeneric="{DynamicResource SubTitle.Gb.NotSel}"
+							cx:VisStates.BgInnerGeneric="{DynamicResource SubTitle.Bg.IsReadOnly}"
+							cx:VisStates.FgGeneric="{DynamicResource SubTitle.Fg.IsReadOnly}"
+							cx:VisStates.StringGeneric="IsCanEdit"
+							/>
+
+					<ContentControl cx:VisStates.DoubleGeneric="100.0"
+							ContentTemplate="{StaticResource Field1}"
+							cx:VisStates.BgOuterGeneric="{DynamicResource SubTitle.Gb.NotSel}"
+							cx:VisStates.BgInnerGeneric="{DynamicResource SubTitle.Bg.IsLocked}"
+							cx:VisStates.FgGeneric="{DynamicResource SubTitle.Fg.IsLocked}"
+							cx:VisStates.StringGeneric="IsLocked"
+							/>
+
+				</StackPanel>
+
+
+			</DockPanel>
+
+		</DockPanel>
+
+		<DockPanel x:Name="G_Action2_SubTitle"
+				HorizontalAlignment="Stretch"
+				Margin="0,0,0,10"
+				>
+
+			<Border Style="{StaticResource RowTitleBorder}">
+
+				<TextBlock Width="{StaticResource TitleWidth}"
+						Text="action 2|  G|"
+						Style="{StaticResource RowTitle}"
+						/>
+			</Border>
+
+			<DockPanel HorizontalAlignment="Stretch">
+
+				<StackPanel DockPanel.Dock="Top"
+						Orientation="Horizontal"
+						>
+
+					<ContentControl cx:VisStates.DoubleGeneric="100.0"
+							ContentTemplate="{StaticResource Field1}"
+							cx:VisStates.BgOuterGeneric="{DynamicResource SubTitle.Gb.Disabled}"
+							cx:VisStates.BgInnerGeneric="{DynamicResource Action2.Bg.Disabled}"
+							cx:VisStates.FgGeneric="{DynamicResource Action2.Fg.Disabled}"
+							cx:VisStates.StringGeneric="Disabled"
+							/>
+
+					<ContentControl cx:VisStates.DoubleGeneric="100.0"
+							ContentTemplate="{StaticResource Field1}"
+							cx:VisStates.BgOuterGeneric="{DynamicResource SubTitle.Gb.NotSel}"
+							cx:VisStates.BgInnerGeneric="{DynamicResource Action2.Bg.NotSel}"
+							cx:VisStates.FgGeneric="{DynamicResource Action2.Fg.NotSel}"
+							cx:VisStates.StringGeneric="NotSel"
+							/>
+
+					<ContentControl cx:VisStates.DoubleGeneric="100.0"
+							ContentTemplate="{StaticResource Field1}"
+							cx:VisStates.BgOuterGeneric="{DynamicResource SubTitle.Gb.IsSel}"
+							cx:VisStates.BgInnerGeneric="{DynamicResource Action2.Bg.IsSel}"
+							cx:VisStates.FgGeneric="{DynamicResource Action2.Fg.IsSel}"
+							cx:VisStates.StringGeneric="IsSel"
+							/>
+
+					<ContentControl cx:VisStates.DoubleGeneric="100.0"
+							ContentTemplate="{StaticResource Field1}"
+							cx:VisStates.BgOuterGeneric="{DynamicResource SubTitle.Gb.IsSel}"
+							cx:VisStates.BgInnerGeneric="{DynamicResource Action2.Bg.IsEditg}"
+							cx:VisStates.FgGeneric="{DynamicResource Action2.Fg.IsEditg}"
+							cx:VisStates.StringGeneric="IsEditing"
+							/>
+
+					<ContentControl cx:VisStates.DoubleGeneric="100.0"
+							ContentTemplate="{StaticResource Field1}"
+							cx:VisStates.BgOuterGeneric="{DynamicResource SubTitle.Gb.NotSel}"
+							cx:VisStates.BgInnerGeneric="{DynamicResource Action2.Bg.IsReadOnly}"
+							cx:VisStates.FgGeneric="{DynamicResource Action2.Fg.IsReadOnly}"
+							cx:VisStates.StringGeneric="IsCanEdit"
+							/>
+
+					<ContentControl cx:VisStates.DoubleGeneric="100.0"
+							ContentTemplate="{StaticResource Field1}"
+							cx:VisStates.BgOuterGeneric="{DynamicResource SubTitle.Gb.NotSel}"
+							cx:VisStates.BgInnerGeneric="{DynamicResource Action2.Bg.IsLocked}"
+							cx:VisStates.FgGeneric="{DynamicResource Action2.Fg.IsLocked}"
+							cx:VisStates.StringGeneric="IsLocked"
+							/>
+
+				</StackPanel>
+
+				<StackPanel DockPanel.Dock="Bottom"
+						Orientation="Horizontal"
+						Margin="110,0,0,0"
+						>
+
+					<ContentControl HorizontalAlignment="Stretch"
+							HorizontalContentAlignment="Stretch"
+							ContentTemplate="{StaticResource Field1}"
+							cx:VisStates.BgOuterGeneric="{DynamicResource SelectionList.Bg.NotSel}"
+							cx:VisStates.BgInnerGeneric="{DynamicResource Action2.Bg.NotSel.MouseOver}"
+							cx:VisStates.BdrInnerGeneric="Transparent"
+							cx:VisStates.FgGeneric="{DynamicResource Action2.Fg.NotSel.MouseOver}"
+							cx:VisStates.StringGeneric="mo not select"
+							cx:VisStates.DoubleGeneric="210.0"
+							/>
+
+					<ContentControl cx:VisStates.DoubleGeneric="100.0"
+							ContentTemplate="{StaticResource Field1}"
+							cx:VisStates.BgOuterGeneric="{DynamicResource SelectionList.Bg.IsSel}"
+							cx:VisStates.BgInnerGeneric="{DynamicResource Action2.Bg.IsEditg.MouseOver}"
+							cx:VisStates.FgGeneric="{DynamicResource Action2.Fg.IsEditg.MouseOver}"
+							cx:VisStates.BdrInnerGeneric="Transparent"
+							cx:VisStates.StringGeneric="mo is editing"
+							/>
+
+				</StackPanel>
+
+			</DockPanel>
+
+		</DockPanel>
+
+		<DockPanel x:Name="G_Action2_Icon"
+				HorizontalAlignment="Stretch"
+				Margin="0,0,0,10"
+				>
+
+			<Border Style="{StaticResource RowTitleBorder}">
+
+				<TextBlock Width="{StaticResource TitleWidth}"
+						Text="icon action2|  G|"
+						Style="{StaticResource RowTitle}"
+						/>
+			</Border>
+
+			<DockPanel HorizontalAlignment="Stretch">
+
+				<StackPanel DockPanel.Dock="Top"
+						Orientation="Horizontal"
+						>
+					<ContentControl Margin="330,0,0,0"
+							HorizontalAlignment="Stretch"
+							HorizontalContentAlignment="Stretch"
+							ContentTemplate="{StaticResource Field1}"
+							cx:VisStates.BgOuterGeneric="{DynamicResource SelectionList.Bg.NotSel}"
+							cx:VisStates.BgInnerGeneric="{DynamicResource Action2.Icon.Bg.IsEditg.MouseOver}"
+							cx:VisStates.BdrInnerGeneric="Transparent"
+							cx:VisStates.FgGeneric="{DynamicResource Action2.Fg.IsEditg}"
+							cx:VisStates.StringGeneric="mo is editg"
+							cx:VisStates.DoubleGeneric="100.0"
+							/>
+
+				</StackPanel>
+
+			</DockPanel>
+
+		</DockPanel>
+
+		<DockPanel x:Name="I_Image"
+				HorizontalAlignment="Stretch"
+				Margin="0,0,0,10"
+				>
+
+			<Border Style="{StaticResource RowTitleBorder}">
+
+				<TextBlock Width="{StaticResource TitleWidth}"
+						Text="image-icon |  I"
+						Style="{StaticResource RowTitle}"
+						/>
+			</Border>
+
+			<DockPanel HorizontalAlignment="Stretch">
+
+				<StackPanel Orientation="Horizontal">
+
+					<ContentControl cx:VisStates.DoubleGeneric="210.0"
+							ContentTemplate="{StaticResource Field1}"
+							cx:VisStates.BgOuterGeneric="{DynamicResource SelectionList.Bg.NotSel}"
+							cx:VisStates.BgInnerGeneric="{DynamicResource Image1.Bg.NotSel}"
+							cx:VisStates.FgGeneric="Black"
+							cx:VisStates.StringGeneric="NotSel"
+							/>
+
+					<ContentControl cx:VisStates.DoubleGeneric="430.0"
+							ContentTemplate="{StaticResource Field1}"
+							cx:VisStates.BgOuterGeneric="{DynamicResource SelectionList.Bg.IsSel}"
+							cx:VisStates.BgInnerGeneric="{DynamicResource Image1.Bg.IsSel}"
+							cx:VisStates.FgGeneric="Black"
+							cx:VisStates.StringGeneric="IsSel"
+							/>
+
+				</StackPanel>
+
+			</DockPanel>
+
+		</DockPanel>
+
+		<DockPanel x:Name="J_Highlight"
+				HorizontalAlignment="Stretch"
+				Margin="0,0,0,10"
+				>
+
+			<Border Style="{StaticResource RowTitleBorder}">
+
+				<TextBlock Width="{StaticResource TitleWidth}"
+						Text="highlight |  j"
+						Style="{StaticResource RowTitle}"
+						/>
+			</Border>
+
+			<DockPanel HorizontalAlignment="Stretch">
+
+				<StackPanel Orientation="Horizontal">
+
+					<ContentControl cx:VisStates.DoubleGeneric="210.0"
+							ContentTemplate="{StaticResource Field1}"
+							cx:VisStates.BgOuterGeneric="{DynamicResource SelectionList.Bg.NotSel}"
+							cx:VisStates.BgInnerGeneric="{DynamicResource Hlight.Bg.NotSel}"
+							cx:VisStates.FgGeneric="{DynamicResource Hlight.Fg.NotSel}"
+							cx:VisStates.StringGeneric="NotSel"
+							/>
+
+					<ContentControl cx:VisStates.DoubleGeneric="430.0"
+							ContentTemplate="{StaticResource Field1}"
+							cx:VisStates.BgOuterGeneric="{DynamicResource SelectionList.Bg.IsSel}"
+							cx:VisStates.BgInnerGeneric="{DynamicResource Hlight.Bg.IsSel}"
+							cx:VisStates.FgGeneric="{DynamicResource Hlight.Fg.IsSel}"
+							cx:VisStates.StringGeneric="IsSel"
+							/>
+
+				</StackPanel>
+
+			</DockPanel>
+
+		</DockPanel>
+
+		<ContentControl x:Name="UnitSettingsTitle"
+				ContentTemplate="{StaticResource SectionTitle}"
+				cs:CustomProperties.GenericStringOne="Unit Settings"
+				/>
+
+		<DockPanel x:Name="Unit_Settings"
+				HorizontalAlignment="Stretch"
+				Margin="0,0,0,10"
+				>
+
+			<Border Style="{StaticResource RowTitleBorder}">
+
+				<TextBlock Width="{StaticResource TitleWidth}"
+						Text="unit settings title &amp; value"
+						Style="{StaticResource RowTitle}"
+						/>
+			</Border>
+
+			<DockPanel HorizontalAlignment="Stretch">
+
+				<StackPanel Orientation="Horizontal">
+
+					<ContentControl ContentTemplate="{StaticResource Field2}"
+							cx:VisStates.BgInnerGeneric="{DynamicResource UnitValTitle.Bg.Disabled}"
+							cx:VisStates.FgGeneric="{DynamicResource UnitValTitle.Fg.Disabled}"
+							cx:VisStates.BdrInnerGeneric="{DynamicResource UnitValTitle.Bg.Disabled}"
+							cx:VisStates.DoubleGeneric="100.0"
+							cx:VisStates.StringGeneric="Disabled"
+							cx:VisStates.ThicknessInnerGeneric="{StaticResource UnitValTitle.BorderThk}"
+							cx:VisStates.CornerRadiusInnerGeneric="{StaticResource UnitValTitle.CornerRadius}"
+							/>
+
+					<ContentControl ContentTemplate="{StaticResource Field2}"
+							cx:VisStates.BgInnerGeneric="{DynamicResource UnitValue.Bg.Disabled}"
+							cx:VisStates.FgGeneric="{DynamicResource UnitValue.Fg.Disabled}"
+							cx:VisStates.BdrInnerGeneric="{DynamicResource UnitValue.Bg.Disabled}"
+							cx:VisStates.DoubleGeneric="100.0"
+							cx:VisStates.StringGeneric="Disabled"
+							cx:VisStates.ThicknessInnerGeneric="{StaticResource UnitValue.BorderThk}"
+							cx:VisStates.CornerRadiusInnerGeneric="{StaticResource UnitValue.CornerRadius}"
+							/>
+
+
+					<ContentControl ContentTemplate="{StaticResource Field2}"
+							cx:VisStates.BgInnerGeneric="{DynamicResource UnitValTitle.Bg.IsUsed}"
+							cx:VisStates.FgGeneric="{DynamicResource UnitValTitle.Fg.IsUsed}"
+							cx:VisStates.BdrInnerGeneric="{DynamicResource UnitValTitle.Bg.IsUsed}"
+							cx:VisStates.DoubleGeneric="100.0"
+							cx:VisStates.StringGeneric="IsUsed"
+							cx:VisStates.ThicknessInnerGeneric="{StaticResource UnitValTitle.BorderThk}"
+							cx:VisStates.CornerRadiusInnerGeneric="{StaticResource UnitValTitle.CornerRadius}"
+							/>
+
+					<ContentControl ContentTemplate="{StaticResource Field2}"
+							cx:VisStates.BgInnerGeneric="{DynamicResource UnitValue.Bg.IsUsed}"
+							cx:VisStates.FgGeneric="{DynamicResource UnitValue.Fg.IsUsed}"
+							cx:VisStates.BdrInnerGeneric="{DynamicResource UnitValue.Bg.IsUsed}"
+							cx:VisStates.DoubleGeneric="100.0"
+							cx:VisStates.StringGeneric="IsUsed"
+							cx:VisStates.ThicknessInnerGeneric="{StaticResource UnitValue.BorderThk}"
+							cx:VisStates.CornerRadiusInnerGeneric="{StaticResource UnitValue.CornerRadius}"
+							/>
+
+
+				</StackPanel>
+
+			</DockPanel>
+
+		</DockPanel>
+
+		<ContentControl x:Name="NewUnitHeader"
+				ContentTemplate="{StaticResource SectionTitle}"
+				cs:CustomProperties.GenericStringOne="New Unit"
+				/>
+
+		<DockPanel x:Name="NewUnitTitle"
+				HorizontalAlignment="Stretch"
+				Margin="0,0,0,10"
+				>
+
+			<Border Style="{StaticResource RowTitleBorder}">
+
+				<TextBlock Width="{StaticResource TitleWidth}"
+						Text="new unit title"
+						Style="{StaticResource RowTitle}"
+						/>
+			</Border>
+
+			<DockPanel HorizontalAlignment="Stretch">
+				<StackPanel Orientation="Horizontal">
+					<ContentControl ContentTemplate="{StaticResource Field1}"
+							cx:VisStates.BgOuterGeneric="{DynamicResource AddUnit.Gbdr.Disabled}"
+							cx:VisStates.BgInnerGeneric="{DynamicResource AddUnit.Title.Bg.Disabled}"
+							cx:VisStates.FgGeneric="{DynamicResource AddUnit.Title.Fg.Disabled}"
+							cx:VisStates.StringGeneric="Disabled"
+							cx:VisStates.DoubleGeneric="100.0"
+							/>
+
+					<ContentControl ContentTemplate="{StaticResource Field1}"
+							cx:VisStates.BgOuterGeneric="{DynamicResource AddUnit.Gbdr.NotSel}"
+							cx:VisStates.BgInnerGeneric="{DynamicResource AddUnit.Title.Bg.NotSel}"
+							cx:VisStates.FgGeneric="{DynamicResource AddUnit.Title.Fg.NotSel}"
+							cx:VisStates.StringGeneric="NotSel"
+							cx:VisStates.DoubleGeneric="100.0"
+							/>
+
+					<ContentControl ContentTemplate="{StaticResource Field1}"
+							cx:VisStates.BgOuterGeneric="{DynamicResource AddUnit.Gbdr.IsSel}"
+							cx:VisStates.BgInnerGeneric="{DynamicResource AddUnit.Title.Bg.IsSel}"
+							cx:VisStates.FgGeneric="{DynamicResource AddUnit.Title.Fg.IsSel}"
+							cx:VisStates.StringGeneric="IsSel"
+							cx:VisStates.DoubleGeneric="100.0"
+							/>
+				</StackPanel>
+			</DockPanel>
+		</DockPanel>
+
+		<DockPanel x:Name="NewUnitSubTitle"
+				HorizontalAlignment="Stretch"
+				Margin="0,0,0,10"
+				>
+
+			<Border Style="{StaticResource RowTitleBorder}">
+
+				<TextBlock Width="{StaticResource TitleWidth}"
+						Text="new unit sub title"
+						Style="{StaticResource RowTitle}"
+						/>
+			</Border>
+
+			<DockPanel HorizontalAlignment="Stretch">
+				<StackPanel Orientation="Horizontal">
+					<ContentControl ContentTemplate="{StaticResource Field1}"
+							cx:VisStates.BgOuterGeneric="{DynamicResource AddUnit.Gbdr.Disabled}"
+							cx:VisStates.BgInnerGeneric="{DynamicResource AddUnit.SubTitle.Bg.Disabled}"
+							cx:VisStates.FgGeneric="{DynamicResource AddUnit.SubTitle.Fg.Disabled}"
+							cx:VisStates.StringGeneric="Disabled"
+							cx:VisStates.DoubleGeneric="100.0"
+							/>
+
+					<ContentControl ContentTemplate="{StaticResource Field1}"
+							cx:VisStates.BgOuterGeneric="{DynamicResource AddUnit.Gbdr.NotSel}"
+							cx:VisStates.BgInnerGeneric="{DynamicResource AddUnit.SubTitle.Bg.NotSel}"
+							cx:VisStates.FgGeneric="{DynamicResource AddUnit.SubTitle.Fg.NotSel}"
+							cx:VisStates.StringGeneric="NotSel"
+							cx:VisStates.DoubleGeneric="100.0"
+							/>
+
+					<ContentControl ContentTemplate="{StaticResource Field1}"
+							cx:VisStates.BgOuterGeneric="{DynamicResource AddUnit.Gbdr.IsSel}"
+							cx:VisStates.BgInnerGeneric="{DynamicResource AddUnit.SubTitle.Bg.IsSel}"
+							cx:VisStates.FgGeneric="{DynamicResource AddUnit.SubTitle.Fg.IsSel}"
+							cx:VisStates.StringGeneric="IsSel"
+							cx:VisStates.DoubleGeneric="100.0"
+							/>
+				</StackPanel>
+			</DockPanel>
+		</DockPanel>
+
+		<DockPanel x:Name="NewUnitValEntry"
+				HorizontalAlignment="Stretch"
+				Margin="0,0,0,10"
+				>
+
+			<Border Style="{StaticResource RowTitleBorder}">
+
+				<TextBlock Width="{StaticResource TitleWidth}"
+						Text="new unit value entry"
+						Style="{StaticResource RowTitle}"
+						/>
+			</Border>
+
+			<DockPanel HorizontalAlignment="Stretch">
+
+
+
+				<StackPanel DockPanel.Dock="Top"
+						Orientation="Horizontal"
+						>
+
+					<ContentControl Margin="220,0,0,0"
+							ContentTemplate="{StaticResource Field1}"
+							cx:VisStates.BgOuterGeneric="{DynamicResource AddUnit.Gbdr.IsSel}"
+							cx:VisStates.BgInnerGeneric="{DynamicResource ValEntry.Bg.IsSel}"
+							cx:VisStates.FgGeneric="{DynamicResource ValEntry.Fg.IsSel}"
+							cx:VisStates.StringGeneric="IsSel / Good"
+							cx:VisStates.DoubleGeneric="100.0"
+							cx:VisStates.BdrInnerGeneric="{DynamicResource Bdr.Good}"
+							cx:VisStates.ThicknessInnerGeneric="1"
+							/>
+
+					<ContentControl ContentTemplate="{StaticResource Field1}"
+							cx:VisStates.BgOuterGeneric="{DynamicResource SelectionList.Bg.IsSel}"
+							cx:VisStates.BgInnerGeneric="{DynamicResource ValEntry.Bg.IsEditg}"
+							cx:VisStates.FgGeneric="{DynamicResource ValEntry.Fg.IsEditg}"
+							cx:VisStates.StringGeneric="IsEditing / Good"
+							cx:VisStates.DoubleGeneric="100.0"
+							cx:VisStates.BdrInnerGeneric="{DynamicResource Bdr.Good}"
+							cx:VisStates.ThicknessInnerGeneric="1"
+							/>
+
+				</StackPanel>
+
+
+				<StackPanel DockPanel.Dock="Top"
+						Orientation="Horizontal"
+						>
+
+					<ContentControl Margin="220,0,0,0"
+							ContentTemplate="{StaticResource Field1}"
+							cx:VisStates.BgOuterGeneric="{DynamicResource AddUnit.Gbdr.IsSel}"
+							cx:VisStates.BgInnerGeneric="{DynamicResource ValEntry.Bg.IsSel}"
+							cx:VisStates.FgGeneric="{DynamicResource ValEntry.Fg.IsSel}"
+							cx:VisStates.StringGeneric="IsSel / Bad"
+							cx:VisStates.DoubleGeneric="100.0"
+							cx:VisStates.BdrInnerGeneric="{DynamicResource Bdr.Bad}"
+							cx:VisStates.ThicknessInnerGeneric="1"
+							/>
+
+					<ContentControl ContentTemplate="{StaticResource Field1}"
+							cx:VisStates.BgOuterGeneric="{DynamicResource SelectionList.Bg.IsSel}"
+							cx:VisStates.BgInnerGeneric="{DynamicResource ValEntry.Bg.IsEditg}"
+							cx:VisStates.FgGeneric="{DynamicResource ValEntry.Fg.IsEditg}"
+							cx:VisStates.StringGeneric="IsEditing/Bad"
+							cx:VisStates.DoubleGeneric="100.0"
+							cx:VisStates.BdrInnerGeneric="{DynamicResource Bdr.Bad}"
+							cx:VisStates.ThicknessInnerGeneric="1"
+							/>
+
+				</StackPanel>
+
+
+				<StackPanel DockPanel.Dock="Top"
+						Orientation="Horizontal"
+						>
+
+					<ContentControl ContentTemplate="{StaticResource Field1}"
+							cx:VisStates.BgOuterGeneric="{DynamicResource AddUnit.Gbdr.Disabled}"
+							cx:VisStates.BgInnerGeneric="{DynamicResource ValEntry.Bg.Disabled}"
+							cx:VisStates.FgGeneric="{DynamicResource ValEntry.Fg.Disabled}"
+							cx:VisStates.StringGeneric="Disabled"
+							cx:VisStates.DoubleGeneric="100.0"
+							cx:VisStates.BdrInnerGeneric="{DynamicResource ValEntry.Bdr.Disabled}"
+							cx:VisStates.ThicknessInnerGeneric="1"
+							/>
+
+					<ContentControl ContentTemplate="{StaticResource Field1}"
+							cx:VisStates.BgOuterGeneric="{DynamicResource AddUnit.Gbdr.NotSel}"
+							cx:VisStates.BgInnerGeneric="{DynamicResource ValEntry.Bg.NotSel}"
+							cx:VisStates.FgGeneric="{DynamicResource ValEntry.Fg.NotSel}"
+							cx:VisStates.StringGeneric="NotSel"
+							cx:VisStates.DoubleGeneric="100.0"
+							cx:VisStates.BdrInnerGeneric="{DynamicResource ValEntry.Bdr.NotSel}"
+							cx:VisStates.ThicknessInnerGeneric="1"
+							/>
+
+					<ContentControl ContentTemplate="{StaticResource Field1}"
+							cx:VisStates.BgOuterGeneric="{DynamicResource AddUnit.Gbdr.IsSel}"
+							cx:VisStates.BgInnerGeneric="{DynamicResource ValEntry.Bg.IsSel}"
+							cx:VisStates.FgGeneric="{DynamicResource ValEntry.Fg.IsSel}"
+							cx:VisStates.StringGeneric="IsSel"
+							cx:VisStates.DoubleGeneric="100.0"
+							cx:VisStates.BdrInnerGeneric="{DynamicResource ValEntry.Bdr.IsSel}"
+							cx:VisStates.ThicknessInnerGeneric="1"
+							/>
+
+					<ContentControl ContentTemplate="{StaticResource Field1}"
+							cx:VisStates.BgOuterGeneric="{DynamicResource SelectionList.Bg.IsSel}"
+							cx:VisStates.BgInnerGeneric="{DynamicResource ValEntry.Bg.IsEditg}"
+							cx:VisStates.FgGeneric="{DynamicResource ValEntry.Fg.IsEditg}"
+							cx:VisStates.StringGeneric="IsEditing"
+							cx:VisStates.DoubleGeneric="100.0"
+							cx:VisStates.BdrInnerGeneric="{DynamicResource ValEntry.Bdr.IsEditg}"
+							cx:VisStates.ThicknessInnerGeneric="1"
+							/>
+
+					<ContentControl ContentTemplate="{StaticResource Field1}"
+							cx:VisStates.BgOuterGeneric="{DynamicResource AddUnit.Gbdr.NotSel}"
+							cx:VisStates.BgInnerGeneric="{DynamicResource ValEntry.Bg.IsReadOnly}"
+							cx:VisStates.FgGeneric="{DynamicResource ValEntry.Fg.IsReadOnly}"
+							cx:VisStates.StringGeneric="IsReadOnly"
+							cx:VisStates.DoubleGeneric="100.0"
+							cx:VisStates.BdrInnerGeneric="{DynamicResource ValEntry.Bdr.IsReadOnly}"
+							cx:VisStates.ThicknessInnerGeneric="1"
+							/>
+
+					<ContentControl ContentTemplate="{StaticResource Field1}"
+							cx:VisStates.BgOuterGeneric="{DynamicResource AddUnit.Gbdr.NotSel}"
+							cx:VisStates.BgInnerGeneric="{DynamicResource ValEntry.Bg.IsLocked}"
+							cx:VisStates.FgGeneric="{DynamicResource ValEntry.Fg.IsLocked}"
+							cx:VisStates.StringGeneric="IsLocked"
+							cx:VisStates.DoubleGeneric="100.0"
+							cx:VisStates.BdrInnerGeneric="{DynamicResource ValEntry.Bdr.IsLocked}"
+							cx:VisStates.ThicknessInnerGeneric="1"
+							/>
+
+				</StackPanel>
+
+				<StackPanel DockPanel.Dock="Bottom"
+						Orientation="Horizontal"
+						Margin="110,0,0,0"
+						>
+
+					<ContentControl HorizontalAlignment="Stretch"
+							HorizontalContentAlignment="Stretch"
+							ContentTemplate="{StaticResource Field1}"
+							cx:VisStates.BgOuterGeneric="{DynamicResource AddUnit.Gbdr.NotSel}"
+							cx:VisStates.BgInnerGeneric="{DynamicResource ValEntry.Bg.NotSel.MouseOver}"
+							cx:VisStates.FgGeneric="{DynamicResource ValEntry.Fg.NotSel.MouseOver}"
+							cx:VisStates.BdrInnerGeneric="{DynamicResource ValEntry.Bdr.NotSel.MouseOver}"
+							cx:VisStates.StringGeneric="mo not select"
+							cx:VisStates.DoubleGeneric="210.0"
+							cx:VisStates.ThicknessInnerGeneric="1"
+							/>
+
+					<ContentControl cx:VisStates.DoubleGeneric="100.0"
+							ContentTemplate="{StaticResource Field1}"
+							cx:VisStates.BgOuterGeneric="{DynamicResource AddUnit.Gbdr.IsSel}"
+							cx:VisStates.BgInnerGeneric="{DynamicResource ValEntry.Bg.IsEditg.MouseOver}"
+							cx:VisStates.FgGeneric="{DynamicResource ValEntry.Fg.IsEditg.MouseOver}"
+							cx:VisStates.StringGeneric="mo is editing"
+							cx:VisStates.BdrInnerGeneric="{DynamicResource ValEntry.Bdr.IsEditg.MouseOver}"
+							cx:VisStates.ThicknessInnerGeneric="1"
+							/>
+
+				</StackPanel>
+
+
+			</DockPanel>
+
+		</DockPanel>
+
+		<DockPanel x:Name="NewUnitSelect"
+				HorizontalAlignment="Stretch"
+				Margin="0,0,0,10"
+				>
+
+			<Border Style="{StaticResource RowTitleBorder}">
+
+				<TextBlock Width="{StaticResource TitleWidth}"
+						Text="new unit select cbx"
+						Style="{StaticResource RowTitle}"
+						/>
+			</Border>
+
+			<DockPanel HorizontalAlignment="Stretch">
+
+				<StackPanel DockPanel.Dock="Top"
+						Orientation="Horizontal"
+						>
+
+					<ContentControl ContentTemplate="{StaticResource Field1}"
+							cx:VisStates.BgOuterGeneric="{DynamicResource AddUnit.Gbdr.Disabled}"
+							cx:VisStates.BgInnerGeneric="{DynamicResource Cbx.Bg.Disabled}"
+							cx:VisStates.FgGeneric="{DynamicResource Cbx.Fg.Disabled}"
+							cx:VisStates.StringGeneric="Disabled"
+							cx:VisStates.DoubleGeneric="100.0"
+							cx:VisStates.BdrInnerGeneric="{DynamicResource Cbx.Bdr.Disabled}"
+							cx:VisStates.ThicknessInnerGeneric="1"
+							/>
+
+					<ContentControl ContentTemplate="{StaticResource Field1}"
+							cx:VisStates.BgOuterGeneric="{DynamicResource AddUnit.Gbdr.NotSel}"
+							cx:VisStates.BgInnerGeneric="{DynamicResource Cbx.Bg.NotSel}"
+							cx:VisStates.FgGeneric="{DynamicResource Cbx.Fg.NotSel}"
+							cx:VisStates.StringGeneric="NotSel"
+							cx:VisStates.DoubleGeneric="100.0"
+							cx:VisStates.BdrInnerGeneric="{DynamicResource Cbx.Bdr.NotSel}"
+							cx:VisStates.ThicknessInnerGeneric="1"
+							/>
+
+					<ContentControl ContentTemplate="{StaticResource Field1}"
+							cx:VisStates.BgOuterGeneric="{DynamicResource AddUnit.Gbdr.IsSel}"
+							cx:VisStates.BgInnerGeneric="{DynamicResource Cbx.Bg.IsSel}"
+							cx:VisStates.FgGeneric="{DynamicResource Cbx.Fg.IsSel}"
+							cx:VisStates.StringGeneric="IsSel"
+							cx:VisStates.DoubleGeneric="100.0"
+							cx:VisStates.BdrInnerGeneric="{DynamicResource Cbx.Bdr.IsSel}"
+							cx:VisStates.ThicknessInnerGeneric="1"
+							/>
+
+					<ContentControl ContentTemplate="{StaticResource Field1}"
+							cx:VisStates.BgOuterGeneric="{DynamicResource SelectionList.Bg.IsSel}"
+							cx:VisStates.BgInnerGeneric="{DynamicResource Cbx.Bg.IsEditg}"
+							cx:VisStates.FgGeneric="{DynamicResource Cbx.Fg.IsEditg}"
+							cx:VisStates.StringGeneric="IsEditing"
+							cx:VisStates.DoubleGeneric="100.0"
+							cx:VisStates.BdrInnerGeneric="{DynamicResource Cbx.Bdr.IsEditg}"
+							cx:VisStates.ThicknessInnerGeneric="1"
+							/>
+
+					<ContentControl ContentTemplate="{StaticResource Field1}"
+							cx:VisStates.BgOuterGeneric="{DynamicResource AddUnit.Gbdr.NotSel}"
+							cx:VisStates.BgInnerGeneric="{DynamicResource Cbx.Bg.IsReadOnly}"
+							cx:VisStates.FgGeneric="{DynamicResource Cbx.Fg.IsReadOnly}"
+							cx:VisStates.StringGeneric="IsReadOnly"
+							cx:VisStates.DoubleGeneric="100.0"
+							cx:VisStates.BdrInnerGeneric="{DynamicResource Cbx.Bdr.IsReadOnly}"
+							cx:VisStates.ThicknessInnerGeneric="1"
+							/>
+
+					<ContentControl ContentTemplate="{StaticResource Field1}"
+							cx:VisStates.BgOuterGeneric="{DynamicResource AddUnit.Gbdr.NotSel}"
+							cx:VisStates.BgInnerGeneric="{DynamicResource Cbx.Bg.IsLocked}"
+							cx:VisStates.FgGeneric="{DynamicResource Cbx.Fg.IsLocked}"
+							cx:VisStates.StringGeneric="IsLocked"
+							cx:VisStates.DoubleGeneric="100.0"
+							cx:VisStates.BdrInnerGeneric="{DynamicResource Cbx.Bdr.IsLocked}"
+							cx:VisStates.ThicknessInnerGeneric="1"
+							/>
+
+				</StackPanel>
+
+				<StackPanel DockPanel.Dock="Bottom"
+						Orientation="Horizontal"
+						Margin="110,0,0,0"
+						>
+
+					<ContentControl HorizontalAlignment="Stretch"
+							HorizontalContentAlignment="Stretch"
+							ContentTemplate="{StaticResource Field1}"
+							cx:VisStates.BgOuterGeneric="{DynamicResource AddUnit.Gbdr.NotSel}"
+							cx:VisStates.BgInnerGeneric="{DynamicResource Cbx.Bg.NotSel.MouseOver}"
+							cx:VisStates.FgGeneric="{DynamicResource Cbx.Fg.NotSel.MouseOver}"
+							cx:VisStates.BdrInnerGeneric="{DynamicResource Cbx.Bdr.NotSel.MouseOver}"
+							cx:VisStates.StringGeneric="mo not select"
+							cx:VisStates.DoubleGeneric="210.0"
+							cx:VisStates.ThicknessInnerGeneric="1"
+							/>
+
+					<ContentControl cx:VisStates.DoubleGeneric="100.0"
+							ContentTemplate="{StaticResource Field1}"
+							cx:VisStates.BgOuterGeneric="{DynamicResource AddUnit.Gbdr.IsSel}"
+							cx:VisStates.BgInnerGeneric="{DynamicResource Cbx.Bg.IsEditg.MouseOver}"
+							cx:VisStates.FgGeneric="{DynamicResource Cbx.Fg.IsEditg.MouseOver}"
+							cx:VisStates.StringGeneric="mo is editing"
+							cx:VisStates.BdrInnerGeneric="{DynamicResource Cbx.Bdr.IsEditg.MouseOver}"
+							cx:VisStates.ThicknessInnerGeneric="1"
+							/>
+
+				</StackPanel>
+
+
+			</DockPanel>
+
+		</DockPanel>
+
+
+		<ContentControl x:Name="DialogControlsHeader"
+				ContentTemplate="{StaticResource SectionTitle}"
+				cs:CustomProperties.GenericStringOne="dialog controls"
+				/>
+
+		<DockPanel x:Name="DcButton"
+				HorizontalAlignment="Stretch"
+				Margin="0,0,0,10"
+				>
+
+			<Border Style="{StaticResource RowTitleBorder}">
+
+				<TextBlock Width="{StaticResource TitleWidth}"
+						Text="dialog controls"
+						Style="{StaticResource RowTitle}"
+						/>
+			</Border>
+
+			<DockPanel HorizontalAlignment="Stretch">
+
+				<StackPanel DockPanel.Dock="Top"
+						Orientation="Horizontal">
+
+					<Button Content="EnaB Per Style"
+							Margin="0,0,10,0"
+							IsEnabled="True"
+							Style="{StaticResource Btn.Std}"
+							>
+					</Button>
+
+
+					<Button Content="DisEn Per Style"
+							Margin="0,0,10,0"
+							IsEnabled="false"
+							Style="{StaticResource Btn.Std}"
+					>
+					</Button>
+
+
+
+					<Button Content="is disabled"
+							Margin="0,0,10,0"
+							IsEnabled="false"
+							Style="{StaticResource Btn.Std}"
+							>
+						<Button.Resources>
+							<!--  bdr1, borderbrush  -->
+							<SolidColorBrush x:Key="Btn.Bdr.Inner.Disabled" 
+									Color="{Binding Color, 
+									Source={StaticResource Btn.Bdr.Inner.NotSel}}" />
+							<!--  border, background  -->
+							<SolidColorBrush x:Key="Btn.Bg.Disabled" 
+									Color="{Binding Color, 
+									Source={StaticResource Btn.Bg.NotSel}}" />
+							<!--  border,  borderbrush  -->
+							<SolidColorBrush x:Key="Btn.Bdr.Disabled" 
+									Color="{Binding Color, 
+									Source={StaticResource Btn.Bdr.NotSel}}" />
+							<!--  foreground  -->
+							<SolidColorBrush x:Key="Btn.Fg.Disabled" 
+									Color="{Binding Color, 
+									Source={StaticResource Btn.Fg.NotSel}}" />
+						</Button.Resources>
+					</Button>
+
+					<Button Content="default/DisE"
+							Margin="0,0,10,0"
+							IsEnabled="false"
+							IsDefault="True"
+							Style="{StaticResource Btn.Std}"
+							>
+
+					</Button>
+
+					<Button Content="is default/Enab"
+							Margin="0,0,10,0"
+							IsEnabled="true"
+							IsDefault="True"
+							Style="{StaticResource Btn.Std}"
+							>
+
+					</Button>
+
+					<Button Content="is pressed"
+							Margin="0,0,10,0"
+							IsEnabled="false"
+							Style="{StaticResource Btn.Std}"
+					>
+						<Button.Resources>
+							<!--  bdr1, borderbrush  -->
+							<SolidColorBrush x:Key="Btn.Bdr.Inner.Disabled" 
+									Color="{Binding Color, 
+									Source={StaticResource Btn.Bdr.Inner.Pressed}}" />
+							<!--  border, background  -->
+							<SolidColorBrush x:Key="Btn.Bg.Disabled" 
+									Color="{Binding Color, 
+									Source={StaticResource Btn.Bg.Pressed}}" />
+							<!--  border,  borderbrush  -->
+							<SolidColorBrush x:Key="Btn.Bdr.Disabled" 
+									Color="{Binding Color, 
+									Source={StaticResource Btn.Bdr.Pressed}}" />
+							<!--  foreground  -->
+							<SolidColorBrush x:Key="Btn.Fg.Disabled" 
+									Color="{Binding Color, 
+									Source={StaticResource Btn.Fg.Pressed}}" />
+						</Button.Resources>
+					</Button>
+
+					
+					<Button Content="is mouseover"
+							Margin="0,0,10,0"
+							IsEnabled="false"
+							Style="{StaticResource Btn.Std}"
+					>
+						<Button.Resources>
+							<!--  bdr1, borderbrush  -->
+							<!-- <SolidColorBrush x:Key="Btn.Bdr.Inner.Disabled"  -->
+							<!-- 		Color="{Binding Color,  -->
+							<!-- 		Source={StaticResource Btn.Bdr.Inner.MouseOver}}" /> -->
+							<!--  border, background  -->
+							<SolidColorBrush x:Key="Btn.Bg.Disabled" 
+									Color="{Binding Color, 
+									Source={StaticResource Btn.Bg.MouseOver}}" />
+							<!--  border,  borderbrush  -->
+							<SolidColorBrush x:Key="Btn.Bdr.Disabled" 
+									Color="{Binding Color, 
+									Source={StaticResource Btn.Bdr.MouseOver}}" />
+							<!--  foreground  -->
+							<SolidColorBrush x:Key="Btn.Fg.Disabled" 
+									Color="{Binding Color, 
+									Source={StaticResource Btn.Fg.MouseOver}}" />
+						</Button.Resources>
+					</Button>
+
+
+				</StackPanel>
+
+			</DockPanel>
+
+		</DockPanel>
+
+
+
+	</StackPanel>
+
+
+</Window>

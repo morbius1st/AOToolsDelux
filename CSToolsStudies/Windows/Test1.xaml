@@ -1798,13 +1798,6 @@
 			<!--  -->
 
 
-
-
-
-
-
-
-
 			<!--  text box  -->
 			<Style x:Key="TbxTrigs.L1.Old"
 					BasedOn="{StaticResource TbxRoot}"
@@ -4543,7 +4536,6 @@
 							FocusVisualStyle="{x:Null}"
 							IsEditable="False"
 							IsEnabled="{Binding ElementName=win, Path=AddUnitEnabled}"
-							IsReadOnly="True"
 							IsSynchronizedWithCurrentItem="True"
 							ItemContainerStyle="{DynamicResource CsCbxItemContainerStyle}"
 							Margin="0,5,0,0"
@@ -6833,6 +6825,7 @@
 						</Border>
 						<!--#endregion-->
 					</StackPanel>
+
 					<Expander x:Name="WindowExpander"
 							IsExpanded="{Binding ExpandWindow, FallbackValue='true'}"
 							Margin="0,30,0,0"

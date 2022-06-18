@@ -2,89 +2,110 @@
 		xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
 		>
 
-	<ResourceDictionary.MergedDictionaries>
-		<ResourceDictionary Source="/Windows/ResourceFiles/XamlResources/MasterColorList.xaml" />
-		<ResourceDictionary Source="/Windows/Skin/CyberStudioSkin.xaml"/>
-	</ResourceDictionary.MergedDictionaries>
+    <ResourceDictionary.MergedDictionaries>
+        <ResourceDictionary Source="/Windows/ResourceFiles/XamlResources/MasterColorList.xaml" />
+        <ResourceDictionary Source="/Windows/Skin/CyberStudioSkin.xaml"/>
+    </ResourceDictionary.MergedDictionaries>
 
 
 
-	<ControlTemplate x:Key="Btn.Ct.Std"
+    <Style x:Key="Btn.Std" TargetType="Button">
+        <Setter Property="FontSize" Value="{StaticResource FontSize.Normal}" />
+        <Setter Property="Margin" Value="0"/>
+        <Setter Property="HorizontalAlignment" Value="Center" />
+        <Setter Property="VerticalAlignment" Value="Center" />
+        <Setter Property="Padding" Value="3,0,3,2" />
+
+				<!-- border, background -->
+        <Setter Property="Background" Value="{DynamicResource Btn.Bg.IsSel}" />
+				<!-- border, borderbrush -->
+        <Setter Property="BorderBrush" Value="{DynamicResource Btn.Bdr.IsSel}" />
+				<!-- foreground -->
+        <Setter Property="Foreground" Value="{DynamicResource Btn.Fg.IsSel}" />
+
+        <Setter Property="Height" Value="{DynamicResource Btn.Height.Std}" />
+        <Setter Property="Width" Value="{DynamicResource Btn.Width.Std}" />
+        <Setter Property="Template" Value="{DynamicResource Btn.Ct.Std}" />
+    </Style>
+
+
+
+    <ControlTemplate x:Key="Btn.Ct.Std"
 			TargetType="Button"
+
 			>
-		<Border x:Name="border"
-				Background="{TemplateBinding Background}"
-				BorderBrush="{TemplateBinding BorderBrush}"
-				BorderThickness="{TemplateBinding BorderThickness}"
-				Padding="{TemplateBinding Padding}"
-				SnapsToDevicePixels="True"
-				CornerRadius="{StaticResource CornerRadius.Sm}"
-				>
-			<Border x:Name="bdr1"
-					BorderBrush="Transparent"
-					BorderThickness="0,0,0,1"
-					Margin="0"
-					
-			>
+ 
+            <Border x:Name="border"
+					Background="{TemplateBinding Background}"
+					BorderBrush="{TemplateBinding BorderBrush}"
+					BorderThickness="{TemplateBinding BorderThickness}"
+					Padding="{TemplateBinding Padding}"
+					SnapsToDevicePixels="True"
+					CornerRadius="{DynamicResource CornerRadius.Std}">
+                <Border x:Name="bdr1"
+						BorderBrush="Transparent"
+						BorderThickness="0,0,0,0"
+						Margin="0">
 
-				<ContentPresenter x:Name="contentPresenter"
-						Content="{TemplateBinding Content}"
-						ContentStringFormat="{TemplateBinding ContentStringFormat}"
-						ContentTemplate="{TemplateBinding ContentTemplate}"
-						Focusable="False"
-						HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
-						RecognizesAccessKey="True"
-						SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
-						VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
-						/>
+                    <ContentPresenter x:Name="contentPresenter"
+							Content="{TemplateBinding Content}"
+							ContentStringFormat="{TemplateBinding ContentStringFormat}"
+							ContentTemplate="{TemplateBinding ContentTemplate}"
+							Focusable="False"
+							HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+							RecognizesAccessKey="True"
+							SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
+							VerticalAlignment="{TemplateBinding VerticalContentAlignment}" />
 
-			</Border>
-		</Border>
-		<ControlTemplate.Triggers>
+                </Border>
+            </Border>
 
 
-			<!-- true -->
-			<Trigger Property="IsDefault" Value="true">
-				<Setter Property="BorderBrush" TargetName="bdr1" Value="{StaticResource Btn.Bdr.Inner.IsDefault}" />
-				<Setter Property="Background" TargetName="border" Value="{StaticResource Btn.Bg.IsDefault}" />
-
-				<!-- false -->
-			</Trigger>
-			<Trigger Property="IsDefault" Value="false">
-				<Setter Property="BorderBrush" TargetName="bdr1" Value="Transparent" />
-				<Setter Property="BorderThickness" TargetName="bdr1" Value="0" />
-			</Trigger>
-
-			<Trigger Property="IsMouseOver" Value="true">
-				<Setter Property="Foreground" Value="{StaticResource Btn.Fg.MouseOver}" />
-				<Setter Property="Background" TargetName="border" Value="{StaticResource Btn.Bg.MouseOver}" />
-				<Setter Property="BorderBrush" TargetName="border" Value="{StaticResource Btn.Bdr.MouseOver}" />
-			</Trigger>
-
-			<Trigger Property="IsPressed" Value="True">
-				<Setter Property="Foreground" Value="{StaticResource Btn.Fg.Pressed}" />
-				<Setter Property="BorderBrush" TargetName="bdr1" Value="{StaticResource Btn.Bdr.Inner.Pressed}" />
-				<Setter Property="Background" TargetName="border" Value="{StaticResource Btn.Bg.Pressed}" />
-				<Setter Property="BorderBrush" TargetName="border" Value="{StaticResource Btn.Bdr.Pressed}" />
-			</Trigger>
-
-			<Trigger Property="IsEnabled" Value="False">
-				<Setter Property="Foreground" Value="{DynamicResource Btn.Fg.NotSel}" />
-				<Setter Property="BorderBrush" TargetName="bdr1" Value="{DynamicResource Btn.Bdr.NotSel.Inner}" />
-				<Setter Property="Background" TargetName="border" Value="{DynamicResource Btn.Bg.NotSel}" />
-				<Setter Property="BorderBrush" TargetName="border" Value="{DynamicResource Btn.Bdr.NotSel}" />
-			</Trigger>
+        <ControlTemplate.Triggers>
 
 
-		</ControlTemplate.Triggers>
-	</ControlTemplate>
+            <!-- true -->
+            <Trigger Property="IsDefault" Value="true">
+                <Setter Property="BorderBrush" TargetName="bdr1" Value="{DynamicResource Btn.Bdr.Inner.IsSel}" />
+                <Setter Property="Background" TargetName="border" Value="{DynamicResource Btn.Bg.IsSel}" />
+                <Setter Property="BorderThickness" TargetName="bdr1" Value="0,0,0,4" />
+            </Trigger>
+            <!-- false -->
+            <Trigger Property="IsDefault" Value="false">
+                <Setter Property="BorderBrush" TargetName="bdr1" Value="Transparent" />
+
+            </Trigger>
+
+            <Trigger Property="IsMouseOver" Value="true">
+                <Setter Property="Foreground" Value="{DynamicResource Btn.Fg.MouseOver}" />
+                <Setter Property="Background" TargetName="border" Value="{DynamicResource Btn.Bg.MouseOver}" />
+                <Setter Property="BorderBrush" TargetName="border" Value="{DynamicResource Btn.Bdr.MouseOver}" />
+            </Trigger>
+
+            <Trigger Property="IsPressed" Value="True">
+                <Setter Property="Foreground" Value="{DynamicResource Btn.Fg.Pressed}" />
+                <Setter Property="BorderBrush" TargetName="bdr1" Value="{DynamicResource Btn.Bdr.Inner.Pressed}" />
+                <Setter Property="Background" TargetName="border" Value="{DynamicResource Btn.Bg.Pressed}" />
+                <Setter Property="BorderBrush" TargetName="border" Value="{DynamicResource Btn.Bdr.Pressed}" />
+            </Trigger>
+
+            <Trigger Property="IsEnabled" Value="False">
+                <Setter Property="Foreground" Value="{DynamicResource Btn.Fg.Disabled}" />
+                <Setter Property="BorderBrush" TargetName="bdr1" Value="{DynamicResource Btn.Bdr.Inner.Disabled}" />
+                <Setter Property="Background" TargetName="border" Value="{DynamicResource Btn.Bg.Disabled}" />
+                <Setter Property="BorderBrush" TargetName="border" Value="{DynamicResource Btn.Bdr.Disabled}" />
+            </Trigger>
+
+
+        </ControlTemplate.Triggers>
+    </ControlTemplate>
 
 
 
-	<ControlTemplate x:Key="Btn.Ct.Stealth"
+    <ControlTemplate x:Key="Btn.Ct.Stealth"
 			TargetType="Button"
 	>
-		<Border x:Name="border"
+        <Border x:Name="border"
 				Background="{TemplateBinding Background}"
 				BorderBrush="{TemplateBinding BorderBrush}"
 				BorderThickness="{TemplateBinding BorderThickness}"
@@ -93,14 +114,14 @@
 				SnapsToDevicePixels="True"
 				VerticalAlignment="Center"
 		>
-			<Border x:Name="bdr1"
+            <Border x:Name="bdr1"
 					BorderBrush="Transparent"
 					BorderThickness="0,0,0,0"
 					Margin="{TemplateBinding Padding}"
 					VerticalAlignment="Center"
 			>
 
-				<ContentPresenter x:Name="contentPresenter"
+                <ContentPresenter x:Name="contentPresenter"
 						Content="{TemplateBinding Content}"
 						ContentStringFormat="{TemplateBinding ContentStringFormat}"
 						ContentTemplate="{TemplateBinding ContentTemplate}"
@@ -110,20 +131,10 @@
 						SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
 						VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
 				/>
-			</Border>
-		</Border>
-	
-	</ControlTemplate>
+            </Border>
+        </Border>
 
-
-
-
-
-
-
-
-
-
+    </ControlTemplate>
 
 
 </ResourceDictionary>
