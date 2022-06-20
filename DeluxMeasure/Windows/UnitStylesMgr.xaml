@@ -21,9 +21,7 @@
 	<Window.Resources>
 
 		<ResourceDictionary>
-
 			<!--#region > L4 resource dictionaries-->
-
 			<ResourceDictionary.MergedDictionaries>
 				<ResourceDictionary Source="/Windows/ResourceFiles/XamlResources/MasterColorList.xaml" />
 				<ResourceDictionary Source="/Windows/ResourceFiles/XamlResources/VisualStates.xaml" />
@@ -37,23 +35,387 @@
 
 			<!--#endregion-->
 
+			<sys:Int16 x:Key="dlgIdx">0</sys:Int16>
+
+			<!--#region > L4 styles-->
+
+			<!--#region > L5 border styles-->
+
+			<Style x:Key="BdrRoot"
+					TargetType="Border"
+					>
+				<Setter Property="Background" Value="{Binding RelativeSource={RelativeSource Self}, Path=(cs:VisualStates.BgDisabled)}" />
+				<Setter Property="Margin" Value="0" />
+				<Setter Property="Padding" Value="0" />
+				<Setter Property="CornerRadius" Value="{StaticResource CornerRadius.Std}" />
+			</Style>
+
+			<Style x:Key="BdrHeader"
+					BasedOn="{StaticResource BdrRoot}"
+					TargetType="Border"
+					>
+				<Setter Property="CornerRadius" Value="{StaticResource CornerRadius.Sm}" />
+				<Setter Property="Background" Value="{StaticResource Header.Bg.IsSel}" />
+			</Style>
+
+			<Style x:Key="BdrUnitValTitle"
+					BasedOn="{StaticResource BdrRoot}"
+					TargetType="Border"
+					>
+				<Setter Property="MinWidth" Value="40" />
+				<Setter Property="CornerRadius" Value="{StaticResource UnitValTitle.CornerRadius}" />
+				<Setter Property="BorderThickness" Value="{StaticResource UnitValTitle.BorderThk}" />
+				<Setter Property="BorderBrush" Value="{StaticResource UnitValTitle.Bdr.IsUsed}" />
+				<Setter Property="Background" Value="{StaticResource UnitValTitle.Bg.IsUsed}" />
+			</Style>
+
+			<Style x:Key="BdrUnitValue"
+					BasedOn="{StaticResource BdrRoot}"
+					TargetType="Border"
+					>
+				<Setter Property="MinWidth" Value="40" />
+				<Setter Property="CornerRadius" Value="{StaticResource UnitValue.CornerRadius}" />
+				<Setter Property="BorderThickness" Value="{StaticResource UnitValue.BorderThk}" />
+				<Setter Property="BorderBrush" Value="{StaticResource UnitValue.Bdr.IsUsed}" />
+				<Setter Property="Background" Value="{StaticResource UnitValue.Bg.IsUsed}" />
+			</Style>
 
 
-
-			<DataTemplate x:Key="DtUnitSetgSelected">
-
-				<StackPanel>
+			<!--#endregion-->
 
 
-					</StackPanel>
+			<!--#region > L5 textblock styles-->
+
+			<Style x:Key="TblkRoot"
+					TargetType="TextBlock"
+					>
+				<Setter Property="Foreground" Value="{Binding RelativeSource={RelativeSource Self}, Path=(cs:VisualStates.FgDisabled)}" />
+				<Setter Property="Padding" Value="0" />
+				<Setter Property="Margin" Value="0" />
+				<Setter Property="FontSize" Value="{StaticResource FontSize.Normal}" />
+			</Style>
+
+			<Style x:Key="TblkHeaderLg"
+					BasedOn="{StaticResource TblkRoot}"
+					TargetType="TextBlock"
+					>
+				<Setter Property="Foreground" Value="{StaticResource Header.Fg.IsSel}" />
+				<Setter Property="Padding" Value="5,0,0,2" />
+				<Setter Property="FontSize" Value="{StaticResource FontSize.XLarge}" />
+			</Style>
+
+			<Style x:Key="TblkUnitValTitle"
+					BasedOn="{StaticResource TblkRoot}"
+					TargetType="TextBlock"
+					>
+				<Setter Property="cs:VisualStates.FgDisabled" Value="{StaticResource UnitValTitle.Fg.IsUsed}" />
+				<Setter Property="Padding" Value="8,2,9,4" />
+				<Setter Property="HorizontalAlignment" Value="Left" />
+				<Setter Property="VerticalAlignment" Value="Center" />
+			</Style>
+
+			<Style x:Key="TblkUnitValue"
+					BasedOn="{StaticResource TblkRoot}"
+					TargetType="TextBlock"
+					>
+				<Setter Property="cs:VisualStates.FgDisabled" Value="{StaticResource UnitValue.Fg.IsUsed}" />
+				<Setter Property="Padding" Value="8,2,9,4" />
+				<Setter Property="HorizontalAlignment" Value="Center" />
+				<Setter Property="VerticalAlignment" Value="Center" />
+			</Style>
+
+
+			<!--#endregion-->
+
+			<!--#endregion-->
+
+
+			<!--#region > L4 dt so ribbon  (DtSoRibbonOrder)-->
+
+			<DataTemplate x:Key="DtSoRibbonOrder">
+
+				<DockPanel VerticalAlignment="Top">
+
+					<Border x:Name="BdrRoHeader"
+							DockPanel.Dock="Top"
+							HorizontalAlignment="Stretch"
+							VerticalAlignment="Top"
+							Margin="0,0,0,3"
+							cs:VisualStates.BgDisabled="{StaticResource Header.Bg.IsSel}"
+							Style="{StaticResource BdrHeader}"
+							>
+						<TextBlock Text="Style Order - Ribbon List"
+								cs:VisualStates.FgDisabled="{StaticResource Header.Fg.IsSel}"
+								Style="{StaticResource TblkHeaderLg}"
+								/>
+					</Border>
+
+				</DockPanel>
+
+			</DataTemplate>
+
+			<!--#endregion-->
+
+			<!--#region > L4 dt so dialog left  (DtSoDlxMeasureLeftOrder)-->
+
+			<DataTemplate x:Key="DtSoDlxMeasureLeftOrder">
+
+				<DockPanel>
+
+					<Border x:Name="BdrRoHeader"
+							DockPanel.Dock="Top"
+							HorizontalAlignment="Stretch"
+							VerticalAlignment="Top"
+							Margin="0,0,0,3"
+							cs:VisualStates.BgDisabled="{StaticResource Header.Bg.IsSel}"
+							Style="{StaticResource BdrHeader}"
+							>
+						<TextBlock Text="Style Order - Delux Measure - Left"
+								cs:VisualStates.FgDisabled="{StaticResource Header.Fg.IsSel}"
+								Style="{StaticResource TblkHeaderLg}"
+								/>
+					</Border>
+
+				</DockPanel>
+
+			</DataTemplate>
+
+			<!--#endregion-->
+
+			<!--#region > L4 dt so dialog right  (DtSoDlxMeasureRightOrder)-->
+
+			<DataTemplate x:Key="DtSoDlxMeasureRightOrder">
+
+				<DockPanel>
+
+					<Border x:Name="BdrRoHeader"
+							DockPanel.Dock="Top"
+							HorizontalAlignment="Stretch"
+							VerticalAlignment="Top"
+							Margin="0,0,0,3"
+							cs:VisualStates.BgDisabled="{StaticResource Header.Bg.IsSel}"
+							Style="{StaticResource BdrHeader}"
+							>
+						<TextBlock Text="Style Order Delux Measure - Right"
+								cs:VisualStates.FgDisabled="{StaticResource Header.Fg.IsSel}"
+								Style="{StaticResource TblkHeaderLg}"
+								/>
+					</Border>
+
+				</DockPanel>
+
+			</DataTemplate>
+
+			<!--#endregion-->
+
+			<!--#region > L4 dt so dialog control - style order (DtDlgCtrlStyleOrder)-->
+
+			<DataTemplate x:Key="DtDlgCtrlStyleOrder">
+
+				<StackPanel x:Name="DialogControls"
+						DockPanel.Dock="Bottom"
+						Margin="0,0,0,0"
+						HorizontalAlignment="Right"
+						Orientation="Horizontal"
+						VerticalAlignment="Bottom"
+						>
+
+
+					<Button x:Name="BtnSoReset"
+							Content="Reset"
+							HorizontalAlignment="Right"
+							Margin="10,0,0,0"
+							Style="{StaticResource Btn.Std}"
+							/>
+
+
+					<Button x:Name="BtnSoCancel"
+							Content="Cancel"
+							HorizontalAlignment="Right"
+							Margin="10,0,0,0"
+							Style="{StaticResource Btn.Std}"
+							/>
+
+
+					<Button x:Name="BtnSoApply"
+							Content="Apply"
+							HorizontalAlignment="Right"
+							Margin="10,0,0,0"
+							Style="{StaticResource Btn.Std}"
+							/>
+
+					<Button x:Name="BtnSoDone"
+							Content="Done"
+							HorizontalAlignment="Right"
+							Margin="10,0,0,0"
+							Style="{StaticResource Btn.Std}"
+							/>
+
+
+				</StackPanel>
+
+			</DataTemplate>
+
+			<!--#endregion-->
+
+
+			<!--#region > L4 dt us unit settings - sel unit (DtUnitSettings)-->
+
+			<DataTemplate x:Key="DtUnitSettings">
+
+				<StackPanel Orientation="Vertical">
+
+					<Border x:Name="BdrUsHeader"
+							HorizontalAlignment="Stretch"
+							VerticalAlignment="Top"
+							Margin="0,0,0,3"
+							cs:VisualStates.BgDisabled="{StaticResource Header.Bg.IsSel}"
+							Style="{StaticResource BdrHeader}"
+							>
+						<TextBlock Text="Unit Settings"
+								cs:VisualStates.FgDisabled="{StaticResource Header.Fg.IsSel}"
+								Style="{StaticResource TblkHeaderLg}"
+								/>
+					</Border>
+
+					<Border 
+							Margin="0,5,0,0"
+							Background="DarkGray">
+						<TextBlock Foreground="White"
+								Text="style selecttype| combobox| Style| create"
+								/>
+					</Border>
+
+					<Border 
+							Margin="0,5,0,0"
+							Background="SkyBlue">
+						<TextBlock Foreground="black"
+								Text="unitvalue title| border+textblock|&#013;border| BdrUnitValTitle (verify) &#013;textblock| TblkUnitValTitle (verify)"
+						/>
+					</Border>	
+
+					<Border 
+							Margin="0,5,0,0"
+							Background="DodgerBlue">
+						<TextBlock Foreground="white"
+								Text="unit value| border+textblock||&#013;border| BdrUnitValue (verify) &#013;textblock| TblkUnitValue (verify)"
+						/>
+					</Border>
+
+
+				</StackPanel>
 
 			</DataTemplate>
 
 
+			<!--#endregion-->
+
+			<!--#region > L4 dt us add style  (DtAddStyle)-->
+
+			<DataTemplate x:Key="DtAddStyle">
+
+				<DockPanel>
+
+					<Border x:Name="BdrAsHeader"
+							DockPanel.Dock="Top"
+							HorizontalAlignment="Stretch"
+							VerticalAlignment="Top"
+							Margin="0,0,0,3"
+							cs:VisualStates.BgDisabled="{StaticResource Header.Bg.IsSel}"
+							Style="{StaticResource BdrHeader}"
+							>
+						<TextBlock Text="Add Style"
+								cs:VisualStates.FgDisabled="{StaticResource Header.Fg.IsSel}"
+								Style="{StaticResource TblkHeaderLg}"
+								/>
+					</Border>
+
+				</DockPanel>
+
+			</DataTemplate>
 
 
+			<!--#endregion-->
 
-			<!--#region > L4 dialog control - unit settings-->
+			<!--#region > L4 dt us add style control  (DtAddStyleCtrl)-->
+
+			<DataTemplate x:Key="DtAddStyleCtrl">
+
+				<DockPanel>
+
+					<Border x:Name="BdrAsCtrlHeader"
+							DockPanel.Dock="Top"
+							HorizontalAlignment="Stretch"
+							VerticalAlignment="Top"
+							Margin="0,0,0,3"
+							cs:VisualStates.BgDisabled="{StaticResource Header.Bg.IsSel}"
+							Style="{StaticResource BdrHeader}"
+							>
+						<TextBlock Text="Place Holder for Add Style Ctrl"
+								cs:VisualStates.FgDisabled="{StaticResource Header.Fg.IsSel}"
+								Style="{StaticResource TblkHeaderLg}"
+								/>
+					</Border>
+
+				</DockPanel>
+
+			</DataTemplate>
+
+			<!--#endregion-->
+
+			<!--#region > L4 dt us saved styles  (DtSavedStyles)-->
+
+			<DataTemplate x:Key="DtSavedStyles">
+
+				<DockPanel>
+
+					<Border x:Name="BdrSsHeader"
+							DockPanel.Dock="Top"
+							HorizontalAlignment="Stretch"
+							VerticalAlignment="Top"
+							Margin="0,0,0,3"
+							cs:VisualStates.BgDisabled="{StaticResource Header.Bg.IsSel}"
+							Style="{StaticResource BdrHeader}"
+							>
+						<TextBlock Text="Saved Styles"
+								cs:VisualStates.FgDisabled="{StaticResource Header.Fg.IsSel}"
+								Style="{StaticResource TblkHeaderLg}"
+								/>
+					</Border>
+
+				</DockPanel>
+
+			</DataTemplate>
+
+			<!--#endregion-->
+
+			<!--#region > L4 dt us saved style control  (DtSavedStylesCtrl)-->
+
+			<DataTemplate x:Key="DtSavedStylesCtrl">
+
+				<DockPanel>
+
+					<Border x:Name="BdrSsCtrlHeader"
+							DockPanel.Dock="Top"
+							HorizontalAlignment="Stretch"
+							VerticalAlignment="Top"
+							Margin="0,0,0,3"
+							cs:VisualStates.BgDisabled="{StaticResource Header.Bg.IsSel}"
+							Style="{StaticResource BdrHeader}"
+							>
+						<TextBlock Text="Place Holder for Saved Styles Ctrl"
+								cs:VisualStates.FgDisabled="{StaticResource Header.Fg.IsSel}"
+								Style="{StaticResource TblkHeaderLg}"
+								/>
+					</Border>
+
+				</DockPanel>
+
+			</DataTemplate>
+
+			<!--#endregion-->
+
+			<!--#region > L4 dt us dialog control - unit settings-->
 
 			<DataTemplate x:Key="DtDlgCtrlUnitSetg">
 
@@ -103,86 +465,123 @@
 
 			<!--#endregion-->
 
-			<!--#region > L4 dialog control - unit order -->
 
-			<DataTemplate x:Key="DtDlgCtrlUnitOrder">
+			<!--#region > L4 dt so main style order (DtStyleOrder)-->
 
-				<StackPanel x:Name="DialogControls"
-						DockPanel.Dock="Bottom"
-						Grid.Column="1"
-						Grid.Row="2"
-						Margin="0,0,0,0"
-						HorizontalAlignment="right"
-						Orientation="Horizontal"
-						VerticalAlignment="Bottom"
-						>
+			<DataTemplate x:Key="DtStyleOrder">
 
-					<Button x:Name="BtnUoReset"
-							Content="Reset"
-							HorizontalAlignment="Right"
-							Margin="10,0,0,0"
-							Style="{StaticResource Btn.Std}"
-							/>
-
-
-					<Button x:Name="BtnUoCancel"
-							Content="Cancel"
-							HorizontalAlignment="Right"
-							Margin="10,0,0,0"
-							Style="{StaticResource Btn.Std}"
-							/>
-
-
-					<Button x:Name="BtnUoApply"
-							Content="Apply"
-							HorizontalAlignment="Right"
-							Margin="10,0,0,0"
-							Style="{StaticResource Btn.Std}"
-							/>
-
-					<Button x:Name="BtnUoDone"
-							Content="Done"
-							HorizontalAlignment="Right"
-							Margin="10,0,0,0"
-							Style="{StaticResource Btn.Std}"
-							/>
-
-				</StackPanel>
-
-			</DataTemplate>
-
-
-			<DataTemplate x:Key="DtUnitStyles">
-
-				<Grid Margin="15,12,8,8">
+				<Grid>
 					<Grid.ColumnDefinitions>
-						<ColumnDefinition Width="{StaticResource Col.UnitSettings.Width}" />
-						<ColumnDefinition Width="{StaticResource Col.StylesChart.Width}" />
+						<ColumnDefinition Width="{StaticResource Col.So.RibbonList.Width}" />
+						<ColumnDefinition x:Name="divider1"
+								Width="5"
+								/>
+						<ColumnDefinition Width="{StaticResource Col.So.DlxMeasureLeft.Width}" />
+						<ColumnDefinition x:Name="divider2"
+								Width="5"
+								/>
+						<ColumnDefinition Width="{StaticResource Col.So.DlxMeasureRight.Width}" />
 					</Grid.ColumnDefinitions>
 
 					<Grid.RowDefinitions>
-						<RowDefinition Height="{StaticResource Row.Main.Height}" />
-						<RowDefinition Height="{StaticResource Row.Function.Height}" />
-						<RowDefinition Height="{StaticResource Row.Control.Height}" />
+						<RowDefinition Height="{StaticResource Row.So.Main.Height}" />
+						<RowDefinition Height="{StaticResource Row.So.Function.Height}" />
 					</Grid.RowDefinitions>
 
-					<ContentControl Grid.Column="0"
-							Grid.Row="2"
-							Grid.ColumnSpan="2"
-							ContentTemplate="{StaticResource DtDlgCtrlUnitSetg}"
+					<ContentControl x:Name="CtSoRibbonOrder"
+							Grid.Column="0"
+							Grid.Row="0"
+							ContentTemplate="{StaticResource DtSoRibbonOrder}"
+							/>
+
+					<ContentControl x:Name="DtSoDlxMeasureLeftOrder"
+							Grid.Column="2"
+							Grid.Row="0"
+							ContentTemplate="{StaticResource DtSoDlxMeasureLeftOrder}"
+							/>
+
+					<ContentControl x:Name="DtSoDlxMeasureRightOrder"
+							Grid.Column="4"
+							Grid.Row="0"
+							ContentTemplate="{StaticResource DtSoDlxMeasureRightOrder}"
+							/>
+
+				</Grid>
+
+				<!--  DtSoRibbonOrder  -->
+
+
+			</DataTemplate>
+
+			<!--#endregion-->
+
+			<!--#region > L4 dt us main unit styles (DtUnitStyles)-->
+
+			<DataTemplate x:Key="DtUnitStyles">
+
+				<Grid>
+					<Grid.ColumnDefinitions>
+						<ColumnDefinition Width="{StaticResource Col.Us.UnitSettings.Width}" />
+						<ColumnDefinition x:Name="divider"
+								Width="5"
+								/>
+						<ColumnDefinition Width="{StaticResource Col.Us.StylesChart.Width}" />
+					</Grid.ColumnDefinitions>
+
+					<Grid.RowDefinitions>
+						<RowDefinition Height="{StaticResource Row.Us.Main.Height}" />
+						<RowDefinition Height="{StaticResource Row.Us.Function.Height}" />
+					</Grid.RowDefinitions>
+
+
+					<DockPanel x:Name="DpUnitSettings"
+							Grid.Column="0"
+							Grid.Row="0"
+							HorizontalAlignment="Stretch"
+							VerticalAlignment="Stretch"
+							>
+
+						<ContentControl x:Name="CtUnitSettings"
+								DockPanel.Dock="Top"
+								VerticalAlignment="Top"
+								ContentTemplate="{StaticResource DtUnitSettings}"
+								/>
+
+						<ContentControl x:Name="CtAddStyle"
+								DockPanel.Dock="Bottom"
+								VerticalAlignment="Bottom"
+								ContentTemplate="{StaticResource DtAddStyle}"
+								/>
+
+					</DockPanel>
+
+					<!-- <ContentControl x:Name="CtAddStyleCtrl" -->
+					<!-- 		DockPanel.Dock="Bottom" -->
+					<!-- 		Grid.Column="0" -->
+					<!-- 		Grid.Row="1" -->
+					<!-- 		VerticalAlignment="Bottom" -->
+					<!-- 		ContentTemplate="{StaticResource DtAddStyleCtrl}" -->
+					<!-- 		/> -->
+
+					<ContentControl x:Name="CtSavedStyle"
+							DockPanel.Dock="Top"
+							Grid.Column="2"
+							Grid.Row="0"
+							VerticalAlignment="Top"
+							ContentTemplate="{StaticResource DtSavedStyles}"
+							/>
+
+					<ContentControl x:Name="CtSavedStyleCtrl"
+							DockPanel.Dock="Bottom"
+							Grid.Column="2"
+							Grid.Row="1"
+							VerticalAlignment="Bottom"
+							ContentTemplate="{StaticResource DtSavedStylesCtrl}"
 							/>
 
 				</Grid>
 
 			</DataTemplate>
-
-
-			<DataTemplate x:Key="DtUnitOrder">
-
-
-			</DataTemplate>
-
-
 
 			<!--#endregion-->
 
@@ -202,27 +601,74 @@
 				Style="{DynamicResource ExpanderStyleStealth}"
 				>
 
-			<!--#region > L4 Main Content  -->
+			<!--#region > L4 Main Content selector-->
+			<Grid Margin="15,12,8,8">
 
-			<ContentControl x:Name="CtPrimary"
-					DataContext="{Binding ElementName=WinUnitStyle}"
-			>
-				<ContentControl.Style>
-					<Style TargetType="ContentControl">
+				<Grid.ColumnDefinitions>
+					<ColumnDefinition Width="*" />
+					<ColumnDefinition Width="2*" />
+				</Grid.ColumnDefinitions>
 
-						<Style.Triggers>
-							<DataTrigger Binding="{Binding DialogIndex, FallbackValue='0'}" Value="0">
-								<Setter Property="ContentTemplate" Value="{StaticResource DtDlgCtrlUnitSetg}" />
-							</DataTrigger>
-							<DataTrigger Binding="{Binding DialogIndex}" Value="1">
-								<Setter Property="ContentTemplate" Value="{StaticResource DtDlgCtrlUnitOrder}" />
-							</DataTrigger>
-						</Style.Triggers>
-					</Style>
-				</ContentControl.Style>
-			</ContentControl>
+				<Grid.RowDefinitions>
+					<RowDefinition Height="{StaticResource Row.Main.Height}" />
+					<RowDefinition Height="{StaticResource Row.Control.Height}" />
+				</Grid.RowDefinitions>
 
-			<!--#endregion -->
+
+				<Button x:Name="BtnSoShowStyleOrder"
+						Content="Change Style Order"
+						Grid.Column="0"
+						Grid.Row="1"
+						Width="Auto"
+						HorizontalAlignment="Left"
+						VerticalAlignment="Bottom"
+						Margin="0,0,10,0"
+						Style="{StaticResource Btn.Std}"
+						/>
+
+				<ContentControl x:Name="CtMainContent"
+						Grid.Column="0"
+						Grid.Row="0"
+						Grid.ColumnSpan="2"
+						DataContext="{Binding ElementName=WinUnitStyle}"
+						>
+					<ContentControl.Style>
+						<Style TargetType="ContentControl">
+							<Style.Triggers>
+								<DataTrigger Binding="{Binding DialogIndex, FallbackValue='0'}" Value="0">
+									<Setter Property="ContentTemplate" Value="{StaticResource DtUnitStyles}" />
+								</DataTrigger>
+								<DataTrigger Binding="{Binding DialogIndex, FallbackValue='0'}" Value="1">
+									<Setter Property="ContentTemplate" Value="{StaticResource DtStyleOrder}" />
+								</DataTrigger>
+							</Style.Triggers>
+						</Style>
+					</ContentControl.Style>
+				</ContentControl>
+
+
+				<ContentControl x:Name="CtDialogControl"
+						Grid.Column="1"
+						Grid.Row="1"
+						DataContext="{Binding ElementName=WinUnitStyle}"
+						>
+					<ContentControl.Style>
+						<Style TargetType="ContentControl">
+							<Style.Triggers>
+								<DataTrigger Binding="{Binding DialogIndex, FallbackValue='0'}" Value="0">
+									<Setter Property="ContentTemplate" Value="{StaticResource DtDlgCtrlUnitSetg}" />
+								</DataTrigger>
+								<DataTrigger Binding="{Binding DialogIndex, FallbackValue='0'}" Value="1">
+									<Setter Property="ContentTemplate" Value="{StaticResource DtDlgCtrlStyleOrder}" />
+								</DataTrigger>
+							</Style.Triggers>
+						</Style>
+					</ContentControl.Style>
+				</ContentControl>
+
+
+			</Grid>
+			<!--#endregion-->
 
 		</Expander>
 

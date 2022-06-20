@@ -12,7 +12,7 @@
 	<!--
 		naming
 		
-		(has been used in-consistently
+		(has been used in-consistently)
 		
 		for specific fields
 		obj[.sub-obj].aspect.state[.sub-state]
@@ -44,6 +44,28 @@
 		Gb - Group (border)
 	-->
 
+	<!-- main dialog -->
+	<GridLength x:Key="Row.Main.Height">*</GridLength>
+	<GridLength x:Key="Row.Control.Height">38</GridLength>
+
+	<!-- unit styles dialog -->
+	<GridLength x:Key="Row.Us.Main.Height">*</GridLength>
+	<GridLength x:Key="Row.Us.Function.Height">33</GridLength>
+
+	<GridLength x:Key="Col.Us.UnitSettings.Width">300*</GridLength>
+	<GridLength x:Key="Col.Us.StylesChart.Width">600*</GridLength>
+	
+	<!-- unit order dialog -->
+	<GridLength x:Key="Row.So.Main.Height">*</GridLength>
+	<GridLength x:Key="Row.So.Function.Height">33</GridLength>
+
+	<GridLength x:Key="Col.So.RibbonList.Width">*</GridLength>
+	<GridLength x:Key="Col.So.DlxMeasureLeft.Width">*</GridLength>
+	<GridLength x:Key="Col.So.DlxMeasureRight.Width">*</GridLength>
+
+
+
+
 
 	<GridLength x:Key="Lv1RowHeight">26</GridLength>
 
@@ -64,17 +86,6 @@
 	<CornerRadius x:Key="CornerRadius.Lg">10</CornerRadius>
 	<CornerRadius x:Key="CornerRadius.Std">6</CornerRadius>
 	<CornerRadius x:Key="CornerRadius.Sm">4</CornerRadius>
-
-
-
-	<GridLength x:Key="Row.Main.Height">94*</GridLength>
-	<GridLength x:Key="Row.Function.Height">10*</GridLength>
-	<GridLength x:Key="Row.Control.Height">7*</GridLength>
-
-	<GridLength x:Key="Col.UnitSettings.Width">300*</GridLength>
-	<GridLength x:Key="Col.StylesChart.Width">600*</GridLength>
-
-
 
 
 
