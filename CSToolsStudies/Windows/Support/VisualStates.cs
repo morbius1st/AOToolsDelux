@@ -74,7 +74,7 @@ namespace CSToolsStudies.Windows.Support
 
 	#endregion
 
-	#region general - selected
+	#region general - is_selected
 
 		public static readonly DependencyProperty
 			IsSelectedProperty = DependencyProperty.RegisterAttached(
@@ -93,6 +93,27 @@ namespace CSToolsStudies.Windows.Support
 		}
 
 	#endregion
+
+	#region general - is_focused
+
+		public static readonly DependencyProperty
+			IsFocusedProperty = DependencyProperty.RegisterAttached(
+				"IsFocused", typeof(bool), typeof(VisualStates),
+				new FrameworkPropertyMetadata(false,
+					FrameworkPropertyMetadataOptions.Inherits));
+
+		public static void SetIsFocused(UIElement e, bool value)
+		{
+			e.SetValue(IsFocusedProperty, value);
+		}
+
+		public static bool GetIsFocused(UIElement e)
+		{
+			return (bool) e.GetValue(IsFocusedProperty);
+		}
+
+	#endregion
+
 
 	#region general - is_readonly
 
@@ -404,6 +425,7 @@ namespace CSToolsStudies.Windows.Support
 	#endregion
 
 		// not editing (any above except disabled)
+		// use for L1a triggers
 
 	#region not_editing - mouse over background
 

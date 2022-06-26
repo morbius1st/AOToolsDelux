@@ -4,8 +4,8 @@
 		>
 
 	<ResourceDictionary.MergedDictionaries>
-		<ResourceDictionary Source="/Windows/ResourceFiles/XamlResources/MasterColorList.xaml" />
-		<ResourceDictionary Source="/Windows/Skin/CyberStudioSkin.xaml" />
+		<ResourceDictionary Source="../ResourceFiles/XamlResources/MasterColorList.xaml" />
+		<ResourceDictionary Source="../Skin/CyberStudioSkin.xaml" />
 	</ResourceDictionary.MergedDictionaries>
 
 

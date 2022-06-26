@@ -4,7 +4,6 @@
 		xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
 		xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
 		xmlns:local="clr-namespace:DeluxMeasure.Windows"
-		xmlns:collections="clr-namespace:System.Collections.Specialized;assembly=System"
 		xmlns:custom="clr-namespace:DeluxMeasure.Windows.Support"
 		xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
 		xmlns:support="clr-namespace:DeluxMeasure.Windows.Support"
@@ -818,7 +817,6 @@
 								Stretch="None"
 								/>
 
-
 					</Border>
 
 
@@ -1078,6 +1076,8 @@
 
 					</DockPanel>
 
+
+
 					<DockPanel x:Name="Column0"
 							Grid.Column="0"
 							Grid.Row="0"
@@ -1176,7 +1176,8 @@
 								<Border x:Name="Name_Units"
 										Style="{StaticResource Bdr.Proj.Units.Value.Editable}"
 										>
-									<TextBlock Text="{Binding Ustyle.Name,
+									<TextBlock 
+											Text="{Binding Ustyle.Name,
 																		 FallbackValue='none'}"
 											Style="{StaticResource Tblk.Value}"
 											/>
@@ -1847,7 +1848,7 @@
 								HorizontalAlignment="Right"
 								Margin="0,0,0,0"
 								VerticalAlignment="Stretch"
-								Visibility="Collapsed"
+								Visibility="Visible"
 								Style="{StaticResource Bdr.Value.Entry}"
 								>
 							<TextBlock DockPanel.Dock="Right"

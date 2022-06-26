@@ -6,7 +6,6 @@ using System.Diagnostics;
 using System.Runtime.CompilerServices;
 using System.Windows.Markup;
 using System.Windows.Media;
-using EnvDTE;
 using UtilityLibrary;
 
 

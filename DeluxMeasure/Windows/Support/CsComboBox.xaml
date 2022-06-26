@@ -4,7 +4,8 @@
 		>
 
 	<ResourceDictionary.MergedDictionaries>
-		<ResourceDictionary Source="/Windows/Skin/CyberStudioSkin.xaml" />
+		<!-- <ResourceDictionary Source="/Windows/Skin/CyberStudioSkin.xaml" /> -->
+		<ResourceDictionary Source="../Skin/CyberStudioSkin.xaml" />
 	</ResourceDictionary.MergedDictionaries>
 
 	<cs:AddConverter x:Key="AddConverter" />

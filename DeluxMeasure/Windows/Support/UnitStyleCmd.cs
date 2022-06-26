@@ -224,8 +224,9 @@ namespace DeluxMeasure.Windows.Support
 
 			Window w = RevitLibrary.RvtLibrary.WindowHandle(h);
 
+			// Test usMgr = new Test();
 			// UnitStylesManager usMgr = new UnitStylesManager();
-			Test usMgr = new Test();
+			UnitStylesMgr usMgr = new UnitStylesMgr();
 
 			// usMgr.SetPosition(w);
 

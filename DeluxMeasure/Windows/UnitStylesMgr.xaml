@@ -3,48 +3,828 @@
 		xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
 		xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
 		xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-		xmlns:local="clr-namespace:DeluxMeasure.Windows"
 		xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-		xmlns:cs="clr-namespace:DeluxMeasure.Windows.Support"
 		xmlns:sys="clr-namespace:System;assembly=mscorlib"
+		xmlns:cs="clr-namespace:DeluxMeasure.Windows.Support"
 		xmlns:util="clr-namespace:DeluxMeasure.UnitsUtil"
+		xmlns:local="clr-namespace:DeluxMeasure.Windows"
 		Title="Unit Styles Manager"
-		Height="Auto"
-		Width="960"
+		Width="900"
+		MinHeight="760"
+		MinWidth="980"
 		Background="{DynamicResource Normal.Window.Background}"
 		DataContext="{Binding RelativeSource={RelativeSource Self}}"
 		FontSize="{DynamicResource FontSize.Normal}"
 		Foreground="White"
 		ResizeMode="NoResize"
 		mc:Ignorable="d"
+		SizeToContent="Height"
 		>
 	<Window.Resources>
 
 		<ResourceDictionary>
 			<!--#region > L4 resource dictionaries-->
 			<ResourceDictionary.MergedDictionaries>
-				<ResourceDictionary Source="/Windows/ResourceFiles/XamlResources/MasterColorList.xaml" />
-				<ResourceDictionary Source="/Windows/ResourceFiles/XamlResources/VisualStates.xaml" />
-				<ResourceDictionary Source="/Windows/Skin/CyberStudioSkin.xaml" />
-				<ResourceDictionary Source="/Windows/Support/CsExpander.xaml" />
-				<ResourceDictionary Source="/Windows/Support/CsScrollBar.xaml" />
-				<ResourceDictionary Source="/Windows/Support/CsScrollViewer.xaml" />
-				<ResourceDictionary Source="/Windows/Support/CsComboBox.xaml" />
-				<ResourceDictionary Source="/Windows/Support/CsButtons.xaml" />
+				<!-- <ResourceDictionary Source="../Windows/ResourceFiles/XamlResources/MasterColorList.xaml" /> -->
+				<!-- <ResourceDictionary Source="../Windows/ResourceFiles/XamlResources/VisualStates.xaml" /> -->
+				<!-- <ResourceDictionary Source="../Windows/Skin/CyberStudioSkin.xaml" /> -->
+
+				<ResourceDictionary Source="pack://Application:,,,/DeluxMeasure;component/Windows/ResourceFiles/XamlResources/MasterColorList.xaml" />
+				<ResourceDictionary Source="pack://Application:,,,/DeluxMeasure;component/Windows/ResourceFiles/XamlResources/VisualStates.xaml" />
+				<ResourceDictionary Source="pack://Application:,,,/DeluxMeasure;component/Windows/Skin/CyberStudioSkin.xaml" />
+				<ResourceDictionary Source="../Windows/Support/CsExpander.xaml" />
+				<ResourceDictionary Source="../Windows/Support/CsScrollBar.xaml" />
+				<ResourceDictionary Source="../Windows/Support/CsScrollViewer.xaml" />
+				<ResourceDictionary Source="../Windows/Support/CsComboBox.xaml" />
+				<ResourceDictionary Source="../Windows/Support/CsButtons.xaml" />
+				<ResourceDictionary Source="../Windows/Support/CsCheckBox.xaml" />
+
+				<!-- <ResourceDictionary Source="/Windows/ResourceFiles/XamlResources/MasterColorList.xaml" /> -->
+				<!-- <ResourceDictionary Source="/Windows/ResourceFiles/XamlResources/VisualStates.xaml" /> -->
+				<!-- <ResourceDictionary Source="/Windows/Skin/CyberStudioSkin.xaml" /> -->
+				<!-- <ResourceDictionary Source="/Windows/Support/CsExpander.xaml" /> -->
+				<!-- <ResourceDictionary Source="/Windows/Support/CsScrollBar.xaml" /> -->
+				<!-- <ResourceDictionary Source="/Windows/Support/CsScrollViewer.xaml" /> -->
+				<!-- <ResourceDictionary Source="/Windows/Support/CsComboBox.xaml" /> -->
+				<!-- <ResourceDictionary Source="/Windows/Support/CsButtons.xaml" /> -->
+				<!-- <ResourceDictionary Source="/Windows/Support/CsCheckBox.xaml" /> -->
 			</ResourceDictionary.MergedDictionaries>
 
 			<!--#endregion-->
 
-			<sys:Int16 x:Key="dlgIdx">0</sys:Int16>
+			<ControlTemplate x:Key="CtTextBox"
+					TargetType="TextBox"
+					>
+				<Border x:Name="border"
+						Background="{TemplateBinding Background}"
+						BorderBrush="{TemplateBinding BorderBrush}"
+						BorderThickness="{TemplateBinding BorderThickness}"
+						SnapsToDevicePixels="True"
+						>
+					<ScrollViewer x:Name="PART_ContentHost"
+							Focusable="false"
+							HorizontalScrollBarVisibility="Hidden"
+							VerticalScrollBarVisibility="Hidden"
+							/>
+				</Border>
+			</ControlTemplate>
 
-			<!--#region > L4 styles-->
+
+			<!--#region > L4 trigger styles-->
+
+			<!--#region > L5 trigger border styles-->
+
+			<!--  border  -->
+			<!--  basic - disabled value  -->
+			<!--  no mouse over  -->
+			<Style x:Key="BdrBasic"
+					TargetType="Border"
+					>
+				<Setter Property="CornerRadius" Value="{StaticResource CornerRadius.Std}" />
+				<Setter Property="Background" Value="{Binding RelativeSource={RelativeSource Self}, Path=(cs:VisualStates.BgDisabled)}" />
+				<Setter Property="BorderBrush" Value="{Binding RelativeSource={RelativeSource Self}, Path=(cs:VisualStates.BdrDisabled)}" />
+				<Setter Property="Margin" Value="0" />
+				<Setter Property="Padding" Value="0" />
+			</Style>
+
+			<!--  vars  -->
+
+			<!--  cs:VisualStates.BdrNotSelMouseOver   ="{StaticResource .Bdr.NotSel.MouseOver}"  -->
+			<!--  cs:VisualStates.BdrIsSelMouseOver    ="{StaticResource .Bdr.IsSel.MouseOver}"  -->
+			<!--  cs:VisualStates.BdrIsEditingMouseOver="{StaticResource .Bdr.IsEditg.MouseOver}"  -->
+			<!--    -->
+			<!--  cs:VisualStates.BgNotSelMouseOver    ="{StaticResource .Bg.NotSel.MouseOver}"  -->
+			<!--  cs:VisualStates.BgIsSelMouseOver     ="{StaticResource .Bg.IsSel.MouseOver}"  -->
+			<!--  cs:VisualStates.BgIsEditingMouseOver ="{StaticResource .Bg.IsEditg.MouseOver}"  -->
+
+
+			<!--  ~1~ L1a @1@  -->
+			<!--  cs:VisualStates.BgDisabled"   ="{StaticResource .Bg.NotSel}"  -->
+			<!--  cs:VisualStates.BgIsSel"      ="{StaticResource .Bg.IsSel}"  -->
+			<!--  ~1~ L1b @1@  -->
+			<!--  cs:VisualStates.BgNotSel"     ="{StaticResource .Bg.NotSel}"  -->
+			<!--  ~1~ L2 @1@  -->
+			<!--  cs:VisualStates.BgIsEditing"  ="{StaticResource .Bg.IsEditg}"  -->
+			<!--  ~1~ L3 @1@  -->
+			<!--  cs:VisualStates.BgIsReadOnly  ="{StaticResource .Bg.IsReadOnly}"  -->
+			<!--  ~1~ L4 @1@  -->
+			<!--  cs:VisualStates.BgIsLocked"   ="{StaticResource .Bg.IsLocked}"  -->
+
+			<!--  ~1~ L1a @1@  -->
+			<!--  cs:VisualStates.BdrDisabled"  ="{StaticResource .Bdr.NotSel}"  -->
+			<!--  cs:VisualStates.BdrIsSel"     ="{StaticResource .Bdr.IsSel}"  -->
+			<!--  ~1~ L1b @1@  -->
+			<!--  cs:VisualStates.BdrNotSel"    ="{StaticResource .Bdr.NotSel}"  -->
+			<!--  ~1~ L2 @1@  -->
+			<!--  cs:VisualStates.BdrIsEditing" ="{StaticResource .Bdr.IsEditg}"  -->
+			<!--  ~1~ L3 @1@  -->
+			<!--  cs:VisualStates.BdrIsReadOnly"="{StaticResource .Bdr.IsReadOnly}"  -->
+			<!--  ~1~ L4 @1@  -->
+			<!--  cs:VisualStates.BdrIsLocked"  ="{StaticResource .Bdr.IsLocked}"  -->
+			<!--    -->
+
+			<!-- vars
+			<Setter Property="cs:VisualStates.BgDisabled" Value="{StaticResource TitleCanEdit.Bg.Disabled}" />
+			<Setter Property="cs:VisualStates.BgNotSel" Value="{StaticResource TitleCanEdit.Bg.NotSel}" />
+			<Setter Property="cs:VisualStates.BgIsSel" Value="{StaticResource TitleCanEdit.Bg.IsSel}" />
+			<Setter Property="cs:VisualStates.BgIsEditing" Value="{StaticResource TitleCanEdit.Bg.IsEditg}" />
+			<Setter Property="cs:VisualStates.BgIsReadOnly" Value="{StaticResource TitleCanEdit.Bg.IsReadOnly}" />
+			<Setter Property="cs:VisualStates.BgIsLocked" Value="{StaticResource TitleCanEdit.Bg.IsLocked}" />
+
+			<Setter Property="cs:VisualStates.BdrDisabled" Value="{StaticResource TitleCanEdit.Bdr.Disabled}" />
+			<Setter Property="cs:VisualStates.BdrNotSel" Value="{StaticResource TitleCanEdit.Bdr.NotSel}" />
+			<Setter Property="cs:VisualStates.BdrIsSel" Value="{StaticResource TitleCanEdit.Bdr.IsSel}" />
+			<Setter Property="cs:VisualStates.BdrIsEditing" Value="{StaticResource TitleCanEdit.Bdr.IsEditg}" />
+			<Setter Property="cs:VisualStates.BdrIsReadOnly" Value="{StaticResource TitleCanEdit.Bdr.IsReadOnly}" />
+			<Setter Property="cs:VisualStates.BdrIsLocked" Value="{StaticResource TitleCanEdit.Bdr.IsLocked}" />	
+			-->
+
+			<!--  border  -->
+			<!--  level 1a trigger styles (basic + issel)  -->
+			<!--  no mouse over  -->
+			<Style x:Key="BdrTrigs.L1a"
+					BasedOn="{StaticResource BdrBasic}"
+					TargetType="Border"
+					>
+				<Style.Triggers>
+
+					<!--  enabled / selected  -->
+					<MultiDataTrigger x:Name="BdrTrigsL1IsSel">
+						<MultiDataTrigger.Conditions>
+							<Condition Binding="{Binding IsEnabled, RelativeSource={RelativeSource Self}, Mode=OneWay}" Value="True" />
+							<Condition Binding="{Binding (cs:VisualStates.IsSelected), RelativeSource={RelativeSource Self}, Mode=OneWay}" Value="true" />
+							<Condition Binding="{Binding (cs:VisualStates.IsReadOnly), RelativeSource={RelativeSource Self}, Mode=OneWay}" Value="false" />
+							<Condition Binding="{Binding (cs:VisualStates.IsLocked), RelativeSource={RelativeSource Self}, Mode=OneWay}" Value="false" />
+						</MultiDataTrigger.Conditions>
+						<Setter Property="Background" Value="{Binding RelativeSource={RelativeSource Self}, Path=(cs:VisualStates.BgIsSel)}" />
+						<Setter Property="BorderBrush" Value="{Binding RelativeSource={RelativeSource Self}, Path=(cs:VisualStates.BdrIsSel), FallbackValue='transparent'}" />
+					</MultiDataTrigger>
+
+					<MultiDataTrigger>
+						<MultiDataTrigger.Conditions>
+							<Condition Binding="{Binding IsEnabled, RelativeSource={RelativeSource Self}, Mode=OneWay}" Value="True" />
+							<Condition Binding="{Binding IsKeyboardFocusWithin, RelativeSource={RelativeSource Self}, Mode=OneWay}" Value="false" />
+							<Condition Binding="{Binding IsMouseOver, RelativeSource={RelativeSource Self}}" Value="True" />
+							<Condition Binding="{Binding (cs:VisualStates.DoesMouseOver), RelativeSource={RelativeSource Self}, Mode=OneWay, FallbackValue='false'}" Value="true" />
+							<Condition Binding="{Binding (cs:VisualStates.IsSelected), RelativeSource={RelativeSource Self}, Mode=OneWay}" Value="false" />
+							<Condition Binding="{Binding (cs:VisualStates.IsReadOnly), RelativeSource={RelativeSource Self}, Mode=OneWay}" Value="false" />
+							<Condition Binding="{Binding (cs:VisualStates.IsLocked), RelativeSource={RelativeSource Self}, Mode=OneWay}" Value="false" />
+						</MultiDataTrigger.Conditions>
+						<Setter Property="Background" Value="{Binding RelativeSource={RelativeSource Self}, Path=(cs:VisualStates.BgIsSelMouseOver)}" />
+						<Setter Property="BorderBrush" Value="{Binding RelativeSource={RelativeSource Self}, Path=(cs:VisualStates.BdrIsSelMouseOver), FallbackValue='transparent'}" />
+					</MultiDataTrigger>
+
+
+				</Style.Triggers>
+
+			</Style>
+			<!--  border with mouseover  -->
+			<!--  level 1b trigger styles (level 1a + notsel)  -->
+			<!--  with mouse over  -->
+			<Style x:Key="BdrTrigs.L1b"
+					BasedOn="{StaticResource BdrTrigs.L1a}"
+					TargetType="Border"
+					>
+				<!--  disabled  -->
+				<!--  from root  -->
+				<Style.Triggers>
+
+					<!--  not selected  -->
+					<MultiDataTrigger x:Name="BdrTrigsL1NotSel">
+						<MultiDataTrigger.Conditions>
+							<Condition Binding="{Binding IsEnabled, RelativeSource={RelativeSource Self}, Mode=OneWay}" Value="True" />
+							<Condition Binding="{Binding (cs:VisualStates.IsSelected), RelativeSource={RelativeSource Self}, Mode=OneWay}" Value="false" />
+							<Condition Binding="{Binding (cs:VisualStates.IsReadOnly), RelativeSource={RelativeSource Self}, Mode=OneWay}" Value="false" />
+							<Condition Binding="{Binding (cs:VisualStates.IsLocked), RelativeSource={RelativeSource Self}, Mode=OneWay}" Value="false" />
+						</MultiDataTrigger.Conditions>
+						<Setter Property="Background" Value="{Binding RelativeSource={RelativeSource Self}, Path=(cs:VisualStates.BgNotSel)}" />
+						<Setter Property="BorderBrush" Value="{Binding RelativeSource={RelativeSource Self}, Path=(cs:VisualStates.BdrNotSel), FallbackValue='transparent'}" />
+					</MultiDataTrigger>
+
+
+					<MultiDataTrigger>
+						<MultiDataTrigger.Conditions>
+							<Condition Binding="{Binding IsEnabled, RelativeSource={RelativeSource Self}, Mode=OneWay}" Value="True" />
+							<Condition Binding="{Binding IsKeyboardFocusWithin, RelativeSource={RelativeSource Self}, Mode=OneWay}" Value="false" />
+							<Condition Binding="{Binding IsMouseOver, RelativeSource={RelativeSource Self}}" Value="True" />
+							<Condition Binding="{Binding (cs:VisualStates.DoesMouseOver), RelativeSource={RelativeSource Self}, Mode=OneWay, FallbackValue='false'}" Value="true" />
+							<Condition Binding="{Binding (cs:VisualStates.IsSelected), RelativeSource={RelativeSource Self}, Mode=OneWay}" Value="false" />
+							<Condition Binding="{Binding (cs:VisualStates.IsReadOnly), RelativeSource={RelativeSource Self}, Mode=OneWay}" Value="false" />
+							<Condition Binding="{Binding (cs:VisualStates.IsLocked), RelativeSource={RelativeSource Self}, Mode=OneWay}" Value="false" />
+						</MultiDataTrigger.Conditions>
+						<Setter Property="Background" Value="{Binding RelativeSource={RelativeSource Self}, Path=(cs:VisualStates.BgNotSelMouseOver)}" />
+						<Setter Property="BorderBrush" Value="{Binding RelativeSource={RelativeSource Self}, Path=(cs:VisualStates.BdrNotSelMouseOver), FallbackValue='transparent'}" />
+					</MultiDataTrigger>
+
+
+				</Style.Triggers>
+			</Style>
+			<!--  border with mouseover  -->
+			<!--  level 2 trigger styles (L1 + iseditg)  -->
+			<!--  with mouse over  -->
+			<Style x:Key="BdrTrigs.L2"
+					BasedOn="{StaticResource BdrTrigs.L1b}"
+					TargetType="Border"
+					>
+				<Style.Triggers>
+
+					<!--  is editing  -->
+					<MultiDataTrigger>
+						<MultiDataTrigger.Conditions>
+							<Condition Binding="{Binding IsEnabled, RelativeSource={RelativeSource Self}, Mode=OneWay}" Value="True" />
+							<Condition Binding="{Binding IsKeyboardFocusWithin, RelativeSource={RelativeSource Self}, Mode=OneWay}" Value="True" />
+							<Condition Binding="{Binding (cs:VisualStates.IsSelected), RelativeSource={RelativeSource Self}, Mode=OneWay}" Value="true" />
+							<Condition Binding="{Binding (cs:VisualStates.IsReadOnly), RelativeSource={RelativeSource Self}, Mode=OneWay}" Value="false" />
+							<Condition Binding="{Binding (cs:VisualStates.IsLocked), RelativeSource={RelativeSource Self}, Mode=OneWay}" Value="false" />
+						</MultiDataTrigger.Conditions>
+						<Setter Property="Background" Value="{Binding RelativeSource={RelativeSource Self}, Path=(cs:VisualStates.BgIsEditing)}" />
+						<Setter Property="BorderBrush" Value="{Binding RelativeSource={RelativeSource Self}, Path=(cs:VisualStates.BdrIsEditing), FallbackValue='transparent'}" />
+					</MultiDataTrigger>
+
+					<MultiDataTrigger>
+						<MultiDataTrigger.Conditions>
+							<Condition Binding="{Binding IsKeyboardFocusWithin, RelativeSource={RelativeSource Self}, Mode=OneWay}" Value="True" />
+							<Condition Binding="{Binding IsMouseOver, RelativeSource={RelativeSource Self}}" Value="True" />
+							<Condition Binding="{Binding (cs:VisualStates.DoesMouseOver), RelativeSource={RelativeSource Self}, Mode=OneWay, FallbackValue='false'}" Value="true" />
+							<Condition Binding="{Binding (cs:VisualStates.IsReadOnly), RelativeSource={RelativeSource Self}, Mode=OneWay}" Value="false" />
+							<Condition Binding="{Binding (cs:VisualStates.IsReadOnly), RelativeSource={RelativeSource Self}, Mode=OneWay}" Value="false" />
+							<Condition Binding="{Binding (cs:VisualStates.IsLocked), RelativeSource={RelativeSource Self}, Mode=OneWay}" Value="false" />
+						</MultiDataTrigger.Conditions>
+						<Setter Property="Background" Value="{Binding RelativeSource={RelativeSource Self}, Path=(cs:VisualStates.BgIsEditingMouseOver)}" />
+						<Setter Property="BorderBrush" Value="{Binding RelativeSource={RelativeSource Self}, Path=(cs:VisualStates.BdrIsEditingMouseOver), FallbackValue='transparent'}" />
+					</MultiDataTrigger>
+
+				</Style.Triggers>
+			</Style>
+			<!--  border with mouseover from above  -->
+			<!--  level 3 trigger styles (L2 + readonly [noeditg])  -->
+			<!--  no mouse over  -->
+			<Style x:Key="BdrTrigs.L3"
+					BasedOn="{StaticResource BdrTrigs.L2}"
+					TargetType="Border"
+					>
+				<Style.Triggers>
+
+					<!--  read only  (i.e. editing not allowed)  -->
+					<MultiDataTrigger>
+						<MultiDataTrigger.Conditions>
+							<Condition Binding="{Binding IsEnabled, RelativeSource={RelativeSource Self}, Mode=OneWay}" Value="True" />
+							<Condition Binding="{Binding (cs:VisualStates.IsReadOnly), RelativeSource={RelativeSource Self}, Mode=OneWay}" Value="true" />
+							<Condition Binding="{Binding (cs:VisualStates.IsLocked), RelativeSource={RelativeSource Self}, Mode=OneWay}" Value="false" />
+						</MultiDataTrigger.Conditions>
+						<Setter Property="Background" Value="{Binding RelativeSource={RelativeSource Self}, Path=(cs:VisualStates.BgIsReadOnly)}" />
+						<Setter Property="BorderBrush" Value="{Binding RelativeSource={RelativeSource Self}, Path=(cs:VisualStates.BdrIsReadOnly), FallbackValue='transparent'}" />
+
+					</MultiDataTrigger>
+				</Style.Triggers>
+			</Style>
+			<!--  border with mouseover from above  -->
+			<!--  level 4 trigger styles (L3 + islocked)  -->
+			<!--  no mouse over  -->
+			<Style x:Key="BdrTrigs.L4"
+					BasedOn="{StaticResource BdrTrigs.L3}"
+					TargetType="Border"
+					>
+				<Style.Triggers>
+
+					<!--  is locked  -->
+					<MultiDataTrigger>
+						<MultiDataTrigger.Conditions>
+							<Condition Binding="{Binding IsEnabled, RelativeSource={RelativeSource Self}, Mode=OneWay}" Value="True" />
+							<Condition Binding="{Binding (cs:VisualStates.IsLocked), RelativeSource={RelativeSource Self}, Mode=OneWay}" Value="true" />
+						</MultiDataTrigger.Conditions>
+						<Setter Property="Background" Value="{Binding RelativeSource={RelativeSource Self}, Path=(cs:VisualStates.BgIsLocked)}" />
+						<Setter Property="BorderBrush" Value="{Binding RelativeSource={RelativeSource Self}, Path=(cs:VisualStates.BdrIsLocked), FallbackValue='transparent'}" />
+					</MultiDataTrigger>
+				</Style.Triggers>
+			</Style>
+			<!--  border with mouseover from above  -->
+			<!--  level 5 trigger styles (L4 + isgood-bad)  -->
+			<!--  no mouse over  -->
+			<Style x:Key="BdrTrigs.L5"
+					BasedOn="{StaticResource BdrTrigs.L4}"
+					TargetType="Border"
+					>
+				<Style.Triggers>
+					<MultiDataTrigger>
+						<MultiDataTrigger.Conditions>
+							<Condition Binding="{Binding (cs:VisualStates.IsGoodBad), RelativeSource={RelativeSource Self}, Mode=OneWay}" Value="true" />
+							<!-- <Condition Binding="{Binding (cs:VisualStates.IsSelected), RelativeSource={RelativeSource Self}, Mode=OneWay}" Value="true" /> -->
+							<!-- <Condition Binding="{Binding (cs:VisualStates.IsReadOnly), RelativeSource={RelativeSource Self}, Mode=OneWay}" Value="false" /> -->
+							<!-- <Condition Binding="{Binding (cs:VisualStates.IsLocked), RelativeSource={RelativeSource Self}, Mode=OneWay}" Value="false" /> -->
+						</MultiDataTrigger.Conditions>
+						<Setter Property="BorderBrush" Value="{StaticResource Bdr.IsGood}" />
+					</MultiDataTrigger>
+
+					<MultiDataTrigger>
+						<MultiDataTrigger.Conditions>
+							<Condition Binding="{Binding (cs:VisualStates.IsGoodBad), RelativeSource={RelativeSource Self}, Mode=OneWay}" Value="false" />
+							<!-- <Condition Binding="{Binding (cs:VisualStates.IsSelected), RelativeSource={RelativeSource Self}, Mode=OneWay}" Value="true" /> -->
+							<!-- <Condition Binding="{Binding (cs:VisualStates.IsReadOnly), RelativeSource={RelativeSource Self}, Mode=OneWay}" Value="false" /> -->
+							<!-- <Condition Binding="{Binding (cs:VisualStates.IsLocked), RelativeSource={RelativeSource Self}, Mode=OneWay}" Value="false" /> -->
+						</MultiDataTrigger.Conditions>
+						<Setter Property="BorderBrush" Value="{StaticResource Bdr.IsBad}" />
+					</MultiDataTrigger>
+
+				</Style.Triggers>
+
+			</Style>
+
+			<!--#endregion-->
+
+
+			<!--#region > L5 trigger textblock styles-->
+
+			<!--
+				vars
+				cs:VisualStates.FgDisabled="{StaticResource Cbx.Fg.NotSel}"
+				cs:VisualStates.FgNotSel="{StaticResource Cbx.Fg.NotSel}"
+				cs:VisualStates.FgIsSel="{StaticResource Cbx.Fg.IsSel}"
+				cs:VisualStates.FgIsEditing="{StaticResource Cbx.Fg.IsEditg}"
+				cs:VisualStates.FgIsReadOnly="{StaticResource Cbx.Fg.IsReadOnly}"
+				cs:VisualStates.FgIsLocked="{StaticResource Cbx.Fg.IsLocked}"
+				cs:VisualStates.FgNotSelMouseOver="{StaticResource Cbx.Fg.NotSel.MouseOver}"
+				cs:VisualStates.FgIsSelMouseOver="{StaticResource Cbx.Fg.IsSel.MouseOver}"
+				cs:VisualStates.FgIsEditingMouseOver="{StaticResource Cbx.Fg.IsEditg.MouseOver}"
+			-->
+
+			<!--  textblock  -->
+			<!--  basic - disabled value  -->
+			<Style x:Key="TblkBasic"
+					TargetType="TextBlock"
+					>
+				<Setter Property="Foreground" Value="{Binding RelativeSource={RelativeSource Self}, Path=(cs:VisualStates.FgDisabled)}" />
+				<Setter Property="Margin" Value="0" />
+				<Setter Property="Padding" Value="0" />
+				<Setter Property="FontSize" Value="{StaticResource FontSize.Normal}" />
+			</Style>
+			<!--  textblock  -->
+			<!--  level 1a trigger styles (basic + issel)  -->
+			<!--  no mouse over  -->
+			<Style x:Key="TblkTrigs.L1a"
+					BasedOn="{StaticResource TblkBasic}"
+					TargetType="TextBlock"
+					>
+				<!--  disabled  -->
+				<!--  from root  -->
+				<Style.Triggers>
+					<!--  enabled / selected  -->
+					<MultiDataTrigger>
+						<MultiDataTrigger.Conditions>
+							<Condition Binding="{Binding IsEnabled, RelativeSource={RelativeSource Self}, Mode=OneWay}" Value="True" />
+							<Condition Binding="{Binding (cs:VisualStates.IsFocused), RelativeSource={RelativeSource Self}, Mode=OneWay}" Value="false" />
+							<Condition Binding="{Binding (cs:VisualStates.IsSelected), RelativeSource={RelativeSource Self}, Mode=OneWay}" Value="true" />
+							<Condition Binding="{Binding (cs:VisualStates.IsReadOnly), RelativeSource={RelativeSource Self}, Mode=OneWay}" Value="false" />
+							<Condition Binding="{Binding (cs:VisualStates.IsLocked), RelativeSource={RelativeSource Self}, Mode=OneWay}" Value="false" />
+						</MultiDataTrigger.Conditions>
+						<Setter Property="Foreground" Value="{Binding RelativeSource={RelativeSource Self}, Path=(cs:VisualStates.FgIsSel)}" />
+					</MultiDataTrigger>
+
+				</Style.Triggers>
+			</Style>
+			<!--  textblock  -->
+			<!--  level 1b trigger styles (level 1a + notsel)  -->
+			<!--  no mouse over  -->
+			<Style x:Key="TblkTrigs.L1b"
+					BasedOn="{StaticResource TblkTrigs.L1a}"
+					TargetType="TextBlock"
+					>
+				<!--  disabled  -->
+				<!--  from root  -->
+				<Style.Triggers>
+					<!--  not selected  -->
+					<MultiDataTrigger>
+						<MultiDataTrigger.Conditions>
+							<Condition Binding="{Binding IsEnabled, RelativeSource={RelativeSource Self}, Mode=OneWay}" Value="True" />
+							<Condition Binding="{Binding (cs:VisualStates.IsFocused), RelativeSource={RelativeSource Self}, Mode=OneWay}" Value="false" />
+							<Condition Binding="{Binding (cs:VisualStates.IsSelected), RelativeSource={RelativeSource Self}, Mode=OneWay}" Value="false" />
+							<Condition Binding="{Binding (cs:VisualStates.IsReadOnly), RelativeSource={RelativeSource Self}, Mode=OneWay}" Value="false" />
+							<Condition Binding="{Binding (cs:VisualStates.IsLocked), RelativeSource={RelativeSource Self}, Mode=OneWay}" Value="false" />
+						</MultiDataTrigger.Conditions>
+						<Setter Property="Foreground" Value="{Binding RelativeSource={RelativeSource Self}, Path=(cs:VisualStates.FgNotSel)}" />
+					</MultiDataTrigger>
+
+
+				</Style.Triggers>
+			</Style>
+			<!--  control (incl. textbox, button  -->
+			<!--  level 2 trigger styles (L1 + iseditg)  -->
+			<!--  with mouse over  -->
+			<Style x:Key="TblkTrigs.L2"
+					BasedOn="{StaticResource TblkTrigs.L1b}"
+					TargetType="TextBlock"
+					>
+				<Style.Triggers>
+
+					<!--  is editing  -->
+					<MultiDataTrigger>
+						<MultiDataTrigger.Conditions>
+							<Condition Binding="{Binding IsEnabled, RelativeSource={RelativeSource Self}, Mode=OneWay}" Value="True" />
+							<Condition Binding="{Binding (cs:VisualStates.IsFocused), RelativeSource={RelativeSource Self}, Mode=OneWay}" Value="true" />
+							<Condition Binding="{Binding (cs:VisualStates.IsSelected), RelativeSource={RelativeSource Self}, Mode=OneWay}" Value="true" />
+							<Condition Binding="{Binding (cs:VisualStates.IsReadOnly), RelativeSource={RelativeSource Self}, Mode=OneWay}" Value="false" />
+							<Condition Binding="{Binding (cs:VisualStates.IsLocked), RelativeSource={RelativeSource Self}, Mode=OneWay}" Value="false" />
+						</MultiDataTrigger.Conditions>
+						<Setter Property="Foreground" Value="{Binding RelativeSource={RelativeSource Self}, Path=(cs:VisualStates.FgIsEditing)}" />
+					</MultiDataTrigger>
+				</Style.Triggers>
+			</Style>
+			<!--  control (incl. textbox, button  -->
+			<!--  level 3 trigger styles (L2 + readonly [noeditg])  -->
+			<!--  no mouse over  -->
+			<Style x:Key="TblkTrigs.L3"
+					BasedOn="{StaticResource TblkTrigs.L2}"
+					TargetType="TextBlock"
+					>
+				<Style.Triggers>
+
+					<!--  read only  (i.e. editing not allowed)  -->
+					<MultiDataTrigger>
+						<MultiDataTrigger.Conditions>
+							<Condition Binding="{Binding IsEnabled, RelativeSource={RelativeSource Self}, Mode=OneWay}" Value="True" />
+							<Condition Binding="{Binding (cs:VisualStates.IsReadOnly), RelativeSource={RelativeSource Self}, Mode=OneWay}" Value="true" />
+							<Condition Binding="{Binding (cs:VisualStates.IsLocked), RelativeSource={RelativeSource Self}, Mode=OneWay}" Value="false" />
+						</MultiDataTrigger.Conditions>
+						<Setter Property="Foreground" Value="{Binding RelativeSource={RelativeSource Self}, Path=(cs:VisualStates.FgIsReadOnly)}" />
+					</MultiDataTrigger>
+				</Style.Triggers>
+			</Style>
+			<!--  control (incl. textbox, button  -->
+			<!--  level 4 trigger styles (L3 + islocked)  -->
+			<!--  no mouse over  -->
+			<Style x:Key="TblkTrigs.L4"
+					BasedOn="{StaticResource TblkTrigs.L3}"
+					TargetType="TextBlock"
+					>
+				<Style.Triggers>
+
+					<!--  is locked  -->
+					<MultiDataTrigger>
+						<MultiDataTrigger.Conditions>
+							<Condition Binding="{Binding IsEnabled, RelativeSource={RelativeSource Self}, Mode=OneWay}" Value="True" />
+							<Condition Binding="{Binding (cs:VisualStates.IsLocked), RelativeSource={RelativeSource Self}, Mode=OneWay}" Value="true" />
+						</MultiDataTrigger.Conditions>
+						<Setter Property="Foreground" Value="{Binding RelativeSource={RelativeSource Self}, Path=(cs:VisualStates.FgIsLocked)}" />
+					</MultiDataTrigger>
+				</Style.Triggers>
+			</Style>
+
+			<!--#endregion-->
+
+
+			<!--#region > L5 trigger control styles-->
+
+			<!--
+				vars
+				cs:VisualStates.FgDisabled="{StaticResource Cbx.Fg.NotSel}"
+				cs:VisualStates.FgNotSel="{StaticResource Cbx.Fg.NotSel}"
+				cs:VisualStates.FgIsSel="{StaticResource Cbx.Fg.IsSel}"
+				cs:VisualStates.FgIsEditing="{StaticResource Cbx.Fg.IsEditg}"
+				cs:VisualStates.FgIsReadOnly="{StaticResource Cbx.Fg.IsReadOnly}"
+				cs:VisualStates.FgIsLocked="{StaticResource Cbx.Fg.IsLocked}"
+				
+				cs:VisualStates.FgNotSelMouseOver="{StaticResource Cbx.Fg.NotSel.MouseOver}"
+				cs:VisualStates.FgIsSelMouseOver="{StaticResource Cbx.Fg.IsSel.MouseOver}"
+				cs:VisualStates.FgIsEditingMouseOver="{StaticResource Cbx.Fg.IsEditg.MouseOver}"
+			-->
+
+			<!--  control (incl. textbox, button)  -->
+			<!--  basic - disabled value  -->
+			<Style x:Key="CtrlBasic"
+					TargetType="Control"
+					>
+				<Setter Property="Foreground" Value="{Binding RelativeSource={RelativeSource Self}, Path=(cs:VisualStates.FgDisabled)}" />
+				<Setter Property="Margin" Value="0" />
+				<Setter Property="Padding" Value="0" />
+			</Style>
+
+
+			<!--  control (incl. textbox, button  -->
+			<!--  level 1a trigger styles (basic + issel)  -->
+			<!--  with mouse over  -->
+			<Style x:Key="CtrlTrigs.L1a"
+					BasedOn="{StaticResource CtrlBasic}"
+					TargetType="Control"
+					>
+				<!--  disabled  -->
+				<!--  from root  -->
+				<Style.Triggers>
+
+					<!--  enabled / selected  -->
+					<MultiDataTrigger x:Name="CtrlTrigsL1IsSel">
+						<MultiDataTrigger.Conditions>
+							<Condition Binding="{Binding IsEnabled, RelativeSource={RelativeSource Self}, Mode=OneWay}" Value="True" />
+							<Condition Binding="{Binding IsFocused, RelativeSource={RelativeSource Self}, Mode=OneWay}" Value="False" />
+							<Condition Binding="{Binding (cs:VisualStates.IsSelected), RelativeSource={RelativeSource Self}, Mode=OneWay}" Value="true" />
+							<Condition Binding="{Binding (cs:VisualStates.IsReadOnly), RelativeSource={RelativeSource Self}, Mode=OneWay}" Value="false" />
+							<Condition Binding="{Binding (cs:VisualStates.IsLocked), RelativeSource={RelativeSource Self}, Mode=OneWay}" Value="false" />
+						</MultiDataTrigger.Conditions>
+						<Setter Property="Foreground" Value="{Binding RelativeSource={RelativeSource Self}, Path=(cs:VisualStates.FgIsSel)}" />
+					</MultiDataTrigger>
+
+
+					<MultiDataTrigger>
+						<MultiDataTrigger.Conditions>
+							<Condition Binding="{Binding IsMouseOver, RelativeSource={RelativeSource Self}}" Value="True" />
+							<Condition Binding="{Binding IsEnabled, RelativeSource={RelativeSource Self}, Mode=OneWay}" Value="True" />
+							<Condition Binding="{Binding (cs:VisualStates.IsSelected), RelativeSource={RelativeSource Self}, Mode=OneWay}" Value="true" />
+							<Condition Binding="{Binding (cs:VisualStates.IsReadOnly), RelativeSource={RelativeSource Self}, Mode=OneWay}" Value="false" />
+							<Condition Binding="{Binding (cs:VisualStates.IsLocked), RelativeSource={RelativeSource Self}, Mode=OneWay}" Value="false" />
+						</MultiDataTrigger.Conditions>
+						<Setter Property="Foreground" Value="{Binding RelativeSource={RelativeSource Self}, Path=(cs:VisualStates.FgIsSelMouseOver)}" />
+					</MultiDataTrigger>
+
+				</Style.Triggers>
+			</Style>
+			<!--  control (incl. textbox, button  -->
+			<!--  level 1b trigger styles (level 1a + notsel)  -->
+			<!--  with mouse over  -->
+			<Style x:Key="CtrlTrigs.L1b"
+					BasedOn="{StaticResource CtrlTrigs.L1a}"
+					TargetType="Control"
+					>
+				<!--  disabled  -->
+				<!--  from root  -->
+				<Style.Triggers>
+
+					<!--  not selected  -->
+					<MultiDataTrigger x:Name="CtrlTrigsL1NotSel">
+						<MultiDataTrigger.Conditions>
+							<Condition Binding="{Binding IsEnabled, RelativeSource={RelativeSource Self}, Mode=OneWay}" Value="True" />
+							<Condition Binding="{Binding IsFocused, RelativeSource={RelativeSource Self}, Mode=OneWay}" Value="False" />
+							<Condition Binding="{Binding (cs:VisualStates.IsSelected), RelativeSource={RelativeSource Self}, Mode=OneWay}" Value="false" />
+							<Condition Binding="{Binding (cs:VisualStates.IsReadOnly), RelativeSource={RelativeSource Self}, Mode=OneWay}" Value="false" />
+							<Condition Binding="{Binding (cs:VisualStates.IsLocked), RelativeSource={RelativeSource Self}, Mode=OneWay}" Value="false" />
+						</MultiDataTrigger.Conditions>
+						<Setter Property="Foreground" Value="{Binding RelativeSource={RelativeSource Self}, Path=(cs:VisualStates.FgNotSel)}" />
+					</MultiDataTrigger>
+					<!-- removed
+					<MultiDataTrigger>
+						<MultiDataTrigger.Conditions>
+							<Condition Binding="{Binding IsMouseOver, RelativeSource={RelativeSource Self}}" Value="True" />
+							<Condition Binding="{Binding IsEnabled, RelativeSource={RelativeSource Self}, Mode=OneWay}" Value="True" />
+							<Condition Binding="{Binding (cs:VisualStates.IsSelected), RelativeSource={RelativeSource Self}, Mode=OneWay}" Value="false" />
+							<Condition Binding="{Binding (cs:VisualStates.IsReadOnly), RelativeSource={RelativeSource Self}, Mode=OneWay}" Value="false" />
+							<Condition Binding="{Binding (cs:VisualStates.IsLocked), RelativeSource={RelativeSource Self}, Mode=OneWay}" Value="false" />
+						</MultiDataTrigger.Conditions>
+						<Setter Property="Foreground" Value="{Binding RelativeSource={RelativeSource Self}, Path=(cs:VisualStates.FgNotSelMouseOver)}" />
+					</MultiDataTrigger>
+					-->
+				</Style.Triggers>
+			</Style>
+			<!--  control (incl. textbox, button  -->
+			<!--  level 2 trigger styles (L1 + iseditg)  -->
+			<!--  with mouse over  -->
+			<Style x:Key="CtrlTrigs.L2"
+					BasedOn="{StaticResource CtrlTrigs.L1b}"
+					TargetType="Control"
+					>
+				<Style.Triggers>
+
+					<!--  is editing  -->
+					<MultiDataTrigger>
+						<MultiDataTrigger.Conditions>
+							<Condition Binding="{Binding IsEnabled, RelativeSource={RelativeSource Self}, Mode=OneWay}" Value="True" />
+							<Condition Binding="{Binding IsFocused, RelativeSource={RelativeSource Self}, Mode=OneWay}" Value="True" />
+							<Condition Binding="{Binding (cs:VisualStates.IsSelected), RelativeSource={RelativeSource Self}, Mode=OneWay}" Value="true" />
+							<Condition Binding="{Binding (cs:VisualStates.IsReadOnly), RelativeSource={RelativeSource Self}, Mode=OneWay}" Value="false" />
+							<Condition Binding="{Binding (cs:VisualStates.IsLocked), RelativeSource={RelativeSource Self}, Mode=OneWay}" Value="false" />
+						</MultiDataTrigger.Conditions>
+						<Setter Property="Foreground" Value="{Binding RelativeSource={RelativeSource Self}, Path=(cs:VisualStates.FgIsEditing)}" />
+					</MultiDataTrigger>
+
+					<MultiDataTrigger>
+						<MultiDataTrigger.Conditions>
+							<Condition Binding="{Binding IsMouseOver, RelativeSource={RelativeSource Self}}" Value="True" />
+							<Condition Binding="{Binding IsEnabled, RelativeSource={RelativeSource Self}, Mode=OneWay}" Value="True" />
+							<Condition Binding="{Binding IsFocused, RelativeSource={RelativeSource Self}, Mode=OneWay}" Value="True" />
+							<Condition Binding="{Binding (cs:VisualStates.IsSelected), RelativeSource={RelativeSource Self}, Mode=OneWay}" Value="true" />
+							<Condition Binding="{Binding (cs:VisualStates.IsReadOnly), RelativeSource={RelativeSource Self}, Mode=OneWay}" Value="false" />
+							<Condition Binding="{Binding (cs:VisualStates.IsLocked), RelativeSource={RelativeSource Self}, Mode=OneWay}" Value="false" />
+						</MultiDataTrigger.Conditions>
+						<Setter Property="Foreground" Value="{Binding RelativeSource={RelativeSource Self}, Path=(cs:VisualStates.FgIsEditingMouseOver)}" />
+					</MultiDataTrigger>
+
+				</Style.Triggers>
+			</Style>
+			<!--  control (incl. textbox, button  -->
+			<!--  level 3 trigger styles (L2 + readonly [noeditg])  -->
+			<!--  no mouse over  -->
+			<Style x:Key="CtrlTrigs.L3"
+					BasedOn="{StaticResource CtrlTrigs.L2}"
+					TargetType="Control"
+					>
+				<Style.Triggers>
+
+					<!--  read only  (i.e. editing not allowed)  -->
+					<MultiDataTrigger>
+						<MultiDataTrigger.Conditions>
+							<Condition Binding="{Binding IsEnabled, RelativeSource={RelativeSource Self}, Mode=OneWay}" Value="True" />
+							<Condition Binding="{Binding (cs:VisualStates.IsReadOnly), RelativeSource={RelativeSource Self}, Mode=OneWay}" Value="true" />
+							<Condition Binding="{Binding (cs:VisualStates.IsLocked), RelativeSource={RelativeSource Self}, Mode=OneWay}" Value="false" />
+						</MultiDataTrigger.Conditions>
+						<Setter Property="Foreground" Value="{Binding RelativeSource={RelativeSource Self}, Path=(cs:VisualStates.FgIsReadOnly)}" />
+					</MultiDataTrigger>
+				</Style.Triggers>
+			</Style>
+			<!--  control (incl. textbox, button  -->
+			<!--  level 4 trigger styles (L3 + islocked)  -->
+			<!--  no mouse over  -->
+			<Style x:Key="CtrlTrigs.L4"
+					BasedOn="{StaticResource CtrlTrigs.L3}"
+					TargetType="Control"
+					>
+				<Style.Triggers>
+
+					<!--  is locked  -->
+					<MultiDataTrigger>
+						<MultiDataTrigger.Conditions>
+							<Condition Binding="{Binding IsEnabled, RelativeSource={RelativeSource Self}, Mode=OneWay}" Value="True" />
+							<Condition Binding="{Binding (cs:VisualStates.IsLocked), RelativeSource={RelativeSource Self}, Mode=OneWay}" Value="true" />
+						</MultiDataTrigger.Conditions>
+						<Setter Property="Foreground" Value="{Binding RelativeSource={RelativeSource Self}, Path=(cs:VisualStates.FgIsLocked)}" />
+					</MultiDataTrigger>
+				</Style.Triggers>
+			</Style>
+
+			<!--#endregion-->
+
+
+			<!--#region > L5 trigger control with border styles-->
+
+			<!--  control (control with interior border -> e.g. combobox)  -->
+			<!--  basic - disabled value  -->
+			<!--  mouse over colors are process within the control  -->
+			<Style x:Key="CtrlWithBdrBasic"
+					TargetType="Control"
+					>
+				<Setter Property="Foreground" Value="{Binding RelativeSource={RelativeSource Self}, Path=(cs:VisualStates.FgDisabled)}" />
+				<Setter Property="Background" Value="{Binding RelativeSource={RelativeSource Self}, Path=(cs:VisualStates.BgDisabled)}" />
+				<Setter Property="BorderBrush" Value="{Binding RelativeSource={RelativeSource Self}, Path=(cs:VisualStates.BdrDisabled)}" />
+				<!--  default mouse over colors  -->
+				<Setter Property="cs:CsCommonAp.BgCommonMouseOver" Value="{Binding RelativeSource={RelativeSource Self}, Path=(cs:VisualStates.BgNotSelMouseOver)}" />
+				<Setter Property="cs:CsCommonAp.FgCommonMouseOver" Value="{Binding RelativeSource={RelativeSource Self}, Path=(cs:VisualStates.FgNotSelMouseOver)}" />
+				<Setter Property="cs:CsCommonAp.BdrCommonMouseOver" Value="{Binding RelativeSource={RelativeSource Self}, Path=(cs:VisualStates.BdrNotSelMouseOver)}" />
+				<Setter Property="Margin" Value="0" />
+				<Setter Property="Padding" Value="0" />
+			</Style>
+			<!--  control (control with interior border -> e.g. combobox)  -->
+			<!--  level 1a trigger styles (basic + issel)  -->
+			<!--  no mouse over  -->
+			<Style x:Key="CtrlWithBdrTrigs.L1a"
+					BasedOn="{StaticResource CtrlWithBdrBasic}"
+					TargetType="Control"
+					>
+				<!--  disabled  -->
+				<!--  from root  -->
+				<Style.Triggers>
+
+					<!--  enabled / selected  -->
+					<MultiDataTrigger x:Name="CtrlBdrTrigsL1IsSel">
+						<MultiDataTrigger.Conditions>
+							<Condition Binding="{Binding IsEnabled, RelativeSource={RelativeSource Self}, Mode=OneWay}" Value="True" />
+							<Condition Binding="{Binding IsFocused, RelativeSource={RelativeSource Self}, Mode=OneWay}" Value="False" />
+							<Condition Binding="{Binding (cs:VisualStates.IsSelected), RelativeSource={RelativeSource Self}, Mode=OneWay}" Value="true" />
+							<Condition Binding="{Binding (cs:VisualStates.IsReadOnly), RelativeSource={RelativeSource Self}, Mode=OneWay}" Value="false" />
+							<Condition Binding="{Binding (cs:VisualStates.IsLocked), RelativeSource={RelativeSource Self}, Mode=OneWay}" Value="false" />
+						</MultiDataTrigger.Conditions>
+						<Setter Property="Background" Value="{Binding RelativeSource={RelativeSource Self}, Path=(cs:VisualStates.BgIsSel)}" />
+						<Setter Property="Foreground" Value="{Binding RelativeSource={RelativeSource Self}, Path=(cs:VisualStates.FgIsSel)}" />
+						<Setter Property="BorderBrush" Value="{Binding RelativeSource={RelativeSource Self}, Path=(cs:VisualStates.BdrIsSel)}" />
+						<Setter Property="cs:CsCommonAp.BgCommonMouseOver" Value="{Binding RelativeSource={RelativeSource Self}, Path=(cs:VisualStates.BgIsSelMouseOver)}" />
+						<Setter Property="cs:CsCommonAp.FgCommonMouseOver" Value="{Binding RelativeSource={RelativeSource Self}, Path=(cs:VisualStates.FgIsSelMouseOver)}" />
+						<Setter Property="cs:CsCommonAp.BdrCommonMouseOver" Value="{Binding RelativeSource={RelativeSource Self}, Path=(cs:VisualStates.BdrIsSelMouseOver)}" />
+					</MultiDataTrigger>
+				</Style.Triggers>
+			</Style>
+			<!--  control (control with interior border -> e.g. combobox)  -->
+			<!--  level 1b trigger styles (level 1a + notsel)  -->
+			<!--  no mouse over  -->
+			<Style x:Key="CtrlWithBdrTrigs.L1b"
+					BasedOn="{StaticResource CtrlWithBdrTrigs.L1a}"
+					TargetType="Control"
+					>
+				<!--  disabled  -->
+				<!--  from root  -->
+				<Style.Triggers>
+
+					<!--  not selected  -->
+					<MultiDataTrigger x:Name="CtrlBdrTrigsL1NotSel">
+						<MultiDataTrigger.Conditions>
+							<Condition Binding="{Binding IsEnabled, RelativeSource={RelativeSource Self}, Mode=OneWay}" Value="True" />
+							<Condition Binding="{Binding IsFocused, RelativeSource={RelativeSource Self}, Mode=OneWay}" Value="False" />
+							<Condition Binding="{Binding (cs:VisualStates.IsSelected), RelativeSource={RelativeSource Self}, Mode=OneWay}" Value="false" />
+							<Condition Binding="{Binding (cs:VisualStates.IsReadOnly), RelativeSource={RelativeSource Self}, Mode=OneWay}" Value="false" />
+							<Condition Binding="{Binding (cs:VisualStates.IsLocked), RelativeSource={RelativeSource Self}, Mode=OneWay}" Value="false" />
+						</MultiDataTrigger.Conditions>
+						<Setter Property="Background" Value="{Binding RelativeSource={RelativeSource Self}, Path=(cs:VisualStates.BgNotSel)}" />
+						<Setter Property="Foreground" Value="{Binding RelativeSource={RelativeSource Self}, Path=(cs:VisualStates.FgNotSel)}" />
+						<Setter Property="BorderBrush" Value="{Binding RelativeSource={RelativeSource Self}, Path=(cs:VisualStates.BdrNotSel)}" />
+
+					</MultiDataTrigger>
+
+				</Style.Triggers>
+			</Style>
+			<!--  control (control with interior border -> e.g. combobox)  -->
+			<!--  level 2 trigger styles (L1 + iseditg)  -->
+			<!--  no mouse over  -->
+			<!--  with mouse over colors  -->
+			<Style x:Key="CtrlWithBdrTrigs.L2"
+					BasedOn="{StaticResource CtrlWithBdrTrigs.L1b}"
+					TargetType="Control"
+					>
+				<Style.Triggers>
+					<!-- <Condition Binding="{Binding IsKeyboardFocusWithin, RelativeSource={RelativeSource Self}, Mode=OneWay}" Value="True" /> -->
+					<!--  is editing  -->
+					<MultiDataTrigger>
+						<MultiDataTrigger.Conditions>
+							<Condition Binding="{Binding IsEnabled, RelativeSource={RelativeSource Self}, Mode=OneWay}" Value="True" />
+							<Condition Binding="{Binding IsKeyboardFocusWithin, RelativeSource={RelativeSource Self}, Mode=OneWay}" Value="True" />
+							<Condition Binding="{Binding (cs:VisualStates.IsSelected), RelativeSource={RelativeSource Self}, Mode=OneWay}" Value="true" />
+							<Condition Binding="{Binding (cs:VisualStates.IsReadOnly), RelativeSource={RelativeSource Self}, Mode=OneWay}" Value="false" />
+							<Condition Binding="{Binding (cs:VisualStates.IsLocked), RelativeSource={RelativeSource Self}, Mode=OneWay}" Value="false" />
+						</MultiDataTrigger.Conditions>
+						<Setter Property="Background" Value="{Binding RelativeSource={RelativeSource Self}, Path=(cs:VisualStates.BgIsEditing)}" />
+						<Setter Property="Foreground" Value="{Binding RelativeSource={RelativeSource Self}, Path=(cs:VisualStates.FgIsEditing)}" />
+						<Setter Property="BorderBrush" Value="{Binding RelativeSource={RelativeSource Self}, Path=(cs:VisualStates.BdrIsEditing)}" />
+						<Setter Property="cs:CsCommonAp.BgCommonMouseOver" Value="{Binding RelativeSource={RelativeSource Self}, Path=(cs:VisualStates.BgIsEditingMouseOver)}" />
+						<Setter Property="cs:CsCommonAp.FgCommonMouseOver" Value="{Binding RelativeSource={RelativeSource Self}, Path=(cs:VisualStates.FgIsEditingMouseOver)}" />
+						<Setter Property="cs:CsCommonAp.BdrCommonMouseOver" Value="{Binding RelativeSource={RelativeSource Self}, Path=(cs:VisualStates.BdrIsEditingMouseOver)}" />
+					</MultiDataTrigger>
+				</Style.Triggers>
+			</Style>
+			<!--  control (control with interior border -> e.g. combobox)  -->
+			<!--  level 3 trigger styles (L2 + readonly [noeditg])  -->
+			<!--  no added mouse over (from default)  -->
+			<Style x:Key="CtrlWithBdrTrigs.L3"
+					BasedOn="{StaticResource CtrlWithBdrTrigs.L2}"
+					TargetType="Control"
+					>
+				<Style.Triggers>
+					<!-- <Condition Binding="{Binding IsKeyboardFocusWithin, RelativeSource={RelativeSource Self}, Mode=OneWay}" Value="True" /> -->
+					<!--  is editing  -->
+					<MultiDataTrigger>
+						<MultiDataTrigger.Conditions>
+							<Condition Binding="{Binding IsEnabled, RelativeSource={RelativeSource Self}, Mode=OneWay}" Value="True" />
+							<Condition Binding="{Binding (cs:VisualStates.IsReadOnly), RelativeSource={RelativeSource Self}, Mode=OneWay}" Value="true" />
+							<Condition Binding="{Binding (cs:VisualStates.IsLocked), RelativeSource={RelativeSource Self}, Mode=OneWay}" Value="false" />
+						</MultiDataTrigger.Conditions>
+						<Setter Property="Background" Value="{Binding RelativeSource={RelativeSource Self}, Path=(cs:VisualStates.BgIsReadOnly)}" />
+						<Setter Property="Foreground" Value="{Binding RelativeSource={RelativeSource Self}, Path=(cs:VisualStates.FgIsReadOnly)}" />
+						<Setter Property="BorderBrush" Value="{Binding RelativeSource={RelativeSource Self}, Path=(cs:VisualStates.BdrIsReadOnly)}" />
+					</MultiDataTrigger>
+
+				</Style.Triggers>
+			</Style>
+			<!--  control (control with interior border -> e.g. combobox)  -->
+			<!--  level 4 trigger styles (L3 + islocked)  -->
+			<!--  no added mouse over (from default)  -->
+			<Style x:Key="CtrlWithBdrTrigs.L4"
+					BasedOn="{StaticResource CtrlWithBdrTrigs.L3}"
+					TargetType="Control"
+					>
+				<Style.Triggers>
+					<!-- <Condition Binding="{Binding IsKeyboardFocusWithin, RelativeSource={RelativeSource Self}, Mode=OneWay}" Value="True" /> -->
+					<!--  is editing  -->
+					<MultiDataTrigger>
+						<MultiDataTrigger.Conditions>
+							<Condition Binding="{Binding IsEnabled, RelativeSource={RelativeSource Self}, Mode=OneWay}" Value="True" />
+							<Condition Binding="{Binding (cs:VisualStates.IsLocked), RelativeSource={RelativeSource Self}, Mode=OneWay}" Value="true" />
+						</MultiDataTrigger.Conditions>
+						<Setter Property="Background" Value="{Binding RelativeSource={RelativeSource Self}, Path=(cs:VisualStates.BgIsLocked)}" />
+						<Setter Property="Foreground" Value="{Binding RelativeSource={RelativeSource Self}, Path=(cs:VisualStates.FgIsLocked)}" />
+						<Setter Property="BorderBrush" Value="{Binding RelativeSource={RelativeSource Self}, Path=(cs:VisualStates.BdrIsLocked)}" />
+					</MultiDataTrigger>
+
+				</Style.Triggers>
+			</Style>
+
+			<!--#endregion-->
+
+
+			<!--#region > L5 trigger panel styles-->
+
+			<!--  panel  -->
+			<!--  basic - disabled value  -->
+			<Style x:Key="PnlBasic"
+					TargetType="Panel"
+					>
+				<Setter Property="Background" Value="{Binding RelativeSource={RelativeSource Self}, Path=(cs:VisualStates.BgDisabled)}" />
+				<Setter Property="Margin" Value="0" />
+			</Style>
+
+			<!--#endregion-->
+
+			<!--#endregion-->
+
+
+			<!--#region > L4 non-trigger styles (may be dependent on trigger style)-->
 
 			<!--#region > L5 border styles-->
 
 			<Style x:Key="BdrRoot"
 					TargetType="Border"
 					>
-				<Setter Property="Background" Value="{Binding RelativeSource={RelativeSource Self}, Path=(cs:VisualStates.BgDisabled)}" />
 				<Setter Property="Margin" Value="0" />
 				<Setter Property="Padding" Value="0" />
 				<Setter Property="CornerRadius" Value="{StaticResource CornerRadius.Std}" />
@@ -78,37 +858,74 @@
 				<Setter Property="BorderThickness" Value="{StaticResource UnitValue.BorderThk}" />
 				<Setter Property="BorderBrush" Value="{StaticResource UnitValue.Bdr.IsUsed}" />
 				<Setter Property="Background" Value="{StaticResource UnitValue.Bg.IsUsed}" />
+				<Style.Triggers>
+					<Trigger Property="IsEnabled" Value="False">
+						<Setter Property="Background" Value="{StaticResource UnitValue.Bg.IsNotUsed}" />
+					</Trigger>
+				</Style.Triggers>
 			</Style>
 
+
+			<!--#region > border styles with triggers-->
+
+
+			<Style x:Key="BdrTrigsL4CanEditTitle" TargetType="Border" BasedOn="{StaticResource BdrTrigs.L4}">
+				<Setter Property="Margin" Value="3,0,0,2"/>
+				<Setter Property="BorderThickness" Value="{StaticResource Title.BorderThk}"/>
+				<Setter Property="CornerRadius" Value="{StaticResource Title.CornerRadius}"/>
+				<Setter Property="cs:VisualStates.BgDisabled" Value="{StaticResource TitleCanEdit.Bg.Disabled}" />
+				<Setter Property="cs:VisualStates.BgNotSel" Value="{StaticResource TitleCanEdit.Bg.NotSel}" />
+				<Setter Property="cs:VisualStates.BgIsSel" Value="{StaticResource TitleCanEdit.Bg.IsSel}" />
+				<Setter Property="cs:VisualStates.BgIsEditing" Value="{StaticResource TitleCanEdit.Bg.IsEditg}" />
+				<Setter Property="cs:VisualStates.BgIsReadOnly" Value="{StaticResource TitleCanEdit.Bg.IsReadOnly}" />
+				<Setter Property="cs:VisualStates.BgIsLocked" Value="{StaticResource TitleCanEdit.Bg.IsLocked}" />
+			</Style>
 
 			<!--#endregion-->
 
 
+
+			<!--#endregion-->
+
 			<!--#region > L5 textblock styles-->
+
+			<Style x:Key="TblkRootL1aTrigs"
+					TargetType="TextBlock"
+					BasedOn="{StaticResource TblkTrigs.L1a}"
+					>
+			</Style>
 
 			<Style x:Key="TblkRoot"
 					TargetType="TextBlock"
 					>
-				<Setter Property="Foreground" Value="{Binding RelativeSource={RelativeSource Self}, Path=(cs:VisualStates.FgDisabled)}" />
 				<Setter Property="Padding" Value="0" />
 				<Setter Property="Margin" Value="0" />
 				<Setter Property="FontSize" Value="{StaticResource FontSize.Normal}" />
 			</Style>
 
-			<Style x:Key="TblkHeaderLg"
+			<Style x:Key="TblkHeader"
 					BasedOn="{StaticResource TblkRoot}"
 					TargetType="TextBlock"
 					>
 				<Setter Property="Foreground" Value="{StaticResource Header.Fg.IsSel}" />
 				<Setter Property="Padding" Value="5,0,0,2" />
-				<Setter Property="FontSize" Value="{StaticResource FontSize.XLarge}" />
+
+			</Style>
+
+			<Style x:Key="TblkHeaderL1aTrigs"
+					BasedOn="{StaticResource TblkRootL1aTrigs}"
+					TargetType="TextBlock"
+					>
+
+				<Setter Property="Padding" Value="5,0,0,2" />
+
 			</Style>
 
 			<Style x:Key="TblkUnitValTitle"
 					BasedOn="{StaticResource TblkRoot}"
 					TargetType="TextBlock"
 					>
-				<Setter Property="cs:VisualStates.FgDisabled" Value="{StaticResource UnitValTitle.Fg.IsUsed}" />
+				<Setter Property="Foreground" Value="{StaticResource UnitValTitle.Fg.IsUsed}" />
 				<Setter Property="Padding" Value="8,2,9,4" />
 				<Setter Property="HorizontalAlignment" Value="Left" />
 				<Setter Property="VerticalAlignment" Value="Center" />
@@ -118,35 +935,116 @@
 					BasedOn="{StaticResource TblkRoot}"
 					TargetType="TextBlock"
 					>
-				<Setter Property="cs:VisualStates.FgDisabled" Value="{StaticResource UnitValue.Fg.IsUsed}" />
+				<Setter Property="Foreground" Value="{StaticResource UnitValue.Fg.IsUsed}" />
 				<Setter Property="Padding" Value="8,2,9,4" />
 				<Setter Property="HorizontalAlignment" Value="Center" />
 				<Setter Property="VerticalAlignment" Value="Center" />
+				<Setter Property="Background" Value="Transparent" />
+				<Setter Property="TextAlignment" Value="Center" />
+				<Style.Triggers>
+					<Trigger Property="IsEnabled" Value="False">
+						<Setter Property="Foreground" Value="{StaticResource UnitValue.Fg.IsNotUsed}" />
+					</Trigger>
+				</Style.Triggers>
 			</Style>
 
 
 			<!--#endregion-->
 
+			<!--#region > L5 textbox styles-->
+
+			<Style x:Key="TbxEditable"
+					BasedOn="{StaticResource CtrlTrigs.L4}"
+					TargetType="TextBox"
+					>
+				<Setter Property="FontSize" Value="{StaticResource FontSize.Normal}" />
+				<Setter Property="Background" Value="Transparent" />
+				<Setter Property="BorderThickness" Value="0" />
+				<Setter Property="HorizontalAlignment" Value="Stretch" />
+				<Setter Property="Margin" Value="0" />
+				<Setter Property="Padding" Value="3,2,0,4" />
+				<Setter Property="HorizontalScrollBarVisibility" Value="Hidden" />
+				<Setter Property="VerticalScrollBarVisibility" Value="Hidden" />
+				<Setter Property="SnapsToDevicePixels" Value="True" />
+				<Setter Property="Template" Value="{StaticResource CtTextBox}" />
+			</Style>
+
+
 			<!--#endregion-->
 
+			<!--#region > L5 scrollviewer styles-->
+
+			<Style x:Key="SvStyle"
+					TargetType="ScrollViewer"
+					>
+				<Setter Property="Template" Value="{DynamicResource CsScrollViewerCt}" />
+				<Setter Property="cs:CsScrollBarAp.ScrollBarWidth" Value="12" />
+				<Setter Property="cs:CsScrollBarAp.ThumbCornerRadius" Value="3" />
+				<Setter Property="cs:CsScrollBarAp.RepeatButtonLength" Value="12" />
+				<Setter Property="cs:CsScrollBarAp.TrackWidth" Value="5" />
+				<Setter Property="cs:CsScrollBarAp.RepeatButtonIconGirth" Value="6" />
+				<Setter Property="cs:CsScrollBarAp.RepeatButtonIconLength" Value="10" />
+				<Setter Property="cs:CsScrollBarAp.VertBorderThickness" Value="0,0,0,0" />
+				<Setter Property="cs:CsScrollBarAp.VertBorderColor">
+					<Setter.Value>
+						<SolidColorBrush Color="{StaticResource Blue.350}" />
+					</Setter.Value>
+				</Setter>
+				<Setter Property="cs:CsScrollBarAp.HorizBorderThickness" Value="0,0,0,0" />
+				<Setter Property="cs:CsScrollBarAp.HorizBorderColor">
+					<Setter.Value>
+						<SolidColorBrush Color="{StaticResource Blue.350}" />
+					</Setter.Value>
+				</Setter>
+
+				<Setter Property="cs:CsScrollViewerAp.CornerRectBkgBrush">
+					<Setter.Value>
+						<SolidColorBrush Color="{StaticResource Gray.150}" />
+					</Setter.Value>
+				</Setter>
+
+
+			</Style>
+
+
+			<!--#endregion-->
+
+			<!--#region > L5 shape styles-->
+
+			<Style x:Key="PathBasic"
+					TargetType="Path"
+					>
+				<Setter Property="Margin" Value="0" />
+				<Setter Property="HorizontalAlignment" Value="Right" />
+				<Setter Property="Stretch" Value="Uniform" />
+				<Setter Property="VerticalAlignment" Value="Stretch" />
+				<Setter Property="Data" Value="{Binding RelativeSource={RelativeSource Self}, Path=(cs:VisualStates.IconGeomDisabled)}" />
+				<Setter Property="Fill" Value="{Binding RelativeSource={RelativeSource Self}, Path=(cs:VisualStates.FgDisabled)}" />
+			</Style>
+
+			<!--#endregion-->
+
+
+			<!--#endregion-->
 
 			<!--#region > L4 dt so ribbon  (DtSoRibbonOrder)-->
 
 			<DataTemplate x:Key="DtSoRibbonOrder">
 
-				<DockPanel VerticalAlignment="Top">
+				<DockPanel x:Name="DpRibbontOrder"
+						VerticalAlignment="Top"
+						>
 
 					<Border x:Name="BdrRoHeader"
 							DockPanel.Dock="Top"
 							HorizontalAlignment="Stretch"
 							VerticalAlignment="Top"
 							Margin="0,0,0,3"
-							cs:VisualStates.BgDisabled="{StaticResource Header.Bg.IsSel}"
 							Style="{StaticResource BdrHeader}"
 							>
 						<TextBlock Text="Style Order - Ribbon List"
-								cs:VisualStates.FgDisabled="{StaticResource Header.Fg.IsSel}"
-								Style="{StaticResource TblkHeaderLg}"
+								FontSize="{StaticResource FontSize.XLarge}"
+								Style="{StaticResource TblkHeader}"
 								/>
 					</Border>
 
@@ -160,19 +1058,18 @@
 
 			<DataTemplate x:Key="DtSoDlxMeasureLeftOrder">
 
-				<DockPanel>
+				<DockPanel x:Name="DpDlxMeasureLeftOrder">
 
 					<Border x:Name="BdrRoHeader"
 							DockPanel.Dock="Top"
 							HorizontalAlignment="Stretch"
 							VerticalAlignment="Top"
 							Margin="0,0,0,3"
-							cs:VisualStates.BgDisabled="{StaticResource Header.Bg.IsSel}"
 							Style="{StaticResource BdrHeader}"
 							>
 						<TextBlock Text="Style Order - Delux Measure - Left"
-								cs:VisualStates.FgDisabled="{StaticResource Header.Fg.IsSel}"
-								Style="{StaticResource TblkHeaderLg}"
+								FontSize="{StaticResource FontSize.XLarge}"
+								Style="{StaticResource TblkHeader}"
 								/>
 					</Border>
 
@@ -186,19 +1083,18 @@
 
 			<DataTemplate x:Key="DtSoDlxMeasureRightOrder">
 
-				<DockPanel>
+				<DockPanel x:Name="DpDlxMeasureRightOrder">
 
 					<Border x:Name="BdrRoHeader"
 							DockPanel.Dock="Top"
 							HorizontalAlignment="Stretch"
 							VerticalAlignment="Top"
 							Margin="0,0,0,3"
-							cs:VisualStates.BgDisabled="{StaticResource Header.Bg.IsSel}"
 							Style="{StaticResource BdrHeader}"
 							>
-						<TextBlock Text="Style Order Delux Measure - Right"
-								cs:VisualStates.FgDisabled="{StaticResource Header.Fg.IsSel}"
-								Style="{StaticResource TblkHeaderLg}"
+						<TextBlock Text="Style Order - Delux Measure - Right"
+								FontSize="{StaticResource FontSize.XLarge}"
+								Style="{StaticResource TblkHeader}"
 								/>
 					</Border>
 
@@ -258,52 +1154,850 @@
 
 			<!--#endregion-->
 
+			<!--#region > L4 dt us lbx item container-->
+
+			<Style x:Key="Lbx1ItemContainerStyle1"
+					TargetType="ListBoxItem"
+					>
+				<Setter Property="SnapsToDevicePixels" Value="True" />
+				<Setter Property="Padding" Value="3" />
+				<!-- <Setter Property="Margin" Value="5,2,5,2" /> -->
+				<Setter Property="HorizontalContentAlignment" Value="{Binding HorizontalContentAlignment, RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}}}" />
+				<Setter Property="VerticalContentAlignment" Value="{Binding VerticalContentAlignment, RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}}}" />
+				<Setter Property="Background" Value="{StaticResource Lv1.Panel.Bg.NotSel}" />
+				<Setter Property="BorderBrush" Value="Transparent" />
+				<Setter Property="BorderThickness" Value="0" />
+				<Setter Property="FocusVisualStyle" Value="{x:Null}" />
+				<Setter Property="MinHeight" Value="20" />
+				<Setter Property="Template">
+					<Setter.Value>
+						<ControlTemplate TargetType="{x:Type ListBoxItem}">
+							<Border x:Name="BdCs1"
+									Background="{TemplateBinding Background}"
+									BorderBrush="{TemplateBinding BorderBrush}"
+									BorderThickness="{TemplateBinding BorderThickness}"
+									CornerRadius="{StaticResource CornerRadius.Std}"
+									Padding="{TemplateBinding Padding}"
+									Margin="{TemplateBinding Margin}"
+									SnapsToDevicePixels="true"
+									>
+								<ContentPresenter x:Name="Lv1Cp1"
+										HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+										SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
+										VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+										/>
+							</Border>
+							<ControlTemplate.Triggers>
+
+								<MultiTrigger>
+									<MultiTrigger.Conditions>
+										<!--  false  and false  -->
+										<!--  not selected / active  -->
+										<!-- <Condition Property="Selector.IsSelectionActive" Value="False" /> -->
+										<Condition Property="IsSelected" Value="false" />
+									</MultiTrigger.Conditions>
+									<Setter Property="Margin" TargetName="BdCs1" Value="8,3,12,3" />
+									<Setter Property="Padding" TargetName="BdCs1" Value="1" />
+									<Setter Property="BorderThickness" TargetName="BdCs1" Value="2.0" />
+									<Setter Property="Background" TargetName="BdCs1" Value="{StaticResource Lv1.Panel.Bg.NotSel}" />
+									<Setter Property="BorderBrush" TargetName="BdCs1" Value="{StaticResource Lv1.Panel.Bdr.NotSel}" />
+								</MultiTrigger>
+								<MultiTrigger>
+									<MultiTrigger.Conditions>
+										<!--  true  and true  -->
+										<!--  is selected / active  -->
+										<!-- <Condition Property="Selector.IsSelectionActive" Value="True" /> -->
+										<Condition Property="IsSelected" Value="true" />
+									</MultiTrigger.Conditions>
+									<Setter Property="Margin" TargetName="BdCs1" Value="0,3,4,3" />
+									<Setter Property="Padding" TargetName="BdCs1" Value="10.5,2.5,9,2.5" />
+									<Setter Property="BorderThickness" TargetName="BdCs1" Value="0.5" />
+									<Setter Property="Background" TargetName="BdCs1" Value="{StaticResource Lv1.Panel.Bg.IsSel}" />
+									<Setter Property="BorderBrush" TargetName="BdCs1" Value="{StaticResource Lv1.Panel.Bdr.IsSel}" />
+								</MultiTrigger>
+
+
+								<MultiTrigger>
+									<MultiTrigger.Conditions>
+										<!--  true  -->
+										<Condition Property="IsMouseOver" Value="true" />
+										<Condition Property="IsSelected" Value="False" />
+									</MultiTrigger.Conditions>
+									<Setter Property="Margin" TargetName="BdCs1" Value="0,3,4,3" />
+									<Setter Property="Padding" TargetName="BdCs1" Value="9,1,9,1" />
+									<Setter Property="BorderThickness" TargetName="BdCs1" Value="2.0" />
+									<Setter Property="Background" TargetName="BdCs1" Value="{StaticResource Lv1.Panel.Bg.MouseOver}" />
+									<Setter Property="BorderBrush" TargetName="BdCs1" Value="{StaticResource Lv1.Panel.Bdr.MouseOver}" />
+								</MultiTrigger>
+
+								<MultiTrigger>
+									<MultiTrigger.Conditions>
+										<!--  true  -->
+										<Condition Property="IsMouseOver" Value="true" />
+										<Condition Property="IsSelected" Value="True" />
+									</MultiTrigger.Conditions>
+									<Setter Property="Margin" TargetName="BdCs1" Value="0,3,4,3" />
+									<Setter Property="Padding" TargetName="BdCs1" Value="9,1,9,1" />
+									<Setter Property="BorderThickness" TargetName="BdCs1" Value="2.0" />
+									<Setter Property="BorderBrush" TargetName="BdCs1" Value="{StaticResource Lv1.Panel.Bdr.MouseOver}" />
+								</MultiTrigger>
+
+
+								<Trigger Property="IsEnabled" Value="False">
+									<Setter Property="TextElement.Foreground" TargetName="BdCs1" Value="{StaticResource Lv1.Panel.Fg.Disabled}" />
+								</Trigger>
+							</ControlTemplate.Triggers>
+						</ControlTemplate>
+					</Setter.Value>
+				</Setter>
+			</Style>
+
+			<!--#endregion-->
+
+			<!--#region > L4 dt us lbx item template-->
+
+			<DataTemplate x:Key="Lbx1ItemTemplate"
+					DataType="util:UnitsDataR"
+					d:DataType="unitsUtil:UnitsDataD"
+					>
+
+				<Grid x:Name="GrdLv1Item"
+						Height="Auto"
+						Margin="3"
+						VerticalAlignment="Center"
+						IsEnabled="{Binding RelativeSource={RelativeSource AncestorType={x:Type ListBoxItem}}, Path=IsSelected}"
+						cs:VisualStates.IsSelected="{Binding RelativeSource={RelativeSource AncestorType={x:Type ListBoxItem}}, Path=IsSelected}"
+						cs:VisualStates.IsLocked="{Binding Ustyle.IsLocked}"
+						>
+					<!--  cs:VisualStates.IsFocused="{Binding RelativeSource={RelativeSource AncestorType={x:Type ListBoxItem}}, Path=IsKeyboardFocusWithin}"  -->
+
+					<Grid.ColumnDefinitions>
+						<ColumnDefinition Width="78" />
+						<ColumnDefinition Width="86" />
+						<ColumnDefinition Width="3*" />
+						<ColumnDefinition Width="5*" />
+						<ColumnDefinition Width="3*" />
+					</Grid.ColumnDefinitions>
+
+					<Grid.RowDefinitions>
+						<RowDefinition Height="{StaticResource Lv1RowHeight}" />
+						<RowDefinition Height="{StaticResource Lv1RowHeight}" />
+						<RowDefinition Height="{StaticResource Lv1RowHeight}" />
+					</Grid.RowDefinitions>
+
+					<Border x:Name="Id_BdrId"
+							Grid.Column="0"
+							Grid.Row="0"
+							Grid.RowSpan="3"
+							cs:VisualStates.BgDisabled="{StaticResource Id.Bg.NotSel}"
+							cs:VisualStates.BgIsSel="{StaticResource Id.Bg.IsSel}"
+							Style="{StaticResource BdrTrigs.L1a}"
+							>
+						<Grid>
+
+							<TextBlock Grid.Column="0"
+									Grid.Row="0"
+									FontSize="40"
+									HorizontalAlignment="Center"
+									Margin="0,-4,0,4"
+									Text="{Binding SeqFormatted, Mode=OneWay}"
+									VerticalAlignment="Center"
+									cs:VisualStates.FgDisabled="{StaticResource Id.Fg.NotSel}"
+									cs:VisualStates.FgIsSel="{StaticResource Id.Fg.IsSel}"
+									Style="{StaticResource TblkTrigs.L1a}"
+									/>
+
+							<Path x:Name="PthCanEditIconx"
+									Grid.Column="0"
+									Grid.Row="0"
+									Height="10"
+									Width="10"
+									Margin="0,0,5,5"
+									VerticalAlignment="Bottom"
+									Stretch="Uniform"
+									Data="{StaticResource IconGeomIsLocked}"
+									HorizontalAlignment="right"
+									>
+								<Path.Style>
+									<Style TargetType="Path">
+										<Setter Property="Visibility" Value="Hidden" />
+										<Setter Property="Fill" Value="{StaticResource IdIcon.Fg.NotSel}" />
+										<Style.Triggers>
+											<MultiDataTrigger>
+												<MultiDataTrigger.Conditions>
+													<!--  true  -->
+													<Condition Binding="{Binding RelativeSource={RelativeSource AncestorType={x:Type ListBoxItem}}, Path=IsSelected}" Value="true" />
+													<!--  true  -->
+													<Condition Binding="{Binding Path=Ustyle.IsLocked}" Value="true" />
+												</MultiDataTrigger.Conditions>
+												<Setter Property="Fill" Value="{StaticResource IdIcon.Fg.IsSel}" />
+												<Setter Property="Visibility" Value="Visible" />
+											</MultiDataTrigger>
+											<MultiDataTrigger>
+												<MultiDataTrigger.Conditions>
+													<Condition Binding="{Binding RelativeSource={RelativeSource AncestorType={x:Type ListBoxItem}}, Path=IsSelected}" Value="False" />
+													<Condition Binding="{Binding Path=Ustyle.IsLocked}" Value="True" />
+												</MultiDataTrigger.Conditions>
+												<Setter Property="Visibility" Value="Visible" />
+												<Setter Property="Fill" Value="{StaticResource IdIcon.Fg.NotSel}" />
+											</MultiDataTrigger>
+
+										</Style.Triggers>
+									</Style>
+								</Path.Style>
+
+
+							</Path>
+						</Grid>
+					</Border>
+
+					<Border x:Name="Icon"
+							Grid.Column="1"
+							Grid.Row="0"
+							Grid.RowSpan="3"
+							Margin="3,0,0,0"
+							cs:VisualStates.BgDisabled="{StaticResource Image1.Bg.NotSel}"
+							cs:VisualStates.BgIsSel="{StaticResource Image1.Bg.IsSel}"
+							Style="{StaticResource BdrTrigs.L1a}"
+							>
+						<Image Name="UnitIcon"
+								DockPanel.Dock="Top"
+								Margin="8"
+								Source="{Binding Path=Ux}"
+								Stretch="None"
+								/>
+
+					</Border>
+
+					<Border x:Name="BdrStyleNameTitle"
+							Grid.Column="2"
+							Grid.Row="0"
+							Margin="3,0,0,2"
+							BorderThickness="{StaticResource Title.BorderThk}"
+							CornerRadius="{StaticResource Title.CornerRadius}"
+							cs:VisualStates.BgDisabled="{StaticResource TitleCanEdit.Bg.Disabled}"
+							cs:VisualStates.BgNotSel="{StaticResource TitleCanEdit.Bg.NotSel}"
+							cs:VisualStates.BgIsSel="{StaticResource TitleCanEdit.Bg.IsSel}"
+							cs:VisualStates.BgIsEditing="{StaticResource TitleCanEdit.Bg.IsEditg}"
+							cs:VisualStates.BgIsReadOnly="{StaticResource TitleCanEdit.Bg.IsReadOnly}"
+							cs:VisualStates.BgIsLocked="{StaticResource TitleCanEdit.Bg.IsLocked}"
+							Style="{StaticResource BdrTrigs.L4}"
+							>
+						<TextBlock x:Name="TblkStyleNameTitle"
+								Text="Style Name"
+								Margin="8,0,0,3"
+								VerticalAlignment="Center"
+								cs:VisualStates.FgDisabled="{StaticResource TitleCanEdit.Fg.Disabled}"
+								cs:VisualStates.FgNotSel="{StaticResource TitleCanEdit.Fg.NotSel}"
+								cs:VisualStates.FgIsSel="{StaticResource TitleCanEdit.Fg.IsSel}"
+								cs:VisualStates.FgIsEditing="{StaticResource TitleCanEdit.Fg.IsEditg}"
+								cs:VisualStates.FgIsReadOnly="{StaticResource TitleCanEdit.Fg.IsReadOnly}"
+								cs:VisualStates.FgIsLocked="{StaticResource TitleCanEdit.Fg.IsLocked}"
+								Style="{StaticResource TblkTrigs.L4}"
+								/>
+
+					</Border>
+
+					<Border x:Name="BdrStyleDescTitle"
+							Grid.Column="2"
+							Grid.Row="1"
+							Margin="3,1,0,1"
+							BorderThickness="{StaticResource Title.BorderThk}"
+							CornerRadius="{StaticResource Title.CornerRadius}"
+							cs:VisualStates.BgDisabled="{StaticResource TitleCanEdit.Bg.Disabled}"
+							cs:VisualStates.BgIsSel="{StaticResource TitleCanEdit.Bg.IsSel}"
+							cs:VisualStates.BgNotSel="{StaticResource TitleCanEdit.Bg.NotSel}"
+							cs:VisualStates.BgIsEditing="{StaticResource TitleCanEdit.Bg.IsEditg}"
+							cs:VisualStates.BgIsReadOnly="{StaticResource TitleCanEdit.Bg.IsReadOnly}"
+							cs:VisualStates.BgIsLocked="{StaticResource TitleCanEdit.Bg.IsLocked}"
+							Style="{StaticResource BdrTrigs.L4}"
+							>
+						<TextBlock x:Name="TblkStyleDescTitle"
+								Text="Description"
+								Margin="8,0,0,3"
+								VerticalAlignment="Center"
+								cs:VisualStates.FgDisabled="{StaticResource TitleCanEdit.Fg.Disabled}"
+								cs:VisualStates.FgNotSel="{StaticResource TitleCanEdit.Fg.NotSel}"
+								cs:VisualStates.FgIsSel="{StaticResource TitleCanEdit.Fg.IsSel}"
+								cs:VisualStates.FgIsEditing="{StaticResource TitleCanEdit.Fg.IsEditg}"
+								cs:VisualStates.FgIsReadOnly="{StaticResource TitleCanEdit.Fg.IsReadOnly}"
+								cs:VisualStates.FgIsLocked="{StaticResource TitleCanEdit.Fg.IsLocked}"
+								Style="{StaticResource TblkTrigs.L4}"
+								/>
+
+					</Border>
+
+					<Border x:Name="BdrStyleExampleTitle"
+							Grid.Column="2"
+							Grid.Row="2"
+							Margin="3,2,0,0"
+							BorderThickness="{StaticResource Title.BorderThk}"
+							CornerRadius="{StaticResource Title.CornerRadius}"
+							cs:VisualStates.BgDisabled="{StaticResource TitleCanEdit.Bg.Disabled}"
+							cs:VisualStates.BgIsSel="{StaticResource TitleCanEdit.Bg.IsSel}"
+							cs:VisualStates.BgNotSel="{StaticResource TitleCanEdit.Bg.NotSel}"
+							cs:VisualStates.BgIsEditing="{StaticResource TitleCanEdit.Bg.IsEditg}"
+							cs:VisualStates.BgIsReadOnly="{StaticResource TitleCanEdit.Bg.IsReadOnly}"
+							cs:VisualStates.BgIsLocked="{StaticResource TitleCanEdit.Bg.IsLocked}"
+							Style="{StaticResource BdrTrigs.L4}"
+							>
+						<TextBlock x:Name="TbxSampleTitle"
+								Text="Sample"
+								Margin="8,0,0,3"
+								VerticalAlignment="Center"
+								cs:VisualStates.FgDisabled="{StaticResource TitleCanEdit.Fg.Disabled}"
+								cs:VisualStates.FgNotSel="{StaticResource TitleCanEdit.Fg.NotSel}"
+								cs:VisualStates.FgIsSel="{StaticResource TitleCanEdit.Fg.IsSel}"
+								cs:VisualStates.FgIsEditing="{StaticResource TitleCanEdit.Fg.IsEditg}"
+								cs:VisualStates.FgIsReadOnly="{StaticResource TitleCanEdit.Fg.IsReadOnly}"
+								cs:VisualStates.FgIsLocked="{StaticResource TitleCanEdit.Fg.IsLocked}"
+								Style="{StaticResource TblkTrigs.L4}"
+								/>
+					</Border>
+
+
+					<Border x:Name="BdrStyleNameEntryText"
+							Grid.Column="3"
+							Grid.Row="0"
+							Margin="0,0,0,2"
+							BorderThickness="{StaticResource Text.BorderThk}"
+							CornerRadius="{StaticResource Text.CornerRadius}"
+							cs:VisualStates.IsFocused="{Binding RelativeSource={RelativeSource AncestorType={x:Type ListBoxItem}}, Path=IsKeyboardFocused}"
+							cs:VisualStates.BgDisabled="{StaticResource CanEdit.Bg.NotSel}"
+							cs:VisualStates.BgIsSel="{StaticResource CanEdit.Bg.IsSel}"
+							cs:VisualStates.BgNotSel="{StaticResource CanEdit.Bg.NotSel}"
+							cs:VisualStates.BgIsEditing="{StaticResource CanEdit.Bg.IsEditg}"
+							cs:VisualStates.BgIsReadOnly="{StaticResource CanEdit.Bg.IsReadOnly}"
+							cs:VisualStates.BgIsLocked="{StaticResource CanEdit.Bg.IsLocked}"
+							cs:VisualStates.DoesMouseOver="True"
+							cs:VisualStates.BgNotSelMouseOver="{StaticResource CanEdit.Bg.NotSel.MouseOver}"
+							cs:VisualStates.BgIsSelMouseOver="{StaticResource CanEdit.Bg.IsSel.MouseOver}"
+							cs:VisualStates.BgIsEditingMouseOver="{StaticResource CanEdit.Bg.IsSel.MouseOver}"
+							Style="{StaticResource BdrTrigs.L4}"
+							>
+						<!--  cs:VisualStates.IsFocused="True"  -->
+						<!--  cs:VisualStates.IsFocused="{Binding RelativeSource={RelativeSource AncestorType={x:Type ListBoxItem}}, Path=IsFocused}"  -->
+						<TextBlock x:Name="TblkStyleNameEntryText"
+								Text="style name"
+								Margin="8,0,0,3"
+								VerticalAlignment="Center"
+								cs:VisualStates.FgDisabled="{StaticResource CanEdit.Fg.Disabled}"
+								cs:VisualStates.FgNotSel="{StaticResource CanEdit.Fg.NotSel}"
+								cs:VisualStates.FgIsSel="{StaticResource CanEdit.Fg.IsSel}"
+								cs:VisualStates.FgIsEditing="{StaticResource CanEdit.Fg.IsEditg}"
+								cs:VisualStates.FgIsReadOnly="{StaticResource CanEdit.Fg.IsReadOnly}"
+								cs:VisualStates.FgIsLocked="{StaticResource CanEdit.Fg.IsLocked}"
+								cs:VisualStates.DoesMouseOver="True"
+								cs:VisualStates.FgNotSelMouseOver="{StaticResource CanEdit.Fg.NotSel.MouseOver}"
+								cs:VisualStates.FgIsSelMouseOver="{StaticResource CanEdit.Fg.IsSel.MouseOver}"
+								cs:VisualStates.FgIsEditingMouseOver="{StaticResource CanEdit.Fg.IsSel.MouseOver}"
+								Style="{StaticResource TblkTrigs.L4}"
+								/>
+
+					</Border>
+
+					<Border x:Name="BdrStyleDescEntryText"
+							Grid.Column="3"
+							Grid.Row="1"
+							Margin="0,1,0,1"
+							BorderThickness="{StaticResource Text.BorderThk}"
+							CornerRadius="{StaticResource Text.CornerRadius}"
+							cs:VisualStates.IsFocused="{Binding RelativeSource={RelativeSource AncestorType={x:Type ListBoxItem}}, Path=IsKeyboardFocused}"
+							cs:VisualStates.BgDisabled="{StaticResource CanEdit.Bg.NotSel}"
+							cs:VisualStates.BgIsSel="{StaticResource CanEdit.Bg.IsSel}"
+							cs:VisualStates.BgNotSel="{StaticResource CanEdit.Bg.NotSel}"
+							cs:VisualStates.BgIsEditing="{StaticResource CanEdit.Bg.IsEditg}"
+							cs:VisualStates.BgIsReadOnly="{StaticResource CanEdit.Bg.IsReadOnly}"
+							cs:VisualStates.BgIsLocked="{StaticResource CanEdit.Bg.IsLocked}"
+							cs:VisualStates.DoesMouseOver="True"
+							cs:VisualStates.BgNotSelMouseOver="{StaticResource CanEdit.Bg.NotSel.MouseOver}"
+							cs:VisualStates.BgIsSelMouseOver="{StaticResource CanEdit.Bg.IsSel.MouseOver}"
+							cs:VisualStates.BgIsEditingMouseOver="{StaticResource CanEdit.Bg.IsSel.MouseOver}"
+							Style="{StaticResource BdrTrigs.L4}"
+							>
+						<TextBlock x:Name="TblkStyleDescEntryText"
+								Text="description"
+								Margin="8,0,0,3"
+								VerticalAlignment="Center"
+								cs:VisualStates.FgDisabled="{StaticResource CanEdit.Fg.Disabled}"
+								cs:VisualStates.FgNotSel="{StaticResource CanEdit.Fg.NotSel}"
+								cs:VisualStates.FgIsSel="{StaticResource CanEdit.Fg.IsSel}"
+								cs:VisualStates.FgIsEditing="{StaticResource CanEdit.Fg.IsEditg}"
+								cs:VisualStates.FgIsReadOnly="{StaticResource CanEdit.Fg.IsReadOnly}"
+								cs:VisualStates.FgIsLocked="{StaticResource CanEdit.Fg.IsLocked}"
+								cs:VisualStates.DoesMouseOver="True"
+								cs:VisualStates.FgNotSelMouseOver="{StaticResource CanEdit.Fg.NotSel.MouseOver}"
+								cs:VisualStates.FgIsSelMouseOver="{StaticResource CanEdit.Fg.IsSel.MouseOver}"
+								cs:VisualStates.FgIsEditingMouseOver="{StaticResource CanEdit.Fg.IsSel.MouseOver}"
+								Style="{StaticResource TblkTrigs.L4}"
+								/>
+
+					</Border>
+
+					<Border x:Name="BdrStyleExampleEntryText"
+							Grid.Column="3"
+							Grid.Row="2"
+							Margin="0,2,0,0"
+							BorderThickness="{StaticResource Text.BorderThk}"
+							CornerRadius="{StaticResource Text.CornerRadius}"
+							cs:VisualStates.IsFocused="{Binding RelativeSource={RelativeSource AncestorType={x:Type ListBoxItem}}, Path=IsKeyboardFocused}"
+							cs:VisualStates.BgDisabled="{StaticResource CanEdit.Bg.NotSel}"
+							cs:VisualStates.BgIsSel="{StaticResource CanEdit.Bg.IsSel}"
+							cs:VisualStates.BgNotSel="{StaticResource CanEdit.Bg.NotSel}"
+							cs:VisualStates.BgIsEditing="{StaticResource CanEdit.Bg.IsEditg}"
+							cs:VisualStates.BgIsReadOnly="{StaticResource CanEdit.Bg.IsReadOnly}"
+							cs:VisualStates.BgIsLocked="{StaticResource CanEdit.Bg.IsLocked}"
+							cs:VisualStates.DoesMouseOver="True"
+							cs:VisualStates.BgNotSelMouseOver="{StaticResource CanEdit.Bg.NotSel.MouseOver}"
+							cs:VisualStates.BgIsSelMouseOver="{StaticResource CanEdit.Bg.IsSel.MouseOver}"
+							cs:VisualStates.BgIsEditingMouseOver="{StaticResource CanEdit.Bg.IsSel.MouseOver}"
+							Style="{StaticResource BdrTrigs.L4}"
+							>
+						<TextBox x:Name="TblkStyleExampleEntryText"
+								Text="sample"
+								Margin="8,0,0,3"
+								VerticalAlignment="Center"
+								Background="Transparent"
+								BorderBrush="Transparent"
+								BorderThickness="0"
+								cs:VisualStates.FgDisabled="{StaticResource CanEdit.Fg.Disabled}"
+								cs:VisualStates.FgNotSel="{StaticResource CanEdit.Fg.NotSel}"
+								cs:VisualStates.FgIsSel="{StaticResource CanEdit.Fg.IsSel}"
+								cs:VisualStates.FgIsEditing="{StaticResource CanEdit.Fg.IsEditg}"
+								cs:VisualStates.FgIsReadOnly="{StaticResource CanEdit.Fg.IsReadOnly}"
+								cs:VisualStates.FgIsLocked="{StaticResource CanEdit.Fg.IsLocked}"
+								cs:VisualStates.FgNotSelMouseOver="{StaticResource CanEdit.Fg.NotSel.MouseOver}"
+								cs:VisualStates.FgIsSelMouseOver="{StaticResource CanEdit.Fg.IsSel.MouseOver}"
+								cs:VisualStates.FgIsEditingMouseOver="{StaticResource CanEdit.Fg.IsEditing.MouseOver}"
+								cs:VisualStates.DoesMouseOver="True"
+								Cursor="IBeam"
+								CaretBrush="White"
+								Style="{StaticResource CtrlTrigs.L4}"
+								Template="{StaticResource CtTextBox}"
+								/>
+
+					</Border>
+
+
+
+
+
+
+					<StackPanel Grid.Column="4"
+							Grid.Row="0"
+							Grid.RowSpan="3"
+							Orientation="Vertical"
+							>
+
+						<TextBlock HorizontalAlignment="Left"
+								MaxWidth="110"
+								Foreground="White"
+								Text="{Binding Path=Ustyle.Name}"
+								/>
+
+						<CheckBox x:Name="Chkbx01"
+								Content="is enabled"
+								Height="12"
+								VerticalAlignment="Top"
+								Foreground="White"
+								FontSize="8"
+								Padding="0"
+								Margin="0"
+								IsChecked="{Binding RelativeSource={RelativeSource AncestorType={x:Type ListBoxItem}}, Path=IsEnabled, Mode=OneWay}"
+								Style="{StaticResource Lv1.CheckboxStyle}"
+								/>
+						<CheckBox x:Name="Chkbx02"
+								Content="is selected"
+								Height="12"
+								VerticalAlignment="Top"
+								IsChecked="{Binding RelativeSource={RelativeSource AncestorType={x:Type ListBoxItem}}, Path=IsSelected, Mode=OneWay}"
+								Foreground="White"
+								FontSize="8"
+								Padding="0"
+								Margin="0"
+								Style="{StaticResource Lv1.CheckboxStyle}"
+								/>
+						<CheckBox x:Name="Chkbx03"
+								Content="is kbfocused"
+								Height="12"
+								VerticalAlignment="Top"
+								Foreground="White"
+								FontSize="8"
+								Padding="0"
+								Margin="0"
+								IsChecked="{Binding RelativeSource={RelativeSource AncestorType={x:Type ListBoxItem}}, Path=IsKeyboardFocused, Mode=OneWay}"
+								Style="{StaticResource Lv1.CheckboxStyle}"
+								/>
+						<CheckBox x:Name="Chkbx05"
+								Content="is focused within"
+								Height="12"
+								VerticalAlignment="Top"
+								Foreground="White"
+								FontSize="8"
+								Padding="0"
+								Margin="0"
+								IsChecked="{Binding RelativeSource={RelativeSource AncestorType={x:Type ListBoxItem}}, Path=IsKeyboardFocusWithin, Mode=OneWay}"
+								Style="{StaticResource Lv1.CheckboxStyle}"
+								/>
+						<CheckBox x:Name="Chkbx04"
+								Content="is locked"
+								Height="12"
+								VerticalAlignment="Top"
+								IsChecked="{Binding Ustyle.IsLocked, Mode=OneWay}"
+								Foreground="White"
+								FontSize="8"
+								Padding="0"
+								Margin="0"
+								Style="{StaticResource Lv1.CheckboxStyle}"
+								/>
+
+
+					</StackPanel>
+
+				</Grid>
+
+
+
+			</DataTemplate>
+
+			<!--#endregion-->
+
 
 			<!--#region > L4 dt us unit settings - sel unit (DtUnitSettings)-->
 
 			<DataTemplate x:Key="DtUnitSettings">
 
-				<StackPanel Orientation="Vertical">
+				<!--#region > L6 unit settings and add style-->
+
+				<StackPanel Orientation="Vertical"
+						DataContext="{Binding ElementName=WinUnitStyle, Path=DetailUnit}"
+						d:DataContext="{Binding Source={x:Static util:UnitStdStylesD.ListD}, Path=[0]}"
+						>
 
 					<Border x:Name="BdrUsHeader"
 							HorizontalAlignment="Stretch"
 							VerticalAlignment="Top"
 							Margin="0,0,0,3"
-							cs:VisualStates.BgDisabled="{StaticResource Header.Bg.IsSel}"
 							Style="{StaticResource BdrHeader}"
 							>
 						<TextBlock Text="Unit Settings"
-								cs:VisualStates.FgDisabled="{StaticResource Header.Fg.IsSel}"
-								Style="{StaticResource TblkHeaderLg}"
+								FontSize="{StaticResource FontSize.XLarge}"
+								Style="{StaticResource TblkHeader}"
 								/>
 					</Border>
 
-					<Border 
-							Margin="0,5,0,0"
-							Background="DarkGray">
-						<TextBlock Foreground="White"
-								Text="style selecttype| combobox| Style| create"
-								/>
-					</Border>
+					<!--#region > L7 unit settings-->
 
-					<Border 
+					<ComboBox x:Name="CbxUnitSelect"
+							FocusVisualStyle="{x:Null}"
+							FontSize="{StaticResource FontSize.Normal}"
+							HorizontalAlignment="Stretch"
+							IsEditable="False"
+							IsEnabled="True"
+							IsReadOnly="True"
+							IsSynchronizedWithCurrentItem="True"
+							ItemContainerStyle="{DynamicResource CsCbxItemContainerStyle}"
 							Margin="0,5,0,0"
-							Background="SkyBlue">
-						<TextBlock Foreground="black"
-								Text="unitvalue title| border+textblock|&#013;border| BdrUnitValTitle (verify) &#013;textblock| TblkUnitValTitle (verify)"
-						/>
-					</Border>	
+							MaxDropDownHeight="120"
+							OverridesDefaultStyle="True"
+							Padding="0,1,0,5"
+							ScrollViewer.CanContentScroll="True"
+							ScrollViewer.VerticalScrollBarVisibility="Auto"
+							ScrollViewer.HorizontalScrollBarVisibility="Auto"
+							SnapsToDevicePixels="True"
+							VerticalAlignment="Top"
+							DataContext="{Binding ElementName=WinUnitStyle}"
+							ItemsSource="{Binding Path=CbxList, Mode=OneWay}"
+							DisplayMemberPath="Key"
+							SelectedIndex="{Binding CbxSelIndex, FallbackValue=0}"
+							SelectedItem="{Binding CbxSelectedItem, Mode=TwoWay}"
+							d:DisplayMemberPath="Value.DropDownName"
+							d:ItemsSource="{x:Static util:UnitStdStylesD.SStdStyles}"
+							d:SelectedIndex="0"
+							Initialized="CbxStdStyles_Initialized"
+							cs:VisualStates.IsSelected="True"
+							cs:CsComboBoxAp.ComboBoxBdrRadius="{StaticResource CornerRadius.Sm}"
+							cs:CsComboBoxAp.DropDownBdrBrush="{StaticResource Cbx.DropDown.Bg.IsSel}"
+							cs:CsComboBoxAp.DropDownBdrRadius="4"
+							cs:CsComboBoxAp.DropDownBdrThickness="4"
+							cs:CsComboBoxAp.DropDownBrush="{StaticResource Cbx.DropDown.Bg.IsSel}"
+							cs:CsComboBoxAp.DropDownMaxWidth="{Binding ActualWidth, RelativeSource={RelativeSource self}}"
+							cs:CsComboBoxAp.DropDownMinWidth="80.0"
+							cs:VisualStates.BdrDisabled="{StaticResource Cbx.Bdr.NotSel}"
+							cs:VisualStates.BdrNotSel="{StaticResource Cbx.Bdr.NotSel}"
+							cs:VisualStates.BdrIsSel="{StaticResource Cbx.Bdr.IsSel}"
+							cs:VisualStates.BdrIsEditing="{StaticResource Cbx.Bdr.IsEditg}"
+							cs:VisualStates.BdrIsReadOnly="{StaticResource Cbx.Bdr.IsReadOnly}"
+							cs:VisualStates.BdrNotSelMouseOver="{StaticResource Cbx.Bdr.NotSel.MouseOver}"
+							cs:VisualStates.BdrIsSelMouseOver="{StaticResource Cbx.Bdr.IsSel.MouseOver}"
+							cs:VisualStates.BdrIsEditingMouseOver="{StaticResource Cbx.Bdr.IsEditg.MouseOver}"
+							cs:VisualStates.BgDisabled="{StaticResource Cbx.Bg.NotSel}"
+							cs:VisualStates.BgNotSel="{StaticResource Cbx.Bg.NotSel}"
+							cs:VisualStates.BgIsSel="{StaticResource Cbx.Bg.IsSel}"
+							cs:VisualStates.BgIsEditing="{StaticResource Cbx.Bg.IsEditg}"
+							cs:VisualStates.BgIsReadOnly="{StaticResource Cbx.Bg.IsReadOnly}"
+							cs:VisualStates.BgNotSelMouseOver="{StaticResource Cbx.Bg.NotSel.MouseOver}"
+							cs:VisualStates.BgIsSelMouseOver="{StaticResource Cbx.Bg.IsSel.MouseOver}"
+							cs:VisualStates.BgIsEditingMouseOver="{StaticResource Cbx.Bg.IsEditg.MouseOver}"
+							cs:VisualStates.FgDisabled="{StaticResource Cbx.Fg.NotSel}"
+							cs:VisualStates.FgNotSel="{StaticResource Cbx.Fg.NotSel}"
+							cs:VisualStates.FgIsSel="{StaticResource Cbx.Fg.IsSel}"
+							cs:VisualStates.FgIsEditing="{StaticResource Cbx.Fg.IsEditg}"
+							cs:VisualStates.FgIsReadOnly="{StaticResource Cbx.Fg.IsReadOnly}"
+							cs:VisualStates.FgNotSelMouseOver="{StaticResource Cbx.Fg.NotSel.MouseOver}"
+							cs:VisualStates.FgIsSelMouseOver="{StaticResource Cbx.Fg.NotSel.MouseOver}"
+							cs:VisualStates.FgIsEditingMouseOver="{StaticResource Cbx.Fg.IsEditg.MouseOver}"
+							>
 
-					<Border 
+						<ComboBox.Style>
+							<Style BasedOn="{StaticResource CtrlWithBdrTrigs.L2}"
+									TargetType="ComboBox"
+									>
+								<Setter Property="Template" Value="{StaticResource CsComboBoxCt}" />
+							</Style>
+						</ComboBox.Style>
+					</ComboBox>
+					<StackPanel x:Name="SpStyleName"
 							Margin="0,5,0,0"
-							Background="DodgerBlue">
-						<TextBlock Foreground="white"
-								Text="unit value| border+textblock||&#013;border| BdrUnitValue (verify) &#013;textblock| TblkUnitValue (verify)"
-						/>
-					</Border>
+							Orientation="Horizontal"
+							>
+						<Border x:Name="BdrStyleNameTitle"
+								Style="{StaticResource BdrUnitValTitle}"
+								>
+							<TextBlock Text="Style Name"
+									Style="{StaticResource TblkUnitValTitle}"
+									/>
+						</Border>
 
+						<Border x:Name="BdrStyleNameValue"
+								Style="{StaticResource BdrUnitValue}"
+								>
+							<TextBlock Text="{Binding Ustyle.Name, FallbackValue=missing}"
+									Style="{StaticResource TblkUnitValue}"
+									/>
+						</Border>
+					</StackPanel>
+
+					<StackPanel x:Name="SpStyleDesc"
+							Margin="0,5,0,0"
+							Orientation="Horizontal"
+							>
+						<Border x:Name="BdrStyleDescTitle"
+								Style="{StaticResource BdrUnitValTitle}"
+								>
+							<TextBlock Text="Description"
+									Style="{StaticResource TblkUnitValTitle}"
+									/>
+						</Border>
+
+						<Border x:Name="BdrStyleDescValue"
+								Style="{StaticResource BdrUnitValue}"
+								>
+							<TextBlock Text="{Binding Ustyle.Description, FallbackValue='missing'}"
+									Style="{StaticResource TblkUnitValue}"
+									/>
+						</Border>
+					</StackPanel>
+
+					<StackPanel x:Name="SpUnitSystem"
+							Margin="0,5,0,0"
+							Orientation="Horizontal"
+							>
+						<Border x:Name="BdrUnitSystemTitle"
+								Style="{StaticResource BdrUnitValTitle}"
+								>
+							<TextBlock Text="Unit System"
+									Style="{StaticResource TblkUnitValTitle}"
+									/>
+						</Border>
+
+						<Border x:Name="BdrUnitSystemValue"
+								Style="{StaticResource BdrUnitValue}"
+								>
+							<TextBlock Text="{Binding Ustyle.UnitSys, FallbackValue='missing'}"
+									Style="{StaticResource TblkUnitValue}"
+									/>
+						</Border>
+					</StackPanel>
+
+					<StackPanel x:Name="SpUnitSymbol"
+							Margin="0,5,0,0"
+							Orientation="Horizontal"
+							>
+						<Border x:Name="BdrUnitSymbolTitle"
+								Style="{StaticResource BdrUnitValTitle}"
+								>
+							<TextBlock Text="Symbol"
+									Style="{StaticResource TblkUnitValTitle}"
+									/>
+						</Border>
+
+						<Border x:Name="BdrUnitSymbolValue"
+								Style="{StaticResource BdrUnitValue}"
+								>
+							<TextBlock Text="{Binding UnitSymbolFormated, FallbackValue='missing'}"
+									Style="{StaticResource TblkUnitValue}"
+									/>
+						</Border>
+					</StackPanel>
+
+					<StackPanel x:Name="SpUnitRounding"
+							Margin="0,5,0,0"
+							Orientation="Horizontal"
+							>
+						<Border x:Name="BdrUniRoundingTitle"
+								Style="{StaticResource BdrUnitValTitle}"
+								>
+							<TextBlock Text="Rounding"
+									Style="{StaticResource TblkUnitValTitle}"
+									/>
+						</Border>
+
+						<Border x:Name="BdrUnitRoundingValue"
+								Style="{StaticResource BdrUnitValue}"
+								>
+							<TextBlock Text="{Binding UnitPrecisionFormatted, FallbackValue='missing'}"
+									Style="{StaticResource TblkUnitValue}"
+									/>
+						</Border>
+					</StackPanel>
+
+					<StackPanel x:Name="SpUnitLeadZero"
+							Margin="0,5,0,0"
+							Orientation="Horizontal"
+							IsEnabled="{Binding UnitLeadZeroEnable}"
+							>
+						<Border x:Name="BdrUnitLeadZeroTitle"
+								Style="{StaticResource BdrUnitValTitle}"
+								>
+							<TextBlock Text="Leading Zero"
+									Style="{StaticResource TblkUnitValTitle}"
+									/>
+						</Border>
+
+						<Border x:Name="BdrUnitLeadZeroValue"
+								Style="{StaticResource BdrUnitValue}"
+								>
+							<TextBlock Text="{Binding UnitLeadZero, FallbackValue='missing'}"
+									Style="{StaticResource TblkUnitValue}"
+									/>
+						</Border>
+					</StackPanel>
+
+					<StackPanel x:Name="SpUnitTrailZero"
+							Margin="0,5,0,0"
+							Orientation="Horizontal"
+							IsEnabled="{Binding UnitTrailZeroEnable}"
+							>
+						<Border x:Name="BdrUnitTrailZeroTitle"
+								Style="{StaticResource BdrUnitValTitle}"
+								>
+							<TextBlock Text="Trailing Zero"
+									Style="{StaticResource TblkUnitValTitle}"
+									/>
+						</Border>
+
+						<Border x:Name="BdrUnitTrailZeroValue"
+								Style="{StaticResource BdrUnitValue}"
+								>
+							<TextBlock Text="{Binding UnitTrailZero, FallbackValue='missing'}"
+									Style="{StaticResource TblkUnitValue}"
+									/>
+						</Border>
+					</StackPanel>
+
+					<StackPanel x:Name="SpUnitExtraSpaces"
+							Margin="0,5,0,0"
+							Orientation="Horizontal"
+							IsEnabled="{Binding UnitExtraSpacesEnable}"
+							>
+						<Border x:Name="BdrUnitExtraSpacesTitle"
+								Style="{StaticResource BdrUnitValTitle}"
+								>
+							<TextBlock Text="Show Extra Spaces"
+									Style="{StaticResource TblkUnitValTitle}"
+									/>
+						</Border>
+
+						<Border x:Name="BdrUnitExtraSpacesValue"
+								Style="{StaticResource BdrUnitValue}"
+								>
+							<TextBlock Text="{Binding UnitExtraSpaces, FallbackValue='missing'}"
+									Style="{StaticResource TblkUnitValue}"
+									/>
+						</Border>
+					</StackPanel>
+
+					<StackPanel x:Name="SpUnitUsePlus"
+							Margin="0,5,0,0"
+							Orientation="Horizontal"
+							IsEnabled="{Binding UnitShowPlusEnable}"
+							>
+						<Border x:Name="BdrUnitUsePlusTitle"
+								Style="{StaticResource BdrUnitValTitle}"
+								>
+							<TextBlock Text="Show + for Positive Values"
+									Style="{StaticResource TblkUnitValTitle}"
+									/>
+						</Border>
+
+						<Border x:Name="BdrUnitUsePlusValue"
+								Style="{StaticResource BdrUnitValue}"
+								>
+							<TextBlock Text="{Binding UnitShowPlus, FallbackValue='missing'}"
+									Style="{StaticResource TblkUnitValue}"
+									/>
+						</Border>
+					</StackPanel>
+
+					<StackPanel x:Name="SpUnitUseGroup"
+							Margin="0,5,0,0"
+							Orientation="Horizontal"
+							IsEnabled="{Binding UnitDigitGrpEnable}"
+							>
+						<Border x:Name="BdrUnitUseGroupTitle"
+								Style="{StaticResource BdrUnitValTitle}"
+								>
+							<TextBlock Text="Use Digit Grouping"
+									Style="{StaticResource TblkUnitValTitle}"
+									/>
+						</Border>
+
+						<Border x:Name="BdrUnitUseGroupValue"
+								Style="{StaticResource BdrUnitValue}"
+								>
+							<TextBlock Text="{Binding UnitDigitGrp, FallbackValue='missing'}"
+									Style="{StaticResource TblkUnitValue}"
+									/>
+						</Border>
+					</StackPanel>
+
+					<StackPanel x:Name="SpUnitSample"
+							Margin="0,5,0,0"
+							Orientation="Horizontal"
+							>
+						<Border x:Name="BdrUnitSampleTitle"
+								Style="{StaticResource BdrUnitValTitle}"
+								>
+							<TextBlock Text="Style Sample"
+									Style="{StaticResource TblkUnitValTitle}"
+									/>
+						</Border>
+
+						<Border x:Name="BdrUnitSampleValue"
+								Style="{StaticResource BdrUnitValue}"
+								>
+							<TextBlock Text="{Binding UnitSampleFormatted, FallbackValue='missing'}"
+									Style="{StaticResource TblkUnitValue}"
+									/>
+						</Border>
+					</StackPanel>
+
+					<!--#endregion-->
 
 				</StackPanel>
+
+				<!--#endregion-->
 
 			</DataTemplate>
 
@@ -314,23 +2008,320 @@
 
 			<DataTemplate x:Key="DtAddStyle">
 
-				<DockPanel>
+				<Border x:Name="GbAddStyle"
+						DataContext="{Binding ElementName=WinUnitStyle}"
+						BorderThickness="0"
+						BorderBrush="White"
+						Padding="10,10,10,10"
+						Margin="0"
+						IsEnabled="{Binding CanStyleAdd}"
+						CornerRadius="{StaticResource CornerRadius.Sm}"
+						d:IsEnabled="false"
+						cs:VisualStates.IsSelected="true"
+						cs:VisualStates.BgDisabled="{StaticResource AddUnit.Gbdr.NotSel}"
+						cs:VisualStates.BgIsSel="{StaticResource AddUnit.Gbdr.IsSel}"
+						Style="{StaticResource BdrTrigs.L1a}"
+						>
 
-					<Border x:Name="BdrAsHeader"
-							DockPanel.Dock="Top"
-							HorizontalAlignment="Stretch"
-							VerticalAlignment="Top"
-							Margin="0,0,0,3"
-							cs:VisualStates.BgDisabled="{StaticResource Header.Bg.IsSel}"
-							Style="{StaticResource BdrHeader}"
-							>
-						<TextBlock Text="Add Style"
-								cs:VisualStates.FgDisabled="{StaticResource Header.Fg.IsSel}"
-								Style="{StaticResource TblkHeaderLg}"
-								/>
-					</Border>
+					<StackPanel Orientation="Vertical">
 
-				</DockPanel>
+						<Border x:Name="BdrAddStyleHeader"
+								DockPanel.Dock="Top"
+								HorizontalAlignment="Stretch"
+								VerticalAlignment="Top"
+								Margin="0,0,0,3"
+								Padding="5,0,0,0"
+								CornerRadius="{StaticResource CornerRadius.Sm}"
+								cs:VisualStates.BdrDisabled="{StaticResource AddUnit.Title.Bg.NotSel}"
+								cs:VisualStates.BdrIsSel="{StaticResource AddUnit.Title.Bg.IsSel}"
+								cs:VisualStates.BgDisabled="{StaticResource AddUnit.Title.Bg.NotSel}"
+								cs:VisualStates.BgIsSel="{StaticResource AddUnit.Title.Bg.IsSel}"
+								Style="{StaticResource BdrTrigs.L1a}"
+								>
+							<TextBlock Text="Add the Above as a New Style?"
+									Padding="0"
+									Margin="5,3,0,5"
+									FontSize="{StaticResource FontSize.Large}"
+									cs:VisualStates.IsFocused="{Binding RelativeSource={RelativeSource AncestorType={x:Type ListBoxItem}}, Path=IsFocused}"
+									cs:VisualStates.FgDisabled="{StaticResource AddUnit.Title.Fg.NotSel}"
+									cs:VisualStates.FgIsSel="{StaticResource AddUnit.Title.Fg.IsSel}"
+									Style="{StaticResource TblkHeaderL1aTrigs}"
+									/>
+						</Border>
+
+						<Border x:Name="BdrAddStyleGetInfo"
+								DockPanel.Dock="Top"
+								HorizontalAlignment="Stretch"
+								VerticalAlignment="Top"
+								Margin="0,5,0,0"
+								Padding="8,4,8,6"
+								CornerRadius="{StaticResource CornerRadius.Sm}"
+								cs:VisualStates.IsSelected="true"
+								cs:VisualStates.BdrDisabled="{StaticResource AddUnit.Title.Bg.NotSel}"
+								cs:VisualStates.BdrIsSel="{StaticResource AddUnit.Title.Bg.IsSel}"
+								cs:VisualStates.BgDisabled="{StaticResource AddUnit.Title.Bg.NotSel}"
+								cs:VisualStates.BgIsSel="{StaticResource AddUnit.Title.Bg.IsSel}"
+								Style="{StaticResource BdrTrigs.L1a}"
+								>
+
+							<StackPanel Orientation="Vertical">
+
+								<TextBlock Text="Name for new Unit Style?"
+										Margin="0,0,0,0"
+										Padding="0"
+										FontSize="{StaticResource FontSize.Large}"
+										cs:VisualStates.IsFocused="{Binding RelativeSource={RelativeSource AncestorType={x:Type ListBoxItem}}, Path=IsFocused}"
+										cs:VisualStates.FgDisabled="{StaticResource AddUnit.SubTitle.Fg.NotSel}"
+										cs:VisualStates.FgIsSel="{StaticResource AddUnit.SubTitle.Fg.IsSel}"
+										Style="{StaticResource TblkHeaderL1aTrigs}"
+										/>
+
+
+								<Border x:Name="BdrGetStyleName"
+										BorderThickness="1"
+										CornerRadius="{StaticResource CornerRadius.Std}"
+										Margin="0,3,0,3"
+										cs:VisualStates.BdrDisabled="{StaticResource ValEntry.Bdr.Disabled}"
+										cs:VisualStates.BdrIsEditing="{StaticResource ValEntry.Bdr.IsEditg}"
+										cs:VisualStates.BdrIsLocked="{StaticResource ValEntry.Bdr.IsLocked}"
+										cs:VisualStates.BdrIsReadOnly="{StaticResource ValEntry.Bdr.Disabled}"
+										cs:VisualStates.BdrIsSel="{StaticResource ValEntry.Bdr.IsSel}"
+										cs:VisualStates.BdrNotSelMouseOver="{StaticResource ValEntry.Bdr.NotSel.MouseOver}"
+										cs:VisualStates.BdrIsSelMouseOver="{StaticResource ValEntry.Bdr.IsSel.MouseOver}"
+										cs:VisualStates.BdrIsEditingMouseOver="{StaticResource ValEntry.Bdr.IsEditg.MouseOver}"
+										cs:VisualStates.BdrNotSel="{StaticResource ValEntry.Bdr.NotSel}"
+										cs:VisualStates.BgDisabled="{StaticResource ValEntry.Bg.Disabled}"
+										cs:VisualStates.BgIsEditing="{StaticResource ValEntry.Bg.IsEditg}"
+										cs:VisualStates.BgIsLocked="{StaticResource ValEntry.Bg.IsLocked}"
+										cs:VisualStates.BgIsReadOnly="{StaticResource ValEntry.Bg.IsReadOnly}"
+										cs:VisualStates.BgIsSel="{StaticResource ValEntry.Bg.IsSel}"
+										cs:VisualStates.BgNotSelMouseOver="{StaticResource ValEntry.Bg.NotSel.MouseOver}"
+										cs:VisualStates.BgIsSelMouseOver="{StaticResource ValEntry.Bg.IsSel.MouseOver}"
+										cs:VisualStates.BgIsEditingMouseOver="{StaticResource ValEntry.Bg.IsEditg.MouseOver}"
+										cs:VisualStates.BgNotSel="{StaticResource ValEntry.Bg.NotSel}"
+										cs:VisualStates.DoesMouseOver="true"
+										Style="{StaticResource BdrTrigs.L5}"
+										>
+
+									<DockPanel HorizontalAlignment="Stretch">
+
+										<Button x:Name="BtnStyleNameClr"
+												Content="&#xE106;"
+												DockPanel.Dock="Right"
+												BorderThickness="0"
+												FontFamily="Segoe UI Symbol"
+												FontSize="{StaticResource FontSize.Normal}"
+												HorizontalAlignment="Stretch"
+												Template="{StaticResource Btn.Ct.Stealth}"
+												>
+											<Button.Style>
+												<Style TargetType="Button">
+													<Setter Property="Visibility" Value="Collapsed" />
+													<Setter Property="Background" Value="Transparent" />
+													<Setter Property="Foreground" Value="{StaticResource ValEntry.BtnClr.Fg.IsEditg}" />
+
+													<Style.Triggers>
+														<!--  true  -->
+														<DataTrigger Binding="{Binding ElementName=BdrGetStyleName, Path=IsKeyboardFocusWithin}" Value="true">
+															<Setter Property="Visibility" Value="Visible" />
+														</DataTrigger>
+														<!--  true  -->
+														<Trigger Property="IsMouseOver" Value="true">
+															<Setter Property="Background" Value="{StaticResource ValEntry.BtnClr.Bg.IsEditg}" />
+														</Trigger>
+													</Style.Triggers>
+												</Style>
+											</Button.Style>
+										</Button>
+
+										<TextBox x:Name="TbxGetStyleName1"
+												DockPanel.Dock="Left"
+												cs:VisualStates.FgDisabled="{StaticResource ValEntry.Fg.Disabled}"
+												cs:VisualStates.FgIsEditing="{StaticResource ValEntry.Fg.IsEditg}"
+												cs:VisualStates.FgIsEditingMouseOver="{StaticResource ValEntry.Fg.IsEditg.MouseOver}"
+												cs:VisualStates.FgIsLocked="{StaticResource ValEntry.Fg.IsLocked}"
+												cs:VisualStates.FgIsReadOnly="{StaticResource ValEntry.Fg.IsReadOnly}"
+												cs:VisualStates.FgIsSel="{StaticResource ValEntry.Fg.IsSel}"
+												cs:VisualStates.FgNotSelMouseOver="{StaticResource ValEntry.Fg.NotSel.MouseOver}"
+												cs:VisualStates.FgNotSel="{StaticResource ValEntry.Fg.NotSel}"
+												Style="{StaticResource TbxEditable}"
+												/>
+
+									</DockPanel>
+
+								</Border>
+
+								<TextBlock Text="Name for new Unit Style?"
+										Margin="0,2,0,0"
+										Padding="0"
+										FontSize="{StaticResource FontSize.Large}"
+										cs:VisualStates.IsFocused="{Binding RelativeSource={RelativeSource AncestorType={x:Type ListBoxItem}}, Path=IsFocused}"
+										cs:VisualStates.FgDisabled="{StaticResource AddUnit.SubTitle.Fg.NotSel}"
+										cs:VisualStates.FgIsSel="{StaticResource AddUnit.SubTitle.Fg.IsSel}"
+										Style="{StaticResource TblkHeaderL1aTrigs}"
+										/>
+
+								<Border x:Name="BdrGetStyleDesc"
+										BorderThickness="1"
+										CornerRadius="{StaticResource CornerRadius.Std}"
+										Margin="0,3,0,3"
+										cs:VisualStates.BdrDisabled="{StaticResource ValEntry.Bdr.Disabled}"
+										cs:VisualStates.BdrIsEditing="{StaticResource ValEntry.Bdr.IsEditg}"
+										cs:VisualStates.BdrIsLocked="{StaticResource ValEntry.Bdr.IsLocked}"
+										cs:VisualStates.BdrIsReadOnly="{StaticResource ValEntry.Bdr.Disabled}"
+										cs:VisualStates.BdrIsSel="{StaticResource ValEntry.Bdr.IsSel}"
+										cs:VisualStates.BdrNotSelMouseOver="{StaticResource ValEntry.Bdr.NotSel.MouseOver}"
+										cs:VisualStates.BdrIsSelMouseOver="{StaticResource ValEntry.Bdr.IsSel.MouseOver}"
+										cs:VisualStates.BdrIsEditingMouseOver="{StaticResource ValEntry.Bdr.IsEditg.MouseOver}"
+										cs:VisualStates.BdrNotSel="{StaticResource ValEntry.Bdr.NotSel}"
+										cs:VisualStates.BgDisabled="{StaticResource ValEntry.Bg.Disabled}"
+										cs:VisualStates.BgIsEditing="{StaticResource ValEntry.Bg.IsEditg}"
+										cs:VisualStates.BgIsLocked="{StaticResource ValEntry.Bg.IsLocked}"
+										cs:VisualStates.BgIsReadOnly="{StaticResource ValEntry.Bg.IsReadOnly}"
+										cs:VisualStates.BgIsSel="{StaticResource ValEntry.Bg.IsSel}"
+										cs:VisualStates.BgNotSelMouseOver="{StaticResource ValEntry.Bg.NotSel.MouseOver}"
+										cs:VisualStates.BgIsSelMouseOver="{StaticResource ValEntry.Bg.IsSel.MouseOver}"
+										cs:VisualStates.BgIsEditingMouseOver="{StaticResource ValEntry.Bg.IsEditg.MouseOver}"
+										cs:VisualStates.BgNotSel="{StaticResource ValEntry.Bg.NotSel}"
+										cs:VisualStates.DoesMouseOver="true"
+										Style="{StaticResource BdrTrigs.L5}"
+										>
+									<DockPanel HorizontalAlignment="Stretch">
+
+										<Button x:Name="BtnStyleDescClr"
+												Content="&#xE106;"
+												DockPanel.Dock="Right"
+												BorderThickness="0"
+												FontFamily="Segoe UI Symbol"
+												FontSize="{StaticResource FontSize.Normal}"
+												HorizontalAlignment="Stretch"
+												Template="{StaticResource Btn.Ct.Stealth}"
+												>
+											<Button.Style>
+												<Style TargetType="Button">
+													<Setter Property="Visibility" Value="Collapsed" />
+													<Setter Property="Background" Value="Transparent" />
+													<Setter Property="Foreground" Value="{StaticResource ValEntry.BtnClr.Fg.IsEditg}" />
+
+													<Style.Triggers>
+														<!--  true  -->
+														<DataTrigger Binding="{Binding ElementName=BdrGetStyleName, Path=IsKeyboardFocusWithin}" Value="true">
+															<Setter Property="Visibility" Value="Visible" />
+														</DataTrigger>
+														<!--  true  -->
+														<Trigger Property="IsMouseOver" Value="true">
+															<Setter Property="Background" Value="{StaticResource ValEntry.BtnClr.Bg.IsEditg}" />
+														</Trigger>
+													</Style.Triggers>
+												</Style>
+											</Button.Style>
+										</Button>
+
+										<TextBox x:Name="TbxGetStyleDesc"
+												DockPanel.Dock="Left"
+												cs:VisualStates.FgDisabled="{StaticResource ValEntry.Fg.Disabled}"
+												cs:VisualStates.FgIsEditing="{StaticResource ValEntry.Fg.IsEditg}"
+												cs:VisualStates.FgIsEditingMouseOver="{StaticResource ValEntry.Fg.IsEditg.MouseOver}"
+												cs:VisualStates.FgIsLocked="{StaticResource ValEntry.Fg.IsLocked}"
+												cs:VisualStates.FgIsReadOnly="{StaticResource ValEntry.Fg.IsReadOnly}"
+												cs:VisualStates.FgIsSel="{StaticResource ValEntry.Fg.IsSel}"
+												cs:VisualStates.FgNotSelMouseOver="{StaticResource ValEntry.Fg.NotSel.MouseOver}"
+												cs:VisualStates.FgNotSel="{StaticResource ValEntry.Fg.NotSel}"
+												Style="{StaticResource TbxEditable}"
+												/>
+
+									</DockPanel>
+
+								</Border>
+
+							</StackPanel>
+
+						</Border>
+
+						<DockPanel x:Name="AddUnitControl"
+								HorizontalAlignment="Stretch"
+								Margin="0,8,0,0"
+								>
+
+							<Button x:Name="BtnAddBefore"
+									Content="Add Before"
+									DockPanel.Dock="left"
+									Height="{StaticResource Btn.Height.Std}"
+									Width="60"
+									HorizontalAlignment="Left"
+									IsEnabled="{Binding Path=CanAddBefore}"
+									VerticalAlignment="Bottom"
+									Style="{StaticResource Btn.Std}"
+									Click="BtnAddBefore_OnClick"
+									/>
+							<!--  Width="{StaticResource Btn.Width.Narrow}"  -->
+							<!--  Style="{StaticResource Btn.Std}"  -->
+
+							<Border DockPanel.Dock="Left"
+									Width="Auto"
+									BorderThickness="1"
+									Margin="10,0,0,0"
+									VerticalAlignment="Stretch"
+									cs:VisualStates.BdrDisabled="{StaticResource ValEntry.Bdr.Disabled}"
+									cs:VisualStates.BdrNotSel="{StaticResource ValEntry.Bdr.NotSel}"
+									cs:VisualStates.BdrIsSel="{StaticResource ValEntry.Bdr.IsSel}"
+									cs:VisualStates.BdrIsEditing="{StaticResource ValEntry.Bdr.IsEditg}"
+									cs:VisualStates.BdrIsLocked="{StaticResource ValEntry.Bdr.IsLocked}"
+									cs:VisualStates.BdrIsReadOnly="{StaticResource ValEntry.Bdr.Disabled}"
+									cs:VisualStates.BdrNotSelMouseOver="{StaticResource ValEntry.Bdr.NotSel.MouseOver}"
+									cs:VisualStates.BdrIsSelMouseOver="{StaticResource ValEntry.Bdr.IsSel.MouseOver}"
+									cs:VisualStates.BdrIsEditingMouseOver="{StaticResource ValEntry.Bdr.IsEditg.MouseOver}"
+									cs:VisualStates.BgDisabled="{StaticResource ValEntry.Bg.Disabled}"
+									cs:VisualStates.BgNotSel="{StaticResource ValEntry.Bg.NotSel}"
+									cs:VisualStates.BgIsSel="{StaticResource ValEntry.Bg.IsSel}"
+									cs:VisualStates.BgIsEditing="{StaticResource ValEntry.Bg.IsEditg}"
+									cs:VisualStates.BgIsLocked="{StaticResource ValEntry.Bg.IsLocked}"
+									cs:VisualStates.BgIsReadOnly="{StaticResource ValEntry.Bg.IsReadOnly}"
+									cs:VisualStates.BgNotSelMouseOver="{StaticResource ValEntry.Bg.NotSel.MouseOver}"
+									cs:VisualStates.BgIsSelMouseOver="{StaticResource ValEntry.Bg.IsSel.MouseOver}"
+									cs:VisualStates.BgIsEditingMouseOver="{StaticResource ValEntry.Bg.IsEditg.MouseOver}"
+									cs:VisualStates.DoesMouseOver="true"
+									Style="{StaticResource BdrTrigs.L5}"
+									>
+
+
+								<TextBox x:Name="TbxAddPosition"
+										Width="55"
+										AcceptsReturn="False"
+										AcceptsTab="False"
+										AutoWordSelection="True"
+										Background="Transparent"
+										BorderThickness="0"
+										CaretBrush="White"
+										FontSize="{StaticResource FontSize.Normal}"
+										Foreground="White"
+										Margin="2,0,2,0"
+										Padding="0,1,0,2"
+										VerticalAlignment="Center"
+										Text="{Binding ElementName=WinUnitStyle, Path=InsPosition, StringFormat='{}{0:D}', Mode=TwoWay}"
+										TextAlignment="Center"
+										Template="{StaticResource CtTextBox}"
+										/>
+
+							</Border>
+
+							<Button x:Name="BtnAddLast"
+									Content="Add Last"
+									DockPanel.Dock="Right"
+									Height="{StaticResource Btn.Height.Std}"
+									Width="{StaticResource Btn.Width.Narrow}"
+									HorizontalAlignment="Right"
+									IsEnabled="{Binding Path=CanAddAfter}"
+									VerticalAlignment="Bottom"
+									Style="{StaticResource Btn.Std}"
+									Click="BtnAddLast_OnClick"
+									/>
+
+						</DockPanel>
+
+					</StackPanel>
+
+				</Border>
 
 			</DataTemplate>
 
@@ -341,24 +2332,6 @@
 
 			<DataTemplate x:Key="DtAddStyleCtrl">
 
-				<DockPanel>
-
-					<Border x:Name="BdrAsCtrlHeader"
-							DockPanel.Dock="Top"
-							HorizontalAlignment="Stretch"
-							VerticalAlignment="Top"
-							Margin="0,0,0,3"
-							cs:VisualStates.BgDisabled="{StaticResource Header.Bg.IsSel}"
-							Style="{StaticResource BdrHeader}"
-							>
-						<TextBlock Text="Place Holder for Add Style Ctrl"
-								cs:VisualStates.FgDisabled="{StaticResource Header.Fg.IsSel}"
-								Style="{StaticResource TblkHeaderLg}"
-								/>
-					</Border>
-
-				</DockPanel>
-
 			</DataTemplate>
 
 			<!--#endregion-->
@@ -367,21 +2340,192 @@
 
 			<DataTemplate x:Key="DtSavedStyles">
 
-				<DockPanel>
+				<DockPanel x:Name="DpSavedStyles1"
+						DataContext="{Binding ElementName=WinUnitStyle}"
+						>
 
 					<Border x:Name="BdrSsHeader"
 							DockPanel.Dock="Top"
 							HorizontalAlignment="Stretch"
 							VerticalAlignment="Top"
 							Margin="0,0,0,3"
-							cs:VisualStates.BgDisabled="{StaticResource Header.Bg.IsSel}"
 							Style="{StaticResource BdrHeader}"
 							>
 						<TextBlock Text="Saved Styles"
-								cs:VisualStates.FgDisabled="{StaticResource Header.Fg.IsSel}"
-								Style="{StaticResource TblkHeaderLg}"
+								FontSize="{StaticResource FontSize.XLarge}"
+								Style="{StaticResource TblkHeader}"
 								/>
 					</Border>
+
+					<Border x:Name="BdrSavedStyles"
+							Padding="8,8,0,8"
+							CornerRadius="{StaticResource CornerRadius.Std}"
+							Background="{StaticResource SavedStyles.Bg.Panel}"
+							>
+						<DockPanel x:Name="DpSavedStyles2"
+								DockPanel.Dock="Top"
+								HorizontalAlignment="Stretch"
+								VerticalAlignment="Stretch"
+								>
+
+							<DockPanel x:Name="DpSavedStylesCtrl"
+									DockPanel.Dock="Bottom"
+									Margin="0,10,0,0"
+									>
+
+								<Button x:Name="BtnUp"
+										DockPanel.Dock="Left"
+										Height="{StaticResource Btn.Height.Std}"
+										Width="40"
+										HorizontalAlignment="left"
+										Margin="0,0,5,0"
+										Style="{StaticResource Btn.Std}"
+										Click="BtnUp_OnClick"
+										>
+									<TextBlock FontSize="{StaticResource FontSize.Large}"
+											Padding="10,0,10,4"
+											Text="▲"
+											/>
+								</Button>
+
+								<Button x:Name="BtnDn"
+										DockPanel.Dock="left"
+										Height="{StaticResource Btn.Height.Std}"
+										Width="40"
+										HorizontalAlignment="left"
+										Margin="0,0,5,0"
+										Style="{StaticResource Btn.Std}"
+										Click="BtnDn_OnClick"
+										>
+									<TextBlock FontSize="{StaticResource FontSize.Large}"
+											Padding="10,2,10,4"
+											Text="▼"
+											/>
+								</Button>
+
+								<Button x:Name="BtnDelete"
+										DockPanel.Dock="Left"
+										Height="{Binding ActualHeight, ElementName=BtnDn, FallbackValue=18}"
+										Width="{Binding ActualWidth, ElementName=BtnDn, FallbackValue=18}"
+										Foreground="White"
+										Margin="0,0,5,0"
+										Template="{StaticResource Button.Normal.ControlTemplate}"
+										Click="BtnDelete_OnClick"
+										>
+									<Button.Background>
+										<SolidColorBrush Color="{StaticResource Deep.Orange.600}" />
+									</Button.Background>
+									<Canvas VerticalAlignment="Center"
+											HorizontalAlignment="Center"
+											>
+										<Path Fill="White"
+												Data="{StaticResource IconDeletePerimeter}"
+												RenderTransformOrigin="0.5,0.5"
+												>
+											<Path.RenderTransform>
+												<TransformGroup>
+													<TranslateTransform X="-9" Y="-9" />
+												</TransformGroup>
+											</Path.RenderTransform>
+
+										</Path>
+										<Path Fill="White"
+												Data="{StaticResource IconDeleteInterior}"
+												>
+											<Path.RenderTransform>
+												<TransformGroup>
+													<TranslateTransform X="-9" Y="-9" />
+												</TransformGroup>
+											</Path.RenderTransform>
+										</Path>
+									</Canvas>
+								</Button>
+
+								<Border x:Name="ChangeCount"
+										DockPanel.Dock="Left"
+										BorderThickness="1"
+										HorizontalAlignment="Right"
+										Margin="0,0,0,0"
+										VerticalAlignment="Stretch"
+										Visibility="Visible"
+										CornerRadius="{StaticResource CornerRadius.Std}"
+										BorderBrush="White"
+										>
+									<TextBlock DockPanel.Dock="Right"
+											Width="60"
+											FontSize="{StaticResource FontSize.Large}"
+											HorizontalAlignment="Right"
+											Margin="0"
+											Padding="5,0,5,2"
+											Text="{Binding HasChanges, FallbackValue=0, StringFormat=\{0:D2\}}"
+											TextAlignment="Center"
+											Background="Transparent"
+											Foreground="White"
+											VerticalAlignment="Center"
+											/>
+								</Border>
+
+
+							</DockPanel>
+
+							<!-- removed
+							<Border x:Name="BdrSavedStylesList"
+									DockPanel.Dock="Top"
+									DataContext="{Binding ElementName=WinUnitStyle}"
+									BorderThickness="0"
+									BorderBrush="White"
+									Padding="10"
+									Margin="0"
+									VerticalAlignment="Top"
+									IsEnabled="{Binding CanStyleAdd}"
+									d:IsEnabled="false"
+									cs:VisualStates.IsSelected="true"
+									cs:VisualStates.BgDisabled="{StaticResource SelectionList.Bg.Disabled}"
+									cs:VisualStates.BgNotSel="{StaticResource SelectionList.Bg.NotSel}"
+									cs:VisualStates.BgIsSel="{StaticResource SelectionList.Bg.IsSel}"
+									CornerRadius="{StaticResource CornerRadius.Std}"
+									Style="{StaticResource Bdr.L1aTrigs}"
+									>
+							</Border>							-->
+
+							<ListBox x:Name="Lbx1"
+									DockPanel.Dock="Top"
+									Grid.IsSharedSizeScope="True"
+									Background="Transparent"
+									BorderThickness="0"
+									DataContext="{Binding StylesView, ElementName=WinUnitStyle}"
+									HorizontalAlignment="Stretch"
+									HorizontalContentAlignment="Stretch"
+									IsSynchronizedWithCurrentItem="True"
+									ItemContainerStyle="{DynamicResource Lbx1ItemContainerStyle1}"
+									ItemTemplate="{StaticResource Lbx1ItemTemplate}"
+									ItemsSource="{Binding}"
+									IsEnabled="True"
+									Margin="0,0,0,0"
+									Padding="0,0,0,0"
+									SelectedIndex="{Binding LbxSelIndex, ElementName=WinUnitStyle, Mode=TwoWay}"
+									SelectedItem="{Binding LbxSelItem, ElementName=WinUnitStyle, Mode=OneWayToSource}"
+									VerticalAlignment="Top"
+									Initialized="lbx_Initialized"
+									d:SelectedIndex="0"
+									d:DataContext="{x:Static util:UnitStdStylesD.ListD}"
+									>
+
+								<ListBox.Resources>
+
+									<Style BasedOn="{StaticResource SvStyle}"
+											TargetType="{x:Type ScrollViewer}"
+											/>
+
+								</ListBox.Resources>
+
+							</ListBox>
+
+
+
+						</DockPanel>
+					</Border>
+
 
 				</DockPanel>
 
@@ -393,19 +2537,18 @@
 
 			<DataTemplate x:Key="DtSavedStylesCtrl">
 
-				<DockPanel>
+				<DockPanel x:Name="DpSavedStylesCtrl">
 
 					<Border x:Name="BdrSsCtrlHeader"
 							DockPanel.Dock="Top"
 							HorizontalAlignment="Stretch"
 							VerticalAlignment="Top"
 							Margin="0,0,0,3"
-							cs:VisualStates.BgDisabled="{StaticResource Header.Bg.IsSel}"
 							Style="{StaticResource BdrHeader}"
 							>
 						<TextBlock Text="Place Holder for Saved Styles Ctrl"
-								cs:VisualStates.FgDisabled="{StaticResource Header.Fg.IsSel}"
-								Style="{StaticResource TblkHeaderLg}"
+								FontSize="{StaticResource FontSize.XLarge}"
+								Style="{StaticResource TblkHeader}"
 								/>
 					</Border>
 
@@ -419,46 +2562,55 @@
 
 			<DataTemplate x:Key="DtDlgCtrlUnitSetg">
 
-				<StackPanel x:Name="DialogControls"
-						DockPanel.Dock="Bottom"
+				<StackPanel x:Name="SpUnitSetg"
 						Grid.Column="1"
 						Grid.Row="2"
 						Margin="0,0,0,0"
-						HorizontalAlignment="right"
-						Orientation="Horizontal"
 						VerticalAlignment="Bottom"
+						HorizontalAlignment="Right"
+						Orientation="Horizontal"
 						>
 
-					<Button x:Name="BtnUsReset"
-							Content="Reset"
-							HorizontalAlignment="Right"
-							Margin="10,0,0,0"
-							Style="{StaticResource Btn.Std}"
-							/>
+					<DockPanel x:Name="DialogControls">
+
+						<Button x:Name="BtnUsReset"
+								Content="Reset"
+								Height="{StaticResource Btn.Height.Std}"
+								Width="{StaticResource Btn.Width.Std}"
+								Margin="10,0,0,0"
+								HorizontalAlignment="Right"
+								Style="{StaticResource Btn.Std}"
+								/>
+
+						<Button x:Name="BtnUsCancel"
+								Content="Cancel"
+								Height="{StaticResource Btn.Height.Std}"
+								Width="{StaticResource Btn.Width.Std}"
+								HorizontalAlignment="Right"
+								Margin="10,0,0,0"
+								Style="{StaticResource Btn.Std}"
+								/>
 
 
-					<Button x:Name="BtnUsCancel"
-							Content="Cancel"
-							HorizontalAlignment="Right"
-							Margin="10,0,0,0"
-							Style="{StaticResource Btn.Std}"
-							/>
+						<Button x:Name="BtnUsApply"
+								Content="Apply"
+								Height="{StaticResource Btn.Height.Std}"
+								Width="{StaticResource Btn.Width.Std}"
+								HorizontalAlignment="Right"
+								Margin="10,0,0,0"
+								Style="{StaticResource Btn.Std}"
+								/>
 
+						<Button x:Name="BtnUsDone"
+								Content="Done"
+								Height="{StaticResource Btn.Height.Std}"
+								Width="{StaticResource Btn.Width.Std}"
+								HorizontalAlignment="Right"
+								Margin="10,0,0,0"
+								Style="{StaticResource Btn.Std}"
+								/>
 
-					<Button x:Name="BtnUsApply"
-							Content="Apply"
-							HorizontalAlignment="Right"
-							Margin="10,0,0,0"
-							Style="{StaticResource Btn.Std}"
-							/>
-
-					<Button x:Name="BtnUsDone"
-							Content="Done"
-							HorizontalAlignment="Right"
-							Margin="10,0,0,0"
-							Style="{StaticResource Btn.Std}"
-							/>
-
+					</DockPanel>
 				</StackPanel>
 
 			</DataTemplate>
@@ -470,7 +2622,7 @@
 
 			<DataTemplate x:Key="DtStyleOrder">
 
-				<Grid>
+				<Grid x:Name="GrdStyleOrder">
 					<Grid.ColumnDefinitions>
 						<ColumnDefinition Width="{StaticResource Col.So.RibbonList.Width}" />
 						<ColumnDefinition x:Name="divider1"
@@ -518,8 +2670,8 @@
 			<!--#region > L4 dt us main unit styles (DtUnitStyles)-->
 
 			<DataTemplate x:Key="DtUnitStyles">
-
-				<Grid>
+				
+				<Grid x:Name="GrdUnitStyles">
 					<Grid.ColumnDefinitions>
 						<ColumnDefinition Width="{StaticResource Col.Us.UnitSettings.Width}" />
 						<ColumnDefinition x:Name="divider"
@@ -527,58 +2679,45 @@
 								/>
 						<ColumnDefinition Width="{StaticResource Col.Us.StylesChart.Width}" />
 					</Grid.ColumnDefinitions>
-
+				
 					<Grid.RowDefinitions>
 						<RowDefinition Height="{StaticResource Row.Us.Main.Height}" />
 						<RowDefinition Height="{StaticResource Row.Us.Function.Height}" />
 					</Grid.RowDefinitions>
-
-
+				
+				
 					<DockPanel x:Name="DpUnitSettings"
 							Grid.Column="0"
 							Grid.Row="0"
+							Grid.RowSpan="2"
 							HorizontalAlignment="Stretch"
 							VerticalAlignment="Stretch"
 							>
-
+				
 						<ContentControl x:Name="CtUnitSettings"
 								DockPanel.Dock="Top"
 								VerticalAlignment="Top"
 								ContentTemplate="{StaticResource DtUnitSettings}"
 								/>
-
+				
 						<ContentControl x:Name="CtAddStyle"
 								DockPanel.Dock="Bottom"
 								VerticalAlignment="Bottom"
 								ContentTemplate="{StaticResource DtAddStyle}"
 								/>
-
+				
 					</DockPanel>
-
-					<!-- <ContentControl x:Name="CtAddStyleCtrl" -->
-					<!-- 		DockPanel.Dock="Bottom" -->
-					<!-- 		Grid.Column="0" -->
-					<!-- 		Grid.Row="1" -->
-					<!-- 		VerticalAlignment="Bottom" -->
-					<!-- 		ContentTemplate="{StaticResource DtAddStyleCtrl}" -->
-					<!-- 		/> -->
-
+				
 					<ContentControl x:Name="CtSavedStyle"
 							DockPanel.Dock="Top"
 							Grid.Column="2"
 							Grid.Row="0"
-							VerticalAlignment="Top"
+							Grid.RowSpan="2"
+							HorizontalAlignment="Stretch"
+							VerticalAlignment="Stretch"
 							ContentTemplate="{StaticResource DtSavedStyles}"
 							/>
-
-					<ContentControl x:Name="CtSavedStyleCtrl"
-							DockPanel.Dock="Bottom"
-							Grid.Column="2"
-							Grid.Row="1"
-							VerticalAlignment="Bottom"
-							ContentTemplate="{StaticResource DtSavedStylesCtrl}"
-							/>
-
+					
 				</Grid>
 
 			</DataTemplate>
@@ -589,15 +2728,15 @@
 
 	</Window.Resources>
 
-	<DockPanel x:Name="DpMain"
-			HorizontalAlignment="Stretch"
-			VerticalAlignment="Stretch"
-			>
+	<DockPanel x:Name="DpMain">
+		<!--  HorizontalAlignment="Stretch"  -->
+		<!--  VerticalAlignment="Stretch"  -->
 
 		<Expander x:Name="DialogExpander"
 				Height="740"
 				IsExpanded="True"
 				VerticalAlignment="Stretch"
+				HorizontalAlignment="Stretch"
 				Style="{DynamicResource ExpanderStyleStealth}"
 				>
 
@@ -614,18 +2753,25 @@
 					<RowDefinition Height="{StaticResource Row.Control.Height}" />
 				</Grid.RowDefinitions>
 
-
-				<Button x:Name="BtnSoShowStyleOrder"
-						Content="Change Style Order"
+				<StackPanel x:Name="SpOpSelect"
 						Grid.Column="0"
 						Grid.Row="1"
-						Width="Auto"
-						HorizontalAlignment="Left"
-						VerticalAlignment="Bottom"
-						Margin="0,0,10,0"
-						Style="{StaticResource Btn.Std}"
-						/>
+						Orientation="Horizontal"
+						>
 
+					<Button x:Name="BtnSoShowStyleOrder"
+							Content="Adjust Style Order"
+							Height="{StaticResource Btn.Height.Std}"
+							Width="Auto"
+							HorizontalAlignment="Left"
+							VerticalAlignment="Bottom"
+							Margin="0,0,10,0"
+							Style="{StaticResource Btn.Std}"
+							/>
+
+
+				</StackPanel>
+				
 				<ContentControl x:Name="CtMainContent"
 						Grid.Column="0"
 						Grid.Row="0"
@@ -635,17 +2781,19 @@
 					<ContentControl.Style>
 						<Style TargetType="ContentControl">
 							<Style.Triggers>
+
 								<DataTrigger Binding="{Binding DialogIndex, FallbackValue='0'}" Value="0">
 									<Setter Property="ContentTemplate" Value="{StaticResource DtUnitStyles}" />
 								</DataTrigger>
+
 								<DataTrigger Binding="{Binding DialogIndex, FallbackValue='0'}" Value="1">
 									<Setter Property="ContentTemplate" Value="{StaticResource DtStyleOrder}" />
 								</DataTrigger>
+
 							</Style.Triggers>
 						</Style>
 					</ContentControl.Style>
 				</ContentControl>
-
 
 				<ContentControl x:Name="CtDialogControl"
 						Grid.Column="1"
@@ -665,7 +2813,6 @@
 						</Style>
 					</ContentControl.Style>
 				</ContentControl>
-
 
 			</Grid>
 			<!--#endregion-->

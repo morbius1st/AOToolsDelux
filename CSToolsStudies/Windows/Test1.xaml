@@ -1410,7 +1410,6 @@
 					TargetType="Border"
 					>
 				<Style.Triggers>
-
 					<!--  is editing  -->
 					<MultiDataTrigger>
 						<MultiDataTrigger.Conditions>
@@ -1956,7 +1955,7 @@
 
 			<cs:NullableBool x:Key="IsEditing" b="true" />
 
-			<GridLength x:Key="C1">320*</GridLength>
+			<GridLength x:Key="C1">400*</GridLength>
 			<GridLength x:Key="C2">500*</GridLength>
 
 
@@ -5396,7 +5395,7 @@
 												<TextBlock Width="50"
 														FontSize="11"
 														HorizontalAlignment="Left"
-														Margin="60,0,10,0"
+														Margin="120,0,10,0"
 														Text="ReadOnly"
 														TextAlignment="Center"
 														>
@@ -5540,6 +5539,28 @@
 															<Setter Property="Foreground" Value="White" />
 															<Style.Triggers>
 																<DataTrigger Binding="{Binding IsFocused, Mode=OneWay}" Value="True">
+																	<Setter Property="Foreground" Value="Black" />
+																	<Setter Property="Background" Value="Lime" />
+																</DataTrigger>
+															</Style.Triggers>
+														</Style>
+													</TextBlock.Style>
+												</TextBlock>
+
+												
+												<TextBlock Width="50"
+														FontSize="11"
+														HorizontalAlignment="Left"
+														Margin="0,0,10,0"
+														Text="KbFocus"
+														TextAlignment="Center"
+												>
+													<TextBlock.Style>
+														<Style TargetType="TextBlock">
+															<Setter Property="Background" Value="Transparent" />
+															<Setter Property="Foreground" Value="White" />
+															<Style.Triggers>
+																<DataTrigger Binding="{Binding IsKeyboardFocused, Mode=OneWay}" Value="True">
 																	<Setter Property="Foreground" Value="Black" />
 																	<Setter Property="Background" Value="Lime" />
 																</DataTrigger>

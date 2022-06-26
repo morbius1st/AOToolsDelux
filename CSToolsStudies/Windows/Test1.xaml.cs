@@ -184,7 +184,6 @@ namespace CSToolsStudies.Windows
 			}
 		}
 
-
 		public bool? IsEditing
 		{
 			[DebuggerStepThrough]

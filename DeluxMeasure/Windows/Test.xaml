@@ -31,6 +31,7 @@
 				<ResourceDictionary Source="/Windows/Support/CsScrollViewer.xaml" />
 				<ResourceDictionary Source="/Windows/Support/CsComboBox.xaml" />
 				<ResourceDictionary Source="/Windows/Support/CsButtons.xaml" />
+				<ResourceDictionary Source="/Windows/Support/CsCheckBox.xaml" />
 			</ResourceDictionary.MergedDictionaries>
 
 			<sys:Double x:Key="FontSize.XLarge">18</sys:Double>
@@ -136,17 +137,18 @@
 							Background="White"
 							HorizontalAlignment="Left"
 							Margin="10,0,-5,0"
+							Width="1"
 							>
-						<Border.Width>
-							<MultiBinding Converter="{StaticResource AddConverter}">
-								<Binding Path="." Source="{StaticResource TitleWidth}" />
-								<Binding>
-									<Binding.Source>
-										<sys:Double>-5.0</sys:Double>
-									</Binding.Source>
-								</Binding>
-							</MultiBinding>
-						</Border.Width>
+						<!-- <Border.Width> -->
+						<!-- 	<MultiBinding Converter="{StaticResource AddConverter}"> -->
+						<!-- 		<Binding Path="." Source="{StaticResource TitleWidth}" /> -->
+						<!-- 		<Binding> -->
+						<!-- 			<Binding.Source> -->
+						<!-- 				<sys:Double>-5.0</sys:Double> -->
+						<!-- 			</Binding.Source> -->
+						<!-- 		</Binding> -->
+						<!-- 	</MultiBinding> -->
+						<!-- </Border.Width> -->
 
 					</Border>
 
@@ -704,11 +706,11 @@
 							Background="{StaticResource SelectionList.Bg.IsSel}"
 							Style="{StaticResource SampleBorderContainer}"
 							>
-						<Border Background="{StaticResource CanEdit.Bg.IsEditg.MouseOver}"
+						<Border Background="{StaticResource CanEdit.Bg.IsSel.MouseOver}"
 								Style="{StaticResource SampleBorderWithin}"
 								>
 							<TextBlock Text="mo not select"
-									Foreground="{StaticResource CanEdit.Fg.IsEditg.MouseOver}"
+									Foreground="{StaticResource CanEdit.Fg.IsSel.MouseOver}"
 									Style="{StaticResource SampleTextLeft}"
 									/>
 						</Border>

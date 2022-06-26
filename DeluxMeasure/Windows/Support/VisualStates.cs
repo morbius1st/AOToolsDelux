@@ -74,7 +74,7 @@ namespace DeluxMeasure.Windows.Support
 
 	#endregion
 
-	#region general - selected
+	#region general - is_selected
 
 		public static readonly DependencyProperty
 			IsSelectedProperty = DependencyProperty.RegisterAttached(
@@ -90,6 +90,26 @@ namespace DeluxMeasure.Windows.Support
 		public static bool GetIsSelected(UIElement e)
 		{
 			return (bool) e.GetValue(IsSelectedProperty);
+		}
+
+	#endregion
+		
+	#region general - is_focused
+
+		public static readonly DependencyProperty
+			IsFocusedProperty = DependencyProperty.RegisterAttached(
+				"IsFocused", typeof(bool), typeof(VisualStates),
+				new FrameworkPropertyMetadata(false,
+					FrameworkPropertyMetadataOptions.Inherits));
+
+		public static void SetIsFocused(UIElement e, bool value)
+		{
+			e.SetValue(IsFocusedProperty, value);
+		}
+
+		public static bool GetIsFocused(UIElement e)
+		{
+			return (bool) e.GetValue(IsFocusedProperty);
 		}
 
 	#endregion
@@ -321,6 +341,68 @@ namespace DeluxMeasure.Windows.Support
 
 	#endregion
 
+
+	#region not_sel - mouse over background
+
+		public static readonly DependencyProperty
+			BgNotSelMouseOverProperty = DependencyProperty.RegisterAttached(
+				"BgNotSelMouseOver", typeof(SolidColorBrush), typeof(VisualStates),
+				new FrameworkPropertyMetadata(new SolidColorBrush(Colors.IndianRed),
+					FrameworkPropertyMetadataOptions.Inherits));
+
+		public static void SetBgNotSelMouseOver(UIElement e, SolidColorBrush value)
+		{
+			e.SetValue(BgNotSelMouseOverProperty, value);
+		}
+
+		public static SolidColorBrush GetBgNotSelMouseOver(UIElement e)
+		{
+			return (SolidColorBrush) e.GetValue(BgNotSelMouseOverProperty);
+		}
+
+	#endregion
+
+	#region not_sel - mouse over foreground
+
+		public static readonly DependencyProperty
+			FgNotSelMouseOverProperty = DependencyProperty.RegisterAttached(
+				"FgNotSelMouseOver", typeof(SolidColorBrush), typeof(VisualStates),
+				new FrameworkPropertyMetadata(new SolidColorBrush(Colors.IndianRed),
+					FrameworkPropertyMetadataOptions.Inherits));
+
+		public static void SetFgNotSelMouseOver(UIElement e, SolidColorBrush value)
+		{
+			e.SetValue(FgNotSelMouseOverProperty, value);
+		}
+
+		public static SolidColorBrush GetFgNotSelMouseOver(UIElement e)
+		{
+			return (SolidColorBrush) e.GetValue(FgNotSelMouseOverProperty);
+		}
+
+	#endregion
+
+	#region not_sel - mouse over borderbrush
+
+		public static readonly DependencyProperty
+			BdrNotSelMouseOverProperty = DependencyProperty.RegisterAttached(
+				"BdrNotSelMouseOver", typeof(SolidColorBrush), typeof(VisualStates),
+				new FrameworkPropertyMetadata(new SolidColorBrush(Colors.IndianRed),
+					FrameworkPropertyMetadataOptions.Inherits));
+
+		public static void SetBdrNotSelMouseOver(UIElement e, SolidColorBrush value)
+		{
+			e.SetValue(BdrNotSelMouseOverProperty, value);
+		}
+
+		public static SolidColorBrush GetBdrNotSelMouseOver(UIElement e)
+		{
+			return (SolidColorBrush) e.GetValue(BdrNotSelMouseOverProperty);
+		}
+
+	#endregion
+
+
 		// enabled & selected
 
 	#region is_sel- background (any)
@@ -403,64 +485,63 @@ namespace DeluxMeasure.Windows.Support
 
 	#endregion
 
-		// not editing (any above except disabled)
 
-	#region not_editing - mouse over background
+	#region is_sel - mouse over background
 
 		public static readonly DependencyProperty
-			BgNotEditingMouseOverProperty = DependencyProperty.RegisterAttached(
-				"BgNotEditingMouseOver", typeof(SolidColorBrush), typeof(VisualStates),
+			BgIsSelMouseOverProperty = DependencyProperty.RegisterAttached(
+				"BgIsSelMouseOver", typeof(SolidColorBrush), typeof(VisualStates),
 				new FrameworkPropertyMetadata(new SolidColorBrush(Colors.IndianRed),
 					FrameworkPropertyMetadataOptions.Inherits));
 
-		public static void SetBgNotEditingMouseOver(UIElement e, SolidColorBrush value)
+		public static void SetBgIsSelMouseOver(UIElement e, SolidColorBrush value)
 		{
-			e.SetValue(BgNotEditingMouseOverProperty, value);
+			e.SetValue(BgIsSelMouseOverProperty, value);
 		}
 
-		public static SolidColorBrush GetBgNotEditingMouseOver(UIElement e)
+		public static SolidColorBrush GetBgIsSelMouseOver(UIElement e)
 		{
-			return (SolidColorBrush) e.GetValue(BgNotEditingMouseOverProperty);
+			return (SolidColorBrush) e.GetValue(BgIsSelMouseOverProperty);
 		}
 
 	#endregion
 
-	#region not_editing - mouse over foreground
+	#region is_sel - mouse over foreground
 
 		public static readonly DependencyProperty
-			FgNotEditingMouseOverProperty = DependencyProperty.RegisterAttached(
-				"FgNotEditingMouseOver", typeof(SolidColorBrush), typeof(VisualStates),
+			FgIsSelMouseOverProperty = DependencyProperty.RegisterAttached(
+				"FgIsSelMouseOver", typeof(SolidColorBrush), typeof(VisualStates),
 				new FrameworkPropertyMetadata(new SolidColorBrush(Colors.IndianRed),
 					FrameworkPropertyMetadataOptions.Inherits));
 
-		public static void SetFgNotEditingMouseOver(UIElement e, SolidColorBrush value)
+		public static void SetFgIsSelMouseOver(UIElement e, SolidColorBrush value)
 		{
-			e.SetValue(FgNotEditingMouseOverProperty, value);
+			e.SetValue(FgIsSelMouseOverProperty, value);
 		}
 
-		public static SolidColorBrush GetFgNotEditingMouseOver(UIElement e)
+		public static SolidColorBrush GetFgIsSelMouseOver(UIElement e)
 		{
-			return (SolidColorBrush) e.GetValue(FgNotEditingMouseOverProperty);
+			return (SolidColorBrush) e.GetValue(FgIsSelMouseOverProperty);
 		}
 
 	#endregion
 
-	#region not_editing - mouse over borderbrush
+	#region is_sel - mouse over borderbrush
 
 		public static readonly DependencyProperty
-			BdrNotEditingMouseOverProperty = DependencyProperty.RegisterAttached(
-				"BdrNotEditingMouseOver", typeof(SolidColorBrush), typeof(VisualStates),
+			BdrIsSelMouseOverProperty = DependencyProperty.RegisterAttached(
+				"BdrIsSelMouseOver", typeof(SolidColorBrush), typeof(VisualStates),
 				new FrameworkPropertyMetadata(new SolidColorBrush(Colors.IndianRed),
 					FrameworkPropertyMetadataOptions.Inherits));
 
-		public static void SetBdrNotEditingMouseOver(UIElement e, SolidColorBrush value)
+		public static void SetBdrIsSelMouseOver(UIElement e, SolidColorBrush value)
 		{
-			e.SetValue(BdrNotEditingMouseOverProperty, value);
+			e.SetValue(BdrIsSelMouseOverProperty, value);
 		}
 
-		public static SolidColorBrush GetBdrNotEditingMouseOver(UIElement e)
+		public static SolidColorBrush GetBdrIsSelMouseOver(UIElement e)
 		{
-			return (SolidColorBrush) e.GetValue(BdrNotEditingMouseOverProperty);
+			return (SolidColorBrush) e.GetValue(BdrIsSelMouseOverProperty);
 		}
 
 	#endregion
