@@ -226,11 +226,11 @@ namespace DeluxMeasure.Windows.Support
 
 			// Test usMgr = new Test();
 			// UnitStylesManager usMgr = new UnitStylesManager();
-			UnitStylesMgr usMgr = new UnitStylesMgr();
+			// UnitStylesMgr usMgr = new UnitStylesMgr();
 
 			// usMgr.SetPosition(w);
 
-			usMgr.ShowDialog();
+			// usMgr.ShowDialog();
 	
 			return Result.Succeeded;
 		}

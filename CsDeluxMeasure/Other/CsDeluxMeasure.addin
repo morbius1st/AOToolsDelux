@@ -1,0 +1,20 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<RevitAddIns>
+  <AddIn Type="Command">
+    <Text>CsDeluxMeasure</Text>
+    <Description>Description of CsDeluxMeasure</Description>
+    <Assembly>CsDeluxMeasure.dll</Assembly>
+    <FullClassName>CsDeluxMeasure.Command</FullClassName>
+    <ClientId>b9890444-dd63-400c-b8c8-303b44730830</ClientId>
+    <VendorId>pro.cyberstudio</VendorId>
+    <VendorDescription>CyberStudio</VendorDescription>
+  </AddIn>
+  <AddIn Type="Application">
+    <Name>Application CsDeluxMeasure</Name>
+    <Assembly>CsDeluxMeasure.dll</Assembly>
+    <FullClassName>CsDeluxMeasure.AppRibbon</FullClassName>
+    <ClientId>403e192c-41ef-44da-9a8d-c3932292a230</ClientId>
+    <VendorId>pro.cyberstudio</VendorId>
+    <VendorDescription>CyberStudio</VendorDescription>
+  </AddIn>
+</RevitAddIns>

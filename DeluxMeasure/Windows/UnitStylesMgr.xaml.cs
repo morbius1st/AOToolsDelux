@@ -16,7 +16,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using Autodesk.Revit.UI;
-using CSToolsStudies.Annotations;
+using DeluxMeasure.Annotations;
 using DeluxMeasure.UnitsUtil;
 using SettingsManager;
 using UtilityLibrary;

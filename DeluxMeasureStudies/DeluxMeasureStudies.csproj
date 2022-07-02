@@ -117,6 +117,9 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Compile Include="Windows\StyleMgr.xaml.cs">
+      <DependentUpon>StyleMgr.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Windows\Support\VisStates.cs" />
     <Compile Include="Windows\Test.xaml.cs">
       <DependentUpon>Test.xaml</DependentUpon>
@@ -161,6 +164,10 @@
     <Page Include="Windows\Skin\CyberStudioSkin.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Windows\StyleMgr.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Windows\Test.xaml">
       <Generator>MSBuild:Compile</Generator>

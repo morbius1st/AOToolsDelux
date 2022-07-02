@@ -3,7 +3,7 @@
   <AddIn Type="Command">
     <Text>DeluxMeasure</Text>
     <Description>Description of DeluxMeasure</Description>
-    <Assembly>DeluxMeasure.dll</Assembly>
+    <Assembly>DeluxMeasurex.dll</Assembly>
     <FullClassName>DeluxMeasure.Command</FullClassName>
     <ClientId>b9890444-dd63-400c-b8c8-303b44730834</ClientId>
     <VendorId>pro.cyberstudio</VendorId>
@@ -11,7 +11,7 @@
   </AddIn>
   <AddIn Type="Application">
     <Name>Application DeluxMeasure</Name>
-    <Assembly>DeluxMeasure.dll</Assembly>
+    <Assembly>DeluxMeasurex.dll</Assembly>
     <FullClassName>DeluxMeasure.AppRibbon</FullClassName>
     <ClientId>403e192c-41ef-44da-9a8d-c3932292a23d</ClientId>
     <VendorId>pro.cyberstudio</VendorId>

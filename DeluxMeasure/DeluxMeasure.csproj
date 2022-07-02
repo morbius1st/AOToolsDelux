@@ -2,17 +2,19 @@
 <Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
-    <ProjectGuid>{$guid1}</ProjectGuid>
     <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <AssemblyName>DeluxMeasure</AssemblyName>
-    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <AssemblyName>DeluxMeasureX</AssemblyName>
+    <RootNamespace>DeluxMeasure</RootNamespace>
     <FileAlignment>512</FileAlignment>
     <OutputType>Library</OutputType>
-    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{3872BF2E-9458-4C6C-BAC7-40A6CD14C397}</ProjectGuid>
     <ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
-    <RootNamespace>DeluxMeasure</RootNamespace>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <!-- removed
+			<ProjectGuid>{$guid1}</ProjectGuid> 
+			-->
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -37,6 +39,7 @@
     <StartAction>Program</StartAction>
     <StartProgram>$(ProgramW6432)\Autodesk\Revit 2021\Revit.exe</StartProgram>
   </PropertyGroup>
+  <!-- removed 	
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'DeluxMeasure|AnyCPU'">
     <DebugSymbols>true</DebugSymbols>
     <OutputPath>bin\DeluxMeasure\</OutputPath>
@@ -81,13 +84,14 @@
     <PlatformTarget>x64</PlatformTarget>
     <LangVersion>7.3</LangVersion>
   </PropertyGroup>
+	-->
   <ItemGroup>
     <Reference Include="RevitAPI">
-      <HintPath>..\..\..\..\..\..\..\..\Program Files\Autodesk\Revit 2021\RevitAPI.dll</HintPath>
+      <HintPath>C:\Program Files\Autodesk\Revit 2021\RevitAPI.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="RevitAPIUI">
-      <HintPath>..\..\..\..\..\..\..\..\Program Files\Autodesk\Revit 2021\RevitAPIUI.dll</HintPath>
+      <HintPath>C:\Program Files\Autodesk\Revit 2021\RevitAPIUI.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="System" />
@@ -123,14 +127,29 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Windows\ResourceFiles\SVG\padlock.xaml">
+    <Page Include="Windows\ResourceFiles\XamlResources\MasterColorList.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Windows\ResourceFiles\XamlResources\VisualStates.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Windows\Skin\CyberStudioSkin.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Windows\StyleMgr.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Windows\MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Compile Include="Windows\StyleMgr.xaml.cs">
+      <DependentUpon>StyleMgr.xaml</DependentUpon>
+    </Compile>
     <Compile Include="UnitsUtil\UnitData.cs" />
     <Compile Include="UnitsUtil\UnitsStdUStyles.cs" />
     <Compile Include="UnitsUtil\UnitsSupport.cs" />
@@ -188,18 +207,6 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Page Include="Windows\ResourceFiles\XamlResources\MasterColorList.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Windows\ResourceFiles\XamlResources\VisualStates.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Windows\Skin\CyberStudioSkin.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
     <Page Include="Windows\Support\CsButtons.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -209,32 +216,36 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Windows\Support\CsComboBox.xaml">
+      <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
-      <Generator>XamlIntelliSenseFileGenerator</Generator>
     </Page>
     <Page Include="Windows\Support\CsExpander.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Windows\Support\CsScrollBar.xaml">
+      <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
-      <Generator>XamlIntelliSenseFileGenerator</Generator>
     </Page>
     <Page Include="Windows\Support\CsScrollViewer.xaml">
+      <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
-      <Generator>XamlIntelliSenseFileGenerator</Generator>
+    </Page>
+    <Page Include="Windows\Support\CsUnitMgrStyles.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="Windows\Test.xaml">
-      <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="Windows\UnitStylesManager.xaml">
-      <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="Windows\UnitStylesMgr.xaml">
-      <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
   </ItemGroup>
   <ItemGroup>
@@ -251,13 +262,13 @@
     <EmbeddedResource Include="Resources\Delux Measure us-ft 32.png" />
     <EmbeddedResource Include="Resources\information16.png" />
     <EmbeddedResource Include="Resources\information32.png" />
-    <Content Include="Other\DeluxMeasure.addin" />
+    <Content Include="Other\DeluxMeasurex.addin" />
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PostBuildEvent>del /s/q "C:\ProgramData\CyberStudio\DeluxMeasure\*.*"
-del /s/q "C:\Users\jeffs\AppData\Roaming\CyberStudio\DeluxMeasure\*.*"
+    <PostBuildEvent>del /s/q "C:\ProgramData\CyberStudio\DeluxMeasurex\*.*"
+del /s/q "C:\Users\jeffs\AppData\Roaming\CyberStudio\DeluxMeasurex\*.*"
 if exist "$(AppData)\Autodesk\REVIT\Addins\2021" copy "$(ProjectDir)other\*.addin" "$(AppData)\Autodesk\REVIT\Addins\2021"
 if exist "$(AppData)\Autodesk\REVIT\Addins\2021" copy "$(ProjectDir)$(OutputPath)*.dll" "$(AppData)\Autodesk\REVIT\Addins\2021"
 		</PostBuildEvent>

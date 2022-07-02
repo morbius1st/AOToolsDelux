@@ -137,18 +137,18 @@
 							Background="White"
 							HorizontalAlignment="Left"
 							Margin="10,0,-5,0"
-							Width="1"
+						
 							>
-						<!-- <Border.Width> -->
-						<!-- 	<MultiBinding Converter="{StaticResource AddConverter}"> -->
-						<!-- 		<Binding Path="." Source="{StaticResource TitleWidth}" /> -->
-						<!-- 		<Binding> -->
-						<!-- 			<Binding.Source> -->
-						<!-- 				<sys:Double>-5.0</sys:Double> -->
-						<!-- 			</Binding.Source> -->
-						<!-- 		</Binding> -->
-						<!-- 	</MultiBinding> -->
-						<!-- </Border.Width> -->
+						<Border.Width>
+							<MultiBinding Converter="{StaticResource AddConverter}">
+								<Binding Path="." Source="{StaticResource TitleWidth}" />
+								<Binding>
+									<Binding.Source>
+										<sys:Double>-5.0</sys:Double>
+									</Binding.Source>
+								</Binding>
+							</MultiBinding>
+						</Border.Width>
 
 					</Border>
 

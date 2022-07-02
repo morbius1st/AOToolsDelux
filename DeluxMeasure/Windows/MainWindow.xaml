@@ -1056,8 +1056,9 @@
 					Margin="0,10,15,0"
 					VerticalAlignment="Stretch"
 					FontSize="11"
-					Text="{Binding MessageBoxText, FallbackValue='Today&#13;Tomorrow&#13;Yesterday'}"
+					Text="{Binding MessageBoxText, FallbackValue='Today Tomorrow Yesterday'}"
 					TextWrapping="Wrap" />
+					<!-- Text="{Binding MessageBoxText, FallbackValue='Today&#013;Tomorrow&#013;Yesterday'}" -->
 
 
 				<StackPanel

@@ -25,13 +25,14 @@
 		<ResourceDictionary>
 			<!--#region > L4 resource dictionaries-->
 			<ResourceDictionary.MergedDictionaries>
-				<!-- <ResourceDictionary Source="../Windows/ResourceFiles/XamlResources/MasterColorList.xaml" /> -->
-				<!-- <ResourceDictionary Source="../Windows/ResourceFiles/XamlResources/VisualStates.xaml" /> -->
-				<!-- <ResourceDictionary Source="../Windows/Skin/CyberStudioSkin.xaml" /> -->
 
-				<ResourceDictionary Source="pack://Application:,,,/DeluxMeasure;component/Windows/ResourceFiles/XamlResources/MasterColorList.xaml" />
-				<ResourceDictionary Source="pack://Application:,,,/DeluxMeasure;component/Windows/ResourceFiles/XamlResources/VisualStates.xaml" />
-				<ResourceDictionary Source="pack://Application:,,,/DeluxMeasure;component/Windows/Skin/CyberStudioSkin.xaml" />
+				<!-- <ResourceDictionary Source="pack://Application:,,,/DeluxMeasure;component/Windows/ResourceFiles/XamlResources/MasterColorList.xaml" /> -->
+				<!-- <ResourceDictionary Source="pack://Application:,,,/DeluxMeasure;component/Windows/ResourceFiles/XamlResources/VisualStates.xaml" /> -->
+				<!-- <ResourceDictionary Source="pack://Application:,,,/DeluxMeasure;component/Windows/Skin/CyberStudioSkin.xaml" /> -->
+				
+				<ResourceDictionary Source="../Windows/ResourceFiles/XamlResources/MasterColorList.xaml" />
+				<ResourceDictionary Source="../Windows/ResourceFiles/XamlResources/VisualStates.xaml" />
+				<ResourceDictionary Source="../Windows/Skin/CyberStudioSkin.xaml" />
 				<ResourceDictionary Source="../Windows/Support/CsExpander.xaml" />
 				<ResourceDictionary Source="../Windows/Support/CsScrollBar.xaml" />
 				<ResourceDictionary Source="../Windows/Support/CsScrollViewer.xaml" />
@@ -246,7 +247,7 @@
 							<Condition Binding="{Binding IsKeyboardFocusWithin, RelativeSource={RelativeSource Self}, Mode=OneWay}" Value="True" />
 							<Condition Binding="{Binding IsMouseOver, RelativeSource={RelativeSource Self}}" Value="True" />
 							<Condition Binding="{Binding (cs:VisualStates.DoesMouseOver), RelativeSource={RelativeSource Self}, Mode=OneWay, FallbackValue='false'}" Value="true" />
-							<Condition Binding="{Binding (cs:VisualStates.IsReadOnly), RelativeSource={RelativeSource Self}, Mode=OneWay}" Value="false" />
+							<Condition Binding="{Binding (cs:VisualStates.IsSelected), RelativeSource={RelativeSource Self}, Mode=OneWay}" Value="false" />
 							<Condition Binding="{Binding (cs:VisualStates.IsReadOnly), RelativeSource={RelativeSource Self}, Mode=OneWay}" Value="false" />
 							<Condition Binding="{Binding (cs:VisualStates.IsLocked), RelativeSource={RelativeSource Self}, Mode=OneWay}" Value="false" />
 						</MultiDataTrigger.Conditions>
@@ -1027,6 +1028,8 @@
 
 			<!--#endregion-->
 
+
+
 			<!--#region > L4 dt so ribbon  (DtSoRibbonOrder)-->
 
 			<DataTemplate x:Key="DtSoRibbonOrder">
@@ -1153,6 +1156,7 @@
 			</DataTemplate>
 
 			<!--#endregion-->
+
 
 			<!--#region > L4 dt us lbx item container-->
 
@@ -1670,9 +1674,10 @@
 				<!--#region > L6 unit settings and add style-->
 
 				<StackPanel Orientation="Vertical"
-						DataContext="{Binding ElementName=WinUnitStyle, Path=DetailUnit}"
-						d:DataContext="{Binding Source={x:Static util:UnitStdStylesD.ListD}, Path=[0]}"
+
 						>
+					<!-- DataContext="{Binding ElementName=WinUnitStyle, Path=DetailUnit}" -->
+					<!-- d:DataContext="{Binding Source={x:Static util:UnitStdStylesD.ListD}, Path=[0]}" -->
 
 					<Border x:Name="BdrUsHeader"
 							HorizontalAlignment="Stretch"
@@ -1712,8 +1717,8 @@
 							SelectedIndex="{Binding CbxSelIndex, FallbackValue=0}"
 							SelectedItem="{Binding CbxSelectedItem, Mode=TwoWay}"
 							d:DisplayMemberPath="Value.DropDownName"
-							d:ItemsSource="{x:Static util:UnitStdStylesD.SStdStyles}"
-							d:SelectedIndex="0"
+							
+							
 							Initialized="CbxStdStyles_Initialized"
 							cs:VisualStates.IsSelected="True"
 							cs:CsComboBoxAp.ComboBoxBdrRadius="{StaticResource CornerRadius.Sm}"
@@ -1748,7 +1753,8 @@
 							cs:VisualStates.FgIsSelMouseOver="{StaticResource Cbx.Fg.NotSel.MouseOver}"
 							cs:VisualStates.FgIsEditingMouseOver="{StaticResource Cbx.Fg.IsEditg.MouseOver}"
 							>
-
+						<!-- d:ItemsSource="{x:Static util:UnitStdStylesD.SStdStyles}" -->
+						<!-- d:SelectedIndex="0" -->
 						<ComboBox.Style>
 							<Style BasedOn="{StaticResource CtrlWithBdrTrigs.L2}"
 									TargetType="ComboBox"
@@ -2325,7 +2331,6 @@
 
 			</DataTemplate>
 
-
 			<!--#endregion-->
 
 			<!--#region > L4 dt us add style control  (DtAddStyleCtrl)-->
@@ -2490,34 +2495,38 @@
 
 							<ListBox x:Name="Lbx1"
 									DockPanel.Dock="Top"
-									Grid.IsSharedSizeScope="True"
+
 									Background="Transparent"
 									BorderThickness="0"
-									DataContext="{Binding StylesView, ElementName=WinUnitStyle}"
+									
 									HorizontalAlignment="Stretch"
 									HorizontalContentAlignment="Stretch"
 									IsSynchronizedWithCurrentItem="True"
-									ItemContainerStyle="{DynamicResource Lbx1ItemContainerStyle1}"
-									ItemTemplate="{StaticResource Lbx1ItemTemplate}"
+
 									ItemsSource="{Binding}"
 									IsEnabled="True"
 									Margin="0,0,0,0"
 									Padding="0,0,0,0"
-									SelectedIndex="{Binding LbxSelIndex, ElementName=WinUnitStyle, Mode=TwoWay}"
-									SelectedItem="{Binding LbxSelItem, ElementName=WinUnitStyle, Mode=OneWayToSource}"
+
 									VerticalAlignment="Top"
 									Initialized="lbx_Initialized"
-									d:SelectedIndex="0"
-									d:DataContext="{x:Static util:UnitStdStylesD.ListD}"
+									
 									>
+								<!-- ItemContainerStyle="{DynamicResource Lbx1ItemContainerStyle1}" -->
+								<!-- ItemTemplate="{StaticResource Lbx1ItemTemplate}" -->
+								<!-- d:DataContext="{x:Static util:UnitStdStylesD.ListD}" -->
+								<!-- DataContext="{Binding StylesView, ElementName=WinUnitStyle}" -->
+								<!-- SelectedIndex="{Binding LbxSelIndex, ElementName=WinUnitStyle, Mode=TwoWay}" -->
+								<!-- SelectedItem="{Binding LbxSelItem, ElementName=WinUnitStyle, Mode=OneWayToSource}" -->
+								<!-- d:SelectedIndex="0" -->
 
-								<ListBox.Resources>
-
-									<Style BasedOn="{StaticResource SvStyle}"
-											TargetType="{x:Type ScrollViewer}"
-											/>
-
-								</ListBox.Resources>
+								<!-- <ListBox.Resources> -->
+								<!-- -->
+								<!-- 	<Style BasedOn="{StaticResource SvStyle}" -->
+								<!-- 			TargetType="{x:Type ScrollViewer}" -->
+								<!-- 			/> -->
+								<!-- -->
+								<!-- </ListBox.Resources> -->
 
 							</ListBox>
 

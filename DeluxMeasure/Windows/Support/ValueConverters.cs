@@ -14,34 +14,35 @@ using System.Windows.Markup;
 
 namespace DeluxMeasure.Windows.Support
 {
-	[MarkupExtensionReturnType (typeof(GridLen))]
-	public class GridLen : UIElement
-	{
-		// Register an attached dependency property with the specified
-		// property name, property type, owner type, and property metadata.
 
-		public static readonly DependencyProperty GridLenProperty =
-			DependencyProperty.RegisterAttached(
-				"GridLen",
-				typeof(GridLength),
-				typeof(GridLen),
-				new FrameworkPropertyMetadata(defaultValue: new GridLength(0.0),
-					flags: FrameworkPropertyMetadataOptions.AffectsMeasure)
-				);
-
-		// Declare a get accessor method.
-
-		public static GridLength GetGridLen(UIElement target) => (GridLength)target.GetValue(GridLenProperty);
-
-		// Declare a set accessor method.
-
-		public static void SetGridLen(UIElement target, GridLength value) => target.SetValue(GridLenProperty, value);
-
-		public static string Formula
-		{
-			set { }
-		}
-	}
+	// [MarkupExtensionReturnType (typeof(GridLen))]
+	// public class GridLen : UIElement
+	// {
+	// 	// Register an attached dependency property with the specified
+	// 	// property name, property type, owner type, and property metadata.
+	//
+	// 	public static readonly DependencyProperty GridLenProperty =
+	// 		DependencyProperty.RegisterAttached(
+	// 			"GridLen",
+	// 			typeof(GridLength),
+	// 			typeof(GridLen),
+	// 			new FrameworkPropertyMetadata(defaultValue: new GridLength(0.0),
+	// 				flags: FrameworkPropertyMetadataOptions.AffectsMeasure)
+	// 			);
+	//
+	// 	// Declare a get accessor method.
+	//
+	// 	public static GridLength GetGridLen(UIElement target) => (GridLength)target.GetValue(GridLenProperty);
+	//
+	// 	// Declare a set accessor method.
+	//
+	// 	public static void SetGridLen(UIElement target, GridLength value) => target.SetValue(GridLenProperty, value);
+	//
+	// 	public static string Formula
+	// 	{
+	// 		set { }
+	// 	}
+	// }
 
 
 #region double divider converter

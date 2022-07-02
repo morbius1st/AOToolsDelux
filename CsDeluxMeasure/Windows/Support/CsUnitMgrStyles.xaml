@@ -1,0 +1,683 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:cs="clr-namespace:CsDeluxMeasure.Windows.Support">
+    
+	<ResourceDictionary.MergedDictionaries>
+		<!-- <ResourceDictionary Source="/Windows/ResourceFiles/XamlResources/MasterColorList.xaml" /> -->
+		<!-- <ResourceDictionary Source="/Windows/ResourceFiles/XamlResources/VisualStates.xaml" /> -->
+		<!-- <ResourceDictionary Source="/Windows/Skin/CyberStudioSkin.xaml" /> -->
+		<!-- <ResourceDictionary Source="/Windows/Support/CsExpander.xaml" /> -->
+		<!-- <ResourceDictionary Source="/Windows/Support/CsScrollBar.xaml" /> -->
+		<!-- <ResourceDictionary Source="/Windows/Support/CsScrollViewer.xaml" /> -->
+		<!-- <ResourceDictionary Source="/Windows/Support/CsComboBox.xaml" /> -->
+		<!-- <ResourceDictionary Source="/Windows/Support/CsButtons.xaml" /> -->
+	</ResourceDictionary.MergedDictionaries>
+
+	
+			<!--
+				element categories
+				background/	 border
+				foreground	brsh/thk
+				*** border (Bdr)
+				border 					  -> UIElement -> FrameworkElement -> Decorator			n						n
+				-> border			y / y				y / y
+				*** textblock (Tblk)
+				textblock 				-> UIElement -> FrameworkElement -> textblock     y / y				n / n
+				
+				*** control (Ctrl)
+				textbox 				  -> UIElement -> FrameworkElement -> Control				y / y				y / y
+				checkbox 				  -> UIElement -> FrameworkElement -> Control					|						|
+				* border
+				* path
+				combobox 				  -> UIElement -> FrameworkElement -> Control					|						|
+				* border
+				* textbox
+				* path
+				* toggle button
+				button 					  -> UIElement -> FrameworkElement -> Control					|						|
+				label 					  -> UIElement -> FrameworkElement -> Control					|						|
+				radiobutton 			-> UIElement -> FrameworkElement -> Control					|						|
+				*> path
+				*> toggle button
+				togglebutton 	    -> UIElement -> FrameworkElement -> Control					|						|
+				expander				  -> UIElement -> FrameworkElement -> Control					v						v
+				
+				*** panel	(Pnl)
+				panel 					  -> UIElement -> FrameworkElement -> panel					y / n				n / n
+				canvas 					  -> UIElement -> FrameworkElement -> panel						|						|
+				stackpanel 				-> UIElement -> FrameworkElement -> panel						|						|
+				dockpanel 				-> UIElement -> FrameworkElement -> panel						v						v
+				
+				*** shapes (Shp)
+				stroke
+				fill				brsh/thk
+				shape					    -> UIElement -> FrameworkElement -> shape						n					y / y
+				path					    -> UIElement -> FrameworkElement -> shape
+			-->
+
+
+			<!--
+				trigger levels
+												Gbdr (L1)			Fg (L1)				Bg (L1)			Icon (fill) (L1)		Fg (L2)				Bg (L2)			Icon (fill) (L2)
+				disabled			BgDisabled		FgDisabled		BgDisabled	IconGeoDisabled			FgDisabled		BgDisabled	IconGeoDisabled
+				not sel				BgNotSel			FgNotSel			BgNotSel		IconGeoNotSel				FgNotSel			BgNotSel		IconGeoNotSel
+				sel						BgIsSel				FgIsSel				BgIsSel			IconGeoIsSel				FgIsSel				BgIsSel			IconGeoIsSel		
+				editg																																			FgIsEditg			BgIsEditg		IconGeoIsEditg	
+
+																																										Fg (L3)				Bg (L3)			Icon (fill) (L3)
+				readonly																																	FgIsRo				BgIsRo			IconGeoIsRo		
+
+																																										Fg (L4)				Bg (L4)			Icon (fill) (L4)
+				locked																																		FgIsLocked		BgIsLocked	IconGeoIsLocked
+
+
+
+																																										disabled	focused																mouse
+				>>> level 1 <<<																															/enabled	(wihtin)	selected	readonly	locked	over
+					*** disabled 																						bdr | ctrl				FALSE			x					x					x					x				x
+								(default) (no trigger needed) (set in "root")
+					*** not selected																				bdr	wo mouseover  TRUE			x					FALSE			FALSE			FALSE		n
+								(when (is/not (no editing) 												bdr	w mouseover		TRUE			TRUE-in		FALSE			FALSE			FALSE		y (not editing)
+								or (is/not (locked))) 														ctrl							TRUE			FALSE			FALSE			FALSE			FALSE		y
+
+					*** selected 																						bdr	wo mouseover	TRUE			x					TRUE			FALSE			FALSE		n
+								(when (is/not (no editing) or not (locked))				bdr w mouseover		TRUE			TRUE-in		TRUE			FALSE			FALSE		y (not editing)
+
+					COLORS used:  ...Disabled  |  ...NotSel  |  ...IsSel
+
+																																	ctrl							TRUE			FALSE			TRUE			FALSE			FALSE		y
+				>>> level 2 <<<
+					level 1 +	
+					*** is editing																					bdr wo mouseover	TRUE			x					TRUE			FALSE			FALSE		n
+								(when is (selected) && not (locked))							bdr w mouseover		TRUE			TRUE-in		TRUE			FALSE			FALSE		y (is editing)
+																																	ctrl | bdr&ctrl		TRUE			TRUE			TRUE			FALSE			FALSE		y
+					COLORS used:  ...IsEditing
+
+				>>> level 3 <<<
+					level 2 +	
+					*** is readonly																					bdr wo mouseover	TRUE			x					x					TRUE			FALSE		n
+								(aka noediting)																		bdr w mouseover		TRUE			TRUE-in		x					TRUE			FALSE		n (is editing)
+								(when is (selected) && not (locked))							ctrl | bdr&ctrl		TRUE			x					x					TRUE			FALSE		y
+	
+					COLORS used:  ...IsReadOnly
+
+				>>> level 4 <<<
+					level 2 +
+					*** is locked 																					bdr | ctrl					x				x					x					x					TRUE		n
+								(when is (selected) && (na (no editing)))
+
+					COLORS used:  ...IsLocked
+
+				>>> level 4 <<<
+					level x +
+								(can be added to any level above
+										but level 3 is expected [level 43] )
+					*** is good (is (isgoodorbad))													bdr | bdr&ctrl		(per prior level)			change border color to ...
+					*** is bad  (not (isgoodorbad))													bdr | bdr&ctrl		(per prior level)			change border color to ...
+			-->
+
+			<!--  basic sets the disabled value  -->
+			<!--  border  -->
+			<Style x:Key="BdrBasic" TargetType="Border">
+				<Setter Property="Background" Value="{Binding RelativeSource={RelativeSource Self}, Path=(cs:VisualStates.BgDisabled)}" />
+				<Setter Property="BorderBrush" Value="{Binding RelativeSource={RelativeSource Self}, Path=(cs:VisualStates.BdrDisabled)}" />
+				<Setter Property="Margin" Value="0" />
+				<Setter Property="Padding" Value="0" />
+			</Style>
+
+			<!--  textblock  -->
+			<Style x:Key="TblkBasic" TargetType="TextBlock">
+				<Setter Property="Foreground" Value="{Binding RelativeSource={RelativeSource Self}, Path=(cs:VisualStates.FgDisabled)}" />
+				<Setter Property="Margin" Value="0" />
+				<Setter Property="Padding" Value="0" />
+			</Style>
+
+			<!--  control (incl. textbox, button  -->
+			<Style x:Key="CtrlBasic" TargetType="Control">
+				<Setter Property="Foreground" Value="{Binding RelativeSource={RelativeSource Self}, Path=(cs:VisualStates.FgDisabled)}" />
+				<Setter Property="Margin" Value="0" />
+				<Setter Property="Padding" Value="0" />
+			</Style>
+
+			<!--  control (control with interior border -> e.g. combobox)  -->
+			<Style x:Key="CtrlWithBdrBasic" x:Name="CtrlBdrTrigsBasic"
+					TargetType="Control"
+					>
+				<Setter Property="Foreground" Value="{Binding RelativeSource={RelativeSource Self}, Path=(cs:VisualStates.FgDisabled)}" />
+				<Setter Property="Background" Value="{Binding RelativeSource={RelativeSource Self}, Path=(cs:VisualStates.BgDisabled)}" />
+				<Setter Property="BorderBrush" Value="{Binding RelativeSource={RelativeSource Self}, Path=(cs:VisualStates.BdrDisabled)}" />
+				<Setter Property="cs:CsCommonAp.BgCommonMouseOver" Value="{Binding RelativeSource={RelativeSource Self}, Path=(cs:VisualStates.BgNotEditingMouseOver)}" />
+				<Setter Property="cs:CsCommonAp.FgCommonMouseOver" Value="{Binding RelativeSource={RelativeSource Self}, Path=(cs:VisualStates.FgNotEditingMouseOver)}" />
+				<Setter Property="cs:CsCommonAp.BdrCommonMouseOver" Value="{Binding RelativeSource={RelativeSource Self}, Path=(cs:VisualStates.BdrNotEditingMouseOver)}" />
+				<Setter Property="Margin" Value="0" />
+				<Setter Property="Padding" Value="0" />
+			</Style>
+
+			<!--  panel  -->
+			<Style x:Key="PnlBasic" TargetType="Panel">
+				<Setter Property="Background" Value="{Binding RelativeSource={RelativeSource Self}, Path=(cs:VisualStates.BgDisabled)}" />
+				<Setter Property="Margin" Value="0" />
+			</Style>
+
+
+			<!--  border with mouseover  -->
+			<Style x:Key="BdrTrigs.L1"
+					BasedOn="{StaticResource BdrBasic}"
+					TargetType="Border"
+					>
+				<!--  disabled  -->
+				<!--  from root  -->
+				<Style.Triggers>
+
+					<!--  not selected  -->
+					<MultiDataTrigger x:Name="BdrTrigsL1NotSel">
+						<MultiDataTrigger.Conditions>
+							<Condition Binding="{Binding IsEnabled, RelativeSource={RelativeSource Self}, Mode=OneWay}" Value="True" />
+							<Condition Binding="{Binding (cs:VisualStates.IsSelected), RelativeSource={RelativeSource Self}, Mode=OneWay}" Value="false" />
+							<Condition Binding="{Binding (cs:VisualStates.IsReadOnly), RelativeSource={RelativeSource Self}, Mode=OneWay}" Value="false" />
+							<Condition Binding="{Binding (cs:VisualStates.IsLocked), RelativeSource={RelativeSource Self}, Mode=OneWay}" Value="false" />
+						</MultiDataTrigger.Conditions>
+						<Setter Property="Background" Value="{Binding RelativeSource={RelativeSource Self}, Path=(cs:VisualStates.BgNotSel)}" />
+						<Setter Property="BorderBrush" Value="{Binding RelativeSource={RelativeSource Self}, Path=(cs:VisualStates.BdrNotSel), FallbackValue='transparent'}" />
+					</MultiDataTrigger>
+
+					<!--  enabled / selected  -->
+					<MultiDataTrigger x:Name="BdrTrigsL1IsSel">
+						<MultiDataTrigger.Conditions>
+							<Condition Binding="{Binding IsEnabled, RelativeSource={RelativeSource Self}, Mode=OneWay}" Value="True" />
+							<Condition Binding="{Binding (cs:VisualStates.IsSelected), RelativeSource={RelativeSource Self}, Mode=OneWay}" Value="true" />
+							<Condition Binding="{Binding (cs:VisualStates.IsReadOnly), RelativeSource={RelativeSource Self}, Mode=OneWay}" Value="false" />
+							<Condition Binding="{Binding (cs:VisualStates.IsLocked), RelativeSource={RelativeSource Self}, Mode=OneWay}" Value="false" />
+						</MultiDataTrigger.Conditions>
+						<Setter Property="Background" Value="{Binding RelativeSource={RelativeSource Self}, Path=(cs:VisualStates.BgIsSel)}" />
+						<Setter Property="BorderBrush" Value="{Binding RelativeSource={RelativeSource Self}, Path=(cs:VisualStates.BdrIsSel), FallbackValue='transparent'}" />
+					</MultiDataTrigger>
+
+					<MultiDataTrigger>
+						<MultiDataTrigger.Conditions>
+							<Condition Binding="{Binding IsEnabled, RelativeSource={RelativeSource Self}, Mode=OneWay}" Value="True" />
+							<Condition Binding="{Binding IsKeyboardFocusWithin, RelativeSource={RelativeSource Self}, Mode=OneWay}" Value="false" />
+							<Condition Binding="{Binding RelativeSource={RelativeSource Self}, Path=IsMouseOver}" Value="True" />
+							<Condition Binding="{Binding (cs:VisualStates.DoesMouseOver), RelativeSource={RelativeSource Self}, Mode=OneWay, FallbackValue='false'}" Value="true" />
+							<Condition Binding="{Binding (cs:VisualStates.IsReadOnly), RelativeSource={RelativeSource Self}, Mode=OneWay}" Value="false" />
+							<Condition Binding="{Binding (cs:VisualStates.IsLocked), RelativeSource={RelativeSource Self}, Mode=OneWay}" Value="false" />
+						</MultiDataTrigger.Conditions>
+						<Setter Property="Background" Value="{Binding RelativeSource={RelativeSource Self}, Path=(cs:VisualStates.BgNotEditingMouseOver)}" />
+						<Setter Property="BorderBrush" Value="{Binding RelativeSource={RelativeSource Self}, Path=(cs:VisualStates.BdrNotEditingMouseOver), FallbackValue='transparent'}" />
+					</MultiDataTrigger>
+
+
+				</Style.Triggers>
+			</Style>
+
+			<!--  textblock  -->
+			<Style x:Key="TblkTrigs.L1"
+					BasedOn="{StaticResource TblkBasic}"
+					TargetType="TextBlock"
+					>
+				<!--  disabled  -->
+				<!--  from root  -->
+				<Style.Triggers>
+
+					<!--  not selected  -->
+					<MultiDataTrigger>
+						<MultiDataTrigger.Conditions>
+							<Condition Binding="{Binding IsEnabled, RelativeSource={RelativeSource Self}, Mode=OneWay}" Value="True" />
+							<Condition Binding="{Binding IsFocused, RelativeSource={RelativeSource Self}, Mode=OneWay}" Value="False" />
+							<Condition Binding="{Binding (cs:VisualStates.IsSelected), RelativeSource={RelativeSource Self}, Mode=OneWay}" Value="false" />
+							<Condition Binding="{Binding (cs:VisualStates.IsReadOnly), RelativeSource={RelativeSource Self}, Mode=OneWay}" Value="false" />
+							<Condition Binding="{Binding (cs:VisualStates.IsLocked), RelativeSource={RelativeSource Self}, Mode=OneWay}" Value="false" />
+						</MultiDataTrigger.Conditions>
+						<Setter Property="Foreground" Value="{Binding RelativeSource={RelativeSource Self}, Path=(cs:VisualStates.FgNotSel)}" />
+					</MultiDataTrigger>
+
+					<!--  enabled / selected  -->
+					<MultiDataTrigger>
+						<MultiDataTrigger.Conditions>
+							<Condition Binding="{Binding IsEnabled, RelativeSource={RelativeSource Self}, Mode=OneWay}" Value="True" />
+							<Condition Binding="{Binding IsFocused, RelativeSource={RelativeSource Self}, Mode=OneWay}" Value="False" />
+							<Condition Binding="{Binding (cs:VisualStates.IsSelected), RelativeSource={RelativeSource Self}, Mode=OneWay}" Value="true" />
+							<Condition Binding="{Binding (cs:VisualStates.IsReadOnly), RelativeSource={RelativeSource Self}, Mode=OneWay}" Value="false" />
+							<Condition Binding="{Binding (cs:VisualStates.IsLocked), RelativeSource={RelativeSource Self}, Mode=OneWay}" Value="false" />
+						</MultiDataTrigger.Conditions>
+						<Setter Property="Foreground" Value="{Binding RelativeSource={RelativeSource Self}, Path=(cs:VisualStates.FgIsSel)}" />
+					</MultiDataTrigger>
+				</Style.Triggers>
+			</Style>
+
+			<!--  control (incl. textbox, button  -->
+			<Style x:Key="CtrlTrigs.L1"
+					BasedOn="{StaticResource CtrlBasic}"
+					TargetType="Control"
+					>
+				<!--  disabled  -->
+				<!--  from root  -->
+				<Style.Triggers>
+
+					<!--  not selected  -->
+					<MultiDataTrigger x:Name="CtrlTrigsL1NotSel">
+						<MultiDataTrigger.Conditions>
+							<Condition Binding="{Binding IsEnabled, RelativeSource={RelativeSource Self}, Mode=OneWay}" Value="True" />
+							<Condition Binding="{Binding IsFocused, RelativeSource={RelativeSource Self}, Mode=OneWay}" Value="False" />
+							<Condition Binding="{Binding (cs:VisualStates.IsSelected), RelativeSource={RelativeSource Self}, Mode=OneWay}" Value="false" />
+							<Condition Binding="{Binding (cs:VisualStates.IsReadOnly), RelativeSource={RelativeSource Self}, Mode=OneWay}" Value="false" />
+							<Condition Binding="{Binding (cs:VisualStates.IsLocked), RelativeSource={RelativeSource Self}, Mode=OneWay}" Value="false" />
+						</MultiDataTrigger.Conditions>
+						<Setter Property="Foreground" Value="{Binding RelativeSource={RelativeSource Self}, Path=(cs:VisualStates.FgNotSel)}" />
+					</MultiDataTrigger>
+
+					<!--  enabled / selected  -->
+					<MultiDataTrigger x:Name="CtrlTrigsL1IsSel">
+						<MultiDataTrigger.Conditions>
+							<Condition Binding="{Binding IsEnabled, RelativeSource={RelativeSource Self}, Mode=OneWay}" Value="True" />
+							<Condition Binding="{Binding IsFocused, RelativeSource={RelativeSource Self}, Mode=OneWay}" Value="False" />
+							<Condition Binding="{Binding (cs:VisualStates.IsSelected), RelativeSource={RelativeSource Self}, Mode=OneWay}" Value="true" />
+							<Condition Binding="{Binding (cs:VisualStates.IsReadOnly), RelativeSource={RelativeSource Self}, Mode=OneWay}" Value="false" />
+							<Condition Binding="{Binding (cs:VisualStates.IsLocked), RelativeSource={RelativeSource Self}, Mode=OneWay}" Value="false" />
+						</MultiDataTrigger.Conditions>
+						<Setter Property="Foreground" Value="{Binding RelativeSource={RelativeSource Self}, Path=(cs:VisualStates.FgIsSel)}" />
+					</MultiDataTrigger>
+
+					<MultiDataTrigger>
+						<MultiDataTrigger.Conditions>
+							<Condition Binding="{Binding IsEnabled, RelativeSource={RelativeSource Self}, Mode=OneWay}" Value="True" />
+							<Condition Binding="{Binding RelativeSource={RelativeSource Self}, Path=IsMouseOver}" Value="True" />
+							<Condition Binding="{Binding (cs:VisualStates.IsReadOnly), RelativeSource={RelativeSource Self}, Mode=OneWay}" Value="false" />
+							<Condition Binding="{Binding (cs:VisualStates.IsLocked), RelativeSource={RelativeSource Self}, Mode=OneWay}" Value="false" />
+						</MultiDataTrigger.Conditions>
+						<Setter Property="Foreground" Value="{Binding RelativeSource={RelativeSource Self}, Path=(cs:VisualStates.FgNotEditingMouseOver)}" />
+					</MultiDataTrigger>
+
+				</Style.Triggers>
+			</Style>
+
+			<!--  control (control with interior border -> e.g. combobox)  -->
+			<Style x:Key="CtrlWithBdrTrigs.L1"
+					BasedOn="{StaticResource CtrlWithBdrBasic}"
+					TargetType="Control"
+					>
+				<!--  disabled  -->
+				<!--  from root  -->
+				<Style.Triggers>
+
+					<!--  not selected  -->
+					<MultiDataTrigger x:Name="CtrlBdrTrigsL1NotSel">
+						<MultiDataTrigger.Conditions>
+							<Condition Binding="{Binding IsEnabled, RelativeSource={RelativeSource Self}, Mode=OneWay}" Value="True" />
+							<Condition Binding="{Binding IsFocused, RelativeSource={RelativeSource Self}, Mode=OneWay}" Value="False" />
+							<Condition Binding="{Binding (cs:VisualStates.IsSelected), RelativeSource={RelativeSource Self}, Mode=OneWay}" Value="false" />
+							<Condition Binding="{Binding (cs:VisualStates.IsReadOnly), RelativeSource={RelativeSource Self}, Mode=OneWay}" Value="false" />
+							<Condition Binding="{Binding (cs:VisualStates.IsLocked), RelativeSource={RelativeSource Self}, Mode=OneWay}" Value="false" />
+						</MultiDataTrigger.Conditions>
+						<Setter Property="Background" Value="{Binding RelativeSource={RelativeSource Self}, Path=(cs:VisualStates.BgNotSel)}" />
+						<Setter Property="Foreground" Value="{Binding RelativeSource={RelativeSource Self}, Path=(cs:VisualStates.FgNotSel)}" />
+						<Setter Property="BorderBrush" Value="{Binding RelativeSource={RelativeSource Self}, Path=(cs:VisualStates.BdrNotSel)}" />
+					</MultiDataTrigger>
+
+					<!--  enabled / selected  -->
+					<MultiDataTrigger x:Name="CtrlBdrTrigsL1IsSel">
+						<MultiDataTrigger.Conditions>
+							<Condition Binding="{Binding IsEnabled, RelativeSource={RelativeSource Self}, Mode=OneWay}" Value="True" />
+							<Condition Binding="{Binding IsFocused, RelativeSource={RelativeSource Self}, Mode=OneWay}" Value="False" />
+							<Condition Binding="{Binding (cs:VisualStates.IsSelected), RelativeSource={RelativeSource Self}, Mode=OneWay}" Value="true" />
+							<Condition Binding="{Binding (cs:VisualStates.IsReadOnly), RelativeSource={RelativeSource Self}, Mode=OneWay}" Value="false" />
+							<Condition Binding="{Binding (cs:VisualStates.IsLocked), RelativeSource={RelativeSource Self}, Mode=OneWay}" Value="false" />
+						</MultiDataTrigger.Conditions>
+						<Setter Property="Background" Value="{Binding RelativeSource={RelativeSource Self}, Path=(cs:VisualStates.BgIsSel)}" />
+						<Setter Property="Foreground" Value="{Binding RelativeSource={RelativeSource Self}, Path=(cs:VisualStates.FgIsSel)}" />
+						<Setter Property="BorderBrush" Value="{Binding RelativeSource={RelativeSource Self}, Path=(cs:VisualStates.BdrIsSel)}" />
+
+					</MultiDataTrigger>
+				</Style.Triggers>
+			</Style>
+
+			<!--  textbox  -->
+			<Style x:Key="TbxTrigs.L1"
+					BasedOn="{StaticResource CtrlTrigs.L1}"
+					TargetType="TextBox"
+					>
+				<Setter Property="Template" Value="{StaticResource AppTextBoxCt}" />
+			</Style>
+
+			<!--  border with mouseover  -->
+			<Style x:Key="BdrTrigs.L2"
+					BasedOn="{StaticResource BdrTrigs.L1}"
+					TargetType="Border"
+					>
+				<Style.Triggers>
+
+					<!--  is editing  -->
+					<MultiDataTrigger>
+						<MultiDataTrigger.Conditions>
+							<Condition Binding="{Binding IsEnabled, RelativeSource={RelativeSource Self}, Mode=OneWay}" Value="True" />
+							<Condition Binding="{Binding IsKeyboardFocusWithin, RelativeSource={RelativeSource Self}, Mode=OneWay}" Value="True" />
+							<Condition Binding="{Binding (cs:VisualStates.IsSelected), RelativeSource={RelativeSource Self}, Mode=OneWay}" Value="true" />
+							<Condition Binding="{Binding (cs:VisualStates.IsReadOnly), RelativeSource={RelativeSource Self}, Mode=OneWay}" Value="false" />
+							<Condition Binding="{Binding (cs:VisualStates.IsLocked), RelativeSource={RelativeSource Self}, Mode=OneWay}" Value="false" />
+						</MultiDataTrigger.Conditions>
+						<Setter Property="Background" Value="{Binding RelativeSource={RelativeSource Self}, Path=(cs:VisualStates.BgIsEditing)}" />
+						<Setter Property="BorderBrush" Value="{Binding RelativeSource={RelativeSource Self}, Path=(cs:VisualStates.BdrIsEditing), FallbackValue='transparent'}" />
+					</MultiDataTrigger>
+
+					<MultiDataTrigger>
+						<MultiDataTrigger.Conditions>
+							<Condition Binding="{Binding IsKeyboardFocusWithin, RelativeSource={RelativeSource Self}, Mode=OneWay}" Value="True" />
+							<Condition Binding="{Binding RelativeSource={RelativeSource Self}, Path=IsMouseOver}" Value="True" />
+							<Condition Binding="{Binding (cs:VisualStates.DoesMouseOver), RelativeSource={RelativeSource Self}, Mode=OneWay, FallbackValue='false'}" Value="true" />
+							<Condition Binding="{Binding (cs:VisualStates.IsReadOnly), RelativeSource={RelativeSource Self}, Mode=OneWay}" Value="false" />
+							<Condition Binding="{Binding (cs:VisualStates.IsLocked), RelativeSource={RelativeSource Self}, Mode=OneWay}" Value="false" />
+						</MultiDataTrigger.Conditions>
+						<Setter Property="Background" Value="{Binding RelativeSource={RelativeSource Self}, Path=(cs:VisualStates.BgIsEditingMouseOver)}" />
+						<Setter Property="BorderBrush" Value="{Binding RelativeSource={RelativeSource Self}, Path=(cs:VisualStates.BdrIsEditingMouseOver), FallbackValue='transparent'}" />
+					</MultiDataTrigger>
+
+				</Style.Triggers>
+			</Style>
+
+			<!--  control (incl. textbox, button  -->
+			<Style x:Key="CtrlTrigs.L2"
+					BasedOn="{StaticResource CtrlTrigs.L1}"
+					TargetType="Control"
+					>
+				<Style.Triggers>
+
+					<!--  is editing  -->
+					<MultiDataTrigger>
+						<MultiDataTrigger.Conditions>
+							<Condition Binding="{Binding IsEnabled, RelativeSource={RelativeSource Self}, Mode=OneWay}" Value="True" />
+							<Condition Binding="{Binding IsFocused, RelativeSource={RelativeSource Self}, Mode=OneWay}" Value="True" />
+							<Condition Binding="{Binding (cs:VisualStates.IsSelected), RelativeSource={RelativeSource Self}, Mode=OneWay}" Value="true" />
+							<Condition Binding="{Binding (cs:VisualStates.IsReadOnly), RelativeSource={RelativeSource Self}, Mode=OneWay}" Value="false" />
+							<Condition Binding="{Binding (cs:VisualStates.IsLocked), RelativeSource={RelativeSource Self}, Mode=OneWay}" Value="false" />
+						</MultiDataTrigger.Conditions>
+						<Setter Property="Foreground" Value="{Binding RelativeSource={RelativeSource Self}, Path=(cs:VisualStates.FgIsEditing)}" />
+					</MultiDataTrigger>
+
+					<MultiDataTrigger>
+						<MultiDataTrigger.Conditions>
+							<Condition Binding="{Binding RelativeSource={RelativeSource Self}, Path=IsMouseOver}" Value="True" />
+							<Condition Binding="{Binding (cs:VisualStates.IsReadOnly), RelativeSource={RelativeSource Self}, Mode=OneWay}" Value="false" />
+							<Condition Binding="{Binding (cs:VisualStates.IsLocked), RelativeSource={RelativeSource Self}, Mode=OneWay}" Value="false" />
+						</MultiDataTrigger.Conditions>
+						<Setter Property="Foreground" Value="{Binding RelativeSource={RelativeSource Self}, Path=(cs:VisualStates.FgIsEditingMouseOver)}" />
+
+					</MultiDataTrigger>
+
+				</Style.Triggers>
+			</Style>
+
+			<!--  control (control with interior border -> e.g. combobox)  -->
+			<Style x:Key="CtrlWithBdrTrigs.L2"
+					BasedOn="{StaticResource CtrlWithBdrTrigs.L1}"
+					TargetType="Control"
+					>
+				<Style.Triggers>
+					<!-- <Condition Binding="{Binding IsKeyboardFocusWithin, RelativeSource={RelativeSource Self}, Mode=OneWay}" Value="True" /> -->
+					<!--  is editing  -->
+					<MultiDataTrigger>
+						<MultiDataTrigger.Conditions>
+							<Condition Binding="{Binding IsEnabled, RelativeSource={RelativeSource Self}, Mode=OneWay}" Value="True" />
+							<Condition Binding="{Binding IsKeyboardFocusWithin, RelativeSource={RelativeSource Self}, Mode=OneWay}" Value="True" />
+							<Condition Binding="{Binding (cs:VisualStates.IsSelected), RelativeSource={RelativeSource Self}, Mode=OneWay}" Value="true" />
+							<Condition Binding="{Binding (cs:VisualStates.IsReadOnly), RelativeSource={RelativeSource Self}, Mode=OneWay}" Value="false" />
+							<Condition Binding="{Binding (cs:VisualStates.IsLocked), RelativeSource={RelativeSource Self}, Mode=OneWay}" Value="false" />
+						</MultiDataTrigger.Conditions>
+						<Setter Property="Background" Value="{Binding RelativeSource={RelativeSource Self}, Path=(cs:VisualStates.BgIsEditing)}" />
+						<Setter Property="Foreground" Value="{Binding RelativeSource={RelativeSource Self}, Path=(cs:VisualStates.FgIsEditing)}" />
+						<Setter Property="BorderBrush" Value="{Binding RelativeSource={RelativeSource Self}, Path=(cs:VisualStates.BdrIsEditing)}" />
+						<Setter Property="cs:CsCommonAp.BgCommonMouseOver" Value="{Binding RelativeSource={RelativeSource Self}, Path=(cs:VisualStates.BgIsEditingMouseOver)}" />
+						<Setter Property="cs:CsCommonAp.FgCommonMouseOver" Value="{Binding RelativeSource={RelativeSource Self}, Path=(cs:VisualStates.FgIsEditingMouseOver)}" />
+						<Setter Property="cs:CsCommonAp.BdrCommonMouseOver" Value="{Binding RelativeSource={RelativeSource Self}, Path=(cs:VisualStates.BdrIsEditingMouseOver)}" />
+					</MultiDataTrigger>
+
+
+				</Style.Triggers>
+			</Style>
+
+			<!--  textbox  -->
+			<Style x:Key="TbxTrigs.L2"
+					BasedOn="{StaticResource CtrlTrigs.L2}"
+					TargetType="TextBox"
+					>
+				<Setter Property="Template" Value="{StaticResource AppTextBoxCt}" />
+			</Style>
+
+
+			<!--  border with mouseover  -->
+			<Style x:Key="BdrTrigs.L3"
+					BasedOn="{StaticResource BdrTrigs.L2}"
+					TargetType="Border"
+					>
+				<Style.Triggers>
+
+					<!--  read only  (i.e. editing not allowed)  -->
+					<MultiDataTrigger>
+						<MultiDataTrigger.Conditions>
+							<Condition Binding="{Binding IsEnabled, RelativeSource={RelativeSource Self}, Mode=OneWay}" Value="True" />
+							<Condition Binding="{Binding (cs:VisualStates.IsReadOnly), RelativeSource={RelativeSource Self}, Mode=OneWay}" Value="true" />
+							<Condition Binding="{Binding (cs:VisualStates.IsLocked), RelativeSource={RelativeSource Self}, Mode=OneWay}" Value="false" />
+						</MultiDataTrigger.Conditions>
+						<Setter Property="Background" Value="{Binding RelativeSource={RelativeSource Self}, Path=(cs:VisualStates.BgIsReadOnly)}" />
+						<Setter Property="BorderBrush" Value="{Binding RelativeSource={RelativeSource Self}, Path=(cs:VisualStates.BdrIsReadOnly), FallbackValue='transparent'}" />
+
+					</MultiDataTrigger>
+				</Style.Triggers>
+			</Style>
+
+			<!--  control (incl. textbox, button  -->
+			<Style x:Key="CtrlTrigs.L3"
+					BasedOn="{StaticResource CtrlTrigs.L2}"
+					TargetType="Control"
+					>
+				<Style.Triggers>
+
+					<!--  read only  (i.e. editing not allowed)  -->
+					<MultiDataTrigger>
+						<MultiDataTrigger.Conditions>
+							<Condition Binding="{Binding IsEnabled, RelativeSource={RelativeSource Self}, Mode=OneWay}" Value="True" />
+							<Condition Binding="{Binding (cs:VisualStates.IsReadOnly), RelativeSource={RelativeSource Self}, Mode=OneWay}" Value="true" />
+							<Condition Binding="{Binding (cs:VisualStates.IsLocked), RelativeSource={RelativeSource Self}, Mode=OneWay}" Value="false" />
+						</MultiDataTrigger.Conditions>
+						<Setter Property="Foreground" Value="{Binding RelativeSource={RelativeSource Self}, Path=(cs:VisualStates.FgIsReadOnly)}" />
+					</MultiDataTrigger>
+				</Style.Triggers>
+			</Style>
+
+			<!--  control (control with interior border -> e.g. combobox)  -->
+			<Style x:Key="CtrlWithBdrTrigs.L3"
+					BasedOn="{StaticResource CtrlWithBdrTrigs.L2}"
+					TargetType="Control"
+					>
+				<Style.Triggers>
+					<!-- <Condition Binding="{Binding IsKeyboardFocusWithin, RelativeSource={RelativeSource Self}, Mode=OneWay}" Value="True" /> -->
+					<!--  is editing  -->
+					<MultiDataTrigger>
+						<MultiDataTrigger.Conditions>
+							<Condition Binding="{Binding IsEnabled, RelativeSource={RelativeSource Self}, Mode=OneWay}" Value="True" />
+							<Condition Binding="{Binding (cs:VisualStates.IsReadOnly), RelativeSource={RelativeSource Self}, Mode=OneWay}" Value="true" />
+							<Condition Binding="{Binding (cs:VisualStates.IsLocked), RelativeSource={RelativeSource Self}, Mode=OneWay}" Value="false" />
+						</MultiDataTrigger.Conditions>
+						<Setter Property="Background" Value="{Binding RelativeSource={RelativeSource Self}, Path=(cs:VisualStates.BgIsReadOnly)}" />
+						<Setter Property="Foreground" Value="{Binding RelativeSource={RelativeSource Self}, Path=(cs:VisualStates.FgIsReadOnly)}" />
+						<Setter Property="BorderBrush" Value="{Binding RelativeSource={RelativeSource Self}, Path=(cs:VisualStates.BdrIsReadOnly)}" />
+					</MultiDataTrigger>
+
+				</Style.Triggers>
+			</Style>
+
+			<!--  textbox  -->
+			<Style x:Key="TbxTrigs.L3"
+					BasedOn="{StaticResource CtrlTrigs.L3}"
+					TargetType="TextBox"
+					>
+				<Setter Property="Template" Value="{StaticResource AppTextBoxCt}" />
+			</Style>
+
+
+			<!--  border with mouseover  -->
+			<Style x:Key="BdrTrigs.L4"
+					BasedOn="{StaticResource BdrTrigs.L3}"
+					TargetType="Border"
+					>
+				<Style.Triggers>
+
+					<!--  is locked  -->
+					<MultiDataTrigger>
+						<MultiDataTrigger.Conditions>
+							<!-- <Condition Binding="{Binding IsEnabled, RelativeSource={RelativeSource Self}, Mode=OneWay}" Value="True" /> -->
+							<Condition Binding="{Binding (cs:VisualStates.IsLocked), RelativeSource={RelativeSource Self}, Mode=OneWay}" Value="true" />
+						</MultiDataTrigger.Conditions>
+						<Setter Property="Background" Value="{Binding RelativeSource={RelativeSource Self}, Path=(cs:VisualStates.BgIsLocked)}" />
+						<Setter Property="BorderBrush" Value="{Binding RelativeSource={RelativeSource Self}, Path=(cs:VisualStates.BdrIsLocked), FallbackValue='transparent'}" />
+					</MultiDataTrigger>
+				</Style.Triggers>
+			</Style>
+
+			<!--  control (incl. textbox, button  -->
+			<Style x:Key="CtrlTrigs.L4"
+					BasedOn="{StaticResource CtrlTrigs.L3}"
+					TargetType="Control"
+					>
+				<Style.Triggers>
+
+					<!--  is locked  -->
+					<MultiDataTrigger>
+						<MultiDataTrigger.Conditions>
+							<Condition Binding="{Binding IsEnabled, RelativeSource={RelativeSource Self}, Mode=OneWay}" Value="True" />
+							<Condition Binding="{Binding (cs:VisualStates.IsLocked), RelativeSource={RelativeSource Self}, Mode=OneWay}" Value="true" />
+						</MultiDataTrigger.Conditions>
+						<Setter Property="Foreground" Value="{Binding RelativeSource={RelativeSource Self}, Path=(cs:VisualStates.FgIsLocked)}" />
+					</MultiDataTrigger>
+				</Style.Triggers>
+			</Style>
+
+			<!--  control (control with interior border -> e.g. combobox)  -->
+			<Style x:Key="CtrlWithBdrTrigs.L4"
+					BasedOn="{StaticResource CtrlWithBdrTrigs.L3}"
+					TargetType="Control"
+					>
+				<Style.Triggers>
+					<!-- <Condition Binding="{Binding IsKeyboardFocusWithin, RelativeSource={RelativeSource Self}, Mode=OneWay}" Value="True" /> -->
+					<!--  is editing  -->
+					<MultiDataTrigger>
+						<MultiDataTrigger.Conditions>
+							<Condition Binding="{Binding IsEnabled, RelativeSource={RelativeSource Self}, Mode=OneWay}" Value="True" />
+							<Condition Binding="{Binding (cs:VisualStates.IsLocked), RelativeSource={RelativeSource Self}, Mode=OneWay}" Value="true" />
+						</MultiDataTrigger.Conditions>
+						<Setter Property="Background" Value="{Binding RelativeSource={RelativeSource Self}, Path=(cs:VisualStates.BgIsLocked)}" />
+						<Setter Property="Foreground" Value="{Binding RelativeSource={RelativeSource Self}, Path=(cs:VisualStates.FgIsLocked)}" />
+						<Setter Property="BorderBrush" Value="{Binding RelativeSource={RelativeSource Self}, Path=(cs:VisualStates.BdrIsLocked)}" />
+					</MultiDataTrigger>
+
+				</Style.Triggers>
+			</Style>
+
+			<!--  textbox  -->
+			<Style x:Key="TbxTrigs.L4"
+					BasedOn="{StaticResource CtrlTrigs.L4}"
+					TargetType="TextBox"
+					>
+				<Setter Property="Template" Value="{StaticResource AppTextBoxCt}" />
+			</Style>
+
+
+			<!--  border with mouseover  -->
+			<Style x:Key="BdrTrigs.L5"
+					BasedOn="{StaticResource BdrTrigs.L4}"
+					TargetType="Border"
+					>
+				<Style.Triggers>
+					<MultiDataTrigger>
+						<MultiDataTrigger.Conditions>
+							<Condition Binding="{Binding (cs:VisualStates.IsGoodBad), RelativeSource={RelativeSource Self}, Mode=OneWay}" Value="true" />
+							<!-- <Condition Binding="{Binding (cs:VisualStates.IsSelected), RelativeSource={RelativeSource Self}, Mode=OneWay}" Value="true" /> -->
+							<!-- <Condition Binding="{Binding (cs:VisualStates.IsReadOnly), RelativeSource={RelativeSource Self}, Mode=OneWay}" Value="false" /> -->
+							<!-- <Condition Binding="{Binding (cs:VisualStates.IsLocked), RelativeSource={RelativeSource Self}, Mode=OneWay}" Value="false" /> -->
+						</MultiDataTrigger.Conditions>
+						<Setter Property="BorderBrush" Value="{StaticResource Bdr.Good}" />
+					</MultiDataTrigger>
+
+					<MultiDataTrigger>
+						<MultiDataTrigger.Conditions>
+							<Condition Binding="{Binding (cs:VisualStates.IsGoodBad), RelativeSource={RelativeSource Self}, Mode=OneWay}" Value="false" />
+							<!-- <Condition Binding="{Binding (cs:VisualStates.IsSelected), RelativeSource={RelativeSource Self}, Mode=OneWay}" Value="true" /> -->
+							<!-- <Condition Binding="{Binding (cs:VisualStates.IsReadOnly), RelativeSource={RelativeSource Self}, Mode=OneWay}" Value="false" /> -->
+							<!-- <Condition Binding="{Binding (cs:VisualStates.IsLocked), RelativeSource={RelativeSource Self}, Mode=OneWay}" Value="false" /> -->
+						</MultiDataTrigger.Conditions>
+						<Setter Property="BorderBrush" Value="{StaticResource Bdr.Bad}" />
+					</MultiDataTrigger>
+
+				</Style.Triggers>
+
+			</Style>
+
+
+			<!--  field styles  -->
+
+			<!--  textbox examples  -->
+			<Style x:Key="TbxExample"
+					BasedOn="{StaticResource TbxTrigs.L4}"
+					TargetType="TextBox"
+					>
+				<Setter Property="FontSize" Value="{StaticResource FontSize.Small}" />
+				<Setter Property="TextAlignment" Value="Center" />
+				<Setter Property="BorderBrush" Value="Red" />
+				<Setter Property="Padding" Value="0" />
+				<Setter Property="Margin" Value="0" />
+				<Setter Property="VerticalAlignment" Value="Center" />
+				<Setter Property="Background" Value="Transparent" />
+				<Setter Property="BorderThickness" Value="0" />
+			</Style>
+
+
+			<!--  border(s) for titles  -->
+			<Style x:Key="Tbx.Editable"
+					BasedOn="{StaticResource TbxTrigs.L4}"
+					TargetType="TextBox"
+					>
+				<Setter Property="FontSize" Value="{StaticResource FontSize.Normal}" />
+				<Setter Property="Background" Value="Transparent" />
+				<Setter Property="BorderThickness" Value="0" />
+				<Setter Property="HorizontalAlignment" Value="Stretch" />
+				<Setter Property="Margin" Value="0" />
+				<Setter Property="Padding" Value="5,2,0,4" />
+
+			</Style>
+
+
+			<!--  editable control  -->
+			<!--  do not assign background here  -->
+			<Style x:Key="Ctrl.Editable"
+					BasedOn="{StaticResource CtrlWithBdrTrigs.L4}"
+					TargetType="Control"
+					>
+				<Setter Property="FontSize" Value="{StaticResource FontSize.Normal}" />
+				<Setter Property="BorderThickness" Value="0" />
+				<Setter Property="HorizontalAlignment" Value="Stretch" />
+				<Setter Property="VerticalAlignment" Value="Center" />
+				<Setter Property="Margin" Value="0" />
+				<Setter Property="Padding" Value="5,2,0,4" />
+			</Style>
+
+
+			<!--  editable control  -->
+			<Style x:Key="Combobox1"
+					BasedOn="{StaticResource Ctrl.Editable}"
+					TargetType="ComboBox"
+					>
+				<Setter Property="IsEditable" Value="False" />
+				<Setter Property="IsReadOnly" Value="True" />
+				<Setter Property="IsSynchronizedWithCurrentItem" Value="True" />
+				<Setter Property="FocusVisualStyle" Value="{x:Null}" />
+				<Setter Property="BorderThickness" Value="1" />
+				<Setter Property="Margin" Value="0,5,0,0" />
+				<Setter Property="Padding" Value="0,1,0,4" />
+				<Setter Property="MaxDropDownHeight" Value="120" />
+				<Setter Property="Template" Value="{StaticResource CsComboBoxCt}" />
+			</Style>
+			<!--  -->
+
+
+
+
+</ResourceDictionary>

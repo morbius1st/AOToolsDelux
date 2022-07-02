@@ -143,8 +143,8 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Windows\Skin\CyberStudioSkin.xaml">
-      <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+      <Generator>XamlIntelliSenseFileGenerator</Generator>
     </Page>
     <Page Include="Windows\Support\CsButtons.xaml">
       <SubType>Designer</SubType>
