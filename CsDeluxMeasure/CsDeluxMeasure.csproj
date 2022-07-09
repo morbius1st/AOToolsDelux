@@ -86,6 +86,7 @@
   </PropertyGroup>
 	-->
   <ItemGroup>
+    <Reference Include="Microsoft.CSharp" />
     <Reference Include="RevitAPI">
       <HintPath>C:\Program Files\Autodesk\Revit 2021\RevitAPI.dll</HintPath>
       <Private>False</Private>
@@ -156,9 +157,12 @@
     <Compile Include="UnitsUtil\UnitUStyle.cs" />
     <Compile Include="Windows\AWindow.cs" />
     <Compile Include="Windows\ColData.cs" />
+    <Compile Include="Windows\Support\CsButtonsAp.cs" />
     <Compile Include="Windows\Support\CsCheckBoxAp.cs" />
     <Compile Include="Windows\Support\CsComboBoxAp.cs" />
     <Compile Include="Windows\Support\CsCommonAp.cs" />
+    <Compile Include="Windows\Support\CsBorderAp.cs" />
+    <Compile Include="Windows\Support\CsPathAp.cs" />
     <Compile Include="Windows\Support\CsScrollBarAp.cs" />
     <Compile Include="Windows\Support\CsScrollViewerAp.cs" />
     <Compile Include="Windows\Support\CustomProperties.cs" />

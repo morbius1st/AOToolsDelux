@@ -48,6 +48,7 @@
 	<Color x:Key="Blue.Gray.950">#FBFCFC</Color>
 	<Color x:Key="Blue.Gray.900">#F1F3F5</Color>
 	<Color x:Key="Blue.Gray.800">#DCE2E5</Color>
+	<Color x:Key="Blue.Gray.750">#CBD2D5</Color>
 	<Color x:Key="Blue.Gray.700">#BBC7CD</Color>
 	<Color x:Key="Blue.Gray.650">#AAB9C0</Color>
 	<Color x:Key="Blue.Gray.600">#95A8B1</Color>

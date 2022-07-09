@@ -158,7 +158,7 @@
 							<Setter Property="Background" Value="{StaticResource Ckbx.Bg.MouseOver}" />
 						</Trigger>
 						<Trigger Property="IsEnabled" Value="false">
-							<Setter Property="Foreground" Value="{StaticResource Fg.NotSel}" />
+							<Setter Property="Foreground" Value="{StaticResource Fg.IsEnabled}" />
 							<Setter Property="Fill" TargetName="optionMark" Value="{StaticResource Ckbx.Glyph.Disabled}" />
 							<Setter Property="Fill" TargetName="indeterminateMark" Value="{StaticResource Ckbx.Glyph.Disabled}" />
 							<Setter Property="Background" Value="{StaticResource Ckbx.Bg.Disabled}" />

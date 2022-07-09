@@ -354,12 +354,11 @@ namespace CsDeluxMeasure.UnitsUtil
 		private ForgeTypeId id;
 		private ForgeTypeId symbol;
 		private UStyle ustyle;
+		private int activeElement = -1;
 
 		protected UnitsDataR() { }
 
-		public UnitsDataR(ForgeTypeId id,
-			ForgeTypeId symbol,
-			UStyle us)
+		public UnitsDataR(ForgeTypeId id, ForgeTypeId symbol, UStyle us)
 		{
 			Id = id;
 			Symbol = symbol;
@@ -411,6 +410,19 @@ namespace CsDeluxMeasure.UnitsUtil
 			}
 		}
 
+		[IgnoreDataMember]
+		public int ActiveElement
+		{
+			get => activeElement;
+			set
+			{
+				if (activeElement == value) return;
+				activeElement = value;
+				OnPropertyChanged();
+			}
+		}
+
+
 		protected override string formatSymbol()
 		{
 			return UnitsSupport.GetSymbol(Symbol, Ustyle.UnitCat);
@@ -448,6 +460,8 @@ namespace CsDeluxMeasure.UnitsUtil
 			return $"{formatted}  ({Ustyle.Sample.Value:G})";
 
 		}
+
+
 
 		public bool Equals(UnitsDataR other)
 		{

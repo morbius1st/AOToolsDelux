@@ -8,19 +8,23 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Controls.Primitives;
 using System.Windows.Data;
 using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Interop;
 using System.Windows.Media;
+using System.Windows.Media.Animation;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using System.Windows.Threading;
 using Autodesk.Revit.UI;
 using CsDeluxMeasure.Annotations;
 using CsDeluxMeasure.UnitsUtil;
 using SettingsManager;
 using UtilityLibrary;
 using ComboBox = System.Windows.Controls.ComboBox;
+using TextBox = System.Windows.Controls.TextBox;
 
 namespace CsDeluxMeasure.Windows
 {
@@ -30,6 +34,14 @@ namespace CsDeluxMeasure.Windows
 	public partial class UnitStylesMgr : Window, INotifyPropertyChanged
 	{
 	#region fixed
+
+		public const int RIBBONFAV = 1;
+
+		public static int RIBBONFAVORITE = 1;
+		public static int DIALOGLEFT = 2;
+		public static int DIALOGRIGHT = 3;
+
+		public static string Test = "Name";
 
 		private readonly string[] contentSelection = new [] { "Adjust Style Order", "Adjust Saved Styles" };
 		private readonly string[] closeSelection = new [] { "Done", "Save and Done" };
@@ -54,7 +66,7 @@ namespace CsDeluxMeasure.Windows
 		private ListCollectionView dialogLeftStyles;
 		private ListCollectionView dialogRightStyles;
 
-		private	KeyValuePair<string, UnitsDataR> cbxSelItem;
+		private KeyValuePair<string, UnitsDataR> cbxSelItem;
 		private List<KeyValuePair<string, string>> cbxList;
 		private KeyValuePair<string, string> cbxSelectedItem;
 
@@ -86,7 +98,7 @@ namespace CsDeluxMeasure.Windows
 		private bool? isEditing = false;
 		private bool? isReadOnly = false;
 		private bool? isLocked = false;
-		
+
 	#endregion
 
 	#region for add unit
@@ -100,6 +112,37 @@ namespace CsDeluxMeasure.Windows
 
 	#endregion
 
+	#region for popup
+
+
+		// private TextBox popupTargetTbxNewName;
+		// private TextBox popupTargetTbxNewDesc;
+
+		private TextBox popupTargetTbxEditName;
+		private TextBox popupTargetTbxEditDesc;
+		private TextBox popupTargetTbxEditSample;
+		
+		private CheckBox popupTargetCkbxRibbonFavs;
+		private CheckBox popupTargetCkbxDialogLeft;
+		private CheckBox popupTargetCkbxDialogRight;
+
+		private int currPopupIdx = -1;
+		private Popup[] popups = new Popup[20];
+		private byte editNamePopup = 0;
+		private byte editDescPopup = 1;
+		private byte editSamplePopup = 2;
+
+		private byte popupRibbonFavs = 3;
+
+
+		private bool popupIsEntered;
+		private DoubleAnimation d = new DoubleAnimation(1, new Duration(TimeSpan.FromSeconds(2)));
+		private AnimationClock popupAniClock;
+
+		private DispatcherTimer timer;
+		private bool timerActive;
+
+	#endregion
 
 		private bool cbx1UnitSelect = false;
 
@@ -114,12 +157,12 @@ namespace CsDeluxMeasure.Windows
 		private int lbxSelIndex;
 		private int cbxSelIndex;
 		private int dialogIndex;
-		private int dialogIdx = 0;
 
 		// properties
 		private Image img;
 		private string newName;
 		private string newDesc;
+
 
 	#endregion
 
@@ -189,7 +232,6 @@ namespace CsDeluxMeasure.Windows
 				showUnitStyleSettings(value.Value);
 			}
 		}
-
 
 
 		public int Count => styles.Count;
@@ -277,7 +319,6 @@ namespace CsDeluxMeasure.Windows
 
 		public int IsClosing
 		{
-
 			get => isClosing;
 
 			set
@@ -315,7 +356,6 @@ namespace CsDeluxMeasure.Windows
 
 		public bool AddUnitSelected
 		{
-
 			get => addUnitSelected;
 
 			set
@@ -359,7 +399,6 @@ namespace CsDeluxMeasure.Windows
 
 			set
 			{
-
 				if (value == isSelected) return;
 				isSelected = value;
 
@@ -450,9 +489,6 @@ namespace CsDeluxMeasure.Windows
 				OnPropertyChanged();
 			}
 		}
-
-
-
 
 
 		public bool Cbx1UnitSelect
@@ -621,6 +657,47 @@ namespace CsDeluxMeasure.Windows
 			}
 		}
 
+		public static int RIBBONFAVS => 1;
+
+		public TextBox PopupTargetTbxEditName
+		{
+			get => popupTargetTbxEditName;
+			set
+			{
+				popupTargetTbxEditName = value;
+				OnPropertyChanged();
+			}
+		}
+
+		public TextBox PopupTargetTbxEditDesc
+		{
+			get => popupTargetTbxEditDesc;
+			set
+			{
+				popupTargetTbxEditDesc = value;
+				OnPropertyChanged();
+			}
+		}
+
+		public TextBox PopupTargetTbxEditSample
+		{
+			get => popupTargetTbxEditSample;
+			set
+			{
+				popupTargetTbxEditSample = value;
+				OnPropertyChanged();
+			}
+		}
+
+		public CheckBox PopupTargetCkbxRibbonFavs
+		{
+			get => popupTargetCkbxRibbonFavs;
+			set
+			{
+				popupTargetCkbxRibbonFavs = value;
+				OnPropertyChanged();
+			}
+		}
 
 	#endregion
 
@@ -636,7 +713,7 @@ namespace CsDeluxMeasure.Windows
 			// cannot be 1 or less
 			// cannot be greater than last number
 
-			return  pos > 1 && pos <= Count;
+			return pos > 1 && pos <= Count;
 		}
 
 		public bool ValidateNewName(string newName)
@@ -691,6 +768,7 @@ namespace CsDeluxMeasure.Windows
 
 			InsPosition = 2;
 
+			LbxSelIndex = 3;
 			Cbx1UnitSelect = true;
 
 			OnPropertyChanged(nameof(StylesView));
@@ -825,7 +903,7 @@ namespace CsDeluxMeasure.Windows
 
 				if (child is T && child.Name.Equals(sChildName))
 				{
-					childElement = (T)child;
+					childElement = (T) child;
 					break;
 				}
 
@@ -928,9 +1006,10 @@ namespace CsDeluxMeasure.Windows
 
 		private void WinUnitStyle_Loaded(object sender, RoutedEventArgs e)
 		{
-			LbxSelIndex = 3;
-
-			CbxSelIndex = 0;
+			popups[editNamePopup] = CsWpfUtilities.FindElementByName<Popup>(this, "PuEditName");
+			popups[editDescPopup] = CsWpfUtilities.FindElementByName<Popup>(this, "PuEditDesc");
+			popups[editSamplePopup] = CsWpfUtilities.FindElementByName<Popup>(this, "PuEditSample");
+			popups[popupRibbonFavs] = CsWpfUtilities.FindElementByName<Popup>(this, "PuRibbonFavs");
 
 
 			HwndSource source = HwndSource.FromHwnd(new WindowInteropHelper(this).Handle);
@@ -942,9 +1021,6 @@ namespace CsDeluxMeasure.Windows
 			UserSettings.Data.WinPosUnitStyleMgr = new WindowLocation(this.Top, this.Left);
 			UserSettings.Admin.Write();
 		}
-
-
-
 
 
 		private void lbx_Initialized(object sender, EventArgs e)
@@ -1154,7 +1230,151 @@ namespace CsDeluxMeasure.Windows
 			NewDesc = null;
 		}
 
+		private void BtnFavCkbxStatus_OnClick(object sender, RoutedEventArgs e)
+		{
+			int favButtonIdx;
+			bool result = Int32.TryParse((string) ((Button) sender).Tag, out favButtonIdx);
+
+			if (!result) return;
+
+			LbxSelItem.ActiveElement = favButtonIdx;
+
+			TaskDialog td = new TaskDialog("title");
+
+			td.MainIcon = TaskDialogIcon.TaskDialogIconInformation;
+
+			td.MainInstruction = $"button {favButtonIdx} pressed";
+
+			td.Show();
+
+			LbxSelItem.ActiveElement = -1;
+		}
+
 	#endregion
 
+	#region popup
+
+		private void BtnRibbonFavs_OnClick(object sender, RoutedEventArgs e)
+		{
+			PopupTargetCkbxRibbonFavs = (CheckBox) ((Button) sender).Tag;
+
+			beginPopup(popupRibbonFavs);
+		}
+
+		private void BtnEditName_OnClick(object sender, RoutedEventArgs e)
+		{
+			PopupTargetTbxEditName = (TextBox) ((Button) sender).Tag;
+
+			beginPopup(editNamePopup);
+		}
+
+		private void BtnEditDesc_OnClick(object sender, RoutedEventArgs e)
+		{
+			PopupTargetTbxEditDesc = (TextBox) ((Button) sender).Tag;
+
+			beginPopup(editDescPopup);
+		}
+
+		private void BtnEditSample_OnClick(object sender, RoutedEventArgs e)
+		{
+			PopupTargetTbxEditSample = (TextBox) ((Button) sender).Tag;
+
+			beginPopup(editSamplePopup);
+		}
+
+		private void beginPopup(byte popupId)
+		{
+			if (currPopupIdx >= 0)
+			{
+				return;
+			}
+
+			popupOpen(popupId);
+
+			popupIsEntered = false;
+
+			startTimer();
+		}
+
+
+
+
+		private void Popup_OnMouseEnter(object sender, RoutedEventArgs e)
+		{
+			popupIsEntered = true;
+
+			removeTimer();
+		}
+
+		private void Popup_OnMouseLeave(object sender, RoutedEventArgs e)
+		{
+			popupIsEntered = false;
+
+			startTimer();
+		}
+
+		private void BtnPopupClose_OnClick(object sender, RoutedEventArgs e)
+		{
+			popupClose();
+		}
+
+		private void popupOpen(byte idx)
+		{
+			currPopupIdx = idx;
+
+			if (!popups[currPopupIdx].IsOpen) popups[currPopupIdx].IsOpen = true;
+		}
+
+		public void popupClose()
+		{
+			if (currPopupIdx < 0)
+			{
+				return;
+			}
+
+			if (popups[currPopupIdx].IsOpen) popups[currPopupIdx].IsOpen = false;
+
+			removeTimer();
+
+			currPopupIdx = -1;
+		}
+
+
+		private void popupTimerCompleted(object sender, EventArgs e)
+		{
+			removeTimer();
+
+			if (popupIsEntered)
+			{
+				return;
+			}
+
+			popupClose();
+		}
+
+		private void removeTimer()
+		{
+			if (!timerActive) return;
+
+			timer.Stop();
+
+			timerActive = false;
+		}
+
+		private void startTimer()
+		{
+			if (timerActive) return;
+
+			timer = new DispatcherTimer();
+			timer.Interval = new TimeSpan(0, 0, 3);
+
+			timerActive = true;
+
+			timer.Tick += popupTimerCompleted;
+
+			timer.Start();
+		}
+
+	#endregion
 	}
 }

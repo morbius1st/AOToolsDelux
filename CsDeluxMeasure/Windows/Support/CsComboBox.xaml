@@ -64,7 +64,7 @@
 	<!-- 									<Setter Property="TextElement.Foreground" Value="{Binding Path=(cs:CsComboBoxAp.MouseOverFgBrush), RelativeSource={RelativeSource AncestorType={x:Type ComboBox}}}" /> -->
 	<!-- 								</Trigger> -->
 	<!-- 								~1~  false  @1@ -->
-	<!-- 								~1~ <Setter Property="TextElement.Foreground" Value="{StaticResource Fg.NotSel}" /> @1@ -->
+	<!-- 								~1~ <Setter Property="TextElement.Foreground" Value="{StaticResource Fg.IsEnabled}" /> @1@ -->
 	<!-- 								<Trigger Property="IsEnabled" Value="False"> -->
 	<!-- 									<Setter Property="TextElement.Foreground" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Foreground}" /> -->
 	<!-- 									<Setter Property="Background" Value="{Binding Path=(cs:CsComboBoxAp.NotEnabledBrush), RelativeSource={RelativeSource AncestorType={x:Type ComboBox}}}" /> -->
@@ -253,7 +253,7 @@
 	<!-- 								<VisualState x:Name="Disabled"> -->
 	<!-- 									<Storyboard> -->
 	<!-- 										<ColorAnimationUsingKeyFrames Storyboard.TargetName="PART_EditableTextBox" Storyboard.TargetProperty="(TextElement.Foreground).(SolidColorBrush.Color)"> -->
-	<!-- 											<EasingColorKeyFrame KeyTime="0" Value="{Binding Color, Source={StaticResource Fg.NotSel}}" /> -->
+	<!-- 											<EasingColorKeyFrame KeyTime="0" Value="{Binding Color, Source={StaticResource Fg.IsEnabled}}" /> -->
 	<!-- 										</ColorAnimationUsingKeyFrames> -->
 	<!-- 									</Storyboard> -->
 	<!-- 								</VisualState> -->
@@ -507,7 +507,7 @@
 						<VisualState x:Name="Disabled">
 							<Storyboard>
 								<ColorAnimationUsingKeyFrames Storyboard.TargetName="PART_EditableTextBox" Storyboard.TargetProperty="(TextElement.Foreground).(SolidColorBrush.Color)">
-									<EasingColorKeyFrame KeyTime="0" Value="{Binding Color, Source={StaticResource Fg.NotSel}}" />
+									<EasingColorKeyFrame KeyTime="0" Value="{Binding Color, Source={StaticResource Fg.IsEnabled}}" />
 								</ColorAnimationUsingKeyFrames>
 							</Storyboard>
 						</VisualState>
@@ -563,8 +563,8 @@
 	<!-- <SolidColorBrush x:Key="Cbx.Item.Bg.Sel.MouseOver" Color="#1AFFFFFF" /> -->
 
 	<!--  not sel / mouse over  -->
-	<!-- <SolidColorBrush x:Key="Cbx.Item.Bdr.NotSel.MouseOver" Color="#7FFFFFFF"/> -->
-	<!-- <SolidColorBrush x:Key="Cbx.Item.Bg.NotSel.MouseOver" Color="#2FFFFFFF" /> -->
+	<!-- <SolidColorBrush x:Key="Cbx.Item.Bdr.IsEnabled.MouseOver" Color="#7FFFFFFF"/> -->
+	<!-- <SolidColorBrush x:Key="Cbx.Item.Bg.IsEnabled.MouseOver" Color="#2FFFFFFF" /> -->
 
 
 	<!--  removed  -->
@@ -612,8 +612,8 @@
 								<Condition Property="IsSelected" Value="False" />
 								<Condition Property="IsMouseOver" Value="True" />
 							</MultiTrigger.Conditions>
-							<Setter Property="Background" TargetName="Bd" Value="{StaticResource Cbx.DropDownItem.Bg.NotSel.MouseOver}" />
-							<Setter Property="BorderBrush" TargetName="Bd" Value="{StaticResource Cbx.DropDownItem.Bdr.NotSel.MouseOver}" />
+							<Setter Property="Background" TargetName="Bd" Value="{StaticResource Cbx.DropDownItem.Bg.IsEnabled.MouseOver}" />
+							<Setter Property="BorderBrush" TargetName="Bd" Value="{StaticResource Cbx.DropDownItem.Bdr.IsEnabled.MouseOver}" />
 						</MultiTrigger>
 
 						<!--  3 sel  -->

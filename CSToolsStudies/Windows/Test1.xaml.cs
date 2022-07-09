@@ -18,7 +18,15 @@ namespace CSToolsStudies.Windows
 	/// </summary>
 	public partial class Test1 : Window, INotifyPropertyChanged
 	{
+		public const int RIBBONFAV = 1;
+
+		public static int RIBBONFAVS = 1;
+		public static int DIALOGLEFT = 2;
+		public static int DIALOGRIGHT = 3;
+
+
 		private bool expandWindow = true;
+
 
 	#region for item list
 
@@ -350,13 +358,7 @@ namespace CSToolsStudies.Windows
 		}
 
 
-		private void BtnPopupClose_OnClick(object sender, RoutedEventArgs e)
-		{
-			popupClose();
-		}
 
-
-				
 		private void Action1Info_MouseDown(object sender, MouseButtonEventArgs e)
 		{
 			if (currPopupIdx >= 0)
@@ -370,7 +372,6 @@ namespace CSToolsStudies.Windows
 
 			startTimer();
 		}
-
 
 		private void CanEditInfo_MouseDown(object sender, MouseButtonEventArgs e)
 		{
@@ -387,7 +388,12 @@ namespace CSToolsStudies.Windows
 		}
 
 
+		private void Popup_OnMouseEnter(object sender, RoutedEventArgs e)
+		{
+			popupIsEntered = true;
 
+			removeTimer();
+		}
 
 		private void Popup_OnMouseLeave(object sender, RoutedEventArgs e)
 		{
@@ -396,11 +402,9 @@ namespace CSToolsStudies.Windows
 			startTimer();
 		}
 
-		private void Popup_OnMouseEnter(object sender, RoutedEventArgs e)
+		private void BtnPopupClose_OnClick(object sender, RoutedEventArgs e)
 		{
-			popupIsEntered = true;
-
-			removeTimer();
+			popupClose();
 		}
 
 
@@ -447,7 +451,6 @@ namespace CSToolsStudies.Windows
 			timerActive = false;
 		}
 
-
 		private void startTimer()
 		{
 			if (timerActive) return;
@@ -461,6 +464,9 @@ namespace CSToolsStudies.Windows
 
 			timer.Start();
 		}
+
+
+
 
 		private Skin skin { get; set; } = AppRibbon.Skin;
 

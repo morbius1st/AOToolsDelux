@@ -74,6 +74,26 @@ namespace CsDeluxMeasure.Windows.Support
 
 	#endregion
 
+	#region general - is_activated
+
+		public static readonly DependencyProperty
+			IsActivatedProperty = DependencyProperty.RegisterAttached(
+				"IsActivated", typeof(bool), typeof(VisualStates),
+				new FrameworkPropertyMetadata(false,
+					FrameworkPropertyMetadataOptions.Inherits));
+
+		public static void SetIsActivated(UIElement e, bool value)
+		{
+			e.SetValue(IsActivatedProperty, value);
+		}
+
+		public static bool GetIsActivated(UIElement e)
+		{
+			return (bool) e.GetValue(IsActivatedProperty);
+		}
+
+	#endregion
+
 	#region general - is_selected
 
 		public static readonly DependencyProperty
@@ -94,22 +114,22 @@ namespace CsDeluxMeasure.Windows.Support
 
 	#endregion
 		
-	#region general - is_focused
+	#region general - is_editing
 
 		public static readonly DependencyProperty
-			IsFocusedProperty = DependencyProperty.RegisterAttached(
-				"IsFocused", typeof(bool), typeof(VisualStates),
+			IsEditingProperty = DependencyProperty.RegisterAttached(
+				"IsEditing", typeof(bool), typeof(VisualStates),
 				new FrameworkPropertyMetadata(false,
 					FrameworkPropertyMetadataOptions.Inherits));
 
-		public static void SetIsFocused(UIElement e, bool value)
+		public static void SetIsEditing(UIElement e, bool value)
 		{
-			e.SetValue(IsFocusedProperty, value);
+			e.SetValue(IsEditingProperty, value);
 		}
 
-		public static bool GetIsFocused(UIElement e)
+		public static bool GetIsEditing(UIElement e)
 		{
-			return (bool) e.GetValue(IsFocusedProperty);
+			return (bool) e.GetValue(IsEditingProperty);
 		}
 
 	#endregion
@@ -134,7 +154,7 @@ namespace CsDeluxMeasure.Windows.Support
 
 	#endregion
 
-	#region general - is_locked
+	#region general - is_selected_locked
 
 		public static readonly DependencyProperty
 			IsLockedProperty = DependencyProperty.RegisterAttached(
@@ -174,21 +194,21 @@ namespace CsDeluxMeasure.Windows.Support
 
 	#endregion
 
-	#region general - border thickness
+	#region general - generic thickness
 
-		public static readonly DependencyProperty BdrThicknessProperty = DependencyProperty.RegisterAttached(
-			"BdrThickness", typeof(Thickness), typeof(VisualStates), 
+		public static readonly DependencyProperty GenericThicknessProperty = DependencyProperty.RegisterAttached(
+			"GenericThickness", typeof(Thickness), typeof(VisualStates), 
 			new FrameworkPropertyMetadata(new Thickness(0, 0, 0, 0), 
 				FrameworkPropertyMetadataOptions.Inherits));
 
-		public static void SetBdrThickness(UIElement e, Thickness value)
+		public static void SetGenericThickness(UIElement e, Thickness value)
 		{
-			e.SetValue(BdrThicknessProperty, value);
+			e.SetValue(GenericThicknessProperty, value);
 		}
 
-		public static Thickness GetBdrThickness(UIElement e)
+		public static Thickness GetGenericThickness(UIElement e)
 		{
-			return (Thickness) e.GetValue(BdrThicknessProperty);
+			return (Thickness) e.GetValue(GenericThicknessProperty);
 		}
 
 	#endregion
@@ -280,143 +300,143 @@ namespace CsDeluxMeasure.Windows.Support
 
 		// not selected (enabled / not selected)
 
-	#region not_sel - background (any)
+	#region is_enabled - background (any)
 
 		public static readonly DependencyProperty
-			BgNotSelProperty = DependencyProperty.RegisterAttached(
-				"BgNotSel", typeof(SolidColorBrush), typeof(VisualStates),
+			BgIsEnabledProperty = DependencyProperty.RegisterAttached(
+				"BgIsEnabled", typeof(SolidColorBrush), typeof(VisualStates),
 				new FrameworkPropertyMetadata(new SolidColorBrush(Colors.IndianRed),
 					FrameworkPropertyMetadataOptions.Inherits));
 
-		public static void SetBgNotSel(UIElement e, SolidColorBrush value)
+		public static void SetBgIsEnabled(UIElement e, SolidColorBrush value)
 		{
-			e.SetValue(BgNotSelProperty, value);
+			e.SetValue(BgIsEnabledProperty, value);
 		}
 
-		public static SolidColorBrush GetBgNotSel(UIElement e)
+		public static SolidColorBrush GetBgIsEnabled(UIElement e)
 		{
-			return (SolidColorBrush) e.GetValue(BgNotSelProperty);
+			return (SolidColorBrush) e.GetValue(BgIsEnabledProperty);
 		}
 
 	#endregion
 
-	#region not_sel - foreground (any)
+	#region is_enabled - foreground (any)
 
 		public static readonly DependencyProperty
-			FgNotSelProperty = DependencyProperty.RegisterAttached(
-				"FgNotSel", typeof(SolidColorBrush), typeof(VisualStates),
+			FgIsEnabledProperty = DependencyProperty.RegisterAttached(
+				"FgIsEnabled", typeof(SolidColorBrush), typeof(VisualStates),
 				new FrameworkPropertyMetadata(new SolidColorBrush(Colors.IndianRed),
 					FrameworkPropertyMetadataOptions.Inherits));
 
-		public static void SetFgNotSel(UIElement e, SolidColorBrush value)
+		public static void SetFgIsEnabled(UIElement e, SolidColorBrush value)
 		{
-			e.SetValue(FgNotSelProperty, value);
+			e.SetValue(FgIsEnabledProperty, value);
 		}
 
-		public static SolidColorBrush GetFgNotSel(UIElement e)
+		public static SolidColorBrush GetFgIsEnabled(UIElement e)
 		{
-			return (SolidColorBrush) e.GetValue(FgNotSelProperty);
+			return (SolidColorBrush) e.GetValue(FgIsEnabledProperty);
 		}
 
 	#endregion
 
-	#region not_sel - borderbrush
+	#region is_enabled - borderbrush
 
 		public static readonly DependencyProperty
-			BdrNotSelProperty = DependencyProperty.RegisterAttached(
-				"BdrNotSel", typeof(SolidColorBrush), typeof(VisualStates),
+			BdrIsEnabledProperty = DependencyProperty.RegisterAttached(
+				"BdrIsEnabled", typeof(SolidColorBrush), typeof(VisualStates),
 				new FrameworkPropertyMetadata(new SolidColorBrush(Colors.IndianRed),
 					FrameworkPropertyMetadataOptions.Inherits));
 
-		public static void SetBdrNotSel(UIElement e, SolidColorBrush value)
+		public static void SetBdrIsEnabled(UIElement e, SolidColorBrush value)
 		{
-			e.SetValue(BdrNotSelProperty, value);
+			e.SetValue(BdrIsEnabledProperty, value);
 		}
 
-		public static SolidColorBrush GetBdrNotSel(UIElement e)
+		public static SolidColorBrush GetBdrIsEnabled(UIElement e)
 		{
-			return (SolidColorBrush) e.GetValue(BdrNotSelProperty);
+			return (SolidColorBrush) e.GetValue(BdrIsEnabledProperty);
 		}
 
 	#endregion
 
-	#region not_sel - icon geometry
+	#region is_enabled - icon geometry
 
 		public static readonly DependencyProperty
-			IconGeometryNotSelProperty = DependencyProperty.RegisterAttached(
-				"IconGeometryNotSel", typeof(Geometry), typeof(VisualStates),
+			IconGeometryIsEnabledProperty = DependencyProperty.RegisterAttached(
+				"IconGeometryIsEnabled", typeof(Geometry), typeof(VisualStates),
 				new FrameworkPropertyMetadata(new PathGeometry(),
 					FrameworkPropertyMetadataOptions.Inherits));
 
-		public static void SetIconGeometryNotSel(UIElement e, Geometry value)
+		public static void SetIconGeometryIsEnabled(UIElement e, Geometry value)
 		{
-			e.SetValue(IconGeometryNotSelProperty, value);
+			e.SetValue(IconGeometryIsEnabledProperty, value);
 		}
 
-		public static Geometry GetIconGeometryNotSel(UIElement e)
+		public static Geometry GetIconGeometryIsEnabled(UIElement e)
 		{
-			return (Geometry) e.GetValue(IconGeometryNotSelProperty);
-		}
-
-	#endregion
-
-
-	#region not_sel - mouse over background
-
-		public static readonly DependencyProperty
-			BgNotSelMouseOverProperty = DependencyProperty.RegisterAttached(
-				"BgNotSelMouseOver", typeof(SolidColorBrush), typeof(VisualStates),
-				new FrameworkPropertyMetadata(new SolidColorBrush(Colors.IndianRed),
-					FrameworkPropertyMetadataOptions.Inherits));
-
-		public static void SetBgNotSelMouseOver(UIElement e, SolidColorBrush value)
-		{
-			e.SetValue(BgNotSelMouseOverProperty, value);
-		}
-
-		public static SolidColorBrush GetBgNotSelMouseOver(UIElement e)
-		{
-			return (SolidColorBrush) e.GetValue(BgNotSelMouseOverProperty);
+			return (Geometry) e.GetValue(IconGeometryIsEnabledProperty);
 		}
 
 	#endregion
 
-	#region not_sel - mouse over foreground
+
+	#region is_enabled - mouse over background
 
 		public static readonly DependencyProperty
-			FgNotSelMouseOverProperty = DependencyProperty.RegisterAttached(
-				"FgNotSelMouseOver", typeof(SolidColorBrush), typeof(VisualStates),
+			BgIsEnabledMouseOverProperty = DependencyProperty.RegisterAttached(
+				"BgIsEnabledMouseOver", typeof(SolidColorBrush), typeof(VisualStates),
 				new FrameworkPropertyMetadata(new SolidColorBrush(Colors.IndianRed),
 					FrameworkPropertyMetadataOptions.Inherits));
 
-		public static void SetFgNotSelMouseOver(UIElement e, SolidColorBrush value)
+		public static void SetBgIsEnabledMouseOver(UIElement e, SolidColorBrush value)
 		{
-			e.SetValue(FgNotSelMouseOverProperty, value);
+			e.SetValue(BgIsEnabledMouseOverProperty, value);
 		}
 
-		public static SolidColorBrush GetFgNotSelMouseOver(UIElement e)
+		public static SolidColorBrush GetBgIsEnabledMouseOver(UIElement e)
 		{
-			return (SolidColorBrush) e.GetValue(FgNotSelMouseOverProperty);
+			return (SolidColorBrush) e.GetValue(BgIsEnabledMouseOverProperty);
 		}
 
 	#endregion
 
-	#region not_sel - mouse over borderbrush
+	#region is_enabled - mouse over foreground
 
 		public static readonly DependencyProperty
-			BdrNotSelMouseOverProperty = DependencyProperty.RegisterAttached(
-				"BdrNotSelMouseOver", typeof(SolidColorBrush), typeof(VisualStates),
+			FgIsEnabledMouseOverProperty = DependencyProperty.RegisterAttached(
+				"FgIsEnabledMouseOver", typeof(SolidColorBrush), typeof(VisualStates),
 				new FrameworkPropertyMetadata(new SolidColorBrush(Colors.IndianRed),
 					FrameworkPropertyMetadataOptions.Inherits));
 
-		public static void SetBdrNotSelMouseOver(UIElement e, SolidColorBrush value)
+		public static void SetFgIsEnabledMouseOver(UIElement e, SolidColorBrush value)
 		{
-			e.SetValue(BdrNotSelMouseOverProperty, value);
+			e.SetValue(FgIsEnabledMouseOverProperty, value);
 		}
 
-		public static SolidColorBrush GetBdrNotSelMouseOver(UIElement e)
+		public static SolidColorBrush GetFgIsEnabledMouseOver(UIElement e)
 		{
-			return (SolidColorBrush) e.GetValue(BdrNotSelMouseOverProperty);
+			return (SolidColorBrush) e.GetValue(FgIsEnabledMouseOverProperty);
+		}
+
+	#endregion
+
+	#region is_enabled - mouse over borderbrush
+
+		public static readonly DependencyProperty
+			BdrIsEnabledMouseOverProperty = DependencyProperty.RegisterAttached(
+				"BdrIsEnabledMouseOver", typeof(SolidColorBrush), typeof(VisualStates),
+				new FrameworkPropertyMetadata(new SolidColorBrush(Colors.IndianRed),
+					FrameworkPropertyMetadataOptions.Inherits));
+
+		public static void SetBdrIsEnabledMouseOver(UIElement e, SolidColorBrush value)
+		{
+			e.SetValue(BdrIsEnabledMouseOverProperty, value);
+		}
+
+		public static SolidColorBrush GetBdrIsEnabledMouseOver(UIElement e)
+		{
+			return (SolidColorBrush) e.GetValue(BdrIsEnabledMouseOverProperty);
 		}
 
 	#endregion
@@ -793,7 +813,7 @@ namespace CsDeluxMeasure.Windows.Support
 
 		// is locked
 
-	#region is_locked - background (any)
+	#region is_selected_locked - background (any)
 
 		public static readonly DependencyProperty
 			BgIsLockedProperty = DependencyProperty.RegisterAttached(
@@ -813,7 +833,7 @@ namespace CsDeluxMeasure.Windows.Support
 
 	#endregion
 
-	#region is_locked - foreground (any)
+	#region is_selected_locked - foreground (any)
 
 		public static readonly DependencyProperty
 			FgIsLockedProperty = DependencyProperty.RegisterAttached(
@@ -833,7 +853,7 @@ namespace CsDeluxMeasure.Windows.Support
 
 	#endregion
 
-	#region is_locked - borderbrush
+	#region is_selected_locked - borderbrush
 
 		public static readonly DependencyProperty
 			BdrIsLockedProperty = DependencyProperty.RegisterAttached(
@@ -853,7 +873,7 @@ namespace CsDeluxMeasure.Windows.Support
 
 	#endregion
 
-	#region is_locked - icon geometry
+	#region is_selected_locked - icon geometry
 
 		public static readonly DependencyProperty
 			IconGeometryIsLockedProperty = DependencyProperty.RegisterAttached(
@@ -872,5 +892,6 @@ namespace CsDeluxMeasure.Windows.Support
 		}
 
 	#endregion
+
 	}
 }

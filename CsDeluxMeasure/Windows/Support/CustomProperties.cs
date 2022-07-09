@@ -51,7 +51,6 @@ namespace CsDeluxMeasure.Windows.Support
 
 	#endregion
 
-		
 	#region GenericStringOne
 
 		public static readonly DependencyProperty GenericStringOneProperty = DependencyProperty.RegisterAttached(
@@ -65,6 +64,23 @@ namespace CsDeluxMeasure.Windows.Support
 		public static string GetGenericStringOne(UIElement e)
 		{
 			return (string) e.GetValue(GenericStringOneProperty);
+		}
+
+	#endregion
+
+	#region GenericIntOne
+
+		public static readonly DependencyProperty GenericIntOneProperty = DependencyProperty.RegisterAttached(
+			"GenericIntOne", typeof(int), typeof(CustomProperties), new PropertyMetadata(-1));
+
+		public static void SetGenericIntOne(UIElement e, int value)
+		{
+			e.SetValue(GenericIntOneProperty, value);
+		}
+
+		public static int GetGenericIntOne(UIElement e)
+		{
+			return (int) e.GetValue(GenericIntOneProperty);
 		}
 
 	#endregion

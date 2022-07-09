@@ -16,7 +16,6 @@ namespace CsDeluxMeasure.Windows.Support
 	public class CsCheckBoxAp : DependencyObject
 	{
 
-		
 	#region double - check box box size
 
 		public static readonly DependencyProperty CheckBoxBoxSizeProperty = DependencyProperty.RegisterAttached(
@@ -34,7 +33,6 @@ namespace CsDeluxMeasure.Windows.Support
 		}
 
 	#endregion
-
 
 	#region checkbox box margin
 

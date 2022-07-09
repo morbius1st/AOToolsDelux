@@ -60,7 +60,7 @@
 				trigger levels
 												Gbdr (L1)			Fg (L1)				Bg (L1)			Icon (fill) (L1)		Fg (L2)				Bg (L2)			Icon (fill) (L2)
 				disabled			BgDisabled		FgDisabled		BgDisabled	IconGeoDisabled			FgDisabled		BgDisabled	IconGeoDisabled
-				not sel				BgNotSel			FgNotSel			BgNotSel		IconGeoNotSel				FgNotSel			BgNotSel		IconGeoNotSel
+				not sel				BgIsEnabled			FgIsEnabled			BgIsEnabled		IconGeoIsEnabled				FgIsEnabled			BgIsEnabled		IconGeoIsEnabled
 				sel						BgIsSel				FgIsSel				BgIsSel			IconGeoIsSel				FgIsSel				BgIsSel			IconGeoIsSel		
 				editg																																			FgIsEditg			BgIsEditg		IconGeoIsEditg	
 
@@ -83,7 +83,7 @@
 					*** selected 																						bdr	wo mouseover	TRUE			x					TRUE			FALSE			FALSE		n
 								(when (is/not (no editing) or not (locked))				bdr w mouseover		TRUE			TRUE-in		TRUE			FALSE			FALSE		y (not editing)
 
-					COLORS used:  ...Disabled  |  ...NotSel  |  ...IsSel
+					COLORS used:  ...Disabled  |  ...IsEnabled  |  ...IsSel
 
 																																	ctrl							TRUE			FALSE			TRUE			FALSE			FALSE		y
 				>>> level 2 <<<
@@ -170,15 +170,15 @@
 				<Style.Triggers>
 
 					<!--  not selected  -->
-					<MultiDataTrigger x:Name="BdrTrigsL1NotSel">
+					<MultiDataTrigger x:Name="BdrTrigsL1IsEnabled">
 						<MultiDataTrigger.Conditions>
 							<Condition Binding="{Binding IsEnabled, RelativeSource={RelativeSource Self}, Mode=OneWay}" Value="True" />
 							<Condition Binding="{Binding (cs:VisualStates.IsSelected), RelativeSource={RelativeSource Self}, Mode=OneWay}" Value="false" />
 							<Condition Binding="{Binding (cs:VisualStates.IsReadOnly), RelativeSource={RelativeSource Self}, Mode=OneWay}" Value="false" />
 							<Condition Binding="{Binding (cs:VisualStates.IsLocked), RelativeSource={RelativeSource Self}, Mode=OneWay}" Value="false" />
 						</MultiDataTrigger.Conditions>
-						<Setter Property="Background" Value="{Binding RelativeSource={RelativeSource Self}, Path=(cs:VisualStates.BgNotSel)}" />
-						<Setter Property="BorderBrush" Value="{Binding RelativeSource={RelativeSource Self}, Path=(cs:VisualStates.BdrNotSel), FallbackValue='transparent'}" />
+						<Setter Property="Background" Value="{Binding RelativeSource={RelativeSource Self}, Path=(cs:VisualStates.BgIsEnabled)}" />
+						<Setter Property="BorderBrush" Value="{Binding RelativeSource={RelativeSource Self}, Path=(cs:VisualStates.BdrIsEnabled), FallbackValue='transparent'}" />
 					</MultiDataTrigger>
 
 					<!--  enabled / selected  -->
@@ -228,7 +228,7 @@
 							<Condition Binding="{Binding (cs:VisualStates.IsReadOnly), RelativeSource={RelativeSource Self}, Mode=OneWay}" Value="false" />
 							<Condition Binding="{Binding (cs:VisualStates.IsLocked), RelativeSource={RelativeSource Self}, Mode=OneWay}" Value="false" />
 						</MultiDataTrigger.Conditions>
-						<Setter Property="Foreground" Value="{Binding RelativeSource={RelativeSource Self}, Path=(cs:VisualStates.FgNotSel)}" />
+						<Setter Property="Foreground" Value="{Binding RelativeSource={RelativeSource Self}, Path=(cs:VisualStates.FgIsEnabled)}" />
 					</MultiDataTrigger>
 
 					<!--  enabled / selected  -->
@@ -255,7 +255,7 @@
 				<Style.Triggers>
 
 					<!--  not selected  -->
-					<MultiDataTrigger x:Name="CtrlTrigsL1NotSel">
+					<MultiDataTrigger x:Name="CtrlTrigsL1IsEnabled">
 						<MultiDataTrigger.Conditions>
 							<Condition Binding="{Binding IsEnabled, RelativeSource={RelativeSource Self}, Mode=OneWay}" Value="True" />
 							<Condition Binding="{Binding IsFocused, RelativeSource={RelativeSource Self}, Mode=OneWay}" Value="False" />
@@ -263,7 +263,7 @@
 							<Condition Binding="{Binding (cs:VisualStates.IsReadOnly), RelativeSource={RelativeSource Self}, Mode=OneWay}" Value="false" />
 							<Condition Binding="{Binding (cs:VisualStates.IsLocked), RelativeSource={RelativeSource Self}, Mode=OneWay}" Value="false" />
 						</MultiDataTrigger.Conditions>
-						<Setter Property="Foreground" Value="{Binding RelativeSource={RelativeSource Self}, Path=(cs:VisualStates.FgNotSel)}" />
+						<Setter Property="Foreground" Value="{Binding RelativeSource={RelativeSource Self}, Path=(cs:VisualStates.FgIsEnabled)}" />
 					</MultiDataTrigger>
 
 					<!--  enabled / selected  -->
@@ -301,7 +301,7 @@
 				<Style.Triggers>
 
 					<!--  not selected  -->
-					<MultiDataTrigger x:Name="CtrlBdrTrigsL1NotSel">
+					<MultiDataTrigger x:Name="CtrlBdrTrigsL1IsEnabled">
 						<MultiDataTrigger.Conditions>
 							<Condition Binding="{Binding IsEnabled, RelativeSource={RelativeSource Self}, Mode=OneWay}" Value="True" />
 							<Condition Binding="{Binding IsFocused, RelativeSource={RelativeSource Self}, Mode=OneWay}" Value="False" />
@@ -309,9 +309,9 @@
 							<Condition Binding="{Binding (cs:VisualStates.IsReadOnly), RelativeSource={RelativeSource Self}, Mode=OneWay}" Value="false" />
 							<Condition Binding="{Binding (cs:VisualStates.IsLocked), RelativeSource={RelativeSource Self}, Mode=OneWay}" Value="false" />
 						</MultiDataTrigger.Conditions>
-						<Setter Property="Background" Value="{Binding RelativeSource={RelativeSource Self}, Path=(cs:VisualStates.BgNotSel)}" />
-						<Setter Property="Foreground" Value="{Binding RelativeSource={RelativeSource Self}, Path=(cs:VisualStates.FgNotSel)}" />
-						<Setter Property="BorderBrush" Value="{Binding RelativeSource={RelativeSource Self}, Path=(cs:VisualStates.BdrNotSel)}" />
+						<Setter Property="Background" Value="{Binding RelativeSource={RelativeSource Self}, Path=(cs:VisualStates.BgIsEnabled)}" />
+						<Setter Property="Foreground" Value="{Binding RelativeSource={RelativeSource Self}, Path=(cs:VisualStates.FgIsEnabled)}" />
+						<Setter Property="BorderBrush" Value="{Binding RelativeSource={RelativeSource Self}, Path=(cs:VisualStates.BdrIsEnabled)}" />
 					</MultiDataTrigger>
 
 					<!--  enabled / selected  -->

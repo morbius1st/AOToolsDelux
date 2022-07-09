@@ -3930,6 +3930,9 @@
 									>	
 									-->
 
+
+
+
 							<!--  E  -->
 							<Grid x:Name="E_GrdAction1"
 									Grid.Column="2"
@@ -3947,23 +3950,13 @@
 										Margin="1,1,0,1"
 										Style="{StaticResource BdrAllTrigAction1}"
 										>
-									<!--  cs:TestVisualStates.BgDefault="{StaticResource Action1.Bg.NotSel}"  -->
-									<!--  cs:TestVisualStates.BgIsEditing="{StaticResource Action1.Bg.IsEditg}"  -->
-									<!--  cs:TestVisualStates.BgIsLocked="{StaticResource Action1.Bg.IsLocked}"  -->
-									<!--  cs:TestVisualStates.BgIsSelected="{StaticResource Action1.Bg.IsSel}"  -->
-									<!--  cs:TestVisualStates.BgReadOnly="{StaticResource Action1.Bg.ReadOnly}"  -->
-									<!--  cs:TestVisualStates.DoesMouseOver="True"  -->
-									<!--  cs:TestVisualStates.MoIsEditing="{StaticResource Action1.Mo.IsEditg}"  -->
-									<!--  Style="{StaticResource BdrAllTriggers}"  -->
-									<!--  >  -->
+	
 									<StackPanel>
 
 										<TextBlock x:Name="TblkAction1"
 												Text="E action field"
 												Style="{StaticResource TblkAllTrigAction1}"
 												/>
-
-
 
 										<Popup Name="PuAction1"
 												AllowsTransparency="True"
@@ -3986,7 +3979,6 @@
 									</StackPanel>
 								</Border>
 
-
 								<Border Grid.Column="1"
 										BorderThickness="0,1,1,1"
 										CornerRadius="0,6,6,0"
@@ -3994,13 +3986,6 @@
 										MouseDown="Action1Info_MouseDown"
 										Style="{StaticResource BdrAllTrigAction1Icon}"
 										>
-									<!--  cs:TestVisualStates.BgDefault    ="{StaticResource Action1.Bg.NotSel}"  -->
-									<!--  cs:TestVisualStates.BgIsEditing  ="{StaticResource Action1.Bg.IsEditg}"  -->
-									<!--  cs:TestVisualStates.BgIsLocked   ="{StaticResource Action1.Bg.IsLocked}"  -->
-									<!--  cs:TestVisualStates.BgIsSelected ="{StaticResource Action1.Bg.IsSel}"  -->
-									<!--  cs:TestVisualStates.BgReadOnly  ="{StaticResource Action1.Bg.ReadOnly}"  -->
-									<!--  cs:TestVisualStates.DoesMouseOver="True"  -->
-									<!--  cs:TestVisualStates.MoIsEditing  ="{StaticResource Action1.Icon.Mo.IsEditg}"  -->
 
 									<Border.Resources>
 										<Style x:Key="PathStyle" TargetType="Path">
@@ -5974,8 +5959,8 @@
 										<DockPanel x:Name="DpGetStyleName" HorizontalAlignment="Stretch">
 
 											<Button x:Name="BtnClrStyleName"
-													Content="&#xE106;"
 													DockPanel.Dock="Right"
+													Content="&#xE106;"
 													FontFamily="Segoe UI Symbol"
 													Foreground="{StaticResource CanEdit.Fg.IsSel}"
 													HorizontalAlignment="Stretch"

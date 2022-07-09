@@ -4,7 +4,7 @@
   <PropertyGroup>
     <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <AssemblyName>DeluxMeasureX</AssemblyName>
+    <AssemblyName>DeluxMeasure</AssemblyName>
     <RootNamespace>DeluxMeasure</RootNamespace>
     <FileAlignment>512</FileAlignment>
     <OutputType>Library</OutputType>
