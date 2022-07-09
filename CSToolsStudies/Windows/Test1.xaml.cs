@@ -20,10 +20,9 @@ namespace CSToolsStudies.Windows
 	{
 		public const int RIBBONFAV = 1;
 
-		public static int RIBBONFAVS = 1;
-		public static int DIALOGLEFT = 2;
-		public static int DIALOGRIGHT = 3;
+		public static int RIBBONFAVORITE = 1;
 
+		public static int RIBBONFAVS => 1;
 
 		private bool expandWindow = true;
 
@@ -282,6 +281,8 @@ namespace CSToolsStudies.Windows
 		}
 
 
+
+
 		public event PropertyChangedEventHandler PropertyChanged;
 		
 		[NotifyPropertyChangedInvocator]
@@ -290,11 +291,6 @@ namespace CSToolsStudies.Windows
 		{
 			PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(memberName));
 		}
-
-
-
-
-
 
 
 		private void win_Loaded(object sender, RoutedEventArgs e)

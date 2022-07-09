@@ -64,8 +64,9 @@
 
 			<!--#endregion-->
 
-			<Style x:Key="TEST" TargetType="Button">
-				<Setter Property="Tag" Value="{x:Static local:UnitStylesMgr.RIBBONFAV}"/>
+			<Style x:Key="junk1" TargetType="Button">
+				<!-- <Setter Property="Tag" Value="{x:Static local:UnitStylesMgr.RIBBONFAV}"/> -->
+				<!-- <Setter Property="Content" Value="{x:Static local:UnitStylesMgr.RIBBONFAVORITE}"/> -->
 			</Style>
 
 			<ControlTemplate x:Key="CtTextBox"
@@ -1929,7 +1930,6 @@
 					>
 
 				<Grid x:Name="GrdLv1Item"
-						Tag="{x:Static local:UnitStylesMgr.RIBBONFAVS}"
 						Height="Auto"
 						Margin="3"
 						VerticalAlignment="Center"
@@ -2642,8 +2642,9 @@
 										HorizontalAlignment="Stretch"
 										>
 
-									<Button x:Name="BtnDialogRightStatus" Tag="3"
+									<Button x:Name="BtnDialogRightStatus" 
 											DockPanel.Dock="Right"
+											Tag="{x:Static local:UnitStylesMgr.RIBBONFAVS}"
 											Width="19"
 											Padding="2,0,1,0"
 											cs:CsPathAp.IconIsLockedScaleX="{StaticResource IconLockedCkbxScaleX}"
@@ -3864,8 +3865,8 @@
 		<!--  HorizontalAlignment="Stretch"  -->
 		<!--  VerticalAlignment="Stretch"  -->
 
+				
 		<Expander x:Name="DialogExpander"
-				Tag="{x:Static local:UnitStylesMgr.RIBBONFAVS}"
 				Height="740"
 				HorizontalAlignment="Stretch"
 				VerticalAlignment="Stretch"
@@ -3887,7 +3888,6 @@
 				</Grid.RowDefinitions>
 
 				<StackPanel x:Name="SpOpSelect"
-						Tag="{x:Static local:UnitStylesMgr.RIBBONFAV}"
 						Grid.Column="0"
 						Grid.Row="1"
 						Orientation="Horizontal"
@@ -3969,6 +3969,12 @@
 						</Style>
 					</ContentControl.Style>
 				</ContentControl>
+
+				<!-- <Button x:Name="junk" -->
+				<!-- 		Visibility="Collapsed" -->
+				<!-- 		Tag="{x:Static local:UnitStylesMgr.RIBBONFAV}" -->
+				<!-- 		Content="{x:Static local:UnitStylesMgr.RIBBONFAVORITE}" -->
+				<!-- /> -->
 
 			</Grid>
 			<!--#endregion-->

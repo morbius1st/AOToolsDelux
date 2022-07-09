@@ -38,8 +38,8 @@ namespace CsDeluxMeasure.Windows
 		public const int RIBBONFAV = 1;
 
 		public static int RIBBONFAVORITE = 1;
-		public static int DIALOGLEFT = 2;
-		public static int DIALOGRIGHT = 3;
+
+		public static int RIBBONFAVS => 1;
 
 		public static string Test = "Name";
 
@@ -657,7 +657,7 @@ namespace CsDeluxMeasure.Windows
 			}
 		}
 
-		public static int RIBBONFAVS => 1;
+
 
 		public TextBox PopupTargetTbxEditName
 		{
