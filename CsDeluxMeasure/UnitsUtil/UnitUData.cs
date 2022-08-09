@@ -1,13 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-
+using System.Diagnostics;
 using System.Runtime.CompilerServices;
 using System.Runtime.Serialization;
+using System.Security.Policy;
 using System.Windows.Data;
 using System.Windows.Controls;
 using System.Windows.Media.Imaging;
 using Autodesk.Revit.DB;
+using CsDeluxMeasure.Annotations;
 using UtilityLibrary;
 using static CsDeluxMeasure.UnitsUtil.UnitsStdUStyles;
 
@@ -19,7 +21,6 @@ using static CsDeluxMeasure.UnitsUtil.UnitsStdUStyles;
 namespace CsDeluxMeasure.UnitsUtil
 {
 #region data types
-
 
 	[DataContract(Namespace = "")]
 	public abstract class AUnitsData<T, U> : INotifyPropertyChanged
@@ -54,11 +55,17 @@ namespace CsDeluxMeasure.UnitsUtil
 		[DataMember(Order = 2)]
 		public abstract T Id { get; set; }
 
-		[IgnoreDataMember]
-		public abstract string Name { get; }
-
 		[DataMember(Order = 4)]
 		public abstract T Symbol { get; set;  }
+
+		[IgnoreDataMember]
+		public abstract string Name { get; set; }
+		
+		[IgnoreDataMember]
+		public abstract string Description { get; set; }
+		
+		[IgnoreDataMember]
+		public abstract string Sample { get; set; }
 
 		[IgnoreDataMember]
 		public abstract U USystem { get; }
@@ -205,6 +212,7 @@ namespace CsDeluxMeasure.UnitsUtil
 				{
 					return Ustyle.Description;
 				}
+
 				// 
 				return $"{DROP_NAME_PREFACE}: {Ustyle.Name}";
 			}
@@ -245,8 +253,11 @@ namespace CsDeluxMeasure.UnitsUtil
 			OnPropertyChanged(nameof(UnitExtraSpaces));
 		}
 
+
 		public event PropertyChangedEventHandler PropertyChanged;
 
+		[DebuggerStepThrough]
+		[NotifyPropertyChangedInvocator]
 		protected void OnPropertyChanged([CallerMemberName] string memberName = "")
 		{
 			PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(memberName));
@@ -262,8 +273,8 @@ namespace CsDeluxMeasure.UnitsUtil
 		public UnitsDataD(string id, string sample, UStyle us)
 		{
 			Id = id;
-			Sample = sample;
 			Ustyle = us;
+			Sample = sample;
 		}
 
 		[IgnoreDataMember]
@@ -271,11 +282,46 @@ namespace CsDeluxMeasure.UnitsUtil
 
 		public override string Id { get; set; }
 
-		public override string Name => Ustyle.Name;
-
 		public override string Symbol { get; set; }
 
-		private string Sample { get; set; }
+		public override string Sample { get; set; }
+
+		public override string Name { get; set; }
+
+		public override string Description { get; set; }
+		
+		public string GetSampleStr { get; set; }
+
+
+		// public override string Sample
+		// {
+		// 	get => GetSampleStr;
+		// 	set
+		// 	{
+		// 		Ustyle.Sample = 1.0;
+		// 	}
+		// }
+		//
+		// public override string Name
+		// {
+		// 	get => Ustyle.Name;
+		// 	set
+		// 	{
+		// 		Ustyle.Name = value;
+		// 	}
+		// }
+		//
+		// public override string Description
+		// {
+		// 	get => Ustyle.Description;
+		// 	set
+		// 	{
+		// 		Ustyle.Description = value;
+		// 	}
+		// }
+		// public string GetSampleStr => formatSample();
+
+
 
 		public override string USystem => Ustyle.UnitSys.ToString();
 
@@ -290,6 +336,7 @@ namespace CsDeluxMeasure.UnitsUtil
 			}
 		}
 
+
 		// public string DropDownName
 		// {
 		// 	get
@@ -303,20 +350,21 @@ namespace CsDeluxMeasure.UnitsUtil
 		// 	}
 		// }
 
-		protected override string formatSymbol()
-		{
-			string s = fmtSymbol();
-
-			if (string.IsNullOrWhiteSpace(s)) return "none";
-
-			return s;
-		}
 
 		protected string fmtSymbol()
 		{
 			if (Ustyle.Symbol != null) return Ustyle.Symbol;
 
 			string s = UnitsSupport.GetSymbol(Ustyle.UnitCat);
+
+			return s;
+		}
+
+		protected override string formatSymbol()
+		{
+			string s = fmtSymbol();
+
+			if (string.IsNullOrWhiteSpace(s)) return "none";
 
 			return s;
 		}
@@ -333,8 +381,8 @@ namespace CsDeluxMeasure.UnitsUtil
 				uSym += fmtSymbol();
 			}
 
-			string s = 
-				UnitsSupport.GetPrecString(Ustyle.UnitCat, 
+			string s =
+				UnitsSupport.GetPrecString(Ustyle.UnitCat,
 					Ustyle.Precision, uSym);
 
 			return s;
@@ -342,7 +390,7 @@ namespace CsDeluxMeasure.UnitsUtil
 
 		protected override string formatSample()
 		{
-			return Sample;
+			return Ustyle.Sample?.ToString("F5") ?? "not set";
 		}
 	}
 
@@ -351,10 +399,31 @@ namespace CsDeluxMeasure.UnitsUtil
 	[DataContract(Namespace = "")]
 	public class UnitsDataR : AUnitsData<ForgeTypeId, UnitSystem> , IEquatable<UnitsDataR>
 	{
+		// private static UnitsSupport uSup;
+
 		private ForgeTypeId id;
 		private ForgeTypeId symbol;
 		private UStyle ustyle;
+
 		private int activeElement = -1;
+
+		// private string setNameResult;
+		// private bool setNameStatus;
+
+		private string name = null;
+		private string desc = null;
+		private string sample = null;
+
+
+		private bool? isNameOk = null;
+		private bool? isDescOk = null;
+		private bool? isSampleOk = null;
+
+
+		// static UnitsDataR()
+		// {
+		// 	uSup = new UnitsSupport();
+		// }
 
 		protected UnitsDataR() { }
 
@@ -367,6 +436,8 @@ namespace CsDeluxMeasure.UnitsUtil
 			// bx = CsUtilitiesMedia.GetBitmapImage(Ustyle.IconId, "CsDeluxMeasure.Resources");
 		}
 
+
+		[System.Diagnostics.DebuggerBrowsable(DebuggerBrowsableState.Never)]
 		[IgnoreDataMember]
 		public BitmapImage Ux => CsUtilitiesMedia.GetBitmapImage(Ustyle.IconId, "CsDeluxMeasure.Resources");
 
@@ -381,9 +452,6 @@ namespace CsDeluxMeasure.UnitsUtil
 			}
 		}
 
-		[IgnoreDataMember]
-		public override string Name => Ustyle.Name;
-
 		[DataMember(Order = 4)]
 		public override ForgeTypeId Symbol
 		{
@@ -391,6 +459,60 @@ namespace CsDeluxMeasure.UnitsUtil
 			set
 			{
 				symbol = value;
+				OnPropertyChanged();
+			}
+		}
+
+		[IgnoreDataMember]
+		public override string Name
+		{
+			get
+			{
+				if (name == null) return Ustyle.Name;
+		
+				return name;
+			}
+			set
+			{
+				name = null;
+		
+				ChangeNameEventArgs e = new ChangeNameEventArgs(value);
+				RaiseNameChangingEvent(e);
+				
+				if (e.Cancel)
+				{
+					name = value;
+					return;
+				}
+		
+				Ustyle.Name = value;
+				OnPropertyChanged();
+			}
+		}
+		
+		[IgnoreDataMember]
+		public override string Description
+		{
+			get
+			{
+				if (desc == null) return Ustyle.Description;
+		
+				return desc;
+			}
+			set
+			{
+				desc = null;
+		
+				ChangeNameEventArgs e = new ChangeNameEventArgs(value);
+				RaiseNameChangingEvent(e);
+				
+				if (e.Cancel)
+				{
+					desc = value;
+					return;
+				}
+		
+				Ustyle.Description = value;
 				OnPropertyChanged();
 			}
 		}
@@ -422,6 +544,69 @@ namespace CsDeluxMeasure.UnitsUtil
 			}
 		}
 
+		[IgnoreDataMember]
+		public bool? IsNameOk
+		{
+			get => isNameOk;
+			set
+			{
+				if (value == isNameOk) return;
+
+				isNameOk = value;
+				OnPropertyChanged();
+			}
+		}
+
+		[IgnoreDataMember]
+		public bool? IsDescOk
+		{
+			get => isDescOk;
+			set
+			{
+				if (value == isDescOk) return;
+
+				isDescOk = value;
+				OnPropertyChanged();
+			}
+		}
+
+		[IgnoreDataMember]
+		public bool? IsSampleOk
+		{
+			get => isSampleOk;
+			set
+			{
+				if (value == isSampleOk) return;
+
+				isSampleOk = value;
+				OnPropertyChanged();
+			}
+		}
+
+		[IgnoreDataMember]
+		public string GetSampleStr => formatSample();
+
+		[IgnoreDataMember]
+		public override string Sample
+		{
+			get => formatSample();
+			// get => Ustyle.Sample?.ToString("F5") ?? "not set";
+			set
+			{
+				Ustyle.Sample = null;
+				
+				double d;
+				bool result = double.TryParse(value, out d);
+				
+				if (result)
+				{
+					Ustyle.Sample = d;
+				}
+		
+				OnPropertyChanged();
+				OnPropertyChanged("GetSampleStr");
+			}
+		}
 
 		protected override string formatSymbol()
 		{
@@ -440,8 +625,8 @@ namespace CsDeluxMeasure.UnitsUtil
 				uSym += formatSymbol();
 			}
 
-			string s = 
-				UnitsSupport.GetPrecString(Ustyle.UnitCat, 
+			string s =
+				UnitsSupport.GetPrecString(Ustyle.UnitCat,
 					Ustyle.Precision, uSym);
 
 			return s;
@@ -452,14 +637,13 @@ namespace CsDeluxMeasure.UnitsUtil
 			if (!Ustyle.Sample.HasValue)
 			{
 				return "Not Set";
-				
 			}
 
 			string formatted = UnitsSupport.GetSampleFormatted(this, Ustyle.Sample.Value);
 
 			return $"{formatted}  ({Ustyle.Sample.Value:G})";
-
 		}
+
 
 
 
@@ -468,14 +652,57 @@ namespace CsDeluxMeasure.UnitsUtil
 			if (other == null) return false;
 			return  Id.Equals(other.Id);
 		}
+
+		public UnitsDataR Clone()
+		{
+			UnitsDataR copy = new UnitsDataR(Id, Symbol, Ustyle.Clone());
+
+			copy.Sequence = Sequence;
+
+			return copy;
+		}
+
+
+		public static event UnitsDataR.NameChangingEventHandler OnNameChanging;
+		public static event UnitsDataR.DescriptionChangingEventHandler OnDescriptionChanging;
+		
+		
+		
+		public delegate void NameChangingEventHandler(object sender, ChangeNameEventArgs e);
+		
+		protected virtual void RaiseNameChangingEvent(ChangeNameEventArgs e)
+		{
+			OnNameChanging?.Invoke(this, e);
+		}
+		
+		
+		public delegate void DescriptionChangingEventHandler(object sender, ChangeNameEventArgs e);
+		
+		protected virtual void RaiseDescriptionChangingEvent(ChangeNameEventArgs e)
+		{
+			OnDescriptionChanging?.Invoke(this, e);
+		}
+
 	}
 
 #endregion
 
+	public class ChangeNameEventArgs : CancelEventArgs
+	{
+		public string Proposed { get; }
+	
+		public ChangeNameEventArgs(string proposed)
+		{
+			Cancel = false;
+			Proposed = proposed;
+		}
+	}
+
+
 #region data containers
 
 	[DataContract(Namespace = "")]
-	public abstract class AUnitsStdStyles<T, U> : INotifyPropertyChanged 
+	public abstract class AUnitsStdStyles<T, U> : INotifyPropertyChanged
 	{
 		protected ICollectionView list;
 		public abstract Dictionary<T, U> StdStyles { get; protected set; }
@@ -495,6 +722,7 @@ namespace CsDeluxMeasure.UnitsUtil
 			PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(memberName));
 		}
 	}
+
 
 	[DataContract(Namespace = "")]
 	public class UnitStdStylesD : AUnitsStdStyles<string, UnitsDataD>, IEqualityComparer<UnitsDataD>
@@ -676,11 +904,10 @@ namespace CsDeluxMeasure.UnitsUtil
 			//  SStdStyles.Add(udd.Ustyle.Name, udd);
 
 			// ListD = new List<UnitsDataD>(SStdStyles.Values);
-
 		}
-
 	}
 
+	[DataContract(Namespace = "")]
 	public class UnitStdStylesR : AUnitsStdStyles<string, UnitsDataR>
 	{
 		public UnitStdStylesR()
@@ -704,7 +931,7 @@ namespace CsDeluxMeasure.UnitsUtil
 			}
 		}
 
-		private void addStyleItem(int i, ForgeTypeId uid, ForgeTypeId sid,	string name) 
+		private void addStyleItem(int i, ForgeTypeId uid, ForgeTypeId sid,	string name)
 		{
 			UnitsDataR udr = new UnitsDataR(uid, sid, UnitsStdUStyles.StdSysStyles[name]);
 			udr.Sequence = i++;
@@ -714,7 +941,6 @@ namespace CsDeluxMeasure.UnitsUtil
 		private void initialize()
 		{
 			StdStyles = new Dictionary<string, UnitsDataR>(12);
-
 			int i = 0;
 
 			UnitsDataR udr;
@@ -821,6 +1047,7 @@ namespace CsDeluxMeasure.UnitsUtil
 
 			// ICollectionView a = CollectionViewSource.GetDefaultView(StdStyles);
 		}
+
 	}
 
 #endregion

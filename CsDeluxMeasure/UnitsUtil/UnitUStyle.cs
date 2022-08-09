@@ -1,5 +1,6 @@
 ﻿using System;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.Runtime.CompilerServices;
 using System.Runtime.Serialization;
 using static CsDeluxMeasure.UnitsUtil.UnitData;
@@ -23,6 +24,8 @@ namespace CsDeluxMeasure.UnitsUtil
 			$"Ustyle.{nameof(OrderInDialogRight)}",
 		};
 
+		private string name;
+		private string desc;
 		private double? sample;
 
 		protected UStyle() {}
@@ -77,10 +80,28 @@ namespace CsDeluxMeasure.UnitsUtil
 		public string Id { get; set; }
 
 		[DataMember(Order = 6)]
-		public string Name { get; set; }
+		public string Name
+		{
+			get => name;
+			set
+			{
+				if (value == name) return;
+				name = value;
+				OnPropertyChanged();
+			}
+		}
 
 		[DataMember(Order = 8)]
-		public string Description { get; set; }
+		public string Description
+		{
+			get => desc;
+			set
+			{
+				if (value == desc) return;
+				desc = value;
+				OnPropertyChanged();
+			}
+		}
 		
 		[DataMember(Order = 14)]
 		public UnitCat UnitCat { get; set; }
@@ -126,9 +147,6 @@ namespace CsDeluxMeasure.UnitsUtil
 
 		[DataMember(Order = 30)]
 		int[] OrderInList { get; set; }
-
-
-
 
 		[IgnoreDataMember]
 		public bool IsLocked => (UnitClass < UnitClass.CL_ORDINARY);
@@ -209,8 +227,6 @@ namespace CsDeluxMeasure.UnitsUtil
 			OnPropertyChanged(nameof(InDialogRightEnabled));
 		}
 
-
-
 		public UStyle Clone()
 		{
 			UStyle us = new UStyle();
@@ -238,9 +254,12 @@ namespace CsDeluxMeasure.UnitsUtil
 
 		public event PropertyChangedEventHandler PropertyChanged;
 
+		[DebuggerStepThrough]
 		private void OnPropertyChanged([CallerMemberName] string memberName = "")
 		{
 			PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(memberName));
 		}
 	}
+
+
 }

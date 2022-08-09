@@ -6,7 +6,6 @@
 		xmlns:local="clr-namespace:DeluxMeasure.Windows"
 		xmlns:custom="clr-namespace:DeluxMeasure.Windows.Support"
 		xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-		xmlns:support="clr-namespace:DeluxMeasure.Windows.Support"
 		xmlns:sys="clr-namespace:System;assembly=mscorlib"
 		xmlns:unitsUtil="clr-namespace:DeluxMeasure.UnitsUtil"
 		Title="Unit Styles Manager"
@@ -39,7 +38,7 @@
 
 			</ResourceDictionary.MergedDictionaries>
 
-			<support:PassThroughConverter x:Key="PassThroughConverter" />
+			<custom:PassThroughConverter x:Key="PassThroughConverter" />
 
 
 			<sys:Double x:Key="FontSize.XLarge">18</sys:Double>
@@ -681,26 +680,25 @@
 					TargetType="{x:Type ScrollViewer}"
 					>
 				<Setter Property="Template" Value="{StaticResource CsScrollViewerCt}" />
-				<Setter Property="support:CsScrollBarAp.ScrollBarWidth" Value="12" />
-				<Setter Property="support:CsScrollBarAp.ThumbCornerRadius" Value="3" />
-				<Setter Property="support:CsScrollBarAp.RepeatButtonLength" Value="12" />
-				<Setter Property="support:CsScrollBarAp.TrackWidth" Value="5" />
-				<Setter Property="support:CsScrollBarAp.RepeatButtonIconGirth" Value="6" />
-				<Setter Property="support:CsScrollBarAp.RepeatButtonIconLength" Value="10" />
-				<Setter Property="support:CsScrollBarAp.VertBorderThickness" Value="0,0,0,0" />
-				<Setter Property="support:CsScrollBarAp.VertBorderColor">
+				<Setter Property="custom:CsScrollBarAp.ScrollBarWidth" Value="12" />
+				<Setter Property="custom:CsScrollBarAp.ThumbCornerRadius" Value="3" />
+				<Setter Property="custom:CsScrollBarAp.RepeatButtonLength" Value="12" />
+				<Setter Property="custom:CsScrollBarAp.TrackWidth" Value="5" />
+				<Setter Property="custom:CsScrollBarAp.RepeatButtonIconGirth" Value="6" />
+				<Setter Property="custom:CsScrollBarAp.RepeatButtonIconLength" Value="10" />
+				<Setter Property="custom:CsScrollBarAp.VertBorderThickness" Value="0,0,0,0" />
+				<Setter Property="custom:CsScrollBarAp.VertBorderColor">
 					<Setter.Value>
 						<SolidColorBrush Color="{StaticResource Blue.350}" />
 					</Setter.Value>
 				</Setter>
-				<Setter Property="support:CsScrollBarAp.HorizBorderThickness" Value="0,0,0,0" />
-				<Setter Property="support:CsScrollBarAp.HorizBorderColor">
+				<Setter Property="custom:CsScrollBarAp.HorizBorderThickness" Value="0,0,0,0" />
+				<Setter Property="custom:CsScrollBarAp.HorizBorderColor">
 					<Setter.Value>
 						<SolidColorBrush Color="{StaticResource Blue.350}" />
 					</Setter.Value>
 				</Setter>
-
-				<Setter Property="support:CsScrollViewerAp.CornerRectBkgBrush">
+				<Setter Property="custom:CsScrollViewerAp.CornerRectBkgBrush">
 					<Setter.Value>
 						<SolidColorBrush Color="{StaticResource Gray.150}" />
 					</Setter.Value>
@@ -1085,9 +1083,8 @@
 							DataContext="{Binding ElementName=WinUnitStyle,
 																		Path=DetailUnit}"
 							Margin="0,0,0,0"
-							d:DataContext="{Binding Source={x:Static unitsUtil:UnitStdStylesD.ListD},
-																			Path=[0]}"
 							>
+							<!-- d:DataContext="{Binding Source={x:Static unitsUtil:UnitStdStylesD.ListD}, Path=[0]}" -->
 						<DockPanel DockPanel.Dock="Top">
 							<Border x:Name="Column0Title2"
 									DockPanel.Dock="right"
@@ -1120,43 +1117,43 @@
 
 						</DockPanel>
 
-						<ComboBox x:Name="Cbx1"
-								DockPanel.Dock="Top"
-								BorderThickness="0"
-								DataContext="{Binding ElementName=WinUnitStyle}"
-								DisplayMemberPath="Key"
-								FocusVisualStyle="{x:Null}"
-								FontSize="{StaticResource FontSize.Normal}"
-								Foreground="White"
-								HorizontalAlignment="Stretch"
-								Initialized="CbxStdStyles_Initialized"
-								IsEditable="False"
-								IsReadOnly="True"
-								IsSynchronizedWithCurrentItem="True"
-								ItemsSource="{Binding Path=CbxList,
-																			Mode=OneWay}"
-								Margin="0,0,0,3"
-								MaxDropDownHeight="200"
-								Padding="3"
-								SelectedIndex="{Binding CbxSelIndex}"
-								SelectedItem="{Binding CbxSelectedItem,
-																			 Mode=TwoWay}"
-								custom:CsComboBoxAp.ComboBoxBdrRadius="{StaticResource Normal.CornerRadius}"
-								custom:CsComboBoxAp.DropDownBdrBrush="{StaticResource ComboBox.ListItem.Background.Normal}"
-								custom:CsComboBoxAp.DropDownBdrRadius="4"
-								custom:CsComboBoxAp.DropDownBdrThickness="1"
-								custom:CsComboBoxAp.DropDownBrush="{StaticResource ComboBox.Background.Normal}"
-
-								d:DisplayMemberPath="Value.DropDownName"
-								d:ItemsSource="{x:Static unitsUtil:UnitStdStylesD.SStdStyles}"
-								d:SelectedIndex="0"
-								Style="{StaticResource CsComboBoxStyle}"
-								>
+						<!-- <ComboBox x:Name="Cbx1" -->
+						<!-- 		DockPanel.Dock="Top" -->
+						<!-- 		BorderThickness="0" -->
+						<!-- 		DataContext="{Binding ElementName=WinUnitStyle}" -->
+						<!-- 		DisplayMemberPath="Key" -->
+						<!-- 		FocusVisualStyle="{x:Null}" -->
+						<!-- 		FontSize="{StaticResource FontSize.Normal}" -->
+						<!-- 		Foreground="White" -->
+						<!-- 		HorizontalAlignment="Stretch" -->
+						<!-- 		Initialized="CbxStdStyles_Initialized" -->
+						<!-- 		IsEditable="False" -->
+						<!-- 		IsReadOnly="True" -->
+						<!-- 		IsSynchronizedWithCurrentItem="True" -->
+						<!-- 		ItemsSource="{Binding Path=CbxList, -->
+						<!-- 													Mode=OneWay}" -->
+						<!-- 		Margin="0,0,0,3" -->
+						<!-- 		MaxDropDownHeight="200" -->
+						<!-- 		Padding="3" -->
+						<!-- 		SelectedIndex="{Binding CbxSelIndex}" -->
+						<!-- 		SelectedItem="{Binding CbxSelectedItem, -->
+						<!-- 													 Mode=TwoWay}" -->
+						<!-- 		custom:CsComboBoxAp.ComboBoxBdrRadius="{StaticResource Normal.CornerRadius}" -->
+						<!-- 		custom:CsComboBoxAp.DropDownBdrBrush="{StaticResource ComboBox.ListItem.Background.Normal}" -->
+						<!-- 		custom:CsComboBoxAp.DropDownBdrRadius="4" -->
+						<!-- 		custom:CsComboBoxAp.DropDownBdrThickness="1" -->
+						<!-- 		custom:CsComboBoxAp.DropDownBrush="{StaticResource ComboBox.Background.Normal}" -->
+						<!-- -->
+						<!-- 		d:DisplayMemberPath="Value.DropDownName" -->
+						<!-- 		d:SelectedIndex="0" -->
+						<!-- 		Style="{StaticResource CsComboBoxStyle}" -->
+						<!-- 		> -->
+						<!-- </ComboBox> -->
+								<!-- d:ItemsSource="{x:Static unitsUtil:UnitStdStylesD.SStdStyles}" -->
 							<!-- custom:CsComboBoxAp.DropDownWidthAdjustment="-10.0" -->
 							<!-- custom:CsComboBoxAp.MouseOverBrush="{StaticResource ComboBox.Subject.Background.MouseOver}" -->
 							<!-- custom:CsComboBoxAp.NotEnabledBrush="{StaticResource ComboBox.Subject.Background.Disabled}" -->
 
-						</ComboBox>
 
 						<StackPanel x:Name="ProjUnit"
 								DockPanel.Dock="Top"
@@ -1910,15 +1907,15 @@
 																			 Path=LbxSelItem,
 																			 Mode=OneWayToSource}"
 								VerticalAlignment="Top"
-								d:DataContext="{x:Static unitsUtil:UnitStdStylesD.ListD}"
 								d:SelectedIndex="2"
 								>
+								<!-- d:DataContext="{x:Static unitsUtil:UnitStdStylesD.ListD}" -->
 
 							<ListBox.Resources>
 
-								<Style BasedOn="{StaticResource svStyle}"
-										TargetType="{x:Type ScrollViewer}"
-										/>
+								<!-- <Style BasedOn="{StaticResource svStyle}" -->
+								<!-- 		TargetType="{x:Type ScrollViewer}" -->
+								<!-- 		/> -->
 
 							</ListBox.Resources>
 

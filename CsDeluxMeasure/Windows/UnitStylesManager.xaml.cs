@@ -704,8 +704,6 @@ namespace CsDeluxMeasure.Windows
 		}
 
 
-
-
 		private void showUnitStyleSettings(UnitsDataR udr)
 		{
 			if (udr.Ustyle.UnitClass == UnitClass.CL_CONTROL)
@@ -898,7 +896,7 @@ namespace CsDeluxMeasure.Windows
 
 
 			// removed - is a duplicate of the other change recordings - however, is more accurate
-			// HasChanges += 1;
+			// ChangesMade += 1;
 			//
 			// Debug.WriteLine("got current changed");
 
@@ -972,7 +970,7 @@ namespace CsDeluxMeasure.Windows
 
 			if (lbxSelIndex < Count - 1)
 			{
-				uMgr.ReSequenceStylesList(styles, lbxSelIndex + 1);
+				uMgr.ReSequenceStylesList(styles, lbxSelIndex + 1, false);
 			}
 
 			HasChanges += 1;

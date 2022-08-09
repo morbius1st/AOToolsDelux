@@ -2510,11 +2510,6 @@
 							<!--  ItemContainerStyle="{DynamicResource Lbx1ItemContainerStyle1}"  -->
 							<!--  ItemTemplate="{StaticResource Lbx1ItemTemplate}"  -->
 
-
-
-
-
-
 						</DockPanel>
 
 					</Border>

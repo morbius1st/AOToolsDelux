@@ -17,13 +17,30 @@ namespace SettingsManager
 {
 	public struct WindowLocation
 	{
-		public double Top { get; set; }
-		public double Left { get; set; }
+		[DataMember]
+		public int top;
+
+		[DataMember]
+		public int left;
+
+		[IgnoreDataMember]
+		public double Top
+		{
+			get => top;
+			set => top = (int) value;
+		}
+
+		[IgnoreDataMember]
+		public double Left
+		{
+			get => left;
+			set => left = (int) value;
+		}
 
 		public WindowLocation(double top, double left)
 		{
-			Top = top;
-			Left = left;
+			this.top = (int) top;
+			this.left = (int) left;
 		}
 	}
 

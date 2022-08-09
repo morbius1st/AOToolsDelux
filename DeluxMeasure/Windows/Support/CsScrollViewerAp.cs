@@ -1,9 +1,9 @@
 ﻿#region + Using Directives
 
-using System.Runtime.CompilerServices;
+
 using System.Windows;
 using System.Windows.Media;
-using Brushes = System.Windows.Media.Brushes;
+
 
 #endregion
 
@@ -14,9 +14,6 @@ namespace DeluxMeasure.Windows.Support
 {
 	public class CsScrollViewerAp : DependencyObject
 	{
-
-
-
 
 	#region scroll viewer border thickness
 

@@ -54,25 +54,25 @@ namespace CsDeluxMeasure.Windows.Support
 
 	#endregion
 
-	#region general - does mouse over
-
-		public static readonly DependencyProperty
-			DoesMouseOverProperty = DependencyProperty.RegisterAttached(
-				"DoesMouseOver", typeof(bool), typeof(VisualStates),
-				new FrameworkPropertyMetadata(false,
-					FrameworkPropertyMetadataOptions.Inherits));
-
-		public static void SetDoesMouseOver(UIElement e, bool value)
-		{
-			e.SetValue(DoesMouseOverProperty, value);
-		}
-
-		public static bool GetDoesMouseOver(UIElement e)
-		{
-			return (bool) e.GetValue(DoesMouseOverProperty);
-		}
-
-	#endregion
+	// #region general - does mouse over
+	//
+	// 	public static readonly DependencyProperty
+	// 		DoesMouseOverProperty = DependencyProperty.RegisterAttached(
+	// 			"DoesMouseOver", typeof(bool), typeof(VisualStates),
+	// 			new FrameworkPropertyMetadata(false,
+	// 				FrameworkPropertyMetadataOptions.Inherits));
+	//
+	// 	public static void SetDoesMouseOver(UIElement e, bool value)
+	// 	{
+	// 		e.SetValue(DoesMouseOverProperty, value);
+	// 	}
+	//
+	// 	public static bool GetDoesMouseOver(UIElement e)
+	// 	{
+	// 		return (bool) e.GetValue(DoesMouseOverProperty);
+	// 	}
+	//
+	// #endregion
 
 	#region general - is_activated
 
@@ -130,6 +130,26 @@ namespace CsDeluxMeasure.Windows.Support
 		public static bool GetIsEditing(UIElement e)
 		{
 			return (bool) e.GetValue(IsEditingProperty);
+		}
+
+	#endregion
+		
+	#region general - is_modified
+
+		public static readonly DependencyProperty
+			IsModifiedProperty = DependencyProperty.RegisterAttached(
+				"IsModified", typeof(bool), typeof(VisualStates),
+				new FrameworkPropertyMetadata(false,
+					FrameworkPropertyMetadataOptions.None));
+
+		public static void SetIsModified(UIElement e, bool value)
+		{
+			e.SetValue(IsModifiedProperty, value);
+		}
+
+		public static bool GetIsModified(UIElement e)
+		{
+			return (bool) e.GetValue(IsModifiedProperty);
 		}
 
 	#endregion

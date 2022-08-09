@@ -27,6 +27,7 @@
 		</Grid.RowDefinitions>
 
 		<TextBox Name="Tbx_01"
+				Tag="Tbx_01"
 				Grid.Column="0"
 				Grid.Row="0"
 				Background="Transparent"

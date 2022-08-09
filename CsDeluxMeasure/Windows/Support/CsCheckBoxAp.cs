@@ -15,11 +15,10 @@ namespace CsDeluxMeasure.Windows.Support
 {
 	public class CsCheckBoxAp : DependencyObject
 	{
-
-	#region double - check box box size
+	#region double - checkbox box size
 
 		public static readonly DependencyProperty CheckBoxBoxSizeProperty = DependencyProperty.RegisterAttached(
-			"CheckBoxBoxSize", typeof(double), typeof(CsCheckBoxAp), 
+			"CheckBoxBoxSize", typeof(double), typeof(CsCheckBoxAp),
 			new FrameworkPropertyMetadata(8.0, FrameworkPropertyMetadataOptions.Inherits));
 
 		public static void SetCheckBoxBoxSize(UIElement e, double value)
@@ -34,13 +33,13 @@ namespace CsDeluxMeasure.Windows.Support
 
 	#endregion
 
-	#region checkbox box margin
+	#region thickness = checkbox box margin
 
-		public static readonly DependencyProperty 
+		public static readonly DependencyProperty
 			CheckBoxBoxMarginProperty = DependencyProperty.RegisterAttached(
-			"CheckBoxBoxMargin", typeof(Thickness), 
-			typeof(CsCheckBoxAp), new FrameworkPropertyMetadata(new Thickness(0), 
-				FrameworkPropertyMetadataOptions.Inherits));
+				"CheckBoxBoxMargin", typeof(Thickness),
+				typeof(CsCheckBoxAp), new FrameworkPropertyMetadata(new Thickness(0),
+					FrameworkPropertyMetadataOptions.Inherits));
 
 		public static void SetCheckBoxBoxMargin(UIElement e, Thickness value)
 		{
@@ -54,12 +53,12 @@ namespace CsDeluxMeasure.Windows.Support
 
 	#endregion
 
-	#region checkbox check margin
+	#region thickness - checkbox check margin
 
-		public static readonly DependencyProperty 
+		public static readonly DependencyProperty
 			CheckBoxCheckMarginProperty = DependencyProperty.RegisterAttached(
-				"CheckBoxCheckMargin", typeof(Thickness), 
-				typeof(CsCheckBoxAp), new FrameworkPropertyMetadata(new Thickness(0), 
+				"CheckBoxCheckMargin", typeof(Thickness),
+				typeof(CsCheckBoxAp), new FrameworkPropertyMetadata(new Thickness(0),
 					FrameworkPropertyMetadataOptions.Inherits));
 
 		public static void SetCheckBoxCheckMargin(UIElement e, Thickness value)
@@ -74,12 +73,12 @@ namespace CsDeluxMeasure.Windows.Support
 
 	#endregion
 
-	#region content margin
+	#region thickness - content margin
 
-		public static readonly DependencyProperty 
+		public static readonly DependencyProperty
 			CheckBoxContentMarginProperty = DependencyProperty.RegisterAttached(
-				"CheckBoxContentMargin", typeof(Thickness), 
-				typeof(CsCheckBoxAp), new FrameworkPropertyMetadata(new Thickness(0), 
+				"CheckBoxContentMargin", typeof(Thickness),
+				typeof(CsCheckBoxAp), new FrameworkPropertyMetadata(new Thickness(0),
 					FrameworkPropertyMetadataOptions.Inherits));
 
 		public static void SetCheckBoxContentMargin(UIElement e, Thickness value)
@@ -94,6 +93,41 @@ namespace CsDeluxMeasure.Windows.Support
 
 	#endregion
 
+	#region brush - option mark fill color
+
+		public static readonly DependencyProperty OptionMarkFillBrushProperty = DependencyProperty.RegisterAttached(
+			"OptionMarkFillBrush", typeof(SolidColorBrush), typeof(CsCheckBoxAp),
+			new FrameworkPropertyMetadata(Brushes.DimGray, FrameworkPropertyMetadataOptions.Inherits));
+
+		public static void SetOptionMarkFillBrush(UIElement e, SolidColorBrush value)
+		{
+			e.SetValue(OptionMarkFillBrushProperty, value);
+		}
+
+		public static SolidColorBrush GetOptionMarkFillBrush(UIElement e)
+		{
+			return (SolidColorBrush) e.GetValue(OptionMarkFillBrushProperty);
+		}
+
+	#endregion
+
+	#region brush - Indeterminant mark fill color
+
+		public static readonly DependencyProperty IndeterminantMarkFillBrushProperty = DependencyProperty.RegisterAttached(
+			"IndeterminantMarkFillBrush", typeof(SolidColorBrush), typeof(CsCheckBoxAp),
+			new FrameworkPropertyMetadata(Brushes.DimGray, FrameworkPropertyMetadataOptions.Inherits));
+
+		public static void SetIndeterminantMarkFillBrush(UIElement e, SolidColorBrush value)
+		{
+			e.SetValue(IndeterminantMarkFillBrushProperty, value);
+		}
+
+		public static SolidColorBrush GetIndeterminantMarkFillBrush(UIElement e)
+		{
+			return (SolidColorBrush) e.GetValue(IndeterminantMarkFillBrushProperty);
+		}
+
+	#endregion
 
 	}
 }

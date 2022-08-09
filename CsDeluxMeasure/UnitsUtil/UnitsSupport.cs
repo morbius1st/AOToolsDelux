@@ -2,6 +2,8 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
+using System.Text.RegularExpressions;
 using System.Windows.Data;
 
 using Autodesk.Revit.DB;
@@ -17,9 +19,6 @@ namespace CsDeluxMeasure.UnitsUtil
 	public partial class UnitsSupport
 	{
 		public const string DEFAULT_UNIT_ICON_NAME = "information32.png";
-
-		
-
 
 	#region private fields
 
@@ -48,7 +47,15 @@ namespace CsDeluxMeasure.UnitsUtil
 
 		static UnitsSupport()
 		{
-			init();
+			try
+			{
+				init();
+			}
+			catch (Exception e)
+			{
+
+				Debug.WriteLine($"try error| {e.Message}");
+			}
 		}
 
 		public UnitsSupport()
@@ -66,6 +73,12 @@ namespace CsDeluxMeasure.UnitsUtil
 
 	#endregion
 
+	#region public static methods
+
+
+
+	#endregion
+		
 	#region public methods
 
 		public void SetInitialSequence(List<UnitsDataR> styleList)
@@ -104,10 +117,10 @@ namespace CsDeluxMeasure.UnitsUtil
 			}
 		}
 
-		public void ReSequence(ListCollectionView styles, int start)
+		public void ReSequence(ListCollectionView styles, int start, bool increase)
 		{
-			// Debug.WriteLine("");
-			// Debug.WriteLine($"@ resequence: start: {start}");
+			int amt = -1;
+			if (increase) amt = 1;
 
 			int idx = start;
 
@@ -126,63 +139,11 @@ namespace CsDeluxMeasure.UnitsUtil
 
 				// Debug.Write($"  seq before: {udr.Sequence:D2}");
 
-				udr.Sequence -= 1;
+				udr.Sequence += amt;
 
 				// Debug.WriteLine($"  seq after: {udr.Sequence:D2}");
 			}
 		}
-
-		// public void ReSequence(List<UnitsDataR> styles, int start) 
-		// {
-		// 	Debug.WriteLine("");
-		// 	Debug.WriteLine($"@ resequence: start: {start}");
-		//
-		// 	int idx = start;
-		//
-		// 	for (int i = start; i < styles.Count; i++)
-		// 	{
-		// 		Debug.Write($"checking: {styles[i].Ustyle.Name,30}   ");
-		//
-		// 		if (styles[i].Skip())
-		// 		{
-		// 			Debug.WriteLine($"  skip? {styles[i].Skip(),5}  del: {styles[i].DeleteStyle,5}");
-		// 			continue;
-		// 		}
-		//
-		// 		Debug.Write($"  seq before: {styles[i].Sequence:D2}");
-		//
-		// 		styles[i].Sequence -= 1;
-		//
-		// 		Debug.WriteLine($"  seq after: {styles[i].Sequence:D2}");
-		// 	}
-		// }
-
-		// public void ReSequence(List<UnitsDataR> styleList, int start, int limit, bool directionIsToEnd)
-		// {
-		// 	int end;
-		// 	int inc;
-		//
-		// 	if (directionIsToEnd)
-		// 	{
-		// 		if (start >= limit) return;
-		// 		end = styleList.Count;
-		// 		inc = 1;
-		// 	}
-		// 	else
-		// 	{
-		// 		if (start <= limit) return;
-		// 		end = 0;
-		// 		inc = -1;
-		// 	}
-		//
-		//
-		// 	for (int i = start; i < end; i += inc)
-		// 	{
-		// 		styleList[i].Sequence = i + 1;
-		// 	}
-		//
-		//
-		// }
 
 		public static string GetSampleFormatted(UnitsDataR udr, double sample)
 		{
@@ -202,7 +163,6 @@ namespace CsDeluxMeasure.UnitsUtil
 			return getPrecString2(precisions2[table], prec, uSym);
 		}
 
-		// return the name field
 		public static string GetTypeIdAsString(ForgeTypeId key)
 		{
 			if (!UnitTypeToString.ContainsKey(key)) return null;
@@ -210,22 +170,12 @@ namespace CsDeluxMeasure.UnitsUtil
 			return UnitTypeToString[key].NameId;
 		}
 
-		// return the name field
 		public static STYLE_DATA GetTypeIdAsStyleId(ForgeTypeId key)
 		{
 			if (!UnitTypeToString.ContainsKey(key)) return STYLE_DATA.Invalid;
 		
 			return UnitTypeToString[key];
 		}
-		
-		// public static ForgeTypeId GetTypeIdAsForge(string key)
-		// {
-		// 	if (!StringToUnitType.ContainsKey(key)) return null;
-		//
-		// 	return StringToUnitType[key];
-		// }
-
-		// used by UnitsDataR
 
 		public static string GetSymbol(ForgeTypeId symbol, UnitCat uCat)
 		{
@@ -250,6 +200,20 @@ namespace CsDeluxMeasure.UnitsUtil
 			result += s.Length > 1 ? $" & {s[1]}" : null;
 
 			return result;
+		}
+
+		public List<UnitsDataR> UnitsDataRListClone(List<UnitsDataR> styleList)
+		{
+			List<UnitsDataR> styleListCopy = new List<UnitsDataR>(styleList.Count);
+			UnitsDataR udrCopy;
+
+			foreach (UnitsDataR udr in styleList)
+			{
+				udrCopy = udr.Clone();
+				styleListCopy.Add(udrCopy);
+			}
+
+			return styleListCopy;
 		}
 
 		public UnitsDataR GetProjectUnitData(Document doc)
@@ -339,9 +303,54 @@ namespace CsDeluxMeasure.UnitsUtil
 			return udr;
 		}
 
-	#endregion
 
-	#region private methods
+		public static string CheckStyleNameSyntax(string testName)
+		{
+			// rules
+			// validation requirements
+			// min 4 characters
+			// must start with alphanumeric (uc or lc)
+			// middle is alphanumeric, space, dash, period
+			// must end with alphanumeric (no dash, no space, no period)
+			// name must be unique
+			if (testName == null || testName.Length < 4)
+			{
+				return "Name mist be a minimum of 4 characters";
+			}
+
+			Regex r = new Regex("^[a-zA-Z0-9][a-zA-Z0-9\\. \\-]*[a-zA-Z0-9]{1}$");
+
+			if (!r.IsMatch(testName))
+			{
+				return "Name has invalid characters";
+			}
+
+			return null;
+		}
+
+		public static string CheckStyleDescSyntax(string newName)
+		{
+
+			if (newName == null || newName.Length < 6)
+			{
+				return "Name mist be a minimum of 6 characters";
+			}
+
+			Regex r = new Regex("^[a-zA-Z0-9][a-zA-Z0-9\\. \\-]*[a-zA-Z0-9]{1}$");
+
+			if (!r.IsMatch(newName))
+			{
+				return "Name has invalid characters";
+			}
+
+			return null;
+		}
+
+
+	#endregion
+		
+	#region private static methods
+
 
 		private static void init()
 		{
@@ -555,6 +564,8 @@ namespace CsDeluxMeasure.UnitsUtil
 			pricXref.Add(UnitCat.UC_FT_FRAC   , (int) PrecXref.XR_FRAC_FT);
 		}
 
+		private static void assignPrecStrings()
+		{
 		// unit
 		// for m+cm  1 cm to 0.1 mm
 
@@ -568,8 +579,6 @@ namespace CsDeluxMeasure.UnitsUtil
 		// for frac in  1" to 1/256"
 		// for ft+ frac in  1' to 1/256"  (but divided by 12)
 
-		private static void assignPrecStrings()
-		{
 			precisions = new Dictionary<string, double>[UnitData.UCAT_COUNT];
 
 			precInFrac = new Dictionary<string, double>()
@@ -677,6 +686,10 @@ namespace CsDeluxMeasure.UnitsUtil
 			precisions2[(int) PrecXref.XR_M_CM] = precMeterCm2;
 		}
 
+	#endregion
+
+	#region private methods
+		
 	#endregion
 
 	#region event consuming

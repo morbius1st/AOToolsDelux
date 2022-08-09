@@ -294,6 +294,7 @@
 									BorderBrush="{TemplateBinding BorderBrush}"
 									BorderThickness="{TemplateBinding BorderThickness}"
 									/>
+
 							<RepeatButton x:Name="PART_LineUpButton"
 									Grid.Row="0"
 									Height="{Binding RelativeSource={RelativeSource AncestorType={x:Type ScrollBar}},
@@ -316,8 +317,13 @@
 										Margin="{Binding RelativeSource={RelativeSource AncestorType={x:Type ScrollBar}},
 																		 Path=(custom:CsScrollBarAp.IconMarginTopEnd)}"
 										Stretch="Fill" VerticalAlignment="Top"
-										/>
+										>
+
+								</Path>
+
 							</RepeatButton>
+
+
 							<Track x:Name="PART_Track"
 									Grid.Row="1"
 									IsDirectionReversed="true"
@@ -333,6 +339,7 @@
 									<Thumb Style="{DynamicResource ScrollBarThumbVertical}" />
 								</Track.Thumb>
 							</Track>
+
 							<RepeatButton x:Name="PART_LineDownButton"
 									Grid.Row="2"
 									Height="{Binding RelativeSource={RelativeSource AncestorType={x:Type ScrollBar}},
@@ -355,13 +362,17 @@
 										Margin="{Binding RelativeSource={RelativeSource AncestorType={x:Type ScrollBar}},
 																		 Path=(custom:CsScrollBarAp.IconMarginBottomEnd)}"
 										Stretch="Fill" VerticalAlignment="bottom"
-										/>
+										>
+
+								</Path>
 
 							</RepeatButton>
+
 						</Grid>
 					</Border>
 
 					<ControlTemplate.Triggers>
+
 						<MultiDataTrigger>
 							<MultiDataTrigger.Conditions>
 								<Condition Binding="{Binding IsMouseOver, ElementName=PART_LineUpButton}" Value="true" />
@@ -372,27 +383,18 @@
 									/>
 							<Setter Property="RenderTransform" TargetName="PART_LineUpButton">
 								<Setter.Value>
-									<ScaleTransform CenterX="{Binding ElementName=PART_LineUpButton,
+									<ScaleTransform x:Name="st_up"
+											CenterX="{Binding ElementName=PART_LineUpButton,
 																				Path=ActualWidth,
 																				Converter={StaticResource DivideConverter},
-																				ConverterParameter=2.0}"
+																				ConverterParameter=2.0, FallbackValue=1}"
 											CenterY="{Binding ElementName=PART_LineUpButton,
-																				Path=ActualHeight}"
+																				Path=ActualHeight, FallbackValue=1}"
 											ScaleX="1.5" ScaleY="1.5"
 											/>
 								</Setter.Value>
 							</Setter>
 						</MultiDataTrigger>
-						<MultiDataTrigger>
-							<MultiDataTrigger.Conditions>
-								<Condition Binding="{Binding IsMouseOver, ElementName=PART_LineUpButton}" Value="true" />
-								<Condition Binding="{Binding IsPressed, ElementName=PART_LineUpButton}" Value="false" />
-							</MultiDataTrigger.Conditions>
-							<Setter Property="Fill" TargetName="ArrowTop"
-									Value="{StaticResource ScrollBar.Glyph.MouseOver}"
-									/>
-						</MultiDataTrigger>
-
 
 						<MultiDataTrigger>
 							<MultiDataTrigger.Conditions>
@@ -404,15 +406,28 @@
 									/>
 							<Setter Property="RenderTransform" TargetName="PART_LineDownButton">
 								<Setter.Value>
-									<ScaleTransform CenterX="{Binding ElementName=PART_LineDownButton,
+									<ScaleTransform x:Name="st_dn"
+											CenterX="{Binding ElementName=PART_LineDownButton,
 																				Path=ActualWidth,
 																				Converter={StaticResource DivideConverter},
-																				ConverterParameter=2.0}"
+																				ConverterParameter=2.0, FallbackValue=1}"
+											CenterY="0"
 											ScaleX="1.5" ScaleY="1.5"
 											/>
 								</Setter.Value>
 							</Setter>
 						</MultiDataTrigger>
+
+						<MultiDataTrigger>
+							<MultiDataTrigger.Conditions>
+								<Condition Binding="{Binding IsMouseOver, ElementName=PART_LineUpButton}" Value="true" />
+								<Condition Binding="{Binding IsPressed, ElementName=PART_LineUpButton}" Value="false" />
+							</MultiDataTrigger.Conditions>
+							<Setter Property="Fill" TargetName="ArrowTop"
+									Value="{StaticResource ScrollBar.Glyph.MouseOver}"
+							/>
+						</MultiDataTrigger>
+
 						<MultiDataTrigger>
 							<MultiDataTrigger.Conditions>
 								<Condition Binding="{Binding IsMouseOver, ElementName=PART_LineDownButton}" Value="true" />
@@ -544,12 +559,13 @@
 											/>
 									<Setter Property="RenderTransform" TargetName="PART_LineLeftButton">
 										<Setter.Value>
-											<ScaleTransform CenterX="{Binding ElementName=PART_LineLeftButton,
-																						Path=ActualWidth}"
+											<ScaleTransform x:Name="st_left"
+													CenterX="{Binding ElementName=PART_LineLeftButton,
+																						Path=ActualWidth, FallbackValue=1}"
 													CenterY="{Binding ElementName=PART_LineLeftButton,
 																						Path=ActualHeight,
 																						Converter={StaticResource DivideConverter},
-																						ConverterParameter=2.0}"
+																						ConverterParameter=2.0, FallbackValue=1}"
 													ScaleX="1.5" ScaleY="1.5"
 													/>
 										</Setter.Value>
@@ -577,10 +593,11 @@
 											/>
 									<Setter Property="RenderTransform" TargetName="PART_LineRightButton">
 										<Setter.Value>
-											<ScaleTransform CenterY="{Binding ElementName=PART_LineRightButton,
+											<ScaleTransform x:Name="st_right" CenterY="{Binding ElementName=PART_LineRightButton,
 																						Path=ActualHeight,
 																						Converter={StaticResource DivideConverter},
-																						ConverterParameter=2.0}"
+																						ConverterParameter=2.0, FallbackValue=1}"
+													CenterX="0"
 													ScaleX="1.5" ScaleY="1.5"
 													/>
 										</Setter.Value>

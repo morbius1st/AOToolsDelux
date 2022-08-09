@@ -164,6 +164,7 @@
 		<Setter Property="BorderBrush" Value="Transparent" />
 		<Setter Property="BorderThickness" Value="1" />
 		<Setter Property="Foreground" Value="{StaticResource Gray.UnSelected.Foreground}" />
+		<Setter Property="VerticalContentAlignment" Value="{Binding VerticalContentAlignment, RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}}}" />
 		<Setter Property="HorizontalContentAlignment" Value="{Binding HorizontalContentAlignment, RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}}}" />
 		<Setter Property="Margin" Value="0,1,0,0" />
 		<Setter Property="Opacity" Value="1" />
@@ -225,7 +226,7 @@
 				</ControlTemplate>
 			</Setter.Value>
 		</Setter>
-		<Setter Property="VerticalContentAlignment" Value="{Binding VerticalContentAlignment, RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}}}" />
+		
 
 	</Style>
 

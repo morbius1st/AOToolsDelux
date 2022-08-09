@@ -8,7 +8,7 @@
 		<!-- <ResourceDictionary Source="../Skin/CyberStudioSkin.xaml" /> -->
 	</ResourceDictionary.MergedDictionaries>
 
-	<cs:AddBoundConverter x:Key="AddConverter" />
+	<cs:MultiAddConverter x:Key="AddConverter" />
 
 	<!-- <SolidColorBrush x:Key="ScrollBarBkg" Color="#222222" /> -->
 	<!-- <SolidColorBrush x:Key="ItemsControl.Text.Disabled" Color="{DynamicResource Gray.600}" /> -->

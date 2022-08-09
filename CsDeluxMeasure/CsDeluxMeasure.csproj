@@ -167,13 +167,12 @@
     <Compile Include="Windows\Support\CsScrollViewerAp.cs" />
     <Compile Include="Windows\Support\CustomProperties.cs" />
     <Compile Include="Windows\Support\junk.cs" />
+    <Compile Include="Windows\Support\UnitStylesMgrWinData.cs" />
     <Compile Include="Windows\Support\UnitStyleCmd.cs" />
+    <Compile Include="Windows\Support\Validation.cs" />
     <Compile Include="Windows\Support\ValueConverters.cs" />
     <Compile Include="Windows\Support\VisualStates.cs" />
     <Compile Include="Windows\Support\XmalMarkup.cs" />
-    <Compile Include="Windows\UnitStylesManager.xaml.cs">
-      <DependentUpon>UnitStylesManager.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Windows\UnitStylesMgr.xaml.cs">
       <DependentUpon>UnitStylesMgr.xaml</DependentUpon>
     </Compile>
@@ -226,14 +225,6 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Windows\Support\CsScrollViewer.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Windows\Support\CsUnitMgrStyles.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Windows\UnitStylesManager.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>

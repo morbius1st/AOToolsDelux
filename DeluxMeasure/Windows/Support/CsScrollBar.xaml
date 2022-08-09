@@ -6,7 +6,7 @@
 		xmlns:sys="clr-namespace:System;assembly=mscorlib"
 		>
 
-	<support:DivideConverter x:Key="DivideConverter" />
+	<custom:DivideConverter x:Key="DivideConverter" />
 
 
 	<sys:Double x:Key="TrackWidth">4</sys:Double>

@@ -64,8 +64,8 @@
 			<!--#region > border styles-->
 
 
+				<!-- <Setter Property="Tag" Value="{x:Static local:Test1.RIBBONFAV}"/> -->
 			<Style x:Key="BdrRoot" TargetType="Border">
-				<Setter Property="Tag" Value="{x:Static local:Test1.RIBBONFAV}"></Setter>
 				<Setter Property="Background" Value="{Binding RelativeSource={RelativeSource Self}, Path=(cs:VisualStates.BgDisabled)}" />
 				<Setter Property="Margin" Value="0" />
 				<Setter Property="Padding" Value="0" />
@@ -4278,8 +4278,8 @@
 
 				<StackPanel x:Name="SpUnitSettings" Orientation="Vertical">
 
+							<!-- Tag="{x:Static local:Test1.RIBBONFAVS}" -->
 					<Border x:Name="BdrHeader"
-							Tag="{x:Static local:Test1.RIBBONFAVS}"
 							HorizontalAlignment="Stretch"
 							Margin="0,0,0,3"
 							cs:VisualStates.BgDisabled="{StaticResource Header.Bg.IsSel}"
@@ -6880,14 +6880,15 @@
 
 		<!--#region > column right-->
 
+				<!-- Tag="{x:Static local:Test1.RIBBONFAVORITE}" -->
 		<DockPanel x:Name="ColumnRight"
-				Tag="{x:Static local:Test1.RIBBONFAVORITE}"
 				Grid.Column="1"
 				Grid.Row="0"
 				Margin="0,0,0,0"
 				>
 
 			<Border x:Name="Header_1R"
+					Tag="Header_1R"
 					DockPanel.Dock="Top"
 					Background="DimGray"
 					BorderThickness="0"

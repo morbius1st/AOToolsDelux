@@ -90,18 +90,18 @@ namespace CsDeluxMeasure.Windows.Support
 
 	#region thickness - path margin
 
-		public static readonly DependencyProperty PathMarginProperty = DependencyProperty.RegisterAttached(
-			"PathMargin", typeof(Thickness), typeof(CsPathAp), 
+		public static readonly DependencyProperty IconIsEditingMarginProperty = DependencyProperty.RegisterAttached(
+			"IconIsEditingMargin", typeof(Thickness), typeof(CsPathAp), 
 			new FrameworkPropertyMetadata(new Thickness(0,0,0,0), FrameworkPropertyMetadataOptions.Inherits));
 
-		public static void SetPathMargin(UIElement e, Thickness value)
+		public static void SetIconIsEditingMargin(UIElement e, Thickness value)
 		{
-			e.SetValue(PathMarginProperty, value);
+			e.SetValue(IconIsEditingMarginProperty, value);
 		}
 
-		public static Thickness GetPathMargin(UIElement e)
+		public static Thickness GetIconIsEditingMargin(UIElement e)
 		{
-			return (Thickness) e.GetValue(PathMarginProperty);
+			return (Thickness) e.GetValue(IconIsEditingMarginProperty);
 		}
 
 	#endregion

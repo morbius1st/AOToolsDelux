@@ -2,25 +2,18 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
-using System.Linq;
 using System.Runtime.CompilerServices;
-using System.Text;
-using System.Threading.Tasks;
+using System.Text.RegularExpressions;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
 using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Interop;
-using System.Windows.Media;
-using System.Windows.Media.Animation;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
-using System.Windows.Threading;
 using Autodesk.Revit.UI;
 using CsDeluxMeasure.Annotations;
 using CsDeluxMeasure.UnitsUtil;
+using CsDeluxMeasure.Windows.Support;
 using SettingsManager;
 using UtilityLibrary;
 using ComboBox = System.Windows.Controls.ComboBox;
@@ -34,14 +27,6 @@ namespace CsDeluxMeasure.Windows
 	public partial class UnitStylesMgr : Window, INotifyPropertyChanged
 	{
 	#region fixed
-
-		public const int RIBBONFAV = 1;
-
-		public static int RIBBONFAVORITE = 1;
-
-		public static int RIBBONFAVS => 1;
-
-		public static string Test = "Name";
 
 		private readonly string[] contentSelection = new [] { "Adjust Style Order", "Adjust Saved Styles" };
 		private readonly string[] closeSelection = new [] { "Done", "Save and Done" };
@@ -60,7 +45,7 @@ namespace CsDeluxMeasure.Windows
 		private const string STR_SHOWSTYLE_DDNAME = "Show Selected User Style";
 
 		// collections
-		private ListCollectionView styles;
+		private ListCollectionView wkgUserStyles;
 
 		private ListCollectionView ribbonStyles;
 		private ListCollectionView dialogLeftStyles;
@@ -71,16 +56,29 @@ namespace CsDeluxMeasure.Windows
 		private KeyValuePair<string, string> cbxSelectedItem;
 
 		// objects + related
-		private UnitsDataR detailUnit;
 		private UnitsManager uMgr = UnitsManager.Instance;
+		// private static UnitsSupport uSup;
+
+		private UnitsDataR detailUnit;
 		private UnitsDataR lbxSelItem;
 
 		// status
-		private string status;
-		private bool initStatus = false;
-		private int hasChanges;
+
+		private int changesMade;
 
 		private bool showingSavedStyles = false;
+
+		private string validateFailDesc;
+
+
+		private string newNameToolTip;
+		private string newDescToolTip;
+		private string insPosToolTip;
+
+		private string editNameToolTip;
+		private string editDescToolTip;
+		private string editSampleToolTip;
+
 
 		private bool? isNewNameOk = null;   // true: ok to use | false not ok to use | null neither / undefined
 		private bool? isNewDescOk = null;   // true: ok to use | false not ok to use | null neither / undefined
@@ -90,10 +88,10 @@ namespace CsDeluxMeasure.Windows
 		private bool canAddAfter = false;
 		private bool canStyleAdd = false;
 
+
 	#region for item list
 
 		// control settings only for style list
-		private int isClosing = -1;
 		private bool isSelected = false;
 		private bool? isEditing = false;
 		private bool? isReadOnly = false;
@@ -103,44 +101,19 @@ namespace CsDeluxMeasure.Windows
 
 	#region for add unit
 
-		// control settings for add unit area
-		private bool addUnitEnabled = false;
-		private bool addUnitSelected = false;
-		private bool addUnitReadOnly = false;
-		private bool addUnitIsLocked = false;
-		private bool? isGoodOrBad = null;
+		// control settings for add unit are
+
+		private int priorValueIdx = -1;
+		private string[] priorValue = new string[UnitStylesMgrWinData.POPUP_COUNT];
 
 	#endregion
 
 	#region for popup
 
+		private Popup currInfoPopup;
+		private Popup currEditPopup;
 
-		// private TextBox popupTargetTbxNewName;
-		// private TextBox popupTargetTbxNewDesc;
-
-		private TextBox popupTargetTbxEditName;
-		private TextBox popupTargetTbxEditDesc;
-		private TextBox popupTargetTbxEditSample;
-		
-		private CheckBox popupTargetCkbxRibbonFavs;
-		private CheckBox popupTargetCkbxDialogLeft;
-		private CheckBox popupTargetCkbxDialogRight;
-
-		private int currPopupIdx = -1;
-		private Popup[] popups = new Popup[20];
-		private byte editNamePopup = 0;
-		private byte editDescPopup = 1;
-		private byte editSamplePopup = 2;
-
-		private byte popupRibbonFavs = 3;
-
-
-		private bool popupIsEntered;
-		private DoubleAnimation d = new DoubleAnimation(1, new Duration(TimeSpan.FromSeconds(2)));
-		private AnimationClock popupAniClock;
-
-		private DispatcherTimer timer;
-		private bool timerActive;
+		private bool winLostFocus;
 
 	#endregion
 
@@ -151,7 +124,7 @@ namespace CsDeluxMeasure.Windows
 		// contained controls
 		private static UnitStylesMgr me;
 		private ListBox lbx;
-		private ComboBox cbx;
+
 
 		// indicies
 		private int lbxSelIndex;
@@ -159,14 +132,15 @@ namespace CsDeluxMeasure.Windows
 		private int dialogIndex;
 
 		// properties
-		private Image img;
+
 		private string newName;
 		private string newDesc;
-
 
 	#endregion
 
 	#region ctor
+
+		// static UnitStylesMgr() { uSup = new UnitsSupport();}
 
 		public UnitStylesMgr()
 		{
@@ -176,18 +150,16 @@ namespace CsDeluxMeasure.Windows
 
 			uMgr.ReadUnitSettings();
 
-			OnPropertyChanged(nameof(StylesView));
+			OnPropertyChanged(nameof(WkgUserStylesView));
 
-			Init();
-
-			status = "init";
+			init();
 		}
 
 	#endregion
 
 	#region public properties
 
-		public Image Imgs => img;
+		public UnitsManager UnitsManager => uMgr;
 
 		// the current displayed unit setting information
 		public UnitsDataR DetailUnit
@@ -202,22 +174,50 @@ namespace CsDeluxMeasure.Windows
 			}
 		}
 
-		// this is the collection being displayed
-		public ListCollectionView StylesView => styles;
-
 		public Dictionary<string, UnitsDataR> StdStyles => uMgr.StdStyles;
+
+
+		// this is the collection being displayed
+		public ListCollectionView WkgUserStylesView => wkgUserStyles;
 
 		public UnitsDataR LbxSelItem
 		{
 			get => lbxSelItem;
 			set
 			{
+
 				lbxSelItem = value;
+
 				OnPropertyChanged();
+
+				// LbxSelItemCopy = lbxSelItem.Clone();
 
 				showSavedStyle(lbxSelItem);
 			}
 		}
+
+		public int LbxSelIndex
+		{
+			get => lbxSelIndex;
+			set
+			{
+				if (value == lbxSelIndex) return;
+				lbxSelIndex = value;
+
+
+				if (lbx != null)
+				{
+					UnitsDataR udr = (UnitsDataR) wkgUserStyles.GetItemAt(lbxSelIndex);
+					lbx.ScrollIntoView(udr);
+				}
+
+				OnPropertyChanged();
+				InsPosition = value + 1;
+			}
+		}
+
+		public int Count => wkgUserStyles.Count;
+
 
 		public List<KeyValuePair<string, string>> CbxList => cbxList;
 
@@ -234,24 +234,22 @@ namespace CsDeluxMeasure.Windows
 		}
 
 
-		public int Count => styles.Count;
+		// new style information
 
 		public string NewName
 		{
 			get => newName;
 			set
 			{
-				string newValue = null;
+				string newValue = value.TrimEnd();
 
-				if (!value.IsVoid())
+				// if ((newValue.Equals(testName) 
+				// 	|| newValue.Equals(priorValue[UnitStylesMgrWinData.POPUP_NEW_STYLE_NAME])) && !newValue.IsVoid()) return;
+
+				if (!newValue.IsVoid())
 				{
-					newValue = value.TrimEnd();
-
-					if (newValue.Equals(newName)) return;
-
 					IsNewNameOk = ValidateNewName(newValue);
-
-					// if (!isNewNameOk.Value) return;
+					NewNameToolTip = validateFailDesc;
 				}
 				else
 				{
@@ -271,17 +269,15 @@ namespace CsDeluxMeasure.Windows
 			get => newDesc;
 			set
 			{
-				string newValue = null;
+				string newValue = value.TrimEnd();
 
-				if (!value.IsVoid())
+				// if ((newValue.Equals(testName) 
+				// 	|| newValue.Equals(priorValue[UnitStylesMgrWinData.POPUP_NEW_STYLE_NAME])) && !newValue.IsVoid()) return;
+
+				if (!newValue.IsVoid())
 				{
-					newValue = value.TrimEnd();
-
-					if (newValue.Equals(newDesc)) return;
-
 					IsNewDescOk = ValidateNewDesc(newValue);
-
-					// if (!isNewNameOk.Value) return;
+					NewDescToolTip = validateFailDesc;
 				}
 				else
 				{
@@ -296,12 +292,109 @@ namespace CsDeluxMeasure.Windows
 			}
 		}
 
-		public string ContentType => contentSelection[dialogIndex];
+		public int InsPosition
+		{
+			get => insPosition;
+			set
+			{
+				insPosition = value;
 
-		public string CloseType => closeSelection[hasChanges > 1 ? 1 : 0];
+				isInsPosValid = ValidateInsPos(value);
+				InsPosToolTip = validateFailDesc;
+
+				if (isInsPosValid)
+				{
+					lbxSelIndex = value - 1;
+					OnPropertyChanged(nameof(LbxSelIndex));
+				}
+
+				OnPropertyChanged();
+
+				DetermineCanAdd();
+			}
+		}
 
 
-		// new name / new description properties
+		public string NewNameToolTip
+		{
+			get => newNameToolTip;
+			set
+			{
+				if (newNameToolTip?.Equals(value) ?? false) return;
+
+				newNameToolTip = value;
+
+				OnPropertyChanged();
+			}
+		}
+
+		public string NewDescToolTip
+		{
+			get => newDescToolTip;
+			set
+			{
+				if (newDescToolTip?.Equals(value) ?? false) return;
+
+				newDescToolTip = value;
+
+				OnPropertyChanged();
+			}
+		}
+
+		public string InsPosToolTip
+		{
+			get => insPosToolTip;
+			set
+			{
+				if (insPosToolTip?.Equals(value) ?? false) return;
+
+				insPosToolTip = value;
+
+				OnPropertyChanged();
+			}
+		}
+
+		public string EditNameToolTip
+		{
+			get => editNameToolTip;
+			set
+			{
+				if (editNameToolTip?.Equals(value) ?? false) return;
+
+				editNameToolTip = value;
+
+				OnPropertyChanged();
+			}
+		}
+
+		public string EditDescToolTip
+		{
+			get => editDescToolTip;
+			set
+			{
+				if (editDescToolTip?.Equals(value) ?? false) return;
+
+				editDescToolTip = value;
+
+				OnPropertyChanged();
+			}
+		}
+
+		public string EditSampleToolTip
+		{
+			get => editSampleToolTip;
+			set
+			{
+				if (editSampleToolTip?.Equals(value) ?? false) return;
+
+				editSampleToolTip = value;
+
+				OnPropertyChanged();
+			}
+		}
+
+
+		// window location
 
 		public static bool WinLocationChanging
 		{
@@ -316,81 +409,6 @@ namespace CsDeluxMeasure.Windows
 
 
 		// status 
-
-		public int IsClosing
-		{
-			get => isClosing;
-
-			set
-			{
-				if (value == isClosing) return;
-				isClosing = value;
-				OnPropertyChanged();
-			}
-		}
-
-		public bool? IsGoodOrBad
-		{
-			[DebuggerStepThrough]
-			get => isGoodOrBad;
-			[DebuggerStepThrough]
-			set
-			{
-				if (value == isGoodOrBad) return;
-				isGoodOrBad = value;
-				OnPropertyChanged();
-			}
-		}
-
-		public bool AddUnitEnabled
-		{
-			get => addUnitEnabled;
-
-			set
-			{
-				if (value == addUnitEnabled) return;
-				addUnitEnabled = value;
-				OnPropertyChanged();
-			}
-		}
-
-		public bool AddUnitSelected
-		{
-			get => addUnitSelected;
-
-			set
-			{
-				if (value == addUnitSelected) return;
-				addUnitSelected = value;
-				OnPropertyChanged();
-			}
-		}
-
-		public bool AddUnitReadOnly
-		{
-			[DebuggerStepThrough]
-			get => addUnitReadOnly;
-			[DebuggerStepThrough]
-			set
-			{
-				if (value == addUnitReadOnly) return;
-				addUnitReadOnly = value;
-				OnPropertyChanged();
-			}
-		}
-
-		public bool AddUnitIsLocked
-		{
-			[DebuggerStepThrough]
-			get => addUnitIsLocked;
-			[DebuggerStepThrough]
-			set
-			{
-				if (value == addUnitIsLocked) return;
-				addUnitIsLocked = value;
-				OnPropertyChanged();
-			}
-		}
 
 		public bool IsSelected
 		{
@@ -490,7 +508,6 @@ namespace CsDeluxMeasure.Windows
 			}
 		}
 
-
 		public bool Cbx1UnitSelect
 		{
 			get => cbx1UnitSelect;
@@ -503,20 +520,20 @@ namespace CsDeluxMeasure.Windows
 			}
 		}
 
-		public int HasChanges
+		public int ChangesMade
 		{
-			get => hasChanges;
+			get => changesMade;
 			set
 			{
-				if (value == hasChanges) return;
+				if (value == changesMade) return;
 
-				hasChanges = value;
+				changesMade = value;
 				OnPropertyChanged();
-				OnPropertyChanged(nameof(CloseType));
+				// OnPropertyChanged(nameof(CloseType));
 			}
 		}
 
-		public bool IsModified => hasChanges > 0;
+		public bool IsModified => changesMade > 0;
 
 		public bool? IsNewNameOk
 		{
@@ -547,6 +564,14 @@ namespace CsDeluxMeasure.Windows
 		public bool? IsInsPosOk
 		{
 			get => isInsPosOk;
+			set
+			{
+				if (isInsPosOk == value) return;
+
+				isInsPosOk = value;
+
+				OnPropertyChanged();
+			}
 		}
 
 		public bool CanAddBefore
@@ -610,128 +635,15 @@ namespace CsDeluxMeasure.Windows
 			}
 		}
 
-		public int InsPosition
-		{
-			get => insPosition;
-			set
-			{
-				if (value == insPosition) return;
-
-				insPosition = value;
-				OnPropertyChanged();
-
-				bool result = ValidateInsPos(value);
-
-				if (result)
-				{
-					isInsPosValid = true;
-
-					LbxSelIndex = value - 1;
-				}
-				else
-				{
-					isInsPosValid = false;
-				}
-
-				DetermineCanAdd();
-			}
-		}
-
-		public int LbxSelIndex
-		{
-			get => lbxSelIndex;
-			set
-			{
-				if (value == lbxSelIndex) return;
-				lbxSelIndex = value;
-				OnPropertyChanged();
-
-				if (lbx != null)
-				{
-					UnitsDataR udr = (UnitsDataR) styles.GetItemAt(lbxSelIndex);
-					lbx.ScrollIntoView(udr);
-				}
-
-				insPosition = value + 1;
-				OnPropertyChanged(nameof(InsPosition));
-			}
-		}
-
-
-
-		public TextBox PopupTargetTbxEditName
-		{
-			get => popupTargetTbxEditName;
-			set
-			{
-				popupTargetTbxEditName = value;
-				OnPropertyChanged();
-			}
-		}
-
-		public TextBox PopupTargetTbxEditDesc
-		{
-			get => popupTargetTbxEditDesc;
-			set
-			{
-				popupTargetTbxEditDesc = value;
-				OnPropertyChanged();
-			}
-		}
-
-		public TextBox PopupTargetTbxEditSample
-		{
-			get => popupTargetTbxEditSample;
-			set
-			{
-				popupTargetTbxEditSample = value;
-				OnPropertyChanged();
-			}
-		}
-
-		public CheckBox PopupTargetCkbxRibbonFavs
-		{
-			get => popupTargetCkbxRibbonFavs;
-			set
-			{
-				popupTargetCkbxRibbonFavs = value;
-				OnPropertyChanged();
-			}
-		}
-
 	#endregion
 
 	#region private properties
 
+		private WindowLocation _Location { get; set; } = new WindowLocation(0, 0);
+
 	#endregion
 
 	#region public methods
-
-		public bool ValidateInsPos(int pos)
-		{
-			// rules
-			// cannot be 1 or less
-			// cannot be greater than last number
-
-			return pos > 1 && pos <= Count;
-		}
-
-		public bool ValidateNewName(string newName)
-		{
-			// rules
-			// cannot stat with a number
-			// minimum of 5 characters
-
-			if (newName.Length < 5 || newName[0] == ' ' ||
-				(newName[0] >= '0' && newName[0] <= '9')) return false;
-
-			return uMgr.UsrStyleList.FindIndex(x => x.Ustyle.Name.Equals(newName)) == -1;
-		}
-
-		public bool ValidateNewDesc(string newName)
-		{
-			return newName.Length > 9 && newName[0] != ' ';
-		}
 
 		public void SetPosition(Window w)
 		{
@@ -746,132 +658,65 @@ namespace CsDeluxMeasure.Windows
 
 		public void ProcessStyleChanges()
 		{
-			bool resultR = setStyleList(ribbonStyles, (int) InList.RIBBON);
-			bool resultDl = setStyleList(dialogLeftStyles, (int) InList.DIALOG_LEFT);
-			bool resultDr = setStyleList(dialogRightStyles, (int) InList.DIALOG_RIGHT);
+			bool resultR = setUserStyles(ribbonStyles, (int) InList.RIBBON);
+			bool resultDl = setUserStyles(dialogLeftStyles, (int) InList.DIALOG_LEFT);
+			bool resultDr = setUserStyles(dialogRightStyles, (int) InList.DIALOG_RIGHT);
 		}
 
 	#endregion
 
 	#region private methods
 
-		private void Init()
+		// init setup
+		private void init()
 		{
-			initStatus = true;
+			ChangesMade = 0;
 
-			HasChanges = 0;
+			initUserStylesView();
 
-			configView();
-			configCbxList();
+			initCbxList();
 
 			DialogIndex = 0;
 
-			InsPosition = 2;
-
-			LbxSelIndex = 3;
+			// LbxSelIndex = 3;
 			Cbx1UnitSelect = true;
 
-			OnPropertyChanged(nameof(StylesView));
-
-			initStatus = false;
+			OnPropertyChanged(nameof(WkgUserStylesView));
 		}
 
-		private void configView()
+		private void initUserStylesView()
 		{
 			uMgr.SetInitialSequence();
 
-			styles = (ListCollectionView) CollectionViewSource.GetDefaultView(uMgr.UsrStyleList);
-			styles.CurrentChanged += Styles_CurrentChanged;
+			wkgUserStyles = (ListCollectionView) CollectionViewSource.GetDefaultView(uMgr.UsrStyleList);
 
-			styles.SortDescriptions.Add(
+			wkgUserStyles.SortDescriptions.Add(
 				new SortDescription("Sequence", ListSortDirection.Ascending));
-			styles.Filter = isNotDeleted;
+			wkgUserStyles.Filter = isNotDeleted;
 
-			styles.IsLiveSorting = true;
+			wkgUserStyles.IsLiveSorting = true;
+
+			UnitsDataR.OnNameChanging += OnEditedNameChanging;
+			UnitsDataR.OnDescriptionChanging += OnEditedDescriptionChanging;
+
+			uMgr.BackupUserStyleList();
 		}
 
-		private void configCbxList()
+		private void initCbxList()
 		{
 			cbxList = new List<KeyValuePair<string, string>>();
 
 			foreach (KeyValuePair<string, UnitsDataR> kvp in StdStyles)
 			{
-				cbxList.Add(new KeyValuePair<string, string>(kvp.Value.DropDownName, kvp.Value.Name));
+				cbxList.Add(new KeyValuePair<string, string>(kvp.Value.DropDownName, kvp.Value.Ustyle.Name));
 			}
 
 
 			cbxList.Add(new KeyValuePair<string, string>(STR_SHOWSTYLE_DDNAME, STR_SHOWSTYLE_NAME));
 		}
 
-		private bool cvrtToBool(bool? b)
-		{
-			return b.HasValue ? b.Value : false;
-		}
 
-		private void DetermineCanAdd()
-		{
-			bool newName = cvrtToBool(isNewNameOk);
-			bool newDesc = cvrtToBool(isNewDescOk);
-
-			isInsPosOk = (isNewNameOk & isInsPosValid) | (isNewDescOk & isInsPosValid);
-
-			OnPropertyChanged(nameof(IsInsPosOk));
-
-			CanAddBefore = newName && newDesc && isInsPosValid;
-			CanAddAfter = newName && newDesc;
-		}
-
-		private void showUnitStyleSettings(string name)
-		{
-			if (name != null)
-			{
-				showingSavedStyles = false;
-				DetailUnit = StdStyles[name];
-			}
-			else
-			{
-				showingSavedStyles = true;
-				showSavedStyle(LbxSelItem);
-			}
-		}
-
-		private void showUnitStyleSettings(UnitsDataR udr)
-		{
-			if (udr.Ustyle.UnitClass == UnitClass.CL_CONTROL)
-			{
-				showingSavedStyles = true;
-
-				showSavedStyle(LbxSelItem);
-			}
-			else
-			{
-				showingSavedStyles = false;
-				// CanEditStyle = false;
-				UnitsDataR ur = getStdStyleFromName(udr.Name);
-
-				if (ur != null)
-				{
-					DetailUnit = ur;
-				}
-			}
-		}
-
-		private void showSavedStyle(UnitsDataR udr)
-		{
-			if (!showingSavedStyles) return;
-
-			DetailUnit = udr;
-		}
-
-		private void setUnitDisplay(string name)
-		{
-			UnitsDataR udr = getStdStyleFromName(name);
-
-			if (udr != null)
-			{
-				DetailUnit = udr;
-			}
-		}
+		// user style
 
 		private UnitsDataR getStdStyleFromName(string name)
 		{
@@ -890,42 +735,14 @@ namespace CsDeluxMeasure.Windows
 			return udr;
 		}
 
-		private T FindElementByName<T>(FrameworkElement element, string sChildName) where T : FrameworkElement
+		private void resetUserStyles()
 		{
-			T childElement = null;
-			var nChildCount = VisualTreeHelper.GetChildrenCount(element);
-			for (int i = 0; i < nChildCount; i++)
-			{
-				FrameworkElement child = VisualTreeHelper.GetChild(element, i) as FrameworkElement;
-
-				if (child == null)
-					continue;
-
-				if (child is T && child.Name.Equals(sChildName))
-				{
-					childElement = (T) child;
-					break;
-				}
-
-				childElement = FindElementByName<T>(child, sChildName);
-
-				if (childElement != null)
-					break;
-			}
-
-			return childElement;
+			uMgr.ResetUserStyleList();
+			initUserStylesView();
+			OnPropertyChanged(nameof(WkgUserStylesView));
 		}
 
-		private void setInitialSequence() { }
-
-		private bool isNotDeleted(object obj)
-		{
-			UnitsDataR udr = obj as UnitsUtil.UnitsDataR;
-
-			return !udr.DeleteStyle;
-		}
-
-		private bool setStyleList(ListCollectionView view, int thisList)
+		private bool setUserStyles(ListCollectionView view, int thisList)
 		{
 			view = (ListCollectionView) CollectionViewSource.GetDefaultView(uMgr.UsrStyleList);
 
@@ -940,9 +757,269 @@ namespace CsDeluxMeasure.Windows
 			return view.Count > 0;
 		}
 
+
+		private void showSavedStyle(UnitsDataR udr)
+		{
+			if (!showingSavedStyles) return;
+
+			DetailUnit = udr;
+		}
+
+		private void showUnitStyleSettings(string name)
+		{
+			if (name != null)
+			{
+				showingSavedStyles = false;
+				DetailUnit = StdStyles[name];
+				CanStyleAdd = true;
+			}
+			else
+			{
+				showingSavedStyles = true;
+				showSavedStyle(LbxSelItem);
+				CanStyleAdd = false;
+			}
+		}
+
+
+		// tests
+
+		private void DetermineCanAdd()
+		{
+			bool newNameOk = cvrtToBool(isNewNameOk);
+			bool newDescOk = cvrtToBool(isNewDescOk);
+
+			IsInsPosOk = (isNewNameOk & isInsPosValid) | (isNewDescOk & isInsPosValid);
+
+			CanAddBefore = newNameOk && newDescOk && isInsPosValid;
+			CanAddAfter = newNameOk && newDescOk;
+		}
+
+		private bool isNotDeleted(object obj)
+		{
+			UnitsDataR udr = obj as UnitsUtil.UnitsDataR;
+
+			return !udr.DeleteStyle;
+		}
+
+
+		// validate date
+
+		private bool ValidateInsPos(int pos)
+		{
+			// rules
+			// cannot be 1 or less
+			// cannot be greater than last number
+
+			validateFailDesc = null;
+
+			if (pos < 2)
+			{
+				validateFailDesc = "Position cannot be 1 or less";
+				return false;
+			}
+
+			if (pos > Count)
+			{
+				validateFailDesc = "Position is too large";
+				return false;
+			}
+
+			return true;
+		}
+
+		private bool ValidateNewName(string testName)
+		{
+			// rules
+			// validation requirements
+			// min 4 characters
+			// must start with alphanumeric (uc or lc)
+			// middle is alphanumeric, space, dash, period
+			// must end with alphanumeric (no dash, no space, no period)
+			// name must be unique
+
+			validateFailDesc = validateName(testName);
+
+			
+			// validateFailDesc = uSup.CheckStyleNameSyntax(testName);
+			//
+			// if (validateFailDesc != null) return false;
+			//
+			// if (hasNameInUserStyles(testName))
+			// {
+			// 	validateFailDesc = "Name is already in use";
+			// 	return false;
+			// }
+
+			return validateFailDesc == null;
+
+
+			// if (testName == null || testName.Length < 4)
+			// {
+			// 	validateFailDesc = "Name mist be a minimum of 4 characters";
+			// 	return false;
+			// }
+			//
+			// Regex r = new Regex("^[a-zA-Z0-9][a-zA-Z0-9\\. \\-]*[a-zA-Z0-9]{1}$");
+			//
+			// if (!r.IsMatch(testName))
+			// {
+			// 	validateFailDesc = "Name has invalid characters";
+			// 	return false;
+			// }
+			//
+			// if (hasNameInUserStyles(testName))
+			// {
+			// 	validateFailDesc = "Name is already in use";
+			// 	return false;
+			// }
+			//
+			// return true;
+		}
+
+		
+
+		private bool ValidateNewDesc(string testName)
+		{
+			// rules
+			// validation requirements
+			// min 6 characters
+			// must start with alphanumeric (uc or lc)
+			// middle is alphanumeric, space, dash, or period
+			// must end with alphanumeric (no dash, no space, no period)
+
+			// validateFailDesc = uMgr.ValidateStyleDesc(testName);
+			validateFailDesc = UnitsSupport.CheckStyleDescSyntax(testName);
+
+			return validateFailDesc == null;
+
+
+			// if (testName == null || testName.Length < 6)
+			// {
+			// 	validateFailDesc = "Name mist be a minimum of 6 characters";
+			// 	return false;
+			// }
+			//
+			// Regex r = new Regex("^[a-zA-Z0-9][a-zA-Z0-9\\. \\-]*[a-zA-Z0-9]{1}$");
+			//
+			// if (!r.IsMatch(testName))
+			// {
+			// 	validateFailDesc = "Name has invalid characters";
+			// 	return false;
+			// }
+			//
+			// return true;
+		}
+
+		private bool hasNameInUserStyles(string testName)
+		{
+			foreach (UnitsDataR udr in wkgUserStyles)
+			{
+				if (udr.Ustyle.Name.Equals(testName)) return true;
+			}
+
+			return false;
+		}
+
+		private string validateName(string testName)
+		{
+			string result;
+
+			result = UnitsSupport.CheckStyleNameSyntax(testName);
+
+			if (result != null) return result;
+
+			if (hasNameInUserStyles(testName))
+			{
+				result = "Name is already in use";
+			}
+
+			return result ;
+		}
+
+		
+		private void OnEditedNameChanging(object sender, ChangeNameEventArgs e)
+		{
+			string result = validateName(e.Proposed);
+		
+			if (e.Proposed.Equals(""))
+			{
+				e.Cancel = false;
+			}
+			else
+			{
+				e.Cancel = result != null;
+			}
+		
+			lbxSelItem.IsNameOk = result == null;
+			
+			EditNameToolTip = result;
+		}
+		
+		private void OnEditedDescriptionChanging(object sender, ChangeNameEventArgs e)
+		{
+			string result = UnitsSupport.CheckStyleDescSyntax(e.Proposed);
+		
+			if (e.Proposed.Equals(""))
+			{
+				e.Cancel = false;
+			}
+			else
+			{
+				e.Cancel = result != null;
+			}
+		
+			lbxSelItem.IsDescOk = result == null;
+		
+			EditDescToolTip = result;
+		}
+
+
+		// util
+
+
+		private void applyChanges()
+		{
+			uMgr.WriteUser();
+
+			ChangesMade = 0;
+
+			wkgUserStyles.Refresh();
+		}
+
+		private string getDefaultNewStyleText()
+		{
+			if (priorValueIdx == UnitStylesMgrWinData.POPUP_NEW_STYLE_NAME)
+			{
+				return $"{detailUnit.Ustyle.Name} Copy";
+			}
+
+			return $"Based on: {detailUnit.Ustyle.Name}";
+		}
+
+		private void resetNewStyleInfo()
+		{
+			string oldName = newName;
+			string oldDesc = newDesc;
+
+			clearNewStyleInfo();
+
+			NewName = oldName;
+			NewDesc = oldDesc;
+		}
+
+		private void clearNewStyleInfo()
+		{
+			NewName = "";
+			NewDesc = "";
+			InsPosition = Count < 2 ? Count : 2;
+		}
+
+
+		[DebuggerStepThrough]
 		private static IntPtr WndProc(IntPtr hwnd, int msg, IntPtr wParam, IntPtr lParam, ref bool handled)
 		{
-			// Debug.WriteLine($"msg is| {msg}");
+			// Debug.WriteLine($"WndProc| msg is| {msg}");
 			switch (msg)
 			{
 			case WM_NCLBUTTONDOWN:
@@ -971,6 +1048,44 @@ namespace CsDeluxMeasure.Windows
 			return IntPtr.Zero;
 		}
 
+		private bool cvrtToBool(bool? b)
+		{
+			return b.HasValue ? b.Value : false;
+		}
+
+		private void setUnitDisplay(string name)
+		{
+			UnitsDataR udr = getStdStyleFromName(name);
+
+			if (udr != null)
+			{
+				DetailUnit = udr;
+			}
+		}
+
+		// debug 
+
+		private void showList()
+		{
+			Debug.WriteLine("");
+			Debug.WriteLine($"view count: {wkgUserStyles.Count}");
+			Debug.WriteLine($"list count: {uMgr.UsrStyleList.Count}");
+			Debug.WriteLine($"this count: {Count}");
+			Debug.WriteLine("");
+
+			int i = 0;
+			foreach (UnitsDataR udr in uMgr.UsrStyleList)
+			{
+				string seq = udr.Sequence == 0 ? "  " : $"{(udr.Sequence + 1):D2}";
+				string iseq = udr.InitialSequence == 0 ? "  " : $"{(udr.Sequence + 1):D2}";
+
+				Debug.WriteLine($"idx: {i++:D2}  seq: {seq}  intseq:  {udr.InitialSequence:D2}  iseq: {udr.Sequence:D2}   isDel: {udr.DeleteStyle,6}  name: {udr.Ustyle.Name}");
+			}
+
+			Debug.WriteLine("");
+			Debug.WriteLine("");
+		}
+
 	#endregion
 
 	#region event publishing
@@ -991,141 +1106,134 @@ namespace CsDeluxMeasure.Windows
 			StaticPropertyChanged?.Invoke(null, new PropertyChangedEventArgs(memberName));
 		}
 
+		private void OnStaticPropertyChanged(object sender, PropertyChangedEventArgs e)
+		{
+			// Debug.WriteLine($"@static prop changed| {e.PropertyName}");
+
+			if (e.PropertyName == nameof(WinLocationChanging))
+			{
+				// Debug.WriteLine($"@static prop change| loc changing| {winLocationChanging} | win moving| {winMoving}");
+
+				if (winLocationChanging)
+				{
+					PopupInfoHide();
+					PopupEditOpsHide();
+				}
+
+				if (!winLocationChanging)
+				{
+					BeginInfoPopup();
+					BeginEditOpsPopup();
+				}
+			}
+		}
+
 	#endregion
 
 	#region system overrides
 
 		public override string ToString()
 		{
-			return "this is class1";
+			return "this is UnitStylesMgr";
 		}
 
 	#endregion
 
 	#region event consuming
 
-		private void WinUnitStyle_Loaded(object sender, RoutedEventArgs e)
-		{
-			popups[editNamePopup] = CsWpfUtilities.FindElementByName<Popup>(this, "PuEditName");
-			popups[editDescPopup] = CsWpfUtilities.FindElementByName<Popup>(this, "PuEditDesc");
-			popups[editSamplePopup] = CsWpfUtilities.FindElementByName<Popup>(this, "PuEditSample");
-			popups[popupRibbonFavs] = CsWpfUtilities.FindElementByName<Popup>(this, "PuRibbonFavs");
+		// win
 
+		private void UnitStylesMgr_Loaded(object sender, RoutedEventArgs e)
+		{
+			List<UnitsDataD> ld = UnitStdStylesD.ListD;
+
+			InsPosition = 2;
+
+			UserSettings.Admin.Read();
+			_Location = UserSettings.Data.WinPosUnitStyleMgr;
+
+			if (_Location.Top >= 0 && _Location.Left >= 0)
+			{
+				this.Top = _Location.Top;
+				this.Left = _Location.Left;
+			}
 
 			HwndSource source = HwndSource.FromHwnd(new WindowInteropHelper(this).Handle);
 			source.AddHook(new HwndSourceHook(WndProc));
+
+			StaticPropertyChanged += OnStaticPropertyChanged;
+
+			// WinIsEnabled = true;
 		}
 
-		private void WinUnitStyle_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+		private void UnitStylesMgr_Closing(object sender, System.ComponentModel.CancelEventArgs e)
 		{
+			PopupEditOpsClose();
+			PopupInfoClose();
+
 			UserSettings.Data.WinPosUnitStyleMgr = new WindowLocation(this.Top, this.Left);
 			UserSettings.Admin.Write();
 		}
 
+		private void UnitStylesMgr_OnIsKeyboardFocusWithinChanged(object sender, DependencyPropertyChangedEventArgs e)
+		{
+			if ((bool) e.NewValue)
+			{
+				if (!winLostFocus) return;
+
+				BeginInfoPopup();
+				BeginEditOpsPopup();
+			}
+			else
+			{
+				PopupInfoHide();
+				PopupEditOpsHide();
+
+				winLostFocus = true;
+			}
+		}
+
+
+		// controls
 
 		private void lbx_Initialized(object sender, EventArgs e)
 		{
 			lbx = (ListBox) sender;
 		}
 
-		private void CbxStdStyles_Initialized(object sender, EventArgs e)
-		{
-			cbx = (ComboBox) sender;
-			// cbx.SelectedIndex = 1;
-		}
-
-		private void Styles_CurrentChanged(object sender, EventArgs e)
-		{
-			if (initStatus) return;
-
-			status = "current changed";
-		}
+		// private void TblkEditSampleText_OnKeyUp(object sender, KeyEventArgs e)
+		// {
+		// 	if (e.Key != Key.Enter) return;
+		//
+		// 	TextBox tbx = (TextBox)sender;
+		//
+		// 	e.Handled = true;
+		// 	LbxSelItem.ProcessSample = tbx.Text;
+		// 	tbx.CaretIndex = tbx.Text.Length;
+		// }
 
 
-		private void BtnChgTemplate_OnClick(object sender, RoutedEventArgs e)
-		{
-			ProcessStyleChanges();
-		}
-
-		private void BtnUp_OnClick(object sender, RoutedEventArgs e)
-		{
-			if (lbxSelIndex <= 1) return;
-
-			int atIdx = ((UnitsDataR) styles.GetItemAt(lbxSelIndex)).Sequence;
-			((UnitsDataR) styles.GetItemAt(lbxSelIndex)).Sequence -= 1;
-
-			int pastIdx = ((UnitsDataR) styles.GetItemAt(lbxSelIndex - 1)).Sequence;
-			((UnitsDataR) styles.GetItemAt(lbxSelIndex - 1)).Sequence += 1;
-
-			HasChanges += 1;
-			Debug.WriteLine("got move up");
-		}
-
-		private void BtnDn_OnClick(object sender, RoutedEventArgs e)
-		{
-			if (lbxSelIndex == Count - 1 || lbxSelIndex == 0) return;
-
-			((UnitsDataR) styles.GetItemAt(lbxSelIndex)).Sequence += 1;
-			((UnitsDataR) styles.GetItemAt(lbxSelIndex + 1)).Sequence -= 1;
-
-			HasChanges += 1;
-			Debug.WriteLine("got move down");
-		}
-
-		private void BtnDelete_OnClick(object sender, RoutedEventArgs e)
-		{
-			// Debug.WriteLine("");
-			// Debug.WriteLine($"selIdx: {SelIndex:D2}  name: {selItem.Ustyle.Name}");
-			// Debug.WriteLine($"   pos: {styles.CurrentPosition:D2}");
-			// Debug.WriteLine("");
-
-			if (lbxSelItem.Ustyle.IsLocked) return;
-
-			lbxSelItem.DeleteStyle = true;
-			lbxSelItem.Sequence = 0;
-
-			int idx = lbxSelIndex;
-			int count = styles.Count;
-
-			if (lbxSelIndex < Count - 1)
-			{
-				uMgr.ReSequenceStylesList(styles, lbxSelIndex + 1);
-			}
-
-			HasChanges += 1;
-			// Debug.WriteLine("got delete");
-
-			styles.Refresh();
-
-			LbxSelIndex = idx <= styles.Count - 1 ? idx : styles.Count - 1;
-
-			// showList();
-		}
-
-		private void showList()
-		{
-			Debug.WriteLine("");
-			Debug.WriteLine($"view count: {styles.Count}");
-			Debug.WriteLine($"list count: {uMgr.UsrStyleList.Count}");
-			Debug.WriteLine($"this count: {Count}");
-			Debug.WriteLine("");
-
-			int i = 0;
-			foreach (UnitsDataR udr in uMgr.UsrStyleList)
-			{
-				string seq = udr.Sequence == 0 ? "  " : $"{(udr.Sequence + 1):D2}";
-				string iseq = udr.InitialSequence == 0 ? "  " : $"{(udr.Sequence + 1):D2}";
-
-
-				Debug.WriteLine($"idx: {i++:D2}  seq: {seq}  intseq:  {udr.InitialSequence:D2}  seq: {udr.Sequence:D2}   isDel: {udr.DeleteStyle,6}  name: {udr.Ustyle.Name}");
-			}
-
-			Debug.WriteLine("");
-			Debug.WriteLine("");
-		}
+		// dialog ctrl
 
 		private void BtnDebug_OnClick(object sender, RoutedEventArgs e)
 		{
+			Debug.WriteLine("@debug| popup is| ");
+
+			BeginEditOpsPopup();
+
+			// if (currEditPopup == null)
+			// {
+			// 	Debug.WriteLine("null");
+			// 	return;
+			// }
+			//
+			// Debug.WriteLine("not null");
+			//
+			// currEditPopup.IsOpen = true;
+
+			return;
+
+
 			int idx = LbxSelIndex;
 
 			UnitsDataR udr = DetailUnit;
@@ -1145,6 +1253,8 @@ namespace CsDeluxMeasure.Windows
 			NewName = udr.Ustyle.Name;
 			NewDesc = udr.Ustyle.Description;
 
+			showList();
+
 			Debug.WriteLine("@debug button");
 		}
 
@@ -1156,15 +1266,6 @@ namespace CsDeluxMeasure.Windows
 			}
 
 			this.Close();
-		}
-
-		private void applyChanges()
-		{
-			uMgr.WriteUser();
-
-			HasChanges = 0;
-
-			styles.Refresh();
 		}
 
 		private void BtnApply_OnClick(object sender, RoutedEventArgs e)
@@ -1194,187 +1295,761 @@ namespace CsDeluxMeasure.Windows
 		{
 			int idx = lbxSelIndex;
 
-			// showList();
+			resetUserStyles();
 
-			uMgr.UnDelete();
-			uMgr.ResetInitialSequence();
 
-			HasChanges = 0;
-
-			styles.Refresh();
-
-			// showList();
-
+			//
+			// // showList();
+			//
+			// uMgr.UnDelete();
+			// uMgr.ResetInitialSequence();
+			//
+			// ChangesMade = 0;
+			//
+			// wkgUserStyles.Refresh();
+			//
+			// // showList();
+			//
 			LbxSelIndex = idx;
 		}
 
-		private void BtnAddBefore_OnClick(object sender, RoutedEventArgs e) { }
+
+		// list controls
+
+		private void BtnUp_OnClick(object sender, RoutedEventArgs e)
+		{
+			if (lbxSelIndex <= 1) return;
+
+			int atIdx = ((UnitsDataR) wkgUserStyles.GetItemAt(lbxSelIndex)).Sequence;
+			((UnitsDataR) wkgUserStyles.GetItemAt(lbxSelIndex)).Sequence -= 1;
+
+			int pastIdx = ((UnitsDataR) wkgUserStyles.GetItemAt(lbxSelIndex - 1)).Sequence;
+			((UnitsDataR) wkgUserStyles.GetItemAt(lbxSelIndex - 1)).Sequence += 1;
+
+			ChangesMade += 1;
+		}
+
+		private void BtnDn_OnClick(object sender, RoutedEventArgs e)
+		{
+			if (lbxSelIndex == Count - 1 || lbxSelIndex == 0) return;
+
+			((UnitsDataR) wkgUserStyles.GetItemAt(lbxSelIndex)).Sequence += 1;
+			((UnitsDataR) wkgUserStyles.GetItemAt(lbxSelIndex + 1)).Sequence -= 1;
+
+			ChangesMade += 1;
+		}
+
+		private void BtnDelete_OnClick(object sender, RoutedEventArgs e)
+		{
+			if (lbxSelItem.Ustyle.IsLocked) return;
+			int idx = lbxSelIndex;
+
+
+			lbxSelItem.DeleteStyle = true;
+			lbxSelItem.Sequence = 0;
+
+			if (lbxSelIndex < Count - 1)
+			{
+				// resequence down (false)
+				uMgr.ReSequenceStylesList(wkgUserStyles, lbxSelIndex + 1, false);
+			}
+
+			ChangesMade += 1;
+
+			wkgUserStyles.Refresh();
+
+			LbxSelIndex = idx <= wkgUserStyles.Count - 1 ? idx : wkgUserStyles.Count - 1;
+
+			// showList();
+		}
+
+
+		// new style controls
+
+		private void BtnAddBefore_OnClick(object sender, RoutedEventArgs e)
+		{
+			UnitsDataR udr = uMgr.NewUDR(detailUnit, newName, newDesc, lbxSelIndex);
+
+			wkgUserStyles.AddNewItem(udr);
+			wkgUserStyles.CommitNew();
+
+			uMgr.ReSequenceStylesList(wkgUserStyles, lbxSelIndex + 1, true);
+
+			wkgUserStyles.Refresh();
+
+			ChangesMade += 1;
+
+			resetNewStyleInfo();
+		}
 
 		private void BtnAddLast_OnClick(object sender, RoutedEventArgs e)
 		{
 			UnitsDataR udr = uMgr.NewUDR(detailUnit, newName, newDesc, uMgr.UsrStyleList.Count);
 
+			// wkgUserStyles.AddNew();
+			wkgUserStyles.AddNewItem(udr);
+			wkgUserStyles.CommitNew();
 
-			// styles.AddNew();
-			styles.AddNewItem(udr);
-			styles.CommitNew();
-		}
+			ChangesMade += 1;
 
-		private void Btn_NameEntryClear_OnClick(object sender, RoutedEventArgs e)
-		{
-			NewName = null;
-		}
-
-		private void Btn_DescEntryClear_OnClick(object sender, RoutedEventArgs e)
-		{
-			NewDesc = null;
-		}
-
-		private void BtnFavCkbxStatus_OnClick(object sender, RoutedEventArgs e)
-		{
-			int favButtonIdx;
-			bool result = Int32.TryParse((string) ((Button) sender).Tag, out favButtonIdx);
-
-			if (!result) return;
-
-			LbxSelItem.ActiveElement = favButtonIdx;
-
-			TaskDialog td = new TaskDialog("title");
-
-			td.MainIcon = TaskDialogIcon.TaskDialogIconInformation;
-
-			td.MainInstruction = $"button {favButtonIdx} pressed";
-
-			td.Show();
-
-			LbxSelItem.ActiveElement = -1;
+			resetNewStyleInfo();
 		}
 
 	#endregion
 
 	#region popup
 
-		private void BtnRibbonFavs_OnClick(object sender, RoutedEventArgs e)
+		// info popup
+
+		private void BtnPopupInfoStart_OnClick(object sender, RoutedEventArgs e)
 		{
-			PopupTargetCkbxRibbonFavs = (CheckBox) ((Button) sender).Tag;
+			PopupInfoClose();
 
-			beginPopup(popupRibbonFavs);
-		}
+			currInfoPopup = CustomProperties.GetGenericPopupOne((Button) sender);
 
-		private void BtnEditName_OnClick(object sender, RoutedEventArgs e)
-		{
-			PopupTargetTbxEditName = (TextBox) ((Button) sender).Tag;
-
-			beginPopup(editNamePopup);
-		}
-
-		private void BtnEditDesc_OnClick(object sender, RoutedEventArgs e)
-		{
-			PopupTargetTbxEditDesc = (TextBox) ((Button) sender).Tag;
-
-			beginPopup(editDescPopup);
-		}
-
-		private void BtnEditSample_OnClick(object sender, RoutedEventArgs e)
-		{
-			PopupTargetTbxEditSample = (TextBox) ((Button) sender).Tag;
-
-			beginPopup(editSamplePopup);
-		}
-
-		private void beginPopup(byte popupId)
-		{
-			if (currPopupIdx >= 0)
-			{
-				return;
-			}
-
-			popupOpen(popupId);
-
-			popupIsEntered = false;
-
-			startTimer();
-		}
-
-
-
-
-		private void Popup_OnMouseEnter(object sender, RoutedEventArgs e)
-		{
-			popupIsEntered = true;
-
-			removeTimer();
-		}
-
-		private void Popup_OnMouseLeave(object sender, RoutedEventArgs e)
-		{
-			popupIsEntered = false;
-
-			startTimer();
+			BeginInfoPopup();
 		}
 
 		private void BtnPopupClose_OnClick(object sender, RoutedEventArgs e)
 		{
-			popupClose();
+			PopupInfoClose();
 		}
 
-		private void popupOpen(byte idx)
-		{
-			currPopupIdx = idx;
 
-			if (!popups[currPopupIdx].IsOpen) popups[currPopupIdx].IsOpen = true;
+		private void BeginInfoPopup()
+		{
+			if (currInfoPopup == null) return;
+
+			// Debug.WriteLine($"B) begin popup| {currInfoPopup.Name}");
+
+			PopupInfoOpen();
+
+			// popupInfoIsEntered = false;
+
+			// startTimer();
 		}
 
-		public void popupClose()
+		private void PopupInfoOpen()
 		{
-			if (currPopupIdx < 0)
+			// Debug.WriteLine($"E) open popup| {currInfoPopup.Name}");
+
+			if (!currInfoPopup.IsOpen) currInfoPopup.IsOpen = true;
+		}
+
+		private void PopupInfoClose()
+		{
+			if (currInfoPopup == null) return;
+
+			// Debug.WriteLine($"F) close popup| {currInfoPopup.Name}");
+
+			if (currInfoPopup.IsOpen) currInfoPopup.IsOpen = false;
+
+			// Debug.WriteLine($"G) popup closed?| {!currInfoPopup.IsOpen}");
+
+			// removeTimer();
+
+			currInfoPopup = null;
+		}
+
+		private void PopupInfoHide()
+		{
+			if (currInfoPopup == null) return;
+
+			if (currInfoPopup.IsOpen) currInfoPopup.IsOpen = false;
+		}
+
+
+		// edit ops popup
+
+
+		private void Tbx_OnGotFocus(object sender, RoutedEventArgs e)
+		{
+			int idx = CustomProperties.GetGenericIntOne((TextBox) sender);
+
+			if (idx != priorValueIdx)
 			{
-				return;
+				PopupEditOpsClose();
 			}
 
-			if (popups[currPopupIdx].IsOpen) popups[currPopupIdx].IsOpen = false;
+			currEditPopup = CustomProperties.GetGenericPopupOne((TextBox) sender);
+			priorValueIdx = idx;
+			priorValue[priorValueIdx] = ((TextBox) sender).Text;
 
-			removeTimer();
+			// if (priorValue[priorValueIdx].IsVoid()) ((TextBox) sender).Text = getDefaultNewStyleText();
 
-			currPopupIdx = -1;
+			// sendTextToTbx(((TextBox) sender),  getDefaultNewStyleText());
+
+			BeginEditOpsPopup();
+		}
+
+		private void Tbx_OnLostFocus(object sender, RoutedEventArgs e)
+		{
+
+			PopupEditOpsClose();
+		}
+
+		
+		// private void TbxEditNameText_OnLostFocus(object sender, RoutedEventArgs e)
+		// {
+		// 	Debug.WriteLine($"TbxEditNameText_OnLostFocus| {((TextBox) sender).Text}");
+		// 	// when a list item's textbox loses focus / is complete
+		// 	// first close the popup
+		// 	PopupEditOpsClose();
+		//
+		// 	// validate the information
+		// }
+
+
+
+		private void EditOpsPopup_Opened(object sender, EventArgs e)
+		{
+			Popup pop = (Popup)sender;
+			ContentControl cc = (ContentControl) pop.Child;
+
+			Border bdr = (Border) pop.PlacementTarget;
+			// TextBox Tbx = (TextBox) CustomProperties.GetGenericObjectOne(pop);
+
+			double popWidth = cc.ActualWidth;
+			double tbxWidth = bdr.ActualWidth;
+
+			pop.HorizontalOffset = tbxWidth - popWidth;
+		}
+
+		private void EditOpsPopup_OnClosed(object sender, EventArgs e)
+		{
+			// currEditPopup = null;
 		}
 
 
-		private void popupTimerCompleted(object sender, EventArgs e)
+		private void BeginEditOpsPopup()
 		{
-			removeTimer();
+			PopupInfoClose();
 
-			if (popupIsEntered)
+			if (currEditPopup == null) return;
+			PopupEditOpsOpen();
+		}
+
+		private void PopupEditOpsOpen()
+		{
+			// Debug.WriteLine($"at popup open|");
+			if (!currEditPopup.IsOpen) currEditPopup.IsOpen = true;
+		}
+
+		private void PopupEditOpsClose()
+		{
+			// Debug.WriteLine($"at popup close|");
+			if (currEditPopup == null) return;
+
+			if (currEditPopup.IsOpen) currEditPopup.IsOpen = false;
+
+			currEditPopup = null;
+		}
+
+		private void PopupEditOpsHide()
+		{
+			if (currEditPopup == null) return;
+
+			if (currEditPopup.IsOpen) currEditPopup.IsOpen = false;
+		}
+
+
+		private void BtnEditOptsClearText_OnClick(object sender, RoutedEventArgs e)
+		{
+			TextBox tbx = getTextBox(sender);
+
+			priorValue[priorValueIdx] = "";
+			sendTextToTbx(tbx, "");
+		}
+
+		private void BtnEditOptsReset_OnClick(object sender, RoutedEventArgs e)
+		{
+			TextBox tbx = getTextBox(sender);
+
+			if (!priorValue[priorValueIdx].IsVoid())
 			{
-				return;
+				sendTextToTbx(tbx, priorValue[priorValueIdx]);
+			}
+			else
+			{
+				string text = getDefaultNewStyleText();
+				priorValue[priorValueIdx] = text;
+				sendTextToTbx(tbx, text);
+			}
+		}
+
+		private void BtnEditOptsCancel_OnClick(object sender, RoutedEventArgs e)
+		{
+			TextBox tbx = getTextBox(sender);
+
+			if (!priorValue[priorValueIdx].IsVoid())
+			{
+				sendTextToTbx(tbx, priorValue[priorValueIdx]);
 			}
 
-			popupClose();
+			PopupEditOpsClose();
+
+			FocusManager.SetFocusedElement(FocusManager.GetFocusScope(tbx), null);
+			Keyboard.ClearFocus();
 		}
 
-		private void removeTimer()
+
+
+		[DebuggerStepThrough]
+		private int getTextBoxIdx(TextBox tbx)
 		{
-			if (!timerActive) return;
-
-			timer.Stop();
-
-			timerActive = false;
+			return (int) CustomProperties.GetGenericIntOne(tbx);
 		}
 
-		private void startTimer()
+		[DebuggerStepThrough]
+		private TextBox getTextBox(object sender)
 		{
-			if (timerActive) return;
-
-			timer = new DispatcherTimer();
-			timer.Interval = new TimeSpan(0, 0, 3);
-
-			timerActive = true;
-
-			timer.Tick += popupTimerCompleted;
-
-			timer.Start();
+			Popup pu = CustomProperties.GetGenericPopupOne((Button) sender);
+			return (TextBox) CustomProperties.GetGenericObjectOne((Button) sender);
 		}
+
+		private void sendTextToTbx(TextBox tbx, string text)
+		{
+			int idx = getTextBoxIdx(tbx);
+
+			switch (idx)
+			{
+			case UnitStylesMgrWinData.POPUP_NEW_STYLE_NAME:
+				{
+					NewName = text;
+					break;
+				}
+			case UnitStylesMgrWinData.POPUP_NEW_STYLE_DESC:
+				{
+					NewDesc = text;
+					break;
+				}
+			case UnitStylesMgrWinData.POPUP_STYLE_NAME:
+				{
+					// lbxSelItem.Name = text;
+					break;
+				}
+			case UnitStylesMgrWinData.POPUP_STYLE_DESC:
+				{
+					// lbxSelItem.Description = text;
+					break;
+				}
+			case UnitStylesMgrWinData.POPUP_STYLE_SAMPLE:
+				{
+					// lbxSelItem.Sample = -1;
+					break;
+				}
+			}
+		}
+
 
 	#endregion
+
+	#region un-categorized
+
+	#endregion
+
+		/*
+		to make the textbox editing work
+		
+		code behind routines are setup
+
+		in the "UnitStylesMgrWinData" file, create an index value for each
+		textbox / data field.  this index identifies the position in the prior value array
+		which holds the "original" textbox value which allow "reset" to occur.
+
+
+		for the textbox, include the two popups
+		"edit ops" and "info" (help)"
+
+		at each textbox
+		@ code behind - validate the info.
+		bind "cs:CustomProperties.GenericIntOne" to the popup index
+		bind "cs:CustomProperties.GenericPopupOne" to the popup 
+		include the following:
+		GotFocus="Tbx_OnGotFocus"
+		LostFocus="Tbx_OnLostFocus"
+		ToolTip="{Binding NewDescToolTip, Mode=OneWay}"
+		(and maybe)
+		Style="{StaticResource TbxEditable}"
+
+		for the edit ops popup
+		bind 'cs:CustomProperties.GenericPopupOne' to the help popup
+		bind 'cs:CustomProperties.GenericObjectOne' to the textbox
+		set the 'PlacementTarget' to the surrounding border
+		include the following
+		Opened="EditOpsPopup_Opened"
+		Closed="EditOpsPopup_OnClosed"
+		Style="{StaticResource PuBase}"
+
+		for the "info" (help) popup
+		set 'cs:VisualStates.MainContent' to the content of the help box
+		set 'cs:VisualStates.TitleText' to the title for the help box
+		include the following:
+		Button.Click="BtnPopupClose_OnClick"
+		Style="{StaticResource PuBase}"
+
+		 */
+
+
+
 	}
 }
+
+/*
+ dead removed code
+		private void BtnEditOptsApply_OnClick(object sender, RoutedEventArgs e)
+		{
+			popupEditClose();
+			this.Focus();
+		}
+
+		private void BtnChgTemplate_OnClick(object sender, RoutedEventArgs e)
+		{
+			ProcessStyleChanges();
+		}
+
+		private void MoveFocus(KeyEventArgs e)
+		{
+			// Creating a FocusNavigationDirection object and setting it to a
+			// local field that contains the direction selected.
+			FocusNavigationDirection focusDirection = FocusNavigationDirection.Next;
+
+			// MoveFocus takes a TraveralReqest as its argument.
+			TraversalRequest request = new TraversalRequest(focusDirection);
+
+			// Gets the element with keyboard focus.
+			UIElement elementWithFocus = Keyboard.FocusedElement as UIElement;
+
+			// Change keyboard focus.
+			if (elementWithFocus != null)
+			{
+				if (elementWithFocus.MoveFocus(request)) e.Handled = true;
+			}
+		}
+
+		public int IsClosing
+		{
+			get => isClosing;
+
+			set
+			{
+				if (value == isClosing) return;
+				isClosing = value;
+				OnPropertyChanged();
+			}
+		}
+
+		public bool? IsGoodOrBad
+		{
+			[DebuggerStepThrough]
+			get => isGoodOrBad;
+			[DebuggerStepThrough]
+			set
+			{
+				if (value == isGoodOrBad) return;
+				isGoodOrBad = value;
+				OnPropertyChanged();
+			}
+		}
+
+
+
+
+
+*/
+
+// private string status;
+// private DispatcherTimer timer;
+// private bool isChanged;
+// private bool stylePanelActivated;
+// private bool lv1ItemPanelActivated;
+
+// private bool okToSave;
+// private int saveCount;
+// private Image img;
+// private ComboBox cbx;
+
+// public Image Imgs => img;
+// private int isClosing = -1;
+// private bool? isGoodOrBad = null;
+// private bool overEditPopup;
+
+// private bool popupInfoIsEntered;
+//
+// private DoubleAnimation d = new DoubleAnimation(1, new Duration(TimeSpan.FromSeconds(2)));
+// private AnimationClock popupAniClock;
+//
+// private DispatcherTimer timer;
+// private bool timerActive;
+
+
+// private void wkgUserStylesCurrentChanged(object sender, EventArgs e)
+// {
+// 	if (initStatus) return;
+// }
+
+// public UnitsDataR LbxSelItemCopy { get; set; }
+
+
+// public string ContentType => contentSelection[dialogIndex];
+//
+// public string CloseType => closeSelection[changesMade > 1 ? 1 : 0];
+
+
+// public bool NotOkToSave => !okToSave;
+
+// public bool OkToSave
+// {
+// 	get => okToSave;
+//
+// 	set
+// 	{
+// 		okToSave = value;
+// 		OnPropertyChanged();
+// 		OnPropertyChanged(nameof(NotOkToSave));
+// 	}
+// }
+
+
+// private void showUnitStyleSettings(UnitsDataR udr)
+// {
+// 	if (udr.Ustyle.UnitClass == UnitClass.CL_CONTROL)
+// 	{
+// 		showingSavedStyles = true;
+//
+// 		showSavedStyle(LbxSelItem);
+// 	}
+// 	else
+// 	{
+// 		showingSavedStyles = false;
+// 		// CanEditStyle = false;
+// 		UnitsDataR ur = getStdStyleFromName(udr.Name);
+//
+// 		if (ur != null)
+// 		{
+// 			DetailUnit = ur;
+// 		}
+// 	}
+// }
+
+
+// private void CbxStdStyles_Initialized(object sender, EventArgs e)
+// {
+// 	cbx = (ComboBox) sender;
+// 	// cbx.SelectedIndex = 1;
+// }
+
+// private int SaveCount
+// {
+// 	get => saveCount;
+// 	set
+// 	{
+// 		saveCount = value;
+// 		OkToSave = saveCount == 0;
+// 	}
+// }
+
+
+// private void NameValidation_OnError(object sender, ValidationErrorEventArgs e)
+// {
+// 	// IsNameOk = (e.Action != ValidationErrorEventAction.Added);
+//
+// 	SaveCount += (e.Action != ValidationErrorEventAction.Added) ? 1 : -1;
+// }
+
+
+// public string ExistStyleName
+// {
+// 	get => lbxSelItem.Name;
+//
+// 	set
+// 	{
+// 		if (value.Equals(lbxSelItem.Name)) return;
+//
+//
+// 	}
+// }
+//
+// public bool IsNameOk
+// {
+// 	get => isNameOk;
+// 	set
+// 	{
+// 		if (value == isNameOk) return;
+//
+// 		isNameOk = value;
+// 		OnPropertyChanged();
+// 	}
+// }
+//
+// public bool IsDescOk
+// {
+// 	get => isDescOk;
+// 	set
+// 	{
+// 		if (value == isDescOk) return;
+//
+// 		isDescOk = value;
+// 		OnPropertyChanged();
+// 	}
+// }
+
+
+// public bool StylePanelActivated
+// {
+// 	get => stylePanelActivated;
+//
+// 	set
+// 	{
+// 		if (value == stylePanelActivated ||
+// 			lv1ItemPanelActivated) return;
+//
+// 		stylePanelActivated = value;
+// 		OnPropertyChanged();
+// 	}
+// }
+//
+// public bool Lv1ItemPanelActivated
+// {
+// 	get => lv1ItemPanelActivated;
+//
+// 	set
+// 	{
+// 		if (value == lv1ItemPanelActivated || 
+// 			stylePanelActivated) return;
+//
+// 		lv1ItemPanelActivated = value;
+// 		OnPropertyChanged();
+// 	}
+// }
+
+
+// private void PuEditOptsStyleName_OnClick(object sender, RoutedEventArgs e)
+// {
+// 	Popup pop = (Popup) sender;
+// 	// TextBox Tbx = (TextBox) CustomProperties.GetGenericObjectOne(pop);
+//
+// 	Debug.WriteLine($"@button click| {((Button) e.OriginalSource).Name}"
+// 		+ $" sender| {pop.Name} "
+// 		+ $" border| {((Border) pop.PlacementTarget).Name} "
+// 		// + $" textbox {Tbx.Name}")
+// 		);
+// }
+
+// private void TbxStyleName_OnTextChanged(object sender, TextChangedEventArgs e)
+// {
+// 	Debug.WriteLine($"new name| textbox changed");
+//
+// 	// isChanged = true;
+//
+// 	// TextBox tbx = (TextBox)sender;
+// 	//
+// 	// VisualStates.SetIsModified(tbx, true);
+// 	// VisualStates.SetIsModified(spNewStyle, true);
+// }
+
+
+// private void getAddStylePanel()
+// {
+// spNewStyle = FindElementByName<StackPanel>(CtMainContent, "SpAddStyleBegin");
+// grdLv1 = FindElementByName<Grid>(CtMainContent, "GrdLv1Item");
+// bdrId = FindElementByName<Border>(CtMainContent, "Id_BdrId");
+
+// StackPanel sp1 = FindElementByName<StackPanel>(DpMain, "SpAddStyleBegin");
+// sp1 = FindElementByName<StackPanel>(WinUnitStyle, "SpAddStyleBegin");
+// }
+
+// private void Popup_OnMouseEnter(object sender, RoutedEventArgs e)
+// {
+// 	Debug.WriteLine($"C) mouse enter| {currInfoPopup?.Name ?? "is null"}");
+//
+// 	popupInfoIsEntered = true;
+//
+// 	removeTimer();
+// }
+//
+// private void Popup_OnMouseLeave(object sender, RoutedEventArgs e)
+// {
+// 	Debug.WriteLine($"D) mouse leave| {currInfoPopup?.Name ?? "is null"}");
+//
+// 	popupInfoIsEntered = false;
+//
+// 	removeTimer();
+// 	startTimer();
+// }
+//
+// private void popupTimerCompleted(object sender, EventArgs e)
+// {
+// 	Debug.WriteLine($"H) timer completed| is entered?| {popupInfoIsEntered}");
+//
+// 	removeTimer();
+//
+// 	if (popupInfoIsEntered)
+// 	{
+// 		return;
+// 	}
+//
+// 	popupInfoClose();
+// }
+//
+// private void removeTimer()
+// {
+// 	Debug.WriteLine($"I) Try remove timer| is active| {timerActive}");
+//
+// 	if (!timerActive) return;
+//
+// 	Debug.WriteLine("J) is active| removing timer");
+//
+// 	timer.Stop();
+// 	timer = null;
+//
+// 	timerActive = false;
+// }
+//
+// private void startTimer()
+// {
+// 	Debug.WriteLine($"K) start timer?| {!timerActive}");
+//
+// 	if (timerActive) return;
+//
+// 	Debug.WriteLine("L) starting timer");
+//
+// 	timer = new DispatcherTimer();
+// 	timer.Interval = new TimeSpan(0, 0, 3);
+//
+// 	timerActive = true;
+//
+// 	timer.Tick += popupTimerCompleted;
+//
+// 	timer.Start();
+// }
+
+
+// private void PuEditOptsStyleName_OnMouseEnter(object sender, MouseEventArgs e)
+// {
+// 	Debug.WriteLine("@element| mouse enter|");
+// 	overEditPopup = true;
+// }
+//
+// private void PuEditOptsStyleName_OnMouseLeave(object sender, MouseEventArgs e)
+// {
+// 	Debug.WriteLine("@element| mouse leave|");
+// 	overEditPopup = false;
+// }
+
+// private void tbx_OnLostFocus(object sender, RoutedEventArgs e)
+// {
+// 	Debug.Write("@textbox| lost focus|");
+//
+// 	if (isChanged)
+// 	{
+// 		Debug.WriteLine($"changed?| yes");
+// 		// ((TextBox) sender).Focus();
+// 	}
+// 	else
+// 	{
+// 		Debug.WriteLine($"changed?| no");
+// 		StylePanelActivated = false;
+// 	}
+//
+// }

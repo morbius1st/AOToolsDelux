@@ -68,10 +68,10 @@ namespace CsDeluxMeasure.Windows.Support
 
 #endregion
 
-#region double add bound converter
+#region double multi add converter
 
 	[ValueConversion(typeof(double), typeof(double))]
-	public class AddBoundConverter : IMultiValueConverter
+	public class MultiAddConverter : IMultiValueConverter
 	{
 		public object Convert(object[] values, Type targetType, object parameter, CultureInfo culture)
 		{
@@ -190,6 +190,35 @@ namespace CsDeluxMeasure.Windows.Support
 #endregion
 
 
+#region double subtract converter
+
+	
+	// example for right justify a popup - provide 
+	// [0] target width (larger value)
+	// [1] popup width (smaller value)
+	// provide target width - popup width (offset to right justify
+	[ValueConversion(typeof(double), typeof(double))]
+	public class MultiSubtractConverter : IMultiValueConverter
+	{
+		public object Convert(object[] values, Type targetType, object parameter, CultureInfo culture)
+		{
+			double sum = (double) values[0];
+
+			foreach (double value in values)
+			{
+				sum -= value;
+			}
+
+			return sum;
+		}
+
+		public object[] ConvertBack(object value, Type[] targetTypes, object parameter, CultureInfo culture)
+		{
+			return new object[] { 0.0 };
+		}
+	}
+
+#endregion
 
 
 // #region bool to visibility value converter

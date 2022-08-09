@@ -3,8 +3,11 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Diagnostics;
+using System.Runtime.CompilerServices;
 using System.Windows.Data;
 using Autodesk.Revit.DB;
+using CsDeluxMeasure.Annotations;
 using static Autodesk.Revit.DB.FormatOptions;
 using SettingsManager;
 
@@ -76,20 +79,26 @@ allow user to create and organize unit styles
 
 namespace CsDeluxMeasure.UnitsUtil
 {
-	public class UnitsManager
+	public class UnitsManager : INotifyPropertyChanged
 	{
 	#region private fields
-
-		private static readonly Lazy<UnitsManager> instance =
-			new Lazy<UnitsManager>(() => new UnitsManager());
 
 		// private Dictionary<ForgeTypeId, UnitsDataR> styleList = null;
 		// private Dictionary<ForgeTypeId, UnitsDataR> stdStyles = null;
 
+		private static readonly Lazy<UnitsManager> instance =
+			new Lazy<UnitsManager>(() => new UnitsManager());
+
 		private UnitsSettings uStg;
 		private UnitsSupport uSup;
 
+		// current / saved lists
 		private ListCollectionView[] inListViews;
+		private List<UnitsDataR> usrStyleListCopy;
+
+		// working lists
+		// private ListCollectionView wkgUserStyles;
+		// private ListCollectionView[] wkgInListViews;
 
 	#endregion
 
@@ -106,6 +115,7 @@ namespace CsDeluxMeasure.UnitsUtil
 			uStg = new UnitsSettings();
 
 			inListViews = new ListCollectionView[UnitData.INLIST_COUNT];
+			// wkgInListViews = new ListCollectionView[UnitData.INLIST_COUNT];
 		}
 
 	#endregion
@@ -125,10 +135,12 @@ namespace CsDeluxMeasure.UnitsUtil
 			}
 		}
 
+		// these are the current / saved name lists
 		public ListCollectionView InListViewRibbon => inListViews[(int) InList.RIBBON];
 		public ListCollectionView InListViewDlgLeft => inListViews[(int) InList.DIALOG_LEFT];
 		public ListCollectionView InListViewDlgRight => inListViews[(int) InList.DIALOG_RIGHT];
 
+		// the current / saved list of user styles
 		public List<UnitsDataR> UsrStyleList
 		{
 			get
@@ -143,6 +155,7 @@ namespace CsDeluxMeasure.UnitsUtil
 			// set => SettingsManager.UserSettings.Data.UserStyles = value;
 		}
 
+		// list of standard unit styles
 		public Dictionary<string, UnitsDataR> StdStyles
 		{
 			get => SettingsManager.AppSettings.Data.AppStyles;
@@ -152,6 +165,16 @@ namespace CsDeluxMeasure.UnitsUtil
 		public static Document Doc { get; set ; }
 
 		public UnitsDataR ProjectUnitStyle => uSup.GetProjectUnitData(Doc);
+
+
+		// // working data
+		// public ListCollectionView WkgUserStyles => wkgUserStyles;
+		//
+		// // these are the current / saved name lists
+		// public ListCollectionView WkgInListViewsRibbon => wkgInListViews[(int) InList.RIBBON];
+		// public ListCollectionView WkgInListViewsDlgLeft => wkgInListViews[(int) InList.DIALOG_LEFT];
+		// public ListCollectionView WkgInListViewsDlgRight => wkgInListViews[(int) InList.DIALOG_RIGHT];
+
 
 	#endregion
 
@@ -165,37 +188,27 @@ namespace CsDeluxMeasure.UnitsUtil
 		{
 			ReadUnitSettings();
 			UpdateNameLists();
+			// ConfigUserStyleView();
 		}
 
-		public void UpdateNameLists()
+		public void BackupUserStyleList()
 		{
-			foreach (InList inListEnum in Enum.GetValues(typeof(InList)))
-			{
-				InitInRibbonNameList(inListEnum);
-			}
+			usrStyleListCopy = uSup.UnitsDataRListClone(UsrStyleList);
 		}
 
-		public void InitInRibbonNameList(InList which)
+		public void ResetUserStyleList()
 		{
-			int order = (int) which;
-
-			if (UsrStyleList == null || UsrStyleList.Count == 0) return;
-
-			// inListNames[order] = (ListCollectionView) CollectionViewSource.GetDefaultView(StyleList);
-			inListViews[order] =new ListCollectionView(UsrStyleList);
-
-			inListViews[order].SortDescriptions.Clear();
-			inListViews[order].SortDescriptions.Add(
-				new SortDescription(UStyle.INLIST_PROP_NAMES[order], ListSortDirection.Ascending));
-				// new SortDescription("Ustyle.OrderInRibbon", ListSortDirection.Ascending));
-
-			inListViews[order].Filter = o =>
-			{
-				return o is UnitsDataR udr && udr.Ustyle.ShowIn(order);
-			};
-
-			inListViews[order].IsLiveSorting = true;
+			UserSettings.Data.UserStyles = usrStyleListCopy;
+			usrStyleListCopy = null;
 		}
+
+		private bool isNotDeleted(object obj)
+		{
+			UnitsDataR udr = obj as UnitsUtil.UnitsDataR;
+
+			return !udr.DeleteStyle;
+		}
+
 
 		public void SetInitialSequence()
 		{
@@ -219,11 +232,11 @@ namespace CsDeluxMeasure.UnitsUtil
 			UserSettings.Admin.Write();
 		}
 
-		public void ReSequenceStylesList(ListCollectionView styles, int start)
+		public void ReSequenceStylesList(ListCollectionView styles, int start, bool increase)
 		{
 			if (start == styles.Count - 1) return;
 
-			uSup.ReSequence(styles, start);
+			uSup.ReSequence(styles, start, increase);
 		}
 
 		public void ReadUnitSettings()
@@ -265,47 +278,35 @@ namespace CsDeluxMeasure.UnitsUtil
 			return result;
 		}
 
-		public FormatOptions GetFormatOptions(UnitsDataR style)
+		public bool HasNameUserList(string name)
 		{
-			FormatOptions fmtOpts;
-			UStyle us = style.Ustyle;
-
-			try
+			foreach (UnitsDataR udr in UsrStyleList)
 			{
-				fmtOpts = new FormatOptions(style.Id);
-				fmtOpts.Accuracy = us.Precision;
-
-				if (CanHaveSymbol(style.Id))
-				{
-					fmtOpts.SetSymbolTypeId(style.Symbol);
-				}
-
-				if (CanSuppressLeadingZeros(style.Id))
-				{
-					fmtOpts.SuppressLeadingZeros = setFmtOpt(us.SuppressLeadZeros);
-				}
-
-				if (CanSuppressTrailingZeros(style.Id))
-				{
-					fmtOpts.SuppressTrailingZeros = setFmtOpt(us.SuppressTrailZeros);
-				}
-
-				if (CanSuppressSpaces(style.Id))
-				{
-					fmtOpts.SuppressSpaces = setFmtOpt(us.SuppressSpaces);
-				}
-
-				if (CanUsePlusPrefix(style.Id))
-				{
-					fmtOpts.UsePlusPrefix = setFmtOpt(us.UsePlusPrefix);
-				}
-			}
-			catch (Exception e)
-			{
-				return null;
+				if (udr.Ustyle.Name.Equals(name)) return true;
 			}
 
-			return fmtOpts;
+			return false;
+		}
+
+		// public string ValidateStyleName(string testName)
+		// {
+		// 	return uSup.CheckStyleNameSyntax(testName);
+		// }
+		//
+		// public string ValidateStyleDesc(string testName)
+		// {
+		//
+		// 	return uSup.CheckStyleDescSyntax(testName);
+		// }
+
+		
+		public double ValidateStyleSample(string testValue)
+		{
+			double value;
+
+			bool result = double.TryParse(testValue, out value);
+
+			return result ? value : double.NaN;
 		}
 
 	#endregion
@@ -359,6 +360,111 @@ namespace CsDeluxMeasure.UnitsUtil
 			return units;
 		}
 
+		private void UpdateNameLists()
+		{
+			foreach (InList inListEnum in Enum.GetValues(typeof(InList)))
+			{
+				InitInRibbonNameList(inListEnum);
+			}
+		}
+
+		// create the ListCollectionViews of each dialog list
+		private void InitInRibbonNameList(InList which)
+		{
+			int currList = (int) which;
+
+			// liev views
+			if (UsrStyleList == null || UsrStyleList.Count == 0) return;
+
+			inListViews[currList] =new ListCollectionView(UsrStyleList);
+
+			inListViews[currList].SortDescriptions.Clear();
+			inListViews[currList].SortDescriptions.Add(
+				new SortDescription(UStyle.INLIST_PROP_NAMES[currList], ListSortDirection.Ascending));
+				// new SortDescription("Ustyle.OrderInRibbon", ListSortDirection.Ascending));
+
+			inListViews[currList].Filter = o =>
+			{
+				return o is UnitsDataR udr && udr.Ustyle.ShowIn(currList);
+			};
+
+			inListViews[currList].IsLiveSorting = true;
+
+			// // working views
+			// wkgInListViews[currList] =new ListCollectionView(UsrStyleList);
+			//
+			// wkgInListViews[currList].SortDescriptions.Clear();
+			// wkgInListViews[currList].SortDescriptions.Add(
+			// 	new SortDescription(UStyle.INLIST_PROP_NAMES[currList], ListSortDirection.Ascending));
+			// // new SortDescription("Ustyle.OrderInRibbon", ListSortDirection.Ascending));
+			//
+			// wkgInListViews[currList].Filter = o =>
+			// {
+			// 	return o is UnitsDataR udr && udr.Ustyle.ShowIn(currList);
+			// };
+			//
+			// wkgInListViews[currList].IsLiveSorting = true;
+
+		}
+		//
+		// private void ConfigUserStyleView()
+		// {
+		// 	SetInitialSequence();
+		//
+		// 	wkgUserStyles = (ListCollectionView) CollectionViewSource.GetDefaultView(UsrStyleList);
+		//
+		// 	wkgUserStyles.SortDescriptions.Add(
+		// 		new SortDescription("Sequence", ListSortDirection.Ascending));
+		// 	wkgUserStyles.Filter = isNotDeleted;
+		//
+		// 	wkgUserStyles.IsLiveSorting = true;
+		//
+		// 	OnPropertyChanged(nameof(WkgUserStyles));
+		// }
+
+		private FormatOptions GetFormatOptions(UnitsDataR style)
+		{
+			FormatOptions fmtOpts;
+			UStyle us = style.Ustyle;
+
+			try
+			{
+				fmtOpts = new FormatOptions(style.Id);
+				fmtOpts.Accuracy = us.Precision;
+
+				if (CanHaveSymbol(style.Id))
+				{
+					fmtOpts.SetSymbolTypeId(style.Symbol);
+				}
+
+				if (CanSuppressLeadingZeros(style.Id))
+				{
+					fmtOpts.SuppressLeadingZeros = setFmtOpt(us.SuppressLeadZeros);
+				}
+
+				if (CanSuppressTrailingZeros(style.Id))
+				{
+					fmtOpts.SuppressTrailingZeros = setFmtOpt(us.SuppressTrailZeros);
+				}
+
+				if (CanSuppressSpaces(style.Id))
+				{
+					fmtOpts.SuppressSpaces = setFmtOpt(us.SuppressSpaces);
+				}
+
+				if (CanUsePlusPrefix(style.Id))
+				{
+					fmtOpts.UsePlusPrefix = setFmtOpt(us.UsePlusPrefix);
+				}
+			}
+			catch (Exception e)
+			{
+				return null;
+			}
+
+			return fmtOpts;
+		}
+
 
 		// private void populateDefaultStyleList()
 		// {
@@ -377,6 +483,15 @@ namespace CsDeluxMeasure.UnitsUtil
 	#endregion
 
 	#region event publishing
+
+		public event PropertyChangedEventHandler PropertyChanged;
+
+		[NotifyPropertyChangedInvocator]
+		[DebuggerStepThrough]
+		private void OnPropertyChanged([CallerMemberName] string memberName = "")
+		{
+			PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(memberName));
+		}
 
 	#endregion
 

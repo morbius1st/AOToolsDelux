@@ -98,10 +98,12 @@
 									>
 								<!--  Height="{Binding ElementName=checkBoxBorder, Path=ActualHeight}"  -->
 								<!--  Width="{Binding ElementName=checkBoxBorder, Path=ActualWidth}"  -->
+								<!-- Fill="{StaticResource Ckbx.Glyph.Static}" -->
 								<Path x:Name="optionMark"
 										Grid.Column="0"
 										Data="F0 M 9.97498,1.22334L 4.6983,9.09834L 4.52164,9.09834L 0,5.19331L 1.27664,3.52165L 4.255,6.08833L 8.33331,1.52588e-005L 9.97498,1.22334 Z "
-										Fill="{StaticResource Ckbx.Glyph.Static}"
+										
+										Fill="{Binding RelativeSource={RelativeSource Self}, Path=(cs:CsCheckBoxAp.OptionMarkFillBrush)}"
 										Margin="{Binding RelativeSource={RelativeSource Self}, Path=(cs:CsCheckBoxAp.CheckBoxCheckMargin)}"
 										Opacity="0"
 										Stretch="Uniform"
@@ -240,13 +242,14 @@
 										BorderThickness="1.5"
 										BorderBrush="{TemplateBinding BorderBrush}"
 										Width="{Binding RelativeSource={RelativeSource Self}, Path=ActualHeight}"
+										
 								>
 								</Border>
 
 								<Path x:Name="optionMark"
 										Grid.Column="0"
 										Data="F0 M 9.97498,1.22334L 4.6983,9.09834L 4.52164,9.09834L 0,5.19331L 1.27664,3.52165L 4.255,6.08833L 8.33331,1.52588e-005L 9.97498,1.22334 Z "
-										Fill="{StaticResource Ckbx.Glyph.Static}"
+										Fill="{Binding RelativeSource={RelativeSource Self}, Path=(cs:CsCheckBoxAp.OptionMarkFillBrush)}"
 										Opacity="0"
 										Stretch="Uniform"
 										Stroke="{StaticResource Ckbx.GlyphStroke.Static}"
@@ -257,8 +260,8 @@
 
 								<Rectangle x:Name="indeterminateMark"
 										Grid.Column="0"
-										Margin="2"
-										Fill="{StaticResource Ckbx.Indeterminant.Fill}"
+										Margin="3"
+										Fill="{Binding RelativeSource={RelativeSource Self}, Path=(cs:CsCheckBoxAp.IndeterminantMarkFillBrush)}"
 										SnapsToDevicePixels="True"
 										Opacity="0"
 										VerticalAlignment="Stretch"
@@ -295,8 +298,8 @@
 
 						</Trigger>
 
-						<!-- isenabled == true is the default -->
-						<Trigger Property="IsEnabled" Value="false">  <!-- default -->
+						<!-- isenabled == false is the default -->
+						<Trigger Property="IsEnabled" Value="False">  <!-- default -->
 							<Setter Property="Foreground" Value="{StaticResource Fg.Disabled.DkBg}" />
 							<Setter Property="Fill" TargetName="optionMark" Value="{StaticResource Ckbx.Glyph.Disabled}" />
 							<Setter Property="Stroke" TargetName="optionMark" Value="{StaticResource Ckbx.GlyphStroke.Disabled}" />
@@ -320,7 +323,7 @@
 							<Setter Property="Opacity" TargetName="indeterminateMark" Value="0" />
 						</Trigger>
 
-							<!-- <Trigger Property="IsChecked" Value="true"> -->
+							<!-- <Trigger Property="IsChecked" Value="null"> -->
 						<Trigger Property="IsChecked" Value="{x:Null}"> <!-- default -->
 							<Setter Property="Opacity" TargetName="optionMark" Value="0" />
 							<Setter Property="Opacity" TargetName="indeterminateMark" Value="1" />

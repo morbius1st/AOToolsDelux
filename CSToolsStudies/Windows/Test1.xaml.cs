@@ -58,8 +58,6 @@ namespace CSToolsStudies.Windows
 		private byte action1Popup = 1;
 
 		private bool popupIsEntered;
-		private DoubleAnimation d = new DoubleAnimation(1, new Duration(TimeSpan.FromSeconds(2)));
-		private AnimationClock popupAniClock;
 
 		private DispatcherTimer timer;
 		private bool timerActive;
