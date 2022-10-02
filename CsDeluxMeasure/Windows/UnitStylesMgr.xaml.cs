@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
@@ -10,12 +11,14 @@ using System.Windows.Controls.Primitives;
 using System.Windows.Data;
 using System.Windows.Input;
 using System.Windows.Interop;
+using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
 using CsDeluxMeasure.Annotations;
 using CsDeluxMeasure.UnitsUtil;
 using CsDeluxMeasure.Windows.Support;
 using SettingsManager;
 using UtilityLibrary;
+using static CsDeluxMeasure.Windows.Support.UnitStylesMgrWinData;
 using ComboBox = System.Windows.Controls.ComboBox;
 using TextBox = System.Windows.Controls.TextBox;
 
@@ -38,6 +41,7 @@ namespace CsDeluxMeasure.Windows
 		// to capture when the window moves
 		private static bool winLocationChanging;
 		private static bool winMoving = false;
+		private bool winLostFocus;
 		private const int WM_SETCURSOR = 32;
 		private const int WM_NCLBUTTONDOWN = 0x00a1;
 
@@ -45,7 +49,7 @@ namespace CsDeluxMeasure.Windows
 		private const string STR_SHOWSTYLE_DDNAME = "Show Selected User Style";
 
 		// collections
-		private ListCollectionView wkgUserStyles;
+		// private ListCollectionView wkgUserStyles;
 
 		private ListCollectionView ribbonStyles;
 		private ListCollectionView dialogLeftStyles;
@@ -65,29 +69,9 @@ namespace CsDeluxMeasure.Windows
 		// status
 
 		private int changesMade;
+		private int[] orderChanges = new int[UnitData.INLIST_COUNT];
 
 		private bool showingSavedStyles = false;
-
-		private string validateFailDesc;
-
-
-		private string newNameToolTip;
-		private string newDescToolTip;
-		private string insPosToolTip;
-
-		private string editNameToolTip;
-		private string editDescToolTip;
-		private string editSampleToolTip;
-
-
-		private bool? isNewNameOk = null;   // true: ok to use | false not ok to use | null neither / undefined
-		private bool? isNewDescOk = null;   // true: ok to use | false not ok to use | null neither / undefined
-		private bool? isInsPosOk = null;    // true: ok to use | false not ok to use | null neither / undefined
-		private bool isInsPosValid = false; // true: value is OK | false: value is not ok
-		private bool canAddBefore = false;
-		private bool canAddAfter = false;
-		private bool canStyleAdd = false;
-
 
 	#region for item list
 
@@ -99,7 +83,31 @@ namespace CsDeluxMeasure.Windows
 
 	#endregion
 
-	#region for add unit
+	#region for add style
+
+		// new style
+
+		private string validateFailDesc;
+
+		private bool canAddBefore = false;
+		private bool canAddAfter = false;
+		private bool canStyleAdd = false;
+
+		private string newName;
+		private bool? isNewNameOk = null; // true: ok to use | false not ok to use | null neither / undefined
+		private ValMsgNameId newNameMsgId;
+		private string newNameToolTip;
+
+
+		private string newDesc;
+		private bool? isNewDescOk = null; // true: ok to use | false not ok to use | null neither / undefined
+		private ValMsgDescId newDescMsgId;
+		private string newDescToolTip;
+
+		private int insPosition;
+		private bool? isInsPosOk = null;    // true: ok to use | false not ok to use | null neither / undefined
+		private bool isInsPosValid = false; // true: value is OK | false: value is not ok
+		private string insPosToolTip;
 
 		// control settings for add unit are
 
@@ -108,18 +116,25 @@ namespace CsDeluxMeasure.Windows
 
 	#endregion
 
+	#region for editing a style
+
+		// editing style
+
+		private string editNameToolTip;
+		private string editDescToolTip;
+		private string editSampleToolTip;
+
+	#endregion
+
 	#region for popup
 
 		private Popup currInfoPopup;
 		private Popup currEditPopup;
 
-		private bool winLostFocus;
-
 	#endregion
 
 		private bool cbx1UnitSelect = false;
 
-		private int insPosition;
 
 		// contained controls
 		private static UnitStylesMgr me;
@@ -127,14 +142,10 @@ namespace CsDeluxMeasure.Windows
 
 
 		// indicies
+
 		private int lbxSelIndex;
 		private int cbxSelIndex;
 		private int dialogIndex;
-
-		// properties
-
-		private string newName;
-		private string newDesc;
 
 	#endregion
 
@@ -147,10 +158,6 @@ namespace CsDeluxMeasure.Windows
 			me = this;
 
 			InitializeComponent();
-
-			uMgr.ReadUnitSettings();
-
-			OnPropertyChanged(nameof(WkgUserStylesView));
 
 			init();
 		}
@@ -178,14 +185,13 @@ namespace CsDeluxMeasure.Windows
 
 
 		// this is the collection being displayed
-		public ListCollectionView WkgUserStylesView => wkgUserStyles;
+		public ListCollectionView WkgUserStylesView => uMgr.WkgUserStylesView;
 
 		public UnitsDataR LbxSelItem
 		{
 			get => lbxSelItem;
 			set
 			{
-
 				lbxSelItem = value;
 
 				OnPropertyChanged();
@@ -201,22 +207,25 @@ namespace CsDeluxMeasure.Windows
 			get => lbxSelIndex;
 			set
 			{
-				if (value == lbxSelIndex) return;
+				if (value == lbxSelIndex || value < 0) return;
 				lbxSelIndex = value;
 
 
 				if (lbx != null)
 				{
-					UnitsDataR udr = (UnitsDataR) wkgUserStyles.GetItemAt(lbxSelIndex);
+					UnitsDataR udr = (UnitsDataR) WkgUserStylesView.GetItemAt(lbxSelIndex);
 					lbx.ScrollIntoView(udr);
 				}
 
 				OnPropertyChanged();
 				InsPosition = value + 1;
+
+				PopupEditOpsClose();
+				PopupInfoClose();
 			}
 		}
 
-		public int Count => wkgUserStyles.Count;
+		public int Count => WkgUserStylesView.Count;
 
 
 		public List<KeyValuePair<string, string>> CbxList => cbxList;
@@ -241,23 +250,27 @@ namespace CsDeluxMeasure.Windows
 			get => newName;
 			set
 			{
-				string newValue = value.TrimEnd();
+				string proposed = value.TrimEnd();
 
-				// if ((newValue.Equals(testName) 
-				// 	|| newValue.Equals(priorValue[UnitStylesMgrWinData.POPUP_NEW_STYLE_NAME])) && !newValue.IsVoid()) return;
+				string tooltip = "";
+				bool? result = false;
 
-				if (!newValue.IsVoid())
+				if (!proposed.IsVoid())
 				{
-					IsNewNameOk = ValidateNewName(newValue);
-					NewNameToolTip = validateFailDesc;
-				}
-				else
-				{
-					IsNewNameOk = null;
+					result = detailUnit.ValidateName(proposed, out newNameMsgId);
+					tooltip = NameErrMsgs[(int) newNameMsgId];
+
+					if (hasNameInUserStyles(proposed))
+					{
+						result = false;
+						tooltip = NameErrMsgs[(int) ValMsgNameId.VN_MUST_BE_UNIQUE];
+					}
 				}
 
-				newName = newValue;
+				IsNewNameOk = result;
+				NewNameToolTip = tooltip;
 
+				newName = proposed;
 				OnPropertyChanged();
 
 				DetermineCanAdd();
@@ -269,23 +282,20 @@ namespace CsDeluxMeasure.Windows
 			get => newDesc;
 			set
 			{
-				string newValue = value.TrimEnd();
+				string proposed = value.TrimEnd();
+				string tooltip = "";
+				bool? result = false;
 
-				// if ((newValue.Equals(testName) 
-				// 	|| newValue.Equals(priorValue[UnitStylesMgrWinData.POPUP_NEW_STYLE_NAME])) && !newValue.IsVoid()) return;
-
-				if (!newValue.IsVoid())
+				if (!proposed.IsVoid())
 				{
-					IsNewDescOk = ValidateNewDesc(newValue);
-					NewDescToolTip = validateFailDesc;
-				}
-				else
-				{
-					IsNewDescOk = null;
+					result = detailUnit.ValidateDesc(proposed, out newDescMsgId);
+					tooltip = DescErrMsgs[(int) newDescMsgId];
 				}
 
-				newDesc = newValue;
+				IsNewDescOk = result;
+				NewDescToolTip = tooltip;
 
+				newDesc = proposed;
 				OnPropertyChanged();
 
 				DetermineCanAdd();
@@ -520,6 +530,11 @@ namespace CsDeluxMeasure.Windows
 			}
 		}
 
+		public bool HasStyleOrderChanges => hasStyleOrderChanges();
+
+
+		public int[] StyleOrderChanges => orderChanges;
+
 		public int ChangesMade
 		{
 			get => changesMade;
@@ -529,11 +544,13 @@ namespace CsDeluxMeasure.Windows
 
 				changesMade = value;
 				OnPropertyChanged();
-				// OnPropertyChanged(nameof(CloseType));
+				OnPropertyChanged(nameof(HasChanges));
+				OnPropertyChanged(nameof(HasNoChanges));
 			}
 		}
 
-		public bool IsModified => changesMade > 0;
+		public bool HasChanges => changesMade > 0;
+		public bool HasNoChanges => changesMade == 0;
 
 		public bool? IsNewNameOk
 		{
@@ -649,18 +666,11 @@ namespace CsDeluxMeasure.Windows
 		{
 			double t = UserSettings.Data.WinPosUnitStyleMgr.Top;
 			double l = UserSettings.Data.WinPosUnitStyleMgr.Left;
-
+		
 			this.Owner = w;
-
+		
 			this.Top = t > 0 ? t : w.Top;
 			this.Left = l > 0 ? l : w.Left;
-		}
-
-		public void ProcessStyleChanges()
-		{
-			bool resultR = setUserStyles(ribbonStyles, (int) InList.RIBBON);
-			bool resultDl = setUserStyles(dialogLeftStyles, (int) InList.DIALOG_LEFT);
-			bool resultDr = setUserStyles(dialogRightStyles, (int) InList.DIALOG_RIGHT);
 		}
 
 	#endregion
@@ -670,36 +680,27 @@ namespace CsDeluxMeasure.Windows
 		// init setup
 		private void init()
 		{
-			ChangesMade = 0;
+			// uMgr.ReadUnitSettings();
+			uMgr.UpdateProjectStyleSettings();
+			uMgr.initUserStylesView();
+			uMgr.BackupUserStyleList();
 
-			initUserStylesView();
+			OnPropertyChanged(nameof(WkgUserStylesView));
 
 			initCbxList();
 
 			DialogIndex = 0;
 
-			// LbxSelIndex = 3;
+			ChangesMade = 0;
+
 			Cbx1UnitSelect = true;
 
-			OnPropertyChanged(nameof(WkgUserStylesView));
-		}
-
-		private void initUserStylesView()
-		{
-			uMgr.SetInitialSequence();
-
-			wkgUserStyles = (ListCollectionView) CollectionViewSource.GetDefaultView(uMgr.UsrStyleList);
-
-			wkgUserStyles.SortDescriptions.Add(
-				new SortDescription("Sequence", ListSortDirection.Ascending));
-			wkgUserStyles.Filter = isNotDeleted;
-
-			wkgUserStyles.IsLiveSorting = true;
-
 			UnitsDataR.OnNameChanging += OnEditedNameChanging;
-			UnitsDataR.OnDescriptionChanging += OnEditedDescriptionChanging;
+			UnitsDataR.OnNameChanged += UnitsDataROnNameChanged;
+			UnitsDataR.OnDescriptionChanged += UnitsDataROnDescriptionChanged;
 
-			uMgr.BackupUserStyleList();
+			UStyle.ShowInChanged += OnShowInChanged;
+
 		}
 
 		private void initCbxList()
@@ -711,10 +712,10 @@ namespace CsDeluxMeasure.Windows
 				cbxList.Add(new KeyValuePair<string, string>(kvp.Value.DropDownName, kvp.Value.Ustyle.Name));
 			}
 
-
 			cbxList.Add(new KeyValuePair<string, string>(STR_SHOWSTYLE_DDNAME, STR_SHOWSTYLE_NAME));
-		}
 
+			showUnitStyleSettings(cbxList[0].Value);
+		}
 
 		// user style
 
@@ -737,9 +738,36 @@ namespace CsDeluxMeasure.Windows
 
 		private void resetUserStyles()
 		{
+			int idx = lbxSelIndex;
+
 			uMgr.ResetUserStyleList();
-			initUserStylesView();
+			uMgr.UpdateProjectStyleSettings();
+			uMgr.initUserStylesView();
+			uMgr.BackupUserStyleList();
+
 			OnPropertyChanged(nameof(WkgUserStylesView));
+
+			DialogIndex = 0;
+
+			LbxSelIndex = idx >= Count ? Count - 1 : idx;
+
+			ChangesMade = 0;
+		}
+
+		private void resetUserStylesToDefault()
+		{
+			uMgr.ResetUserStylesToDefault();
+			uMgr.UnDelete();
+			uMgr.UpdateProjectStyleSettings();
+			uMgr.initUserStylesView();
+			uMgr.BackupUserStyleList();
+
+			OnPropertyChanged(nameof(WkgUserStylesView));
+
+			DialogIndex = 0;
+
+			LbxSelIndex = 2;
+			ChangesMade = 1;
 		}
 
 		private bool setUserStyles(ListCollectionView view, int thisList)
@@ -757,7 +785,6 @@ namespace CsDeluxMeasure.Windows
 			return view.Count > 0;
 		}
 
-
 		private void showSavedStyle(UnitsDataR udr)
 		{
 			if (!showingSavedStyles) return;
@@ -770,8 +797,16 @@ namespace CsDeluxMeasure.Windows
 			if (name != null)
 			{
 				showingSavedStyles = false;
-				DetailUnit = StdStyles[name];
 				CanStyleAdd = true;
+
+				if (StdStyles[name].Ustyle.UnitClass == UnitClass.CL_PROJECT)
+				{
+					DetailUnit = uMgr.ProjectUnitStyle;
+				}
+				else
+				{
+					DetailUnit = StdStyles[name];
+				}
 			}
 			else
 			{
@@ -781,6 +816,27 @@ namespace CsDeluxMeasure.Windows
 			}
 		}
 
+		private void resetNewStyleInfo()
+		{
+			// string oldName = newName;
+			// string oldDesc = newDesc;
+
+			// newName = "";
+			// newDesc = "";
+			insPosition = Count < 2 ? Count : 2;
+
+			IsNewNameOk = false;
+			NewNameToolTip = NameErrMsgs[(int) ValMsgNameId.VN_MUST_BE_UNIQUE];
+
+			IsNewDescOk = true;
+
+			IsInsPosOk = null;
+
+
+			OnPropertyChanged(nameof(InsPosition));
+
+			// NewName = oldName;
+		}
 
 		// tests
 
@@ -789,11 +845,55 @@ namespace CsDeluxMeasure.Windows
 			bool newNameOk = cvrtToBool(isNewNameOk);
 			bool newDescOk = cvrtToBool(isNewDescOk);
 
-			IsInsPosOk = (isNewNameOk & isInsPosValid) | (isNewDescOk & isInsPosValid);
 
-			CanAddBefore = newNameOk && newDescOk && isInsPosValid;
+			if (!isInsPosOk.HasValue)
+			{
+				if (newNameOk && newDescOk && isInsPosValid)
+				{
+					IsInsPosOk = true;
+				}
+				else
+				{
+					IsInsPosOk = null;
+				}
+			}
+			else
+			{
+				if (newNameOk && newDescOk)
+				{
+					IsInsPosOk = true;
+				}
+				else
+				{
+					IsInsPosOk = null;
+				}
+			}
+
+			bool insPosOk = cvrtToBool(isInsPosOk);
+
+			CanAddBefore = newNameOk && newDescOk && insPosOk;
 			CanAddAfter = newNameOk && newDescOk;
 		}
+
+		/*
+
+		inspostiion:
+		generally neutral / null
+
+		 * if inspos is null => neutral / null / no color
+		 *
+		 * if name entered and is ok + inspos is ok => green
+		 * and
+		 * if desc entered and is ok + inspos is ok => green
+		 * and
+		 * if inspos not ok => red
+
+		 after add:
+			name has old value => red (already used)
+			desc has old value => neutral / null / no color
+			pos has a value => neutral / null / no color
+
+		*/
 
 		private bool isNotDeleted(object obj)
 		{
@@ -803,7 +903,7 @@ namespace CsDeluxMeasure.Windows
 		}
 
 
-		// validate date
+		// validate data
 
 		private bool ValidateInsPos(int pos)
 		{
@@ -828,92 +928,10 @@ namespace CsDeluxMeasure.Windows
 			return true;
 		}
 
-		private bool ValidateNewName(string testName)
-		{
-			// rules
-			// validation requirements
-			// min 4 characters
-			// must start with alphanumeric (uc or lc)
-			// middle is alphanumeric, space, dash, period
-			// must end with alphanumeric (no dash, no space, no period)
-			// name must be unique
-
-			validateFailDesc = validateName(testName);
-
-			
-			// validateFailDesc = uSup.CheckStyleNameSyntax(testName);
-			//
-			// if (validateFailDesc != null) return false;
-			//
-			// if (hasNameInUserStyles(testName))
-			// {
-			// 	validateFailDesc = "Name is already in use";
-			// 	return false;
-			// }
-
-			return validateFailDesc == null;
-
-
-			// if (testName == null || testName.Length < 4)
-			// {
-			// 	validateFailDesc = "Name mist be a minimum of 4 characters";
-			// 	return false;
-			// }
-			//
-			// Regex r = new Regex("^[a-zA-Z0-9][a-zA-Z0-9\\. \\-]*[a-zA-Z0-9]{1}$");
-			//
-			// if (!r.IsMatch(testName))
-			// {
-			// 	validateFailDesc = "Name has invalid characters";
-			// 	return false;
-			// }
-			//
-			// if (hasNameInUserStyles(testName))
-			// {
-			// 	validateFailDesc = "Name is already in use";
-			// 	return false;
-			// }
-			//
-			// return true;
-		}
-
-		
-
-		private bool ValidateNewDesc(string testName)
-		{
-			// rules
-			// validation requirements
-			// min 6 characters
-			// must start with alphanumeric (uc or lc)
-			// middle is alphanumeric, space, dash, or period
-			// must end with alphanumeric (no dash, no space, no period)
-
-			// validateFailDesc = uMgr.ValidateStyleDesc(testName);
-			validateFailDesc = UnitsSupport.CheckStyleDescSyntax(testName);
-
-			return validateFailDesc == null;
-
-
-			// if (testName == null || testName.Length < 6)
-			// {
-			// 	validateFailDesc = "Name mist be a minimum of 6 characters";
-			// 	return false;
-			// }
-			//
-			// Regex r = new Regex("^[a-zA-Z0-9][a-zA-Z0-9\\. \\-]*[a-zA-Z0-9]{1}$");
-			//
-			// if (!r.IsMatch(testName))
-			// {
-			// 	validateFailDesc = "Name has invalid characters";
-			// 	return false;
-			// }
-			//
-			// return true;
-		}
-
 		private bool hasNameInUserStyles(string testName)
 		{
-			foreach (UnitsDataR udr in wkgUserStyles)
+			// return true if found / name already exists
+			foreach (UnitsDataR udr in WkgUserStylesView)
 			{
 				if (udr.Ustyle.Name.Equals(testName)) return true;
 			}
@@ -921,70 +939,44 @@ namespace CsDeluxMeasure.Windows
 			return false;
 		}
 
-		private string validateName(string testName)
+		private void OnEditedNameChanging(object sender, ChangeValueEventArgs<ValMsgNameId> e)
 		{
-			string result;
+			// the data class does the basic syntax validation
+			// only need to verify that the name is unique
 
-			result = UnitsSupport.CheckStyleNameSyntax(testName);
-
-			if (result != null) return result;
-
-			if (hasNameInUserStyles(testName))
+			if (!lbxSelItem.Ustyle.Name.Equals(e.Proposed) && hasNameInUserStyles(e.Proposed))
 			{
-				result = "Name is already in use";
+				e.Response = ValMsgNameId.VN_MUST_BE_UNIQUE;
+				e.Cancel = true;
 			}
-
-			return result ;
 		}
 
-		
-		private void OnEditedNameChanging(object sender, ChangeNameEventArgs e)
+		private void UnitsDataROnDescriptionChanged(object sender, EventArgs e)
 		{
-			string result = validateName(e.Proposed);
-		
-			if (e.Proposed.Equals(""))
-			{
-				e.Cancel = false;
-			}
-			else
-			{
-				e.Cancel = result != null;
-			}
-		
-			lbxSelItem.IsNameOk = result == null;
-			
-			EditNameToolTip = result;
-		}
-		
-		private void OnEditedDescriptionChanging(object sender, ChangeNameEventArgs e)
-		{
-			string result = UnitsSupport.CheckStyleDescSyntax(e.Proposed);
-		
-			if (e.Proposed.Equals(""))
-			{
-				e.Cancel = false;
-			}
-			else
-			{
-				e.Cancel = result != null;
-			}
-		
-			lbxSelItem.IsDescOk = result == null;
-		
-			EditDescToolTip = result;
+			ChangesMade += 1;
 		}
 
+		private void UnitsDataROnNameChanged(object sender, EventArgs e)
+		{
+			ChangesMade += 1;
+		}
 
-		// util
-
+		// private void OnOnShowInChanged(object sender, CheckBoxChangedEventArgs e)
+		// {
+		// 	ChangesMade += 1;
+		// }
 
 		private void applyChanges()
 		{
-			uMgr.WriteUser();
+			uMgr.UlMgr.Current.InListViewRibbon.Refresh();
+
+			uMgr.UlMgr.ApplyRibbonButtonChangesToCurrent();
+
+			uMgr.WriteUserStyles();
 
 			ChangesMade = 0;
 
-			wkgUserStyles.Refresh();
+			WkgUserStylesView.Refresh();
 		}
 
 		private string getDefaultNewStyleText()
@@ -997,24 +989,19 @@ namespace CsDeluxMeasure.Windows
 			return $"Based on: {detailUnit.Ustyle.Name}";
 		}
 
-		private void resetNewStyleInfo()
+		private string getEditStyleResetText()
 		{
-			string oldName = newName;
-			string oldDesc = newDesc;
+			if (priorValueIdx == POPUP_STYLE_NAME)
+			{
+				return lbxSelItem.Ustyle.Name;
+			}
+			else if (priorValueIdx == POPUP_STYLE_DESC)
+			{
+				return lbxSelItem.Ustyle.Description;
+			}
 
-			clearNewStyleInfo();
-
-			NewName = oldName;
-			NewDesc = oldDesc;
+			return "0.0";
 		}
-
-		private void clearNewStyleInfo()
-		{
-			NewName = "";
-			NewDesc = "";
-			InsPosition = Count < 2 ? Count : 2;
-		}
-
 
 		[DebuggerStepThrough]
 		private static IntPtr WndProc(IntPtr hwnd, int msg, IntPtr wParam, IntPtr lParam, ref bool handled)
@@ -1053,6 +1040,62 @@ namespace CsDeluxMeasure.Windows
 			return b.HasValue ? b.Value : false;
 		}
 
+		private bool hasStyleOrderChanges()
+		{
+			return orderChanges[0] > 0 || orderChanges[1] > 0 || orderChanges[2] > 0;
+		}
+
+		private bool verifyDialogClose()
+		{
+			PopupEditOpsClose();
+			PopupInfoClose();
+
+			if (HasChanges)
+			{
+				TaskDialog td = new TaskDialog("Unit Styles");
+				td.MainInstruction = "You have un-saved changes.";
+				td.MainContent = "Select CANCEL to keep these changes\nSelect OK to proceed and lose these changes";
+				td.CommonButtons = TaskDialogCommonButtons.Cancel | TaskDialogCommonButtons.Ok;
+				td.DefaultButton = TaskDialogResult.Cancel;
+
+				if (td.Show() == TaskDialogResult.Cancel)
+				{
+					return false;
+				}
+			}
+
+
+			return true;
+		}
+
+
+		// debug 
+
+		private void showList()
+		{
+			Debug.WriteLine("");
+			Debug.WriteLine($"view count: {WkgUserStylesView.Count}");
+			Debug.WriteLine($"list count: {uMgr.UsrStyleList.Count}");
+			Debug.WriteLine($"this count: {Count}");
+			Debug.WriteLine("");
+
+			int i = 0;
+			foreach (UnitsDataR udr in uMgr.UsrStyleList)
+			{
+				Debug.WriteLine($"idx: {i++:D2}| name: {udr.Ustyle.Name}| ");
+
+
+				// string seq = udr.Sequence == 0 ? "  " : $"{(udr.Sequence + 1):D2}";
+				// string iseq = udr.InitialSequence == 0 ? "  " : $"{(udr.Sequence + 1):D2}";
+
+				// Debug.WriteLine($"idx: {i++:D2}  seq: {seq}  intseq:  {udr.InitialSequence:D2}  iseq: {udr.Sequence:D2}   isDel: {udr.DeleteStyle,6}  name: {udr.Ustyle.Name}");
+			}
+
+			Debug.WriteLine("");
+		}
+
+	#region defunct
+
 		private void setUnitDisplay(string name)
 		{
 			UnitsDataR udr = getStdStyleFromName(name);
@@ -1063,28 +1106,131 @@ namespace CsDeluxMeasure.Windows
 			}
 		}
 
-		// debug 
+		//  Removed
+		// private bool ValidateNewName(string testName)
+		// {
+		// 	// rules
+		// 	// validation requirements
+		// 	// min 4 characters
+		// 	// must start with alphanumeric (uc or lc)
+		// 	// middle is alphanumeric, space, dash, period
+		// 	// must end with alphanumeric (no dash, no space, no period)
+		// 	// name must be unique
+		//
+		// 	bool result = validateName(testName);
+		//
+		// 	validateFailDesc = null;
+		//
+		// 	
+		// 	// validateFailDesc = uSup.CheckStyleNameSyntax(testName);
+		// 	//
+		// 	// if (validateFailDesc != null) return false;
+		// 	//
+		// 	// if (hasNameInUserStyles(testName))
+		// 	// {
+		// 	// 	validateFailDesc = "Name is already in use";
+		// 	// 	return false;
+		// 	// }
+		//
+		// 	return validateFailDesc == null;
+		//
+		//
+		// 	// if (testName == null || testName.Length < 4)
+		// 	// {
+		// 	// 	validateFailDesc = "Name mist be a minimum of 4 characters";
+		// 	// 	return false;
+		// 	// }
+		// 	//
+		// 	// Regex r = new Regex("^[a-zA-Z0-9][a-zA-Z0-9\\. \\-]*[a-zA-Z0-9]{1}$");
+		// 	//
+		// 	// if (!r.IsMatch(testName))
+		// 	// {
+		// 	// 	validateFailDesc = "Name has invalid characters";
+		// 	// 	return false;
+		// 	// }
+		// 	//
+		// 	// if (hasNameInUserStyles(testName))
+		// 	// {
+		// 	// 	validateFailDesc = "Name is already in use";
+		// 	// 	return false;
+		// 	// }
+		// 	//
+		// 	// return true;
+		// }
 
-		private void showList()
-		{
-			Debug.WriteLine("");
-			Debug.WriteLine($"view count: {wkgUserStyles.Count}");
-			Debug.WriteLine($"list count: {uMgr.UsrStyleList.Count}");
-			Debug.WriteLine($"this count: {Count}");
-			Debug.WriteLine("");
 
-			int i = 0;
-			foreach (UnitsDataR udr in uMgr.UsrStyleList)
-			{
-				string seq = udr.Sequence == 0 ? "  " : $"{(udr.Sequence + 1):D2}";
-				string iseq = udr.InitialSequence == 0 ? "  " : $"{(udr.Sequence + 1):D2}";
+		// private bool ValidateNewDesc(string testName)
+		// {
+		// 	// rules
+		// 	// validation requirements
+		// 	// min 6 characters
+		// 	// must start with alphanumeric (uc or lc)
+		// 	// middle is alphanumeric, space, dash, or period
+		// 	// must end with alphanumeric (no dash, no space, no period)
+		//
+		// 	// validateFailDesc = uMgr.ValidateStyleDesc(testName);
+		// 	validateFailDesc = UnitsSupport.CheckStyleDescSyntax(testName);
+		//
+		// 	return validateFailDesc == null;
+		//
+		//
+		// 	// if (testName == null || testName.Length < 6)
+		// 	// {
+		// 	// 	validateFailDesc = "Name mist be a minimum of 6 characters";
+		// 	// 	return false;
+		// 	// }
+		// 	//
+		// 	// Regex r = new Regex("^[a-zA-Z0-9][a-zA-Z0-9\\. \\-]*[a-zA-Z0-9]{1}$");
+		// 	//
+		// 	// if (!r.IsMatch(testName))
+		// 	// {
+		// 	// 	validateFailDesc = "Name has invalid characters";
+		// 	// 	return false;
+		// 	// }
+		// 	//
+		// 	// return true;
+		// }
 
-				Debug.WriteLine($"idx: {i++:D2}  seq: {seq}  intseq:  {udr.InitialSequence:D2}  iseq: {udr.Sequence:D2}   isDel: {udr.DeleteStyle,6}  name: {udr.Ustyle.Name}");
-			}
+		// private bool validateName(string testName)
+		// {
+		// 	bool result;
+		// 	ValMsgNameId msgId;
+		//
+		// 	result = UnitsSupport.CheckStyleNameSyntax(testName, out msgId);
+		//
+		// 	if (!result) return result;
+		//
+		// 	if (hasNameInUserStyles(testName))
+		// 	{
+		// 		result = false;
+		// 		msgId = ValMsgNameId.VN_MUST_BE_UNIQUE;
+		// 	}
+		//
+		// 	return result ;
+		// }
 
-			Debug.WriteLine("");
-			Debug.WriteLine("");
-		}
+		// private void OnEditedDescriptionChanging(object sender, ChangeValueEventArgs e)
+		// {
+		// 	string result = UnitsSupport.CheckStyleDescSyntax(e.Proposed);
+		//
+		// 	if (e.Proposed.Equals(""))
+		// 	{
+		// 		e.Cancel = false;
+		// 	}
+		// 	else
+		// 	{
+		// 		e.Cancel = result != null;
+		// 	}
+		//
+		// 	lbxSelItem.IsDescOk = result == null;
+		//
+		// 	EditDescToolTip = result;
+		// }
+
+
+		// util
+
+	#endregion
 
 	#endregion
 
@@ -1145,11 +1291,8 @@ namespace CsDeluxMeasure.Windows
 
 		private void UnitStylesMgr_Loaded(object sender, RoutedEventArgs e)
 		{
-			List<UnitsDataD> ld = UnitStdStylesD.ListD;
-
 			InsPosition = 2;
 
-			UserSettings.Admin.Read();
 			_Location = UserSettings.Data.WinPosUnitStyleMgr;
 
 			if (_Location.Top >= 0 && _Location.Left >= 0)
@@ -1162,14 +1305,33 @@ namespace CsDeluxMeasure.Windows
 			source.AddHook(new HwndSourceHook(WndProc));
 
 			StaticPropertyChanged += OnStaticPropertyChanged;
-
-			// WinIsEnabled = true;
 		}
 
 		private void UnitStylesMgr_Closing(object sender, System.ComponentModel.CancelEventArgs e)
 		{
-			PopupEditOpsClose();
-			PopupInfoClose();
+			// PopupEditOpsClose();
+			// PopupInfoClose();
+			//
+			// if (HasChanges)
+			// {
+			// 	TaskDialog td = new TaskDialog("Unit Styles");
+			// 	td.MainInstruction = "You have un-saved changes.";
+			// 	td.MainContent = "Select CANCEL to keep these changes\nSelect OK to proceed and lose these changes";
+			// 	td.CommonButtons = TaskDialogCommonButtons.Cancel | TaskDialogCommonButtons.Ok;
+			// 	td.DefaultButton = TaskDialogResult.Cancel;
+			//
+			// 	if (td.Show() == TaskDialogResult.Cancel)
+			// 	{
+			// 		e.Cancel = true;
+			// 		return;
+			// 	}
+			// }
+
+			if (!verifyDialogClose())
+			{
+				e.Cancel = true;
+				return;
+			}
 
 			UserSettings.Data.WinPosUnitStyleMgr = new WindowLocation(this.Top, this.Left);
 			UserSettings.Admin.Write();
@@ -1196,10 +1358,47 @@ namespace CsDeluxMeasure.Windows
 
 		// controls
 
+		private void OnShowInChanged(object sender, CheckBoxChangedEventArgs e)
+		{
+			if ((e.WhichCheckBox.HasValue))
+			{
+				int order = uMgr.GetMaxInListIdx(e.WhichCheckBox.Value);
+
+				e.InListOrder = ++order;
+			}
+			else
+			{
+				e.InListOrder = UnitData.INLIST_UNDEFINED;
+			}
+
+			ChangesMade++;
+
+		}
+
+		private void TbxEditText_OnKeyDown(object sender, KeyEventArgs e)
+		{
+			if (e.Key == Key.Enter)
+			{
+				e.Handled = true;
+
+				((TextBox)sender).MoveFocus(new TraversalRequest(FocusNavigationDirection.Next));
+			}
+		}
+
 		private void lbx_Initialized(object sender, EventArgs e)
 		{
 			lbx = (ListBox) sender;
 		}
+
+		private void Lbx1_OnScrollChanged(object sender, ScrollChangedEventArgs e)
+		{
+			if (e.VerticalChange == 0) return;
+
+			PopupEditOpsClose();
+			FocusManager.SetFocusedElement(FocusManager.GetFocusScope(((ListBox)sender)), null);
+			Keyboard.ClearFocus();
+		}
+
 
 		// private void TblkEditSampleText_OnKeyUp(object sender, KeyEventArgs e)
 		// {
@@ -1213,13 +1412,45 @@ namespace CsDeluxMeasure.Windows
 		// }
 
 
-		// dialog ctrl
-
+		// dialog control
 		private void BtnDebug_OnClick(object sender, RoutedEventArgs e)
 		{
-			Debug.WriteLine("@debug| popup is| ");
+			
 
-			BeginEditOpsPopup();
+
+			uMgr.UlMgr.Rio.ListPbs();
+
+
+			int a = 1;
+
+			// IList<ForgeTypeId> ids = uMgr.GetSymIds(uMgr.ProjectUnitStyle);
+			// UnitsInListMgr ul = uMgr.UlMgr;
+			// SettingsMgr<AppSettingPath, AppSettingInfo<AppSettingDataFile>, AppSettingDataFile> a = AppSettings.Admin;
+			// SettingsMgr<UserSettingPath, UserSettingInfo<UserSettingDataFile>, UserSettingDataFile> u = UserSettings.Admin;
+			//
+			// UnitsDataR r = lbxSelItem;
+
+			// ListCollectionView vr = uMgr.InListViewRibbon;
+			// ListCollectionView vlt = uMgr.InListViewDlgLeft;
+			// ListCollectionView vrt = uMgr.InListViewDlgRight;
+
+			// Dictionary<string, UStyle> us = UnitsStdUStyles.StdSysStyles;
+			//
+			// List<UnitsDataD> ud1 = UnitStdStylesD.ListDribbon;
+			// List<UnitsDataD> ud2 = UnitStdStylesD.ListDleft;
+			// List<UnitsDataD> ud3 = UnitStdStylesD.ListDright;
+
+			// vr.Refresh();
+			// t1.Refresh();
+			// t2.Refresh();
+
+			// lbxSelItem.Sequence = 0;
+			//
+			// int b = 1;
+
+			// Debug.WriteLine("@debug| popup is| ");
+			//
+			// BeginEditOpsPopup();
 
 			// if (currEditPopup == null)
 			// {
@@ -1231,36 +1462,42 @@ namespace CsDeluxMeasure.Windows
 			//
 			// currEditPopup.IsOpen = true;
 
-			return;
 
+			// Debug.WriteLine("\nStdStyles\n");
+			// styles(StdStyles);
+			//
+			// Debug.WriteLine("\nUsrStyles");
+			// showList();
+			//
+			// Debug.WriteLine("\nend of listings\n");
 
-			int idx = LbxSelIndex;
-
-			UnitsDataR udr = DetailUnit;
-			UStyle us = udr.Ustyle;
-
-			UnitsDataR udrl = lbxSelItem;
-			UStyle usl = udrl.Ustyle;
-
-			KeyValuePair<string, UnitsDataR> kvp = cbxSelItem;
-			string kname = kvp.Value.Ustyle.Name;
-
-			// not the one
-			// UnitsDataR udrv = cbxSelValue;
-			// UStyle usc = udrv.Ustyle;
-			// string name = usc.Name;
-
-			NewName = udr.Ustyle.Name;
-			NewDesc = udr.Ustyle.Description;
-
-			showList();
-
-			Debug.WriteLine("@debug button");
+			// int idx = LbxSelIndex;
+			//
+			// UnitsDataR udr = DetailUnit;
+			// UStyle us = udr.Ustyle;
+			//
+			// UnitsDataR udrl = lbxSelItem;
+			// UStyle usl = udrl.Ustyle;
+			//
+			// KeyValuePair<string, UnitsDataR> kvp = cbxSelItem;
+			// string kname = kvp.Value.Ustyle.Name;
+			//
+			// // not the one
+			// // UnitsDataR udrv = cbxSelValue;
+			// // UStyle usc = udrv.Ustyle;
+			// // string name = usc.Name;
+			//
+			// NewName = udr.Ustyle.Name;
+			// NewDesc = udr.Ustyle.Description;
+			//
+			// showList();
+			//
+			// Debug.WriteLine("@debug button");
 		}
 
 		private void BtnDone_OnClick(object sender, RoutedEventArgs e)
 		{
-			if (IsModified)
+			if (HasChanges)
 			{
 				applyChanges();
 			}
@@ -1275,11 +1512,43 @@ namespace CsDeluxMeasure.Windows
 
 		private void BtnCancel_OnClick(object sender, RoutedEventArgs e)
 		{
-			if (IsModified)
+			// if (HasChanges)
+			// {
+			// 	TaskDialog td = new TaskDialog("Unit Styles");
+			// 	td.MainInstruction = "You have un-saved changes.";
+			// 	td.MainContent = "Select CANCEL to keep these changes\nSelect OK to proceed and lose these changes";
+			// 	td.CommonButtons = TaskDialogCommonButtons.Cancel | TaskDialogCommonButtons.Ok;
+			// 	td.DefaultButton = TaskDialogResult.Cancel;
+			//
+			// 	TaskDialogResult result = td.Show();
+			//
+			// 	if (result == TaskDialogResult.Cancel)
+			// 	{
+			// 		
+			// 		return;
+			// 	}
+			// }
+
+			// pressed OK == ok to cancel these changes / go back to before the changes.
+			// same as reset but closes dialog box.
+			if (!verifyDialogClose())
 			{
-				TaskDialog td = new TaskDialog("Delux Measure");
+				e.Handled = true;
+				return;
+			}
+
+			resetUserStyles();
+
+			this.Close();
+		}
+
+		private void BtnReset_OnClick(object sender, RoutedEventArgs e)
+		{
+			if (HasChanges)
+			{
+				TaskDialog td = new TaskDialog("Unit Styles");
 				td.MainInstruction = "You have un-saved changes.";
-				td.MainContent = "Select CANCEL to return\nSelect OK to proceed and lose these changes";
+				td.MainContent = "Select CANCEL to keep these changes\nSelect OK to lose your changes";
 				td.CommonButtons = TaskDialogCommonButtons.Cancel | TaskDialogCommonButtons.Ok;
 				td.DefaultButton = TaskDialogResult.Cancel;
 
@@ -1288,31 +1557,34 @@ namespace CsDeluxMeasure.Windows
 				if (result == TaskDialogResult.Cancel) return;
 			}
 
-			this.Close();
-		}
-
-		private void BtnReset_OnClick(object sender, RoutedEventArgs e)
-		{
-			int idx = lbxSelIndex;
-
 			resetUserStyles();
-
-
-			//
-			// // showList();
-			//
-			// uMgr.UnDelete();
-			// uMgr.ResetInitialSequence();
-			//
-			// ChangesMade = 0;
-			//
-			// wkgUserStyles.Refresh();
-			//
-			// // showList();
-			//
-			LbxSelIndex = idx;
 		}
 
+		private void BtnUsResetToDefault_OnClick(object sender, RoutedEventArgs e)
+		{
+			TaskDialog td = new TaskDialog("Unit Styles");
+			td.MainInstruction = "This will eliminate any changes and revert to the default settings.";
+			td.MainContent = "Select CANCEL to keep all of your changes\nSelect OK to lose all of your changes";
+			td.CommonButtons = TaskDialogCommonButtons.Cancel | TaskDialogCommonButtons.Ok;
+			td.DefaultButton = TaskDialogResult.Cancel;
+
+			TaskDialogResult result = td.Show();
+
+			if (result == TaskDialogResult.Cancel) return;
+
+			resetUserStylesToDefault();
+		}
+
+		private void BtnSoShowStyleOrder_OnClick(object sender, RoutedEventArgs e)
+		{
+			uMgr.ConfigWorkingInLists();
+
+			UnitStyleOrder winOrder = new UnitStyleOrder(this);
+
+			winOrder.SetPosition(this);
+
+			winOrder.ShowDialog();
+		}
 
 		// list controls
 
@@ -1320,11 +1592,11 @@ namespace CsDeluxMeasure.Windows
 		{
 			if (lbxSelIndex <= 1) return;
 
-			int atIdx = ((UnitsDataR) wkgUserStyles.GetItemAt(lbxSelIndex)).Sequence;
-			((UnitsDataR) wkgUserStyles.GetItemAt(lbxSelIndex)).Sequence -= 1;
+			int atIdx = ((UnitsDataR) WkgUserStylesView.GetItemAt(lbxSelIndex)).Sequence;
+			((UnitsDataR) WkgUserStylesView.GetItemAt(lbxSelIndex)).Sequence -= 1;
 
-			int pastIdx = ((UnitsDataR) wkgUserStyles.GetItemAt(lbxSelIndex - 1)).Sequence;
-			((UnitsDataR) wkgUserStyles.GetItemAt(lbxSelIndex - 1)).Sequence += 1;
+			int pastIdx = ((UnitsDataR) WkgUserStylesView.GetItemAt(lbxSelIndex - 1)).Sequence;
+			((UnitsDataR) WkgUserStylesView.GetItemAt(lbxSelIndex - 1)).Sequence += 1;
 
 			ChangesMade += 1;
 		}
@@ -1333,8 +1605,8 @@ namespace CsDeluxMeasure.Windows
 		{
 			if (lbxSelIndex == Count - 1 || lbxSelIndex == 0) return;
 
-			((UnitsDataR) wkgUserStyles.GetItemAt(lbxSelIndex)).Sequence += 1;
-			((UnitsDataR) wkgUserStyles.GetItemAt(lbxSelIndex + 1)).Sequence -= 1;
+			((UnitsDataR) WkgUserStylesView.GetItemAt(lbxSelIndex)).Sequence += 1;
+			((UnitsDataR) WkgUserStylesView.GetItemAt(lbxSelIndex + 1)).Sequence -= 1;
 
 			ChangesMade += 1;
 		}
@@ -1351,14 +1623,14 @@ namespace CsDeluxMeasure.Windows
 			if (lbxSelIndex < Count - 1)
 			{
 				// resequence down (false)
-				uMgr.ReSequenceStylesList(wkgUserStyles, lbxSelIndex + 1, false);
+				uMgr.ReSequenceStylesList(WkgUserStylesView, lbxSelIndex + 1, false);
 			}
 
 			ChangesMade += 1;
 
-			wkgUserStyles.Refresh();
+			WkgUserStylesView.Refresh();
 
-			LbxSelIndex = idx <= wkgUserStyles.Count - 1 ? idx : wkgUserStyles.Count - 1;
+			LbxSelIndex = idx <= WkgUserStylesView.Count - 1 ? idx : WkgUserStylesView.Count - 1;
 
 			// showList();
 		}
@@ -1370,12 +1642,14 @@ namespace CsDeluxMeasure.Windows
 		{
 			UnitsDataR udr = uMgr.NewUDR(detailUnit, newName, newDesc, lbxSelIndex);
 
-			wkgUserStyles.AddNewItem(udr);
-			wkgUserStyles.CommitNew();
+			WkgUserStylesView.AddNewItem(udr);
+			WkgUserStylesView.CommitNew();
 
-			uMgr.ReSequenceStylesList(wkgUserStyles, lbxSelIndex + 1, true);
+			uMgr.ReSequenceStylesList(WkgUserStylesView, lbxSelIndex + 1, true);
 
-			wkgUserStyles.Refresh();
+			WkgUserStylesView.Refresh();
+
+			OnPropertyChanged(nameof(WkgUserStylesView));
 
 			ChangesMade += 1;
 
@@ -1384,15 +1658,17 @@ namespace CsDeluxMeasure.Windows
 
 		private void BtnAddLast_OnClick(object sender, RoutedEventArgs e)
 		{
-			UnitsDataR udr = uMgr.NewUDR(detailUnit, newName, newDesc, uMgr.UsrStyleList.Count);
+			UnitsDataR udr = uMgr.NewUDR(detailUnit, newName, newDesc, WkgUserStylesView.Count);
 
 			// wkgUserStyles.AddNew();
-			wkgUserStyles.AddNewItem(udr);
-			wkgUserStyles.CommitNew();
+			WkgUserStylesView.AddNewItem(udr);
+			WkgUserStylesView.CommitNew();
 
 			ChangesMade += 1;
 
 			resetNewStyleInfo();
+
+			LbxSelIndex = WkgUserStylesView.Count - 1;
 		}
 
 	#endregion
@@ -1403,6 +1679,14 @@ namespace CsDeluxMeasure.Windows
 
 		private void BtnPopupInfoStart_OnClick(object sender, RoutedEventArgs e)
 		{
+			
+
+			if (currInfoPopup!= null && currInfoPopup.Equals(CustomProperties.GetGenericPopupOne((Button) sender)))
+			{
+				PopupInfoClose();
+				return;
+			}
+
 			PopupInfoClose();
 
 			currInfoPopup = CustomProperties.GetGenericPopupOne((Button) sender);
@@ -1484,11 +1768,10 @@ namespace CsDeluxMeasure.Windows
 
 		private void Tbx_OnLostFocus(object sender, RoutedEventArgs e)
 		{
-
 			PopupEditOpsClose();
 		}
 
-		
+
 		// private void TbxEditNameText_OnLostFocus(object sender, RoutedEventArgs e)
 		// {
 		// 	Debug.WriteLine($"TbxEditNameText_OnLostFocus| {((TextBox) sender).Text}");
@@ -1498,6 +1781,7 @@ namespace CsDeluxMeasure.Windows
 		//
 		// 	// validate the information
 		// }
+
 
 
 
@@ -1526,6 +1810,7 @@ namespace CsDeluxMeasure.Windows
 			PopupInfoClose();
 
 			if (currEditPopup == null) return;
+
 			PopupEditOpsOpen();
 		}
 
@@ -1557,7 +1842,7 @@ namespace CsDeluxMeasure.Windows
 		{
 			TextBox tbx = getTextBox(sender);
 
-			priorValue[priorValueIdx] = "";
+			// priorValue[priorValueIdx] = "";
 			sendTextToTbx(tbx, "");
 		}
 
@@ -1571,8 +1856,18 @@ namespace CsDeluxMeasure.Windows
 			}
 			else
 			{
-				string text = getDefaultNewStyleText();
-				priorValue[priorValueIdx] = text;
+				string text;
+
+				if (priorValueIdx <= POPUP_NEW_STYLE_LIMIT)
+				{
+					text = getDefaultNewStyleText();
+					priorValue[priorValueIdx] = text;
+				}
+				else
+				{
+					text = getEditStyleResetText();
+				}
+
 				sendTextToTbx(tbx, text);
 			}
 		}
@@ -1592,6 +1887,15 @@ namespace CsDeluxMeasure.Windows
 			Keyboard.ClearFocus();
 		}
 
+		private void BtnEditOptsClose_OnClick(object sender, RoutedEventArgs e)
+		{
+			TextBox tbx = getTextBox(sender);
+
+			PopupEditOpsClose();
+
+			FocusManager.SetFocusedElement(FocusManager.GetFocusScope(tbx), null);
+			Keyboard.ClearFocus();
+		}
 
 
 		[DebuggerStepThrough]
@@ -1625,26 +1929,45 @@ namespace CsDeluxMeasure.Windows
 				}
 			case UnitStylesMgrWinData.POPUP_STYLE_NAME:
 				{
-					// lbxSelItem.Name = text;
+					lbxSelItem.Name = text;
 					break;
 				}
 			case UnitStylesMgrWinData.POPUP_STYLE_DESC:
 				{
-					// lbxSelItem.Description = text;
+					lbxSelItem.Description = text;
 					break;
 				}
 			case UnitStylesMgrWinData.POPUP_STYLE_SAMPLE:
 				{
-					// lbxSelItem.Sample = -1;
+					lbxSelItem.Sample = text;
 					break;
 				}
 			}
 		}
 
-
 	#endregion
 
 	#region un-categorized
+
+	#if DEBUG
+
+		private void styles(Dictionary<string, UnitsDataR> styles)
+		{
+			foreach (KeyValuePair<string, UnitsDataR> kvp in styles)
+			{
+				Debug.Write($"key| {kvp.Key,-30}");
+				Debug.Write($"USystem| {kvp.Value.USystem,-15}");
+				Debug.Write($"Id| {kvp.Value.Id.TypeId,-50}");
+				Debug.Write($"Cat| {kvp.Value.Ustyle.UnitCat,-15}");
+				Debug.Write($"Class| {kvp.Value.Ustyle.UnitClass,-15}");
+				Debug.Write($"Sys| {kvp.Value.Ustyle.UnitSys,-15}");
+				// Debug.Write($"Sym| >{kvp.Value.Ustyle.Symbol}<");
+				Debug.WriteLine("");
+			}
+		}
+
+
+	#endif
 
 	#endregion
 
@@ -1689,9 +2012,6 @@ namespace CsDeluxMeasure.Windows
 		Style="{StaticResource PuBase}"
 
 		 */
-
-
-
 	}
 }
 

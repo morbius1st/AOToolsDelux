@@ -67,6 +67,12 @@ namespace SettingsManager
 		public int UserSettingsValue { get; set; } = 7;
 
 		[DataMember(Order = 2)]
+		public string DialogLeftSelItemName { get; set; }
+
+		[DataMember(Order = 3)]
+		public string DialogRightSelItemName { get; set; }
+
+		[DataMember(Order = 3)]
 		public List<UnitsDataR> UserStyles {
 			get
 			{
@@ -92,6 +98,12 @@ namespace SettingsManager
 		
 		[DataMember]
 		public WindowLocation WinPosUnitStyleMgr { get; set; }
+
+		[DataMember]
+		public WindowLocation WinPosStyleOrder { get; set; }
+		
+		[DataMember]
+		public WindowLocation WinPosDeluxMeasure { get; set; }
 
 
 	}

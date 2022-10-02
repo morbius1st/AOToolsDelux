@@ -10,8 +10,10 @@ using System.Windows.Controls;
 using System.Windows.Media.Imaging;
 using Autodesk.Revit.DB;
 using CsDeluxMeasure.Annotations;
+using CsDeluxMeasure.Windows.Support;
 using UtilityLibrary;
 using static CsDeluxMeasure.UnitsUtil.UnitsStdUStyles;
+using static CsDeluxMeasure.Windows.Support.UnitStylesMgrWinData;
 
 // Solution:     AOToolsDelux
 // Project:       CsDeluxMeasure
@@ -25,6 +27,7 @@ namespace CsDeluxMeasure.UnitsUtil
 	[DataContract(Namespace = "")]
 	public abstract class AUnitsData<T, U> : INotifyPropertyChanged
 	{
+		
 		private const string DROP_NAME_PREFACE = "Show Std. Style ";
 
 		private bool unitLeadZeroEnable;
@@ -56,14 +59,14 @@ namespace CsDeluxMeasure.UnitsUtil
 		public abstract T Id { get; set; }
 
 		[DataMember(Order = 4)]
-		public abstract T Symbol { get; set;  }
+		public abstract T Symbol { get; set; }
 
 		[IgnoreDataMember]
 		public abstract string Name { get; set; }
-		
+
 		[IgnoreDataMember]
 		public abstract string Description { get; set; }
-		
+
 		[IgnoreDataMember]
 		public abstract string Sample { get; set; }
 
@@ -221,7 +224,7 @@ namespace CsDeluxMeasure.UnitsUtil
 		public string SeqFormatted => (sequence + 1).ToString("00");
 
 		public string UnitSymbolFormated => formatSymbol();
-		protected abstract string formatSample();
+		protected abstract string formatSample(bool isEditing = false);
 
 		public string UnitPrecisionFormatted => formatPrecision();
 		protected abstract string formatPrecision();
@@ -270,7 +273,7 @@ namespace CsDeluxMeasure.UnitsUtil
 	{
 		private UStyle ustyle;
 
-		public UnitsDataD(string id, string sample, UStyle us)
+		public UnitsDataD(  string id, string sample, string symbol, UStyle us)
 		{
 			Id = id;
 			Ustyle = us;
@@ -278,50 +281,36 @@ namespace CsDeluxMeasure.UnitsUtil
 		}
 
 		[IgnoreDataMember]
-		public BitmapImage Ux => CsUtilitiesMedia.GetBitmapImage(Ustyle.IconId, "CsDeluxMeasure.Resources");
+		// public BitmapImage Ux => CsUtilitiesMedia.GetBitmapImage(Ustyle.IconId, "CsDeluxMeasure.Resources");
+		public BitmapImage Ux => CsUtilitiesMedia.GetBitmapImageResource($"{AppRibbon.ICON_FOLDER}/{Ustyle.IconId}");
 
 		public override string Id { get; set; }
 
-		public override string Symbol { get; set; }
+		public override string Symbol
+		{
+			get => "sample 1";
+			set { }
+		}
 
 		public override string Sample { get; set; }
 
-		public override string Name { get; set; }
+		public override string Name
+		{
+			get => Ustyle.Name;
+			set
+			{
+				int a = 1;
+			}
+		}
 
-		public override string Description { get; set; }
-		
-		public string GetSampleStr { get; set; }
-
-
-		// public override string Sample
-		// {
-		// 	get => GetSampleStr;
-		// 	set
-		// 	{
-		// 		Ustyle.Sample = 1.0;
-		// 	}
-		// }
-		//
-		// public override string Name
-		// {
-		// 	get => Ustyle.Name;
-		// 	set
-		// 	{
-		// 		Ustyle.Name = value;
-		// 	}
-		// }
-		//
-		// public override string Description
-		// {
-		// 	get => Ustyle.Description;
-		// 	set
-		// 	{
-		// 		Ustyle.Description = value;
-		// 	}
-		// }
-		// public string GetSampleStr => formatSample();
-
-
+		public override string Description
+		{
+			get => Ustyle.Description;
+			set
+			{
+				int a = 1;
+			}
+		}
 
 		public override string USystem => Ustyle.UnitSys.ToString();
 
@@ -336,24 +325,9 @@ namespace CsDeluxMeasure.UnitsUtil
 			}
 		}
 
-
-		// public string DropDownName
-		// {
-		// 	get
-		// 	{
-		// 		if (ustyle.IsControl)
-		// 		{
-		// 			return Ustyle.Description;
-		// 		}
-		// 		// 
-		// 		return $"Std. Style: {Ustyle.Name}";
-		// 	}
-		// }
-
-
 		protected string fmtSymbol()
 		{
-			if (Ustyle.Symbol != null) return Ustyle.Symbol;
+			// if (Ustyle.Symbol != null) return Ustyle.Symbol;
 
 			string s = UnitsSupport.GetSymbol(Ustyle.UnitCat);
 
@@ -388,7 +362,7 @@ namespace CsDeluxMeasure.UnitsUtil
 			return s;
 		}
 
-		protected override string formatSample()
+		protected override string formatSample(bool isEditing = false)
 		{
 			return Ustyle.Sample?.ToString("F5") ?? "not set";
 		}
@@ -397,7 +371,7 @@ namespace CsDeluxMeasure.UnitsUtil
 	// this is the data map for any type of style
 	// release version  (i.e. ...R)
 	[DataContract(Namespace = "")]
-	public class UnitsDataR : AUnitsData<ForgeTypeId, UnitSystem> , IEquatable<UnitsDataR>
+	public class UnitsDataR : AUnitsData<ForgeTypeId, UnitSystem>
 	{
 		// private static UnitsSupport uSup;
 
@@ -405,25 +379,21 @@ namespace CsDeluxMeasure.UnitsUtil
 		private ForgeTypeId symbol;
 		private UStyle ustyle;
 
-		private int activeElement = -1;
-
-		// private string setNameResult;
-		// private bool setNameStatus;
-
-		private string name = null;
-		private string desc = null;
-		private string sample = null;
+		
 
 
-		private bool? isNameOk = null;
-		private bool? isDescOk = null;
-		private bool? isSampleOk = null;
+		private string name;
+		private ValMsgNameId nameMsgId;
+		private bool? isNameOk;
 
 
-		// static UnitsDataR()
-		// {
-		// 	uSup = new UnitsSupport();
-		// }
+		private string desc;
+		private ValMsgDescId descMsgId;
+		private bool? isDescOk;
+
+		private string sample;
+		private bool? isSampleOk;
+
 
 		protected UnitsDataR() { }
 
@@ -433,13 +403,25 @@ namespace CsDeluxMeasure.UnitsUtil
 			Symbol = symbol;
 			Ustyle = us;
 
-			// bx = CsUtilitiesMedia.GetBitmapImage(Ustyle.IconId, "CsDeluxMeasure.Resources");
+			ResetValidateInfo();
+
+			// UStyle.ShowInChanged+= OnShowInPropertyChanged;
+		}
+
+		[OnDeserialized]
+		void OnDeserialized(StreamingContext context)
+		{
+			ResetValidateInfo();
+
+			// UStyle.ShowInChanged+= OnShowInPropertyChanged;
 		}
 
 
+	#region public properties
+
 		[System.Diagnostics.DebuggerBrowsable(DebuggerBrowsableState.Never)]
 		[IgnoreDataMember]
-		public BitmapImage Ux => CsUtilitiesMedia.GetBitmapImage(Ustyle.IconId, "CsDeluxMeasure.Resources");
+		public BitmapImage Ux => CsUtilitiesMedia.GetBitmapImageResource($"{AppRibbon.ICON_FOLDER}/{Ustyle.IconId}");
 
 		[DataMember(Order = 2)]
 		public override ForgeTypeId Id
@@ -466,54 +448,115 @@ namespace CsDeluxMeasure.UnitsUtil
 		[IgnoreDataMember]
 		public override string Name
 		{
+			// process: 
+			// connection point with consumers
+			// get: the raw value
+			// set: a proposed value
+			//	set will validate for syntax
+			//  set has event that will allow secondary validation
 			get
 			{
 				if (name == null) return Ustyle.Name;
-		
+
 				return name;
 			}
 			set
 			{
-				name = null;
-		
-				ChangeNameEventArgs e = new ChangeNameEventArgs(value);
-				RaiseNameChangingEvent(e);
-				
-				if (e.Cancel)
+				isNameOk = ValidateName(value, out nameMsgId);
+
+				if (isNameOk.Value)
+				{
+					name = null;
+
+					if (!value.Equals(Ustyle.Name))
+					{
+						RaiseNameChangedEvent(EventArgs.Empty);
+						Ustyle.Name = value;
+					}
+				}
+				else
 				{
 					name = value;
-					return;
 				}
-		
-				Ustyle.Name = value;
+
 				OnPropertyChanged();
+				OnPropertyChanged(nameof(IsNameOk));
+				OnPropertyChanged(nameof(NameValidationMsg));
+				OnPropertyChanged(nameof(NameValidationId));
 			}
 		}
-		
+
 		[IgnoreDataMember]
 		public override string Description
 		{
 			get
 			{
 				if (desc == null) return Ustyle.Description;
-		
+
 				return desc;
 			}
 			set
 			{
-				desc = null;
-		
-				ChangeNameEventArgs e = new ChangeNameEventArgs(value);
-				RaiseNameChangingEvent(e);
-				
-				if (e.Cancel)
+				isDescOk = ValidateDesc(value, out descMsgId);
+
+				if (isDescOk.Value)
+				{
+					desc = null;
+
+					if (!value.Equals(Ustyle.Description))
+					{
+						RaiseDescriptionChangedEvent(EventArgs.Empty);
+						Ustyle.Description = value;
+					}
+				}
+				else
 				{
 					desc = value;
-					return;
 				}
-		
-				Ustyle.Description = value;
+
 				OnPropertyChanged();
+				OnPropertyChanged(nameof(IsDescOk));
+				OnPropertyChanged(nameof(DescValidationMsg));
+				OnPropertyChanged(nameof(DescValidationId));
+			}
+		}
+
+		[IgnoreDataMember]
+		public override string Sample
+		{
+			// communication point with consumers
+			// they get / send a string
+			// 
+
+			get => formatSampleWithValue();
+
+			set
+			{
+				if (value.Equals(""))
+				{
+					isSampleOk = null;
+					sample = "";
+				}
+				else
+				{
+					double d = UnitsSupport.ConvertSampleToDbl(this, value);
+
+					if (Double.IsNaN(d))
+					{
+						isSampleOk = false;
+						sample = "Invalid length";
+					}
+					else
+					{
+						isSampleOk = true;
+						sample = null;
+						Ustyle.Sample = d;
+					}
+				}
+
+				OnPropertyChanged();
+				OnPropertyChanged(nameof(IsSampleOk));
+				OnPropertyChanged(nameof(SampleForEditing));
 			}
 		}
 
@@ -533,18 +576,6 @@ namespace CsDeluxMeasure.UnitsUtil
 		}
 
 		[IgnoreDataMember]
-		public int ActiveElement
-		{
-			get => activeElement;
-			set
-			{
-				if (activeElement == value) return;
-				activeElement = value;
-				OnPropertyChanged();
-			}
-		}
-
-		[IgnoreDataMember]
 		public bool? IsNameOk
 		{
 			get => isNameOk;
@@ -555,6 +586,18 @@ namespace CsDeluxMeasure.UnitsUtil
 				isNameOk = value;
 				OnPropertyChanged();
 			}
+		}
+
+		[IgnoreDataMember]
+		public string NameValidationMsg
+		{
+			get => UnitStylesMgrWinData.NameErrMsgs[(int) nameMsgId];
+		}
+
+		[IgnoreDataMember]
+		public ValMsgNameId NameValidationId
+		{
+			get => nameMsgId;
 		}
 
 		[IgnoreDataMember]
@@ -571,6 +614,18 @@ namespace CsDeluxMeasure.UnitsUtil
 		}
 
 		[IgnoreDataMember]
+		public string DescValidationMsg
+		{
+			get => UnitStylesMgrWinData.NameErrMsgs[(int) descMsgId];
+		}
+
+		[IgnoreDataMember]
+		public ValMsgDescId DescValidationId
+		{
+			get => descMsgId;
+		}
+
+		[IgnoreDataMember]
 		public bool? IsSampleOk
 		{
 			get => isSampleOk;
@@ -584,46 +639,35 @@ namespace CsDeluxMeasure.UnitsUtil
 		}
 
 		[IgnoreDataMember]
-		public string GetSampleStr => formatSample();
-
-		[IgnoreDataMember]
-		public override string Sample
+		public string SampleForEditing
 		{
-			get => formatSample();
-			// get => Ustyle.Sample?.ToString("F5") ?? "not set";
-			set
-			{
-				Ustyle.Sample = null;
-				
-				double d;
-				bool result = double.TryParse(value, out d);
-				
-				if (result)
-				{
-					Ustyle.Sample = d;
-				}
-		
-				OnPropertyChanged();
-				OnPropertyChanged("GetSampleStr");
-			}
+			// get => UnitsSupport.FormatLength(this, Ustyle.Sample.Value);
+			get => formatSample(true);
+			set => Sample = value;
 		}
+
+	#endregion
+
+	#region format info for user
 
 		protected override string formatSymbol()
 		{
-			return UnitsSupport.GetSymbol(Symbol, Ustyle.UnitCat);
+			string sym = UnitsSupport.GetSymbol(Symbol, Ustyle.UnitCat);
+
+			return sym;
 		}
 
 		protected override string formatPrecision()
 		{
-			string uSym = null;
-
 			if (Ustyle.Precision < 0) return "*invalid";
 
-			if (Ustyle.UnitCat == UnitCat.UC_DECIMAL)
-			{
-				uSym = USystem == UnitSystem.Metric ? " " : "";
-				uSym += formatSymbol();
-			}
+			string uSym = formatSymbol();
+
+			// if (Ustyle.UnitCat == UnitCat.UC_DECIMAL)
+			// {
+			// 	uSym = USystem == UnitSystem.Metric ? " " : "";
+			// 	uSym += formatSymbol();
+			// }
 
 			string s =
 				UnitsSupport.GetPrecString(Ustyle.UnitCat,
@@ -632,26 +676,89 @@ namespace CsDeluxMeasure.UnitsUtil
 			return s;
 		}
 
-		protected override string formatSample()
+		protected override string formatSample(bool isEditing = false)
 		{
+			if (sample != null) return sample;
+
 			if (!Ustyle.Sample.HasValue)
 			{
 				return "Not Set";
 			}
 
-			string formatted = UnitsSupport.GetSampleFormatted(this, Ustyle.Sample.Value);
+			string formatted = UnitsSupport.FormatLength(this, Ustyle.Sample.Value, isEditing);
 
-			return $"{formatted}  ({Ustyle.Sample.Value:G})";
+			return formatted;
 		}
 
-
-
-
-		public bool Equals(UnitsDataR other)
+		protected string formatSampleWithValue()
 		{
-			if (other == null) return false;
-			return  Id.Equals(other.Id);
+			string formatted = formatSample(false);
+
+			if (sample != null) return formatted;
+
+			if (!Ustyle.Sample.HasValue) return formatted;
+
+			return $"{formatted} ({Ustyle.Sample.Value:G})";
 		}
+
+	#endregion
+
+	#region validate info
+
+		public bool ValidateName(string testName, out ValMsgNameId msgId)
+		{
+			// check syntax - set both result and msg id
+			bool result = UnitsSupport.CheckStyleNameSyntax(testName, out msgId);
+
+			if (result)
+			{
+				// syntax good, check for custom validation
+				ChangeValueEventArgs<ValMsgNameId> e = new ChangeValueEventArgs<ValMsgNameId>(testName, ValMsgNameId.VN_GOOD);
+				RaiseNameChangingEvent(e);
+
+				result = !e.Cancel;
+				msgId = e.Response;
+			}
+
+			return result;
+		}
+
+		public bool ValidateDesc(string testDesc, out ValMsgDescId msgId)
+		{
+			// check syntax - set both result and msg id
+			bool result = UnitsSupport.CheckStyleDescSyntax(testDesc, out msgId);
+
+			if (result)
+			{
+				// syntax good, check for custom validation
+				ChangeValueEventArgs<ValMsgDescId> e = new ChangeValueEventArgs<ValMsgDescId>(testDesc, ValMsgDescId.VD_GOOD);
+				RaiseDescriptionChangingEvent(e);
+
+				result = !e.Cancel;
+				msgId = e.Response;
+			}
+
+			return result;
+		}
+
+	#endregion
+
+		public void ResetValidateInfo()
+		{
+			name = null;
+			nameMsgId = ValMsgNameId.VN_GOOD;
+			isNameOk = null;
+
+			desc = null;
+			descMsgId = ValMsgDescId.VD_GOOD;
+			isDescOk = null;
+
+			sample = null;
+			isSampleOk = null;
+
+		}
+
+	#region system overrides
 
 		public UnitsDataR Clone()
 		{
@@ -662,40 +769,126 @@ namespace CsDeluxMeasure.UnitsUtil
 			return copy;
 		}
 
+		public override string ToString()
+		{
+			return $"name| {Name}| ribbon order| {Ustyle.OrderInRibbon}| left order| {Ustyle.OrderInDialogLeft}| right order| {Ustyle.OrderInDialogRight}";
+		}
+
+	#endregion
+
+		// private void OnShowInPropertyChanged(object sender, CheckBoxChangedEventArgs e)
+		// {
+		// 	// RaiseShowInChangedEvent(new CheckBoxChangedEventArgs(e.WhichCheckBox));
+		// }
+
+	#region raise events
 
 		public static event UnitsDataR.NameChangingEventHandler OnNameChanging;
 		public static event UnitsDataR.DescriptionChangingEventHandler OnDescriptionChanging;
-		
-		
-		
-		public delegate void NameChangingEventHandler(object sender, ChangeNameEventArgs e);
-		
-		protected virtual void RaiseNameChangingEvent(ChangeNameEventArgs e)
+
+		public static event UnitsDataR.NameChangedEventHandler OnNameChanged;
+		public static event UnitsDataR.DescriptionChangedEventHandler OnDescriptionChanged;
+
+
+		public delegate void NameChangingEventHandler(object sender, ChangeValueEventArgs<ValMsgNameId> e);
+
+		protected virtual void RaiseNameChangingEvent(ChangeValueEventArgs<ValMsgNameId> e)
 		{
 			OnNameChanging?.Invoke(this, e);
 		}
-		
-		
-		public delegate void DescriptionChangingEventHandler(object sender, ChangeNameEventArgs e);
-		
-		protected virtual void RaiseDescriptionChangingEvent(ChangeNameEventArgs e)
+
+
+		public delegate void DescriptionChangingEventHandler(object sender, ChangeValueEventArgs<ValMsgDescId> e);
+
+		protected virtual void RaiseDescriptionChangingEvent(ChangeValueEventArgs<ValMsgDescId> e)
 		{
 			OnDescriptionChanging?.Invoke(this, e);
 		}
 
+
+		public delegate void NameChangedEventHandler(object sender, EventArgs e);
+
+		protected virtual void RaiseNameChangedEvent(EventArgs e)
+		{
+			OnNameChanged?.Invoke(this, e);
+		}
+
+
+		public delegate void DescriptionChangedEventHandler(object sender, EventArgs e);
+
+		protected virtual void RaiseDescriptionChangedEvent(EventArgs e)
+		{
+			OnDescriptionChanged?.Invoke(this, e);
+		}
+
+
+
+		// public static event UnitsDataR.ShowInChangedEventHandler OnShowInChanged;
+		//
+		// public delegate void ShowInChangedEventHandler(object sender, CheckBoxChangedEventArgs e);
+		//
+		// protected virtual void RaiseShowInChangedEvent(CheckBoxChangedEventArgs e)
+		// {
+		// 	OnShowInChanged?.Invoke(this, e);
+		// }
+
+	#endregion
 	}
 
 #endregion
 
-	public class ChangeNameEventArgs : CancelEventArgs
+	// public class UdrCompareInListOrder
+	// {
+	// 	public static int Compare(UnitsDataR x, UnitsDataR y, InList which)
+	// 	{
+	// 		if (x == null && y == null) { return 0; }
+	// 		if (y == null ||
+	// 			x.Ustyle.OrderInList[(int) which] > y.Ustyle.OrderInList[(int) which]) { return 1; }
+	// 		if (x == null ||
+	// 			x.Ustyle.OrderInList[(int) which] < y.Ustyle.OrderInList[(int) which]) { return -1; }
+	//
+	// 		return 0;
+	// 	}
+	// }
+
+	public class ChangeValueEventArgs<TE> : CancelEventArgs where TE : Enum
 	{
 		public string Proposed { get; }
-	
-		public ChangeNameEventArgs(string proposed)
+		public TE Response { get; set; }
+
+		public ChangeValueEventArgs(string proposed, TE def)
 		{
 			Cancel = false;
 			Proposed = proposed;
+			Response = def;
 		}
+	}
+
+	public class CheckBoxChangedEventArgs : CancelEventArgs
+	{
+		public InList? WhichCheckBox { get; }
+		public int InListOrder { get; set; }
+
+		public CheckBoxChangedEventArgs(InList? whichCheckBox)
+		{
+			WhichCheckBox = whichCheckBox;
+			InListOrder = -1;
+		}
+	}
+
+	public struct WkgInListItemD
+	{
+		public int ProposedOrder { get; set; }
+		public int CurrentOrder { get; set; }
+		public UnitsDataD Data { get; set; }
+
+		public WkgInListItemD(int proposedOrder, int currentOrder, UnitsDataD data)
+		{
+			ProposedOrder = proposedOrder;
+			CurrentOrder = currentOrder;
+			Data = data;
+		}
+
 	}
 
 
@@ -735,7 +928,14 @@ namespace CsDeluxMeasure.UnitsUtil
 		}
 
 		// private new static ICollectionView list;
-		private new static List<UnitsDataD> listD;
+		private static List<UnitsDataD> listD;
+		// private static List<UnitsDataD> listDribbon;
+		// private static List<UnitsDataD> listDleft;
+		// private static List<UnitsDataD> listDright;
+
+		public static List<WkgInListItemD> InListsRibbon { get; protected set; }
+		public static List<WkgInListItemD> InListsDlgLeft { get; protected set; }
+		public static List<WkgInListItemD> InListsDlgRight { get; protected set; }
 
 		public static Dictionary<string, UnitsDataD> SStdStyles { get; protected set; }
 		public override Dictionary<string, UnitsDataD> StdStyles { get; protected set; }
@@ -749,23 +949,7 @@ namespace CsDeluxMeasure.UnitsUtil
 				OnPropertyChanged_S();
 			}
 		}
-
-		// private void assignSamples()
-		// {
-		// string[] samples = new []
-		// {
-		// 	"120'-11 248/255\"", // 0
-		// 	"120'-11.987\"",     // 1
-		// 	"120.1234'",         // 2
-		// 	"120.1234\"",        // 3
-		// 	"120 248/255\"",     // 4
-		// 	"120.1234m",         // 5
-		// 	"120.1234dm",        // 6
-		// 	"120.1234cm",        // 7
-		// 	"120.1234mm",        // 8
-		// 	"120m 1234cm"        // 9
-		// };
-		// }
+		
 
 		public bool Equals(UnitsDataD x, UnitsDataD y)
 		{
@@ -783,17 +967,49 @@ namespace CsDeluxMeasure.UnitsUtil
 			UnitsDataD udd;
 
 			udd = new UnitsDataD(
-				sid.TypeId, sample,
-				UnitsStdUStyles.StdSysStyles[sid.NameId]);
+				sid.TypeId, sample, 
+				sid.Symbol,
+				StdSysStyles[sid.NameId]);
 			udd.Sequence = i;
 			ListD.Add(udd);
 			SStdStyles.Add(udd.Ustyle.Name, udd);
+
+			if (udd.Ustyle.ShowInRibbon)
+			{
+				
+				InListsRibbon.Add(new WkgInListItemD(udd.Ustyle.OrderInRibbon, udd.Ustyle.OrderInRibbon, udd));
+			}
+			OnPropertyChanged_S(nameof(InListsRibbon));
+
+			if (udd.Ustyle.ShowInDialogLeft)
+			{
+				InListsDlgLeft.Add(new WkgInListItemD(udd.Ustyle.OrderInDialogLeft, udd.Ustyle.OrderInDialogLeft, udd));
+				// listDleft.Add(udd);
+			}
+			OnPropertyChanged_S(nameof(InListsDlgLeft));
+
+			if (udd.Ustyle.ShowInDialogRight)
+			{
+				InListsDlgRight.Add(new WkgInListItemD(udd.Ustyle.OrderInDialogRight, udd.Ustyle.OrderInDialogRight, udd));
+				// listDright.Add(udd);
+			}
+			OnPropertyChanged_S(nameof(InListsDlgRight));
+
 		}
 
 		private static void initialize()
 		{
+			InListsRibbon =   new List<WkgInListItemD>();
+			InListsDlgLeft =  new List<WkgInListItemD>();
+			InListsDlgRight = new List<WkgInListItemD>();
+
 			SStdStyles = new Dictionary<string, UnitsDataD>(12);
 			ListD = new List<UnitsDataD>();
+			// listDribbon = new List<UnitsDataD>();
+			// listDleft = new List<UnitsDataD>();
+			// listDright = new List<UnitsDataD>();
+
+			
 
 			int i = 0;
 
@@ -915,26 +1131,13 @@ namespace CsDeluxMeasure.UnitsUtil
 			initialize();
 		}
 
-		private new ICollectionView list;
-
 		[DataMember(Order = 2)]
 		public override Dictionary<string, UnitsDataR> StdStyles { get; protected set; }
 
-		[IgnoreDataMember]
-		public new ICollectionView List
-		{
-			get => list;
-			set
-			{
-				list = value;
-				OnPropertyChanged_S();
-			}
-		}
-
-		private void addStyleItem(int i, ForgeTypeId uid, ForgeTypeId sid,	string name)
+		private void addStyleItem(int i, ForgeTypeId uid, ForgeTypeId sid, string name)
 		{
 			UnitsDataR udr = new UnitsDataR(uid, sid, UnitsStdUStyles.StdSysStyles[name]);
-			udr.Sequence = i++;
+			udr.Sequence = i;
 			StdStyles.Add(udr.Ustyle.Name, udr);
 		}
 
@@ -976,7 +1179,7 @@ namespace CsDeluxMeasure.UnitsUtil
 			// udr.Sequence = i++;
 			// StdStyles.Add(STYLE_ID_US_SURVEY, udr);
 			//
-			addStyleItem(i++, UnitTypeId.Feet, SymbolTypeId.Ft, STYLE_DATA.Feet.NameId);
+			addStyleItem(i++, UnitTypeId.Feet, SymbolTypeId.FootSingleQuote, STYLE_DATA.Feet.NameId);
 			//
 			// udr = new UnitsDataR(
 			// 	UnitTypeId.Feet, SymbolTypeId.Ft,
@@ -1043,11 +1246,10 @@ namespace CsDeluxMeasure.UnitsUtil
 
 			// addStyleItem(i++, UnitTypeId.Custom, null, STYLE_DATA.Control01.NameId);
 
-			List = CollectionViewSource.GetDefaultView(StdStyles);
+			// List = CollectionViewSource.GetDefaultView(StdStyles);
 
 			// ICollectionView a = CollectionViewSource.GetDefaultView(StdStyles);
 		}
-
 	}
 
 #endregion

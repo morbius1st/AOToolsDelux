@@ -13,6 +13,7 @@ namespace CsDeluxMeasure.UnitsUtil
 		public const int INLIST_DISABLED = -2;
 
 		public static readonly int INLIST_COUNT = Enum.GetValues(typeof(InList)).Length;
+		public static string[] IN_LIST_NAMES = new [] { "Ribbon Button", "Dialog Left", "Dialog Right" };
 
 		public static readonly int UCAT_COUNT = Enum.GetValues(typeof(UnitCat)).Length;
 		public static readonly int UTYPE_COUNT = Enum.GetValues(typeof(UnitType)).Length;
@@ -67,6 +68,8 @@ namespace CsDeluxMeasure.UnitsUtil
 		DIALOG_LEFT = 1,
 		DIALOG_RIGHT = 2,
 	}
+
+	
 
 	public enum PrecXref
 	{

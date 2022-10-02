@@ -218,6 +218,7 @@
 						CanVerticallyScroll="False"
 						ContentTemplate="{TemplateBinding ContentTemplate}"
 						Margin="{TemplateBinding Padding}"
+
 						/>
 
 				<ScrollBar x:Name="PART_VerticalScrollBar"

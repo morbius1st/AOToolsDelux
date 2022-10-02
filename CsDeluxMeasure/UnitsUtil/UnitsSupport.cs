@@ -2,13 +2,21 @@
 
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Diagnostics;
+using System.Runtime.CompilerServices;
 using System.Text.RegularExpressions;
 using System.Windows.Data;
 
 using Autodesk.Revit.DB;
+using CsDeluxMeasure.Windows.Support;
+using SettingsManager;
 using static Autodesk.Revit.DB.FormatOptions;
 using static CsDeluxMeasure.UnitsUtil.UnitsStdUStyles;
+
+using static CsDeluxMeasure.Windows.Support.UnitStylesMgrWinData.ValMsgNameId;
+using static CsDeluxMeasure.Windows.Support.UnitStylesMgrWinData.ValMsgDescId;
+using static CsDeluxMeasure.Windows.Support.UnitStylesMgrWinData;
 #endregion
 
 // username: jeffs
@@ -20,26 +28,43 @@ namespace CsDeluxMeasure.UnitsUtil
 	{
 		public const string DEFAULT_UNIT_ICON_NAME = "information32.png";
 
+		private const string SYNTAX_SUBPATTERN_1 = "a-zA-Z0-9";
+		private const string SYNTAX_SUBPATTERN_2 = SYNTAX_SUBPATTERN_1+"\\. \\-";
+
+		private const string SYNTAX_PREFIX_PATTERN = "^[" + SYNTAX_SUBPATTERN_1 + "]";
+		private const string SYNTAX_MIDDLE_PATTERN = "[" + SYNTAX_SUBPATTERN_2 + "]*";
+		private const string SYNTAX_POSTFIX_PATTERN = "[" + SYNTAX_SUBPATTERN_1 + "]{1}$";
+		private const string SYNTAX_PATTERN = SYNTAX_PREFIX_PATTERN + SYNTAX_MIDDLE_PATTERN + SYNTAX_POSTFIX_PATTERN;
+
+
+
+		private static readonly string[] SUPERSCRIPT_DIGITS = new []
+		{
+			"⁰","¹","²","³","⁴","⁵", "⁶", "⁷", "⁸", "⁹"
+		};
+
 	#region private fields
 
 		private static Dictionary<ForgeTypeId, STYLE_DATA> UnitTypeToString;
 		private static Dictionary<STYLE_DATA, ForgeTypeId> StringToUnitType;
 
-		private static Dictionary<string, double>[] precisions;
-		private static Dictionary<string, double> precDecimal;
-		private static Dictionary<string, double> precInFrac;
-		private static Dictionary<string, double> precFtFrac;
-		private static Dictionary<string, double> precMeterCm;
+		// private static Dictionary<string, double>[] precisions;
+		// private static Dictionary<string, double> precDecimal;
+		// private static Dictionary<string, double> precInFrac;
+		// private static Dictionary<string, double> precFtFrac;
+		// private static Dictionary<string, double> precMeterCm;
 
 
 		private static Dictionary<UnitCat, int> pricXref;
-		private static Dictionary<double, string>[] precisions2;
-		private static Dictionary<double, string> precDecimal2;
-		private static Dictionary<double, string> precInFrac2;
-		private static Dictionary<double, string> precFtFrac2;
-		private static Dictionary<double, string> precMeterCm2;
+		private static Dictionary<string, string>[] precisions2;
+		private static Dictionary<string, string> precDecimal2;
+		private static Dictionary<string, string> precInFrac2;
+		private static Dictionary<string, string> precFtFrac2;
+		private static Dictionary<string, string> precMeterCm2;
 
 		public static string[][] symbolStrings;
+
+
 
 	#endregion
 
@@ -67,6 +92,7 @@ namespace CsDeluxMeasure.UnitsUtil
 
 	#region public properties
 
+
 	#endregion
 
 	#region private properties
@@ -75,11 +101,11 @@ namespace CsDeluxMeasure.UnitsUtil
 
 	#region public static methods
 
-
-
 	#endregion
 		
 	#region public methods
+
+		// style list processing
 
 		public void SetInitialSequence(List<UnitsDataR> styleList)
 		{
@@ -145,64 +171,7 @@ namespace CsDeluxMeasure.UnitsUtil
 			}
 		}
 
-		public static string GetSampleFormatted(UnitsDataR udr, double sample)
-		{
-			Units units = makeStdLengthUnit(udr);
-
-			if (units == null) return "N/A";
-
-			string result =  UnitFormatUtils.Format(units, SpecTypeId.Length, sample, false);
-			return result;
-		}
-
-		public static string GetPrecString(UnitCat uc, double prec, string uSym)
-		{
-
-			int table = pricXref[uc];
-
-			return getPrecString2(precisions2[table], prec, uSym);
-		}
-
-		public static string GetTypeIdAsString(ForgeTypeId key)
-		{
-			if (!UnitTypeToString.ContainsKey(key)) return null;
-		
-			return UnitTypeToString[key].NameId;
-		}
-
-		public static STYLE_DATA GetTypeIdAsStyleId(ForgeTypeId key)
-		{
-			if (!UnitTypeToString.ContainsKey(key)) return STYLE_DATA.Invalid;
-		
-			return UnitTypeToString[key];
-		}
-
-		public static string GetSymbol(ForgeTypeId symbol, UnitCat uCat)
-		{
-			if (symbol == null) return GetSymbol(uCat);
-
-			if (symbol.Empty()) return "None";
-
-			ForgeTypeId id = symbol;
-
-			string result = LabelUtils.GetLabelForSymbol(id);
-
-			return result;
-		}
-
-		// only when symbol is null
-		public static string GetSymbol(UnitCat uCat)
-		{
-			string[] s = symbolStrings[(int) uCat];
-
-			string result = $"{s[0]}";
-
-			result += s.Length > 1 ? $" & {s[1]}" : null;
-
-			return result;
-		}
-
-		public List<UnitsDataR> UnitsDataRListClone(List<UnitsDataR> styleList)
+		public static List<UnitsDataR> UnitsDataRListClone(List<UnitsDataR> styleList)
 		{
 			List<UnitsDataR> styleListCopy = new List<UnitsDataR>(styleList.Count);
 			UnitsDataR udrCopy;
@@ -215,6 +184,28 @@ namespace CsDeluxMeasure.UnitsUtil
 
 			return styleListCopy;
 		}
+
+		public int GetMaxInListIdx(List<UnitsDataR> styleList, InList which)
+		{
+			int maxIdx = 0;
+			int currList = (int) which;
+
+			foreach (UnitsDataR udr in styleList)
+			{
+				if (udr.DeleteStyle) continue;
+
+				if (udr.Ustyle.ShowIn(currList))
+				{
+					maxIdx =
+						udr.Ustyle.OrderInList[currList] > maxIdx ? 
+							udr.Ustyle.OrderInList[currList] : maxIdx;
+				}
+			}
+
+			return maxIdx;
+		}
+		
+		// unitdataR processing
 
 		public UnitsDataR GetProjectUnitData(Document doc)
 		{
@@ -231,6 +222,14 @@ namespace CsDeluxMeasure.UnitsUtil
 				udr = UDRFromRevitUnits(doc.GetUnits());
 				udr.Ustyle.UnitClass = UnitClass.CL_PROJECT;
 			}
+
+			
+
+			udr.Ustyle.OrderInRibbon = UnitData.INLIST_UNDEFINED;
+			udr.Ustyle.OrderInDialogLeft = 100;
+			udr.Ustyle.OrderInDialogRight = 100;
+			udr.Ustyle.Sample = 123.456;
+			udr.Ustyle.Name = "Project Units";
 
 			return udr;
 		}
@@ -249,12 +248,22 @@ namespace CsDeluxMeasure.UnitsUtil
 			return udr;
 		}
 
-		public UStyle USFromRevitUnits(Units u)
+		public UnitsDataR UDRClone(UnitsDataR orig, 
+			string name, string desc, int seq)
 		{
-			FormatOptions fo = u.GetFormatOptions(SpecTypeId.Length);
+			UnitsDataR udr = new UnitsDataR(orig.Id, orig.Symbol, orig.Ustyle.Clone());
 
-			return USFromRevitFO(fo);
+			udr.Ustyle.Name = name;
+			udr.Ustyle.Description = desc;
+			udr.Sequence = seq;
+			udr.Ustyle.OrderInRibbon = -1;
+			udr.Ustyle.OrderInDialogLeft = -1;
+			udr.Ustyle.OrderInDialogRight = -1;
+
+			return udr;
 		}
+
+		// UStyle processing
 
 		public UStyle USFromRevitFO(FormatOptions fo)
 		{
@@ -273,7 +282,7 @@ namespace CsDeluxMeasure.UnitsUtil
 				baseUs.UnitCat,
 				baseUs.UnitSys,
 				fo.Accuracy,
-				GetSymbol(symbol, baseUs.UnitCat),
+				// GetSymbol(symbol, baseUs.UnitCat),
 				baseUs.SuppressTrailZeros.HasValue ? (bool?) fo.SuppressTrailingZeros : null,
 				baseUs.SuppressLeadZeros.HasValue ? (bool?) fo.SuppressLeadingZeros : null,
 				baseUs.UsePlusPrefix.HasValue ? (bool?)	fo.UsePlusPrefix : null,
@@ -286,65 +295,316 @@ namespace CsDeluxMeasure.UnitsUtil
 			return us;
 		}
 
+
+		// static
+
+		public static STYLE_DATA GetTypeIdAsStyleId(ForgeTypeId key)
+		{
+			if (!UnitTypeToString.ContainsKey(key)) return STYLE_DATA.Invalid;
+		
+			return UnitTypeToString[key];
+		}
+
+		// only when symbol is null
+		public static string GetSymbol(UnitCat uCat)
+		{
+			string[] s = symbolStrings[(int) uCat];
+
+			string result = $"{s[0]}";
+
+			result += s.Length > 1 ? $" & {s[1]}" : null;
+
+			return result;
+		}
+
+
+		// defunct
+
+		public UStyle USFromRevitUnits(Units u)
+		{
+			FormatOptions fo = u.GetFormatOptions(SpecTypeId.Length);
+
+			return USFromRevitFO(fo);
+		}
+
 		private bool? getBool(bool? baseUs, bool? fo)
 		{
 			return baseUs.HasValue ? fo : null;
 		}
 
-		public UnitsDataR UDRClone(UnitsDataR orig, 
-			string name, string desc, int seq)
+		public static string GetTypeIdAsString(ForgeTypeId key)
 		{
-			UnitsDataR udr = new UnitsDataR(orig.Id, orig.Symbol, orig.Ustyle.Clone());
-
-			udr.Ustyle.Name = name;
-			udr.Ustyle.Description = desc;
-			udr.Sequence = seq;
-
-			return udr;
+			if (!UnitTypeToString.ContainsKey(key)) return null;
+		
+			return UnitTypeToString[key].NameId;
 		}
 
 
-		public static string CheckStyleNameSyntax(string testName)
+
+		// units
+
+		public static string FormatLength(UnitsDataR udr, double? sample, bool isEditing)
 		{
+			if (!sample.HasValue) return "0.0";
+
+			if (udr.Ustyle.UnitClass == UnitClass.CL_FT_DEC_IN)
+			{
+				string rresult = UtilityLibrary.CsConversions.FromDoubleFeet.ToFeetAndDecimalInches(sample ?? 0.0, udr.Ustyle.Precision, 
+					udr.Ustyle.SuppressLeadZeros ?? true, udr.Ustyle.SuppressTrailZeros ?? false);
+				return rresult;
+			}
+
+			Units units = makeStdLengthUnit(udr);
+
+			if (units == null) return "N/A";
+
+			string result =  UnitFormatUtils.Format(units, SpecTypeId.Length, sample.Value, false);
+
+			if (udr.Ustyle.UnitCat == UnitCat.UC_METER_CM && !isEditing)
+			{
+				result = formatM_CmSample(result);
+			}
+
+			return result;
+		}
+
+		private static string formatM_CmSample(string sample)
+		{
+			if (sample.Length < 5) return sample;
+
+			string mm = sample.Substring(0, 4);
+			mm += convertToSuperScript(sample[4]);
+
+			if (sample.Length > 5)
+			{
+				mm += convertToSuperScript(sample[5]);
+			}
+
+			return mm;
+		}
+
+		private static string convertToSuperScript(char digit)
+		{
+			int idx = digit - '0';
+			return SUPERSCRIPT_DIGITS[idx];
+		}
+
+		public static double ConvertSampleToDbl(UnitsDataR udr, string sample)
+		{
+			// convert a string, sample, into a double based on the units
+			double result = Double.NaN;
+			bool answer;
+			Units units = makeStdLengthUnit(udr);
+
+			try
+			{
+				if (units != null)
+				{
+					answer = UnitFormatUtils.TryParse(units, SpecTypeId.Length, sample, out result);
+
+					if (!answer) result = Double.NaN;
+				}
+			}
+			catch (Exception e)
+			{
+				// could not convert
+				result = Double.NaN;
+			}
+
+			return result;
+		}
+
+		public bool setUnit(Document doc, Units unit)
+		{
+			try { doc.SetUnits(unit); }
+			catch (Exception e)
+			{
+				return false;
+			}
+
+			return true;
+		}
+
+		public static Units makeStdLengthUnit(UnitsDataR udr)
+		{
+			// if (udr.Ustyle.IsLocked == null) return null;
+			// if problem, return null
+
+			Units units;
+			FormatOptions fmtOpts;
+
+			try
+			{
+				fmtOpts = getFormatOptions(udr);
+			}
+			catch (Exception e)
+			{
+				return null;
+			}
+
+			units = new Units(udr.USystem);
+			units.SetFormatOptions(SpecTypeId.Length, fmtOpts);
+
+			return units;
+		}
+
+
+		// symbol
+
+		public static string GetSymbol(ForgeTypeId symbol, UnitCat uCat)
+		{
+			// if (symbol == null) return GetSymbol(uCat);
+			if (symbol == null)
+			{
+				// unit has no options (e.g. ft & in / m & cm)
+				// Debug.WriteLine($"cat | {uCat} | symbol is | (null) | n/a");
+				// return "n/a";
+				return GetSymbol(uCat);
+				// return "none";
+			}
+
+			if (symbol.Empty()) 
+			{
+				// user selects "none"
+				// Debug.WriteLine($"cat | {uCat} | symbol is | (empty) | none");
+
+				return "None";
+			}
+
+			ForgeTypeId id = symbol;
+
+			string result = LabelUtils.GetLabelForSymbol(id);
+
+			// Debug.WriteLine($"cat | {uCat} | symbol is| {symbol.TypeId} | >{result}<");
+
+			return result;
+		}
+
+		// precision
+
+		public static string GetPrecString(UnitCat uCat, double prec, string uSym)
+		{
+
+			int table = pricXref[uCat];
+
+			return getPrecString(precisions2[table], prec, uSym);
+		}
+
+
+		// validate syntax
+
+		public static bool CheckStyleNameSyntax(string testName, out ValMsgNameId msgId)
+		{
+			// return true if name is OK - false if not
+			// provide via out, id of message
+			msgId = VN_GOOD;
+			bool result = true;
+
 			// rules
 			// validation requirements
 			// min 4 characters
 			// must start with alphanumeric (uc or lc)
 			// middle is alphanumeric, space, dash, period
 			// must end with alphanumeric (no dash, no space, no period)
-			// name must be unique
-			if (testName == null || testName.Length < 4)
+			if (testName != null && testName.Length > 3)
 			{
-				return "Name mist be a minimum of 4 characters";
+				Regex r = new Regex(SYNTAX_PATTERN);
+
+				if (!r.IsMatch(testName))
+				{
+					result = false;
+
+					r = new Regex(SYNTAX_PREFIX_PATTERN);
+
+					if (r.IsMatch(testName))
+					{
+						r = new Regex(SYNTAX_POSTFIX_PATTERN);
+
+						if (r.IsMatch(testName))
+						{
+							msgId = VN_DISALLOWED_CHARS;
+						}
+						else
+						{
+							msgId = VN_END_ALPHANUM_REQD;
+						}
+					}
+					else
+					{
+						msgId = VN_BEG_ALPHANUM_REQD;
+					}
+				}
+			}
+			else
+			{
+				msgId = VN_TOOSHORT;
+				result = false;
 			}
 
-			Regex r = new Regex("^[a-zA-Z0-9][a-zA-Z0-9\\. \\-]*[a-zA-Z0-9]{1}$");
-
-			if (!r.IsMatch(testName))
-			{
-				return "Name has invalid characters";
-			}
-
-			return null;
+			return result;
 		}
 
-		public static string CheckStyleDescSyntax(string newName)
+		public static bool CheckStyleDescSyntax(string testName, out ValMsgDescId msgId)
 		{
+			// return true if name is OK - false if not
+			// provide via out, id of message
+			msgId = VD_GOOD;
+			bool result = true;
 
-			if (newName == null || newName.Length < 6)
+			// rules
+			// validation requirements
+			// min 6 characters
+			// must start with alphanumeric (uc or lc)
+			// middle is alphanumeric, space, dash, period
+			// must end with alphanumeric (no dash, no space, no period)
+			if (testName != null && testName.Length > 5)
 			{
-				return "Name mist be a minimum of 6 characters";
+				Regex r = new Regex(SYNTAX_PATTERN);
+
+				if (!r.IsMatch(testName))
+				{
+					result = false;
+
+					r = new Regex(SYNTAX_PREFIX_PATTERN);
+
+					if (r.IsMatch(testName))
+					{
+						r = new Regex(SYNTAX_POSTFIX_PATTERN);
+
+						if (r.IsMatch(testName))
+						{
+							msgId = VD_DISALLOWED_CHARS;
+						}
+						else
+						{
+							msgId = VD_END_ALPHANUM_REQD;
+						}
+					}
+					else
+					{
+						msgId = VD_BEG_ALPHANUM_REQD;
+					}
+				}
+			}
+			else
+			{
+				msgId = VD_TOOSHORT;
+				result = false;
 			}
 
-			Regex r = new Regex("^[a-zA-Z0-9][a-zA-Z0-9\\. \\-]*[a-zA-Z0-9]{1}$");
-
-			if (!r.IsMatch(newName))
-			{
-				return "Name has invalid characters";
-			}
-
-			return null;
+			return result;
 		}
+		
+
+		// tests
+
+		// public IList<ForgeTypeId> getSymbols(UnitsDataR style)
+		// {
+		// 	FormatOptions fo = getInitialFormatOptions(style);
+		//
+		// 	return (IList<ForgeTypeId> ) fo.GetValidSymbols();
+		// }
+
 
 
 	#endregion
@@ -358,35 +618,17 @@ namespace CsDeluxMeasure.UnitsUtil
 
 			assignSymbols();
 
-			assignPrecStrings();
+			// assignPrecStrings();
 			assignPrecStrings2();
 
 			assignPricTableXref();
 		}
 
-		private static Units makeStdLengthUnit(UnitsDataR udr)
+		private static FormatOptions getInitialFormatOptions(UnitsDataR style)
 		{
-			// if (udr.Ustyle.IsLocked == null) return null;
-
-			Units units;
-			FormatOptions fmtOpts;
-
-			try
-			{
-				fmtOpts = getFormatOptions(udr);
-			}
-			catch (Exception e)
-			{
-				fmtOpts = null;
-			}
-
-			if (fmtOpts == null) return null;
-
-			units = new Units(udr.USystem);
-			units.SetFormatOptions(SpecTypeId.Length, fmtOpts);
-
-			return units;
+			return new FormatOptions(style.Id);
 		}
+
 
 		private static FormatOptions getFormatOptions(UnitsDataR style)
 		{
@@ -395,7 +637,13 @@ namespace CsDeluxMeasure.UnitsUtil
 
 			try
 			{
-				fmtOpts = new FormatOptions(style.Id);
+				// if (style.Id == UnitTypeId.General)
+				// {
+				// 	return null;
+				// }
+
+
+				fmtOpts = getInitialFormatOptions(style);
 				fmtOpts.Accuracy = us.Precision;
 
 				if (CanHaveSymbol(style.Id))
@@ -438,24 +686,35 @@ namespace CsDeluxMeasure.UnitsUtil
 			return opt.Value;
 		}
 
-		private static string getPrecString2(Dictionary<double, string> data, 
+
+		private static string getPrecString(Dictionary<string, string> data, 
 			double precision, string uSym)
 		{
-			
+			string prec = $"{precision}";
 
-			if (data.ContainsKey(precision))
+			// use standard pric string
+			if (data.ContainsKey(prec))
 			{
-				return data[precision];
+				return data[prec];
 			}
 
+			// formatted precision not found - 
+			if (data.ContainsKey("-1.0")) return "*Invalid*";
 
-			if (data.ContainsKey(-1.0)) return "*Invalid*";
+			string s = "*Invalid*";
 
-			string s = String.Format(data[0.0], precision, uSym);
+			// do custom precision
+			if (data.ContainsKey("0.0"))
+			{
+				if (!uSym.Equals("\'") && !uSym.Equals("\"") && !string.IsNullOrWhiteSpace(uSym))
+				{
+					uSym = " " + uSym;
+				}
+
+				s = String.Format(data["0.0"], precision, uSym);
+			}
 
 			return s;
-
-			return $"{data[0.0]} ({precision:G})";
 		}
 
 		private static void assignSymbols()
@@ -564,6 +823,78 @@ namespace CsDeluxMeasure.UnitsUtil
 			pricXref.Add(UnitCat.UC_FT_FRAC   , (int) PrecXref.XR_FRAC_FT);
 		}
 
+
+		private static void assignPrecStrings2()
+		{
+			precisions2 = new Dictionary<string, string>[UnitData.UCAT_COUNT];
+
+			precInFrac2 = new Dictionary<string, string>()
+			{
+				{ "-1.0"        , "no custom" },
+				{ $"{1.0 / 256}", "1/256\""  },
+				{ $"{1.0 / 128}", "1/128\""  },
+				{ $"{1.0 / 64}" , "1/64\""   },
+				{ $"{1.0 / 32}" , "1/32\""   },
+				{ $"{1.0 / 16}" , "1/16\""   },
+				{ $"{0.125}"    , "1/8\""    },
+				{ "0.25"        , "1/4\""    },
+				{ "0.5"         , "1/2\""    },
+				{ "1.0"         , "1\""      }
+			};
+			// precisions2[(int) UnitCat.IN_FRAC] = precInFrac2;
+			precisions2[(int) PrecXref.XR_FRAC_IN] = precInFrac2;
+
+// todo: no such thing as fractional feet
+			precFtFrac2 = new Dictionary<string, string>()
+			{
+				{ $"-1.0"                , "no custom" },
+				{ $"{(1.0 / 256) / 12.0}", "1/256\""  },
+				{ $"{(1.0 / 128) / 12.0}", "1/128\""  },
+				{ $"{(1.0 / 64) / 12.0}" , "1/64\""   },
+				{ $"{(1.0 / 32) / 12.0}" , "1/32\""   },
+				{ $"{(1.0 / 16) / 12.0}" , "1/16\""   },
+				{ $"{0.125 / 12.0}"      , "1/8\""    },
+				{ $"{0.25 / 12.0}"       , "1/4\""    },
+				{ $"{0.5 / 12.0}"        , "1/2\""    },
+				{ $"{1.0 / 12.0}"        , "1\""      },
+				{ "0.5"                  , "6\""      },
+				{ "1.0"                  , "1\'"      },
+			};
+			// precisions2[(int) UnitCat.FT_FRAC] = precFtFrac2;
+			precisions2[(int) PrecXref.XR_FRAC_FT] = precFtFrac2;
+
+
+			precDecimal2 = new Dictionary<string, string>()
+			{
+				{ "0.0"   ,  "custom ({0:G}{1})" },
+				{ "1.0"   ,  "To the Nearest 1"     },
+				{ "10.0"  ,  "To the Nearest 10"    },
+				{ "100.0" ,  "To the Nearest 100"   },
+				{ "1000.0",  "To the Nearest 1000"  },
+				{ "0.1"   ,  "1 decimal place (0.1)"  },
+				{ "0.01"  ,  "2 decimal place (0.01)" },
+				{ "0.001" ,  "3 decimal place (0.001)" }
+			};
+			// precisions2[(int) UnitCat.DECIMAL] = precDecimal2;
+			precisions2[(int) PrecXref.XR_DEC] = precDecimal2;
+
+
+			precMeterCm2 = new Dictionary<string, string>()
+			{
+				{ "-1.0"  ,  "no custom"    },
+				{ "0.01"  ,  "To the Nearest 1 cm"   },
+				{ "0.005" ,  "To the Nearest 5 mm"   },
+				{ "0.0025",  "To the Nearest 2.5 mm" },
+				{ "0.001" ,  "To the Nearest 1 mm"   },
+				{ "0.0001",  "To the Nearest 0.1 mm" }
+			};
+			// precisions2[(int) UnitCat.METER_CM] = precMeterCm2;
+			precisions2[(int) PrecXref.XR_M_CM] = precMeterCm2;
+		}
+
+
+
+		/*
 		private static void assignPrecStrings()
 		{
 		// unit
@@ -618,73 +949,11 @@ namespace CsDeluxMeasure.UnitsUtil
 			// precisions[(int) PrecXref.M_CM] = precMeterCm;
 		}
 
-		private static void assignPrecStrings2()
-		{
-			precisions2 = new Dictionary<double, string>[UnitData.UCAT_COUNT];
-
-			precInFrac2 = new Dictionary<double, string>()
-			{
-				{ -1.0     , "no custom" },
-				{ 1.0 / 256, "1/256\""  },
-				{ 1.0 / 128, "1/128\""  },
-				{ 1.0 / 64 , "1/64\""   },
-				{ 1.0 / 32 , "1/32\""   },
-				{ 1.0 / 16 , "1/16\""   },
-				{ 0.125    , "1/8\""    },
-				{ 0.25     , "1/4\""    },
-				{ 0.5      , "1/2\""    },
-				{ 1.0      , "1\""      }
-			};
-			// precisions2[(int) UnitCat.IN_FRAC] = precInFrac2;
-			precisions2[(int) PrecXref.XR_FRAC_IN] = precInFrac2;
-
-// todo: no such thing as fractional feet
-			precFtFrac2 = new Dictionary<double, string>()
-			{
-				{ -1.0              , "no custom" },
-				{ (1.0 / 256) / 12.0, "1/256\""  },
-				{ (1.0 / 128) / 12.0, "1/128\""  },
-				{ (1.0 / 64) / 12.0 , "1/64\""   },
-				{ (1.0 / 32) / 12.0 , "1/32\""   },
-				{ (1.0 / 16) / 12.0 , "1/16\""   },
-				{ 0.125 / 12.0      , "1/8\""    },
-				{ 0.25 / 12.0       , "1/4\""    },
-				{ 0.5 / 12.0        , "1/2\""    },
-				{ 1.0 / 12.0        , "1\""      },
-				{ 0.5               , "6\""      },
-				{ 1.0               , "1\'"      },
-			};
-			// precisions2[(int) UnitCat.FT_FRAC] = precFtFrac2;
-			precisions2[(int) PrecXref.XR_FRAC_FT] = precFtFrac2;
+		*/
 
 
-			precDecimal2 = new Dictionary<double, string>()
-			{
-				{ 0.0   ,  "custom ({0:G}{1})" },
-				{ 1.0   ,  "To the Nearest 1"     },
-				{ 10.0  ,  "To the Nearest 10"    },
-				{ 100.0 ,  "To the Nearest 100"   },
-				{ 1000.0,  "To the Nearest 1000"  },
-				{ 0.1   ,  "1 decimal place (0.1)"  },
-				{ 0.01  ,  "2 decimal place (0.01)" },
-				{ 0.001 ,  "3 decimal place (0.001)" }
-			};
-			// precisions2[(int) UnitCat.DECIMAL] = precDecimal2;
-			precisions2[(int) PrecXref.XR_DEC] = precDecimal2;
 
 
-			precMeterCm2 = new Dictionary<double, string>()
-			{
-				{ -1.0  ,  "no custom"    },
-				{ 0.01  ,  "To the Nearest 1 cm"   },
-				{ 0.005 ,  "To the Nearest 5 mm"   },
-				{ 0.0025,  "To the Nearest 2.5 mm" },
-				{ 0.001 ,  "To the Nearest 1 mm"   },
-				{ 0.0001,  "To the Nearest 0.1 mm" }
-			};
-			// precisions2[(int) UnitCat.METER_CM] = precMeterCm2;
-			precisions2[(int) PrecXref.XR_M_CM] = precMeterCm2;
-		}
 
 	#endregion
 

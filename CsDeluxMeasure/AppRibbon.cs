@@ -10,6 +10,7 @@ using System.Diagnostics;
 using System.Dynamic;
 using System.Windows.Controls;
 using Autodesk.Revit.DB;
+using CsDeluxMeasure.RevitSupport;
 using CsDeluxMeasure.UnitsUtil;
 using CsDeluxMeasure.Windows.Support;
 using UtilityLibrary;
@@ -33,8 +34,10 @@ namespace CsDeluxMeasure
 		// display information
 
 		internal const string APP_NAME = "Delux Measure";
+		internal const int MAX_RIBBON_NAME_WIDTH = 20;
+		internal const int MAX_RIBBON_TOOLTIP_WIDTH = 36;
 
-		private const string NAMESPACE_PREFIX_RESOURCES = "CsDeluxMeasure.Resources";
+		internal const string NAMESPACE_PREFIX_RESOURCES = "CsDeluxMeasure.Resources";
 
 		private const string PANEL_NAME = "DeluxMeasure";
 		private const string TAB_NAME = "AO Tools";
@@ -45,14 +48,26 @@ namespace CsDeluxMeasure
 		private const string COMMAND_CLASS_NAME = "Command";
 
 		private static string AddInPath = typeof(AppRibbon).Assembly.Location;
-		private const string CLASSPATH = "CsDeluxMeasure.Windows.Support.";
+		private const string CLASSPATH_REVITSUPPORT = "CsDeluxMeasure.RevitSupport.";
+		private const string CLASSPATH_SUPPORT = "CsDeluxMeasure.Windows.Support.";
 
 		private const string SMALLICON = "information16.png";
 		private const string LARGEICON = "information32.png";
 
+		private const string SMALLICON_AP = "Gear32.png";
+		private const string LARGEICON_AP = "Gear32.png";
+
+		
+		private const string SMALLICON_DM = "Tape Measure32.png";
+		private const string LARGEICON_DM = "Tape Measure32.png";
+
+		public const string ICON_FOLDER = "/resources";
+
+		private const string MAIN_WIN_HELP_FILE = "Delux Measure Intro Help.htm";
+
 
 		public const string BTN_NAME_DIVIDER = "?";
-		private string BTN_NAME = $"UnitStyle{BTN_NAME_DIVIDER}";
+		internal static string BTN_NAME = $"UnitStyle{BTN_NAME_DIVIDER}";
 
 		// private UnitStyles us;
 		private UnitsManager uMgr;
@@ -61,14 +76,30 @@ namespace CsDeluxMeasure
 
 		internal UIApplication uiApp;
 
-		//		internal UIControlledApplication uiCtrlApp;
+		internal static string AddInLocation { get; set; }
 
-		//		public static PulldownButton pb;
-		//		public static SplitButton sb;
+		internal string AddInResourcesLocation => $"{AddInLocation}\\Resources";
+
+		internal string AddinMainWinHelpFile => $"{AddInResourcesLocation}\\{MAIN_WIN_HELP_FILE}";
+		internal string AddinUnitStylesHelpFile => $"{AddInResourcesLocation}\\{MAIN_WIN_HELP_FILE}";
+		internal string AddinUnitStyleOrderHelpFile => $"{AddInResourcesLocation}\\{MAIN_WIN_HELP_FILE}";
 
 
 		public Result OnStartup(UIControlledApplication app)
 		{
+
+			ControlledApplication ctrldApp = app.ControlledApplication;
+			AddInLocation = ctrldApp.CurrentUserAddinsLocation;
+
+			// Debug.WriteLine($"all user bundle location            | {ctrldApp.AllUsersAddinsLocation}");
+			// Debug.WriteLine($"current user addin location         | {ctrldApp.CurrentUserAddinsLocation}");
+			// Debug.WriteLine($"current user addins data folder path| {ctrldApp.CurrentUsersAddinsDataFolderPath}");
+			// Debug.WriteLine($"current user data folder path       | {ctrldApp.CurrentUsersDataFolderPath}\n");
+			// Debug.WriteLine($"saved addin location                | {AddInLocation}");
+			// Debug.WriteLine($"saved addin location->resources     | {AddInResourcesLocation}");
+
+
+
 			try
 			{
 			#if PATH
@@ -78,6 +109,7 @@ namespace CsDeluxMeasure
 				uMgr = UnitsManager.Instance;
 
 				uMgr.Config();
+				uMgr.ConfigCurrentInList();
 
 				app.ControlledApplication.ApplicationInitialized += OnAppInitalized;
 
@@ -129,13 +161,13 @@ namespace CsDeluxMeasure
 					ribbonPanel = app.CreateRibbonPanel(tabName, panelName);
 				}
 
-				ribbonPanel.AddItem(
-					CreateButton(
-						BUTTON_NAME, BUTTON_TEXT,
-						SMALLICON, LARGEICON,
-						AddInPath,
-						CLASSPATH + COMMAND_CLASS_NAME,
-						"Set Model Units to a Style"));
+				// ribbonPanel.AddItem(
+				// 	CreateButtonData(
+				// 		BUTTON_NAME, BUTTON_TEXT,
+				// 		SMALLICON, LARGEICON,
+				// 		AddInPath,
+				// 		CLASSPATH_REVITSUPPORT + COMMAND_CLASS_NAME,
+				// 		"Set Model Units to a Style"));
 
 				if (!addSplitButtons(ribbonPanel))
 				{
@@ -174,14 +206,14 @@ namespace CsDeluxMeasure
 			td.Show();
 		}
 
-		private PushButtonData CreateButton(string ButtonName,
+		private PushButtonData CreateButtonData(string ButtonName,
 			string ButtonText,
+			string imageFolder,
 			string Image16,
 			string Image32,
 			string dllPath,
 			string dllClass,
-			string ToolTip
-			)
+			string ToolTip)
 		{
 			PushButtonData pdData;
 
@@ -193,12 +225,13 @@ namespace CsDeluxMeasure
 					dllPath,
 					dllClass);
 				// if we have a path for a small image, try to load the image
-				if (Image16.Length != 0)
+				if ((Image16?.Length ?? 0) != 0)
 				{
 					try
 					{
 						// load the image
-						pdData.Image = CsUtilitiesMedia.GetBitmapImage(Image16, NAMESPACE_PREFIX_RESOURCES);
+						// pdData.Image = CsUtilitiesMedia.GetBitmapImage(Image16, NAMESPACE_PREFIX_RESOURCES);
+						pdData.Image = CsUtilitiesMedia.GetBitmapImageResource($"{imageFolder}/{Image16}");
 					}
 					catch
 					{
@@ -207,12 +240,13 @@ namespace CsDeluxMeasure
 				}
 
 				// if have a path for a large image, try to load the image
-				if (Image32.Length != 0)
+				if ((Image32?.Length ?? 0) != 0)
 				{
 					try
 					{
 						// load the image
-						pdData.LargeImage = CsUtilitiesMedia.GetBitmapImage(Image32, NAMESPACE_PREFIX_RESOURCES);
+						// pdData.LargeImage = CsUtilitiesMedia.GetBitmapImage(Image32, NAMESPACE_PREFIX_RESOURCES);
+						pdData.LargeImage = CsUtilitiesMedia.GetBitmapImageResource($"{imageFolder}/{Image32}");
 					}
 					catch
 					{
@@ -236,49 +270,118 @@ namespace CsDeluxMeasure
 			SplitButtonData sbData = new SplitButtonData("splitButton1", "Split");
 			sb = ribbonPanel.AddItem(sbData) as SplitButton;
 
+			ContextualHelp ch = new ContextualHelp(ContextualHelpType.Url, AddinMainWinHelpFile);
+			sb.SetContextualHelp(ch);
+
+			uMgr.UlMgr.Rio.SB = sb;
+
 			PushButtonData pbd;
 
-			UStyle us;
-			// UnitsData.UnitInfo ui;
 
 			int max = uMgr.UsrStyleList.Count > UnitStyleCmd.MAX_STYLE_CMDS ? UnitStyleCmd.MAX_STYLE_CMDS : uMgr.UsrStyleList.Count;
 			int i = 0;
 
-			foreach (UnitsDataR udr in uMgr.InListViewRibbon)
+			// foreach (UnitsDataR udr in uMgr.InListViewRibbon)
+			foreach (UnitsDataR udr in uMgr.UlMgr.Current.InListViewRibbon)
 			{
-				
-			// }
-			//
-			//
-			// foreach (UnitsDataR udr in uMgr.StyleList)
-			// {
-				us = udr.Ustyle;
+				// List<string> lines = CsStringUtil.StringDivide(us.Name, new [] { ' ' }, MAX_RIBBON_NAME_WIDTH, 0);
+				//
+				// string result = CsStringUtil.MakeMultiLineString(lines, MAX_RIBBON_NAME_WIDTH);
+				//
+				// string cmdName = $"UnitStyleCmd{i}";
+				// string btnName = $"{BTN_NAME}{i:D2}";
+				// string btnTitle = result;
+				// string btnToolTip = $"Set Project Units to " + us.Description;
+				// string classPath = $"{CLASSPATH}{cmdName}";
+				// string btnFailText = $"{us.Name} Button";
 
-				string cmdName = $"UnitStyleCmd{i}";
-				string btnName = $"{BTN_NAME}{i:D2}";
-				string btnTitle = us.Description;
-				string btnToolTip = $"Set Model " + us.Description;
-				string classPath = $"{CLASSPATH}{cmdName}";
-				string btnFailText = $"{us.Name} Button";
+				// pbd = CreateButton(
+				// 	btnName, btnTitle, us.IconId, us.IconId, AddInPath, classPath, btnToolTip);
 
-				pbd = CreateButton(
-					btnName, btnTitle, us.IconId, us.IconId, AddInPath, classPath, btnToolTip);
+				pbd = getPushButtonData(udr.Ustyle, i);
 
 				if (pbd == null)
 				{
-					CreateButtonFail(btnFailText);
+					CreateButtonFail($"{udr.Ustyle.Name} Button");
 					return false;
 				}
 
-				sb.AddPushButton(pbd);
+				PushButton pb = sb.AddPushButton(pbd);
+				pb.SetContextualHelp(ch);
+
+				uMgr.UlMgr.Rio.AddPbToList(pb);
 
 				i++;
 				if (i == max) break;
 			}
 
+			for (int j = i; j < max; j++)
+			{
+				// string cmdName = $"UnitStyleCmd{j}";
+				// string btnName = $"{BTN_NAME}{j:D2}";
+				// string btnTitle = $"{BTN_NAME}{j:D2}";
+				// string btnToolTip = $"Set Project Units to " + $"{BTN_NAME}{j:D2}";
+				// string classPath = $"{CLASSPATH}{cmdName}";
+				// string btnFailText = $"{BTN_NAME}{j:D2} Button";
+				//
+				// pbd = CreateButton(
+				// 	btnName, btnTitle, null, null, AddInPath, classPath, btnToolTip);
+
+				pbd = getPushButtonData(null, j);
+
+
+				if (pbd == null)
+				{
+					CreateButtonFail($"{BTN_NAME}{j:D2} Button");
+					return false;
+				}
+
+				PushButton pb = sb.AddPushButton(pbd);
+				pb.Visible = false;
+				pb.SetContextualHelp(ch);
+
+				uMgr.UlMgr.Rio.AddPbToList(pb);
+			}
+
 			sb.IsSynchronizedWithCurrentItem = true;
 
+			
 			return true;
+		}
+
+		private PushButtonData getPushButtonData(UStyle us, int idx)
+		{
+			string name = uMgr.UlMgr.Rio.MakePbName(idx, BTN_NAME);
+
+			string title;
+			string icId;
+			string tTip;
+
+			if (us != null)
+			{
+				title = uMgr.UlMgr.Rio.MakePbTitle(us.Name);
+				icId = us.IconId;
+				tTip = uMgr.UlMgr.Rio.MakePbToolTip(us.Description);
+			}
+			else
+			{
+				title = uMgr.UlMgr.Rio.MakePbHiddenTitle(idx, name);
+				icId = null;
+				tTip=uMgr.UlMgr.Rio.MakePbToolTip(name);
+			}
+
+			PushButtonData pbd;
+
+			string btnName = name;
+			string cmdName = $"UnitStyleCmd{idx}";
+			string btnTitle = title;
+			string btnToolTip = tTip;
+			string classPath = $"{CLASSPATH_REVITSUPPORT}{cmdName}";
+
+			pbd = CreateButtonData(
+				btnName, btnTitle, ICON_FOLDER, icId, icId, AddInPath, classPath, btnToolTip);
+
+			return pbd;
 		}
 
 		private bool addDropPanel(RibbonPanel ribbonPanel)
@@ -287,18 +390,44 @@ namespace CsDeluxMeasure
 
 			PushButtonData pbd;
 
-			pbd = CreateButton(
+			ContextualHelp ch = new ContextualHelp(ContextualHelpType.Url, AddinUnitStylesHelpFile);
+
+			pbd = CreateButtonData(
 				"UnitStyleUtil",
-				"Unit Style Mgr",
-				SMALLICON,
-				LARGEICON,
+				"Unit Style Mgr", 
+				ICON_FOLDER,
+				SMALLICON_AP,
+				LARGEICON_AP,
 				AddInPath,
-				$"{CLASSPATH}UnitStyleMgr",
+				$"{CLASSPATH_REVITSUPPORT}UnitStyleMgr",
 				"Opens the Unit Style Manager");
 
-			ribbonPanel.AddItem(pbd);
+			RibbonItem ri = ribbonPanel.AddItem(pbd);
+
+			ri.SetContextualHelp(ch);
+
+
+			ch = new ContextualHelp(ContextualHelpType.Url, AddinUnitStylesHelpFile);
+
+			pbd = CreateButtonData(
+				"DeluxMeasure",
+				"Delux Measure", 
+				ICON_FOLDER,
+				SMALLICON_DM,
+				LARGEICON_DM,
+				AddInPath,
+				$"{CLASSPATH_REVITSUPPORT}MainWindowCommand",
+				"Begin Measuring Between Points");
+
+			// pbd.Image = CsUtilitiesMedia.GetBitmapImageResource($"{ICON_FOLDER}/{SMALLICON_DM}");
+			// pbd.LargeImage = CsUtilitiesMedia.GetBitmapImageResource($"{ICON_FOLDER}/{LARGEICON_DM}");
+
+			ri = ribbonPanel.AddItem(pbd);
+
+			ri.SetContextualHelp(ch);
 
 			return true;
 		}
+
 	}
 }

@@ -34,19 +34,6 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'DeluxMeasure|AnyCPU'">
-    <DebugSymbols>true</DebugSymbols>
-    <OutputPath>bin\DeluxMeasure\</OutputPath>
-    <DefineConstants>TRACE;DEBUG;USER_SETTINGS, APP_SETTINGS, SUITE_SETTINGS, MACH_SETTINGS, SITE_SETTINGS</DefineConstants>
-    <DebugType>full</DebugType>
-    <PlatformTarget>AnyCPU</PlatformTarget>
-    <LangVersion>7.3</LangVersion>
-    <ErrorReport>prompt</ErrorReport>
-    <Prefer32Bit>true</Prefer32Bit>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'CsToolsStudy|AnyCPU'">
-    <OutputPath>bin\CsToolsStudy\</OutputPath>
-  </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Data" />

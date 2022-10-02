@@ -79,6 +79,10 @@ namespace CsDeluxMeasure.UnitsUtil
 
 		public void ReadStyles()
 		{
+			AppSettingInfo<AppSettingDataFile> a = AppSettings.Info;
+			UserSettingInfo<UserSettingDataFile> u = UserSettings.Info;
+
+
 		#if PATH
 			MethodBase mb = new StackTrace().GetFrame(1).GetMethod();
 			Debug.WriteLine($"@UnitsSettings: ReadStyles: {(mb.ReflectedType?.FullName ?? "is null")} > {mb.Name}");
@@ -118,15 +122,6 @@ namespace CsDeluxMeasure.UnitsUtil
 		{
 			AppSettings.Data.AppStyles = new Dictionary<string, UnitsDataR>(uStdR.StdStyles);
 
-			// int i = 1;
-			//
-			// foreach (KeyValuePair<ForgeTypeId, UnitsDataR> kvp in AppSettings.Data.AppStyles)
-			// {
-			// 	kvp.Value.Sequence = i++;
-			// }
-
-			// AppSettings.Data.UpdateAppStyles(uStdR.StdStyles);
-			// int c = AppSettings.Data.AppStyles.Count;
 			AppSettings.Admin.Write();
 		}
 
@@ -137,21 +132,19 @@ namespace CsDeluxMeasure.UnitsUtil
 			Debug.WriteLine($"@UnitsSettings: SetUserStyles: {(mb.ReflectedType?.FullName ?? "is null")} > {mb.Name}");
 		#endif
 
-			UserSettings.Data.UserStyles = 
-				new List<UnitsDataR>(AppSettings.Data.AppStyles.Values);
+			// UserSettings.Data.UserStyles = 
+			// 	new List<UnitsDataR>(AppSettings.Data.AppStyles.Values);
+
+			UserSettings.Data.UserStyles = UnitsSupport.UnitsDataRListClone(new List<UnitsDataR>(AppSettings.Data.AppStyles.Values));
+
 		}
 
 		private void setUserStyles()
 		{
-			UserSettings.Data.UserStyles = 
-				new List<UnitsDataR>(AppSettings.Data.AppStyles.Values);
+			// UserSettings.Data.UserStyles = 
+			// 	new List<UnitsDataR>(AppSettings.Data.AppStyles.Values);
 
-			// int i = 1;
-			//
-			// foreach (UnitsDataR kvp in UserSettings.Data.UserStyles)
-			// {
-			// 	kvp.Sequence = i++;
-			// }
+			UserSettings.Data.UserStyles = UnitsSupport.UnitsDataRListClone(new List<UnitsDataR>(AppSettings.Data.AppStyles.Values));
 
 			UserSettings.Admin.Write();
 		}
@@ -196,12 +189,6 @@ namespace CsDeluxMeasure.UnitsUtil
 			{
 				WriteUnitImperialAppSettings();
 			}
-
-			// TaskDialog td = new TaskDialog("Read app settings");
-			// td.MainInstruction = $"app settings read\n"
-			// 	+ $"info (int)| {AppSettings.Data.AppSettingsValue}"
-			// 	+ $"path| {AppSettings.Path.SettingFilePath}";
-			// td.Show();
 		}
 
 		public void WriteUnitImperialAppSettings()

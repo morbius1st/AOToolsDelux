@@ -63,6 +63,18 @@
 
 			<cs:AddConverter x:Key="AddConverter" />
 
+			<Style x:Key="Btn.TabItem"
+					TargetType="Button"
+					BasedOn="{StaticResource Btn.Std}"
+					>
+				<Setter Property="Width" Value="150" />
+				<Setter Property="Margin" Value="0,0,10,0" />
+				<Setter Property="IsEnabled" Value="True" />
+				<Setter Property="Height" Value="24" />
+				<Setter Property="HorizontalAlignment" Value="Left" />
+				<Setter Property="BorderThickness" Value="1.5" />
+			</Style>
+
 
 			<Style x:Key="RowTitleBorder"
 					TargetType="Border"
@@ -309,8 +321,6 @@
 				<Setter Property="HorizontalAlignment" Value="Center" />
 				<Setter Property="Stretch" Value="Uniform" />
 			</Style>
-
-
 
 			<Style x:Key="IconLineInner"
 					TargetType="Line"
@@ -1880,9 +1890,10 @@
 		</DockPanel>
 
 		<StackPanel x:Name="IconPanel1"
-				Orientation="Vertical">
+				Orientation="Vertical"
+				>
 
-			<DockPanel 
+			<DockPanel
 					Height="50"
 					Margin="30,5,50,5"
 					HorizontalAlignment="Left"
@@ -2684,27 +2695,25 @@
 						HorizontalAlignment="Right"
 						Style="{StaticResource DpIconOuter}"
 						>
-				
+
 					<Border
 							DockPanel.Dock="Top"
 							Style="{StaticResource IconBdrOuter}"
 							>
-				
-						<Grid
-								HorizontalAlignment="Center"
-								>
-				
+
+						<Grid HorizontalAlignment="Center">
+
 							<ContentControl ContentTemplate="{StaticResource IconLines}" />
-				
+
 							<Path
 									Height="30"
 									Data="{StaticResource IconCancel1}"
 									Style="{StaticResource PathIcon}"
 									/>
-				
+
 						</Grid>
 					</Border>
-				
+
 					<TextBlock
 							VerticalAlignment="Center"
 							Text="Cancel&#013;Lose"
@@ -2857,6 +2866,73 @@
 		<ContentControl x:Name="DtDlgCtrlUnitSetg"
 				ContentTemplate="{StaticResource DtDlgCtrlUnitSetg}"
 				/>
+
+
+		<ContentControl x:Name="TabItemsHeader"
+				ContentTemplate="{StaticResource SectionTitle}"
+				cs:CustomProperties.GenericStringOne="Tab Items"
+				/>
+
+		<DockPanel x:Name="DpTabItems"
+				HorizontalAlignment="Stretch"
+				Margin="0,0,0,10"
+				>
+
+			<Border Style="{StaticResource RowTitleBorder}">
+
+				<TextBlock
+						Width="{StaticResource TitleWidth}"
+						Text="tab items"
+						Style="{StaticResource RowTitle}"
+						/>
+			</Border>
+
+			<StackPanel
+					HorizontalAlignment="left"
+					Orientation="Horizontal"
+					VerticalAlignment="Bottom"
+					>
+
+				<DockPanel DockPanel.Dock="Top">
+							
+					<Button
+							Content="Selected - is mo"
+							Style="{StaticResource Btn.TabItem}"
+							BorderBrush="{StaticResource TabItem.Fg.SelMo}"
+							Background="{StaticResource TabItem.Bg.SelMo}"
+							Foreground="{StaticResource TabItem.Fg.SelMo}"
+							/>
+
+					<Button
+							Content="Selected - no mo"
+							Style="{StaticResource Btn.TabItem}"
+							BorderBrush="{StaticResource TabItem.Bg.Sel}"
+							Background="{StaticResource TabItem.Bg.Sel}"
+							Foreground="{StaticResource TabItem.Fg.Sel}"
+							/>
+														
+					<Button
+							Content="Not Selected - is mo"
+							Style="{StaticResource Btn.TabItem}"
+							BorderBrush="{StaticResource TabItem.Fg.NotSelMo}"
+							Background="{StaticResource TabItem.Bg.NotSelMo}"
+							Foreground="{StaticResource TabItem.Fg.NotSelMo}"
+					/>
+
+					<Button
+							Content="not Selected - no mo"
+							Style="{StaticResource Btn.TabItem}"
+							BorderBrush="{StaticResource TabItem.Bg.NotSel}"
+							Background="{StaticResource TabItem.Bg.NotSel}"
+							Foreground="{StaticResource TabItem.Fg.NotSel}"
+					/>
+
+
+				</DockPanel>
+
+			</StackPanel>
+
+		</DockPanel>
 
 
 	</StackPanel>

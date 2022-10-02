@@ -69,7 +69,27 @@ namespace DeluxMeasure.Windows.Support
 
 	#endregion
 
+	#region GenericDoubleOne
 
+		public static readonly DependencyProperty GenericDoubleOneProperty = DependencyProperty.RegisterAttached(
+			"GenericDoubleOne", typeof(double), typeof(CustomProperties),
+			new FrameworkPropertyMetadata(-1.0, 
+				FrameworkPropertyMetadataOptions.AffectsMeasure | 
+				FrameworkPropertyMetadataOptions.Inherits |
+				FrameworkPropertyMetadataOptions.AffectsParentMeasure |
+				FrameworkPropertyMetadataOptions.AffectsRender));
+
+		public static void SetGenericDoubleOne(UIElement e, double value)
+		{
+			e.SetValue(GenericDoubleOneProperty, value);
+		}
+
+		public static double GetGenericDoubleOne(UIElement e)
+		{
+			return (double) e.GetValue(GenericDoubleOneProperty);
+		}
+
+	#endregion
 
 
 	// #region DropDownWidthAdjustment

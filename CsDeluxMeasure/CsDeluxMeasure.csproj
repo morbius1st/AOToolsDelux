@@ -8,15 +8,13 @@
     <RootNamespace>CsDeluxMeasure</RootNamespace>
     <FileAlignment>512</FileAlignment>
     <OutputType>Library</OutputType>
-    <ProjectGuid>{81AE7083-4BC0-473B-B2BB-AFC2BF76B9CE}</ProjectGuid>
+    <ProjectGuid>{91AE7083-4BC0-473B-B2BB-AFC2BF76B9CE}</ProjectGuid>
     <ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <!-- removed
-			<ProjectGuid>{$guid1}</ProjectGuid> 
-			-->
+    <RvtVersion>2021</RvtVersion>
   </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' or '$(Configuration)|$(Platform)' == 'Rvt21Dbg|AnyCPU' or '$(Configuration)|$(Platform)' == 'Rvt22Dbg|AnyCPU'">
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <DefineConstants>TRACE;DEBUG;USER_SETTINGS, APP_SETTINGS, SUITE_SETTINGS, MACH_SETTINGS, SITE_SETTINGS</DefineConstants>
@@ -26,11 +24,19 @@
     <PlatformTarget>AnyCPU</PlatformTarget>
     <WarningLevel>4</WarningLevel>
     <StartAction>Program</StartAction>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Rvt21Dbg|AnyCPU'">
     <StartProgram>$(ProgramW6432)\Autodesk\Revit 2021\Revit.exe</StartProgram>
+    <RvtVersion>2021</RvtVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Rvt22Dbg|AnyCPU'">
+    <StartProgram>$(ProgramW6432)\Autodesk\Revit 2022\Revit.exe</StartProgram>
+    <RvtVersion>2022</RvtVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugType>pdbonly</DebugType>
+    <DefineConstants>TRACE;USER_SETTINGS, APP_SETTINGS, SUITE_SETTINGS, MACH_SETTINGS, SITE_SETTINGS</DefineConstants>
     <Optimize>true</Optimize>
     <OutputPath>bin\Release\</OutputPath>
     <DefineConstants>TRACE</DefineConstants>
@@ -39,52 +45,18 @@
     <StartAction>Program</StartAction>
     <StartProgram>$(ProgramW6432)\Autodesk\Revit 2021\Revit.exe</StartProgram>
   </PropertyGroup>
-  <!-- removed 	
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'CsDeluxMeasure|AnyCPU'">
-    <DebugSymbols>true</DebugSymbols>
-    <OutputPath>bin\CsDeluxMeasure\</OutputPath>
-    <DefineConstants>TRACE;DEBUG;USER_SETTINGS, APP_SETTINGS, SUITE_SETTINGS, MACH_SETTINGS, SITE_SETTINGS</DefineConstants>
-    <DebugType>full</DebugType>
+  <PropertyGroup>
+    <RunPostBuildEvent>Always</RunPostBuildEvent>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Rvt21Rel|AnyCPU' ">
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE;USER_SETTINGS, APP_SETTINGS, SUITE_SETTINGS, MACH_SETTINGS, SITE_SETTINGS</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
     <PlatformTarget>AnyCPU</PlatformTarget>
     <LangVersion>7.3</LangVersion>
     <ErrorReport>prompt</ErrorReport>
   </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'CsToolsStudy|AnyCPU'">
-    <OutputPath>bin\CsToolsStudy\</OutputPath>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'">
-    <DebugSymbols>true</DebugSymbols>
-    <OutputPath>bin\x64\Debug\</OutputPath>
-    <DefineConstants>TRACE;DEBUG;USER_SETTINGS, APP_SETTINGS, SUITE_SETTINGS, MACH_SETTINGS, SITE_SETTINGS</DefineConstants>
-    <DebugType>full</DebugType>
-    <PlatformTarget>x64</PlatformTarget>
-    <LangVersion>7.3</LangVersion>
-    <ErrorReport>prompt</ErrorReport>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'">
-    <OutputPath>bin\x64\Release\</OutputPath>
-    <DefineConstants>TRACE</DefineConstants>
-    <Optimize>true</Optimize>
-    <DebugType>pdbonly</DebugType>
-    <PlatformTarget>x64</PlatformTarget>
-    <LangVersion>7.3</LangVersion>
-    <ErrorReport>prompt</ErrorReport>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'CsDeluxMeasure|x64'">
-    <DebugSymbols>true</DebugSymbols>
-    <OutputPath>bin\x64\CsDeluxMeasure\</OutputPath>
-    <DefineConstants>TRACE;DEBUG;USER_SETTINGS, APP_SETTINGS, SUITE_SETTINGS, MACH_SETTINGS, SITE_SETTINGS</DefineConstants>
-    <DebugType>full</DebugType>
-    <PlatformTarget>x64</PlatformTarget>
-    <LangVersion>7.3</LangVersion>
-    <ErrorReport>prompt</ErrorReport>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'CsToolsStudy|x64'">
-    <OutputPath>bin\x64\CsToolsStudy\</OutputPath>
-    <PlatformTarget>x64</PlatformTarget>
-    <LangVersion>7.3</LangVersion>
-  </PropertyGroup>
-	-->
   <ItemGroup>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="RevitAPI">
@@ -109,6 +81,12 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="..\..\..\UtilityLibrary\UtilityLibrary\CsConversions.cs">
+      <Link>.Linked\CsConversions.cs</Link>
+    </Compile>
+    <Compile Include="..\..\..\UtilityLibrary\UtilityLibrary\CsStringUtil.cs">
+      <Link>.Linked\CsStringUtil.cs</Link>
+    </Compile>
     <Compile Include="..\..\..\UtilityLibrary\UtilityLibrary\CsWpfUtilities.cs">
       <Link>.Linked\CsWpfUtilities.cs</Link>
     </Compile>
@@ -116,6 +94,8 @@
       <Link>.Linked\RevitLibrary.cs</Link>
     </Compile>
     <Compile Include="Properties\Annotations.cs" />
+    <Compile Include="RevitSupport\RevitInterOp.cs" />
+    <Compile Include="RevitSupport\RevitUtil.cs" />
     <Compile Include="Settings\AppSettings.cs" />
     <Compile Include="Settings\DataSet.cs" />
     <Compile Include="Settings\HeadingSetting.cs" />
@@ -125,6 +105,14 @@
     <Compile Include="Settings\UserSettings.cs" />
     <Page Include="..\SharedCode\Windows\Resources\IconDelete.xaml">
       <Link>Windows\ResourceFiles\SVG\IconDelete.xaml</Link>
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Windows\About.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Windows\Privacy.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -149,14 +137,23 @@
       <SubType>Designer</SubType>
     </Page>
     <Compile Include="UnitsUtil\UnitData.cs" />
+    <Compile Include="UnitsUtil\UnitsInListMgr.cs" />
+    <Compile Include="UnitsUtil\UnitsInListsCurrent.cs" />
+    <Compile Include="UnitsUtil\UnitsInListsWorking.cs" />
     <Compile Include="UnitsUtil\UnitsStdUStyles.cs" />
     <Compile Include="UnitsUtil\UnitsSupport.cs" />
     <Compile Include="UnitsUtil\UnitsSettings.cs" />
     <Compile Include="UnitsUtil\UnitsManager.cs" />
     <Compile Include="UnitsUtil\UnitUData.cs" />
     <Compile Include="UnitsUtil\UnitUStyle.cs" />
+    <Compile Include="Windows\About.xaml.cs">
+      <DependentUpon>About.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Windows\AWindow.cs" />
     <Compile Include="Windows\ColData.cs" />
+    <Compile Include="Windows\Privacy.xaml.cs">
+      <DependentUpon>Privacy.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Windows\Support\CsButtonsAp.cs" />
     <Compile Include="Windows\Support\CsCheckBoxAp.cs" />
     <Compile Include="Windows\Support\CsComboBoxAp.cs" />
@@ -168,11 +165,14 @@
     <Compile Include="Windows\Support\CustomProperties.cs" />
     <Compile Include="Windows\Support\junk.cs" />
     <Compile Include="Windows\Support\UnitStylesMgrWinData.cs" />
-    <Compile Include="Windows\Support\UnitStyleCmd.cs" />
+    <Compile Include="RevitSupport\UnitStyleCmd.cs" />
     <Compile Include="Windows\Support\Validation.cs" />
     <Compile Include="Windows\Support\ValueConverters.cs" />
     <Compile Include="Windows\Support\VisualStates.cs" />
     <Compile Include="Windows\Support\XmalMarkup.cs" />
+    <Compile Include="Windows\UnitStyleOrder.xaml.cs">
+      <DependentUpon>UnitStyleOrder.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Windows\UnitStylesMgr.xaml.cs">
       <DependentUpon>UnitStylesMgr.xaml</DependentUpon>
     </Compile>
@@ -198,7 +198,7 @@
       <Link>.Linked\SettingsMgr.cs</Link>
     </Compile>
     <Compile Include="AppRibbon.cs" />
-    <Compile Include="Windows\Support\Command.cs" />
+    <Compile Include="RevitSupport\Commands.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Windows\MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
@@ -228,35 +228,50 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Page Include="Windows\UnitStyleOrder.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Windows\UnitStylesMgr.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Resources\Delux Measure dec-ft 32.png" />
-    <EmbeddedResource Include="Resources\Delux Measure dec-in 32.png" />
-    <EmbeddedResource Include="Resources\Delux Measure frac-in 32.png" />
-    <EmbeddedResource Include="Resources\Delux Measure cm 32.png" />
-    <EmbeddedResource Include="Resources\Delux Measure dm 32.png" />
-    <EmbeddedResource Include="Resources\Delux Measure ft-dec-in 32.png" />
-    <EmbeddedResource Include="Resources\Delux Measure ft-frac-in 32.png" />
-    <EmbeddedResource Include="Resources\Delux Measure m 32.png" />
-    <EmbeddedResource Include="Resources\Delux Measure m-cm 32.png" />
-    <EmbeddedResource Include="Resources\Delux Measure mm 32.png" />
-    <EmbeddedResource Include="Resources\Delux Measure us-ft 32.png" />
-    <EmbeddedResource Include="Resources\information16.png" />
-    <EmbeddedResource Include="Resources\information32.png" />
+    <Content Include="Other\Delux Measure Main Window Help.htm" />
+    <Resource Include="Resources\CreateSheetsAbout v2.png" />
+    <Resource Include="Resources\CyberStudio Icon.png" />
+    <Resource Include="Resources\CyberStudio Logo - Narrow.png" />
+    <Resource Include="Resources\Tape Measure32.png" />
+    <Resource Include="Resources\Gear32.png" />
+    <Resource Include="Resources\Delux Measure dec-ft 32.png" />
+    <Resource Include="Resources\Delux Measure dec-in 32.png" />
+    <Resource Include="Resources\Delux Measure frac-in 32.png" />
+    <Resource Include="Resources\Delux Measure cm 32.png" />
+    <Resource Include="Resources\Delux Measure dm 32.png" />
+    <Resource Include="Resources\Delux Measure ft-dec-in 32.png" />
+    <Resource Include="Resources\Delux Measure ft-frac-in 32.png" />
+    <Resource Include="Resources\Delux Measure m 32.png" />
+    <Resource Include="Resources\Delux Measure m-cm 32.png" />
+    <Resource Include="Resources\Delux Measure mm 32.png" />
+    <Resource Include="Resources\Delux Measure us-ft 32.png" />
+    <Resource Include="Resources\information16.png" />
+    <Resource Include="Resources\information32.png" />
     <Content Include="Other\CsDeluxMeasure.addin" />
   </ItemGroup>
-  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PostBuildEvent>del /s/q "C:\ProgramData\CyberStudio\CsDeluxMeasure\*.*"
-del /s/q "C:\Users\jeffs\AppData\Roaming\CyberStudio\CsDeluxMeasure\*.*"
-if exist "$(AppData)\Autodesk\REVIT\Addins\2021" copy "$(ProjectDir)other\*.addin" "$(AppData)\Autodesk\REVIT\Addins\2021"
-if exist "$(AppData)\Autodesk\REVIT\Addins\2021" copy "$(ProjectDir)$(OutputPath)*.dll" "$(AppData)\Autodesk\REVIT\Addins\2021"
-		</PostBuildEvent>
+    <PostBuildEvent>echo Building: $(ConfigurationName)
+echo Testing Revit Version: $(RvtVersion)
+if exist "$(AppData)\Autodesk\REVIT\Addins\$(RvtVersion)" copy "$(ProjectDir)$(OutputPath)$(TargetFileName)" "$(AppData)\Autodesk\REVIT\Addins\$(RvtVersion)"
+if exist "$(AppData)\Autodesk\REVIT\Addins\$(RvtVersion)" copy "$(ProjectDir)other\*.addin" "$(AppData)\Autodesk\REVIT\Addins\$(RvtVersion)"
+if exist "$(AppData)\Autodesk\REVIT\Addins\$(RvtVersion)" xcopy /i/y/s/e "$(ProjectDir)other\Help Files" "$(AppData)\Autodesk\REVIT\Addins\$(RvtVersion)\Resources"
+
+	</PostBuildEvent>
+  </PropertyGroup>
+  <PropertyGroup>
+    <PreBuildEvent>
+    </PreBuildEvent>
   </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it.
        Other similar extension points exist, see Microsoft.Common.targets.

@@ -1,0 +1,52 @@
+to do
+
+help 
+1. need full help description for saved styles
+2. need full help description for style order
+3. need to complete help description for delux measure
+ a. unit styles section
+ b. general information -> setup shortcut DX
+ c. info: what distances mean
+ d. what does "project into current working plane" means
+4. need full help for ribbon button
+
+
+
+general, 
+
+* remove / isolate debug code
+* update F1 support to correct help file
+* develop icons for apps
+
+MainWindow
+* read styles
+
+
+UnitStylesManager
+add F1 support
+
+style order
+add F1 support
+* for left & right, project units is fixed at 100 and cannot be adjusted / moved;
+
+
+
+
+done
+
+* selection change -> close any popups
+* adjust help popup -> ft & dec in cannot be in the ribbon
+* apply needs to update ribbon button when order has not been revised.
+* update ribbon button on apply
+* (don't need this - dialog box will be closed) send message to delux measure that unit lists have been updated
+* updating ribbon buttons -> adjust to allow the max / set hidden / reset to not hidden when needed
+* (canceled) when set / remove in-list checkbox - make sure that is-modified is set.
+* updating ribbon buttons -> divide long titles as per AppRibbon.cs
+* when "reset to default" -> flag modified, etc.
+* after apply, verify that changed flags are reset -> checkbox flipping is not correctly noting being changed.
+* checking show-in does not get correct index number
+* apply changes -> ribbon -> update ribbon buttons -> when apply at main dialog
+* add help popups
+* verify that ribbon buttons work
+* verify that window positions are saved / restored
+ribbon items F1 support provided

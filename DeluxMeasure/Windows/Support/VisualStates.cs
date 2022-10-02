@@ -1,5 +1,6 @@
 ﻿#region + Using Directives
 
+using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 using System.Windows;
 using System.Windows.Media;
@@ -170,6 +171,25 @@ namespace DeluxMeasure.Windows.Support
 		public static bool? GetIsGoodBad(UIElement e)
 		{
 			return (bool?) e.GetValue(IsGoodBadProperty);
+		}
+
+	#endregion
+
+	#region special - info popup description
+
+		public static readonly DependencyProperty StringList2DimProperty = DependencyProperty.RegisterAttached(
+			"StringList2Dim", typeof(List<string[]>), typeof(VisualStates),
+			new FrameworkPropertyMetadata(new List<string[]>(),
+				FrameworkPropertyMetadataOptions.Inherits));
+		
+		public static void SetStringList2Dim(UIElement e, List<string[]> value)
+		{
+			e.SetValue(StringList2DimProperty, value);
+		}
+		
+		public static List<string[]> GetStringList2Dim(UIElement e)
+		{
+			return (List<string[]>) e.GetValue(StringList2DimProperty);
 		}
 
 	#endregion

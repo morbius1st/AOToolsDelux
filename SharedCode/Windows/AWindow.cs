@@ -415,8 +415,6 @@ namespace SharedCode.Windows
 		{
 			string result = s.IsVoid() ? "" : s;
 
-
-
 			if (trim.HasValue)
 			{
 				if (trim.Value)

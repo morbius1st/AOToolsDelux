@@ -387,9 +387,9 @@
 											CenterX="{Binding ElementName=PART_LineUpButton,
 																				Path=ActualWidth,
 																				Converter={StaticResource DivideConverter},
-																				ConverterParameter=2.0, FallbackValue=1}"
+																				ConverterParameter=2.0, FallbackValue='1', TargetNullValue='0'}"
 											CenterY="{Binding ElementName=PART_LineUpButton,
-																				Path=ActualHeight, FallbackValue=1}"
+																				Path=ActualHeight, FallbackValue='1', TargetNullValue='0'}"
 											ScaleX="1.5" ScaleY="1.5"
 											/>
 								</Setter.Value>
@@ -410,7 +410,7 @@
 											CenterX="{Binding ElementName=PART_LineDownButton,
 																				Path=ActualWidth,
 																				Converter={StaticResource DivideConverter},
-																				ConverterParameter=2.0, FallbackValue=1}"
+																				ConverterParameter=2.0, FallbackValue='1', TargetNullValue='0'}"
 											CenterY="0"
 											ScaleX="1.5" ScaleY="1.5"
 											/>
@@ -561,11 +561,11 @@
 										<Setter.Value>
 											<ScaleTransform x:Name="st_left"
 													CenterX="{Binding ElementName=PART_LineLeftButton,
-																						Path=ActualWidth, FallbackValue=1}"
+																						Path=ActualWidth, FallbackValue='1', TargetNullValue='0'}"
 													CenterY="{Binding ElementName=PART_LineLeftButton,
 																						Path=ActualHeight,
 																						Converter={StaticResource DivideConverter},
-																						ConverterParameter=2.0, FallbackValue=1}"
+																						ConverterParameter=2.0, FallbackValue='1', TargetNullValue='0'}"
 													ScaleX="1.5" ScaleY="1.5"
 													/>
 										</Setter.Value>
@@ -596,7 +596,7 @@
 											<ScaleTransform x:Name="st_right" CenterY="{Binding ElementName=PART_LineRightButton,
 																						Path=ActualHeight,
 																						Converter={StaticResource DivideConverter},
-																						ConverterParameter=2.0, FallbackValue=1}"
+																						ConverterParameter=2.0, FallbackValue='1', TargetNullValue='0'}"
 													CenterX="0"
 													ScaleX="1.5" ScaleY="1.5"
 													/>

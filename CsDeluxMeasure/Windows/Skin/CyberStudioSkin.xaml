@@ -1,5 +1,6 @@
 ﻿<ResourceDictionary 
 		xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+		xmlns:ops="http://schemas.microsoft.com/winfx/2006/xaml/presentation/options"
 		xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
 		xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
 		xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
@@ -47,6 +48,8 @@
 		Bdr- Border
 		Gb - Group (border)
 	-->
+	
+	<!--#region numerical values -->
 
 	<!-- main dialog -->
 	<GridLength x:Key="Row.Main.Height">660</GridLength>
@@ -58,17 +61,14 @@
 
 	<GridLength x:Key="Col.Us.UnitSettings.Width">300*</GridLength>
 	<GridLength x:Key="Col.Us.StylesChart.Width">600*</GridLength>
-	
+
 	<!-- unit order dialog -->
 	<GridLength x:Key="Row.So.Main.Height">500</GridLength>
-	<GridLength x:Key="Row.So.Function.Height">33</GridLength>
+	<GridLength x:Key="Row.So.Function.Height">54</GridLength>
 
 	<GridLength x:Key="Col.So.RibbonList.Width">*</GridLength>
 	<GridLength x:Key="Col.So.DlxMeasureLeft.Width">*</GridLength>
 	<GridLength x:Key="Col.So.DlxMeasureRight.Width">*</GridLength>
-
-
-
 
 
 	<GridLength x:Key="Lv1RowHeight">29</GridLength>
@@ -93,6 +93,7 @@
 	<CornerRadius x:Key="CornerRadius.Tbx">5.5</CornerRadius>
 	<CornerRadius x:Key="CornerRadius.Sm">4</CornerRadius>
 
+	<!--#endregion-->
 
 	<!--#region > icons -->
 
@@ -172,7 +173,7 @@
 	<!-- styled x -->
 
 	<!-- boxed x -->
-	<Geometry x:Key="IconClose">
+	<Geometry x:Key="IconClose" ops:Freeze="True">
 		F0 M 0.996094 5.722656 L 19.013672 5.722656 L 19.013672 22.578125 L 0.996094 22.578125 Z M 2.011719 20.048828 L 4.0625 22.080078 L 10 16.152344 L 15.947266 22.080078 L 17.998047 20.048828 L 12.041016 14.091797 L 17.998047 8.144531 L 15.947266 6.113281 L 10 12.080078 L 4.0625 6.113281 L 2.011719 8.144531 L 7.958984 14.091797 Z
 	</Geometry>
 
@@ -193,7 +194,7 @@
 
 	<sys:Double x:Key="IconHelp1CkbxScaleX">0.7</sys:Double>
 
-	<Geometry x:Key="IconHelp">
+	<Geometry x:Key="IconHelp" x:Shared="False">
 		F0 M 2.5925 12.6619 C 2.4217 12.2064 2.3363 11.726 2.3363 11.2206 C 2.3363 10.7722 2.4057 10.3381 2.5445 9.9181 C 2.6833 9.4982 2.8915 9.1103 3.169 8.7544 C 3.3683 8.4982 3.5996 8.2598 3.863 8.0391 C 4.1263 7.8185 4.3861 7.5925 4.6423 7.3612 C 4.8986 7.1299 5.1352 6.8861 5.3523 6.6299 C 5.5694 6.3737 5.7349 6.0819 5.8488 5.7544 C 5.9413 5.4982 5.9875 5.2349 5.9875 4.9644 C 5.9875 4.7224 5.9466 4.4947 5.8648 4.2811 C 5.7829 4.0676 5.6601 3.8826 5.4964 3.726 C 5.3327 3.5694 5.1299 3.4448 4.8879 3.3523 C 4.6459 3.2598 4.3683 3.2135 4.0552 3.2135 C 3.3292 3.2135 2.6317 3.3612 1.9626 3.6566 C 1.2936 3.952 0.6886 4.3381 0.1477 4.8149 L 0.1477 1.1637 C 0.4182 0.9858 0.7224 0.8256 1.0605 0.6833 C 1.3986 0.5409 1.758 0.4199 2.1388 0.3203 C 2.5196 0.2206 2.9146 0.1423 3.3238 0.0854 C 3.7331 0.0285 4.1441 0 4.5569 0 C 5.1406 0 5.7117 0.0587 6.2705 0.1762 C 6.8292 0.2936 7.3399 0.4822 7.8025 0.742 C 8.2651 1.0018 8.6637 1.3363 8.9982 1.7456 C 9.3327 2.1548 9.5676 2.6512 9.7028 3.2349 C 9.8025 3.669 9.8523 4.0783 9.8523 4.4626 C 9.8523 5.9288 9.226 7.1922 7.9733 8.2527 C 7.7456 8.4733 7.4893 8.6957 7.2046 8.9199 C 6.9199 9.1441 6.653 9.3861 6.4039 9.6459 C 6.1548 9.9057 5.9466 10.1868 5.7794 10.4893 C 5.6121 10.7918 5.5285 11.1317 5.5285 11.5089 C 5.5285 11.6797 5.548 11.863 5.5872 12.0587 C 5.6263 12.2544 5.6957 12.4555 5.7954 12.6619 Z M 4.3754 13.9751 C 4.6601 13.9751 4.9377 14.0178 5.2082 14.1032 C 5.4786 14.1886 5.7171 14.3167 5.9235 14.4875 C 6.1299 14.6584 6.2954 14.8701 6.4199 15.1228 C 6.5445 15.3754 6.6068 15.669 6.6068 16.0036 C 6.6068 16.3167 6.5427 16.5961 6.4146 16.8416 C 6.2865 17.0872 6.1192 17.2954 5.9128 17.4662 C 5.7064 17.637 5.4698 17.7687 5.2028 17.8612 C 4.9359 17.9537 4.6601 18 4.3754 18 C 4.105 18 3.8363 17.9555 3.5694 17.8665 C 3.3025 17.7776 3.0605 17.6477 2.8434 17.4769 C 2.6263 17.3061 2.4502 17.0979 2.3149 16.8523 C 2.1797 16.6068 2.1121 16.3238 2.1121 16.0036 C 2.1121 15.6975 2.1762 15.4181 2.3043 15.1655 C 2.4324 14.9128 2.6014 14.6993 2.8114 14.5249 C 3.0214 14.3505 3.2616 14.2153 3.532 14.1192 C 3.8025 14.0231 4.0836 13.9751 4.3754 13.9751 Z
 	</Geometry>
 
@@ -208,6 +209,7 @@
 
 
 	<!--#region > element and control colors-->
+	<!--#endregion-->
 
 	<!--#region > general - app colors-->
 
@@ -259,9 +261,11 @@
 
 	<!--#endregion-->
 
-	<!--  these colors need / may need to be skinned  -->
 
 	<!--#region > unit value / unit setting colors-->
+
+	<!--  these colors need / may need to be skinned  -->
+
 
 	<!--  for unit values / current unit settings  -->
 	<!--  for unit values / title  -->
@@ -440,7 +444,6 @@
 	<SolidColorBrush x:Key="Cbx.DropDownItem.Bdr.Sel.MouseOver"              Color="#7FFFFFFF" />
 
 	<!--#endregion-->
-
 
 	<!--#region > selection list colors-->
 
@@ -675,8 +678,7 @@
 
 
 	<!--#endregion-->
-
-
+	
 	<!--#region > interior / component colors-->
 
 	<!--#region > checkbox interior colors-->
@@ -714,6 +716,90 @@
 
 	<!--#endregion-->
 
+	<!--#region > popup colors -->
+	
+	<SolidColorBrush x:Key="Pop.Bdr.Out.Bg"                     Color="#E100FF00" />
+	<SolidColorBrush x:Key="Pop.Bdr.Out"		                     Color="#E100FF00" />
+
+	<SolidColorBrush x:Key="Pop.Tblk.Ttl.Out.Bg"		             Color="Transparent" />
+	<SolidColorBrush x:Key="Pop.Tblk.Ttl.Out.Fg"		             Color="Black" />
+	<FontWeight x:Key="Pop.Tblk.Ttl.Fw">DemiBold</FontWeight>
+
+
+	<SolidColorBrush x:Key="Pop.Btn.Cls.Bg"		                   Color="LimeGreen" />
+	<SolidColorBrush x:Key="Pop.Btn.Cls.Fg"		                   Color="White" />
+
+	<LinearGradientBrush x:Key="Pop.Bdr.In.Bg" StartPoint="0.5,0" EndPoint="0.5,1" >
+		<GradientStop Offset="0"                                   Color="#E100FF00" />
+		<GradientStop Offset="1"                                   Color="#FF00C400" />
+		<GradientStop Offset="0.9"                                 Color="#FB003800" />
+	</LinearGradientBrush>
+
+	<SolidColorBrush x:Key="Pop.Tblk.Ttl.In.Bg"		               Color="WhiteSmoke" />
+	<SolidColorBrush x:Key="Pop.Tblk.Ttl.In.Fg"		               Color="Black" />
+
+	<SolidColorBrush x:Key="Pop.Ic.Bg"													 Color="WhiteSmoke" />
+	<SolidColorBrush x:Key="Pop.Ic.Tblk.Bg"		                   Color="Transparent" />
+	<SolidColorBrush x:Key="Pop.Ic.Tblk.Fg"		                   Color="Black" />
+	<sys:Double x:Key="Pop.Ic.Tblk.Lh">15</sys:Double>
+	
+	<sys:Double x:Key="Pop.StyleName.Width">350</sys:Double>
+	<sys:Double x:Key="Pop.StyleDesc.Width">350</sys:Double>
+	<sys:Double x:Key="Pop.Std.Width">350</sys:Double>
+	<GridLength x:Key="Pop.Col0">18</GridLength>
+	<GridLength x:Key="Pop.Col1">24</GridLength>
+	<GridLength x:Key="Pop.Col2">36</GridLength>
+	<GridLength x:Key="Pop.Col3">48</GridLength>
+
+
+
+
+
+	<!--#endregion-->
+
+	<!--#region > style order  tab control-->
+
+	<SolidColorBrush x:Key="TabItem.Bg.Sel" Color="{StaticResource  Bright.Green.350}" />
+	<SolidColorBrush x:Key="TabItem.Fg.Sel" Color="{StaticResource True.White}" />
+
+	<SolidColorBrush x:Key="TabItem.Bg.NotSel" Color="{StaticResource Bright.Green.250}" />
+	<SolidColorBrush x:Key="TabItem.Fg.NotSel" Color="{StaticResource Gray.150}" />
+
+	<SolidColorBrush x:Key="TabItem.Bg.SelMo" Color="{StaticResource Bright.Green.350}" />
+	<SolidColorBrush x:Key="TabItem.Fg.SelMo" Color="{StaticResource True.White}" />
+
+	<SolidColorBrush x:Key="TabItem.Bg.NotSelMo" Color="{StaticResource Bright.Green.300}" />
+	<SolidColorBrush x:Key="TabItem.Fg.NotSelMo" Color="{StaticResource Gray.760}" />
+
+
+	<SolidColorBrush x:Key="TabItem.Bg.Disabled" Color="{StaticResource Gray.150}" />
+	<SolidColorBrush x:Key="TabItem.Bdr.Disabled" Color="{StaticResource Gray.350}" />
+
+
+	<SolidColorBrush x:Key="TabItem.Bdr.Sel" Color="{StaticResource Yellow.700}" />
+	<SolidColorBrush x:Key="TabItem.Bdr.NotSel" Color="{StaticResource Yellow.300}" />
+	<SolidColorBrush x:Key="TabItem.Bdr.SelMo" Color="{StaticResource Gray.600}" />
+	<SolidColorBrush x:Key="TabItem.Bdr.NotSelMo" Color="{StaticResource Gray.300}" />
+
+
+	
+	<!-- style order listbox -->
+	<SolidColorBrush x:Key="Item.MouseOver.Background" Color="#3F26A0DA" />
+	<SolidColorBrush x:Key="Item.MouseOver.Border" Color="#CF26B0Fa" />
+
+	<SolidColorBrush x:Key="Item.SelectedInactive.Background" Color="#2DDADADA" />
+	<SolidColorBrush x:Key="Item.SelectedInactive.Border"     Color="#FFDADADA" />
+
+	<SolidColorBrush x:Key="Item.SelectedActive.Background" Color="#2DDADADA" />
+	<SolidColorBrush x:Key="Item.SelectedActive.Border"     Color="#FFDADADA" />
+	
+	<!-- <SolidColorBrush x:Key="Item.SelectedActive.Background" Color="#318F00FF" /> -->
+	<!-- <SolidColorBrush x:Key="Item.SelectedActive.Border" Color="#FFA600FF" /> -->
+
+
+	<!--#endregion-->
+
+
 	<!--  not verified colors  -->
 
 	<!--#region > buttons-->
@@ -750,9 +836,6 @@
 
 	<!--#endregion-->
 
-	<!--#endregion-->
-	
-	<!--#endregion-->
 
 </ResourceDictionary>
 

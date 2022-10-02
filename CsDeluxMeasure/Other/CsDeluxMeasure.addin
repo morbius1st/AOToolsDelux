@@ -4,7 +4,7 @@
     <Text>CsDeluxMeasure</Text>
     <Description>Description of CsDeluxMeasure</Description>
     <Assembly>CsDeluxMeasure.dll</Assembly>
-    <FullClassName>CsDeluxMeasure.Command</FullClassName>
+    <FullClassName>CsDeluxMeasure.RevitSupport.MainWindowCommand</FullClassName>
     <ClientId>b9890444-dd63-400c-b8c8-303b44730830</ClientId>
     <VendorId>pro.cyberstudio</VendorId>
     <VendorDescription>CyberStudio</VendorDescription>

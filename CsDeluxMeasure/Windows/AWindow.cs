@@ -2,6 +2,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Diagnostics;
 using System.Runtime.CompilerServices;
 using System.Text;
@@ -16,7 +17,7 @@ using UtilityLibrary;
 
 namespace CsDeluxMeasure.Windows
 {
-	public abstract class AWindow : Window
+	public class AWindow : Window, INotifyPropertyChanged
 	{
 		public string textMsg01 { get; set; }
 
@@ -58,7 +59,7 @@ namespace CsDeluxMeasure.Windows
 			set
 			{
 				textMsg01 = value;
-				OnPropertyChange();
+				OnPropertyChanged();
 			}
 		}
 
@@ -135,7 +136,7 @@ namespace CsDeluxMeasure.Windows
 
 		public void ShowMsg()
 		{
-			OnPropertyChange("MessageBoxText");
+			OnPropertyChanged("MessageBoxText");
 		}
 
 
@@ -1068,6 +1069,14 @@ namespace CsDeluxMeasure.Windows
 
 	#endregion
 
-		protected abstract void OnPropertyChange([CallerMemberName] string memberName = "");
+		// protected void OnPropertyChange([CallerMemberName] string memberName = "");
+
+		public event PropertyChangedEventHandler PropertyChanged;
+
+		[DebuggerStepThrough]
+		protected void OnPropertyChanged([CallerMemberName] string memberName = "")
+		{
+			PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(memberName));
+		}
 	}
 }

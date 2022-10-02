@@ -7,11 +7,15 @@
 		xmlns:local="clr-namespace:DeluxMeasureStudies.Windows"
 		xmlns:sys="clr-namespace:System;assembly=mscorlib"
 		xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+		xmlns:vs="clr-namespace:DeluxMeasureStudies.Windows.Support"
+		xmlns:cs="clr-namespace:DeluxMeasure.Windows.Support"
 		Title="MainWindow"
-		Height="450"
+
 		Width="800"
+		mc:Ignorable="d"
 		Foreground="White"
 		Background="{StaticResource Normal.Window.Background}"
+		DataContext="{Binding RelativeSource={RelativeSource Self}}"
 		>
 
 	<Window.Resources>
@@ -67,7 +71,8 @@
 			<Style x:Key="PuTblkEditOps"
 					TargetType="TextBlock"
 					>
-				<Setter Property="Visibility" Value="Collapsed"/>
+				<Setter Property="Width" Value="Auto" />
+				<Setter Property="Visibility" Value="Collapsed" />
 				<Setter Property="HorizontalAlignment" Value="Right" />
 				<Setter Property="VerticalAlignment" Value="Center" />
 				<Setter Property="Background" Value="Transparent" />
@@ -90,19 +95,33 @@
 				<Setter Property="Margin" Value="0,0,0,0" />
 			</Style>
 
+			<Style x:Key="TblkPopInfoList"
+					TargetType="TextBlock"
+			>
+				<Setter Property="Visibility" Value="Visible" />
+				<Setter Property="FontSize" Value="{StaticResource FontSize.Normal}" />
+				<Setter Property="Padding" Value="0" />
+				<Setter Property="Margin" Value="0" />
+				<Setter Property="Background" Value="{StaticResource Pop.Ic.Tblk.Bg}" />
+				<Setter Property="Foreground" Value="{StaticResource Pop.Ic.Tblk.Fg}" />
+				<Setter Property="LineHeight" Value="{StaticResource Pop.Ic.Tblk.Lh}" />
+				<Setter Property="LineStackingStrategy" Value="BlockLineHeight" />
+				<Setter Property="TextWrapping" Value="Wrap" />
+				<Style.Triggers>
+					<Trigger Property="Text" Value="{x:Null}">
+						<Setter Property="Visibility" Value="Collapsed" />
+					</Trigger>
+					<Trigger Property="Text" Value="">
+						<Setter Property="Visibility" Value="Collapsed" />
+					</Trigger>
+				</Style.Triggers>
+			</Style>
+
 			<!--#endregion-->
 
-
-			<!--
-				buttons in no order
-				
-				cancel (revert) / exit
-				reset / revert / continue
-				clear
-				accept / exit
-				help
-			-->
-
+			<Geometry x:Key="IconClose">
+				F0 M 0.996094 5.722656 L 19.013672 5.722656 L 19.013672 22.578125 L 0.996094 22.578125 Z M 2.011719 20.048828 L 4.0625 22.080078 L 10 16.152344 L 15.947266 22.080078 L 17.998047 20.048828 L 12.041016 14.091797 L 17.998047 8.144531 L 15.947266 6.113281 L 10 12.080078 L 4.0625 6.113281 L 2.011719 8.144531 L 7.958984 14.091797 Z
+			</Geometry>
 
 			<DataTemplate x:Key="DtPopup">
 
@@ -124,7 +143,6 @@
 
 
 					<Grid
-
 							Margin="0,0,0,0"
 							HorizontalAlignment="Right"
 							VerticalAlignment="Stretch"
@@ -154,19 +172,19 @@
 									MinWidth="18"
 									Padding="1,2,1,-1"
 									ToolTip="Info"
+									Background="#50FFFFFF"
 									Style="{StaticResource PuBtnEditOps}"
 									Template="{StaticResource Button.Stealth.ControlTemplate}"
-									Background="#50FFFFFF"
 									>
 
 								<Button.Content>
 									<Path
 											Data="{StaticResource IconHelp}"
 											Style="{StaticResource PuPathEditOps}"
-											
 											>
 										<Path.Fill>
-											<SolidColorBrush Color="{StaticResource Gray.800}"></SolidColorBrush>
+											<SolidColorBrush Color="{StaticResource Gray.800}">
+											</SolidColorBrush>
 										</Path.Fill>
 									</Path>
 								</Button.Content>
@@ -187,17 +205,18 @@
 									MinWidth="18"
 									Padding="1,2,1,-1"
 									ToolTip="Clear Text"
+									Background="#8000FF00"
 									Style="{StaticResource PuBtnEditOps}"
 									Template="{StaticResource Button.Stealth.ControlTemplate}"
-									Background="#8000FF00"
 									>
 								<Button.Content>
 									<Path
 											Data="{StaticResource IconClearText}"
 											Style="{StaticResource PuPathEditOps}"
-									>
+											>
 										<Path.Fill>
-											<SolidColorBrush Color="{StaticResource Bright.Green.800}"></SolidColorBrush>
+											<SolidColorBrush Color="{StaticResource Bright.Green.800}">
+											</SolidColorBrush>
 										</Path.Fill>
 									</Path>
 								</Button.Content>
@@ -252,11 +271,11 @@
 									</Path>
 								</Button.Content>
 							</Button>
-							<!-- -->
-							<!-- <TextBlock -->
-							<!-- 		Text="Apply" -->
-							<!-- 		Style="{StaticResource PuTblkEditOps}" -->
-							<!-- 		/> -->
+							<!--    -->
+							<!--  <TextBlock  -->
+							<!--  Text="Apply"  -->
+							<!--  Style="{StaticResource PuTblkEditOps}"  -->
+							<!--  />  -->
 						</StackPanel>
 
 						<StackPanel x:Name="SpEditOpsCancel"
@@ -265,8 +284,8 @@
 								Style="{StaticResource PuPnlEditOps}"
 								>
 							<Button
-									ToolTip="Cancel"
 									Height="{StaticResource IconHeightCancel}"
+									ToolTip="Cancel"
 									Style="{StaticResource PuBtnEditOps}"
 									Template="{StaticResource Button.Stealth.ControlTemplate}"
 									>
@@ -279,10 +298,10 @@
 								</Button.Content>
 							</Button>
 
-							<!-- <TextBlock -->
-							<!-- 		Text="Cancel" -->
-							<!-- 		Style="{StaticResource PuTblkEditOps}" -->
-							<!-- 		> -->
+							<!--  <TextBlock  -->
+							<!--  Text="Cancel"  -->
+							<!--  Style="{StaticResource PuTblkEditOps}"  -->
+							<!--  >  -->
 							<!-- </TextBlock> -->
 						</StackPanel>
 
@@ -298,11 +317,17 @@
 								Foreground="White"
 								Text="Edit Options"
 								Visibility="Collapsed"
-						>
+								>
 							<TextBlock.Effect>
-								<DropShadowEffect Color="Black" ShadowDepth="2" BlurRadius="1" Opacity="1" RenderingBias="Performance"/>
+								<DropShadowEffect
+										Color="Black"
+										ShadowDepth="2"
+										BlurRadius="1"
+										Opacity="1"
+										RenderingBias="Performance"
+										/>
 							</TextBlock.Effect>
-							<!-- Background="Transparent" -->
+							<!--  Background="Transparent"  -->
 
 						</TextBlock>
 
@@ -313,25 +338,894 @@
 			</DataTemplate>
 
 
-			<ContentControl x:Key="CcHelpPopup"
-					x:Shared="False"
-					>
 
-			</ContentControl>
+			<Style x:Key="TbxHelpPopup"
+					TargetType="TextBox"
+					>
+				<Setter Property="Focusable" Value="False" />
+				<Setter Property="Padding" Value="4,2,4,3" />
+				<Setter Property="Margin" Value="0,1,0,3" />
+				<Setter Property="HorizontalAlignment" Value="Stretch" />
+				<Setter Property="FontSize" Value="{StaticResource FontSize.Normal}" />
+				<Setter Property="Background" Value="WhiteSmoke" />
+				<Setter Property="Foreground" Value="Black" />
+				<Setter Property="BorderThickness" Value="0" />
+				<Setter Property="IsReadOnly" Value="True" />
+				<Setter Property="TextAlignment" Value="Left" />
+				<Setter Property="TextWrapping" Value="Wrap" />
+			</Style>
+
+			<DataTemplate x:Key="CcHelpPopup">
+
+				<Grid x:Name="GrdPopup"
+						Width="330"
+						Focusable="False"
+						HorizontalAlignment="Stretch"
+						Background="Transparent"
+						>
+
+					<Grid.ColumnDefinitions>
+						<ColumnDefinition Width="*" />
+						<ColumnDefinition Width="18" />
+					</Grid.ColumnDefinitions>
+
+					<Grid.RowDefinitions>
+						<RowDefinition Height="*" />
+						<RowDefinition Height="*" />
+
+					</Grid.RowDefinitions>
+
+
+					<Border x:Name="BdrPopup"
+							Grid.Column="0"
+							Grid.Row="0"
+							Margin="0,0,3,0"
+							Padding="13,0,2,0"
+							Background="#e100FF00"
+							BorderThickness="0,0,0,0"
+							BorderBrush="#e100FF00"
+							CornerRadius="12,12,0,0"
+							>
+						<TextBlock x:Name="TblkPopupTitle"
+								Focusable="False"
+								Margin="0,1,0,2"
+								HorizontalAlignment="Stretch"
+								FontSize="{StaticResource FontSize.Normal}"
+								Background="Transparent"
+								Foreground="Black"
+								Text="This Title Text"
+								FontWeight="DemiBold"
+								/>
+					</Border>
+
+					<Button x:Name="BtnClosePopup"
+							Grid.Column="1"
+							Grid.Row="0"
+							Focusable="False"
+							FontFamily="Segoe UI Symbol"
+							Background="LimeGreen"
+							Foreground="White"
+							>
+						<!--  Click="BtnPopupClose_OnClick"  -->
+						<Button.Content>
+							<Path
+									Data="{StaticResource IconClose}"
+									Fill="White"
+									Stretch="Uniform"
+									/>
+						</Button.Content>
+					</Button>
+
+					<Border x:Name="BdrPopupInner"
+							Grid.Column="0"
+							Grid.Row="1"
+							Margin="0,0,3,0"
+							Padding="9,0,6,2"
+							BorderThickness="0"
+							CornerRadius="0,0,12,12"
+							>
+
+						<Border.Background>
+							<LinearGradientBrush StartPoint="0.5,0" EndPoint="0.5,1">
+								<GradientStop Offset="0" Color="#E100FF00" />
+								<GradientStop Offset="1" Color="#FF00C400" />
+								<GradientStop Offset="0.9" Color="#FB003800" />
+							</LinearGradientBrush>
+						</Border.Background>
+
+						<DockPanel VerticalAlignment="Stretch">
+
+							<TextBox x:Name="TbxPopupInnerTitle"
+									DockPanel.Dock="Top"
+									FontWeight="DemiBold"
+									Text="Style name must follows these requirements"
+									VerticalAlignment="Top"
+									Style="{StaticResource TbxHelpPopup}"
+									>
+								<TextBox.Resources>
+									<Style TargetType="{x:Type Border}">
+										<Setter Property="CornerRadius" Value="8">
+										</Setter>
+									</Style>
+								</TextBox.Resources>
+
+							</TextBox>
+
+							<TextBox x:Name="TbxPopupInnerText"
+									Text="&#x25CF;  Minimum of 4 Characters&#013;&#x25CF;  Must begin with an alphanumeric&#013;    character&#013;&#x25CF;  Only Numbers and letters"
+									VerticalAlignment="Stretch"
+									Padding="4"
+									Style="{StaticResource TbxHelpPopup}"
+									>
+
+								<TextBox.Resources>
+									<Style TargetType="{x:Type Border}">
+										<Setter Property="CornerRadius" Value="8">
+										</Setter>
+									</Style>
+								</TextBox.Resources>
+							</TextBox>
+
+
+
+						</DockPanel>
+					</Border>
+
+				</Grid>
+
+			</DataTemplate>
+
+
+			<DataTemplate x:Key="CcHelpPopup2">
+
+				<Grid x:Name="GrdPopup"
+						Focusable="False"
+						HorizontalAlignment="Stretch"
+						Background="Transparent"
+						>
+
+					<Grid.ColumnDefinitions>
+						<ColumnDefinition Width="*" />
+						<ColumnDefinition Width="18" />
+					</Grid.ColumnDefinitions>
+
+					<Grid.RowDefinitions>
+						<RowDefinition Height="*" />
+						<RowDefinition Height="*" />
+
+					</Grid.RowDefinitions>
+
+
+					<Border x:Name="BdrPopup"
+							Grid.Column="0"
+							Grid.Row="0"
+							Margin="0,0,3,0"
+							Padding="13,0,2,0"
+							Background="#e100FF00"
+							BorderThickness="0,0,0,0"
+							BorderBrush="#e100FF00"
+							CornerRadius="12,12,0,0"
+							>
+						<TextBlock x:Name="TblkPopupTitle"
+								Focusable="False"
+								Margin="0,1,0,2"
+								HorizontalAlignment="Stretch"
+								FontSize="{StaticResource FontSize.Normal}"
+								Background="Transparent"
+								Foreground="Black"
+								Text="This Title Text"
+								FontWeight="DemiBold"
+								/>
+					</Border>
+
+					<Button x:Name="BtnClosePopup2"
+							Grid.Column="1"
+							Grid.Row="0"
+							Focusable="False"
+							FontFamily="Segoe UI Symbol"
+							Background="LimeGreen"
+							Foreground="White"
+							>
+						<!--  Click="BtnPopupClose_OnClick"  -->
+						<Button.Content>
+							<Path
+									Data="{StaticResource IconClose}"
+									Fill="White"
+									Stretch="Uniform"
+									/>
+						</Button.Content>
+					</Button>
+
+					<Border x:Name="BdrPopupInner2"
+							Grid.Column="0"
+							Grid.Row="1"
+							Margin="0,0,3,0"
+							Padding="9,0,6,2"
+							BorderThickness="0"
+							CornerRadius="0,0,12,12"
+							>
+
+						<Border.Background>
+							<LinearGradientBrush StartPoint="0.5,0" EndPoint="0.5,1">
+								<GradientStop Offset="0" Color="#E100FF00" />
+								<GradientStop Offset="1" Color="#FF00C400" />
+								<GradientStop Offset="0.9" Color="#FB003800" />
+							</LinearGradientBrush>
+						</Border.Background>
+
+						<DockPanel
+								HorizontalAlignment="Left"
+								VerticalAlignment="Stretch"
+								>
+
+							<TextBox x:Name="TbxPopupInnerTitle2"
+									DockPanel.Dock="Top"
+									FontWeight="DemiBold"
+									Margin="0,0,5,5"
+									Text="Style name must follows these requirements"
+									VerticalAlignment="Top"
+									Style="{StaticResource TbxHelpPopup}"
+									>
+								<TextBox.Resources>
+									<Style TargetType="{x:Type Border}">
+										<Setter Property="CornerRadius" Value="8">
+										</Setter>
+									</Style>
+								</TextBox.Resources>
+
+							</TextBox>
+
+							<!--  <TextBox x:Name="TbxPopupInnerText2"  -->
+							<!--  Text="&#x25CF;  Minimum of 4 Characters&#013;&#x25CF;  Must begin with an alphanumeric&#013;    character&#013;&#x25CF;  Only Numbers and letters"  -->
+							<!--  VerticalAlignment="Stretch"  -->
+							<!--  Style="{StaticResource TbxHelpPopup}"  -->
+							<!--  Padding="4"  -->
+							<!--  >  -->
+							<!--    -->
+							<!-- 	<TextBox.Resources> -->
+							<!-- 		<Style TargetType="{x:Type Border}"> -->
+							<!-- 			<Setter Property="CornerRadius" Value="8"> -->
+							<!-- 			</Setter> -->
+							<!-- 		</Style> -->
+							<!-- 	</TextBox.Resources> -->
+							<!-- </TextBox> -->
+
+							<ListBox
+									DockPanel.Dock="Bottom"
+									Background="WhiteSmoke"
+									VerticalAlignment="Stretch"
+									HorizontalAlignment="Left"
+									BorderThickness="0"
+									Margin="0,0,5,7"
+									Padding="0,0,0,3"
+									DataContext="{Binding (cs:VisualStates.StringList2Dim), RelativeSource={RelativeSource Self}}"
+									ItemsSource="{Binding}"
+									d:ItemsSource="{x:Static local:HelpInfoData.NameInfo}"
+									>
+								<!--    -->
+								<!-- <ListBox.ItemContainerStyle> -->
+								<!-- 	<Style TargetType="ListBoxItem"> -->
+								<!-- 		<Setter Property="Background" Value="AntiqueWhite"></Setter> -->
+								<!-- 	</Style> -->
+								<!-- </ListBox.ItemContainerStyle> -->
+
+								<ListBox.Resources>
+									<Style TargetType="{x:Type Border}">
+										<Setter Property="CornerRadius" Value="6">
+										</Setter>
+									</Style>
+								</ListBox.Resources>
+
+
+								<ListBox.ItemTemplate>
+
+									<DataTemplate>
+										<DockPanel HorizontalAlignment="Left">
+
+											<TextBlock
+													DockPanel.Dock="Left"
+													Width="25"
+													HorizontalAlignment="Left"
+													FontSize="{StaticResource FontSize.Normal}"
+													Padding="0"
+													Margin="0,-2,0,-2"
+													Text="{Binding [0], Mode=OneWay}"
+													/>
+
+
+											<TextBlock
+													DockPanel.Dock="Right"
+													Width="{Binding (cs:CustomProperties.GenericDoubleOne), RelativeSource={RelativeSource Self}}"
+													TextWrapping="Wrap"
+													FontSize="{StaticResource FontSize.Normal}"
+													Padding="0"
+													Margin="0,-2,0,-2"
+													Text="{Binding [1], Mode=OneWay}"
+													/>
+
+
+
+										</DockPanel>
+									</DataTemplate>
+								</ListBox.ItemTemplate>
+
+							</ListBox>
+
+						</DockPanel>
+					</Border>
+
+				</Grid>
+
+			</DataTemplate>
+
+
+			
+			<DataTemplate x:Key="CcHelpPopup3">
+
+				<Grid x:Name="GrdPopup"
+						Width="{StaticResource Pop.StyleName.Width}"
+						Focusable="False"
+						HorizontalAlignment="Stretch"
+						Background="Transparent"
+						>
+
+					<Grid.ColumnDefinitions>
+						<ColumnDefinition Width="*" />
+						<ColumnDefinition Width="18" />
+					</Grid.ColumnDefinitions>
+
+					<Grid.RowDefinitions>
+						<RowDefinition Height="*" />
+						<RowDefinition Height="*" />
+
+					</Grid.RowDefinitions>
+
+
+					<Border x:Name="BdrPopup"
+							Grid.Column="0"
+							Grid.Row="0"
+							Margin="0,0,3,0"
+							Padding="13,0,2,0"
+							Background="#e100FF00"
+							BorderThickness="0,0,0,0"
+							BorderBrush="#e100FF00"
+							CornerRadius="12,12,0,0"
+							>
+						<TextBlock x:Name="TblkPopupTitle"
+								Focusable="False"
+								Margin="0,1,0,2"
+								HorizontalAlignment="Stretch"
+								FontSize="{StaticResource FontSize.Normal}"
+								Background="Transparent"
+								Foreground="Black"
+								Text="This Title Text"
+								FontWeight="DemiBold"
+								/>
+					</Border>
+
+					<Button x:Name="BtnClosePopup2"
+							Grid.Column="1"
+							Grid.Row="0"
+							Focusable="False"
+							FontFamily="Segoe UI Symbol"
+							Background="LimeGreen"
+							Foreground="White"
+							>
+						<!--  Click="BtnPopupClose_OnClick"  -->
+						<Button.Content>
+							<Path
+									Data="{StaticResource IconClose}"
+									Fill="White"
+									Stretch="Uniform"
+									/>
+						</Button.Content>
+					</Button>
+
+					<Border x:Name="BdrPopupInner2"
+							Grid.Column="0"
+							Grid.Row="1"
+							Margin="0,0,3,0"
+							Padding="11,4,6,6"
+							BorderThickness="0"
+							CornerRadius="0,0,12,12"
+							>
+
+						<Border.Background>
+							<LinearGradientBrush StartPoint="0.5,0" EndPoint="0.5,1">
+								<GradientStop Offset="0" Color="#E100FF00" />
+								<GradientStop Offset="1" Color="#FF00C400" />
+								<GradientStop Offset="0.9" Color="#FB003800" />
+							</LinearGradientBrush>
+						</Border.Background>
+
+						<DockPanel
+								HorizontalAlignment="Stretch"
+								VerticalAlignment="Stretch"
+								>
+
+							<TextBox x:Name="TbxPopupInnerTitle2"
+									DockPanel.Dock="Top"
+									FontWeight="DemiBold"
+									Margin="0,0,0,5"
+									Padding="5,3,5,5"
+									Text="Style name must follows these requirements"
+									VerticalAlignment="Top"
+									Style="{StaticResource TbxHelpPopup}"
+									>
+								<TextBox.Resources>
+									<Style TargetType="{x:Type Border}">
+										<Setter Property="CornerRadius" Value="8">
+										</Setter>
+									</Style>
+								</TextBox.Resources>
+
+							</TextBox>
+
+							<ItemsControl
+									BorderThickness="0"
+									HorizontalContentAlignment="Left"
+									Padding="7"
+									FontSize="{StaticResource FontSize.Normal}"
+									Foreground="Black"
+									Background="WhiteSmoke"
+									DataContext="{Binding ElementName=WinMain, Path=HelpInfo}"
+									ItemsSource="{Binding}"
+									d:DataContext="{x:Static local:HelpInfoData.NameInfo}"
+									
+							>
+								<ItemsControl.Resources>
+									<Style TargetType="{x:Type Border}">
+										<Setter Property="CornerRadius" Value="8">
+										</Setter>
+									</Style>
+								</ItemsControl.Resources>
+
+										<ItemsControl.ItemTemplate>
+											<DataTemplate>
+												<Grid
+														Margin="0"
+														HorizontalAlignment="Stretch"
+														>
+
+													<Grid.ColumnDefinitions>
+														<ColumnDefinition x:Name="col0"
+																Width="18"
+																/>
+														<ColumnDefinition x:Name="col1"
+																Width="24"
+																/>
+														<ColumnDefinition x:Name="col2"
+																Width="24"
+																/>
+														<ColumnDefinition x:Name="col3"
+																Width="24"
+																/>
+														<ColumnDefinition x:Name="col4"
+																Width="*"
+																/>
+													</Grid.ColumnDefinitions>
+													<!--  bold title / margin 4 abv + 2 below -->
+													<TextBlock x:Name="Col0_0"
+															Grid.Column="0"
+															Grid.ColumnSpan="5"
+															Margin="0,4,0,2"
+															Text="{Binding [0], Mode=OneWay, TargetNullValue=''}"
+															Style="{StaticResource TblkPopInfoList}"
+															/>
+													<!--  sub-title / margin 4 abv + 2 below -->
+													<TextBlock x:Name="Col0_1"
+															Grid.Column="0"
+															Grid.ColumnSpan="5"
+															FontWeight="DemiBold"
+															Margin="0,4,0,2"
+															Text="{Binding [1], Mode=OneWay, TargetNullValue=''}"
+															Style="{StaticResource TblkPopInfoList}"
+															/>
+													<!-- far left - bullet or text -->
+													<TextBlock x:Name="Col0_2"
+															Grid.Column="0"
+															Grid.ColumnSpan="5"
+															Text="{Binding [2], Mode=OneWay, TargetNullValue=''}"
+															Style="{StaticResource TblkPopInfoList}"
+															/>
+													<!-- text at col 1 -->
+													<TextBlock x:Name="Col1"
+															Grid.Column="1"
+															Grid.ColumnSpan="4"
+															Text="{Binding [3], Mode=OneWay, TargetNullValue=''}"
+															Style="{StaticResource TblkPopInfoList}"
+															/>
+													<!-- text at col 2 -->
+													<TextBlock x:Name="Col2"
+															Grid.Column="2"
+															Grid.ColumnSpan="3"
+															Text="{Binding [4], Mode=OneWay, TargetNullValue=''}"
+															Style="{StaticResource TblkPopInfoList}"
+															/>
+													<!-- text at col 3 -->
+													<TextBlock x:Name="Col3"
+															Grid.Column="3"
+															Grid.ColumnSpan="2"
+															Text="{Binding [5], Mode=OneWay, TargetNullValue=''}"
+															Style="{StaticResource TblkPopInfoList}"
+															/>
+
+
+												</Grid>
+											</DataTemplate>
+										</ItemsControl.ItemTemplate>
+
+							</ItemsControl>
+
+							</DockPanel>
+					</Border>
+
+				</Grid>
+
+			</DataTemplate>
+
+
+			
+			
+			<DataTemplate x:Key="CcHelpPopup4">
+
+				<Grid x:Name="GrdPopup"
+						Width="{StaticResource Pop.StyleName.Width}"
+						Focusable="False"
+						HorizontalAlignment="Stretch"
+						Background="Transparent"
+						>
+
+					<Grid.ColumnDefinitions>
+						<ColumnDefinition Width="*" />
+						<ColumnDefinition Width="18" />
+					</Grid.ColumnDefinitions>
+
+					<Grid.RowDefinitions>
+						<RowDefinition Height="*" />
+						<RowDefinition Height="*" />
+
+					</Grid.RowDefinitions>
+
+
+					<Border x:Name="BdrPopup"
+							Grid.Column="0"
+							Grid.Row="0"
+							Margin="0,0,3,0"
+							Padding="13,0,2,0"
+							Background="#e100FF00"
+							BorderThickness="0,0,0,0"
+							BorderBrush="#e100FF00"
+							CornerRadius="12,12,0,0"
+							>
+						<TextBlock x:Name="TblkPopupTitle"
+								Focusable="False"
+								Margin="0,1,0,2"
+								HorizontalAlignment="Stretch"
+								FontSize="{StaticResource FontSize.Normal}"
+								Background="Transparent"
+								Foreground="Black"
+								Text="This Title Text"
+								FontWeight="DemiBold"
+								/>
+					</Border>
+
+					<Button x:Name="BtnClosePopup2"
+							Grid.Column="1"
+							Grid.Row="0"
+							Focusable="False"
+							FontFamily="Segoe UI Symbol"
+							Background="LimeGreen"
+							Foreground="White"
+							>
+						<!--  Click="BtnPopupClose_OnClick"  -->
+						<Button.Content>
+							<Path
+									Data="{StaticResource IconClose}"
+									Fill="White"
+									Stretch="Uniform"
+									/>
+						</Button.Content>
+					</Button>
+
+					<Border x:Name="BdrPopupInner2"
+							Grid.Column="0"
+							Grid.Row="1"
+							Margin="0,0,3,0"
+							Padding="11,4,6,6"
+							BorderThickness="0"
+							CornerRadius="0,0,12,12"
+							>
+
+						<Border.Background>
+							<LinearGradientBrush StartPoint="0.5,0" EndPoint="0.5,1">
+								<GradientStop Offset="0" Color="#E100FF00" />
+								<GradientStop Offset="1" Color="#FF00C400" />
+								<GradientStop Offset="0.9" Color="#FB003800" />
+							</LinearGradientBrush>
+						</Border.Background>
+
+						<DockPanel
+								HorizontalAlignment="Stretch"
+								VerticalAlignment="Stretch"
+								>
+
+							<TextBox x:Name="TbxPopupInnerTitle2"
+									DockPanel.Dock="Top"
+									FontWeight="DemiBold"
+									Margin="0,0,0,5"
+									Padding="5,3,5,5"
+									Text="Style name must follows these requirements"
+									VerticalAlignment="Top"
+									Style="{StaticResource TbxHelpPopup}"
+									>
+								<TextBox.Resources>
+									<Style TargetType="{x:Type Border}">
+										<Setter Property="CornerRadius" Value="8">
+										</Setter>
+									</Style>
+								</TextBox.Resources>
+
+							</TextBox>
+
+							<ItemsControl
+									BorderThickness="0"
+									HorizontalContentAlignment="Left"
+									Padding="7"
+									FontSize="{StaticResource FontSize.Normal}"
+									Foreground="Black"
+									Background="WhiteSmoke"
+									DataContext="{Binding ElementName=WinMain, Path=HelpData}"
+									ItemsSource="{Binding}"
+									d:DataContext="{x:Static local:HelpInfoData.NameInfoData}"
+									
+							>
+								<ItemsControl.Resources>
+									<Style TargetType="{x:Type Border}">
+										<Setter Property="CornerRadius" Value="8">
+										</Setter>
+									</Style>
+								</ItemsControl.Resources>
+
+										<ItemsControl.ItemTemplate>
+											<DataTemplate>
+												<Grid
+														Margin="{Binding Marg}"
+														HorizontalAlignment="Stretch"
+												>
+
+													<Grid.ColumnDefinitions>
+														<ColumnDefinition x:Name="Index0"
+																Width="{StaticResource Pop.Col0}"
+																/>
+														<ColumnDefinition x:Name="Index1"
+																Width="{StaticResource Pop.Col1}"
+																/>
+														<ColumnDefinition x:Name="Index2"
+																Width="{StaticResource Pop.Col2Plus}"
+																/>
+														<ColumnDefinition x:Name="Index3"
+																Width="{StaticResource Pop.Col2Plus}"
+																/>
+														<ColumnDefinition x:Name="Index4"
+																Width="*"
+																/>
+													</Grid.ColumnDefinitions>
+													<!--  bold title / margin 4 abv + 2 below -->
+													<TextBlock x:Name="Col0_0"
+															Grid.Column="0"
+															Grid.ColumnSpan="5"
+															Text="{Binding HelpDesc[0], Mode=OneWay, TargetNullValue=''}"
+															Style="{StaticResource TblkPopInfoList}"
+															/>
+													<!--  sub-title / margin 4 abv + 2 below -->
+													<TextBlock x:Name="Col0_1"
+															Grid.Column="0"
+															Grid.ColumnSpan="5"
+															FontWeight="DemiBold"
+															Text="{Binding HelpDesc[1], Mode=OneWay, TargetNullValue=''}"
+															Style="{StaticResource TblkPopInfoList}"
+															/>
+													<!-- far left - bullet or text -->
+													<TextBlock x:Name="Col0_2"
+															Grid.Column="0"
+															Grid.ColumnSpan="5"
+															Text="{Binding HelpDesc[2], Mode=OneWay, TargetNullValue=''}"
+															Style="{StaticResource TblkPopInfoList}"
+															/>
+													<!-- text at col 1 -->
+													<TextBlock x:Name="Col1"
+															Grid.Column="1"
+															Grid.ColumnSpan="4"
+															Text="{Binding HelpDesc[3], Mode=OneWay, TargetNullValue=''}"
+															Style="{StaticResource TblkPopInfoList}"
+															/>
+													<!-- text at col 2 -->
+													<TextBlock x:Name="Col2"
+															Grid.Column="2"
+															Grid.ColumnSpan="3"
+															Text="{Binding HelpDesc[4], Mode=OneWay, TargetNullValue=''}"
+															Style="{StaticResource TblkPopInfoList}"
+															/>
+													<!-- text at col 3 -->
+													<TextBlock x:Name="Col3"
+															Grid.Column="3"
+															Grid.ColumnSpan="2"
+															Text="{Binding HelpDesc[5], Mode=OneWay, TargetNullValue=''}"
+															Style="{StaticResource TblkPopInfoList}"
+															/>
+													<!-- text at col 4 -->
+													<TextBlock x:Name="Col4"
+															Grid.Column="4"
+															Text="{Binding HelpDesc[6], Mode=OneWay, TargetNullValue=''}"
+															Style="{StaticResource TblkPopInfoList}"
+															/>
+
+												</Grid>
+											</DataTemplate>
+										</ItemsControl.ItemTemplate>
+
+							</ItemsControl>
+
+							</DockPanel>
+					</Border>
+
+				</Grid>
+
+			</DataTemplate>
+
+
+
+
+
+			<!--  Provide the name for the subject following these requirements&#013;&#x25CF;  Must Being with an Alpha&#013;    Character&#013;&#x25CF;  Minimum of 4 Characters&#013;&#x25CF;  Only Numbers and letters"  -->
+
+
+
+
 		</ResourceDictionary>
 
 	</Window.Resources>
 
+	<StackPanel 
+			Margin="15"
+			Orientation="Horizontal">
+
+		<!--  DataContext="{Binding	Temp_Struct,	ElementName=WinMain}"  -->
+		<StackPanel Orientation="Vertical">
+
+			<ContentControl
+					Margin="0,10,0,0"
+					HorizontalAlignment="Left"
+					ContentTemplate="{StaticResource CcHelpPopup3}"
+					cs:CustomProperties.GenericDoubleOne="350.0"
+					cs:VisualStates.StringList2Dim="{Binding HelpInfo}"
+			/>
 
 
-	<!--  DataContext="{Binding	Temp_Struct,	ElementName=WinMain}"  -->
-	<StackPanel Orientation="Vertical">
+			<!-- <ContentControl -->
+			<!-- 		HorizontalAlignment="Left" -->
+			<!-- 		ContentTemplate="{StaticResource DtPopup}" -->
+			<!-- 		/> -->
+			<!-- -->
+			<!-- <ContentControl -->
+			<!-- 		Margin="0,10,0,0" -->
+			<!-- 		HorizontalAlignment="Left" -->
+			<!-- 		ContentTemplate="{StaticResource CcHelpPopup}" -->
+			<!-- 		/> -->
+			<!-- -->
+			<!-- -->
+			<!-- <ContentControl -->
+			<!-- 		Margin="0,10,0,0" -->
+			<!-- 		HorizontalAlignment="Left" -->
+			<!-- 		ContentTemplate="{StaticResource CcHelpPopup2}" -->
+			<!-- 		cs:CustomProperties.GenericDoubleOne="350.0" -->
+			<!-- 		cs:VisualStates.StringList2Dim="{Binding HelpInfo}" -->
+			<!-- 		/> -->
+			<!-- -->
+			<!-- <ListBox -->
+			<!-- 		Width="300" -->
+			<!-- 		HorizontalAlignment="Left" -->
+			<!-- 		DataContext="{Binding ElementName=WinMain, Path=HelpInfo}" -->
+			<!-- 		ItemsSource="{Binding}" -->
+			<!-- 		d:DataContext="{x:Static local:HelpInfo.NameInfo}" -->
+			<!-- 		> -->
+			<!-- 	<ListBox.ItemTemplate> -->
+			<!-- 		<DataTemplate> -->
+			<!-- 			<StackPanel Orientation="Horizontal"> -->
+			<!-- 				<TextBlock -->
+			<!-- 						Width="25" -->
+			<!-- 						FontSize="{StaticResource FontSize.Normal}" -->
+			<!-- 						Padding="0" -->
+			<!-- 						Margin="0,-2,0,-2" -->
+			<!-- 						Text="{Binding [0]}" -->
+			<!-- 						/> -->
+			<!-- 				<TextBlock -->
+			<!-- 						FontSize="{StaticResource FontSize.Normal}" -->
+			<!-- 						Padding="0" -->
+			<!-- 						Margin="0,-2,0,-2" -->
+			<!-- 						Text="{Binding [1]}" -->
+			<!-- 						> -->
+			<!-- 				</TextBlock> -->
+			<!-- 			</StackPanel> -->
+			<!-- 		</DataTemplate> -->
+			<!-- -->
+			<!-- 	</ListBox.ItemTemplate> -->
+			<!-- -->
+			<!-- -->
+			<!-- </ListBox> -->
 
-		<ContentControl
-				HorizontalAlignment="Left"
-				ContentTemplate="{StaticResource DtPopup}"
-				/>
+		</StackPanel>
 
+		<StackPanel Orientation="Vertical">
+
+			<ContentControl
+					Margin="0,10,0,0"
+					HorizontalAlignment="Left"
+					ContentTemplate="{StaticResource CcHelpPopup4}"
+					cs:CustomProperties.GenericDoubleOne="350.0"
+					cs:VisualStates.StringList2Dim="{Binding HelpInfo}"
+			/>
+
+
+
+			<!-- -->
+			<!-- <ItemsControl -->
+			<!-- 		Height="100" -->
+			<!-- -->
+			<!-- 		BorderThickness="0" -->
+			<!-- 		HorizontalContentAlignment="Left" -->
+			<!-- 		Padding="3,3,3,3" -->
+			<!-- 		FontSize="{StaticResource FontSize.Normal}" -->
+			<!-- 		Foreground="Black" -->
+			<!-- 		Background="WhiteSmoke" -->
+			<!-- 		DataContext="{Binding ElementName=WinMain, Path=HelpInfo}" -->
+			<!-- 		ItemsSource="{Binding}" -->
+			<!-- 		d:DataContext="{x:Static local:HelpInfo.NameInfo}" -->
+			<!-- 		ScrollViewer.HorizontalScrollBarVisibility="Hidden" -->
+			<!-- 		> -->
+			<!-- 	<ItemsControl.Resources> -->
+			<!-- 		<Style TargetType="{x:Type Border}"> -->
+			<!-- 			<Setter Property="CornerRadius" Value="6"> -->
+			<!-- 			</Setter> -->
+			<!-- 		</Style> -->
+			<!-- 	</ItemsControl.Resources> -->
+			<!-- -->
+			<!-- -->
+			<!-- 	<ItemsControl.ItemTemplate> -->
+			<!-- 		<DataTemplate> -->
+			<!-- 			<DockPanel  -->
+			<!-- 					 -->
+			<!-- 					HorizontalAlignment="Stretch" -->
+			<!-- 					> -->
+			<!-- 				<TextBlock -->
+			<!-- 						Width="25" -->
+			<!-- 						FontSize="{StaticResource FontSize.Normal}" -->
+			<!-- 						Padding="0" -->
+			<!-- 						Margin="0,-2,0,-2" -->
+			<!-- 						Text="{Binding [0]}" -->
+			<!-- 						/> -->
+			<!-- 				<TextBlock -->
+			<!-- 				HorizontalAlignment="Left" -->
+			<!-- 						FontSize="{StaticResource FontSize.Normal}" -->
+			<!-- 						Padding="0" -->
+			<!-- 						Margin="0,-2,0,-2" -->
+			<!-- 						TextWrapping="Wrap" -->
+			<!-- 						Text="{Binding [1]}" -->
+			<!-- 						> -->
+			<!-- 				</TextBlock> -->
+			<!-- 			</DockPanel> -->
+			<!-- 		</DataTemplate> -->
+			<!-- -->
+			<!-- 	</ItemsControl.ItemTemplate> -->
+			<!-- -->
+			<!-- </ItemsControl> -->
+			<!-- -->
+			<!-- -->
+
+
+		</StackPanel>
 
 	</StackPanel>
+
 </Window>

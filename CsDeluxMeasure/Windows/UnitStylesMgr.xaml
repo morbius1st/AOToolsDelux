@@ -23,9 +23,8 @@
 		Loaded="UnitStylesMgr_Loaded"
 		Closing="UnitStylesMgr_Closing"
 		IsKeyboardFocusWithinChanged="UnitStylesMgr_OnIsKeyboardFocusWithinChanged"
+		Icon="/CsDeluxMeasure;component/Resources/CyberStudio Icon.png"
 		>
-	<!--    -->
-	<!--  Background="{DynamicResource Normal.Window.Background}"  -->
 
 	<Window.Style>
 		<Style TargetType="Window">
@@ -48,38 +47,10 @@
 					</EventTrigger.Actions>
 				</EventTrigger>
 
-
-				<!-- <DataTrigger Binding="{Binding ElementName=WinUnitStyle, Path=WinIsEnabled}" Value="True"> -->
-				<!--    -->
-				<!-- 	<DataTrigger.EnterActions> -->
-				<!-- 		<BeginStoryboard> -->
-				<!-- 			<Storyboard> -->
-				<!--  ~1~ <DoubleAnimation @1@  -->
-				<!--  ~1~ 		Storyboard.TargetProperty="Height" @1@  -->
-				<!--  ~1~ 		From="0" @1@  -->
-				<!--  ~1~ 		To="700" @1@  -->
-				<!--  ~1~ 		BeginTime="0:0:0.2" @1@  -->
-				<!--  ~1~ 		Duration="0:0:0.3" @1@  -->
-				<!--  ~1~ 		/> @1@  -->
-				<!--  <DoubleAnimation  -->
-				<!--  Storyboard.TargetProperty="Opacity"  -->
-				<!--  From="0" To="1"  -->
-				<!--  BeginTime="0:0:0.3"  -->
-				<!--  Duration="0:0:0.3"  -->
-				<!--  />  -->
-				<!-- 			</Storyboard> -->
-				<!-- 		</BeginStoryboard> -->
-				<!-- 	</DataTrigger.EnterActions> -->
-				<!-- </DataTrigger> -->
 			</Style.Triggers>
 		</Style>
 
 	</Window.Style>
-
-	<!--  MaxHeight="760"  -->
-	<!--  SizeToContent="Height"  -->
-	<!--  IsKeyboardFocusWithinChanged="UnitStylesMgr_OnIsKeyboardFocusWithinChanged"  -->
-	<!--  LocationChanged="UnitStylesMgr_LocationChanged"  -->
 
 	<Window.Resources>
 
@@ -91,7 +62,7 @@
 				<ResourceDictionary Source="pack://Application:,,,/CsDeluxMeasure;component/Windows/ResourceFiles/XamlResources/VisualStates.xaml" />
 				<ResourceDictionary Source="pack://Application:,,,/CsDeluxMeasure;component/Windows/Skin/CyberStudioSkin.xaml" />
 
-				<ResourceDictionary Source="pack://Application:,,,/CsDeluxMeasure;component/Windows/Support/CsExpander.xaml" />
+				<!-- <ResourceDictionary Source="pack://Application:,,,/CsDeluxMeasure;component/Windows/Support/CsExpander.xaml" /> -->
 				<ResourceDictionary Source="pack://Application:,,,/CsDeluxMeasure;component/Windows/Support/CsScrollViewer.xaml" />
 				<ResourceDictionary Source="pack://Application:,,,/CsDeluxMeasure;component/Windows/Support/CsScrollBar.xaml" />
 				<ResourceDictionary Source="pack://Application:,,,/CsDeluxMeasure;component/Windows/Support/CsComboBox.xaml" />
@@ -1227,8 +1198,7 @@
 
 			<Style x:Key="BdrCanEditTextPlusGoodBad"
 					TargetType="Border"
-
-			>
+					>
 				<Setter Property="CornerRadius" Value="{StaticResource CornerRadius.Tbx}" />
 				<Setter Property="BorderThickness" Value="1" />
 				<Setter Property="BorderBrush" Value="Transparent" />
@@ -1258,7 +1228,7 @@
 					>
 				<Setter Property="Margin" Value="0,2,0,0" />
 
-				<Setter Property="cs:VisualStates.GenericThickness" Value="{StaticResource Action2.BorderThk}" />
+				<Setter Property="cs:CustomProperties.GenericThickness" Value="{StaticResource Action2.BorderThk}" />
 				<Setter Property="cs:VisualStates.BgDisabled" Value="{StaticResource Action2.Bg.Disabled}" />
 				<Setter Property="cs:VisualStates.BgIsEnabled" Value="{StaticResource Action2.Bg.IsEnabled}" />
 				<Setter Property="cs:VisualStates.BgIsSel" Value="{StaticResource Action2.Bg.IsSel}" />
@@ -1390,6 +1360,26 @@
 			</Style>
 
 
+			<Style x:Key="TblkPopInfoList"
+					TargetType="TextBlock"
+					>
+				<Setter Property="Visibility" Value="Visible" />
+				<Setter Property="FontSize" Value="{StaticResource FontSize.Normal}" />
+				<Setter Property="Padding" Value="0" />
+				<Setter Property="Margin" Value="0" />
+				<Setter Property="Background" Value="{StaticResource Pop.Ic.Tblk.Bg}" />
+				<Setter Property="Foreground" Value="{StaticResource Pop.Ic.Tblk.Fg}" />
+				<Setter Property="LineHeight" Value="{StaticResource Pop.Ic.Tblk.Lh}" />
+				<Setter Property="LineStackingStrategy" Value="BlockLineHeight" />
+				<Setter Property="TextWrapping" Value="Wrap" />
+				<Style.Triggers>
+					<Trigger Property="Text" Value="{x:Null}">
+						<Setter Property="Visibility" Value="Collapsed" />
+					</Trigger>
+				</Style.Triggers>
+			</Style>
+
+
 			<!--#region > text block styles with triggers-->
 
 			<Style x:Key="TblkTrigsL3CanEditTitle"
@@ -1415,7 +1405,8 @@
 			<!--  new unit style entry text boxes  -->
 			<Style x:Key="TbxEditable"
 					TargetType="TextBox"
-					BasedOn="{StaticResource CtrlTrigs.L3}">
+					BasedOn="{StaticResource CtrlTrigs.L3}"
+					>
 				<Setter Property="Background" Value="Transparent" />
 				<Setter Property="BorderBrush" Value="Transparent" />
 				<Setter Property="BorderThickness" Value="0" />
@@ -1430,13 +1421,29 @@
 				<Setter Property="VerticalContentAlignment" Value="Center" />
 			</Style>
 
+			<Style x:Key="TbxHelpPopup"
+					TargetType="TextBox"
+					>
+				<Setter Property="Focusable" Value="False" />
+				<Setter Property="Padding" Value="4,2,4,3" />
+				<Setter Property="Margin" Value="0,1,0,3" />
+				<Setter Property="HorizontalAlignment" Value="Stretch" />
+				<Setter Property="FontSize" Value="{StaticResource FontSize.Normal}" />
+				<Setter Property="Background" Value="WhiteSmoke" />
+				<Setter Property="Foreground" Value="Black" />
+				<Setter Property="BorderThickness" Value="0" />
+				<Setter Property="IsReadOnly" Value="True" />
+				<Setter Property="TextAlignment" Value="Left" />
+				<Setter Property="TextWrapping" Value="Wrap" />
+			</Style>
+
 
 			<!--#region > text box styles with triggers-->
 
-			<!-- <Style x:Key="TbxTrigsL3CanEditTextBase" -->
-			<!-- 		TargetType="TextBox" -->
-			<!-- 		BasedOn="{StaticResource CtrlTrigs.L3}" -->
-			<!-- 		> -->
+			<!--  <Style x:Key="TbxTrigsL3CanEditTextBase"  -->
+			<!--  TargetType="TextBox"  -->
+			<!--  BasedOn="{StaticResource CtrlTrigs.L3}"  -->
+			<!--  >  -->
 			<!-- 	<Setter Property="cs:VisualStates.FgDisabled" Value="{StaticResource CanEdit.Fg.Disabled}" /> -->
 			<!-- 	<Setter Property="cs:VisualStates.FgIsEnabled" Value="{StaticResource CanEdit.Fg.IsEnabled}" /> -->
 			<!-- 	<Setter Property="cs:VisualStates.FgIsSel" Value="{StaticResource CanEdit.Fg.IsSel}" /> -->
@@ -1445,11 +1452,11 @@
 			<!-- 	<Setter Property="cs:VisualStates.FgIsLocked" Value="{StaticResource CanEdit.Fg.IsLocked}" /> -->
 			<!-- 	~1~ <Setter Property="cs:VisualStates.DoesMouseOver" Value="False" /> @1@ -->
 			<!-- </Style> -->
-			<!-- -->
-			<!-- <Style x:Key="TbxTrigsL3CanEditTextBaseMo" -->
-			<!-- 		TargetType="TextBox" -->
-			<!-- 		BasedOn="{StaticResource TbxTrigsL3CanEditTextBase}" -->
-			<!-- 		> -->
+			<!--    -->
+			<!--  <Style x:Key="TbxTrigsL3CanEditTextBaseMo"  -->
+			<!--  TargetType="TextBox"  -->
+			<!--  BasedOn="{StaticResource TbxTrigsL3CanEditTextBase}"  -->
+			<!--  >  -->
 			<!-- 	<Setter Property="cs:VisualStates.FgIsEnabledMouseOver" Value="{StaticResource CanEdit.Fg.IsEnabled.MouseOver}" /> -->
 			<!-- 	<Setter Property="cs:VisualStates.FgIsSelMouseOver" Value="{StaticResource CanEdit.Fg.IsSel.MouseOver}" /> -->
 			<!-- 	<Setter Property="cs:VisualStates.FgIsEditingMouseOver" Value="{StaticResource CanEdit.Fg.IsEditing.MouseOver}" /> -->
@@ -1500,6 +1507,8 @@
 
 			<!--#endregion-->
 
+			<!--#endregion-->
+
 			<!--#region > L5 scrollviewer styles-->
 
 			<!--  listbox scrollviewer overrides  -->
@@ -1535,8 +1544,6 @@
 
 			<!--#endregion-->
 
-			<!--#endregion-->
-
 			<!--#region > L5 path styles-->
 
 			<Style x:Key="PathCanEditText.Icon1"
@@ -1558,7 +1565,7 @@
 				<Setter Property="cs:VisualStates.IconGeometryIsLocked" Value="{StaticResource IconIsLocked}" />
 
 			</Style>
-				<!-- <Setter Property="cs:CsPathAp.IconIsEditingScaleX" Value="1.0" /> -->
+			<!-- <Setter Property="cs:CsPathAp.IconIsEditingScaleX" Value="1.0" /> -->
 
 			<Style x:Key="PathClearText.Icon"
 					TargetType="Path"
@@ -1575,6 +1582,17 @@
 					TargetType="Path"
 					>
 				<Setter Property="Margin" Value="2.5" />
+				<Setter Property="Fill" Value="White" />
+				<Setter Property="Stretch" Value="Uniform" />
+				<Setter Property="Data" Value="{StaticResource IconHelp}" />
+				<Setter Property="VerticalAlignment" Value="Center" />
+				<Setter Property="HorizontalAlignment" Value="Center" />
+			</Style>
+
+			<Style x:Key="PathHelp.Icon"
+					TargetType="Path"
+					>
+				<Setter Property="Margin" Value="5" />
 				<Setter Property="Fill" Value="White" />
 				<Setter Property="Stretch" Value="Uniform" />
 				<Setter Property="Data" Value="{StaticResource IconHelp}" />
@@ -1720,7 +1738,7 @@
 				<Setter Property="Placement" Value="Bottom" />
 				<Setter Property="VerticalOffset" Value="2" />
 				<Setter Property="StaysOpen" Value="True" />
-				<Setter Property="PopupAnimation" Value="Scroll" />
+				<Setter Property="PopupAnimation" Value="Fade" />
 			</Style>
 
 
@@ -1941,57 +1959,7 @@
 
 			<!--#endregion-->
 
-			<!--#region > L4 dt so dialog control - style order (DtDlgCtrlStyleOrder)-->
-
-			<DataTemplate x:Key="DtDlgCtrlStyleOrder">
-
-				<StackPanel x:Name="DialogControls"
-						DockPanel.Dock="Bottom"
-						Margin="0,0,0,0"
-						HorizontalAlignment="Right"
-						VerticalAlignment="Bottom"
-						Orientation="Horizontal"
-						>
-
-					<Button x:Name="BtnSoReset"
-							Content="Reset"
-							Margin="10,0,0,0"
-							HorizontalAlignment="Right"
-							Style="{StaticResource Btn.Std}"
-							/>
-
-
-					<Button x:Name="BtnSoCancel"
-							Content="Cancel"
-							Margin="10,0,0,0"
-							HorizontalAlignment="Right"
-							Style="{StaticResource Btn.Std}"
-							/>
-
-
-					<Button x:Name="BtnSoApply"
-							Content="Apply"
-							Margin="10,0,0,0"
-							HorizontalAlignment="Right"
-							Style="{StaticResource Btn.Std}"
-							/>
-
-					<Button x:Name="BtnSoDone"
-							Content="Done"
-							Margin="10,0,0,0"
-							HorizontalAlignment="Right"
-							Style="{StaticResource Btn.Std}"
-							/>
-
-
-				</StackPanel>
-
-			</DataTemplate>
-
-			<!--#endregion-->
-
-			<!--#region > L4 popup CC (ccEditOptPopup-->
-
+			<!--#region debug check boxes-->
 
 			<DockPanel x:Key="DpChkBxs"
 					DockPanel.Dock="Top"
@@ -2060,6 +2028,9 @@
 
 			</DockPanel>
 
+			<!--#endregion-->
+
+			<!--#region > L4 popup CC (ccEditOptPopup-->
 
 			<ContentControl x:Key="CcEditOptsPopup"
 					x:Shared="False"
@@ -2098,6 +2069,8 @@
 									<ColumnDefinition Width="{StaticResource ColWidthEditOpsBtw}" />
 									<ColumnDefinition Width="{StaticResource ColWidthEditOps}" />
 									<ColumnDefinition Width="*" />
+									<ColumnDefinition Width="{StaticResource ColWidthEditOps}" />
+									<ColumnDefinition Width="{StaticResource ColWidthEditOpsBtw}" />
 									<ColumnDefinition Width="{StaticResource ColWidthEditOps}" />
 									<ColumnDefinition Width="{StaticResource ColWidthEditOpsBtw}" />
 								</Grid.ColumnDefinitions>
@@ -2245,6 +2218,36 @@
 								</StackPanel>
 
 
+
+								<StackPanel x:Name="SpEditOpsClose"
+										Grid.Column="11"
+										Orientation="Vertical"
+										Style="{StaticResource PuPnlEditOps}"
+										>
+									<Button x:Name="BtnEditOptsClose"
+											Focusable="False"
+											ToolTip="Close"
+											Padding="1"
+											Style="{StaticResource PuBtnEditOps}"
+											Template="{StaticResource Button.Stealth.ControlTemplate}"
+											Click="BtnEditOptsClose_OnClick"
+											>
+										<Button.Content>
+											<Path
+													Data="{StaticResource IconClose}"
+													Style="{StaticResource PuPathEditOps}"
+													>
+											</Path>
+										</Button.Content>
+									</Button>
+
+									<TextBlock
+											Text="Close"
+											Style="{StaticResource PuTblkEditOps}"
+											>
+									</TextBlock>
+								</StackPanel>
+
 								<TextBlock x:Name="TblkPopupTitle"
 										Grid.Column="1"
 										Grid.ColumnSpan="6"
@@ -2289,6 +2292,220 @@
 					x:Shared="False"
 					>
 				<ContentControl.ContentTemplate>
+
+					<DataTemplate x:Name="DtHelpPopup">
+
+						<Grid x:Name="GrdPopup"
+								Width="{Binding (cs:CustomProperties.GenericDoubleOne), RelativeSource={RelativeSource Self}, FallbackValue=100.0}"
+								Focusable="False"
+								HorizontalAlignment="Stretch"
+								Background="Transparent"
+								>
+
+							<Grid.ColumnDefinitions>
+								<ColumnDefinition Width="*" />
+								<ColumnDefinition Width="18" />
+							</Grid.ColumnDefinitions>
+
+							<Grid.RowDefinitions>
+								<RowDefinition Height="*" />
+								<RowDefinition Height="*" />
+
+							</Grid.RowDefinitions>
+
+							<Border x:Name="BdrPopup"
+									Grid.Column="0"
+									Grid.Row="0"
+									Margin="0,0,3,0"
+									Padding="13,0,2,0"
+									Background="{StaticResource Pop.Bdr.Out.Bg}"
+									BorderThickness="0,0,0,0"
+									BorderBrush="{StaticResource Pop.Bdr.Out}"
+									CornerRadius="12,12,0,0"
+									>
+								<TextBlock x:Name="TblkPopupTitle"
+										Focusable="False"
+										Margin="0,1,0,2"
+										HorizontalAlignment="Stretch"
+										FontSize="{StaticResource FontSize.Normal}"
+										Background="{StaticResource Pop.Tblk.Ttl.Out.Bg}"
+										Foreground="{StaticResource Pop.Tblk.Ttl.Out.Fg}"
+										Text="{Binding RelativeSource={RelativeSource Self}, Path=(cs:VisualStates.MainTitle), FallbackValue='This IsEnabled Title Text'}"
+										FontWeight="DemiBold"
+										/>
+							</Border>
+
+							<Button x:Name="BtnClosePopup"
+									Grid.Column="1"
+									Grid.Row="0"
+									Focusable="False"
+									FontFamily="Segoe UI Symbol"
+									Background="{StaticResource Pop.Btn.Cls.Bg}"
+									Foreground="{StaticResource Pop.Btn.Cls.Fg}"
+									>
+								<!--  Click="BtnPopupClose_OnClick"  -->
+								<Button.Content>
+									<Path
+											Data="{StaticResource IconClose}"
+											Fill="White"
+											Stretch="Uniform"
+											/>
+								</Button.Content>
+							</Button>
+
+							<Border x:Name="BdrPopupInner"
+									Grid.Column="0"
+									Grid.Row="1"
+									Margin="0,0,3,0"
+									Padding="9,0,6,2"
+									BorderThickness="0"
+									CornerRadius="0,0,12,12"
+									Background="{StaticResource Pop.Bdr.In.Bg}"
+									>
+
+
+
+								<!-- <Border.Background> -->
+								<!-- 	<LinearGradientBrush StartPoint="0.5,0" EndPoint="0.5,1"> -->
+								<!-- 		<GradientStop Offset="0" Color="#E100FF00" /> -->
+								<!-- 		<GradientStop Offset="1" Color="#FF00C400" /> -->
+								<!-- 		<GradientStop Offset="0.9" Color="#FB003800" /> -->
+								<!-- 	</LinearGradientBrush> -->
+								<!-- </Border.Background> -->
+
+								<DockPanel
+										HorizontalAlignment="Stretch"
+										VerticalAlignment="Stretch"
+										Margin="4"
+										>
+
+									<TextBox x:Name="TbxPopupInnerTitle"
+											DockPanel.Dock="Top"
+											Margin="0"
+											FontWeight="DemiBold"
+											VerticalAlignment="Top"
+											Text="{Binding RelativeSource={RelativeSource Self}, Path=(cs:VisualStates.MainDescription), FallbackValue='This is main description text'}"
+											Background="{StaticResource Pop.Tblk.Ttl.In.Bg}"
+											Foreground="{StaticResource Pop.Tblk.Ttl.In.Fg}"
+											Style="{StaticResource TbxHelpPopup}"
+											>
+										<TextBox.Resources>
+											<Style TargetType="{x:Type Border}">
+												<Setter Property="CornerRadius" Value="{StaticResource CornerRadius.Std}">
+												</Setter>
+											</Style>
+										</TextBox.Resources>
+
+									</TextBox>
+
+									<ItemsControl
+											BorderThickness="0"
+											Background="{StaticResource Pop.Ic.Bg}"
+											VerticalAlignment="Stretch"
+											HorizontalContentAlignment="Left"
+											FontSize="{StaticResource FontSize.Normal}"
+											Margin="0,5,0,0"
+											Padding="7"
+											Focusable="False"
+											DataContext="{Binding (cs:VisualStates.MainInfo), RelativeSource={RelativeSource Self}}"
+											ItemsSource="{Binding}"
+											>
+										<ItemsControl.Resources>
+											<Style TargetType="{x:Type Border}">
+												<Setter Property="CornerRadius" Value="8">
+												</Setter>
+											</Style>
+										</ItemsControl.Resources>
+
+										<ItemsControl.ItemTemplate>
+											<DataTemplate>
+												<Grid
+														Margin="{Binding Marg}"
+														HorizontalAlignment="Stretch"
+														>
+
+													<Grid.ColumnDefinitions>
+														<ColumnDefinition x:Name="Index0"
+																Width="{StaticResource Pop.Col0}"
+																/>
+														<ColumnDefinition x:Name="Index1"
+																Width="{StaticResource Pop.Col1}"
+																/>
+														<ColumnDefinition x:Name="Index2"
+																Width="{StaticResource Pop.Col2}"
+																/>
+														<ColumnDefinition x:Name="Index3"
+																Width="{StaticResource Pop.Col3}"
+																/>
+														<ColumnDefinition x:Name="Index4"
+																Width="*"
+																/>
+													</Grid.ColumnDefinitions>
+													<!--  bold title / margin 4 abv + 2 below  -->
+													<TextBlock x:Name="Col0_0"
+															Grid.Column="0"
+															Grid.ColumnSpan="5"
+															Text="{Binding HelpDesc[0], Mode=OneWay, TargetNullValue=''}"
+															Style="{StaticResource TblkPopInfoList}"
+															/>
+													<!--  sub-title / margin 4 abv + 2 below  -->
+													<TextBlock x:Name="Col0_1"
+															Grid.Column="0"
+															Grid.ColumnSpan="5"
+															FontWeight="DemiBold"
+															Text="{Binding HelpDesc[1], Mode=OneWay, TargetNullValue=''}"
+															Style="{StaticResource TblkPopInfoList}"
+															/>
+													<!--  far left - bullet or text  -->
+													<TextBlock x:Name="Col0_2"
+															Grid.Column="0"
+															Grid.ColumnSpan="5"
+															Text="{Binding HelpDesc[2], Mode=OneWay, TargetNullValue=''}"
+															Style="{StaticResource TblkPopInfoList}"
+															/>
+													<!--  text at col 1  -->
+													<TextBlock x:Name="Col1"
+															Grid.Column="1"
+															Grid.ColumnSpan="4"
+															Text="{Binding HelpDesc[3], Mode=OneWay, TargetNullValue=''}"
+															Style="{StaticResource TblkPopInfoList}"
+															/>
+													<!--  text at col 2  -->
+													<TextBlock x:Name="Col2"
+															Grid.Column="2"
+															Grid.ColumnSpan="3"
+															Text="{Binding HelpDesc[4], Mode=OneWay, TargetNullValue=''}"
+															Style="{StaticResource TblkPopInfoList}"
+															/>
+													<!--  text at col 3  -->
+													<TextBlock x:Name="Col3"
+															Grid.Column="3"
+															Grid.ColumnSpan="2"
+															Text="{Binding HelpDesc[5], Mode=OneWay, TargetNullValue=''}"
+															Style="{StaticResource TblkPopInfoList}"
+															/>
+													<!--  text at col 4  -->
+													<TextBlock x:Name="Col4"
+															Grid.Column="4"
+															Text="{Binding HelpDesc[6], Mode=OneWay, TargetNullValue=''}"
+															Style="{StaticResource TblkPopInfoList}"
+															/>
+
+												</Grid>
+											</DataTemplate>
+										</ItemsControl.ItemTemplate>
+
+									</ItemsControl>
+
+								</DockPanel>
+							</Border>
+
+						</Grid>
+					</DataTemplate>
+
+
+
+					<!-- voided
 
 					<DataTemplate x:Name="DtPopup">
 
@@ -2340,7 +2557,7 @@
 									Background="LimeGreen"
 									Foreground="White"
 									>
-								<!--  Click="BtnPopupClose_OnClick"  -->
+
 								<Button.Content>
 									<Path
 											Data="{StaticResource IconClose}"
@@ -2391,22 +2608,27 @@
 
 						</Grid>
 					</DataTemplate>
+
+					-->
+
 				</ContentControl.ContentTemplate>
+
 			</ContentControl>
 
 			<!--#endregion-->
-			
+
 			<!--#region > L4 dt us lbx item container-->
 
 			<Style x:Key="Lbx1ItemContainerStyle1"
 					TargetType="ListBoxItem"
 					>
 				<Setter Property="SnapsToDevicePixels" Value="True" />
-				<Setter Property="Padding" Value="0,3,3,3" />
-				<Setter Property="Margin" Value="5,1,5,1" />
-				<Setter Property="Width" Value="{Binding RelativeSource={RelativeSource AncestorType={x:Type ScrollContentPresenter}}, Path=ActualWidth}"/>
-				<Setter Property="HorizontalContentAlignment" Value="{Binding HorizontalContentAlignment, RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}}}" />
-				<Setter Property="VerticalContentAlignment" Value="{Binding VerticalContentAlignment, RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}}}" />
+				<Setter Property="Padding" Value="0" />
+				<Setter Property="Margin" Value="0" />
+				<Setter Property="Width" Value="{Binding RelativeSource={RelativeSource AncestorType={x:Type ScrollContentPresenter}}, Path=ActualWidth}" />
+
+				<Setter Property="HorizontalContentAlignment" Value="{Binding RelativeSource={RelativeSource AncestorType={x:Type ListBox}}, Path=HorizontalContentAlignment}" />
+				<Setter Property="VerticalContentAlignment" Value="{Binding RelativeSource={RelativeSource AncestorType={x:Type ListBox}}, Path=VerticalContentAlignment}" />
 				<Setter Property="Background" Value="{StaticResource Lv1.Panel.Bg.IsEnabled}" />
 				<Setter Property="BorderBrush" Value="Transparent" />
 				<Setter Property="BorderThickness" Value="0" />
@@ -2439,7 +2661,7 @@
 										<!-- <Condition Property="Selector.IsSelectionActive" Value="False" /> -->
 										<Condition Property="IsSelected" Value="false" />
 									</MultiTrigger.Conditions>
-									<Setter TargetName="BdCs1" Property="Margin" Value="7,1,12,1" />
+									<Setter TargetName="BdCs1" Property="Margin" Value="9,3,14,3" />
 									<Setter TargetName="BdCs1" Property="Padding" Value="2" />
 									<Setter TargetName="BdCs1" Property="BorderThickness" Value="2.0" />
 									<Setter TargetName="BdCs1" Property="Background" Value="{StaticResource Lv1.Panel.Bg.IsEnabled}" />
@@ -2452,7 +2674,7 @@
 										<!-- <Condition Property="Selector.IsSelectionActive" Value="True" /> -->
 										<Condition Property="IsSelected" Value="true" />
 									</MultiTrigger.Conditions>
-									<Setter TargetName="BdCs1" Property="Margin" Value="0,2,5,2" />
+									<Setter TargetName="BdCs1" Property="Margin" Value="2,4,7,4" />
 									<Setter TargetName="BdCs1" Property="Padding" Value="10.5,2.5,10.5,2.5" />
 									<Setter TargetName="BdCs1" Property="BorderThickness" Value="0.5" />
 									<Setter TargetName="BdCs1" Property="Background" Value="{StaticResource Lv1.Panel.Bg.IsSel}" />
@@ -2466,7 +2688,7 @@
 										<Condition Property="IsMouseOver" Value="true" />
 										<Condition Property="IsSelected" Value="False" />
 									</MultiTrigger.Conditions>
-									<Setter TargetName="BdCs1" Property="Margin" Value="0,2,5,2" />
+									<Setter TargetName="BdCs1" Property="Margin" Value="2,4,7,4" />
 									<Setter TargetName="BdCs1" Property="Padding" Value="9,1,9,1" />
 									<Setter TargetName="BdCs1" Property="BorderThickness" Value="2.0" />
 									<Setter TargetName="BdCs1" Property="Background" Value="{StaticResource Lv1.Panel.Bg.MouseOver}" />
@@ -2479,7 +2701,7 @@
 										<Condition Property="IsMouseOver" Value="true" />
 										<Condition Property="IsSelected" Value="True" />
 									</MultiTrigger.Conditions>
-									<Setter TargetName="BdCs1" Property="Margin" Value="0,2,5,2" />
+									<Setter TargetName="BdCs1" Property="Margin" Value="2,4,7,4" />
 									<Setter TargetName="BdCs1" Property="Padding" Value="9,1,9,1" />
 									<Setter TargetName="BdCs1" Property="BorderThickness" Value="2.0" />
 									<Setter TargetName="BdCs1" Property="BorderBrush" Value="{StaticResource Lv1.Panel.Bdr.MouseOver}" />
@@ -2506,8 +2728,6 @@
 					>
 
 				<Grid x:Name="GrdLv1Item"
-
-						
 						Height="Auto"
 						Margin="3"
 						VerticalAlignment="Center"
@@ -2629,6 +2849,7 @@
 							Grid.Row="0"
 							Grid.ColumnSpan="2"
 							Margin="3,-1,0,1.67"
+							DataContext="{Binding}"
 							Style="{StaticResource BdrCanEditPair}"
 							>
 
@@ -2664,52 +2885,23 @@
 
 								<Border x:Name="BdrNameText"
 										Grid.Column="0"
-								>
+										>
 									<Border.Style>
 										<Style
 												TargetType="Border"
 												BasedOn="{StaticResource BdrCanEditText}"
 												>
-											<Style.Triggers>
-												<DataTrigger Binding="{Binding ActiveElement}" Value="6">
-													<Setter Property="cs:VisualStates.IsEditing" Value="True" />
-													<Setter Property="cs:VisualStates.IsActivated" Value="True" />
-												</DataTrigger>
-											</Style.Triggers>
+											<!-- <Style.Triggers> -->
+											<!-- 	<DataTrigger Binding="{Binding ActiveElement}" Value="6"> -->
+											<!-- 		<Setter Property="cs:VisualStates.IsEditing" Value="True" /> -->
+											<!-- 		<Setter Property="cs:VisualStates.IsActivated" Value="True" /> -->
+											<!-- 	</DataTrigger> -->
+											<!-- </Style.Triggers> -->
 										</Style>
 									</Border.Style>
 
 
 									<DockPanel x:Name="DpName">
-
-										<!--  Tag="6"  -->
-
-										<!-- <Button x:Name="BtnNameEditStatus" -->
-										<!-- 		DockPanel.Dock="Right" -->
-										<!-- 		Width="{StaticResource IconEditStatusWidth}" -->
-										<!-- 		cs:CustomProperties.GenericPopupOne="{Binding ElementName=PuInfoEditName}" -->
-										<!-- 		Style="{StaticResource BtnIconEditStatus}" -->
-										<!-- 		Click="BtnPopupInfoStart_OnClick" -->
-										<!-- 		> -->
-										<!-- 	<Button.Content> -->
-										<!-- 		<Path x:Name="PathNameEditStatus" -->
-										<!-- 				Style="{StaticResource PathCanEditText.Icon1}" -->
-										<!-- 				/> -->
-										<!-- 	</Button.Content> -->
-										<!-- -->
-										<!-- </Button> -->
-										<!-- -->
-										<!-- <Button x:Name="BtnNameClearText" -->
-										<!-- 		DockPanel.Dock="Right" -->
-										<!-- 		Style="{StaticResource BtnIconClearText}" -->
-										<!-- 		Click="Btn_NameEntryClear_OnClick" -->
-										<!-- 		> -->
-										<!-- 	<Button.Content> -->
-										<!-- 		<Path x:Name="PathNameClearText" -->
-										<!-- 				Style="{StaticResource PathClearText.Icon}" -->
-										<!-- 				/> -->
-										<!-- 	</Button.Content> -->
-										<!-- </Button> -->
 
 										<Popup Name="PuEditOptsStyleName"
 												cs:CustomProperties.GenericPopupOne="{Binding ElementName=PuEditNameHelp}"
@@ -2719,75 +2911,42 @@
 												Opened="EditOpsPopup_Opened"
 												Closed="EditOpsPopup_OnClosed"
 												Style="{StaticResource PuBase}"
-										/>
+												/>
 
 										<Popup Name="PuEditNameHelp"
 												PlacementTarget="{Binding ElementName=TblkEditNameText}"
-												cs:VisualStates.MainContent="Provide the name for the subject following these requirements&#013;&#x25CF;  Must Being with an Alpha&#013;    Character&#013;&#x25CF;  Minimum of 4 Characters&#013;&#x25CF;  Only Numbers and letters"
-												cs:VisualStates.TitleText="Edit Name Help"
-												Child="{DynamicResource CcHelpPopup}"
+												cs:VisualStates.MainTitle="{x:Static cs:UnitStylesMgrWinData.NameHelpInfoTitle}"
+												cs:VisualStates.MainDescription="{x:Static cs:UnitStylesMgrWinData.NameHelpInfoHeader}"
+												cs:VisualStates.MainInfo="{x:Static cs:UnitStylesMgrWinData.NameHelpInfo}"
+												cs:CustomProperties.GenericDoubleOne="{StaticResource Pop.StyleName.Width}"
+												Child="{StaticResource CcHelpPopup}"
 												Button.Click="BtnPopupClose_OnClick"
 												Style="{StaticResource PuBase}"
 												>
 										</Popup>
 
 										<Border
-												Style="{StaticResource BdrCanEditTextPlusGoodBad}"
 												cs:VisualStates.IsGoodBad="{Binding IsNameOk, Mode=OneWay}"
+												Style="{StaticResource BdrCanEditTextPlusGoodBad}"
 												>
 
 											<TextBox x:Name="TblkEditNameText"
-												DockPanel.Dock="Left"
-												cs:CustomProperties.GenericIntOne="{x:Static cs:UnitStylesMgrWinData.POPUP_STYLE_NAME}"
-												cs:CustomProperties.GenericPopupOne="{Binding ElementName=PuEditOptsStyleName}"
-												TextWrapping="NoWrap"
-												ClipToBounds="True"
-												Style="{StaticResource TbxTrigsL3CanEditText}"
-												Text="{Binding Ustyle.Name}"
-												GotFocus="Tbx_OnGotFocus"
-												LostFocus="Tbx_OnLostFocus"
-												ToolTip="{Binding EditNameToolTip, ElementName=WinUnitStyle, Mode=OneWay}"
-												>
-												
+													DockPanel.Dock="Left"
+													cs:CustomProperties.GenericIntOne="{x:Static cs:UnitStylesMgrWinData.POPUP_STYLE_NAME}"
+													cs:CustomProperties.GenericPopupOne="{Binding ElementName=PuEditOptsStyleName}"
+													TextWrapping="NoWrap"
+													ClipToBounds="True"
+													GotFocus="Tbx_OnGotFocus"
+													LostFocus="Tbx_OnLostFocus"
+													KeyDown="TbxEditText_OnKeyDown"
+													Text="{Binding Name, Mode=TwoWay}"
+													ToolTip="{Binding NameValidationMsg, Mode=OneWay}"
+													Style="{StaticResource TbxTrigsL3CanEditText}"
+													>
+
 											</TextBox>
 
 										</Border>
-
-										<!--  Text="{Binding Ustyle.Name, Mode=TwoWay}"  -->
-
-											<!--  Validation.ErrorTemplate="{StaticResource CtValidationName}"  -->
-											<!--  Validation.Error="NameValidation_OnError"  -->
-											<!-- <TextBox.Style> -->
-											<!--  <Style  -->
-											<!--  TargetType="{x:Type TextBox}"  -->
-											<!--  BasedOn="{StaticResource TbxTrigsL3CanEditText}"  -->
-											<!--  >  -->
-											<!--    -->
-											<!-- 		<Setter Property="ToolTip" Value="Provide a name for your style" /> -->
-											<!--    -->
-											<!-- 		<Style.Triggers> -->
-											<!-- 			<Trigger Property="Validation.HasError" Value="True"> -->
-											<!-- 				<Setter Property="ToolTip" Value="{Binding (Validation.Errors)/ErrorContent, RelativeSource={x:Static RelativeSource.Self}}" /> -->
-											<!-- 			</Trigger> -->
-											<!-- 		</Style.Triggers> -->
-											<!--    -->
-											<!-- 	</Style> -->
-											<!-- </TextBox.Style> -->
-											<!--    -->
-											<!-- <TextBox.Text> -->
-											<!-- 	<Binding Path="Ustyle.Name" Mode="TwoWay" UpdateSourceTrigger="LostFocus" NotifyOnValidationError="True"> -->
-											<!-- 		<Binding.ValidationRules> -->
-											<!--  <cs:NameValidation  -->
-											<!--  d:uMgr="{x:Null}"  -->
-											<!--  uMgr="{x:Static util:UnitsManager.Instance}"  -->
-											<!--  />  -->
-											<!-- 		</Binding.ValidationRules> -->
-											<!-- 	</Binding> -->
-											<!-- </TextBox.Text> -->
-
-
-
-
 
 									</DockPanel>
 								</Border>
@@ -2843,46 +3002,18 @@
 												TargetType="Border"
 												BasedOn="{StaticResource BdrCanEditText}"
 												>
-											<Style.Triggers>
-												<DataTrigger Binding="{Binding ActiveElement}" Value="6">
-													<Setter Property="cs:VisualStates.IsEditing" Value="True" />
-													<Setter Property="cs:VisualStates.IsActivated" Value="True" />
-												</DataTrigger>
-											</Style.Triggers>
+											<!-- <Style.Triggers> -->
+											<!-- 	<DataTrigger Binding="{Binding ActiveElement}" Value="6"> -->
+											<!-- 		<Setter Property="cs:VisualStates.IsEditing" Value="True" /> -->
+											<!-- 		<Setter Property="cs:VisualStates.IsActivated" Value="True" /> -->
+											<!-- 	</DataTrigger> -->
+											<!-- </Style.Triggers> -->
 										</Style>
 									</Border.Style>
 
 									<DockPanel x:Name="DpDesc">
-										<!--  HorizontalAlignment="Stretch"  -->
-
-										<!-- <Button x:Name="BtnDescEditStatus" -->
-										<!-- 		DockPanel.Dock="Right" -->
-										<!-- 		Width="{StaticResource IconEditStatusWidth}" -->
-										<!-- 		cs:CustomProperties.GenericPopupOne="{Binding ElementName=PuEditDesc}" -->
-										<!-- 		Style="{StaticResource BtnIconEditStatus}" -->
-										<!-- 		Click="BtnPopupInfoStart_OnClick" -->
-										<!-- 		> -->
-										<!-- 	<Button.Content> -->
-										<!-- 		<Path x:Name="PathDescEditStatus" -->
-										<!-- 				Style="{StaticResource PathCanEditText.Icon1}" -->
-										<!-- 				/> -->
-										<!-- 	</Button.Content> -->
-										<!-- </Button> -->
-										<!-- -->
-										<!-- <Button x:Name="BtnDescClearText" -->
-										<!-- 		DockPanel.Dock="Right" -->
-										<!-- 		Style="{StaticResource BtnIconClearText}" -->
-										<!-- 		Click="Btn_DescEntryClear_OnClick" -->
-										<!-- 		> -->
-										<!-- 	<Button.Content> -->
-										<!-- 		<Path x:Name="PathDescClearText" -->
-										<!-- 				Style="{StaticResource PathClearText.Icon}" -->
-										<!-- 				/> -->
-										<!-- 	</Button.Content> -->
-										<!-- </Button> -->
 
 										<Popup Name="PuEditOptsStyleDesc"
-												
 												cs:CustomProperties.GenericPopupOne="{Binding ElementName=PuEditDescHelp}"
 												cs:CustomProperties.GenericObjectOne="{Binding ElementName=TblkEditDescText}"
 												PlacementTarget="{Binding ElementName=BdrDescText}"
@@ -2890,34 +3021,37 @@
 												Opened="EditOpsPopup_Opened"
 												Closed="EditOpsPopup_OnClosed"
 												Style="{StaticResource PuBase}"
-										/>
+												/>
 
 										<Popup Name="PuEditDescHelp"
-												cs:VisualStates.MainContent="Provide the name for the subject following these requirements&#013;&#x25CF;  Must Being with an Alpha&#013;    Character&#013;&#x25CF;  Minimum of 4 Characters&#013;&#x25CF;  Only Numbers and letters"
-												cs:VisualStates.TitleText="Edit Description Help"
 												PlacementTarget="{Binding ElementName=TblkEditDescText}"
+												cs:VisualStates.MainTitle="{x:Static cs:UnitStylesMgrWinData.DescHelpInfoTitle}"
+												cs:VisualStates.MainDescription="{x:Static cs:UnitStylesMgrWinData.DescHelpInfoHeader}"
+												cs:VisualStates.MainInfo="{x:Static cs:UnitStylesMgrWinData.DescHelpInfo}"
+												cs:CustomProperties.GenericDoubleOne="{StaticResource Pop.StyleDesc.Width}"
 												Button.Click="BtnPopupClose_OnClick"
-												Child="{DynamicResource CcHelpPopup}"
+												Child="{StaticResource CcHelpPopup}"
 												Style="{StaticResource PuBase}"
 												>
 
 										</Popup>
 
 										<Border
-												Style="{StaticResource BdrCanEditTextPlusGoodBad}"
 												cs:VisualStates.IsGoodBad="{Binding IsDescOk, Mode=OneWay}"
-										>
+												Style="{StaticResource BdrCanEditTextPlusGoodBad}"
+												>
 
 											<TextBox x:Name="TblkEditDescText"
-												DockPanel.Dock="Left"
-												cs:CustomProperties.GenericIntOne="{x:Static cs:UnitStylesMgrWinData.POPUP_STYLE_DESC}"
-												cs:CustomProperties.GenericPopupOne="{Binding ElementName=PuEditOptsStyleDesc}"
-												Style="{StaticResource TbxTrigsL3CanEditText}"
-												GotFocus="Tbx_OnGotFocus"
-												LostFocus="Tbx_OnLostFocus"
-												Text="{Binding Ustyle.Description}"
-												ToolTip="{Binding EditDescToolTip, ElementName=WinUnitStyle, Mode=OneWay}"
-												/>
+													DockPanel.Dock="Left"
+													cs:CustomProperties.GenericIntOne="{x:Static cs:UnitStylesMgrWinData.POPUP_STYLE_DESC}"
+													cs:CustomProperties.GenericPopupOne="{Binding ElementName=PuEditOptsStyleDesc}"
+													GotFocus="Tbx_OnGotFocus"
+													LostFocus="Tbx_OnLostFocus"
+													KeyDown="TbxEditText_OnKeyDown"
+													Text="{Binding Description, Mode=TwoWay}"
+													ToolTip="{Binding DescValidationMsg, Mode=OneWay}"
+													Style="{StaticResource TbxTrigsL3CanEditText}"
+													/>
 
 										</Border>
 									</DockPanel>
@@ -2976,42 +3110,16 @@
 												TargetType="Border"
 												BasedOn="{StaticResource BdrCanEditText}"
 												>
-											<Style.Triggers>
-												<DataTrigger Binding="{Binding ActiveElement}" Value="6">
-													<Setter Property="cs:VisualStates.IsEditing" Value="True" />
-													<Setter Property="cs:VisualStates.IsActivated" Value="True" />
-												</DataTrigger>
-											</Style.Triggers>
+											<!-- <Style.Triggers> -->
+											<!-- 	<DataTrigger Binding="{Binding ActiveElement}" Value="6"> -->
+											<!-- 		<Setter Property="cs:VisualStates.IsEditing" Value="True" /> -->
+											<!-- 		<Setter Property="cs:VisualStates.IsActivated" Value="True" /> -->
+											<!-- 	</DataTrigger> -->
+											<!-- </Style.Triggers> -->
 										</Style>
 									</Border.Style>
 
 									<DockPanel x:Name="SpExampleEntry">
-
-										<!-- <Button x:Name="BtnExampleEditStatus" -->
-										<!-- 		DockPanel.Dock="Right" -->
-										<!-- 		Width="{StaticResource IconEditStatusWidth}" -->
-										<!-- 		cs:CustomProperties.GenericPopupOne="{Binding ElementName=PuEditSample}" -->
-										<!-- 		Style="{StaticResource BtnIconEditStatus}" -->
-										<!-- 		Click="BtnPopupInfoStart_OnClick" -->
-										<!-- 		> -->
-										<!-- 	<Button.Content> -->
-										<!-- 		<Path x:Name="PathEditStatus" -->
-										<!-- 				Style="{StaticResource PathCanEditText.Icon1}" -->
-										<!-- 				/> -->
-										<!-- 	</Button.Content> -->
-										<!-- </Button> -->
-										<!-- -->
-										<!-- <Button x:Name="BtnExampleClearText" -->
-										<!-- 		DockPanel.Dock="Right" -->
-										<!-- 		Style="{StaticResource BtnIconClearText}" -->
-										<!-- 		Click="Btn_SampleEntryClear_OnClick" -->
-										<!-- 		> -->
-										<!-- 	<Button.Content> -->
-										<!-- 		<Path x:Name="PathClearText" -->
-										<!-- 				Style="{StaticResource PathClearText.Icon}" -->
-										<!-- 				/> -->
-										<!-- 	</Button.Content> -->
-										<!-- </Button> -->
 
 										<Popup Name="PuEditOptsStyleSample"
 												cs:CustomProperties.GenericPopupOne="{Binding ElementName=PuEditSample}"
@@ -3021,54 +3129,55 @@
 												Opened="EditOpsPopup_Opened"
 												Closed="EditOpsPopup_OnClosed"
 												Style="{StaticResource PuBase}"
-										/>
+												/>
 
 										<Popup Name="PuEditSample"
-												cs:VisualStates.MainContent="Provide the name for the subject following these requirements&#013;&#x25CF;  Must Being with an Alpha&#013;    Character&#013;&#x25CF;  Minimum of 4 Characters&#013;&#x25CF;  Only Numbers and letters"
-												cs:VisualStates.TitleText="Edit Sample Help"
+												cs:VisualStates.MainTitle="{x:Static cs:UnitStylesMgrWinData.SampleHelpInfoTitle}"
+												cs:VisualStates.MainDescription="{x:Static cs:UnitStylesMgrWinData.SampleHelpInfoHeader}"
+												cs:VisualStates.MainInfo="{x:Static cs:UnitStylesMgrWinData.SampleHelpInfo}"
+												cs:CustomProperties.GenericDoubleOne="{StaticResource Pop.Std.Width}"
 												PlacementTarget="{Binding ElementName=TblkEditSampleText}"
 												Button.Click="BtnPopupClose_OnClick"
-												Child="{DynamicResource CcHelpPopup}"
+												Child="{StaticResource CcHelpPopup}"
 												Style="{StaticResource PuBase}"
 												>
+
 										</Popup>
 
 										<Border
-												Style="{StaticResource BdrCanEditTextPlusGoodBad}"
 												cs:VisualStates.IsGoodBad="{Binding IsSampleOk, Mode=OneWay}"
-										>
-
-										<TextBox x:Name="TblkEditSampleText"
-												DockPanel.Dock="Left"
-												cs:CustomProperties.GenericIntOne="{x:Static cs:UnitStylesMgrWinData.POPUP_STYLE_SAMPLE}"
-												cs:CustomProperties.GenericPopupOne="{Binding ElementName=PuEditOptsStyleSample}"
-												
-												d:Text="Sample"
-												GotFocus="Tbx_OnGotFocus"
-												LostFocus="Tbx_OnLostFocus"
-												Text="{Binding Ustyle.Sample}"
-												ToolTip="{Binding EditSampleToolTip, ElementName=WinUnitStyle, Mode=OneWay}"
+												Style="{StaticResource BdrCanEditTextPlusGoodBad}"
 												>
-												
-											
 
-											<TextBox.Style>
-												<Style
-														TargetType="TextBox"
-														BasedOn="{StaticResource TbxTrigsL3CanEditText}"
-														>
-													<Setter Property="Text" Value="{Binding GetSampleStr, Mode=OneWay}" />
-													<Style.Triggers>
-														<DataTrigger Binding="{Binding (cs:VisualStates.IsEditing), RelativeSource={RelativeSource Self}}" Value="True">
-															<Setter Property="Text" Value="{Binding Sample, Mode=TwoWay}" />
-														</DataTrigger>
-													</Style.Triggers>
-												</Style>
+											<TextBox x:Name="TblkEditSampleText"
+													DockPanel.Dock="Left"
+													cs:CustomProperties.GenericIntOne="{x:Static cs:UnitStylesMgrWinData.POPUP_STYLE_SAMPLE}"
+													cs:CustomProperties.GenericPopupOne="{Binding ElementName=PuEditOptsStyleSample}"
+													GotFocus="Tbx_OnGotFocus"
+													LostFocus="Tbx_OnLostFocus"
+													KeyDown="TbxEditText_OnKeyDown"
+													ToolTip="{Binding EditSampleToolTip, ElementName=WinUnitStyle, Mode=OneWay}"
+													>
+												<!--  d:Text="{Binding Sample, Mode=OneWay, FallbackValue='none'}"  -->
+												<!--  Text="{Binding Sample}"  -->
 
-											</TextBox.Style>
-										</TextBox>
-											
-											<!-- KeyUp="TblkEditSampleText_OnKeyUp" -->
+												<TextBox.Style>
+													<Style
+															TargetType="TextBox"
+															BasedOn="{StaticResource TbxTrigsL3CanEditText}"
+															>
+														<Setter Property="Text" Value="{Binding Sample, Mode=OneWay, FallbackValue='none'}" />
+														<Style.Triggers>
+															<DataTrigger Binding="{Binding (cs:VisualStates.IsEditing), RelativeSource={RelativeSource Self}}" Value="True">
+																<Setter Property="Text" Value="{Binding SampleForEditing, Mode=TwoWay}" />
+															</DataTrigger>
+														</Style.Triggers>
+													</Style>
+
+												</TextBox.Style>
+											</TextBox>
+
+											<!--  KeyUp="TblkEditSampleText_OnKeyUp"  -->
 										</Border>
 									</DockPanel>
 								</Border>
@@ -3130,7 +3239,7 @@
 										Text="Include Here"
 										Style="{StaticResource TblkTrigs.L3}"
 										/>
-										<!-- cs:VisualStates.DoesMouseOver="False" -->
+								<!--  cs:VisualStates.DoesMouseOver="False"  -->
 
 							</Border>
 
@@ -3143,12 +3252,12 @@
 											TargetType="Border"
 											BasedOn="{StaticResource BdrShowHereCkbx}"
 											>
-										<Style.Triggers>
-											<DataTrigger Binding="{Binding ActiveElement}" Value="1">
-												<Setter Property="cs:VisualStates.IsEditing" Value="True" />
-												<Setter Property="cs:VisualStates.IsActivated" Value="True" />
-											</DataTrigger>
-										</Style.Triggers>
+										<!-- <Style.Triggers> -->
+										<!-- 	<DataTrigger Binding="{Binding ActiveElement}" Value="1"> -->
+										<!-- 		<Setter Property="cs:VisualStates.IsEditing" Value="True" /> -->
+										<!-- 		<Setter Property="cs:VisualStates.IsActivated" Value="True" /> -->
+										<!-- 	</DataTrigger> -->
+										<!-- </Style.Triggers> -->
 									</Style>
 								</Border.Style>
 
@@ -3164,7 +3273,7 @@
 											Style="{StaticResource BtnIconEditStatus}"
 											Click="BtnPopupInfoStart_OnClick"
 											>
-										
+
 										<Button.Content>
 											<Path x:Name="PathRibbonFavs"
 													cs:CsPathAp.IconIsLockedScaleX="{StaticResource IconLockedCkbxScaleX}"
@@ -3180,13 +3289,28 @@
 									<!--  PlacementTarget="{Binding ElementName=WinUnitStyle, Path=PopupTargetCkbxRibbonFavs, Mode=OneWay}"  -->
 									<!--  PlacementTarget="{Binding Tag, ElementName=BtnRibbonFavsStatus, UpdateSourceTrigger=PropertyChanged, NotifyOnTargetUpdated=True}"  -->
 									<Popup Name="PuRibbonFavs"
-											cs:VisualStates.MainContent="Provide the name for the subject following these requirements&#013;&#x25CF;  Must Being with an Alpha&#013;    Character&#013;&#x25CF;  Minimum of 4 Characters&#013;&#x25CF;  Only Numbers and letters"
-											cs:VisualStates.TitleText="Ribbon Favs Help"
+											cs:VisualStates.MainTitle="{x:Static cs:UnitStylesMgrWinData.RibbonFavsHelpInfoTitle}"
+											cs:VisualStates.MainDescription="{x:Static cs:UnitStylesMgrWinData.RibbonFavsHelpInfoHeader}"
+											cs:CustomProperties.GenericDoubleOne="{StaticResource Pop.Std.Width}"
 											PlacementTarget="{Binding ElementName=CbxRibbonFavs}"
 											Button.Click="BtnPopupClose_OnClick"
-											Child="{DynamicResource CcHelpPopup}"
-											Style="{StaticResource PuBase}"
+											Child="{StaticResource CcHelpPopup}"
 											>
+										<!--  cs:VisualStates.MainInfo="{x:Static cs:UnitStylesMgrWinData.RibbonFavsHelpInfo}"  -->
+										<Popup.Style>
+											<Style
+													TargetType="Popup"
+													BasedOn="{StaticResource PuBase}"
+													>
+												<Setter Property="cs:VisualStates.MainInfo" Value="{x:Static cs:UnitStylesMgrWinData.RibbonFavsHelpInfo}"/>
+												<Style.Triggers>
+													<DataTrigger Binding="{Binding Ustyle.OrderInRibbon}" Value="-2">
+														<Setter Property="cs:VisualStates.MainInfo" Value="{x:Static cs:UnitStylesMgrWinData.RibbonFavsHelpInfoFtDecIn}"/>
+													</DataTrigger>
+												</Style.Triggers>
+											</Style>
+										</Popup.Style>
+
 									</Popup>
 
 									<CheckBox x:Name="CbxRibbonFavs"
@@ -3222,6 +3346,10 @@
 														<Setter Property="IsEnabled" Value="False">
 														</Setter>
 													</DataTrigger>
+													<DataTrigger Binding="{Binding Ustyle.OrderInRibbon}" Value="-2">
+														<Setter Property="IsEnabled" Value="False">
+														</Setter>
+													</DataTrigger>
 												</Style.Triggers>
 											</Style>
 										</CheckBox.Style>
@@ -3238,12 +3366,12 @@
 											TargetType="Border"
 											BasedOn="{StaticResource BdrShowHereCkbx}"
 											>
-										<Style.Triggers>
-											<DataTrigger Binding="{Binding ActiveElement}" Value="2">
-												<Setter Property="cs:VisualStates.IsEditing" Value="True" />
-												<Setter Property="cs:VisualStates.IsActivated" Value="True" />
-											</DataTrigger>
-										</Style.Triggers>
+										<!-- <Style.Triggers> -->
+										<!-- 	<DataTrigger Binding="{Binding ActiveElement}" Value="2"> -->
+										<!-- 		<Setter Property="cs:VisualStates.IsEditing" Value="True" /> -->
+										<!-- 		<Setter Property="cs:VisualStates.IsActivated" Value="True" /> -->
+										<!-- 	</DataTrigger> -->
+										<!-- </Style.Triggers> -->
 									</Style>
 								</Border.Style>
 
@@ -3272,11 +3400,13 @@
 
 
 									<Popup Name="PuDialogLeft"
-											cs:VisualStates.MainContent="Provide the name for the subject following these requirements&#013;&#x25CF;  Must Being with an Alpha&#013;    Character&#013;&#x25CF;  Minimum of 4 Characters&#013;&#x25CF;  Only Numbers and letters"
-											cs:VisualStates.TitleText="Dialog Left Help"
+											cs:VisualStates.MainTitle="{x:Static cs:UnitStylesMgrWinData.LeftListHelpInfoTitle}"
+											cs:VisualStates.MainDescription="{x:Static cs:UnitStylesMgrWinData.LeftListHelpInfoHeader}"
+											cs:VisualStates.MainInfo="{x:Static cs:UnitStylesMgrWinData.LeftListHelpInfo}"
+											cs:CustomProperties.GenericDoubleOne="{StaticResource Pop.Std.Width}"
 											PlacementTarget="{Binding ElementName=CbxDialogLeft}"
 											Button.Click="BtnPopupClose_OnClick"
-											Child="{DynamicResource CcHelpPopup}"
+											Child="{StaticResource CcHelpPopup}"
 											Style="{StaticResource PuBase}"
 											>
 									</Popup>
@@ -3329,12 +3459,12 @@
 											TargetType="Border"
 											BasedOn="{StaticResource BdrShowHereCkbx}"
 											>
-										<Style.Triggers>
-											<DataTrigger Binding="{Binding ActiveElement}" Value="3">
-												<Setter Property="cs:VisualStates.IsEditing" Value="True" />
-												<Setter Property="cs:VisualStates.IsActivated" Value="True" />
-											</DataTrigger>
-										</Style.Triggers>
+										<!-- <Style.Triggers> -->
+										<!-- 	<DataTrigger Binding="{Binding ActiveElement}" Value="3"> -->
+										<!-- 		<Setter Property="cs:VisualStates.IsEditing" Value="True" /> -->
+										<!-- 		<Setter Property="cs:VisualStates.IsActivated" Value="True" /> -->
+										<!-- 	</DataTrigger> -->
+										<!-- </Style.Triggers> -->
 									</Style>
 								</Border.Style>
 
@@ -3362,11 +3492,13 @@
 									</Button>
 
 									<Popup Name="PuDialogRight"
-											cs:VisualStates.MainContent="Provide the name for the subject following these requirements&#013;&#x25CF;  Must Being with an Alpha&#013;    Character&#013;&#x25CF;  Minimum of 4 Characters&#013;&#x25CF;  Only Numbers and letters"
-											cs:VisualStates.TitleText="Dialog Right Help"
+											cs:VisualStates.MainTitle="{x:Static cs:UnitStylesMgrWinData.RightListHelpInfoTitle}"
+											cs:VisualStates.MainDescription="{x:Static cs:UnitStylesMgrWinData.RightListHelpInfoHeader}"
+											cs:VisualStates.MainInfo="{x:Static cs:UnitStylesMgrWinData.RightListHelpInfo}"
+											cs:CustomProperties.GenericDoubleOne="{StaticResource Pop.Std.Width}"
 											PlacementTarget="{Binding ElementName=CbxDialogRight}"
 											Button.Click="BtnPopupClose_OnClick"
-											Child="{DynamicResource CcHelpPopup}"
+											Child="{StaticResource CcHelpPopup}"
 											Style="{StaticResource PuBase}"
 											>
 
@@ -3426,14 +3558,14 @@
 							Visibility="Collapsed"
 							>
 
-						<TextBlock
-								Margin="0,0,5,0"
-								MaxWidth="110"
-								HorizontalAlignment="Left"
-								FontSize="8"
-								Foreground="White"
-								Text="{Binding Path=ActiveElement, FallbackValue='none'}"
-								/>
+						<!--  <TextBlock  -->
+						<!--  Margin="0,0,5,0"  -->
+						<!--  MaxWidth="110"  -->
+						<!--  HorizontalAlignment="Left"  -->
+						<!--  FontSize="8"  -->
+						<!--  Foreground="White"  -->
+						<!--  Text="{Binding Path=ActiveElement, FallbackValue='none'}"  -->
+						<!--  />  -->
 
 						<TextBlock
 								Margin="0,0,5,0"
@@ -3499,6 +3631,17 @@
 								IsChecked="{Binding Ustyle.IsLocked, Mode=OneWay}"
 								Style="{StaticResource Lv1.CheckboxStyle}"
 								/>
+						<!--  <CheckBox x:Name="Chkbx06"  -->
+						<!--  Content="is modified"  -->
+						<!--  Height="12"  -->
+						<!--  Margin="0"  -->
+						<!--  Padding="0"  -->
+						<!--  VerticalAlignment="Top"  -->
+						<!--  FontSize="8"  -->
+						<!--  Foreground="White"  -->
+						<!--  IsChecked="{Binding Ustyle.IsModified, Mode=OneWay}"  -->
+						<!--  Style="{StaticResource Lv1.CheckboxStyle}"  -->
+						<!--  />  -->
 
 
 					</StackPanel>
@@ -3647,7 +3790,7 @@
 						<Border x:Name="BdrStyleNameValue"
 								Style="{StaticResource BdrUnitValue}"
 								>
-							<TextBlock
+							<TextBlock x:Name="TbxName"
 									Text="{Binding Ustyle.Name, FallbackValue=missing}"
 									Style="{StaticResource TblkUnitValue}"
 									/>
@@ -3670,7 +3813,7 @@
 						<Border x:Name="BdrStyleDescValue"
 								Style="{StaticResource BdrUnitValue}"
 								>
-							<TextBlock
+							<TextBlock x:Name="TbxDesc"
 									Text="{Binding Ustyle.Description, FallbackValue='missing'}"
 									Style="{StaticResource TblkUnitValue}"
 									/>
@@ -3693,7 +3836,7 @@
 						<Border x:Name="BdrUnitSystemValue"
 								Style="{StaticResource BdrUnitValue}"
 								>
-							<TextBlock
+							<TextBlock x:Name="TbxUsys"
 									Text="{Binding Ustyle.UnitSys, FallbackValue='missing'}"
 									Style="{StaticResource TblkUnitValue}"
 									/>
@@ -3716,7 +3859,7 @@
 						<Border x:Name="BdrUnitSymbolValue"
 								Style="{StaticResource BdrUnitValue}"
 								>
-							<TextBlock
+							<TextBlock x:Name="TbxSymFmtd"
 									Text="{Binding UnitSymbolFormated, FallbackValue='missing'}"
 									Style="{StaticResource TblkUnitValue}"
 									/>
@@ -3739,7 +3882,7 @@
 						<Border x:Name="BdrUnitRoundingValue"
 								Style="{StaticResource BdrUnitValue}"
 								>
-							<TextBlock
+							<TextBlock x:Name="TbxUpricFmtd"
 									Text="{Binding UnitPrecisionFormatted, FallbackValue='missing'}"
 									Style="{StaticResource TblkUnitValue}"
 									/>
@@ -3920,7 +4063,7 @@
 								Padding="0"
 								FontSize="{StaticResource FontSize.XLarge}"
 								Foreground="Black"
-								Text="Create New Style"
+								Text="Make New Style"
 								/>
 
 					</Border>
@@ -4017,35 +4160,35 @@
 											<!--  Button.Click="PuEditOptsStyleName_OnClick"  -->
 
 											<Popup Name="PuStyleNameHelp"
-													cs:VisualStates.MainContent="Provide the name for the subject following these requirements&#013;&#x25CF;  Must Being with an Alpha&#013;    Character&#013;&#x25CF;  Minimum of 4 Characters&#013;&#x25CF;  Only Numbers and letters"
-													cs:VisualStates.TitleText="Style Name Help"
+													cs:VisualStates.MainTitle="{x:Static cs:UnitStylesMgrWinData.NewNameHelpInfoTitle}"
+													cs:VisualStates.MainDescription="{x:Static cs:UnitStylesMgrWinData.NewNameHelpInfoHeader}"
+													cs:VisualStates.MainInfo="{x:Static cs:UnitStylesMgrWinData.NewNameHelpInfo}"
+													cs:CustomProperties.GenericDoubleOne="{StaticResource Pop.Std.Width}"
 													PlacementTarget="{Binding ElementName=TbxStyleName}"
-													Child="{DynamicResource CcHelpPopup}"
+													Child="{StaticResource CcHelpPopup}"
 													Button.Click="BtnPopupClose_OnClick"
 													Style="{StaticResource PuBase}"
 													>
 											</Popup>
 
 											<TextBox x:Name="TbxStyleName"
-													DockPanel.Dock="Top"
+													DockPanel.Dock="Left"
 													cs:CustomProperties.GenericIntOne="{x:Static cs:UnitStylesMgrWinData.POPUP_NEW_STYLE_NAME}"
 													cs:CustomProperties.GenericPopupOne="{Binding ElementName=PuEditOptsStyleName}"
-
 													cs:VisualStates.FgDisabled="{StaticResource ValEntry.Fg.Disabled}"
 													cs:VisualStates.FgIsEditing="{StaticResource ValEntry.Fg.IsEditg}"
 													cs:VisualStates.FgIsLocked="{StaticResource ValEntry.Fg.IsLocked}"
 													cs:VisualStates.FgIsReadOnly="{StaticResource ValEntry.Fg.IsReadOnly}"
 													cs:VisualStates.FgIsSel="{StaticResource ValEntry.Fg.IsSel}"
 													cs:VisualStates.FgIsEnabled="{StaticResource ValEntry.Fg.IsEnabled}"
-
 													cs:VisualStates.FgIsEnabledMouseOver="{StaticResource ValEntry.Fg.IsEnabled.MouseOver}"
 													cs:VisualStates.FgIsSelMouseOver="{StaticResource ValEntry.Fg.IsSel.MouseOver}"
 													cs:VisualStates.FgIsEditingMouseOver="{StaticResource ValEntry.Fg.IsEditg.MouseOver}"
-
 													GotFocus="Tbx_OnGotFocus"
 													LostFocus="Tbx_OnLostFocus"
-													ToolTip="{Binding NewNameToolTip, Mode=OneWay}"
+													KeyDown="TbxEditText_OnKeyDown"
 													Text="{Binding NewName, Mode=TwoWay, FallbackValue='New Style Name'}"
+													ToolTip="{Binding NewNameToolTip, Mode=OneWay}"
 													>
 
 												<TextBox.Style>
@@ -4100,11 +4243,13 @@
 
 											<Popup Name="PuStyleDescHelp"
 													Focusable="False"
-													cs:VisualStates.MainContent="Provide the name for the subject following these requirements&#013;&#x25CF;  Must Being with an Alpha&#013;    Character&#013;&#x25CF;  Minimum of 4 Characters&#013;&#x25CF;  Only Numbers and letters"
-													cs:VisualStates.TitleText="Style Desc Help"
+													cs:VisualStates.MainTitle="{x:Static cs:UnitStylesMgrWinData.NewDescHelpInfoTitle}"
+													cs:VisualStates.MainDescription="{x:Static cs:UnitStylesMgrWinData.NewDescHelpInfoHeader}"
+													cs:VisualStates.MainInfo="{x:Static cs:UnitStylesMgrWinData.NewDescHelpInfo}"
+													cs:CustomProperties.GenericDoubleOne="{StaticResource Pop.Std.Width}"
 													PlacementTarget="{Binding ElementName=TbxStyleDesc}"
 													Button.Click="BtnPopupClose_OnClick"
-													Child="{DynamicResource CcHelpPopup}"
+													Child="{StaticResource CcHelpPopup}"
 													Style="{StaticResource PuBase}"
 													>
 											</Popup>
@@ -4113,20 +4258,18 @@
 													DockPanel.Dock="Top"
 													cs:CustomProperties.GenericPopupOne="{Binding ElementName=PuEditOptsStyleDesc}"
 													cs:CustomProperties.GenericIntOne="{x:Static cs:UnitStylesMgrWinData.POPUP_NEW_STYLE_DESC}"
-
 													cs:VisualStates.FgDisabled="{StaticResource ValEntry.Fg.Disabled}"
 													cs:VisualStates.FgIsEditing="{StaticResource ValEntry.Fg.IsEditg}"
 													cs:VisualStates.FgIsLocked="{StaticResource ValEntry.Fg.IsLocked}"
 													cs:VisualStates.FgIsReadOnly="{StaticResource ValEntry.Fg.IsReadOnly}"
 													cs:VisualStates.FgIsSel="{StaticResource ValEntry.Fg.IsSel}"
 													cs:VisualStates.FgIsEnabled="{StaticResource ValEntry.Fg.IsEnabled}"
-
 													cs:VisualStates.FgIsEditingMouseOver="{StaticResource ValEntry.Fg.IsEditg.MouseOver}"
 													cs:VisualStates.FgIsEnabledMouseOver="{StaticResource ValEntry.Fg.IsEnabled.MouseOver}"
 													cs:VisualStates.FgIsSelMouseOver="{StaticResource ValEntry.Fg.IsSel.MouseOver}"
-
 													GotFocus="Tbx_OnGotFocus"
 													LostFocus="Tbx_OnLostFocus"
+													KeyDown="TbxEditText_OnKeyDown"
 													Text="{Binding NewDesc, Mode=TwoWay, FallbackValue='New Style Description'}"
 													ToolTip="{Binding NewDescToolTip, Mode=OneWay}"
 													>
@@ -4333,11 +4476,13 @@
 
 								<Popup Name="PuStylePosition"
 										DockPanel.Dock="Right"
-										cs:VisualStates.MainContent="Provide the name for the subject following these requirements&#013;&#x25CF;  Must Being with an Alpha&#013;    Character&#013;&#x25CF;  Minimum of 4 Characters&#013;&#x25CF;  Only Numbers and letters"
-										cs:VisualStates.TitleText="Style Position Help"
+										cs:VisualStates.MainTitle="{x:Static cs:UnitStylesMgrWinData.PosIdxHelpInfoTitle}"
+										cs:VisualStates.MainDescription="{x:Static cs:UnitStylesMgrWinData.PosIdxHelpInfoHeader}"
+										cs:VisualStates.MainInfo="{x:Static cs:UnitStylesMgrWinData.PosIdxHelpInfo}"
+										cs:CustomProperties.GenericDoubleOne="{StaticResource Pop.Std.Width}"
 										Button.Click="BtnPopupClose_OnClick"
 										PlacementTarget="{Binding ElementName=TbxAddPosition}"
-										Child="{DynamicResource CcHelpPopup}"
+										Child="{StaticResource CcHelpPopup}"
 										Style="{StaticResource PuBase}"
 										>
 									<!--  MouseEnter="Popup_OnMouseEnter"  -->
@@ -4355,11 +4500,12 @@
 										FontSize="{StaticResource FontSize.Large}"
 										Foreground="White"
 										Margin="2,0,2,0"
-										Padding="0,2,0,0"
+										Padding="0,0,0,2"
 										Text="{Binding ElementName=WinUnitStyle, Path=InsPosition, StringFormat='{}{0:D}', Mode=TwoWay, FallbackValue=2}"
 										TextAlignment="Center"
 										VerticalAlignment="Center"
 										ToolTip="{Binding InsPosToolTip, Mode=OneWay}"
+										KeyDown="TbxEditText_OnKeyDown"
 										Style="{StaticResource TbxEditable}"
 										/>
 
@@ -4419,89 +4565,6 @@
 								HorizontalAlignment="Stretch"
 								VerticalAlignment="Stretch"
 								>
-							<!--    -->
-							<!--  <DockPanel x:Name="DpSavedStylesCtrl"  -->
-							<!--  DockPanel.Dock="Bottom"  -->
-							<!--  Margin="0,10,0,0"  -->
-							<!--  >  -->
-							<!--    -->
-							<!--  <Button x:Name="BtnUp"  -->
-							<!--  DockPanel.Dock="Left"  -->
-							<!--  Height="{StaticResource Btn.Height.Std}"  -->
-							<!--  Width="40"  -->
-							<!--  Margin="0,0,5,0"  -->
-							<!--  HorizontalAlignment="left"  -->
-							<!--  Style="{StaticResource Btn.Std}"  -->
-							<!--  Click="BtnUp_OnClick"  -->
-							<!--  >  -->
-							<!--  <TextBlock  -->
-							<!--  Padding="10,0,10,4"  -->
-							<!--  FontSize="{StaticResource FontSize.Large}"  -->
-							<!--  Text="▲"  -->
-							<!--  />  -->
-							<!-- 		</Button> -->
-							<!--    -->
-							<!--  <Button x:Name="BtnDn"  -->
-							<!--  DockPanel.Dock="left"  -->
-							<!--  Height="{StaticResource Btn.Height.Std}"  -->
-							<!--  Width="40"  -->
-							<!--  Margin="0,0,5,0"  -->
-							<!--  HorizontalAlignment="left"  -->
-							<!--  Style="{StaticResource Btn.Std}"  -->
-							<!--  Click="BtnDn_OnClick"  -->
-							<!--  >  -->
-							<!--  <TextBlock  -->
-							<!--  Padding="10,2,10,4"  -->
-							<!--  FontSize="{StaticResource FontSize.Large}"  -->
-							<!--  Text="▼"  -->
-							<!--  />  -->
-							<!-- 		</Button> -->
-							<!--    -->
-							<!--  <Button x:Name="BtnDelete"  -->
-							<!--  DockPanel.Dock="Left"  -->
-							<!--  Height="{Binding ActualHeight, ElementName=BtnDn, FallbackValue=18}"  -->
-							<!--  Width="{Binding ActualWidth, ElementName=BtnDn, FallbackValue=18}"  -->
-							<!--  HorizontalAlignment="Left"  -->
-							<!--  Foreground="White"  -->
-							<!--  Template="{StaticResource Button.Normal.ControlTemplate}"  -->
-							<!--  Click="BtnDelete_OnClick"  -->
-							<!--  >  -->
-							<!-- 			<Button.Background> -->
-							<!-- 				<SolidColorBrush Color="{StaticResource Deep.Orange.500}" /> -->
-							<!-- 			</Button.Background> -->
-							<!--  <Path  -->
-							<!--  Fill="White"  -->
-							<!--  Margin="0,0,3,2"  -->
-							<!--  HorizontalAlignment="Center"  -->
-							<!--  Data="{StaticResource IconDelete}"  -->
-							<!--  />  -->
-							<!--    -->
-							<!-- 		</Button> -->
-
-							<!--  <Border x:Name="ChangeCount"  -->
-							<!--  DockPanel.Dock="Left"  -->
-							<!--  Margin="0,0,0,0"  -->
-							<!--  HorizontalAlignment="Right"  -->
-							<!--  VerticalAlignment="Stretch"  -->
-							<!--  BorderThickness="1"  -->
-							<!--  BorderBrush="White"  -->
-							<!--  Visibility="Visible"  -->
-							<!--  CornerRadius="{StaticResource CornerRadius.Std}"  -->
-							<!--  >  -->
-							<!--  <TextBlock DockPanel.Dock="Right"  -->
-							<!--  Width="60"  -->
-							<!--  Margin="0"  -->
-							<!--  Padding="5,0,5,2"  -->
-							<!--  HorizontalAlignment="Right"  -->
-							<!--  VerticalAlignment="Center"  -->
-							<!--  FontSize="{StaticResource FontSize.Large}"  -->
-							<!--  Background="Transparent"  -->
-							<!--  Foreground="White"  -->
-							<!--  Text="{Binding HasChanges, FallbackValue=0, StringFormat=\{0:D2\}}"  -->
-							<!--  TextAlignment="Center"  -->
-							<!--  />  -->
-							<!-- </Border> -->
-
 
 							<!-- </DockPanel> -->
 
@@ -4509,7 +4572,7 @@
 									DockPanel.Dock="Top"
 									Background="Transparent"
 									BorderThickness="0"
-									HorizontalAlignment="Left"
+									HorizontalAlignment="Stretch"
 									HorizontalContentAlignment="Stretch"
 									IsEnabled="True"
 									IsSynchronizedWithCurrentItem="True"
@@ -4525,15 +4588,22 @@
 									d:SelectedIndex="1"
 									d:DataContext="{x:Static util:UnitStdStylesD.ListD}"
 									Initialized="lbx_Initialized"
+									ScrollViewer.ScrollChanged="Lbx1_OnScrollChanged"
+									ScrollViewer.HorizontalScrollBarVisibility="Hidden"
 									>
-								<!-- DataContext="{Binding WkgUserStylesView, ElementName=WinUnitStyle}" -->
-								<!-- d:DataContext="{x:Static util:UnitStdStylesD.ListD}" -->
+								<!--  DataContext="{Binding WkgUserStylesView, ElementName=WinUnitStyle}"  -->
+								<!--  d:DataContext="{x:Static util:UnitStdStylesD.ListD}"  -->
 								<ListBox.Resources>
 
 									<Style
 											TargetType="{x:Type ScrollViewer}"
 											BasedOn="{StaticResource SvStyle}"
-											/>
+											>
+										<Setter Property="HorizontalAlignment" Value="Stretch">
+										</Setter>
+										<Setter Property="HorizontalContentAlignment" Value="Stretch">
+										</Setter>
+									</Style>
 
 								</ListBox.Resources>
 
@@ -4563,7 +4633,6 @@
 						HorizontalAlignment="Stretch"
 						VerticalAlignment="Stretch"
 						DataContext="{Binding ElementName=WinUnitStyle}"
-						IsEnabled="{Binding CanStyleAdd}"
 						Background="{StaticResource AddUnit.Gbdr.IsEnabled}"
 						>
 
@@ -4579,6 +4648,7 @@
 								Width="40"
 								Margin="0,0,5,0"
 								HorizontalAlignment="left"
+								IsEnabled="{Binding CanStyleAdd}"
 								Style="{StaticResource Btn.Std}"
 								Click="BtnUp_OnClick"
 								>
@@ -4595,6 +4665,7 @@
 								Width="40"
 								Margin="0,0,5,0"
 								HorizontalAlignment="left"
+								IsEnabled="{Binding CanStyleAdd}"
 								Style="{StaticResource Btn.Std}"
 								Click="BtnDn_OnClick"
 								>
@@ -4608,9 +4679,11 @@
 						<Button x:Name="BtnDelete"
 								DockPanel.Dock="Left"
 								Height="{Binding ActualHeight, ElementName=BtnDn, FallbackValue=18}"
-								Width="{Binding ActualWidth, ElementName=BtnDn, FallbackValue=18}"
+								Width="40"
 								HorizontalAlignment="Left"
 								Foreground="White"
+								Margin="0,0,5,0"
+								IsEnabled="{Binding CanStyleAdd}"
 								Template="{StaticResource Button.Normal.ControlTemplate}"
 								Click="BtnDelete_OnClick"
 								>
@@ -4625,6 +4698,51 @@
 									/>
 
 						</Button>
+
+
+						<Button x:Name="BtnListCtrlsHelp"
+								DockPanel.Dock="Left"
+								Height="{Binding ActualHeight, ElementName=BtnDn, FallbackValue=18}"
+								Width="28"
+								HorizontalAlignment="Left"
+								Foreground="White"
+								Margin="0,0,5,0"
+								IsEnabled="True"
+								cs:CustomProperties.GenericPopupOne="{Binding ElementName=PuListControls}"
+								Template="{StaticResource Button.Normal.ControlTemplate}"
+								Click="BtnPopupInfoStart_OnClick"
+								>
+							<Button.Background>
+								<SolidColorBrush Color="{StaticResource Blue.450}" />
+							</Button.Background>
+
+							<Button.Content>
+								<Path x:Name="PathListCtrlsHelp"
+										Style="{StaticResource PathHelp.Icon}"
+										>
+								</Path>
+							</Button.Content>
+						</Button>
+
+						<!--  <Path  -->
+						<!--  Fill="White"  -->
+						<!--  Margin="0,3,3,4"  -->
+						<!--  HorizontalAlignment="Center"  -->
+						<!--  Data="{StaticResource IconHelp}"  -->
+						<!--  />  -->
+
+						<Popup Name="PuListControls"
+								DockPanel.Dock="Right"
+								cs:VisualStates.MainTitle="{x:Static cs:UnitStylesMgrWinData.CtrlsLstHelpInfoTitle}"
+								cs:VisualStates.MainDescription="{x:Static cs:UnitStylesMgrWinData.CtrlsLstHelpInfoHeader}"
+								cs:VisualStates.MainInfo="{x:Static cs:UnitStylesMgrWinData.CtrlsLstHelpInfo}"
+								cs:CustomProperties.GenericDoubleOne="{StaticResource Pop.Std.Width}"
+								Button.Click="BtnPopupClose_OnClick"
+								PlacementTarget="{Binding ElementName=BtnListCtrlsHelp}"
+								Child="{StaticResource CcHelpPopup}"
+								Style="{StaticResource PuBase}"
+								>
+						</Popup>
 
 					</DockPanel>
 
@@ -4646,7 +4764,7 @@
 
 			<!--#region > L4 dt us dialog control - unit settings-->
 
-			<DataTemplate x:Key="DtDlgCtrlUnitSetg">
+			<DataTemplate x:Key="DtDlgCtrlSavedStyles">
 
 				<StackPanel x:Name="SpUnitSetg"
 						Grid.Column="1"
@@ -4655,11 +4773,13 @@
 						HorizontalAlignment="Right"
 						VerticalAlignment="Bottom"
 						Orientation="Horizontal"
+						DataContext="{Binding ElementName=WinUnitStyle}"
 						>
 
 					<DockPanel x:Name="DialogControls">
 
 						<Button x:Name="BtnUsDebug"
+								Visibility="Collapsed"
 								Content="Debug"
 								Height="{StaticResource Btn.Height.Std}"
 								Width="{StaticResource Btn.Width.Std}"
@@ -4669,12 +4789,70 @@
 								Click="BtnDebug_OnClick"
 								/>
 
+
+						<Button x:Name="BtnDlgCtrlsHelp"
+								DockPanel.Dock="Left"
+								Height="{StaticResource Btn.Height.Std}"
+								Width="28"
+								HorizontalAlignment="Left"
+								Foreground="White"
+								Margin="10,0,0,0"
+								cs:CustomProperties.GenericPopupOne="{Binding ElementName=PuDlgControls}"
+								Template="{StaticResource Button.Normal.ControlTemplate}"
+								Click="BtnPopupInfoStart_OnClick"
+								>
+							<Button.Background>
+								<SolidColorBrush Color="{StaticResource Blue.450}" />
+							</Button.Background>
+
+							<Button.Content>
+								<Path x:Name="PathDlgCtrlsHelp"
+										Style="{StaticResource PathHelp.Icon}"
+										>
+								</Path>
+							</Button.Content>
+						</Button>
+
+						<!--  <Path  -->
+						<!--  Fill="White"  -->
+						<!--  Margin="0,3,3,4"  -->
+						<!--  HorizontalAlignment="Center"  -->
+						<!--  Data="{StaticResource IconHelp}"  -->
+						<!--  />  -->
+
+						<Popup Name="PuDlgControls"
+								DockPanel.Dock="Right"
+								cs:VisualStates.MainTitle="{x:Static cs:UnitStylesMgrWinData.CtrlsDlgHelpInfoTitle}"
+								cs:VisualStates.MainDescription="{x:Static cs:UnitStylesMgrWinData.CtrlsDlgHelpInfoHeader}"
+								cs:VisualStates.MainInfo="{x:Static cs:UnitStylesMgrWinData.CtrlsDlgHelpInfo}"
+								cs:CustomProperties.GenericDoubleOne="{StaticResource Pop.Std.Width}"
+								Button.Click="BtnPopupClose_OnClick"
+								PlacementTarget="{Binding ElementName=BtnDlgCtrlsHelp}"
+								Child="{StaticResource CcHelpPopup}"
+								Style="{StaticResource PuBase}"
+								>
+						</Popup>
+
+
+
+						<Button x:Name="BtnUsResetToDefault"
+								Content="Reset to Default"
+								Height="{StaticResource Btn.Height.Std}"
+								Width="{StaticResource Btn.Width.Std}"
+								Margin="10,0,0,0"
+								HorizontalAlignment="Right"
+								Style="{StaticResource Btn.Std}"
+								Click="BtnUsResetToDefault_OnClick"
+								/>
+
+
 						<Button x:Name="BtnUsReset"
 								Content="Reset"
 								Height="{StaticResource Btn.Height.Std}"
 								Width="{StaticResource Btn.Width.Std}"
 								Margin="10,0,0,0"
 								HorizontalAlignment="Right"
+								IsEnabled="{Binding HasChanges}"
 								Style="{StaticResource Btn.Std}"
 								Click="BtnReset_OnClick"
 								/>
@@ -4685,6 +4863,7 @@
 								Width="{StaticResource Btn.Width.Std}"
 								Margin="10,0,0,0"
 								HorizontalAlignment="Right"
+								IsEnabled="{Binding HasChanges}"
 								Style="{StaticResource Btn.Std}"
 								Click="BtnCancel_OnClick"
 								/>
@@ -4696,6 +4875,7 @@
 								Width="{StaticResource Btn.Width.Std}"
 								Margin="10,0,0,0"
 								HorizontalAlignment="Right"
+								IsEnabled="{Binding HasChanges}"
 								Style="{StaticResource Btn.Std}"
 								Click="BtnApply_OnClick"
 								/>
@@ -4706,11 +4886,61 @@
 								Width="{StaticResource Btn.Width.Std}"
 								Margin="10,0,0,0"
 								HorizontalAlignment="Right"
+								IsEnabled="{Binding HasNoChanges}"
 								Style="{StaticResource Btn.Std}"
 								Click="BtnDone_OnClick"
 								/>
 
 					</DockPanel>
+				</StackPanel>
+
+			</DataTemplate>
+
+			<!--#endregion-->
+
+			<!--#region > L4 dt so dialog control - style order (DtDlgCtrlStyleOrder)-->
+
+			<DataTemplate x:Key="DtDlgCtrlStyleOrder">
+
+				<StackPanel x:Name="DialogControls"
+						DockPanel.Dock="Bottom"
+						Margin="0,0,0,0"
+						HorizontalAlignment="Right"
+						VerticalAlignment="Bottom"
+						Orientation="Horizontal"
+						>
+
+					<Button x:Name="BtnSoReset"
+							Content="Reset"
+							Margin="10,0,0,0"
+							HorizontalAlignment="Right"
+							Style="{StaticResource Btn.Std}"
+							/>
+
+
+					<Button x:Name="BtnSoCancel"
+							Content="Cancel"
+							Margin="10,0,0,0"
+							HorizontalAlignment="Right"
+							Style="{StaticResource Btn.Std}"
+							/>
+
+
+					<Button x:Name="BtnSoApply"
+							Content="Apply"
+							Margin="10,0,0,0"
+							HorizontalAlignment="Right"
+							Style="{StaticResource Btn.Std}"
+							/>
+
+					<Button x:Name="BtnSoDone"
+							Content="Done"
+							Margin="10,0,0,0"
+							HorizontalAlignment="Right"
+							Style="{StaticResource Btn.Std}"
+							/>
+
+
 				</StackPanel>
 
 			</DataTemplate>
@@ -4797,7 +5027,7 @@
 								VerticalAlignment="Top"
 								ContentTemplate="{StaticResource DtUnitSettings}"
 								/>
-						
+
 						<ContentControl x:Name="CtAddStyle"
 								DockPanel.Dock="Bottom"
 								VerticalAlignment="Bottom"
@@ -4821,13 +5051,18 @@
 							VerticalAlignment="Stretch"
 							ContentTemplate="{StaticResource DtSavedStyles}"
 							/>
-					
+
 					<ContentControl x:Name="CcSavedStylesCtrl"
 							Grid.Column="2"
 							Grid.Row="1"
 							HorizontalAlignment="Stretch"
 							VerticalAlignment="Stretch"
 							ContentTemplate="{StaticResource DtSavedStylesCtrl}"
+							/>
+					<ContentControl x:Name="CtSavedStyle_Copy"
+							Grid.Column="2"
+							Grid.Row="0"
+							ContentTemplate="{StaticResource DtSavedStyles}"
 							/>
 
 				</Grid>
@@ -4859,43 +5094,6 @@
 				<RowDefinition Height="{StaticResource Row.Control.Height}" />
 			</Grid.RowDefinitions>
 
-			<!-- <Grid.Style> -->
-			<!-- 	<Style TargetType="Grid"> -->
-					<!-- <Setter Property="Height" Value="700" /> -->
-
-					<!-- <Style.Triggers> -->
-					<!--    -->
-					<!-- <DataTrigger Binding="{Binding ElementName=DpMain, Path=IsEnabled}" Value="True"> -->
-					<!--    -->
-					<!-- 		<DataTrigger.EnterActions> -->
-					<!-- 			<BeginStoryboard> -->
-					<!-- 				<Storyboard> -->
-					<!--  <DoubleAnimation  -->
-					<!--    -->
-					<!--  Storyboard.TargetProperty="Opacity"  -->
-					<!--  From="0"  -->
-					<!--  To="1"  -->
-					<!--  Duration="0:0:1.2"  -->
-					<!--  />  -->
-					<!-- 				</Storyboard> -->
-					<!-- 			</BeginStoryboard> -->
-					<!-- 		</DataTrigger.EnterActions> -->
-					<!-- 		<DataTrigger.ExitActions> -->
-					<!-- 			<BeginStoryboard> -->
-					<!-- 				<Storyboard> -->
-					<!--  <DoubleAnimation  -->
-					<!--  Storyboard.TargetProperty="Height"  -->
-					<!--  From="725"  -->
-					<!--  To="0"  -->
-					<!--  Duration="0:0:1.5"  -->
-					<!--  />  -->
-					<!-- 				</Storyboard> -->
-					<!-- 			</BeginStoryboard> -->
-					<!-- 		</DataTrigger.ExitActions> -->
-					<!-- 	</DataTrigger> -->
-					<!-- </Style.Triggers> -->
-			<!-- 	</Style> -->
-			<!-- </Grid.Style> -->
 
 			<StackPanel x:Name="SpOpSelect"
 					Grid.Column="0"
@@ -4911,6 +5109,7 @@
 						HorizontalAlignment="Left"
 						VerticalAlignment="Bottom"
 						Style="{StaticResource Btn.Std}"
+						Click="BtnSoShowStyleOrder_OnClick"
 						/>
 
 
@@ -4948,7 +5147,7 @@
 					<Style TargetType="ContentControl">
 						<Style.Triggers>
 							<DataTrigger Value="0" Binding="{Binding DialogIndex, FallbackValue='0'}">
-								<Setter Property="ContentTemplate" Value="{StaticResource DtDlgCtrlUnitSetg}" />
+								<Setter Property="ContentTemplate" Value="{StaticResource DtDlgCtrlSavedStyles}" />
 							</DataTrigger>
 							<DataTrigger Value="1" Binding="{Binding DialogIndex, FallbackValue='0'}">
 								<Setter Property="ContentTemplate" Value="{StaticResource DtDlgCtrlStyleOrder}" />
@@ -4957,13 +5156,6 @@
 					</Style>
 				</ContentControl.Style>
 			</ContentControl>
-
-
-			<!--  <Button x:Name="junk"  -->
-			<!--  Visibility="Collapsed"  -->
-			<!--  Tag="{x:Static local:UnitStylesMgr.RIBBONFAV}"  -->
-			<!--  Content="{x:Static local:UnitStylesMgr.RIBBONFAVORITE}"  -->
-			<!--  />  -->
 
 		</Grid>
 		<!--#endregion-->

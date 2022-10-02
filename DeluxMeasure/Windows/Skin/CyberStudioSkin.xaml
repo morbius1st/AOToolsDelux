@@ -783,7 +783,80 @@
 	<!--#endregion-->
 
 
+	<SolidColorBrush x:Key="Pop.Bdr.Out.Bg"                     Color="#E100FF00" />
+	<SolidColorBrush x:Key="Pop.Bdr.Out"		                     Color="#E100FF00" />
+
+	<SolidColorBrush x:Key="Pop.Tblk.Ttl.Out.Bg"		             Color="Transparent" />
+	<SolidColorBrush x:Key="Pop.Tblk.Ttl.Out.Fg"		             Color="Black" />
+	<FontWeight x:Key="Pop.Tblk.Ttl.Fw">DemiBold</FontWeight>
+
+
+	<SolidColorBrush x:Key="Pop.Btn.Cls.Bg"		                   Color="LimeGreen" />
+	<SolidColorBrush x:Key="Pop.Btn.Cls.Fg"		                   Color="White" />
+
+	<LinearGradientBrush x:Key="Pop.Bdr.In.Bg" StartPoint="0.5,0" EndPoint="0.5,1" >
+		<GradientStop Offset="0"                                   Color="#E100FF00" />
+		<GradientStop Offset="1"                                   Color="#FF00C400" />
+		<GradientStop Offset="0.9"                                 Color="#FB003800" />
+	</LinearGradientBrush>
+
+	<SolidColorBrush x:Key="Pop.Tblk.Ttl.In.Bg"		               Color="WhiteSmoke" />
+	<SolidColorBrush x:Key="Pop.Tblk.Ttl.In.Fg"		               Color="Black" />
+
+	<SolidColorBrush x:Key="Pop.Ic.Bg"													 Color="WhiteSmoke" />
+	<SolidColorBrush x:Key="Pop.Ic.Tblk.Bg"		                   Color="Transparent" />
+	<SolidColorBrush x:Key="Pop.Ic.Tblk.Fg"		                   Color="Black" />
+	<sys:Double x:Key="Pop.Ic.Tblk.Lh">15</sys:Double>
+	
+	<sys:Double x:Key="Pop.StyleName.Width">340</sys:Double>
+	<sys:Double x:Key="Pop.StyleDesc.Width">350</sys:Double>
+	<GridLength x:Key="Pop.Col0">18</GridLength>
+	<GridLength x:Key="Pop.Col1">24</GridLength>
+	<GridLength x:Key="Pop.Col2Plus">24</GridLength>
+
+
 	<!--#endregion-->
+
+	<!--#region > style order  tab control-->
+
+	<SolidColorBrush x:Key="TabItem.Bg.Sel" Color="{StaticResource  Bright.Green.350}" />
+	<SolidColorBrush x:Key="TabItem.Fg.Sel" Color="{StaticResource True.White}" />
+
+	<SolidColorBrush x:Key="TabItem.Bg.NotSel" Color="{StaticResource Bright.Green.250}" />
+	<SolidColorBrush x:Key="TabItem.Fg.NotSel" Color="{StaticResource Gray.150}" />
+
+	<SolidColorBrush x:Key="TabItem.Bg.SelMo" Color="{StaticResource Bright.Green.350}" />
+	<SolidColorBrush x:Key="TabItem.Fg.SelMo" Color="{StaticResource True.White}" />
+
+	<SolidColorBrush x:Key="TabItem.Bg.NotSelMo" Color="{StaticResource Bright.Green.300}" />
+	<SolidColorBrush x:Key="TabItem.Fg.NotSelMo" Color="{StaticResource Gray.760}" />
+
+
+	<SolidColorBrush x:Key="TabItem.Bg.Disabled" Color="{StaticResource Gray.150}" />
+	<SolidColorBrush x:Key="TabItem.Bdr.Disabled" Color="{StaticResource Gray.350}" />
+
+
+	<SolidColorBrush x:Key="TabItem.Bdr.Sel" Color="{StaticResource Yellow.700}" />
+	<SolidColorBrush x:Key="TabItem.Bdr.NotSel" Color="{StaticResource Yellow.300}" />
+	<SolidColorBrush x:Key="TabItem.Bdr.SelMo" Color="{StaticResource Gray.600}" />
+	<SolidColorBrush x:Key="TabItem.Bdr.NotSelMo" Color="{StaticResource Gray.300}" />
+
+
+	
+	<!-- style order listbox -->
+	<SolidColorBrush x:Key="Item.MouseOver.Background" Color="#3F26A0DA" />
+	<SolidColorBrush x:Key="Item.MouseOver.Border" Color="#CF26B0Fa" />
+
+	<SolidColorBrush x:Key="Item.SelectedActive.Background" Color="#318F00FF" />
+	<SolidColorBrush x:Key="Item.SelectedActive.Border" Color="#FFA600FF" />
+
+	<SolidColorBrush x:Key="Item.SelectedInactive.Background" Color="#2DDADADA" />
+	<SolidColorBrush x:Key="Item.SelectedInactive.Border" Color="#FFDADADA" />
+
+	
+	<!--#endregion-->
+
+
 
 	<!--  not verified colors  -->
 

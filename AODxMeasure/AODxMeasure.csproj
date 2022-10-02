@@ -47,7 +47,7 @@ echo $(AppData)\Autodesk\REVIT\Addins\adm01</PreBuildEvent>
     </DebugSymbols>
     <PreBuildEvent>echo *** Configuration: $(ConfigurationName) ***
 echo $(AppData)\Autodesk\REVIT\Addins\adm02</PreBuildEvent>
-    <PostBuildEvent>(copy /y "$(ProjectDir)Other\$(TargetName).addin" "$(AppData)\Autodesk\REVIT\Addins\2017")
+    <PostBuildEvent>(copy /y "$(ProjectDir)Other\$(TargetName).addin" "$(AppData)\Autodesk\REVIT\Addins\2018")
 (copy /y "$(TargetPath)" "$(AppData)\Autodesk\REVIT\Addins\2017")</PostBuildEvent>
     <StartAction>Program</StartAction>
     <StartProgram>$(ProgramW6432)\Autodesk\Revit 2017\Revit.exe</StartProgram>
@@ -149,33 +149,9 @@ echo $(AppData)\Autodesk\REVIT\Addins\adm05</PreBuildEvent>
     <ErrorReport>prompt</ErrorReport>
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'DeluxMeasure|AnyCPU'">
-    <DebugSymbols>true</DebugSymbols>
-    <OutputPath>bin\DeluxMeasure\</OutputPath>
-    <DefineConstants>DEBUG;TRACE</DefineConstants>
-    <DebugType>full</DebugType>
-    <PlatformTarget>AnyCPU</PlatformTarget>
-    <LangVersion>7.3</LangVersion>
-    <ErrorReport>prompt</ErrorReport>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'DeluxMeasure|x64'">
-    <DebugSymbols>true</DebugSymbols>
-    <OutputPath>bin\x64\DeluxMeasure\</OutputPath>
-    <DefineConstants>DEBUG;TRACE</DefineConstants>
-    <DebugType>full</DebugType>
-    <PlatformTarget>x64</PlatformTarget>
-    <LangVersion>7.3</LangVersion>
-    <ErrorReport>prompt</ErrorReport>
-    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'CsToolsStudy|AnyCPU'">
-    <OutputPath>bin\CsToolsStudy\</OutputPath>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'CsToolsStudy|x64'">
-    <OutputPath>bin\x64\CsToolsStudy\</OutputPath>
-  </PropertyGroup>
   <ItemGroup>
     <Reference Include="PresentationCore" />
+    <Reference Include="PresentationFramework" />
     <Reference Include="RevitAPI">
       <HintPath>..\..\..\..\..\..\..\..\Program Files\Autodesk\Revit 2021\RevitAPI.dll</HintPath>
     </Reference>
@@ -259,12 +235,15 @@ echo $(AppData)\Autodesk\REVIT\Addins\adm05</PreBuildEvent>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PostBuildEvent>(copy /y "$(ProjectDir)Other\$(TargetName).addin" "$(AppData)\Autodesk\REVIT\Addins\2019")
+    <!-- removed
+
+		<PostBuildEvent>(copy /y "$(ProjectDir)Other\$(TargetName).addin" "$(AppData)\Autodesk\REVIT\Addins\2019")
 (copy /y "$(ProjectDir)Other\$(TargetName).addin" "$(AppData)\Autodesk\REVIT\Addins\2020")
 (copy /y "$(ProjectDir)Other\$(TargetName).addin" "$(AppData)\Autodesk\REVIT\Addins\2021")
 (copy /y "$(TargetPath)" "$(AppData)\Autodesk\REVIT\Addins\2019")
 (copy /y "$(TargetPath)" "$(AppData)\Autodesk\REVIT\Addins\2020")
 (copy /y "$(TargetPath)" "$(AppData)\Autodesk\REVIT\Addins\2021")</PostBuildEvent>
+ -->
   </PropertyGroup>
   <PropertyGroup>
     <PreBuildEvent>echo *** Configuration: $(ConfigurationName) ***

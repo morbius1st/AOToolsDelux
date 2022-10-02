@@ -8,18 +8,26 @@
 		xmlns:sys="clr-namespace:System;assembly=mscorlib"
 		xmlns:cs="clr-namespace:DeluxMeasure.Windows.Support"
 		Title="Unit Styles Manager"
+		Height="760"
 		Width="900"
-		MinHeight="760"
+		MinHeight="780"
 		MinWidth="980"
-		Background="{DynamicResource Normal.Window.Background}"
 		DataContext="{Binding RelativeSource={RelativeSource Self}}"
 		FontSize="{DynamicResource FontSize.Normal}"
 		Foreground="White"
 		ResizeMode="NoResize"
 		mc:Ignorable="d"
-		SizeToContent="Height"
+		Loaded="StyleMgr_OnLoaded"
 		>
-	<!--  xmlns:util="clr-namespace:DeluxMeasureStudies.UnitsUtil"  -->
+
+	<Window.Style>
+		<Style TargetType="Window">
+			<Setter Property="Background" Value="{DynamicResource Normal.Window.Background}" />
+
+
+		</Style>
+	</Window.Style>
+
 	<Window.Resources>
 
 		<ResourceDictionary>
@@ -41,7 +49,8 @@
 
 			<!--#endregion-->
 
-			<cs:AddConverter x:Key="AddConverter"></cs:AddConverter>
+			<cs:AddConverter x:Key="AddConverter">
+			</cs:AddConverter>
 
 			<ControlTemplate x:Key="CtTextBox"
 					TargetType="TextBox"
@@ -1020,9 +1029,7 @@
 
 			<DataTemplate x:Key="DtSoRibbonOrder">
 
-				<DockPanel x:Name="DpRibbontOrder"
-						VerticalAlignment="Top"
-						>
+				<DockPanel x:Name="DpRibbontOrder">
 
 					<Border x:Name="BdrRoHeader"
 							DockPanel.Dock="Top"
@@ -1031,11 +1038,28 @@
 							Margin="0,0,0,3"
 							Style="{StaticResource BdrHeader}"
 							>
-						<TextBlock Text="Style Order - Ribbon List"
+						<TextBlock
+								Text="Style Order - Ribbon List"
 								FontSize="{StaticResource FontSize.XLarge}"
 								Style="{StaticResource TblkHeader}"
 								/>
 					</Border>
+
+					<ListBox x:Name="LbxRibbon"
+							Background="Black"
+							d:ItemsSource="{d:SampleData ItemCount=15}"
+							Initialized="LbxRibbon_OnInitialized"
+							Loaded="LbxRibbon_OnLoaded"
+							>
+						<ListBox.ItemTemplate>
+							<DataTemplate>
+								<TextBlock
+										Text="{Binding}"
+										Foreground="White"
+										/>
+							</DataTemplate>
+						</ListBox.ItemTemplate>
+					</ListBox>
 
 				</DockPanel>
 
@@ -1056,11 +1080,28 @@
 							Margin="0,0,0,3"
 							Style="{StaticResource BdrHeader}"
 							>
-						<TextBlock Text="Style Order - Delux Measure - Left"
+						<TextBlock
+								Text="Style Order - Delux Measure - Left"
 								FontSize="{StaticResource FontSize.XLarge}"
 								Style="{StaticResource TblkHeader}"
 								/>
 					</Border>
+
+					<ListBox x:Name="LbxLeft"
+							Background="Black"
+							d:ItemsSource="{d:SampleData ItemCount=15}"
+							Loaded="LbxLeft_Loaded"
+							Initialized="LbxLeft_Initialized"
+							>
+						<ListBox.ItemTemplate>
+							<DataTemplate>
+								<TextBlock
+										Text="{Binding}"
+										Foreground="White"
+										/>
+							</DataTemplate>
+						</ListBox.ItemTemplate>
+					</ListBox>
 
 				</DockPanel>
 
@@ -1081,17 +1122,100 @@
 							Margin="0,0,0,3"
 							Style="{StaticResource BdrHeader}"
 							>
-						<TextBlock Text="Style Order - Delux Measure - Right"
+						<TextBlock
+								Text="Style Order - Delux Measure - Right"
 								FontSize="{StaticResource FontSize.XLarge}"
 								Style="{StaticResource TblkHeader}"
 								/>
 					</Border>
+
+					<ListBox x:Name="LbxRight"
+							Background="Black"
+							d:ItemsSource="{d:SampleData ItemCount=15}"
+							Initialized="LbxRight_Initialized"
+							Loaded="LbxRight_Loaded"
+							>
+						<ListBox.ItemTemplate>
+							<DataTemplate>
+								<TextBlock
+										Text="{Binding}"
+										Foreground="White"
+										/>
+							</DataTemplate>
+						</ListBox.ItemTemplate>
+					</ListBox>
 
 				</DockPanel>
 
 			</DataTemplate>
 
 			<!--#endregion-->
+
+
+
+			<!--#region >L4 Tab Control-->
+
+			<DataTemplate x:Key="DtTabControl">
+
+				<TabControl
+						Foreground="White"
+						Background="Black"
+						HorizontalAlignment="Stretch"
+						Tag="{DynamicResource LbxRibbon}"
+						>
+
+					<TabItem
+							Width="300"
+							ContentTemplate="{StaticResource DtSoRibbonOrder}"
+							>
+						<TabItem.Header>
+							<TextBlock
+									HorizontalAlignment="Stretch"
+									Background="DimGray"
+									Foreground="White"
+									Text="Ribbon Button"
+									/>
+						</TabItem.Header>
+
+					</TabItem>
+
+
+					<TabItem
+							Width="300"
+							ContentTemplate="{StaticResource DtSoDlxMeasureLeftOrder}"
+							>
+						<TabItem.Header>
+							<TextBlock
+									HorizontalAlignment="Stretch"
+									Background="DimGray"
+									Foreground="White"
+									Text="Dialog Left"
+									/>
+						</TabItem.Header>
+
+					</TabItem>
+
+					<TabItem
+							Width="300"
+							ContentTemplate="{StaticResource DtSoDlxMeasureRightOrder}"
+							>
+						<TabItem.Header>
+							<TextBlock
+									HorizontalAlignment="Stretch"
+									Background="DimGray"
+									Foreground="White"
+									Text="Dialog Right"
+									/>
+						</TabItem.Header>
+
+					</TabItem>
+
+				</TabControl>
+
+			</DataTemplate>
+
+			<!--#endregion-->
+
 
 			<!--#region > L4 dt so dialog control - style order (DtDlgCtrlStyleOrder)-->
 
@@ -1142,7 +1266,6 @@
 			</DataTemplate>
 
 			<!--#endregion-->
-
 
 
 			<!--#region > L4 dt us lbx item container-->
@@ -1283,7 +1406,8 @@
 							>
 						<Grid>
 
-							<TextBlock Grid.Column="0"
+							<TextBlock
+									Grid.Column="0"
 									Grid.Row="0"
 									FontSize="40"
 									HorizontalAlignment="Center"
@@ -1466,7 +1590,7 @@
 						<!--  cs:VisualStates.IsFocused="True"  -->
 						<!--  cs:VisualStates.IsFocused="{Binding RelativeSource={RelativeSource AncestorType={x:Type ListBoxItem}}, Path=IsFocused}"  -->
 						<TextBlock x:Name="TblkStyleNameEntryText"
-								Text="style name"
+								Text="{Binding Ustyle.Name}"
 								Margin="8,0,0,3"
 								VerticalAlignment="Center"
 								cs:VisualStates.FgDisabled="{StaticResource CanEdit.Fg.Disabled}"
@@ -1571,13 +1695,15 @@
 
 
 
-					<StackPanel Grid.Column="4"
+					<StackPanel
+							Grid.Column="4"
 							Grid.Row="0"
 							Grid.RowSpan="3"
 							Orientation="Vertical"
 							>
 
-						<TextBlock HorizontalAlignment="Left"
+						<TextBlock
+								HorizontalAlignment="Left"
 								MaxWidth="110"
 								Foreground="White"
 								Text="{Binding Path=Ustyle.Name}"
@@ -1657,7 +1783,9 @@
 
 				<!--#region > L6 unit settings and add style-->
 
-				<StackPanel Orientation="Vertical">
+				<StackPanel x:Name="SpUsHeader"
+						Orientation="Vertical"
+						>
 
 					<Border x:Name="BdrUsHeader"
 							HorizontalAlignment="Stretch"
@@ -1665,7 +1793,8 @@
 							Margin="0,0,0,3"
 							Style="{StaticResource BdrHeader}"
 							>
-						<TextBlock Text="Unit Settings"
+						<TextBlock x:Name="TblkUnitSettings"
+								Text="Unit Settings"
 								FontSize="{StaticResource FontSize.XLarge}"
 								Style="{StaticResource TblkHeader}"
 								/>
@@ -1732,13 +1861,15 @@
 							>
 
 						<ComboBox.Style>
-							<Style BasedOn="{StaticResource CtrlWithBdrTrigs.L2}"
+							<Style
+									BasedOn="{StaticResource CtrlWithBdrTrigs.L2}"
 									TargetType="ComboBox"
 									>
 								<Setter Property="Template" Value="{StaticResource CsComboBoxCt}" />
 							</Style>
 						</ComboBox.Style>
 					</ComboBox>
+
 					<StackPanel x:Name="SpStyleName"
 							Margin="0,5,0,0"
 							Orientation="Horizontal"
@@ -1746,7 +1877,8 @@
 						<Border x:Name="BdrStyleNameTitle"
 								Style="{StaticResource BdrUnitValTitle}"
 								>
-							<TextBlock Text="Style Name"
+							<TextBlock x:Name="TblkStyleNameTitle"
+									Text="Style Name"
 									Style="{StaticResource TblkUnitValTitle}"
 									/>
 						</Border>
@@ -1754,7 +1886,8 @@
 						<Border x:Name="BdrStyleNameValue"
 								Style="{StaticResource BdrUnitValue}"
 								>
-							<TextBlock Text="{Binding Ustyle.Name, FallbackValue=missing}"
+							<TextBlock
+									Text="{Binding Ustyle.Name, FallbackValue=missing}"
 									Style="{StaticResource TblkUnitValue}"
 									/>
 						</Border>
@@ -1767,7 +1900,8 @@
 						<Border x:Name="BdrStyleDescTitle"
 								Style="{StaticResource BdrUnitValTitle}"
 								>
-							<TextBlock Text="Description"
+							<TextBlock x:Name="TblkStyleDescriptionTitle"
+									Text="Description"
 									Style="{StaticResource TblkUnitValTitle}"
 									/>
 						</Border>
@@ -1775,7 +1909,8 @@
 						<Border x:Name="BdrStyleDescValue"
 								Style="{StaticResource BdrUnitValue}"
 								>
-							<TextBlock Text="{Binding Ustyle.Description, FallbackValue='missing'}"
+							<TextBlock x:Name="TblkStyleDescriptionValue"
+									Text="{Binding Ustyle.Description, FallbackValue='missing'}"
 									Style="{StaticResource TblkUnitValue}"
 									/>
 						</Border>
@@ -1788,7 +1923,8 @@
 						<Border x:Name="BdrUnitSystemTitle"
 								Style="{StaticResource BdrUnitValTitle}"
 								>
-							<TextBlock Text="Unit System"
+							<TextBlock x:Name="TblkUnitSysTitle"
+									Text="Unit System"
 									Style="{StaticResource TblkUnitValTitle}"
 									/>
 						</Border>
@@ -1796,7 +1932,8 @@
 						<Border x:Name="BdrUnitSystemValue"
 								Style="{StaticResource BdrUnitValue}"
 								>
-							<TextBlock Text="{Binding Ustyle.UnitSys, FallbackValue='missing'}"
+							<TextBlock x:Name="TblkUnitSysValue"
+									Text="{Binding Ustyle.UnitSys, FallbackValue='missing'}"
 									Style="{StaticResource TblkUnitValue}"
 									/>
 						</Border>
@@ -1809,7 +1946,8 @@
 						<Border x:Name="BdrUnitSymbolTitle"
 								Style="{StaticResource BdrUnitValTitle}"
 								>
-							<TextBlock Text="Symbol"
+							<TextBlock x:Name="TblkUnitSymbolTitle"
+									Text="Symbol"
 									Style="{StaticResource TblkUnitValTitle}"
 									/>
 						</Border>
@@ -1817,7 +1955,8 @@
 						<Border x:Name="BdrUnitSymbolValue"
 								Style="{StaticResource BdrUnitValue}"
 								>
-							<TextBlock Text="{Binding UnitSymbolFormated, FallbackValue='missing'}"
+							<TextBlock x:Name="TblkUnitSymbolValue"
+									Text="{Binding UnitSymbolFormated, FallbackValue='missing'}"
 									Style="{StaticResource TblkUnitValue}"
 									/>
 						</Border>
@@ -1830,7 +1969,8 @@
 						<Border x:Name="BdrUniRoundingTitle"
 								Style="{StaticResource BdrUnitValTitle}"
 								>
-							<TextBlock Text="Rounding"
+							<TextBlock x:Name="TblkUnitRoundingTitle"
+									Text="Rounding"
 									Style="{StaticResource TblkUnitValTitle}"
 									/>
 						</Border>
@@ -1838,7 +1978,8 @@
 						<Border x:Name="BdrUnitRoundingValue"
 								Style="{StaticResource BdrUnitValue}"
 								>
-							<TextBlock Text="{Binding UnitPrecisionFormatted, FallbackValue='missing'}"
+							<TextBlock x:Name="TblkUnitRoundingValue"
+									Text="{Binding UnitPrecisionFormatted, FallbackValue='missing'}"
 									Style="{StaticResource TblkUnitValue}"
 									/>
 						</Border>
@@ -1852,7 +1993,8 @@
 						<Border x:Name="BdrUnitLeadZeroTitle"
 								Style="{StaticResource BdrUnitValTitle}"
 								>
-							<TextBlock Text="Leading Zero"
+							<TextBlock
+									Text="Leading Zero"
 									Style="{StaticResource TblkUnitValTitle}"
 									/>
 						</Border>
@@ -1860,7 +2002,8 @@
 						<Border x:Name="BdrUnitLeadZeroValue"
 								Style="{StaticResource BdrUnitValue}"
 								>
-							<TextBlock Text="{Binding UnitLeadZero, FallbackValue='missing'}"
+							<TextBlock
+									Text="{Binding UnitLeadZero, FallbackValue='missing'}"
 									Style="{StaticResource TblkUnitValue}"
 									/>
 						</Border>
@@ -1874,7 +2017,8 @@
 						<Border x:Name="BdrUnitTrailZeroTitle"
 								Style="{StaticResource BdrUnitValTitle}"
 								>
-							<TextBlock Text="Trailing Zero"
+							<TextBlock
+									Text="Trailing Zero"
 									Style="{StaticResource TblkUnitValTitle}"
 									/>
 						</Border>
@@ -1882,7 +2026,8 @@
 						<Border x:Name="BdrUnitTrailZeroValue"
 								Style="{StaticResource BdrUnitValue}"
 								>
-							<TextBlock Text="{Binding UnitTrailZero, FallbackValue='missing'}"
+							<TextBlock
+									Text="{Binding UnitTrailZero, FallbackValue='missing'}"
 									Style="{StaticResource TblkUnitValue}"
 									/>
 						</Border>
@@ -1896,7 +2041,8 @@
 						<Border x:Name="BdrUnitExtraSpacesTitle"
 								Style="{StaticResource BdrUnitValTitle}"
 								>
-							<TextBlock Text="Show Extra Spaces"
+							<TextBlock
+									Text="Show Extra Spaces"
 									Style="{StaticResource TblkUnitValTitle}"
 									/>
 						</Border>
@@ -1904,7 +2050,8 @@
 						<Border x:Name="BdrUnitExtraSpacesValue"
 								Style="{StaticResource BdrUnitValue}"
 								>
-							<TextBlock Text="{Binding UnitExtraSpaces, FallbackValue='missing'}"
+							<TextBlock
+									Text="{Binding UnitExtraSpaces, FallbackValue='missing'}"
 									Style="{StaticResource TblkUnitValue}"
 									/>
 						</Border>
@@ -1918,7 +2065,8 @@
 						<Border x:Name="BdrUnitUsePlusTitle"
 								Style="{StaticResource BdrUnitValTitle}"
 								>
-							<TextBlock Text="Show + for Positive Values"
+							<TextBlock
+									Text="Show + for Positive Values"
 									Style="{StaticResource TblkUnitValTitle}"
 									/>
 						</Border>
@@ -1926,7 +2074,8 @@
 						<Border x:Name="BdrUnitUsePlusValue"
 								Style="{StaticResource BdrUnitValue}"
 								>
-							<TextBlock Text="{Binding UnitShowPlus, FallbackValue='missing'}"
+							<TextBlock
+									Text="{Binding UnitShowPlus, FallbackValue='missing'}"
 									Style="{StaticResource TblkUnitValue}"
 									/>
 						</Border>
@@ -1940,7 +2089,8 @@
 						<Border x:Name="BdrUnitUseGroupTitle"
 								Style="{StaticResource BdrUnitValTitle}"
 								>
-							<TextBlock Text="Use Digit Grouping"
+							<TextBlock
+									Text="Use Digit Grouping"
 									Style="{StaticResource TblkUnitValTitle}"
 									/>
 						</Border>
@@ -1948,7 +2098,8 @@
 						<Border x:Name="BdrUnitUseGroupValue"
 								Style="{StaticResource BdrUnitValue}"
 								>
-							<TextBlock Text="{Binding UnitDigitGrp, FallbackValue='missing'}"
+							<TextBlock
+									Text="{Binding UnitDigitGrp, FallbackValue='missing'}"
 									Style="{StaticResource TblkUnitValue}"
 									/>
 						</Border>
@@ -1961,7 +2112,8 @@
 						<Border x:Name="BdrUnitSampleTitle"
 								Style="{StaticResource BdrUnitValTitle}"
 								>
-							<TextBlock Text="Style Sample"
+							<TextBlock
+									Text="Style Sample"
 									Style="{StaticResource TblkUnitValTitle}"
 									/>
 						</Border>
@@ -1969,7 +2121,8 @@
 						<Border x:Name="BdrUnitSampleValue"
 								Style="{StaticResource BdrUnitValue}"
 								>
-							<TextBlock Text="{Binding UnitSampleFormatted, FallbackValue='missing'}"
+							<TextBlock
+									Text="{Binding UnitSampleFormatted, FallbackValue='missing'}"
 									Style="{StaticResource TblkUnitValue}"
 									/>
 						</Border>
@@ -2005,7 +2158,9 @@
 						Style="{StaticResource BdrTrigs.L1a}"
 						>
 
-					<StackPanel Orientation="Vertical">
+					<StackPanel x:Name="SpAddStyle"
+							Orientation="Vertical"
+							>
 
 						<Border x:Name="BdrAddStyleHeader"
 								DockPanel.Dock="Top"
@@ -2020,11 +2175,11 @@
 								cs:VisualStates.BgIsSel="{StaticResource AddUnit.Title.Bg.IsSel}"
 								Style="{StaticResource BdrTrigs.L1a}"
 								>
-							<TextBlock Text="Add the Above as a New Style?"
+							<TextBlock x:Name="TblkNewStyleAdd"
+									Text="Add the Above as a New Style?"
 									Padding="0"
 									Margin="5,3,0,5"
 									FontSize="{StaticResource FontSize.Large}"
-									cs:VisualStates.IsFocused="{Binding RelativeSource={RelativeSource AncestorType={x:Type ListBoxItem}}, Path=IsFocused}"
 									cs:VisualStates.FgDisabled="{StaticResource AddUnit.Title.Fg.NotSel}"
 									cs:VisualStates.FgIsSel="{StaticResource AddUnit.Title.Fg.IsSel}"
 									Style="{StaticResource TblkHeaderL1aTrigs}"
@@ -2046,13 +2201,15 @@
 								Style="{StaticResource BdrTrigs.L1a}"
 								>
 
-							<StackPanel Orientation="Vertical">
+							<StackPanel x:Name="SpNewStyle"
+									Orientation="Vertical"
+									>
 
-								<TextBlock Text="Name for new Unit Style?"
+								<TextBlock x:Name="TblkNewStyleName"
+										Text="Name for new Unit Style?"
 										Margin="0,0,0,0"
 										Padding="0"
 										FontSize="{StaticResource FontSize.Large}"
-										cs:VisualStates.IsFocused="{Binding RelativeSource={RelativeSource AncestorType={x:Type ListBoxItem}}, Path=IsFocused}"
 										cs:VisualStates.FgDisabled="{StaticResource AddUnit.SubTitle.Fg.NotSel}"
 										cs:VisualStates.FgIsSel="{StaticResource AddUnit.SubTitle.Fg.IsSel}"
 										Style="{StaticResource TblkHeaderL1aTrigs}"
@@ -2085,7 +2242,9 @@
 										Style="{StaticResource BdrTrigs.L5}"
 										>
 
-									<DockPanel HorizontalAlignment="Stretch">
+									<DockPanel x:Name="DpStyleNameClr"
+											HorizontalAlignment="Stretch"
+											>
 
 										<Button x:Name="BtnStyleNameClr"
 												Content="&#xE106;"
@@ -2133,11 +2292,11 @@
 
 								</Border>
 
-								<TextBlock Text="Name for new Unit Style?"
+								<TextBlock x:Name="TblkNewUnitStleName"
+										Text="Name for new Unit Style?"
 										Margin="0,2,0,0"
 										Padding="0"
 										FontSize="{StaticResource FontSize.Large}"
-										cs:VisualStates.IsFocused="{Binding RelativeSource={RelativeSource AncestorType={x:Type ListBoxItem}}, Path=IsFocused}"
 										cs:VisualStates.FgDisabled="{StaticResource AddUnit.SubTitle.Fg.NotSel}"
 										cs:VisualStates.FgIsSel="{StaticResource AddUnit.SubTitle.Fg.IsSel}"
 										Style="{StaticResource TblkHeaderL1aTrigs}"
@@ -2168,7 +2327,9 @@
 										cs:VisualStates.DoesMouseOver="true"
 										Style="{StaticResource BdrTrigs.L5}"
 										>
-									<DockPanel HorizontalAlignment="Stretch">
+									<DockPanel x:Name="DpStyleDesc"
+											HorizontalAlignment="Stretch"
+											>
 
 										<Button x:Name="BtnStyleDescClr"
 												Content="&#xE106;"
@@ -2238,7 +2399,8 @@
 							<!--  Width="{StaticResource Btn.Width.Narrow}"  -->
 							<!--  Style="{StaticResource Btn.Std}"  -->
 
-							<Border DockPanel.Dock="Left"
+							<Border x:Name="BdrAddPosition"
+									DockPanel.Dock="Left"
 									Width="Auto"
 									BorderThickness="1"
 									Margin="10,0,0,0"
@@ -2329,7 +2491,8 @@
 							VerticalAlignment="Top"
 							Margin="0,0,0,3"
 							>
-						<TextBlock Text="Saved Styles"
+						<TextBlock x:Name="TblkSsHeader"
+								Text="Saved Styles"
 								FontSize="{StaticResource FontSize.XLarge}"
 								/>
 					</Border>
@@ -2359,7 +2522,8 @@
 										Margin="0,0,5,0"
 										Style="{StaticResource Btn.Std}"
 										>
-									<TextBlock FontSize="{StaticResource FontSize.Large}"
+									<TextBlock
+											FontSize="{StaticResource FontSize.Large}"
 											Padding="10,0,10,4"
 											Text="▲"
 											/>
@@ -2373,7 +2537,8 @@
 										Margin="0,0,5,0"
 										Style="{StaticResource Btn.Std}"
 										>
-									<TextBlock FontSize="{StaticResource FontSize.Large}"
+									<TextBlock
+											FontSize="{StaticResource FontSize.Large}"
 											Padding="10,2,10,4"
 											Text="▼"
 											/>
@@ -2390,10 +2555,12 @@
 									<Button.Background>
 										<SolidColorBrush Color="{StaticResource Deep.Orange.600}" />
 									</Button.Background>
-									<Canvas VerticalAlignment="Center"
+									<Canvas x:Name="CanPath01"
+											VerticalAlignment="Center"
 											HorizontalAlignment="Center"
 											>
-										<Path Fill="White"
+										<Path x:Name="PathDeleteP"
+												Fill="White"
 												Data="{StaticResource IconDeletePerimeter}"
 												RenderTransformOrigin="0.5,0.5"
 												>
@@ -2404,7 +2571,8 @@
 											</Path.RenderTransform>
 
 										</Path>
-										<Path Fill="White"
+										<Path x:Name="PathDeleteI"
+												Fill="White"
 												Data="{StaticResource IconDeleteInterior}"
 												>
 											<Path.RenderTransform>
@@ -2426,7 +2594,8 @@
 										CornerRadius="{StaticResource CornerRadius.Std}"
 										BorderBrush="White"
 										>
-									<TextBlock DockPanel.Dock="Right"
+									<TextBlock x:Name="TblkHasChanges"
+											DockPanel.Dock="Right"
 											Width="60"
 											FontSize="{StaticResource FontSize.Large}"
 											HorizontalAlignment="Right"
@@ -2491,6 +2660,7 @@
 									HorizontalAlignment="Stretch"
 									HorizontalContentAlignment="Stretch"
 									IsSynchronizedWithCurrentItem="True"
+									DataContext="{Binding ElementName=WinUnitStyle, Path=CbxList}"
 									ItemContainerStyle="{DynamicResource Lbx1ItemContainerStyle1}"
 									ItemTemplate="{StaticResource Lbx1ItemTemplate}"
 									ItemsSource="{Binding}"
@@ -2567,7 +2737,7 @@
 								/>
 
 						<Button x:Name="BtnUsDone"
-								Content="Done"
+								Content="Help"
 								Height="{StaticResource Btn.Height.Std}"
 								Width="{StaticResource Btn.Width.Std}"
 								HorizontalAlignment="Right"
@@ -2603,24 +2773,24 @@
 						<RowDefinition Height="{StaticResource Row.So.Main.Height}" />
 						<RowDefinition Height="{StaticResource Row.So.Function.Height}" />
 					</Grid.RowDefinitions>
-					
+
 					<ContentControl x:Name="CtSoRibbonOrder"
-					Grid.Column="0"
-					Grid.Row="0"
-					ContentTemplate="{StaticResource DtSoRibbonOrder}"
-					/>
-					
+							Grid.Column="0"
+							Grid.Row="0"
+							ContentTemplate="{StaticResource DtSoRibbonOrder}"
+							/>
+
 					<ContentControl x:Name="DtSoDlxMeasureLeftOrder"
-					Grid.Column="2"
-					Grid.Row="0"
-					ContentTemplate="{StaticResource DtSoDlxMeasureLeftOrder}"
-					/>
-					
+							Grid.Column="2"
+							Grid.Row="0"
+							ContentTemplate="{StaticResource DtSoDlxMeasureLeftOrder}"
+							/>
+
 					<ContentControl x:Name="DtSoDlxMeasureRightOrder"
-					Grid.Column="4"
-					Grid.Row="0"
-					ContentTemplate="{StaticResource DtSoDlxMeasureRightOrder}"
-					/>
+							Grid.Column="4"
+							Grid.Row="0"
+							ContentTemplate="{StaticResource DtSoDlxMeasureRightOrder}"
+							/>
 
 				</Grid>
 
@@ -2705,7 +2875,9 @@
 				>
 
 			<!--#region > L4 Main Content selector-->
-			<Grid Margin="15,12,8,8">
+			<Grid x:Name="GridExpander"
+					Margin="15,12,8,8"
+					>
 
 				<Grid.ColumnDefinitions>
 					<ColumnDefinition Width="*" />
@@ -2731,6 +2903,7 @@
 							VerticalAlignment="Bottom"
 							Margin="0,0,10,0"
 							Style="{StaticResource Btn.Std}"
+							Click="BtnSoShowStyleOrder_OnClick"
 							/>
 
 
@@ -2747,12 +2920,12 @@
 						<Style TargetType="ContentControl">
 							<Style.Triggers>
 
-								<DataTrigger Binding="{Binding DialogIndex, FallbackValue='0'}" Value="0">
+								<DataTrigger Binding="{Binding ShowTab, FallbackValue='0'}" Value="0">
 									<Setter Property="ContentTemplate" Value="{StaticResource DtUnitStyles}" />
 								</DataTrigger>
 
-								<DataTrigger Binding="{Binding DialogIndex, FallbackValue='0'}" Value="1">
-									<Setter Property="ContentTemplate" Value="{StaticResource DtStyleOrder}" />
+								<DataTrigger Binding="{Binding ShowTab, FallbackValue='0'}" Value="1">
+									<Setter Property="ContentTemplate" Value="{StaticResource DtTabControl}" />
 								</DataTrigger>
 
 							</Style.Triggers>

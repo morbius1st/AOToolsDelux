@@ -1,5 +1,6 @@
 ﻿#region + Using Directives
 
+using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 using System.Windows;
 using System.Windows.Media;
@@ -14,27 +15,48 @@ namespace CsDeluxMeasure.Windows.Support
 {
 	public class VisualStates : DependencyObject
 	{
-	#region general - title text
+
+	#region general - main title
 
 		public static readonly DependencyProperty
-			TitleTextProperty = DependencyProperty.RegisterAttached(
-				"TitleText", typeof(string), typeof(VisualStates),
+			MainTitleProperty = DependencyProperty.RegisterAttached(
+				"MainTitle", typeof(string), typeof(VisualStates),
 				new FrameworkPropertyMetadata("",
 					FrameworkPropertyMetadataOptions.Inherits));
 
-		public static void SetTitleText(UIElement e, string value)
+		public static void SetMainTitle(UIElement e, string value)
 		{
-			e.SetValue(TitleTextProperty, value);
+			e.SetValue(MainTitleProperty, value);
 		}
 
-		public static string GetTitleText(UIElement e)
+		public static string GetMainTitle(UIElement e)
 		{
-			return (string) e.GetValue(TitleTextProperty);
+			return (string) e.GetValue(MainTitleProperty);
 		}
 
 	#endregion
 
-	#region general - title text
+	#region general - main description
+
+		public static readonly DependencyProperty
+			MainDescriptionProperty = DependencyProperty.RegisterAttached(
+				"MainDescription", typeof(string), typeof(VisualStates),
+				new FrameworkPropertyMetadata("",
+					FrameworkPropertyMetadataOptions.Inherits));
+
+		public static void SetMainDescription(UIElement e, string value)
+		{
+			e.SetValue(MainDescriptionProperty, value);
+		}
+
+		public static string GetMainDescription(UIElement e)
+		{
+			return (string) e.GetValue(MainDescriptionProperty);
+		}
+
+	#endregion
+
+	#region general - main content
 
 		public static readonly DependencyProperty
 			MainContentProperty = DependencyProperty.RegisterAttached(
@@ -54,25 +76,25 @@ namespace CsDeluxMeasure.Windows.Support
 
 	#endregion
 
-	// #region general - does mouse over
-	//
-	// 	public static readonly DependencyProperty
-	// 		DoesMouseOverProperty = DependencyProperty.RegisterAttached(
-	// 			"DoesMouseOver", typeof(bool), typeof(VisualStates),
-	// 			new FrameworkPropertyMetadata(false,
-	// 				FrameworkPropertyMetadataOptions.Inherits));
-	//
-	// 	public static void SetDoesMouseOver(UIElement e, bool value)
-	// 	{
-	// 		e.SetValue(DoesMouseOverProperty, value);
-	// 	}
-	//
-	// 	public static bool GetDoesMouseOver(UIElement e)
-	// 	{
-	// 		return (bool) e.GetValue(DoesMouseOverProperty);
-	// 	}
-	//
-	// #endregion
+		// #region general - does mouse over
+		//
+		// 	public static readonly DependencyProperty
+		// 		DoesMouseOverProperty = DependencyProperty.RegisterAttached(
+		// 			"DoesMouseOver", typeof(bool), typeof(VisualStates),
+		// 			new FrameworkPropertyMetadata(false,
+		// 				FrameworkPropertyMetadataOptions.Inherits));
+		//
+		// 	public static void SetDoesMouseOver(UIElement e, bool value)
+		// 	{
+		// 		e.SetValue(DoesMouseOverProperty, value);
+		// 	}
+		//
+		// 	public static bool GetDoesMouseOver(UIElement e)
+		// 	{
+		// 		return (bool) e.GetValue(DoesMouseOverProperty);
+		// 	}
+		//
+		// #endregion
 
 	#region general - is_activated
 
@@ -113,7 +135,7 @@ namespace CsDeluxMeasure.Windows.Support
 		}
 
 	#endregion
-		
+
 	#region general - is_editing
 
 		public static readonly DependencyProperty
@@ -133,7 +155,7 @@ namespace CsDeluxMeasure.Windows.Support
 		}
 
 	#endregion
-		
+
 	#region general - is_modified
 
 		public static readonly DependencyProperty
@@ -193,7 +215,7 @@ namespace CsDeluxMeasure.Windows.Support
 		}
 
 	#endregion
-		
+
 	#region general - is_goodbad (& null)
 
 		public static readonly DependencyProperty
@@ -214,22 +236,25 @@ namespace CsDeluxMeasure.Windows.Support
 
 	#endregion
 
-	#region general - generic thickness
 
-		public static readonly DependencyProperty GenericThicknessProperty = DependencyProperty.RegisterAttached(
-			"GenericThickness", typeof(Thickness), typeof(VisualStates), 
-			new FrameworkPropertyMetadata(new Thickness(0, 0, 0, 0), 
-				FrameworkPropertyMetadataOptions.Inherits));
+		// special
 
-		public static void SetGenericThickness(UIElement e, Thickness value)
-		{
-			e.SetValue(GenericThicknessProperty, value);
-		}
+	#region special - main info - popup help
 
-		public static Thickness GetGenericThickness(UIElement e)
-		{
-			return (Thickness) e.GetValue(GenericThicknessProperty);
-		}
+			public static readonly DependencyProperty MainInfoProperty = DependencyProperty.RegisterAttached(
+				"MainInfo", typeof(List<HelpInfo>), typeof(VisualStates),
+				new FrameworkPropertyMetadata(new List<HelpInfo>(),
+					FrameworkPropertyMetadataOptions.Inherits));
+		
+			public static void SetMainInfo(UIElement e, List<HelpInfo> value)
+			{
+				e.SetValue(MainInfoProperty, value);
+			}
+		
+			public static List<HelpInfo> GetMainInfo(UIElement e)
+			{
+				return (List<HelpInfo>) e.GetValue(MainInfoProperty);
+			}
 
 	#endregion
 
@@ -503,7 +528,7 @@ namespace CsDeluxMeasure.Windows.Support
 		}
 
 	#endregion
-		
+
 	#region is_sel - borderbrush
 
 		public static readonly DependencyProperty
@@ -790,7 +815,7 @@ namespace CsDeluxMeasure.Windows.Support
 		}
 
 	#endregion
-		
+
 	#region is_readonly - borderbrush
 
 		public static readonly DependencyProperty
@@ -912,6 +937,5 @@ namespace CsDeluxMeasure.Windows.Support
 		}
 
 	#endregion
-
 	}
 }

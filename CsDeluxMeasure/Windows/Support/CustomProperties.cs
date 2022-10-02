@@ -36,7 +36,7 @@ namespace CsDeluxMeasure.Windows.Support
 
 	#endregion
 
-	#region GenericBoolOne
+	#region GenericBoolTwo
 
 		public static readonly DependencyProperty GenericBoolTwoProperty = DependencyProperty.RegisterAttached(
 			"GenericBoolTwo", typeof(bool), typeof(CustomProperties),
@@ -71,10 +71,45 @@ namespace CsDeluxMeasure.Windows.Support
 
 	#endregion
 
+	// #region GenericStringTwo
+	//
+	// 	public static readonly DependencyProperty GenericStringTwoProperty = DependencyProperty.RegisterAttached(
+	// 		"GenericStringTwo", typeof(string), typeof(CustomProperties), new PropertyMetadata(""));
+	//
+	// 	public static void SetGenericStringTwo(UIElement e, string value)
+	// 	{
+	// 		e.SetValue(GenericStringTwoProperty, value);
+	// 	}
+	//
+	// 	public static string GetGenericStringTwo(UIElement e)
+	// 	{
+	// 		return (string) e.GetValue(GenericStringTwoProperty);
+	// 	}
+	//
+	// #endregion
+	//
+	// #region GenericStringThree
+	//
+	// 	public static readonly DependencyProperty GenericStringThreeProperty = DependencyProperty.RegisterAttached(
+	// 		"GenericStringThree", typeof(string), typeof(CustomProperties), new PropertyMetadata(""));
+	//
+	// 	public static void SetGenericStringThree(UIElement e, string value)
+	// 	{
+	// 		e.SetValue(GenericStringThreeProperty, value);
+	// 	}
+	//
+	// 	public static string GetGenericStringThree(UIElement e)
+	// 	{
+	// 		return (string) e.GetValue(GenericStringThreeProperty);
+	// 	}
+	//
+	// #endregion
+
 	#region GenericIntOne
 
 		public static readonly DependencyProperty GenericIntOneProperty = DependencyProperty.RegisterAttached(
-			"GenericIntOne", typeof(int), typeof(CustomProperties), new PropertyMetadata(-1));
+			"GenericIntOne", typeof(int), typeof(CustomProperties), 
+			new FrameworkPropertyMetadata(-1, FrameworkPropertyMetadataOptions.Inherits));
 
 		public static void SetGenericIntOne(UIElement e, int value)
 		{
@@ -84,6 +119,28 @@ namespace CsDeluxMeasure.Windows.Support
 		public static int GetGenericIntOne(UIElement e)
 		{
 			return (int) e.GetValue(GenericIntOneProperty);
+		}
+
+	#endregion
+
+	#region GenericDoubleOne
+
+		public static readonly DependencyProperty GenericDoubleOneProperty = DependencyProperty.RegisterAttached(
+			"GenericDoubleOne", typeof(double), typeof(CustomProperties), 
+			new FrameworkPropertyMetadata(-1.0, 
+				FrameworkPropertyMetadataOptions.AffectsMeasure | 
+				FrameworkPropertyMetadataOptions.Inherits |
+				FrameworkPropertyMetadataOptions.AffectsParentMeasure |
+				FrameworkPropertyMetadataOptions.AffectsRender));
+
+		public static void SetGenericDoubleOne(UIElement e, double value)
+		{
+			e.SetValue(GenericDoubleOneProperty, value);
+		}
+
+		public static double GetGenericDoubleOne(UIElement e)
+		{
+			return (double) e.GetValue(GenericDoubleOneProperty);
 		}
 
 	#endregion
@@ -141,6 +198,24 @@ namespace CsDeluxMeasure.Windows.Support
 
 	#endregion
 
+	#region GenericThickness
+
+		public static readonly DependencyProperty GenericThicknessProperty = DependencyProperty.RegisterAttached(
+			"GenericThickness", typeof(Thickness), typeof(CustomProperties), 
+			new FrameworkPropertyMetadata(new Thickness(0, 0, 0, 0), 
+				FrameworkPropertyMetadataOptions.Inherits));
+
+		public static void SetGenericThickness(UIElement e, Thickness value)
+		{
+			e.SetValue(GenericThicknessProperty, value);
+		}
+
+		public static Thickness GetGenericThickness(UIElement e)
+		{
+			return (Thickness) e.GetValue(GenericThicknessProperty);
+		}
+
+	#endregion
 
 
 		// #region DropDownWidthAdjustment

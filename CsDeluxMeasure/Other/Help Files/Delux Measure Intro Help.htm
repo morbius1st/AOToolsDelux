@@ -1,0 +1,224 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html xmlns:v="urn:schemas-microsoft-com:vml" xmlns:dt="uuid:C2F41010-65B3-11d1-A29F-00AA00C14882"
+  xmlns:m="http://schemas.microsoft.com/office/2004/12/omml" xmlns="http://www.w3.org/TR/REC-html40">
+
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=windows-1252">
+  <style type="text/css">
+    a:visited {
+      color: blue;
+      text-decoration: none;
+    }
+
+    a:hover {
+      color: red;
+      text-decoration: underline;
+    }
+
+    body {
+      font-family: Arial;
+      font-size: 16px;
+    }
+
+    h1 {
+      font-size: 26px;
+    }
+
+    h2 {
+      font-size: 20px;
+    }
+
+    ul {
+      margin: 8px 10px 10px 25px;
+      padding: 0px;
+    }
+
+    li {
+      margin-top: 3px;
+    }
+
+    .notbold {
+      font-weight: normal;
+      font-size: 22px;
+    }
+
+    #centerdiv {
+      margin: 20px auto auto;
+      padding: 20px;
+      width: 70%;
+      opacity: 0.95;
+      background-color: #fbfbfb;
+    }
+
+    #page {
+      background-position: left top;
+      background-attachment: fixed;
+      background-repeat: no-repeat;
+      background-size: cover;
+      background-image: url(Delux%20Measure%20Intro%20Help_files/CyberStudio%20Logo%20-%20Full%20v2.png);
+
+    }
+
+    #hrbar {
+      background-color: #ff0000;
+      height: 3px;
+      margin-left: 0;
+      margin-top: -8px;
+      padding: 0;
+      border-width: 0px;
+    }
+
+    #hrredline {
+      background-color: #ff0000;
+      height: 1.25px;
+      margin-top: 0px;
+      padding: 0;
+      border-width: 0px;
+    }
+
+    #containflexbox {
+      display: flex;
+    }
+
+    #child-flexbox {
+      border: 1px solid white;
+      margin-left: 10px;
+    }
+  </style>
+  <title>Delux Measure Introduction and Help File</title>
+
+</head>
+
+<body id="page" lang="EN-US">
+  <div id="centerdiv">
+    <h1 style="margin-bottom: 0px;">Delux Measure Help
+      Information</h1>
+    <hr id="hrredline">
+    <hr id="hrbar" width="420"><br>
+    This document describes Delux Measure and the Unit Style apps <br>
+    <h2><a name="Introduction">Introduction</a></h2>
+    I am sure that you find the standard measure tool a bit
+    lacking as the measured distance is only the direct XY distance. I know
+    that frequently, I want separate X &amp; Y distance and using the
+    standard measure tool means either measuring twice or placing a
+    temporary dimension - not the most efficient system. <br>
+    <br>
+    Which is why I created,<strong> Delux Measure.<br></strong>&nbsp;<br>
+    With <span style="font-weight: bold;">Delux Measure</span>,
+    you can pick two points and get the full range of
+    geometric distances between the points (within the limitations imposed
+    by Revit<sup><small>�</small></sup> - more on
+    this below). &nbsp;This includes the X, Y, and Z
+    distances as well as the 4 diagonal distances XY, XZ,YZ, and, of course
+    XYZ. &nbsp;These distances are presented using a unit style of your
+    choice (and design - more on this below) as well as an secondary unit
+    style. &nbsp;I find this most helpful when working on site plans
+    since the Architectural site plans will, typically, use a Feet and
+    Fractional unit style but the Civil Engineer's plans use Decimal Feet.
+    &nbsp;The conversion math is simple but tedious having to convert
+    each time. &nbsp;Having two unit systems at the same time greatly
+    simplifies this task.
+    <h3>Interface</h3>
+    Once installed and loaded, <span style="font-weight: bold;">Delux
+      Measure</span> creates a single split ribbon
+    button with Unit Style shortcuts. &nbsp;In addition, there is a
+    drop down with two buttons - the <span style="font-weight: bold;">Delux
+      Measure</span> command and the <span style="font-weight: bold;">Unit
+      Styles Manager</span>. &nbsp;At first, having the <span style="font-weight: bold;">Delux Measure</span>
+    commend
+    placed on the drop down, seems to not make sense. &nbsp;But I have
+    a reason for this ... &nbsp;To get the most out of <span style="font-weight: bold;">Delux Measure</span>, I
+    think you will want to access it quickly. &nbsp;To do this, my
+    expectation is that you create a keyboard shortcut. &nbsp;<br>
+    <br>
+    Create a keyboard shortcut, if you do not already know how,select
+    the&nbsp;View tab &#9658; User Interface
+    Button &#9658; Keyboard Shortcuts command (at bottom of the list). &nbsp;
+    Search for "<span style="font-style: italic;">CsDeluxMeasure</span>".
+    &nbsp;This should find a single entry: "<span style="font-style: italic;">External Tools:CsDeluxMeasure</span>".
+    &nbsp;Select this item and assign a shortcut - I use "<span style="font-weight: bold;">DX</span>" myself.
+    &nbsp;Once you've done and saved this, you can access <span style="font-weight: bold;">Delux Measure</span>
+    without using a ribbon button by just typing DX in most situations -
+    this is the most efficient method.<br>
+    <h3>Unit Styles</h3>
+    One of the main fextures is unit-styles. A unit style is a group of
+    distance unit settings saved and named for future reference. Unit
+    styles are created, organized, and saved using the <span style="font-weight: bold;">Unit Styles Manager</span>.<br>
+    <br>
+    Unit styles are used in two ways.<br>
+    <ul>
+      <li>in the Ribbon Button</li>
+      <li>in the Delux Measure window</li>
+    </ul>
+    Each of these is described below.
+    <h3>Components</h3>
+    As
+    noted, there are three primary parts - <span style="font-weight: bold;">Delux Measure</span>, the <span
+      style="font-weight: bold;">Ribbon Button</span>
+    with Unit Style shortcuts, and the <span style="font-weight: bold;">Unit
+      Styles Manager</span>.<br>
+    <br>
+    The <span style="font-weight: bold;">Ribbon Button</span>
+    with Unit Style Shortcuts is described below.<br>
+    <br>
+    Select this to get Information about <a href="Delux%20Measure%20Intro%20Help.htm"><span
+        style="font-weight: bold;">Delux
+        Measure</span>.</a> &nbsp;<br>
+    And, select this to get
+    information about the <a href="Delux%20Measure%20Intro%20Help.htm"><span style="font-weight: bold;">Unit
+        Styles</span></a>
+    editor.<br>
+    <br>
+    <h2 style="margin-bottom: 0px;">Ribbon Button <span class="notbold">with
+        Unit Styles</span></h2>
+    <hr id="hrredline">
+    <hr id="hrbar" width="305">The ribbon button,
+    pictured here, shows an example of what it would
+    look like:<br>
+    <br>
+    <div id="containflexbox">
+      <div id="child-flexbox"><img style="width: 128px; height: 102px;" alt="Ribbon Button Image"
+          src="Delux%20Measure%20Intro%20Help_files/RibbonButton.png"></div>
+      <div id="child-flexbox">The Ribbon Button is a
+        split-button with the last selected unit-style showing.
+        &nbsp;Pressing this button changes the project distance units the
+        the values saved in the unit style. This allows you to quickly switch
+        between distance unit settings.<br>
+        Maybe you are thinking - why would I need to change the project
+        distance unit settings. Fair question. I found this
+        to be very helpful in these situations. I'm sure you can think of
+        others:<br>
+        <ul>
+          <li>When workiing on a family type, it makes more sense to have
+            the project units be fractional inches or decimal inches rather than
+            feet and fractional inches. &nbsp;This happens a lot for me when
+            working on smaller items such as balusters, or other small component.</li>
+          <li>Needing to switch between Imperial and Metric</li>
+          <li>When working on a site plan and having to croordinate with
+            drawings from a civil engineer who uses decimal feet.</li>
+        </ul>
+        Below the Ribbon Button is the drop-down which contains the <span style="font-weight: bold;">Unit Styles
+          Manager</span> and the <span style="font-weight: bold;">Delux Measure</span>.
+      </div>
+    </div>
+    <div>
+      <h2 style="margin-bottom: 0px;">Delux Measure</h2>
+      <hr id="hrredline">
+      <hr id="hrbar" width="150">
+      <h3>Main Window</h3>
+      <img width=100% src="Delux%20Measure%20Intro%20Help_files/MainWindow%20with%20Keys.png"
+        alt="Graphical user interface&#10;&#10;Description automatically generated" v:shapes="Picture_x0020_1">
+      <h4>Description</h4>
+      <img width=100% src="Delux%20Measure%20Intro%20Help_files/MainWindow%20with%20Key%20Descriptions.png"
+        alt="Graphical user interface&#10;&#10;Description automatically generated" v:shapes="Picture_x0020_1">
+      <h3>Unit Styles Selection</h3>
+      <img width=100% src="Delux%20Measure%20Intro%20Help_files/MainWindowSelectUnitsWithKeys.png"
+        alt="Graphical user interface&#10;&#10;Description automatically generated" v:shapes="Picture_x0020_1">
+      <h4>Descriptions</h4>
+      <img width=100% src="Delux%20Measure%20Intro%20Help_files/MainWindowSelectUnitsWithKeyDescriptions.png"
+        alt="Graphical user interface&#10;&#10;Description automatically generated" v:shapes="Picture_x0020_1">
+    </div>
+  </div>
+</body>
+
+</html>

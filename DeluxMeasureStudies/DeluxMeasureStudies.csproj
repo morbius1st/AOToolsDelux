@@ -52,6 +52,9 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="..\..\..\UtilityLibrary\UtilityLibrary\CsWpfUtilities.cs">
+      <Link>.Linked\CsWpfUtilities.cs</Link>
+    </Compile>
     <Compile Include="..\DeluxMeasure\Windows\Support\CsCheckBoxAp.cs">
       <Link>Windows\Support\CsCheckBoxAp.cs</Link>
     </Compile>

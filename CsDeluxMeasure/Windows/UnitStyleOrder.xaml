@@ -1,0 +1,2334 @@
+﻿<Window x:Name="WinRibbonOrder"
+		x:Class="CsDeluxMeasure.Windows.UnitStyleOrder"
+		xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+		xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+		xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+		xmlns:local="clr-namespace:CsDeluxMeasure.Windows"
+		xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+		xmlns:sys="clr-namespace:System;assembly=mscorlib"
+		xmlns:cs="clr-namespace:CsDeluxMeasure.Windows.Support"
+		xmlns:util="clr-namespace:CsDeluxMeasure.UnitsUtil"
+		xmlns:collections="clr-namespace:System.Collections;assembly=mscorlib"
+		Title="Ribbon Button Saved Styles Order"
+		Height="480"
+		Width="750"
+		MinWidth="500"
+		mc:Ignorable="d"
+		ResizeMode="NoResize"
+		d:Opacity="1"
+		DataContext="{Binding RelativeSource={RelativeSource Self}}"
+		FontSize="{DynamicResource FontSize.Normal}"
+		Background="{DynamicResource Normal.Window.Background}"
+		Closing="UnitStyleOrder_OnClosing"
+		IsKeyboardFocusWithinChanged="UnitStyleOrder_OnIsKeyboardFocusWithinChanged"
+		Loaded="UnitStyleOrder_OnLoaded"
+		Icon="/CsDeluxMeasure;component/Resources/CyberStudio Icon.png"
+		>
+	<Window.Style>
+		<Style TargetType="Window">
+			<Setter Property="Opacity" Value="0" />
+			<Style.Triggers>
+
+				<EventTrigger RoutedEvent="Loaded">
+					<EventTrigger.Actions>
+						<BeginStoryboard>
+							<Storyboard>
+								<DoubleAnimation
+										Storyboard.TargetProperty="Opacity"
+										From="0" To="1"
+										BeginTime="0:0:0.3"
+										Duration="0:0:0.3"
+										/>
+							</Storyboard>
+						</BeginStoryboard>
+					</EventTrigger.Actions>
+				</EventTrigger>
+			</Style.Triggers>
+		</Style>
+
+	</Window.Style>
+
+	<Window.Resources>
+		<ResourceDictionary>
+			<ResourceDictionary.MergedDictionaries>
+
+				<ResourceDictionary Source="pack://Application:,,,/CsDeluxMeasure;component/Windows/ResourceFiles/XamlResources/MasterColorList.xaml" />
+				<ResourceDictionary Source="pack://Application:,,,/CsDeluxMeasure;component/Windows/ResourceFiles/XamlResources/VisualStates.xaml" />
+				<ResourceDictionary Source="pack://Application:,,,/CsDeluxMeasure;component/Windows/Skin/CyberStudioSkin.xaml" />
+
+				<ResourceDictionary Source="pack://Application:,,,/CsDeluxMeasure;component/Windows/Support/CsScrollViewer.xaml" />
+				<ResourceDictionary Source="pack://Application:,,,/CsDeluxMeasure;component/Windows/Support/CsScrollBar.xaml" />
+				<ResourceDictionary Source="pack://Application:,,,/CsDeluxMeasure;component/Windows/Support/CsComboBox.xaml" />
+				<ResourceDictionary Source="pack://Application:,,,/CsDeluxMeasure;component/Windows/Support/CsButtons.xaml" />
+				<ResourceDictionary Source="pack://Application:,,,/CsDeluxMeasure;component/Windows/Support/CsCheckBox.xaml" />
+
+			</ResourceDictionary.MergedDictionaries>
+
+			<sys:Double x:Key="Btn.Height.ListCtrls">30</sys:Double>
+
+
+			<!--#region CtTextBox-->
+
+			<ControlTemplate x:Key="CtTextBox"
+					TargetType="TextBox"
+					>
+				<Border x:Name="border"
+						Background="{TemplateBinding Background}"
+						BorderThickness="{TemplateBinding BorderThickness}"
+						BorderBrush="{TemplateBinding BorderBrush}"
+						SnapsToDevicePixels="True"
+						>
+					<ScrollViewer x:Name="PART_ContentHost"
+							Focusable="false"
+							HorizontalScrollBarVisibility="Hidden"
+							VerticalScrollBarVisibility="Hidden"
+							/>
+				</Border>
+			</ControlTemplate>
+
+			<!--#endregion-->
+
+			<!--#region listbox styles-->
+
+
+			<Style x:Key="LbrContainerStyle"
+					TargetType="{x:Type ListBoxItem}"
+					>
+				<Setter Property="SnapsToDevicePixels" Value="True" />
+				<Setter Property="Padding" Value="3,1" />
+
+				<Setter Property="HorizontalContentAlignment" Value="{Binding HorizontalContentAlignment, RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}}}" />
+				<Setter Property="VerticalContentAlignment" Value="{Binding VerticalContentAlignment, RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}}}" />
+
+				<Setter Property="Background" Value="Transparent" />
+				<Setter Property="BorderBrush" Value="Transparent" />
+				<Setter Property="BorderThickness" Value="3,1,3,1" />
+				<Setter Property="FocusVisualStyle" Value="{x:Null}" />
+				<Setter Property="Template">
+					<Setter.Value>
+						<ControlTemplate TargetType="{x:Type ListBoxItem}">
+							<Border x:Name="Bd"
+									Background="{TemplateBinding Background}"
+									BorderBrush="{TemplateBinding BorderBrush}"
+									Padding="{TemplateBinding Padding}"
+									SnapsToDevicePixels="true"
+									BorderThickness="{TemplateBinding BorderThickness}"
+									CornerRadius="6"
+									>
+								<!--    -->
+								<ContentPresenter
+										HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+										SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
+										VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+										/>
+							</Border>
+							<ControlTemplate.Triggers>
+								<MultiTrigger>
+									<MultiTrigger.Conditions>
+										<Condition Property="IsMouseOver" Value="True" />
+									</MultiTrigger.Conditions>
+									<Setter Property="Background" TargetName="Bd" Value="{StaticResource Item.MouseOver.Background}" />
+									<Setter Property="BorderBrush" TargetName="Bd" Value="{StaticResource Item.MouseOver.Border}" />
+								</MultiTrigger>
+								<MultiTrigger>
+									<MultiTrigger.Conditions>
+										<Condition Property="Selector.IsSelectionActive" Value="False" />
+										<Condition Property="IsSelected" Value="True" />
+									</MultiTrigger.Conditions>
+									<Setter Property="Background" TargetName="Bd" Value="{StaticResource Item.SelectedInactive.Background}" />
+									<Setter Property="BorderBrush" TargetName="Bd" Value="{StaticResource Item.SelectedInactive.Border}" />
+								</MultiTrigger>
+								<MultiTrigger>
+									<MultiTrigger.Conditions>
+										<Condition Property="Selector.IsSelectionActive" Value="True" />
+										<Condition Property="IsSelected" Value="True" />
+									</MultiTrigger.Conditions>
+									<Setter Property="Background" TargetName="Bd" Value="{StaticResource Item.SelectedActive.Background}" />
+									<Setter Property="BorderBrush" TargetName="Bd" Value="{StaticResource Item.SelectedActive.Border}" />
+								</MultiTrigger>
+								<Trigger Property="IsEnabled" Value="False">
+									<Setter Property="TextElement.Foreground" TargetName="Bd" Value="{DynamicResource {x:Static SystemColors.GrayTextBrushKey}}" />
+								</Trigger>
+							</ControlTemplate.Triggers>
+						</ControlTemplate>
+					</Setter.Value>
+				</Setter>
+			</Style>
+
+
+			<!--#endregion-->
+
+			<!--#region border styles-->
+
+			<Style x:Key="Bx00"
+					TargetType="Border"
+					>
+				<!-- <Setter Property="Background" Value="{StaticResource Id.Bg.IsEnabled}" /> -->
+				<Setter Property="Background" Value="{Binding RelativeSource={RelativeSource Self}, Path=(cs:VisualStates.BgDisabled)}" />
+				<Setter Property="CornerRadius" Value="{StaticResource CornerRadius.Std}" />
+				<Setter Property="Padding" Value="0" />
+				<Setter Property="Margin" Value="0" />
+			</Style>
+
+			<Style x:Key="BdrHeader"
+					TargetType="Border"
+					BasedOn="{StaticResource Bx00}"
+					>
+				<Setter Property="cs:VisualStates.BgDisabled" Value="{StaticResource Header.Bg.IsSel}" />
+			</Style>
+
+			<Style x:Key="BdrValEntry"
+					TargetType="Border"
+					BasedOn="{StaticResource Bx00}"
+					>
+				<Setter Property="BorderThickness" Value="1" />
+				<Setter Property="BorderBrush" Value="{StaticResource ValEntry.Bdr.IsEnabled}" />
+				<Setter Property="cs:VisualStates.BgDisabled" Value="{StaticResource ValEntry.Bg.Disabled}" />
+			</Style>
+
+
+			<!--#endregion-->
+
+			<!--#region textblock styles-->
+
+			<Style x:Key="TblkRoot"
+					TargetType="TextBlock"
+					>
+				<Setter Property="Padding" Value="0" />
+				<Setter Property="Margin" Value="0" />
+				<Setter Property="FontSize" Value="{StaticResource FontSize.Normal}" />
+			</Style>
+
+			<Style x:Key="TblkHeader"
+					TargetType="TextBlock"
+					BasedOn="{StaticResource TblkRoot}"
+					>
+				<Setter Property="Foreground" Value="{StaticResource Header.Fg.IsSel}" />
+				<Setter Property="Padding" Value="5,0,0,2" />
+
+			</Style>
+
+			<Style x:Key="TblkPopInfoList"
+					TargetType="TextBlock"
+					>
+				<Setter Property="Visibility" Value="Visible" />
+				<Setter Property="FontSize" Value="{StaticResource FontSize.Normal}" />
+				<Setter Property="Padding" Value="0" />
+				<Setter Property="Margin" Value="0" />
+				<Setter Property="Background" Value="{StaticResource Pop.Ic.Tblk.Bg}" />
+				<Setter Property="Foreground" Value="{StaticResource Pop.Ic.Tblk.Fg}" />
+				<Setter Property="LineHeight" Value="{StaticResource Pop.Ic.Tblk.Lh}" />
+				<Setter Property="LineStackingStrategy" Value="BlockLineHeight" />
+				<Setter Property="TextWrapping" Value="Wrap" />
+				<Style.Triggers>
+					<Trigger Property="Text" Value="{x:Null}">
+						<Setter Property="Visibility" Value="Collapsed" />
+					</Trigger>
+				</Style.Triggers>
+			</Style>
+
+
+			<!--#endregion-->
+
+			<!--#region textbox styles-->
+
+			<Style x:Key="TbxEditable"
+					TargetType="TextBox"
+					>
+				<Setter Property="Background" Value="Transparent" />
+				<Setter Property="Foreground" Value="White" />
+				<Setter Property="BorderBrush" Value="Transparent" />
+				<Setter Property="BorderThickness" Value="0" />
+				<Setter Property="CaretBrush" Value="White" />
+				<Setter Property="Cursor" Value="IBeam" />
+				<Setter Property="FontSize" Value="{StaticResource FontSize.Normal}" />
+				<Setter Property="HorizontalAlignment" Value="Stretch" />
+				<Setter Property="Margin" Value="0" />
+				<Setter Property="Padding" Value="5,0,5,3" />
+				<Setter Property="SnapsToDevicePixels" Value="True" />
+				<Setter Property="Template" Value="{StaticResource CtTextBox}" />
+				<Setter Property="VerticalContentAlignment" Value="Center" />
+			</Style>
+
+			<Style x:Key="TbxHelpPopup"
+					TargetType="TextBox"
+					>
+				<Setter Property="Focusable" Value="False" />
+				<Setter Property="Padding" Value="4,2,4,3" />
+				<Setter Property="Margin" Value="0,1,0,3" />
+				<Setter Property="HorizontalAlignment" Value="Stretch" />
+				<Setter Property="FontSize" Value="{StaticResource FontSize.Normal}" />
+				<Setter Property="Background" Value="WhiteSmoke" />
+				<Setter Property="Foreground" Value="Black" />
+				<Setter Property="BorderThickness" Value="0" />
+				<Setter Property="IsReadOnly" Value="True" />
+				<Setter Property="TextAlignment" Value="Left" />
+				<Setter Property="TextWrapping" Value="Wrap" />
+			</Style>
+
+
+			<!--#endregion-->
+
+			<!--#region scrollviewer styles-->
+
+			<!--  listbox scrollviewer overrides  -->
+			<Style x:Key="SvStyle"
+					TargetType="ScrollViewer"
+					>
+				<Setter Property="Template" Value="{DynamicResource CsScrollViewerCt}" />
+				<Setter Property="cs:CsScrollBarAp.ScrollBarWidth" Value="12" />
+				<Setter Property="cs:CsScrollBarAp.ThumbCornerRadius" Value="3" />
+				<Setter Property="cs:CsScrollBarAp.RepeatButtonLength" Value="12" />
+				<Setter Property="cs:CsScrollBarAp.TrackWidth" Value="5" />
+				<Setter Property="cs:CsScrollBarAp.RepeatButtonIconGirth" Value="6" />
+				<Setter Property="cs:CsScrollBarAp.RepeatButtonIconLength" Value="10" />
+				<Setter Property="cs:CsScrollBarAp.VertBorderThickness" Value="0,0,0,0" />
+				<Setter Property="cs:CsScrollBarAp.VertBorderColor">
+					<Setter.Value>
+						<SolidColorBrush Color="{StaticResource Blue.350}" />
+					</Setter.Value>
+				</Setter>
+				<Setter Property="cs:CsScrollBarAp.HorizBorderThickness" Value="0,0,0,0" />
+				<Setter Property="cs:CsScrollBarAp.HorizBorderColor">
+					<Setter.Value>
+						<SolidColorBrush Color="{StaticResource Blue.350}" />
+					</Setter.Value>
+				</Setter>
+				<Setter Property="cs:CsScrollViewerAp.CornerRectBkgBrush">
+					<Setter.Value>
+						<SolidColorBrush Color="{StaticResource Gray.150}" />
+					</Setter.Value>
+				</Setter>
+			</Style>
+
+			<!--#endregion-->
+
+			<!--#region path styles-->
+
+			<Style x:Key="PathHelp.Icon"
+					TargetType="Path"
+					>
+				<Setter Property="Margin" Value="5" />
+				<Setter Property="Fill" Value="White" />
+				<Setter Property="Stretch" Value="Uniform" />
+				<Setter Property="Data" Value="{StaticResource IconHelp}" />
+				<Setter Property="VerticalAlignment" Value="Center" />
+				<Setter Property="HorizontalAlignment" Value="Center" />
+			</Style>
+
+			<!--#endregion-->
+
+			<!--#region popup styles-->
+
+			<Style x:Key="PuBase"
+					TargetType="Popup"
+					>
+				<Setter Property="AllowsTransparency" Value="True" />
+				<Setter Property="Margin" Value="10" />
+				<Setter Property="HorizontalAlignment" Value="Right" />
+				<Setter Property="Focusable" Value="False" />
+				<Setter Property="HorizontalOffset" Value="4" />
+				<Setter Property="Placement" Value="Bottom" />
+				<Setter Property="VerticalOffset" Value="2" />
+				<Setter Property="StaysOpen" Value="True" />
+				<Setter Property="PopupAnimation" Value="Fade" />
+			</Style>
+
+			<!--#endregion-->
+
+			<!--#regionTabItemStyle-->
+
+			<Style x:Key="TabItemStyle"
+					TargetType="{x:Type TabItem}"
+					>
+				<Setter Property="FocusVisualStyle" Value="{x:Null}" />
+				<Setter Property="Foreground" Value="Black" />
+				<Setter Property="Background" Value="{StaticResource TabItem.Bg.NotSel}" />
+				<Setter Property="BorderBrush" Value="{StaticResource TabItem.Bdr.NotSel}" />
+				<Setter Property="Margin" Value="30,0,-30,0" />
+				<Setter Property="Padding" Value="6,2,6,2" />
+				<Setter Property="HorizontalContentAlignment" Value="Stretch" />
+				<Setter Property="VerticalContentAlignment" Value="Stretch" />
+
+				<Setter Property="Template">
+					<Setter.Value>
+						<ControlTemplate TargetType="{x:Type TabItem}">
+							<Grid x:Name="templateRoot"
+									SnapsToDevicePixels="true"
+									>
+								<Border x:Name="notSelectedBdr"
+										Background="{TemplateBinding Background}"
+										BorderBrush="{TemplateBinding BorderBrush}"
+										BorderThickness="0"
+										Margin="0,0,5,0"
+										CornerRadius="{StaticResource CornerRadius.Std}"
+										>
+									<!--  BorderBrush="{TemplateBinding BorderBrush}"  -->
+
+									<Border x:Name="SelectedBorder"
+											BorderThickness="0"
+											Margin="-1,0,0,0"
+											Opacity="0"
+											CornerRadius="6,6,6,6"
+											/>
+									<!--  Background="{StaticResource TabItem.Bg.Sel}"  -->
+									<!--  BorderBrush="{StaticResource TabItem.Bdr.Sel}"  -->
+								</Border>
+								<ContentPresenter x:Name="contentPresenter"
+										ContentSource="Header"
+										Focusable="False"
+										HorizontalAlignment="{Binding HorizontalContentAlignment, RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}}}"
+										Margin="{TemplateBinding Padding}"
+										RecognizesAccessKey="True"
+										SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
+										VerticalAlignment="{Binding VerticalContentAlignment, RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}}}"
+										/>
+							</Grid>
+							<ControlTemplate.Triggers>
+
+								<!--
+									selection states
+									
+									is selected		mouse over
+									yes					n/a					Sel
+									yes					yes					SelMo
+									no					n/a					NotSel
+									no					yes					NotSelMo
+								-->
+
+
+								<!--  not enabled  -->
+								<MultiDataTrigger>
+									<MultiDataTrigger.Conditions>
+										<!--  false  -->
+										<Condition Binding="{Binding IsEnabled, RelativeSource={RelativeSource Self}}" Value="false" />
+										<Condition Binding="{Binding TabStripPlacement, RelativeSource={RelativeSource AncestorType={x:Type TabControl}}}" Value="Top" />
+									</MultiDataTrigger.Conditions>
+									<Setter Property="Opacity" TargetName="contentPresenter" Value="0.56" />
+									<Setter Property="Background" TargetName="notSelectedBdr" Value="{StaticResource TabItem.Bg.Disabled}" />
+									<!-- <Setter Property="BorderBrush" TargetName="notSelectedBdr" Value="{StaticResource TabItem.Bdr.Disabled}" /> -->
+									<!-- <Setter Property="BorderThickness" TargetName="SelectedBorder" Value="1,1,1,0" /> -->
+									<!-- <Setter Property="BorderThickness" TargetName="notSelectedBdr" Value="1,1,1,0" /> -->
+								</MultiDataTrigger>
+
+
+								<!--  not selected not mouse  -->
+								<MultiDataTrigger>
+									<MultiDataTrigger.Conditions>
+										<!--  false  -->
+										<Condition Binding="{Binding IsSelected, RelativeSource={RelativeSource Self}}" Value="false" />
+										<!-- <Condition Binding="{Binding TabStripPlacement, RelativeSource={RelativeSource AncestorType={x:Type TabControl}}}" Value="Top" /> -->
+									</MultiDataTrigger.Conditions>
+									<Setter Property="TextElement.Foreground" Value="{StaticResource TabItem.Fg.NotSel}" />
+									<Setter Property="Background" TargetName="notSelectedBdr" Value="{StaticResource TabItem.Bg.NotSel}" />
+									<Setter Property="BorderBrush" TargetName="notSelectedBdr" Value="{StaticResource TabItem.Fg.NotSel}" />
+									<!-- <Setter Property="BorderBrush" TargetName="notSelectedBdr" Value="{StaticResource TabItem.Bdr.NotSel}" /> -->
+									<!-- <Setter Property="BorderThickness" TargetName="SelectedBorder" Value="1,1,1,0" /> -->
+									<!-- <Setter Property="BorderThickness" TargetName="notSelectedBdr" Value="1,1,1,0" /> -->
+								</MultiDataTrigger>
+
+								<!--  is selected not mouse  -->
+								<MultiDataTrigger>
+									<MultiDataTrigger.Conditions>
+										<!--  true  -->
+										<Condition Binding="{Binding IsSelected, RelativeSource={RelativeSource Self}}" Value="true" />
+										<!-- <Condition Binding="{Binding TabStripPlacement, RelativeSource={RelativeSource AncestorType={x:Type TabControl}}}" Value="Top" /> -->
+									</MultiDataTrigger.Conditions>
+									<Setter Property="Panel.ZIndex" Value="1" />
+									<Setter Property="Margin" Value="30,-2,-30,0" />
+									<Setter Property="Opacity" TargetName="SelectedBorder" Value="1" />
+									<Setter Property="Background" TargetName="notSelectedBdr" Value="Transparent" />
+									<Setter Property="Background" TargetName="SelectedBorder" Value="{StaticResource TabItem.Bg.Sel}" />
+									<Setter Property="TextElement.Foreground" Value="{StaticResource TabItem.Fg.Sel}" />
+									<Setter Property="BorderBrush" TargetName="SelectedBorder" Value="{StaticResource TabItem.Fg.Sel}" />
+
+								</MultiDataTrigger>
+
+								<!--  not selected / mouse over  -->
+								<MultiDataTrigger>
+									<MultiDataTrigger.Conditions>
+										<!--  true  -->
+										<Condition Binding="{Binding IsSelected, RelativeSource={RelativeSource Self}}" Value="false" />
+										<Condition Binding="{Binding IsMouseOver, RelativeSource={RelativeSource Self}}" Value="true" />
+										<!-- <Condition Binding="{Binding TabStripPlacement, RelativeSource={RelativeSource AncestorType={x:Type TabControl}}}" Value="Top" /> -->
+									</MultiDataTrigger.Conditions>
+									<Setter Property="TextElement.Foreground" Value="{StaticResource TabItem.Fg.NotSelMo}" />
+									<Setter Property="BorderThickness" TargetName="notSelectedBdr" Value="1.5" />
+									<Setter Property="Background" TargetName="notSelectedBdr" Value="{StaticResource TabItem.Bg.NotSelMo}" />
+									<Setter Property="BorderBrush" TargetName="notSelectedBdr" Value="{StaticResource TabItem.Fg.NotSelMo}" />
+									<!-- <Setter Property="BorderBrush" TargetName="notSelectedBdr" Value="{StaticResource TabItem.Bdr.NotSelMo}" /> -->
+								</MultiDataTrigger>
+
+								<!--  is selected / mouse over  -->
+								<!--  removed  -->
+								<!-- <MultiDataTrigger> -->
+								<!-- 	<MultiDataTrigger.Conditions> -->
+								<!--  ~1~  true  @1@  -->
+								<!-- 		<Condition Binding="{Binding IsSelected, RelativeSource={RelativeSource Self}}" Value="true" /> -->
+								<!-- 		<Condition Binding="{Binding IsMouseOver, RelativeSource={RelativeSource Self}}" Value="true" /> -->
+								<!-- 		~1~ <Condition Binding="{Binding TabStripPlacement, RelativeSource={RelativeSource AncestorType={x:Type TabControl}}}" Value="Top" /> @1@ -->
+								<!-- 	</MultiDataTrigger.Conditions> -->
+								<!-- 	<Setter Property="Panel.ZIndex" Value="1" /> -->
+								<!-- 	<Setter Property="Margin" Value="0,-2,0,0" /> -->
+								<!-- 	<Setter Property="Opacity" TargetName="SelectedBorder" Value="1" /> -->
+								<!-- 	<Setter Property="Background" TargetName="notSelectedBdr" Value="Transparent" /> -->
+								<!-- 	<Setter Property="BorderThickness" TargetName="notSelectedBdr" Value="2.0" /> -->
+								<!-- 	<Setter Property="Background" TargetName="SelectedBorder" Value="{StaticResource TabItem.Bg.SelMo}" /> -->
+								<!-- 	<Setter Property="TextElement.Foreground" Value="{StaticResource TabItem.Fg.SelMo}" /> -->
+								<!-- 	<Setter Property="BorderBrush" TargetName="notSelectedBdr" Value="{StaticResource TabItem.Fg.SelMo}" /> -->
+								<!-- </MultiDataTrigger> -->
+
+								<!-- removed
+
+								<MultiDataTrigger>
+									<MultiDataTrigger.Conditions>
+										<Condition Binding="{Binding IsMouseOver, RelativeSource={RelativeSource Self}}" Value="true"/>
+										<Condition Binding="{Binding TabStripPlacement, RelativeSource={RelativeSource AncestorType={x:Type TabControl}}}" Value="Left"/>
+									</MultiDataTrigger.Conditions>
+									<Setter Property="Background" TargetName="mainBorder" Value="{StaticResource TabItem.MouseOver.Background}"/>
+									<Setter Property="BorderBrush" TargetName="mainBorder" Value="{StaticResource TabItem.MouseOver.Border}"/>
+									<Setter Property="BorderThickness" TargetName="innerBorder" Value="1,1,0,1"/>
+									<Setter Property="BorderThickness" TargetName="mainBorder" Value="1,1,0,1"/>
+								</MultiDataTrigger>
+								<MultiDataTrigger>
+									<MultiDataTrigger.Conditions>
+										<Condition Binding="{Binding IsMouseOver, RelativeSource={RelativeSource Self}}" Value="true"/>
+										<Condition Binding="{Binding TabStripPlacement, RelativeSource={RelativeSource AncestorType={x:Type TabControl}}}" Value="Bottom"/>
+									</MultiDataTrigger.Conditions>
+									<Setter Property="Background" TargetName="mainBorder" Value="{StaticResource TabItem.MouseOver.Background}"/>
+									<Setter Property="BorderBrush" TargetName="mainBorder" Value="{StaticResource TabItem.MouseOver.Border}"/>
+									<Setter Property="BorderThickness" TargetName="innerBorder" Value="1,0,1,1"/>
+									<Setter Property="BorderThickness" TargetName="mainBorder" Value="1,0,1,1"/>
+								</MultiDataTrigger>
+								<MultiDataTrigger>
+									<MultiDataTrigger.Conditions>
+										<Condition Binding="{Binding IsMouseOver, RelativeSource={RelativeSource Self}}" Value="true"/>
+										<Condition Binding="{Binding TabStripPlacement, RelativeSource={RelativeSource AncestorType={x:Type TabControl}}}" Value="Right"/>
+									</MultiDataTrigger.Conditions>
+									<Setter Property="Background" TargetName="mainBorder" Value="{StaticResource TabItem.MouseOver.Background}"/>
+									<Setter Property="BorderBrush" TargetName="mainBorder" Value="{StaticResource TabItem.MouseOver.Border}"/>
+									<Setter Property="BorderThickness" TargetName="innerBorder" Value="0,1,1,1"/>
+									<Setter Property="BorderThickness" TargetName="mainBorder" Value="0,1,1,1"/>
+								</MultiDataTrigger>
+
+
+								<MultiDataTrigger>
+									<MultiDataTrigger.Conditions>
+										<Condition Binding="{Binding IsEnabled, RelativeSource={RelativeSource Self}}" Value="false"/>
+										<Condition Binding="{Binding TabStripPlacement, RelativeSource={RelativeSource AncestorType={x:Type TabControl}}}" Value="Left"/>
+									</MultiDataTrigger.Conditions>
+									<Setter Property="Opacity" TargetName="contentPresenter" Value="0.56"/>
+									<Setter Property="Background" TargetName="mainBorder" Value="{StaticResource TabItem.Disabled.Background}"/>
+									<Setter Property="BorderBrush" TargetName="mainBorder" Value="{StaticResource TabItem.Disabled.Border}"/>
+									<Setter Property="BorderThickness" TargetName="innerBorder" Value="1,1,0,1"/>
+									<Setter Property="BorderThickness" TargetName="mainBorder" Value="1,1,0,1"/>
+								</MultiDataTrigger>
+								<MultiDataTrigger>
+									<MultiDataTrigger.Conditions>
+										<Condition Binding="{Binding IsEnabled, RelativeSource={RelativeSource Self}}" Value="false"/>
+										<Condition Binding="{Binding TabStripPlacement, RelativeSource={RelativeSource AncestorType={x:Type TabControl}}}" Value="Bottom"/>
+									</MultiDataTrigger.Conditions>
+									<Setter Property="Opacity" TargetName="contentPresenter" Value="0.56"/>
+									<Setter Property="Background" TargetName="mainBorder" Value="{StaticResource TabItem.Disabled.Background}"/>
+									<Setter Property="BorderBrush" TargetName="mainBorder" Value="{StaticResource TabItem.Disabled.Border}"/>
+									<Setter Property="BorderThickness" TargetName="innerBorder" Value="1,0,1,1"/>
+									<Setter Property="BorderThickness" TargetName="mainBorder" Value="1,0,1,1"/>
+								</MultiDataTrigger>
+								<MultiDataTrigger>
+									<MultiDataTrigger.Conditions>
+										<Condition Binding="{Binding IsEnabled, RelativeSource={RelativeSource Self}}" Value="false"/>
+										<Condition Binding="{Binding TabStripPlacement, RelativeSource={RelativeSource AncestorType={x:Type TabControl}}}" Value="Right"/>
+									</MultiDataTrigger.Conditions>
+									<Setter Property="Opacity" TargetName="contentPresenter" Value="0.56"/>
+									<Setter Property="Background" TargetName="mainBorder" Value="{StaticResource TabItem.Disabled.Background}"/>
+									<Setter Property="BorderBrush" TargetName="mainBorder" Value="{StaticResource TabItem.Disabled.Border}"/>
+									<Setter Property="BorderThickness" TargetName="innerBorder" Value="0,1,1,1"/>
+									<Setter Property="BorderThickness" TargetName="mainBorder" Value="0,1,1,1"/>
+								</MultiDataTrigger>
+
+								<MultiDataTrigger>
+									<MultiDataTrigger.Conditions>
+										<Condition Binding="{Binding IsSelected, RelativeSource={RelativeSource Self}}" Value="false"/>
+										<Condition Binding="{Binding TabStripPlacement, RelativeSource={RelativeSource AncestorType={x:Type TabControl}}}" Value="Left"/>
+									</MultiDataTrigger.Conditions>
+									<Setter Property="BorderThickness" TargetName="innerBorder" Value="1,1,0,1"/>
+									<Setter Property="BorderThickness" TargetName="mainBorder" Value="1,1,0,1"/>
+								</MultiDataTrigger>
+								<MultiDataTrigger>
+									<MultiDataTrigger.Conditions>
+										<Condition Binding="{Binding IsSelected, RelativeSource={RelativeSource Self}}" Value="true"/>
+										<Condition Binding="{Binding TabStripPlacement, RelativeSource={RelativeSource AncestorType={x:Type TabControl}}}" Value="Left"/>
+									</MultiDataTrigger.Conditions>
+									<Setter Property="Panel.ZIndex" Value="1"/>
+									<Setter Property="Margin" Value="-2,-2,0,-2"/>
+									<Setter Property="Opacity" TargetName="innerBorder" Value="1"/>
+									<Setter Property="BorderThickness" TargetName="innerBorder" Value="1,1,0,1"/>
+									<Setter Property="BorderThickness" TargetName="mainBorder" Value="1,1,0,1"/>
+								</MultiDataTrigger>
+								<MultiDataTrigger>
+									<MultiDataTrigger.Conditions>
+										<Condition Binding="{Binding IsSelected, RelativeSource={RelativeSource Self}}" Value="false"/>
+										<Condition Binding="{Binding TabStripPlacement, RelativeSource={RelativeSource AncestorType={x:Type TabControl}}}" Value="Bottom"/>
+									</MultiDataTrigger.Conditions>
+									<Setter Property="BorderThickness" TargetName="innerBorder" Value="1,0,1,1"/>
+									<Setter Property="BorderThickness" TargetName="mainBorder" Value="1,0,1,1"/>
+								</MultiDataTrigger>
+								<MultiDataTrigger>
+									<MultiDataTrigger.Conditions>
+										<Condition Binding="{Binding IsSelected, RelativeSource={RelativeSource Self}}" Value="true"/>
+										<Condition Binding="{Binding TabStripPlacement, RelativeSource={RelativeSource AncestorType={x:Type TabControl}}}" Value="Bottom"/>
+									</MultiDataTrigger.Conditions>
+									<Setter Property="Panel.ZIndex" Value="1"/>
+									<Setter Property="Margin" Value="-2,0,-2,-2"/>
+									<Setter Property="Opacity" TargetName="innerBorder" Value="1"/>
+									<Setter Property="BorderThickness" TargetName="innerBorder" Value="1,0,1,1"/>
+									<Setter Property="BorderThickness" TargetName="mainBorder" Value="1,0,1,1"/>
+								</MultiDataTrigger>
+								<MultiDataTrigger>
+									<MultiDataTrigger.Conditions>
+										<Condition Binding="{Binding IsSelected, RelativeSource={RelativeSource Self}}" Value="false"/>
+										<Condition Binding="{Binding TabStripPlacement, RelativeSource={RelativeSource AncestorType={x:Type TabControl}}}" Value="Right"/>
+									</MultiDataTrigger.Conditions>
+									<Setter Property="BorderThickness" TargetName="innerBorder" Value="0,1,1,1"/>
+									<Setter Property="BorderThickness" TargetName="mainBorder" Value="0,1,1,1"/>
+								</MultiDataTrigger>
+								<MultiDataTrigger>
+									<MultiDataTrigger.Conditions>
+										<Condition Binding="{Binding IsSelected, RelativeSource={RelativeSource Self}}" Value="true"/>
+										<Condition Binding="{Binding TabStripPlacement, RelativeSource={RelativeSource AncestorType={x:Type TabControl}}}" Value="Right"/>
+									</MultiDataTrigger.Conditions>
+									<Setter Property="Panel.ZIndex" Value="1"/>
+									<Setter Property="Margin" Value="0,-2,-2,-2"/>
+									<Setter Property="Opacity" TargetName="innerBorder" Value="1"/>
+									<Setter Property="BorderThickness" TargetName="innerBorder" Value="0,1,1,1"/>
+									<Setter Property="BorderThickness" TargetName="mainBorder" Value="0,1,1,1"/>
+								</MultiDataTrigger>
+							
+							-->
+
+							</ControlTemplate.Triggers>
+						</ControlTemplate>
+					</Setter.Value>
+				</Setter>
+			</Style>
+
+
+			<!--#endregion-->
+
+
+			<!--#region CcHelpPopup -->
+
+			<ContentControl x:Key="CcHelpPopup"
+					x:Shared="False"
+					>
+				<ContentControl.ContentTemplate>
+
+					<DataTemplate x:Name="DtHelpPopup">
+
+						<Grid x:Name="GrdPopup"
+								Width="{Binding (cs:CustomProperties.GenericDoubleOne), RelativeSource={RelativeSource Self}, FallbackValue=100.0}"
+								Focusable="False"
+								HorizontalAlignment="Stretch"
+								Background="Transparent"
+								>
+
+							<Grid.ColumnDefinitions>
+								<ColumnDefinition Width="*" />
+								<ColumnDefinition Width="18" />
+							</Grid.ColumnDefinitions>
+
+							<Grid.RowDefinitions>
+								<RowDefinition Height="*" />
+								<RowDefinition Height="*" />
+
+							</Grid.RowDefinitions>
+
+							<Border x:Name="BdrPopup"
+									Grid.Column="0"
+									Grid.Row="0"
+									Margin="0,0,3,0"
+									Padding="13,0,2,0"
+									Background="{StaticResource Pop.Bdr.Out.Bg}"
+									BorderThickness="0,0,0,0"
+									BorderBrush="{StaticResource Pop.Bdr.Out}"
+									CornerRadius="12,12,0,0"
+									>
+								<TextBlock x:Name="TblkPopupTitle"
+										Focusable="False"
+										Margin="0,1,0,2"
+										HorizontalAlignment="Stretch"
+										FontSize="{StaticResource FontSize.Normal}"
+										Background="{StaticResource Pop.Tblk.Ttl.Out.Bg}"
+										Foreground="{StaticResource Pop.Tblk.Ttl.Out.Fg}"
+										Text="{Binding RelativeSource={RelativeSource Self}, Path=(cs:VisualStates.MainTitle), FallbackValue='This IsEnabled Title Text'}"
+										FontWeight="DemiBold"
+										/>
+							</Border>
+
+							<Button x:Name="BtnClosePopup"
+									Grid.Column="1"
+									Grid.Row="0"
+									Focusable="False"
+									FontFamily="Segoe UI Symbol"
+									Background="{StaticResource Pop.Btn.Cls.Bg}"
+									Foreground="{StaticResource Pop.Btn.Cls.Fg}"
+									>
+								<!--  Click="BtnPopupClose_OnClick"  -->
+								<Button.Content>
+									<Path
+											Data="{StaticResource IconClose}"
+											Fill="White"
+											Stretch="Uniform"
+											/>
+								</Button.Content>
+							</Button>
+
+							<Border x:Name="BdrPopupInner"
+									Grid.Column="0"
+									Grid.Row="1"
+									Margin="0,0,3,0"
+									Padding="9,0,6,2"
+									BorderThickness="0"
+									CornerRadius="0,0,12,12"
+									Background="{StaticResource Pop.Bdr.In.Bg}"
+									>
+
+								<DockPanel
+										HorizontalAlignment="Stretch"
+										VerticalAlignment="Stretch"
+										Margin="4"
+										>
+
+									<TextBox x:Name="TbxPopupInnerTitle"
+											DockPanel.Dock="Top"
+											Margin="0"
+											FontWeight="DemiBold"
+											VerticalAlignment="Top"
+											Text="{Binding RelativeSource={RelativeSource Self}, Path=(cs:VisualStates.MainDescription), FallbackValue='This is main description text'}"
+											Background="{StaticResource Pop.Tblk.Ttl.In.Bg}"
+											Foreground="{StaticResource Pop.Tblk.Ttl.In.Fg}"
+											Style="{StaticResource TbxHelpPopup}"
+											>
+										<TextBox.Resources>
+											<Style TargetType="{x:Type Border}">
+												<Setter Property="CornerRadius" Value="{StaticResource CornerRadius.Std}">
+												</Setter>
+											</Style>
+										</TextBox.Resources>
+
+									</TextBox>
+
+									<ItemsControl
+											BorderThickness="0"
+											Background="{StaticResource Pop.Ic.Bg}"
+											VerticalAlignment="Stretch"
+											HorizontalContentAlignment="Left"
+											FontSize="{StaticResource FontSize.Normal}"
+											Margin="0,5,0,0"
+											Padding="7"
+											Focusable="False"
+											DataContext="{Binding (cs:VisualStates.MainInfo), RelativeSource={RelativeSource Self}}"
+											ItemsSource="{Binding}"
+											>
+										<ItemsControl.Resources>
+											<Style TargetType="{x:Type Border}">
+												<Setter Property="CornerRadius" Value="8">
+												</Setter>
+											</Style>
+										</ItemsControl.Resources>
+
+										<ItemsControl.ItemTemplate>
+											<DataTemplate>
+												<Grid
+														Margin="{Binding Marg}"
+														HorizontalAlignment="Stretch"
+														>
+
+													<Grid.ColumnDefinitions>
+														<ColumnDefinition x:Name="Index0"
+																Width="{StaticResource Pop.Col0}"
+																/>
+														<ColumnDefinition x:Name="Index1"
+																Width="{StaticResource Pop.Col1}"
+																/>
+														<ColumnDefinition x:Name="Index2"
+																Width="{StaticResource Pop.Col2}"
+																/>
+														<ColumnDefinition x:Name="Index3"
+																Width="{StaticResource Pop.Col3}"
+																/>
+														<ColumnDefinition x:Name="Index4"
+																Width="*"
+																/>
+													</Grid.ColumnDefinitions>
+													<!--  bold title / margin 4 abv + 2 below  -->
+													<TextBlock x:Name="Col0_0"
+															Grid.Column="0"
+															Grid.ColumnSpan="5"
+															Text="{Binding HelpDesc[0], Mode=OneWay, TargetNullValue=''}"
+															Style="{StaticResource TblkPopInfoList}"
+															/>
+													<!--  sub-title / margin 4 abv + 2 below  -->
+													<TextBlock x:Name="Col0_1"
+															Grid.Column="0"
+															Grid.ColumnSpan="5"
+															FontWeight="DemiBold"
+															Text="{Binding HelpDesc[1], Mode=OneWay, TargetNullValue=''}"
+															Style="{StaticResource TblkPopInfoList}"
+															/>
+													<!--  far left - bullet or text  -->
+													<TextBlock x:Name="Col0_2"
+															Grid.Column="0"
+															Grid.ColumnSpan="5"
+															Text="{Binding HelpDesc[2], Mode=OneWay, TargetNullValue=''}"
+															Style="{StaticResource TblkPopInfoList}"
+															/>
+													<!--  text at col 1  -->
+													<TextBlock x:Name="Col1"
+															Grid.Column="1"
+															Grid.ColumnSpan="4"
+															Text="{Binding HelpDesc[3], Mode=OneWay, TargetNullValue=''}"
+															Style="{StaticResource TblkPopInfoList}"
+															/>
+													<!--  text at col 2  -->
+													<TextBlock x:Name="Col2"
+															Grid.Column="2"
+															Grid.ColumnSpan="3"
+															Text="{Binding HelpDesc[4], Mode=OneWay, TargetNullValue=''}"
+															Style="{StaticResource TblkPopInfoList}"
+															/>
+													<!--  text at col 3  -->
+													<TextBlock x:Name="Col3"
+															Grid.Column="3"
+															Grid.ColumnSpan="2"
+															Text="{Binding HelpDesc[5], Mode=OneWay, TargetNullValue=''}"
+															Style="{StaticResource TblkPopInfoList}"
+															/>
+													<!--  text at col 4  -->
+													<TextBlock x:Name="Col4"
+															Grid.Column="4"
+															Text="{Binding HelpDesc[6], Mode=OneWay, TargetNullValue=''}"
+															Style="{StaticResource TblkPopInfoList}"
+															/>
+
+												</Grid>
+											</DataTemplate>
+										</ItemsControl.ItemTemplate>
+
+									</ItemsControl>
+
+								</DockPanel>
+							</Border>
+
+						</Grid>
+					</DataTemplate>
+
+
+
+					<!-- voided
+
+					<DataTemplate x:Name="DtPopup">
+
+						<Grid x:Name="GrdPopup"
+								Width="{TemplateBinding Width}"
+								Focusable="False"
+								HorizontalAlignment="Stretch"
+								Background="Transparent"
+								>
+
+							<Grid.ColumnDefinitions>
+								<ColumnDefinition Width="*" />
+								<ColumnDefinition Width="18" />
+							</Grid.ColumnDefinitions>
+
+							<Grid.RowDefinitions>
+								<RowDefinition Height="*" />
+								<RowDefinition Height="*" />
+
+							</Grid.RowDefinitions>
+
+
+							<Border x:Name="BdrPopup"
+									Grid.Column="0"
+									Grid.Row="0"
+									Margin="0,0,3,0"
+									Padding="13,0,2,0"
+									Background="#e100FF00"
+									BorderThickness="0,0,0,0"
+									BorderBrush="#e100FF00"
+									CornerRadius="12,12,0,0"
+									>
+								<TextBlock x:Name="TblkPopupTitle"
+										Focusable="False"
+										Margin="0"
+										HorizontalAlignment="Stretch"
+										FontSize="{StaticResource FontSize.Normal}"
+										Background="Transparent"
+										Foreground="Black"
+										Text="{Binding RelativeSource={RelativeSource Self}, Path=(cs:VisualStates.TitleText), FallbackValue='This IsEnabled Title Text'}"
+										/>
+							</Border>
+
+							<Button x:Name="BtnClosePopup"
+									Grid.Column="1"
+									Grid.Row="0"
+									Focusable="False"
+									FontFamily="Segoe UI Symbol"
+									Background="LimeGreen"
+									Foreground="White"
+									>
+
+								<Button.Content>
+									<Path
+											Data="{StaticResource IconClose}"
+											Fill="White"
+											Stretch="Uniform"
+											/>
+								</Button.Content>
+							</Button>
+
+							<Border x:Name="BdrPopupInner"
+									Grid.Column="0"
+									Grid.Row="1"
+									Margin="0,0,3,0"
+									Padding="10,0,4,4"
+									BorderThickness="0"
+									CornerRadius="0,0,12,12"
+									>
+								<Border.Background>
+									<LinearGradientBrush StartPoint="0.5,0" EndPoint="0.5,1">
+										<GradientStop Offset="0" Color="#E100FF00" />
+										<GradientStop Offset="1" Color="#FF00C400" />
+										<GradientStop Offset="0.9" Color="#FB003800" />
+									</LinearGradientBrush>
+								</Border.Background>
+
+								<TextBox x:Name="TbxPopupInner"
+										Focusable="False"
+										Padding="2"
+										HorizontalAlignment="Stretch"
+										FontSize="{StaticResource FontSize.Normal}"
+										Background="WhiteSmoke"
+										Foreground="Black"
+										BorderThickness="0"
+										IsReadOnly="True"
+										Text="{Binding RelativeSource={RelativeSource Self}, Path=(cs:VisualStates.MainContent), FallbackValue='Fallback text this is a second line of help text'}"
+										TextAlignment="Left"
+										TextWrapping="Wrap"
+										>
+									<TextBox.Resources>
+										<Style TargetType="{x:Type Border}">
+											<Setter Property="CornerRadius" Value="8">
+											</Setter>
+										</Style>
+									</TextBox.Resources>
+								</TextBox>
+
+							</Border>
+
+						</Grid>
+					</DataTemplate>
+
+					-->
+
+				</ContentControl.ContentTemplate>
+
+			</ContentControl>
+
+			<!--#endregion-->
+
+			<!--#region DtStyleOrderCtrl-->
+
+			<DataTemplate x:Key="DtStyleOrderCtrl">
+
+				<Border x:Name="BdrSsCtrlHeader"
+						Margin="0,3,0,0"
+						CornerRadius="0,0,6,6"
+						Padding="10,0,0,0"
+						HorizontalAlignment="Stretch"
+						VerticalAlignment="Stretch"
+						DataContext="{Binding ElementName=WinRibbonOrder}"
+						Background="{StaticResource AddUnit.Gbdr.IsEnabled}"
+						>
+					<DockPanel x:Name="DpListControls"
+							HorizontalAlignment="Stretch"
+							>
+
+						<DockPanel x:Name="DpListAdjControls"
+								DockPanel.Dock="Left"
+								HorizontalAlignment="Left"
+								Margin="0,0,0,0"
+								>
+
+
+							<Button x:Name="BtnUp"
+									DockPanel.Dock="Left"
+									Height="{StaticResource Btn.Height.ListCtrls}"
+									Width="40"
+									Margin="0,0,10,0"
+									HorizontalAlignment="left"
+									Style="{StaticResource Btn.Std}"
+									Click="BtnUp_OnClick"
+									>
+								<TextBlock
+										VerticalAlignment="Center"
+										Padding="10,0,10,0"
+										FontSize="{StaticResource FontSize.Large}"
+										Text="▲"
+										/>
+							</Button>
+
+							<Button x:Name="BtnDn"
+									DockPanel.Dock="left"
+									Height="{StaticResource Btn.Height.ListCtrls}"
+									Width="40"
+									Margin="0,0,10,0"
+									HorizontalAlignment="left"
+									Style="{StaticResource Btn.Std}"
+									Click="BtnDn_OnClick"
+									>
+								<TextBlock
+										VerticalAlignment="Center"
+										Padding="10,2,10,0"
+										FontSize="{StaticResource FontSize.Large}"
+										Text="▼"
+										/>
+							</Button>
+
+
+							<Border x:Name="BdrEditPosition"
+									Height="{StaticResource Btn.Height.ListCtrls}"
+									Width="50"
+									Margin="0,0,10,0"
+									Style="{StaticResource BdrValEntry}"
+									>
+								<Border.Background>
+									<SolidColorBrush Color="{StaticResource Gray.250}">
+									</SolidColorBrush>
+								</Border.Background>
+								<TextBox x:Name="TbxEditPosition"
+										TextAlignment="Center"
+										Padding="0,0,0,2"
+										Text="{Binding PropOrder, FallbackValue=100}"
+										KeyDown="TbxEditPosition_OnKeyDown"
+										Style="{StaticResource TbxEditable}"
+										/>
+							</Border>
+
+
+							<Button x:Name="BtnCtrlsPosHelp"
+									DockPanel.Dock="Left"
+									Height="{StaticResource Btn.Height.ListCtrls}"
+									Width="28"
+									HorizontalAlignment="Left"
+									Foreground="White"
+									Margin="0,0,10,0"
+									IsEnabled="True"
+									cs:CustomProperties.GenericPopupOne="{Binding ElementName=PuCtrlsPos}"
+									Template="{StaticResource Button.Normal.ControlTemplate}"
+									Click="BtnPopupInfoStart_OnClick"
+									>
+								<!--    -->
+								<Button.Background>
+									<SolidColorBrush Color="{StaticResource Blue.450}" />
+								</Button.Background>
+
+								<Button.Content>
+									<Path x:Name="PathListCtrlsHelp"
+											Style="{StaticResource PathHelp.Icon}"
+											>
+									</Path>
+								</Button.Content>
+							</Button>
+
+							<Popup Name="PuCtrlsPos"
+									DockPanel.Dock="Right"
+									cs:VisualStates.MainTitle="{x:Static cs:UnitStylesMgrWinData.SoCtrlsPosHelpInfoTitle}"
+									cs:VisualStates.MainDescription="{x:Static cs:UnitStylesMgrWinData.SoCtrlsPosHelpInfoHeader}"
+									cs:VisualStates.MainInfo="{x:Static cs:UnitStylesMgrWinData.SoCtrlsPosHelpInfo}"
+									cs:CustomProperties.GenericDoubleOne="{StaticResource Pop.Std.Width}"
+									PlacementTarget="{Binding ElementName=BtnCtrlsPosHelp}"
+									Child="{StaticResource CcHelpPopup}"
+									Button.Click="BtnPopupClose_OnClick"
+									Style="{StaticResource PuBase}"
+									>
+							</Popup>
+
+
+
+
+						</DockPanel>
+
+
+						<StackPanel x:Name="DpListOpControls"
+								Margin="0,0,0,0"
+								HorizontalAlignment="Right"
+								VerticalAlignment="Stretch"
+								Orientation="Horizontal"
+								DataContext="{Binding ElementName=WinRibbonOrder}"
+								>
+
+							<Button x:Name="BtnListCtrlsHelp"
+									DockPanel.Dock="Right"
+									Height="{StaticResource Btn.Height.ListCtrls}"
+									Width="28"
+									HorizontalAlignment="Left"
+									Foreground="White"
+									Margin="0,0,5,0"
+									IsEnabled="True"
+									cs:CustomProperties.GenericPopupOne="{Binding ElementName=PuListCtrls}"
+									Template="{StaticResource Button.Normal.ControlTemplate}"
+									Click="BtnPopupInfoStart_OnClick"
+									>
+								<!--    -->
+								<Button.Background>
+									<SolidColorBrush Color="{StaticResource Blue.450}" />
+								</Button.Background>
+
+								<Button.Content>
+									<Path x:Name="PathListOpsHelp"
+											Style="{StaticResource PathHelp.Icon}"
+											>
+									</Path>
+								</Button.Content>
+							</Button>
+
+
+							<Popup Name="PuListCtrls"
+									DockPanel.Dock="Right"
+									cs:VisualStates.MainTitle="{x:Static cs:UnitStylesMgrWinData.SoCtrlsLstHelpInfoTitle}"
+									cs:VisualStates.MainDescription="{x:Static cs:UnitStylesMgrWinData.SoCtrlsLstHelpInfoHeader}"
+									cs:VisualStates.MainInfo="{x:Static cs:UnitStylesMgrWinData.SoCtrlsLstHelpInfo}"
+									cs:CustomProperties.GenericDoubleOne="{StaticResource Pop.Std.Width}"
+									PlacementTarget="{Binding ElementName=BtnListCtrlsHelp}"
+									Child="{StaticResource CcHelpPopup}"
+									Button.Click="BtnPopupClose_OnClick"
+									Style="{StaticResource PuBase}"
+									>
+							</Popup>
+
+
+
+							<Button x:Name="BtnListReset"
+									Height="{StaticResource Btn.Height.ListCtrls}"
+									Width="{StaticResource Btn.Width.Std}"
+									Margin="10,0,0,0"
+									HorizontalAlignment="Right"
+									IsEnabled="{Binding TabHasChanges}"
+									ToolTip="Reset the information, for&#013;this list, to when&#013;the dialog was opened"
+									Style="{StaticResource Btn.Std}"
+									Click="BtnListReset_OnClick"
+									>
+								<Button.Content>
+
+									<StackPanel
+											Margin="0"
+											Orientation="Vertical"
+											>
+										<TextBlock
+												HorizontalAlignment="Center"
+												Text="Reset"
+												Margin="0,-3,0,0"
+												Padding="0"
+												/>
+										<TextBlock
+												HorizontalAlignment="Center"
+												Text="{Binding InListName, FallbackValue='Ribbon Button'}"
+												Margin="0,-4,0,0"
+												Padding="0"
+												/>
+
+									</StackPanel>
+								</Button.Content>
+							</Button>
+
+
+							<Button x:Name="BtnListApply"
+									Height="{StaticResource Btn.Height.ListCtrls}"
+									Width="{StaticResource Btn.Width.Std}"
+									Margin="10,0,0,0"
+									HorizontalAlignment="Right"
+									IsEnabled="{Binding TabHasChanges}"
+									ToolTip="Apply the changes, for&#013;this list, to&#013;the unit styles"
+									Style="{StaticResource Btn.Std}"
+									Click="BtnListApply_OnClick"
+									>
+								<Button.Content>
+
+									<StackPanel
+											Margin="0"
+											Orientation="Vertical"
+											>
+										<TextBlock
+												HorizontalAlignment="Center"
+												Text="Apply"
+												Margin="0,-3,0,0"
+												Padding="0"
+												/>
+										<TextBlock
+												HorizontalAlignment="Center"
+												Text="{Binding InListName, FallbackValue='Ribbon Button'}"
+												Margin="0,-4,0,0"
+												Padding="0"
+												/>
+
+									</StackPanel>
+								</Button.Content>
+							</Button>
+
+						</StackPanel>
+
+
+					</DockPanel>
+
+
+				</Border>
+
+			</DataTemplate>
+
+			<!--#endregion-->
+
+			<!--#region  DtDlgCtrlStyleOrder-->
+
+			<DataTemplate x:Key="DtDlgCtrlStyleOrder">
+
+				<StackPanel x:Name="DialogControls"
+						Margin="0,0,0,0"
+						HorizontalAlignment="Right"
+						VerticalAlignment="Bottom"
+						Orientation="Horizontal"
+						DataContext="{Binding ElementName=WinRibbonOrder}"
+						>
+
+					<Button x:Name="BtnDlgCtrlsHelp"
+							DockPanel.Dock="Left"
+							Height="{StaticResource Btn.Height.Std}"
+							Width="28"
+							HorizontalAlignment="Left"
+							Foreground="White"
+							Margin="10,0,0,0"
+							IsEnabled="True"
+							cs:CustomProperties.GenericPopupOne="{Binding ElementName=PuDlgControls}"
+							Template="{StaticResource Button.Normal.ControlTemplate}"
+							Click="BtnPopupInfoStart_OnClick"
+							>
+
+						<Button.Background>
+							<SolidColorBrush Color="{StaticResource Blue.450}" />
+						</Button.Background>
+
+						<Button.Content>
+							<Path x:Name="PathDlgCtrlsHelp"
+									Style="{StaticResource PathHelp.Icon}"
+									>
+							</Path>
+						</Button.Content>
+					</Button>
+
+					<Popup Name="PuDlgControls"
+							DockPanel.Dock="Right"
+							cs:VisualStates.MainTitle="{x:Static cs:UnitStylesMgrWinData.SoCtrlsDlgHelpInfoTitle}"
+							cs:VisualStates.MainDescription="{x:Static cs:UnitStylesMgrWinData.SoCtrlsDlgHelpInfoHeader}"
+							cs:VisualStates.MainInfo="{x:Static cs:UnitStylesMgrWinData.SoCtrlsDlgHelpInfo}"
+							cs:CustomProperties.GenericDoubleOne="{StaticResource Pop.Std.Width}"
+							PlacementTarget="{Binding ElementName=BtnDlgCtrlsHelp}"
+							Child="{StaticResource CcHelpPopup}"
+							Button.Click="BtnPopupClose_OnClick"
+							Style="{StaticResource PuBase}"
+							>
+					</Popup>
+
+					<Button x:Name="BtnSoReset"
+							Content="Reset"
+							Height="{StaticResource Btn.Height.Std}"
+							Width="{StaticResource Btn.Width.Std}"
+							Margin="10,0,0,0"
+							HorizontalAlignment="Right"
+							IsEnabled="{Binding UnitMgr.UlMgr.Working.HasChanges}"
+							ToolTip="Reset the information to when&#013;the dialog was opened"
+							Style="{StaticResource Btn.Std}"
+							Click="BtnSoReset_OnClick"
+							/>
+
+
+					<Button x:Name="BtnSoCancel"
+							Content="Cancel"
+							Height="{StaticResource Btn.Height.Std}"
+							Width="{StaticResource Btn.Width.Std}"
+							Margin="10,0,0,0"
+							HorizontalAlignment="Right"
+							IsEnabled="{Binding UnitMgr.UlMgr.Working.HasChanges}"
+							ToolTip="Close this dialog&#013;and lose any changes"
+							Style="{StaticResource Btn.Std}"
+							Click="BtnSoCancel_OnClick"
+							/>
+
+
+					<Button x:Name="BtnSoApply"
+							Content="Apply"
+							Height="{StaticResource Btn.Height.Std}"
+							Width="{StaticResource Btn.Width.Std}"
+							Margin="10,0,0,0"
+							HorizontalAlignment="Right"
+							IsEnabled="{Binding UnitMgr.UlMgr.Working.HasChanges}"
+							ToolTip="Apply all the&#013;changes unit styles"
+							Style="{StaticResource Btn.Std}"
+							Click="BtnSoApply_OnClick"
+							/>
+
+					<Button x:Name="BtnSoDone"
+							Content="Done"
+							Height="{StaticResource Btn.Height.Std}"
+							Width="{StaticResource Btn.Width.Std}"
+							Margin="10,0,0,0"
+							HorizontalAlignment="Right"
+							IsEnabled="{Binding UnitMgr.UlMgr.Working.NoChanges}"
+							ToolTip="Close this dialog&#013;when there are no changes"
+							Style="{StaticResource Btn.Std}"
+							Click="BtnSoDone_OnClick"
+							/>
+
+				</StackPanel>
+
+			</DataTemplate>
+
+			<!--#endregion-->
+
+			<!--#region LbrItemTemplate-->
+
+			<DataTemplate x:Key="LbxItemTemplate"
+					d:DataType="unitsUtil:WkgInListItemD"
+					DataType="util:WkgInListItem"
+					>
+
+				<StackPanel
+						Orientation="Horizontal"
+						HorizontalAlignment="Stretch"
+						VerticalAlignment="Top"
+						Margin="2"
+						>
+					<StackPanel.Resources>
+						<Style TargetType="TextBlock">
+							<Setter Property="VerticalAlignment" Value="Center" />
+							<Setter Property="FontSize" Value="{StaticResource FontSize.Smaller}">
+							</Setter>
+						</Style>
+					</StackPanel.Resources>
+
+					<Border>
+						<Border.Style>
+							<Style
+									TargetType="Border"
+									BasedOn="{StaticResource Bx00}"
+									>
+								<Setter Property="cs:VisualStates.BgDisabled" Value="{StaticResource Id.Bg.IsEnabled}" />
+								<Setter Property="BorderBrush" Value="{StaticResource Id.Bg.IsEnabled}" />
+								<Setter Property="BorderThickness" Value="1" />
+								<Style.Triggers>
+									<DataTrigger Binding="{Binding IsModified}" Value="true">
+										<Setter Property="BorderBrush" Value="{StaticResource Bdr.IsGood}">
+										</Setter>
+									</DataTrigger>
+								</Style.Triggers>
+							</Style>
+						</Border.Style>
+
+						<TextBlock
+								Width="32"
+								Padding="0,0,0,2"
+								TextAlignment="Center"
+								Foreground="White"
+								Text="{Binding ProposedOrder}"
+								/>
+
+					</Border>
+
+					<Border Margin="5,0,0,0">
+						<Border.Style>
+							<Style
+									TargetType="Border"
+									BasedOn="{StaticResource Bx00}"
+									>
+								<Setter Property="cs:VisualStates.BgDisabled" Value="{StaticResource Id.Bg.IsEnabled}" />
+								<Setter Property="BorderBrush" Value="{StaticResource Id.Bg.IsEnabled}" />
+								<Setter Property="BorderThickness" Value="1" />
+							</Style>
+						</Border.Style>
+
+						<TextBlock
+								Width="32"
+								Padding="0,0,0,2"
+								TextAlignment="Center"
+								Foreground="White"
+								Text="{Binding CurrentOrder}"
+								/>
+
+					</Border>
+
+					<StackPanel x:Name="SpStyleName"
+							Orientation="Horizontal"
+							Margin="5,0,0,0"
+							>
+						<Border
+								Width="{StaticResource TitleReadonlyWidth}"
+								Padding="7,0,0,3"
+								CornerRadius="{StaticResource Title.CornerRadius}"
+								Background="{StaticResource TitleCanEdit.Bg.IsEnabled}"
+								Style="{StaticResource Bx00}"
+								>
+							<TextBlock
+									Text="Style Name"
+									Foreground="White"
+									>
+							</TextBlock>
+
+						</Border>
+
+						<Border
+								Width="Auto"
+								Padding="7,0,10,3"
+								CornerRadius="{StaticResource Text.CornerRadius}"
+								Background="{StaticResource CanEdit.Bg.IsEnabled}"
+								Style="{StaticResource Bx00}"
+								>
+
+							<TextBlock
+									Text="{Binding Data.Name}"
+									Foreground="White"
+									>
+							</TextBlock>
+						</Border>
+
+					</StackPanel>
+
+					<StackPanel x:Name="SpStyleDesc"
+							Orientation="Horizontal"
+							Margin="5,0,0,0"
+							>
+						<Border
+								Width="{StaticResource TitleReadonlyWidth}"
+								Padding="7,0,0,3"
+								CornerRadius="{StaticResource Title.CornerRadius}"
+								Background="{StaticResource TitleCanEdit.Bg.IsEnabled}"
+								Style="{StaticResource Bx00}"
+								>
+							<TextBlock
+									Text="Description"
+									Foreground="White"
+									>
+							</TextBlock>
+
+						</Border>
+
+						<Border
+								Width="Auto"
+								Padding="7,0,10,3"
+								CornerRadius="{StaticResource Text.CornerRadius}"
+								Background="{StaticResource CanEdit.Bg.IsEnabled}"
+								Style="{StaticResource Bx00}"
+								>
+
+							<TextBlock
+									Text="{Binding Data.Description}"
+									Foreground="White"
+									>
+							</TextBlock>
+						</Border>
+
+					</StackPanel>
+
+					<StackPanel x:Name="SpSample"
+							Orientation="Horizontal"
+							Margin="5,0,0,0"
+							>
+						<Border
+								Padding="7,0,7,3"
+								CornerRadius="{StaticResource Title.CornerRadius}"
+								Background="{StaticResource TitleCanEdit.Bg.IsEnabled}"
+								Style="{StaticResource Bx00}"
+								>
+							<TextBlock
+									Text="Sample"
+									FontSize="{StaticResource FontSize.Normal}"
+									Foreground="White"
+									>
+							</TextBlock>
+
+						</Border>
+
+						<Border
+								Width="Auto"
+								Padding="7,0,10,3"
+								CornerRadius="{StaticResource Text.CornerRadius}"
+								Background="{StaticResource CanEdit.Bg.IsEnabled}"
+								Style="{StaticResource Bx00}"
+								>
+
+							<TextBlock
+									Text="{Binding Data.Sample}"
+									Foreground="White"
+									>
+							</TextBlock>
+						</Border>
+
+					</StackPanel>
+
+				</StackPanel>
+
+
+			</DataTemplate>
+
+			<!--#endregion-->
+
+			<!--#region DtRightOrder-->
+
+
+			<DataTemplate x:Key="DtRightOrder">
+
+				<DockPanel x:Name="DpSavedStyles3"
+						DataContext="{Binding ElementName=WinRibbonOrder}"
+						>
+
+					<Border x:Name="BdrRibbonOrderHeader3"
+							DockPanel.Dock="Top"
+							Margin="0,0,0,3"
+							HorizontalAlignment="Stretch"
+							VerticalAlignment="Top"
+							Style="{StaticResource BdrHeader}"
+							>
+						<TextBlock
+								FontSize="{StaticResource FontSize.Large}"
+								Text="Order of Saved Styles in the Right List of the Delux Measure Dialog"
+								Style="{StaticResource TblkHeader}"
+								/>
+					</Border>
+
+					<Border x:Name="BdrRibbonOrde3"
+							Padding="2,2,2,2"
+							CornerRadius="6,6,0,0"
+							Background="{StaticResource SavedStyles.Bg.Panel}"
+							>
+
+						<DockPanel x:Name="DpRibbonOrder2"
+								DockPanel.Dock="Top"
+								HorizontalAlignment="Stretch"
+								VerticalAlignment="Stretch"
+								>
+
+							<!-- </DockPanel> -->
+
+							<ListBox x:Name="LbxRight"
+									DockPanel.Dock="Top"
+									cs:CustomProperties.GenericObjectOne="{Binding ElementName=LbxRight}"
+									cs:CustomProperties.GenericIntOne="2"
+									Background="Transparent"
+									BorderThickness="0"
+									HorizontalAlignment="Stretch"
+									HorizontalContentAlignment="Stretch"
+									IsEnabled="True"
+									IsSynchronizedWithCurrentItem="True"
+									Margin="0,0,0,0"
+									Padding="0,0,0,0"
+									VerticalAlignment="Stretch"
+									DataContext="{Binding UnitMgr.UlMgr.Working.InListsDlgRight}"
+									ItemsSource="{Binding}"
+									SelectedIndex="{Binding SelIdxDlgRight, ElementName=WinRibbonOrder, Mode=TwoWay}"
+									SelectedItem="{Binding SelItemDlgRight, ElementName=WinRibbonOrder, Mode=TwoWay}"
+									ItemTemplate="{StaticResource LbxItemTemplate}"
+									ItemContainerStyle="{StaticResource LbrContainerStyle}"
+									d:SelectedIndex="1"
+									d:DataContext="{x:Static util:UnitStdStylesD.InListsDlgRight}"
+									ScrollViewer.HorizontalScrollBarVisibility="Hidden"
+									Initialized="LbxRight_Initialized"
+									>
+								<!--  Initialized="LbRight_OnInitialized"  -->
+
+								<ListBox.Resources>
+
+									<Style
+											TargetType="{x:Type ScrollViewer}"
+											BasedOn="{StaticResource SvStyle}"
+											>
+										<Setter Property="HorizontalAlignment" Value="Stretch" />
+										<Setter Property="HorizontalContentAlignment" Value="Stretch" />
+									</Style>
+
+								</ListBox.Resources>
+
+							</ListBox>
+
+						</DockPanel>
+					</Border>
+
+
+				</DockPanel>
+
+			</DataTemplate>
+
+
+			<!--#endregion-->
+
+			<!--#region DtLeftOrder-->
+
+
+			<DataTemplate x:Key="DtLeftOrder">
+
+				<DockPanel x:Name="DpSavedStyles2"
+						DataContext="{Binding ElementName=WinRibbonOrder}"
+						>
+
+					<Border x:Name="BdrRibbonOrderHeader2"
+							DockPanel.Dock="Top"
+							Margin="0,0,0,3"
+							HorizontalAlignment="Stretch"
+							VerticalAlignment="Top"
+							Style="{StaticResource BdrHeader}"
+							>
+						<TextBlock
+								FontSize="{StaticResource FontSize.Large}"
+								Text="Order of Saved Styles in the Left List of the Delux Measure Dialog"
+								Style="{StaticResource TblkHeader}"
+								/>
+					</Border>
+
+					<Border x:Name="BdrRibbonOrde2"
+							Padding="2,2,2,2"
+							CornerRadius="6,6,0,0"
+							Background="{StaticResource SavedStyles.Bg.Panel}"
+							>
+
+						<DockPanel x:Name="DpRibbonOrder2"
+								DockPanel.Dock="Top"
+								HorizontalAlignment="Stretch"
+								VerticalAlignment="Stretch"
+								>
+
+							<!-- </DockPanel> -->
+
+							<ListBox x:Name="LbxLeft"
+									DockPanel.Dock="Top"
+									cs:CustomProperties.GenericIntOne="1"
+									Background="Transparent"
+									BorderThickness="0"
+									HorizontalAlignment="Stretch"
+									HorizontalContentAlignment="Stretch"
+									IsEnabled="True"
+									IsSynchronizedWithCurrentItem="True"
+									Margin="0,0,0,0"
+									Padding="0,0,0,0"
+									VerticalAlignment="Stretch"
+									DataContext="{Binding UnitMgr.UlMgr.Working.InListsDlgLeft}"
+									ItemsSource="{Binding}"
+									SelectedIndex="{Binding SelIdxDlgLeft, ElementName=WinRibbonOrder, Mode=TwoWay}"
+									SelectedItem="{Binding SelItemDlgLeft, ElementName=WinRibbonOrder, Mode=TwoWay}"
+									ItemTemplate="{StaticResource LbxItemTemplate}"
+									ItemContainerStyle="{StaticResource LbrContainerStyle}"
+									d:SelectedIndex="1"
+									d:DataContext="{x:Static util:UnitStdStylesD.InListsDlgLeft}"
+									ScrollViewer.HorizontalScrollBarVisibility="Hidden"
+									Initialized="LbxLeft_Initialized"
+									>
+								<!--  Initialized="LbLeft_OnInitialized"  -->
+								<ListBox.Resources>
+
+									<Style
+											TargetType="{x:Type ScrollViewer}"
+											BasedOn="{StaticResource SvStyle}"
+											>
+										<Setter Property="HorizontalAlignment" Value="Stretch" />
+										<Setter Property="HorizontalContentAlignment" Value="Stretch" />
+									</Style>
+
+								</ListBox.Resources>
+
+							</ListBox>
+
+
+
+						</DockPanel>
+					</Border>
+
+
+				</DockPanel>
+
+			</DataTemplate>
+
+
+			<!--#endregion-->
+
+			<!--#region DtRibbonOrder-->
+
+
+			<DataTemplate x:Key="DtRibbonOrder">
+
+				<DockPanel x:Name="DpSavedStyles1"
+						DataContext="{Binding ElementName=WinRibbonOrder}"
+						>
+
+					<Border x:Name="BdrRibbonOrderHeader"
+							DockPanel.Dock="Top"
+							Margin="0,0,0,3"
+							HorizontalAlignment="Stretch"
+							VerticalAlignment="Top"
+							Style="{StaticResource BdrHeader}"
+							>
+						<TextBlock
+								FontSize="{StaticResource FontSize.Large}"
+								Text="Order of Saved Styles for the Ribbon Button"
+								Style="{StaticResource TblkHeader}"
+								/>
+					</Border>
+
+					<Border x:Name="BdrRibbonOrder"
+							Padding="2,2,2,2"
+							CornerRadius="6,6,0,0"
+							Background="{StaticResource SavedStyles.Bg.Panel}"
+							>
+
+						<DockPanel x:Name="DpRibbonOrder"
+								DockPanel.Dock="Top"
+								HorizontalAlignment="Stretch"
+								VerticalAlignment="Stretch"
+								>
+
+							<!-- </DockPanel> -->
+
+							<ListBox x:Name="LbxRibbon"
+									DockPanel.Dock="Top"
+									cs:CustomProperties.GenericIntOne="0"
+									Background="Transparent"
+									BorderThickness="0"
+									HorizontalAlignment="Stretch"
+									HorizontalContentAlignment="Stretch"
+									IsEnabled="True"
+									IsSynchronizedWithCurrentItem="True"
+									Margin="0,0,0,0"
+									Padding="0,0,0,0"
+									VerticalAlignment="Stretch"
+									DataContext="{Binding UnitMgr.UlMgr.Working.InListsRibbon}"
+									ItemsSource="{Binding}"
+									SelectedIndex="{Binding SelIdxRibbon, ElementName=WinRibbonOrder, Mode=TwoWay}"
+									SelectedItem="{Binding SelItemRibbon, ElementName=WinRibbonOrder, Mode=TwoWay}"
+									ItemTemplate="{StaticResource LbxItemTemplate}"
+									ItemContainerStyle="{StaticResource LbrContainerStyle}"
+									ScrollViewer.HorizontalScrollBarVisibility="Hidden"
+									d:SelectedIndex="1"
+									d:DataContext="{x:Static util:UnitStdStylesD.InListsRibbon}"
+									Initialized="LbxRibbon_Initialized"
+									>
+								<!--  Initialized="Lbr_OnInitialized"  -->
+
+								<ListBox.Resources>
+
+									<Style
+											TargetType="{x:Type ScrollViewer}"
+											BasedOn="{StaticResource SvStyle}"
+											>
+										<Setter Property="HorizontalAlignment" Value="Stretch" />
+										<Setter Property="HorizontalContentAlignment" Value="Stretch" />
+									</Style>
+
+								</ListBox.Resources>
+
+							</ListBox>
+
+
+
+						</DockPanel>
+					</Border>
+
+
+				</DockPanel>
+
+			</DataTemplate>
+
+
+			<!--#endregion-->
+
+
+		</ResourceDictionary>
+	</Window.Resources>
+
+	<Grid x:Name="GrdRoot"
+			Margin="15,12,8,8"
+			>
+		<Grid.ColumnDefinitions>
+			<ColumnDefinition Width="*" />
+			<ColumnDefinition Width="*" />
+		</Grid.ColumnDefinitions>
+
+		<Grid.RowDefinitions>
+			<RowDefinition Height="*" />
+			<RowDefinition Height="{StaticResource Row.So.Function.Height}" />
+			<RowDefinition Height="{StaticResource Row.Control.Height}" />
+			<!-- <RowDefinition Height="60" /> -->
+		</Grid.RowDefinitions>
+
+
+		<ContentControl x:Name="CtDialogControl"
+				Grid.Column="0"
+				Grid.Row="2"
+				Grid.ColumnSpan="2"
+				DataContext="{Binding ElementName=WinRibbonOrder}"
+				ContentTemplate="{StaticResource DtDlgCtrlStyleOrder}"
+				/>
+
+		<ContentControl x:Name="CtStyleOrderControl"
+				Grid.Column="0"
+				Grid.Row="1"
+				Grid.ColumnSpan="2"
+				DataContext="{Binding ElementName=WinRibbonOrder}"
+				ContentTemplate="{StaticResource DtStyleOrderCtrl}"
+				/>
+
+
+		<TabControl x:Name="TcTabControl"
+				Grid.Column="0"
+				Grid.Row="0"
+				Grid.ColumnSpan="2"
+				Background="Transparent"
+				HorizontalAlignment="Stretch"
+				HorizontalContentAlignment="Stretch"
+				BorderThickness="0"
+				Margin="0"
+				Padding="0,2,0,0"
+				DataContext="{Binding ElementName=WinRibbonOrder}"
+				>
+			<!--  SelectedIndex="{Binding TabSelected}"  -->
+
+
+			<TabItem x:Name="TiRibbonButton"
+					Selector.Selected="TiRibbonButton_OnSelected"
+					Style="{StaticResource TabItemStyle}"
+					>
+
+				<TabItem.Header>
+
+					<Border
+							CornerRadius="6"
+							Padding="0"
+							Margin="0"
+							>
+
+						<StackPanel
+								Orientation="Horizontal"
+								HorizontalAlignment="Stretch"
+								>
+							<TextBlock
+									HorizontalAlignment="Left"
+									FontSize="{StaticResource FontSize.Large}"
+									Margin="-5,0,0,0"
+									Padding="0,0,1,0"
+									Text="✽"
+									Foreground="OrangeRed"
+									>
+								<TextBlock.Style>
+									<Style TargetType="TextBlock">
+										<Setter Property="Visibility" Value="Hidden" />
+										<Style.Triggers>
+											<DataTrigger Binding="{Binding Working.HasChgsRibbon}" Value="true">
+												<Setter Property="Visibility" Value="Visible">
+												</Setter>
+											</DataTrigger>
+										</Style.Triggers>
+									</Style>
+								</TextBlock.Style>
+							</TextBlock>
+
+							<TextBlock
+									FontSize="{StaticResource FontSize.Large}"
+									Padding="0,0,10,0"
+									Margin="0,0,0,0"
+									HorizontalAlignment="Left"
+									Background="Transparent"
+									Text="Ribbon Button Style Order"
+									>
+								<!--  Foreground="Black"  -->
+							</TextBlock>
+
+						</StackPanel>
+
+					</Border>
+
+				</TabItem.Header>
+
+				<ContentControl x:Name="CtRibbonOrder"
+						DataContext="{Binding ElementName=WinRibbonOrder}"
+						ContentTemplate="{StaticResource DtRibbonOrder}"
+						/>
+
+			</TabItem>
+
+
+			<TabItem x:Name="TiDlgLeft"
+					Selector.Selected="TiDlgLeft_OnSelected"
+					Style="{DynamicResource TabItemStyle}"
+					>
+
+				<TabItem.Header>
+
+					<Border
+							CornerRadius="6"
+							Padding="0"
+							Margin="0"
+							>
+						<StackPanel
+								Orientation="Horizontal"
+								HorizontalAlignment="Stretch"
+								>
+							<TextBlock
+									HorizontalAlignment="Left"
+									FontSize="{StaticResource FontSize.Large}"
+									Margin="-5,0,0,0"
+									Padding="0,0,1,0"
+									Text="✽"
+									Foreground="OrangeRed"
+									>
+								<TextBlock.Style>
+									<Style TargetType="TextBlock">
+										<Setter Property="Visibility" Value="Hidden" />
+										<Style.Triggers>
+											<DataTrigger Binding="{Binding Working.HasChgsDlgLeft}" Value="true">
+												<Setter Property="Visibility" Value="Visible">
+												</Setter>
+											</DataTrigger>
+										</Style.Triggers>
+									</Style>
+								</TextBlock.Style>
+							</TextBlock>
+
+							<TextBlock
+									FontSize="{StaticResource FontSize.Large}"
+									Padding="0,0,10,0"
+									Margin="0,0,0,0"
+									HorizontalAlignment="Left"
+									Background="Transparent"
+									Text="Dialog Left List Style Order"
+									>
+
+							</TextBlock>
+						</StackPanel>
+
+					</Border>
+				</TabItem.Header>
+
+				<ContentControl x:Name="CtDlgLeft"
+						DataContext="{Binding ElementName=WinRibbonOrder}"
+						ContentTemplate="{StaticResource DtLeftOrder}"
+						/>
+
+			</TabItem>
+
+
+			<TabItem x:Name="TiDlgRight"
+					Selector.Selected="TiDlgRight_OnSelected"
+					Style="{DynamicResource TabItemStyle}"
+					>
+
+				<TabItem.Header>
+
+					<Border
+							CornerRadius="6"
+							Padding="0"
+							Margin="0"
+							>
+
+						<StackPanel
+								Orientation="Horizontal"
+								HorizontalAlignment="Stretch"
+								>
+							<TextBlock
+									HorizontalAlignment="Left"
+									FontSize="{StaticResource FontSize.Large}"
+									Margin="-5,0,0,0"
+									Padding="0,0,1,0"
+									Text="✽"
+									Foreground="OrangeRed"
+									>
+								<TextBlock.Style>
+									<Style TargetType="TextBlock">
+										<Setter Property="Visibility" Value="Hidden" />
+										<Style.Triggers>
+											<DataTrigger Binding="{Binding Working.HasChgsDlgRight}" Value="true">
+												<Setter Property="Visibility" Value="Visible">
+												</Setter>
+											</DataTrigger>
+										</Style.Triggers>
+									</Style>
+								</TextBlock.Style>
+							</TextBlock>
+
+
+							<TextBlock
+									FontSize="{StaticResource FontSize.Large}"
+									Padding="0,0,10,0"
+									Margin="0,0,0,0"
+									HorizontalAlignment="Left"
+									Background="Transparent"
+									Text="Dialog Right List Style Order"
+									>
+
+							</TextBlock>
+						</StackPanel>
+
+					</Border>
+				</TabItem.Header>
+
+				<ContentControl x:Name="CtDlgRight"
+						DataContext="{Binding ElementName=WinRibbonOrder}"
+						ContentTemplate="{StaticResource DtRightOrder}"
+						/>
+
+			</TabItem>
+
+
+		</TabControl>
+
+
+		
+		<Button x:Name="BtnDialogHelp"
+				Grid.Column="0"
+				Grid.Row="0"
+				Height="25"
+				Width="25"
+				VerticalAlignment="Top"
+				HorizontalAlignment="Left"
+				Foreground="White"
+				Margin="0,1,0,0"
+				IsEnabled="True"
+				cs:CustomProperties.GenericPopupOne="{Binding ElementName=PuDialog}"
+				Template="{StaticResource Button.Normal.ControlTemplate}"
+				Click="BtnPopupInfoStart_OnClick"
+		>
+
+			<Button.Background>
+				<SolidColorBrush Color="{StaticResource Blue.450}" />
+			</Button.Background>
+
+			<Button.Content>
+				<Path x:Name="PathDialogHelp"
+						Style="{StaticResource PathHelp.Icon}"
+				>
+				</Path>
+			</Button.Content>
+		</Button>
+
+		<Popup Name="PuDialog"
+				DockPanel.Dock="Right"
+				cs:VisualStates.MainTitle="{x:Static cs:UnitStylesMgrWinData.SoDialogHelpInfoTitle}"
+				cs:VisualStates.MainDescription="{x:Static cs:UnitStylesMgrWinData.SoDialogHelpInfoHeader}"
+				cs:VisualStates.MainInfo="{x:Static cs:UnitStylesMgrWinData.SoDialogHelpInfo}"
+				cs:CustomProperties.GenericDoubleOne="{StaticResource Pop.Std.Width}"
+				PlacementTarget="{Binding ElementName=BtnDialogHelp}"
+				Child="{StaticResource CcHelpPopup}"
+				Button.Click="BtnPopupClose_OnClick"
+				Style="{StaticResource PuBase}"
+		>
+		</Popup>
+
+
+
+		<!-- for debugging
+		<StackPanel
+				Grid.Column="0"
+				Grid.Row="3"
+				Grid.ColumnSpan="2"
+				Orientation="Vertical"
+				>
+
+			<StackPanel
+					Orientation="Horizontal"
+					VerticalAlignment="Center"
+					>
+
+				<TextBlock
+						DockPanel.Dock="Bottom"
+						Width="100"
+						HorizontalAlignment="Left"
+						VerticalAlignment="Bottom"
+						Background="Transparent"
+						Foreground="White"
+						Text="Ribbon"
+						/>
+
+				<TextBlock
+						DockPanel.Dock="Bottom"
+						Width="100"
+						HorizontalAlignment="Left"
+						VerticalAlignment="Bottom"
+						Background="Transparent"
+						Foreground="White"
+						Text="SelIdxRibbon"
+						/>
+
+				<TextBlock
+						DockPanel.Dock="Bottom"
+						Width="30"
+						Margin="0,0,10,0"
+						TextAlignment="Center"
+						HorizontalAlignment="Left"
+						VerticalAlignment="Bottom"
+						Background="Black"
+						Foreground="White"
+						Text="{Binding SelIdxRibbon, FallbackValue=1}"
+						/>
+
+			</StackPanel>
+
+			<StackPanel
+					Orientation="Horizontal"
+					VerticalAlignment="Center"
+					>
+
+				<TextBlock
+						DockPanel.Dock="Bottom"
+						Width="100"
+						HorizontalAlignment="Left"
+						VerticalAlignment="Bottom"
+						Background="Transparent"
+						Foreground="White"
+						Text="Dialog Left"
+						/>
+
+				<TextBlock
+						DockPanel.Dock="Bottom"
+						Width="100"
+						HorizontalAlignment="Left"
+						VerticalAlignment="Bottom"
+						Background="Transparent"
+						Foreground="White"
+						Text="SelIdxDlgLeft"
+						/>
+
+				<TextBlock
+						DockPanel.Dock="Bottom"
+						Width="30"
+						Margin="0,0,10,0"
+						TextAlignment="Center"
+						HorizontalAlignment="Left"
+						VerticalAlignment="Bottom"
+						Background="Black"
+						Foreground="White"
+						Text="{Binding SelIdxDlgLeft, FallbackValue=1}"
+						/>
+
+			</StackPanel>
+
+
+			<StackPanel
+					Orientation="Horizontal"
+					VerticalAlignment="Center"
+					>
+
+				<TextBlock
+						DockPanel.Dock="Bottom"
+						Width="100"
+						HorizontalAlignment="Left"
+						VerticalAlignment="Bottom"
+						Background="Transparent"
+						Foreground="White"
+						Text="Dialog Right"
+						/>
+
+				<TextBlock
+						DockPanel.Dock="Bottom"
+						Width="100"
+						HorizontalAlignment="Left"
+						VerticalAlignment="Bottom"
+						Background="Transparent"
+						Foreground="White"
+						Text="SelIdxDlgRight"
+						/>
+
+				<TextBlock
+						DockPanel.Dock="Bottom"
+						Width="30"
+						Margin="0,0,10,0"
+						TextAlignment="Center"
+						HorizontalAlignment="Left"
+						VerticalAlignment="Bottom"
+						Background="Black"
+						Foreground="White"
+						Text="{Binding SelIdxDlgRight, FallbackValue=1}"
+						/>
+
+			</StackPanel>
+
+		</StackPanel>
+		-->
+
+
+	</Grid>
+</Window>
+
+
+
+<!--~1~#region LbrItemTemplate@1@-->
+<!--    -->
+<!--  <DataTemplate x:Key="LbrItemTemplate"  -->
+<!--  d:DataType="unitsUtil:UnitsDataD"  -->
+<!--  DataType="util:UnitsDataR"  -->
+<!--  >  -->
+<!--    -->
+<!--  <StackPanel  -->
+<!--  Orientation="Horizontal"  -->
+<!--  HorizontalAlignment="Stretch"  -->
+<!--  VerticalAlignment="Top"  -->
+<!--  Margin="2"  -->
+<!--  >  -->
+<!-- 		<StackPanel.Resources> -->
+<!-- 			<Style TargetType="TextBlock"> -->
+<!-- 				<Setter Property="VerticalAlignment" Value="Center" /> -->
+<!-- 				<Setter Property="FontSize" Value="{StaticResource FontSize.Smaller}"> -->
+<!-- 				</Setter> -->
+<!-- 			</Style> -->
+<!-- 		</StackPanel.Resources> -->
+<!--    -->
+<!--  <Border  -->
+<!--  Background="{StaticResource Id.Bg.IsEnabled}"  -->
+<!--  Style="{StaticResource Bx00}"  -->
+<!--  >  -->
+<!--    -->
+<!--  <TextBlock  -->
+<!--  Width="32"  -->
+<!--  Padding="0,0,0,2"  -->
+<!--  TextAlignment="Center"  -->
+<!--  Foreground="White"  -->
+<!--  >  -->
+<!--  ~1~  Text="{Binding Ustyle.OrderInList[cs:CustomProperties], FallbackValue='00', StringFormat='00'}"  @1@  -->
+<!-- 				<TextBlock.Style> -->
+<!-- 					<Style TargetType="TextBlock"> -->
+<!-- 						<Setter Property="Text" Value="00"> -->
+<!-- 						</Setter> -->
+<!-- 						<Style.Triggers> -->
+<!-- 							<Trigger Property="cs:CustomProperties.GenericIntOne" Value="0"> -->
+<!-- 								<Setter Property="Text" Value="{Binding Ustyle.OrderInRibbon}" /> -->
+<!-- 							</Trigger> -->
+<!-- 							<Trigger Property="cs:CustomProperties.GenericIntOne" Value="1"> -->
+<!-- 								<Setter Property="Text" Value="{Binding Ustyle.OrderInDialogLeft}" /> -->
+<!-- 							</Trigger> -->
+<!-- 							<Trigger Property="cs:CustomProperties.GenericIntOne" Value="2"> -->
+<!-- 								<Setter Property="Text" Value="{Binding Ustyle.OrderInDialogRight}" /> -->
+<!-- 							</Trigger> -->
+<!-- 						</Style.Triggers> -->
+<!-- 					</Style> -->
+<!-- 				</TextBlock.Style> -->
+<!-- 			</TextBlock> -->
+<!--  ~1~  DataContext="{Binding WinStyleRibbonOrder}"  @1@  -->
+<!--    -->
+<!-- 		</Border> -->
+<!--    -->
+<!--  <StackPanel x:Name="SpStyleName"  -->
+<!--  Orientation="Horizontal"  -->
+<!--  Margin="5,0,0,0"  -->
+<!--  >  -->
+<!--  <Border  -->
+<!--  Width="{StaticResource TitleReadonlyWidth}"  -->
+<!--  Padding="7,0,0,3"  -->
+<!--  CornerRadius="{StaticResource Title.CornerRadius}"  -->
+<!--  Background="{StaticResource TitleCanEdit.Bg.IsEnabled}"  -->
+<!--  Style="{StaticResource Bx00}"  -->
+<!--  >  -->
+<!--  <TextBlock  -->
+<!--  Text="Style Name"  -->
+<!--  Foreground="White"  -->
+<!--  >  -->
+<!-- 				</TextBlock> -->
+<!--    -->
+<!-- 			</Border> -->
+<!--    -->
+<!--  <Border  -->
+<!--  Width="Auto"  -->
+<!--  Padding="7,0,10,3"  -->
+<!--  CornerRadius="{StaticResource Text.CornerRadius}"  -->
+<!--  Background="{StaticResource CanEdit.Bg.IsEnabled}"  -->
+<!--  Style="{StaticResource Bx00}"  -->
+<!--  >  -->
+<!--    -->
+<!--  <TextBlock  -->
+<!--  Text="{Binding Name}"  -->
+<!--  Foreground="White"  -->
+<!--  >  -->
+<!-- 				</TextBlock> -->
+<!-- 			</Border> -->
+<!--    -->
+<!-- 		</StackPanel> -->
+<!--    -->
+<!--  <StackPanel x:Name="SpStyleDesc"  -->
+<!--  Orientation="Horizontal"  -->
+<!--  Margin="5,0,0,0"  -->
+<!--  >  -->
+<!--  <Border  -->
+<!--  Width="{StaticResource TitleReadonlyWidth}"  -->
+<!--  Padding="7,0,0,3"  -->
+<!--  CornerRadius="{StaticResource Title.CornerRadius}"  -->
+<!--  Background="{StaticResource TitleCanEdit.Bg.IsEnabled}"  -->
+<!--  Style="{StaticResource Bx00}"  -->
+<!--  >  -->
+<!--  <TextBlock  -->
+<!--  Text="Description"  -->
+<!--  Foreground="White"  -->
+<!--  >  -->
+<!-- 				</TextBlock> -->
+<!--    -->
+<!-- 			</Border> -->
+<!--    -->
+<!--  <Border  -->
+<!--  Width="Auto"  -->
+<!--  Padding="7,0,10,3"  -->
+<!--  CornerRadius="{StaticResource Text.CornerRadius}"  -->
+<!--  Background="{StaticResource CanEdit.Bg.IsEnabled}"  -->
+<!--  Style="{StaticResource Bx00}"  -->
+<!--  >  -->
+<!--    -->
+<!--  <TextBlock  -->
+<!--  Text="{Binding Description}"  -->
+<!--  Foreground="White"  -->
+<!--  >  -->
+<!-- 				</TextBlock> -->
+<!-- 			</Border> -->
+<!--    -->
+<!-- 		</StackPanel> -->
+<!--    -->
+<!--  <StackPanel x:Name="SpSample"  -->
+<!--  Orientation="Horizontal"  -->
+<!--  Margin="5,0,0,0"  -->
+<!--  >  -->
+<!--  <Border  -->
+<!--  Padding="7,0,7,3"  -->
+<!--  CornerRadius="{StaticResource Title.CornerRadius}"  -->
+<!--  Background="{StaticResource TitleCanEdit.Bg.IsEnabled}"  -->
+<!--  Style="{StaticResource Bx00}"  -->
+<!--  >  -->
+<!--  <TextBlock  -->
+<!--  Text="Sample"  -->
+<!--  FontSize="{StaticResource FontSize.Normal}"  -->
+<!--  Foreground="White"  -->
+<!--  >  -->
+<!-- 				</TextBlock> -->
+<!--    -->
+<!-- 			</Border> -->
+<!--    -->
+<!--  <Border  -->
+<!--  Width="Auto"  -->
+<!--  Padding="7,0,10,3"  -->
+<!--  CornerRadius="{StaticResource Text.CornerRadius}"  -->
+<!--  Background="{StaticResource CanEdit.Bg.IsEnabled}"  -->
+<!--  Style="{StaticResource Bx00}"  -->
+<!--  >  -->
+<!--    -->
+<!--  <TextBlock  -->
+<!--  Text="{Binding Sample}"  -->
+<!--  Foreground="White"  -->
+<!--  >  -->
+<!-- 				</TextBlock> -->
+<!-- 			</Border> -->
+<!--    -->
+<!-- 		</StackPanel> -->
+<!--    -->
+<!-- 	</StackPanel> -->
+<!--    -->
+<!--    -->
+<!-- </DataTemplate> -->
+<!--    -->
+<!--~1~#endregion@1@-->

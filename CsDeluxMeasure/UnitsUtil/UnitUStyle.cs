@@ -4,7 +4,7 @@ using System.Diagnostics;
 using System.Runtime.CompilerServices;
 using System.Runtime.Serialization;
 using static CsDeluxMeasure.UnitsUtil.UnitData;
-
+using CsDeluxMeasure.UnitsUtil;
 
 // Solution:     AOToolsDelux
 // Project:       CsDeluxMeasure
@@ -17,6 +17,8 @@ namespace CsDeluxMeasure.UnitsUtil
 	[DataContract(Namespace = "")]
 	public class UStyle : INotifyPropertyChanged
 	{
+		public static int[] InListMaxIdx { get; set; } = new [] { 100, 100, 100 };
+
 		public static readonly string[] INLIST_PROP_NAMES = new []
 		{
 			$"Ustyle.{nameof(OrderInRibbon)}",
@@ -27,6 +29,7 @@ namespace CsDeluxMeasure.UnitsUtil
 		private string name;
 		private string desc;
 		private double? sample;
+		private bool modified;
 
 		protected UStyle() {}
 
@@ -37,7 +40,8 @@ namespace CsDeluxMeasure.UnitsUtil
 			string description,
 			UnitCat uCat,
 			UnitSys uSys,
-			double precision, string symbol,
+			double precision, 
+			// string symbol,
 			bool? suppressTrailZeros,
 			bool? suppressLeadZeros,
 			bool? usePlusPrefix,
@@ -52,7 +56,7 @@ namespace CsDeluxMeasure.UnitsUtil
 			UnitClass = uClass;
 			Id = id;
 			UnitSys = uSys;
-			Symbol = symbol;
+			// Symbol = symbol;
 
 			Name = name;
 			Description = description;
@@ -71,6 +75,14 @@ namespace CsDeluxMeasure.UnitsUtil
 			OrderInDialogRight = orderInDialogRight;
 
 			Sample = sample;
+
+			modified = false;
+		}
+
+		[OnDeserialized]
+		void OnDeserialized(StreamingContext context)
+		{
+			modified = false;
 		}
 
 		[DataMember(Order = 2)]
@@ -87,6 +99,7 @@ namespace CsDeluxMeasure.UnitsUtil
 			{
 				if (value == name) return;
 				name = value;
+
 				OnPropertyChanged();
 			}
 		}
@@ -109,8 +122,8 @@ namespace CsDeluxMeasure.UnitsUtil
 		[DataMember(Order = 14)]
 		public UnitSys UnitSys { get; set; }
 
-		[DataMember(Order = 16)]
-		public string Symbol { get; set; }
+		// [DataMember(Order = 16)]
+		// public string Symbol { get; set; }
 
 		[DataMember(Order = 18)]
 		public double Precision { get; set; }
@@ -146,54 +159,147 @@ namespace CsDeluxMeasure.UnitsUtil
 		public string IconId { get; set; }
 
 		[DataMember(Order = 30)]
-		int[] OrderInList { get; set; }
+		public int[] OrderInList { get; set; }
+
+		
+		// [IgnoreDataMember]
+		// public bool IsModified
+		// {
+		// 	// not utilized at this point - very complicated to implement
+		//  // thing is, would need to be a count of the changes in order to
+		//  // properly determine if the record turely has no changes
+		// 	get => modified;
+		// 	set
+		// 	{
+		// 		if (modified == value) return;
+		//
+		// 		modified = value;
+		// 		OnPropertyChanged();
+		// 	}
+		// }
 
 		[IgnoreDataMember]
 		public bool IsLocked => (UnitClass < UnitClass.CL_ORDINARY);
 
 		[IgnoreDataMember]
 		public bool IsControl => UnitClass.Equals(UnitClass.CL_CONTROL);
+		
+		[IgnoreDataMember]
+		public bool IsFtDecInch => UnitClass.Equals(UnitClass.CL_FT_DEC_IN);
 
 		[IgnoreDataMember]
 		public int OrderInRibbon
 		{
 			get => OrderInList[(int) InList.RIBBON];
-			set => OrderInList[(int) InList.RIBBON] = value;
+			set
+			{
+				OrderInList[(int) InList.RIBBON] = value;
+			}
 		}
 
 		[IgnoreDataMember]
 		public int OrderInDialogLeft
 		{
 			get => OrderInList[(int) InList.DIALOG_LEFT];
-			set => OrderInList[(int) InList.DIALOG_LEFT] = value;
+			set
+			{
+				OrderInList[(int) InList.DIALOG_LEFT] = value;
+				// OnChkBxPropertyChanged();
+			}
 		}
 
 		[IgnoreDataMember]
 		public int OrderInDialogRight
 		{
 			get => OrderInList[(int) InList.DIALOG_RIGHT];
-			set => OrderInList[(int) InList.DIALOG_RIGHT] = value;
+			set
+			{
+				OrderInList[(int) InList.DIALOG_RIGHT] = value;
+				// OnChkBxPropertyChanged();
+			}
 		}
 
 		[IgnoreDataMember]
 		public bool ShowInRibbon
 		{
 			get => OrderInRibbon > INLIST_UNDEFINED;
-			set => OrderInRibbon = value ? 100 : INLIST_UNDEFINED;
+			set
+			{
+				if (value == ShowInRibbon) return;
+
+				CheckBoxChangedEventArgs e;
+
+				if (value)
+				{
+					e = new CheckBoxChangedEventArgs(InList.RIBBON);
+				}
+				else
+				{
+					e = new CheckBoxChangedEventArgs(null);
+				}
+
+				RaiseShowInChangedEvent(e);
+
+				OrderInRibbon = e.InListOrder;
+
+				OnPropertyChanged();
+			}
 		}
 
 		[IgnoreDataMember]
 		public bool ShowInDialogLeft
 		{
 			get => OrderInDialogLeft > INLIST_UNDEFINED;
-			set => OrderInDialogLeft = value ? 100 : INLIST_UNDEFINED;
+			set
+			{
+				if (value == ShowInDialogLeft) return;
+
+				CheckBoxChangedEventArgs e;
+
+				if (value)
+				{
+					e = new CheckBoxChangedEventArgs(InList.DIALOG_LEFT);
+				}
+				else
+				{
+					e = new CheckBoxChangedEventArgs(null);
+				}
+
+				RaiseShowInChangedEvent(e);
+
+				OrderInDialogLeft = e.InListOrder;
+
+				OnPropertyChanged();
+
+			}
 		}
 
 		[IgnoreDataMember]
 		public bool ShowInDialogRight
 		{
 			get => OrderInDialogRight > INLIST_UNDEFINED;
-			set => OrderInDialogRight = value ? 100 : INLIST_UNDEFINED;
+			set
+			{
+				if (value == ShowInDialogRight) return;
+
+				CheckBoxChangedEventArgs e;
+
+				if (value)
+				{
+					e = new CheckBoxChangedEventArgs(InList.DIALOG_LEFT);
+				}
+				else
+				{
+					e = new CheckBoxChangedEventArgs(null);
+				}
+
+				RaiseShowInChangedEvent(e);
+
+				OrderInDialogRight = e.InListOrder;
+
+				OnPropertyChanged();
+
+			}
 		}
 
 		[IgnoreDataMember]
@@ -215,6 +321,11 @@ namespace CsDeluxMeasure.UnitsUtil
 		}
 
 		public bool ShowIn(int which) => OrderInList[which] >= 0;
+
+		public string FormatOrderValue(int which)
+		{
+			return $"{OrderInList[which]:D10}";
+		}
 
 		public void UpdateProperties()
 		{
@@ -243,23 +354,34 @@ namespace CsDeluxMeasure.UnitsUtil
 			us.UseDigitGrouping = UseDigitGrouping;
 			us.SuppressSpaces = SuppressSpaces;
 			us.OrderInList = new int[3];
-			us.OrderInRibbon = -1;
-			us.OrderInDialogLeft = -1;
-			us.OrderInDialogRight = -1;
+			us.OrderInRibbon = OrderInRibbon;
+			us.OrderInDialogLeft = OrderInDialogLeft;
+			us.OrderInDialogRight = OrderInDialogRight;
 			us.Sample = Sample;
 			us.IconId = IconId;
 
 			return us;
 		}
 
-		public event PropertyChangedEventHandler PropertyChanged;
 
 		[DebuggerStepThrough]
 		private void OnPropertyChanged([CallerMemberName] string memberName = "")
 		{
 			PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(memberName));
 		}
+
+		public event PropertyChangedEventHandler PropertyChanged;
+
+
+		[DebuggerStepThrough]
+		protected virtual void RaiseShowInChangedEvent(CheckBoxChangedEventArgs e)
+		{
+			ShowInChanged?.Invoke(this, e);
+		}
+
+		public static event UStyle.ShowInChangedEventHandler ShowInChanged;
+
+		public delegate void ShowInChangedEventHandler(object sender, CheckBoxChangedEventArgs e);
+
 	}
-
-
 }

@@ -2,11 +2,14 @@
 
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.Runtime.CompilerServices;
 using System.Windows.Data;
+using System.Windows.Media.Effects;
 using Autodesk.Revit.DB;
+using Autodesk.Revit.UI;
 using CsDeluxMeasure.Annotations;
 using static Autodesk.Revit.DB.FormatOptions;
 using SettingsManager;
@@ -74,6 +77,32 @@ allow user to create and organize unit styles
 		-> sample
 	+ cannot change any other unit settings / done only from revit
 
+in-lists needs
+* 1. used to determine ribbon button descriptions / icon / button name / tooltip
+* 2. need to update ribbon button due to changes
+* 3. units manager holds the data but unit style manager directs usage and updates
+* 4. thinking - 
+* 5.  "current" list is the in-lists when dialog opens
+* 6.  "working" that has the changes due to edits from unit style manager and style order manager
+* 7. upon close of unit style manager, updates occur
+* 8. "working" in-list created upon open order dialog - null otherwise
+* 9. order dlg: reset means re-create lists from the live data
+* 10. order dlg: cancel means, do not process the changes & set in-lists to null
+* 11. order dlg: apply means
+*		a. update live data with order changes
+*		b. re-create "current" based on "working"
+*		c. "working" to null
+*		d. update ribbon button
+* 12. need "current" to be an array list based on the determined order and only the items selected
+* 13. "working" can be a sorted dictionary
+* 14. "current" list should be just a list of UDR's
+* 15. "working" list needs to be a sort index + the udr
+* 16. sequence user applies for this sequence
+*		start -> units manager reads data -> main dlg open -> main dlg adds project units -> create "current" in-lists
+*			-> button to change order -> create "working" lists -> order dlg opens
+*			-> user changes order -> dictionary key adjusted -> user applies -> flag "apply" with return value
+*			-> at main dlg: -> update live data -> update ribbon button
+*
 */
 
 
@@ -93,12 +122,20 @@ namespace CsDeluxMeasure.UnitsUtil
 		private UnitsSupport uSup;
 
 		// current / saved lists
-		private ListCollectionView[] inListViews;
-		private List<UnitsDataR> usrStyleListCopy;
+		private List<UnitsDataR> usrStyleListBackup;
 
-		// working lists
-		// private ListCollectionView wkgUserStyles;
-		// private ListCollectionView[] wkgInListViews;
+		private ListCollectionView wkgUserStyles;
+
+		// private ListCollectionView[] inListViews;
+		// private List<UnitsDataR>[] inLists;
+
+		// private SortedDictionary<int, UnitsDataR>[] inListSortedDic;
+
+		// private int[] InListMaxIdx;
+		//
+		// private UnitsDataR projUdr;
+
+		private UnitsInListMgr ulMgr;
 
 	#endregion
 
@@ -106,6 +143,9 @@ namespace CsDeluxMeasure.UnitsUtil
 
 		public UnitsManager()
 		{
+			// Debug.WriteLine("got unitsmgr ctor");
+
+
 		#if PATH
 			MethodBase mb = new StackTrace().GetFrame(1).GetMethod();
 			Debug.WriteLine($"@UnitsManager: ctor: {(mb.ReflectedType?.FullName ?? "is null")} > {mb.Name}");
@@ -113,9 +153,9 @@ namespace CsDeluxMeasure.UnitsUtil
 
 			uSup = new UnitsSupport();
 			uStg = new UnitsSettings();
+			ulMgr = new UnitsInListMgr();
 
-			inListViews = new ListCollectionView[UnitData.INLIST_COUNT];
-			// wkgInListViews = new ListCollectionView[UnitData.INLIST_COUNT];
+			// UStyle.ShowInChanged += OnShowInChanged;
 		}
 
 	#endregion
@@ -134,11 +174,6 @@ namespace CsDeluxMeasure.UnitsUtil
 				return instance.Value;
 			}
 		}
-
-		// these are the current / saved name lists
-		public ListCollectionView InListViewRibbon => inListViews[(int) InList.RIBBON];
-		public ListCollectionView InListViewDlgLeft => inListViews[(int) InList.DIALOG_LEFT];
-		public ListCollectionView InListViewDlgRight => inListViews[(int) InList.DIALOG_RIGHT];
 
 		// the current / saved list of user styles
 		public List<UnitsDataR> UsrStyleList
@@ -162,19 +197,15 @@ namespace CsDeluxMeasure.UnitsUtil
 			// set => SettingsManager.AppSettings.Data.AppStyles = value;
 		}
 
+		public ListCollectionView WkgUserStylesView => wkgUserStyles;
+
+		public UnitsInListMgr UlMgr => ulMgr;
+
 		public static Document Doc { get; set ; }
 
 		public UnitsDataR ProjectUnitStyle => uSup.GetProjectUnitData(Doc);
 
-
-		// // working data
-		// public ListCollectionView WkgUserStyles => wkgUserStyles;
-		//
-		// // these are the current / saved name lists
-		// public ListCollectionView WkgInListViewsRibbon => wkgInListViews[(int) InList.RIBBON];
-		// public ListCollectionView WkgInListViewsDlgLeft => wkgInListViews[(int) InList.DIALOG_LEFT];
-		// public ListCollectionView WkgInListViewsDlgRight => wkgInListViews[(int) InList.DIALOG_RIGHT];
-
+		public int ProjectStyleIdx { get; set; }
 
 	#endregion
 
@@ -187,57 +218,27 @@ namespace CsDeluxMeasure.UnitsUtil
 		public void Config()
 		{
 			ReadUnitSettings();
-			UpdateNameLists();
-			// ConfigUserStyleView();
+
+			// initUserStylesView();
+			// BackupUserStyleList();
 		}
 
-		public void BackupUserStyleList()
+		public void initUserStylesView()
 		{
-			usrStyleListCopy = uSup.UnitsDataRListClone(UsrStyleList);
+			SetInitialSequence();
+
+			wkgUserStyles = (ListCollectionView) CollectionViewSource.GetDefaultView(UsrStyleList);
+
+			wkgUserStyles.SortDescriptions.Add(
+				new SortDescription("Sequence", ListSortDirection.Ascending));
+			wkgUserStyles.Filter = isNotDeleted;
+
+			wkgUserStyles.IsLiveSorting = true;
+
+			OnPropertyChanged(nameof(WkgUserStylesView));
 		}
 
-		public void ResetUserStyleList()
-		{
-			UserSettings.Data.UserStyles = usrStyleListCopy;
-			usrStyleListCopy = null;
-		}
-
-		private bool isNotDeleted(object obj)
-		{
-			UnitsDataR udr = obj as UnitsUtil.UnitsDataR;
-
-			return !udr.DeleteStyle;
-		}
-
-
-		public void SetInitialSequence()
-		{
-			uSup.SetInitialSequence(UsrStyleList);
-		}
-
-		public void ResetInitialSequence()
-		{
-			uSup.ResetInitialSequence(UsrStyleList);
-		}
-
-		public void UnDelete()
-		{
-			uSup.UnDelete(UsrStyleList);
-		}
-
-		public void WriteUser()
-		{
-			uSup.RemoveDeleted(UsrStyleList);
-
-			UserSettings.Admin.Write();
-		}
-
-		public void ReSequenceStylesList(ListCollectionView styles, int start, bool increase)
-		{
-			if (start == styles.Count - 1) return;
-
-			uSup.ReSequence(styles, start, increase);
-		}
+		// main list processing
 
 		public void ReadUnitSettings()
 		{
@@ -249,13 +250,49 @@ namespace CsDeluxMeasure.UnitsUtil
 			uStg.ReadStyles();
 		}
 
+		public void WriteUserStyles()
+		{
+			uSup.RemoveDeleted(UsrStyleList);
+
+			UserSettings.Admin.Write();
+		}
+
+		public void BackupUserStyleList()
+		{
+			usrStyleListBackup = UnitsSupport.UnitsDataRListClone(UsrStyleList);
+		}
+
+		public void ResetUserStyleList()
+		{
+			UserSettings.Data.UserStyles = usrStyleListBackup;
+			usrStyleListBackup = null;
+		}
+
+		public void ResetUserStylesToDefault()
+		{
+			UnitsSettings.SetUserStyles();
+			usrStyleListBackup = null;
+		}
+
+		public void SetInitialSequence()
+		{
+			uSup.SetInitialSequence(UsrStyleList);
+		}
+
+		public void ReSequenceStylesList(ListCollectionView styles, int start, bool increase)
+		{
+			if (start == styles.Count) return;
+
+			uSup.ReSequence(styles, start, increase);
+		}
+
 		public bool SetUnit( /*Document doc, */ UnitsDataR style)
 		{
-			Units units = makeStdLengthUnit( style);
+			Units units = UnitsSupport.makeStdLengthUnit(style);
 
 			if (units == null) return false;
 
-			if (setUnit(Doc, units)) return true;
+			if (uSup.setUnit(Doc, units)) return true;
 
 			return false;
 		}
@@ -264,18 +301,8 @@ namespace CsDeluxMeasure.UnitsUtil
 		{
 			UnitsDataR udr = uSup.UDRClone(orig, name, desc, seq);
 			udr.Ustyle.UnitClass = UnitClass.CL_ORDINARY;
-			
+
 			return udr;
-		}
-
-		public string FormatLength(double value, UnitsDataR style)
-		{
-			Units units = makeStdLengthUnit(style);
-
-			if (units == null) return "N/A";
-
-			string result =  UnitFormatUtils.Format(units, SpecTypeId.Length, value, false);
-			return result;
 		}
 
 		public bool HasNameUserList(string name)
@@ -288,193 +315,106 @@ namespace CsDeluxMeasure.UnitsUtil
 			return false;
 		}
 
-		// public string ValidateStyleName(string testName)
-		// {
-		// 	return uSup.CheckStyleNameSyntax(testName);
-		// }
-		//
-		// public string ValidateStyleDesc(string testName)
-		// {
-		//
-		// 	return uSup.CheckStyleDescSyntax(testName);
-		// }
-
-		
-		public double ValidateStyleSample(string testValue)
+		private bool isNotDeleted(object obj)
 		{
-			double value;
+			UnitsDataR udr = obj as UnitsUtil.UnitsDataR;
 
-			bool result = double.TryParse(testValue, out value);
-
-			return result ? value : double.NaN;
+			return !udr.DeleteStyle;
 		}
+
+		public void ResetInitialSequence()
+		{
+			uSup.ResetInitialSequence(UsrStyleList);
+		}
+
+		public void UnDelete()
+		{
+			uSup.UnDelete(UsrStyleList);
+		}
+
+		public void UpdateProjectStyleSettings()
+		{
+			for (var i = 0; i < UsrStyleList.Count; i++)
+			{
+				if (UsrStyleList[i].Ustyle.UnitClass != UnitClass.CL_PROJECT) continue;
+
+				UsrStyleList[i] = ProjectUnitStyle;
+				ProjectStyleIdx = i;
+
+				// there can be only one
+				break;
+			}
+		}
+
+		public bool DoesPropertyMatch(UStyle current, string propName)
+		{
+			UnitsDataR backup = usrStyleListBackup.Find(r => r.Ustyle.Name.Equals(current.Name));
+
+			if (backup == null) return false;
+
+			return backup.GetType().GetMember(propName).GetValue(0).Equals(
+				current.GetType().GetMember(propName).GetValue(0));
+		}
+
+
+		// in-list processing
+
+		public void ConfigWorkingInLists()
+		{
+			ulMgr.WkgUserStylesView = wkgUserStyles;
+			ulMgr.ConfigWorkingInLists();
+		}
+
+		public void ConfigCurrentInList()
+		{
+			if (UsrStyleList == null) throw new NullReferenceException();
+
+			ulMgr.UsrStyleList = UsrStyleList;
+			ulMgr.ConfigCurrentInLists();
+		}
+
+		public void ApplyStyleOrderChange(InList which)
+		{
+			// 1. take the changes in the working inlist[] and apply to UserStyles
+			// 2. notify that user styles has been updated
+			// 3. update current inlist / notify changed
+			// 4. (reserved)
+			// 5. update working inlist / notify changed
+			// 6. (reserved)
+			// 7. update style order status values
+
+
+			// 1.
+			ulMgr.ApplyChanges(which, UsrStyleList);
+
+			OnPropertyChanged(nameof(UsrStyleList));
+			OnPropertyChanged(nameof(WkgUserStylesView));
+
+			// 2. 
+			// OnPropertyChanged(nameof(UsrStyleList));
+		}
+
+		public void ApplyStyleOrderChanges()
+		{
+			foreach (InList which in Enum.GetValues(typeof(InList)))
+			{
+				ulMgr.ApplyChanges(which, UsrStyleList);
+			}
+
+			OnPropertyChanged(nameof(UsrStyleList));
+			OnPropertyChanged(nameof(WkgUserStylesView));
+		}
+
+		public int GetMaxInListIdx(InList list)
+		{
+			return uSup.GetMaxInListIdx(UsrStyleList, list);
+		}
+
+		// tests 
 
 	#endregion
 
 	#region private methods
-
-		private List<string> initList(int qty)
-		{
-			List<string> list = new List<string>(qty);
-
-			return list;
-		}
-
-		private bool setFmtOpt(bool? opt)
-		{
-			if (opt == null) return false;
-
-			return opt.Value;
-		}
-
-		private bool setUnit(Document doc, Units unit)
-		{
-			try { doc.SetUnits(unit); }
-			catch (Exception e)
-			{
-				return false;
-			}
-
-			return true;
-		}
-
-		private Units makeStdLengthUnit(UnitsDataR udr)
-		{
-			// if (udr.Ustyle.IsLocked == null) return null;
-
-			Units units;
-			FormatOptions fmtOpts;
-
-			try
-			{
-				fmtOpts = GetFormatOptions(udr);
-			}
-			catch (Exception e)
-			{
-				return null;
-			}
-
-			units = new Units(udr.USystem);
-			units.SetFormatOptions(SpecTypeId.Length, fmtOpts);
-
-			return units;
-		}
-
-		private void UpdateNameLists()
-		{
-			foreach (InList inListEnum in Enum.GetValues(typeof(InList)))
-			{
-				InitInRibbonNameList(inListEnum);
-			}
-		}
-
-		// create the ListCollectionViews of each dialog list
-		private void InitInRibbonNameList(InList which)
-		{
-			int currList = (int) which;
-
-			// liev views
-			if (UsrStyleList == null || UsrStyleList.Count == 0) return;
-
-			inListViews[currList] =new ListCollectionView(UsrStyleList);
-
-			inListViews[currList].SortDescriptions.Clear();
-			inListViews[currList].SortDescriptions.Add(
-				new SortDescription(UStyle.INLIST_PROP_NAMES[currList], ListSortDirection.Ascending));
-				// new SortDescription("Ustyle.OrderInRibbon", ListSortDirection.Ascending));
-
-			inListViews[currList].Filter = o =>
-			{
-				return o is UnitsDataR udr && udr.Ustyle.ShowIn(currList);
-			};
-
-			inListViews[currList].IsLiveSorting = true;
-
-			// // working views
-			// wkgInListViews[currList] =new ListCollectionView(UsrStyleList);
-			//
-			// wkgInListViews[currList].SortDescriptions.Clear();
-			// wkgInListViews[currList].SortDescriptions.Add(
-			// 	new SortDescription(UStyle.INLIST_PROP_NAMES[currList], ListSortDirection.Ascending));
-			// // new SortDescription("Ustyle.OrderInRibbon", ListSortDirection.Ascending));
-			//
-			// wkgInListViews[currList].Filter = o =>
-			// {
-			// 	return o is UnitsDataR udr && udr.Ustyle.ShowIn(currList);
-			// };
-			//
-			// wkgInListViews[currList].IsLiveSorting = true;
-
-		}
-		//
-		// private void ConfigUserStyleView()
-		// {
-		// 	SetInitialSequence();
-		//
-		// 	wkgUserStyles = (ListCollectionView) CollectionViewSource.GetDefaultView(UsrStyleList);
-		//
-		// 	wkgUserStyles.SortDescriptions.Add(
-		// 		new SortDescription("Sequence", ListSortDirection.Ascending));
-		// 	wkgUserStyles.Filter = isNotDeleted;
-		//
-		// 	wkgUserStyles.IsLiveSorting = true;
-		//
-		// 	OnPropertyChanged(nameof(WkgUserStyles));
-		// }
-
-		private FormatOptions GetFormatOptions(UnitsDataR style)
-		{
-			FormatOptions fmtOpts;
-			UStyle us = style.Ustyle;
-
-			try
-			{
-				fmtOpts = new FormatOptions(style.Id);
-				fmtOpts.Accuracy = us.Precision;
-
-				if (CanHaveSymbol(style.Id))
-				{
-					fmtOpts.SetSymbolTypeId(style.Symbol);
-				}
-
-				if (CanSuppressLeadingZeros(style.Id))
-				{
-					fmtOpts.SuppressLeadingZeros = setFmtOpt(us.SuppressLeadZeros);
-				}
-
-				if (CanSuppressTrailingZeros(style.Id))
-				{
-					fmtOpts.SuppressTrailingZeros = setFmtOpt(us.SuppressTrailZeros);
-				}
-
-				if (CanSuppressSpaces(style.Id))
-				{
-					fmtOpts.SuppressSpaces = setFmtOpt(us.SuppressSpaces);
-				}
-
-				if (CanUsePlusPrefix(style.Id))
-				{
-					fmtOpts.UsePlusPrefix = setFmtOpt(us.UsePlusPrefix);
-				}
-			}
-			catch (Exception e)
-			{
-				return null;
-			}
-
-			return fmtOpts;
-		}
-
-
-		// private void populateDefaultStyleList()
-		// {
-		// 	styleList = new List<UnitStyle>();
-		//
-		// 	foreach (UnitStyle unitStyle in UnitStyles.StdStyles)
-		// 	{
-		// 		styleList.Add(unitStyle);
-		// 	}
-		// }
 
 	#endregion
 
