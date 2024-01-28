@@ -2,11 +2,11 @@
 using Autodesk.Revit.DB;
 using Autodesk.Revit.DB.ExtensibleStorage;
 
-using AOTools.AppSettings.RevitSettings;
+using AOToolsDelux.AppSettings.RevitSettings;
 using UtilityLibrary;
 
 
-namespace AOTools.AppSettings.SchemaSettings
+namespace AOToolsDelux.AppSettings.SchemaSettings
 {
 	[DataContract(Namespace = Header.NSpace)]
 	public class SchemaFieldUnit

@@ -12,8 +12,8 @@ using Autodesk.Revit.UI;
 
 using static UtilityLibrary.MessageUtilities;
 
-using static AOTools.RevInfoEnum;
-using static AOTools.RevCloudData;
+using static AOToolsDelux.RevInfoEnum;
+using static AOToolsDelux.RevCloudData;
 
 
 #endregion
@@ -23,7 +23,7 @@ using static AOTools.RevCloudData;
 // created:		5/9/2018 6:14:10 PM
 
 
-namespace AOTools
+namespace AOToolsDelux
 {
 
 	[Transaction(TransactionMode.Manual)]

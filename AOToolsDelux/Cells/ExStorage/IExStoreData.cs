@@ -5,7 +5,7 @@
 
 using System;
 
-namespace AOTools.Cells.ExStorage
+namespace AOToolsDelux.Cells.ExStorage
 {
 	
 	public interface IExStore

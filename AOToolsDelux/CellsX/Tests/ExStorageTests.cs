@@ -2,17 +2,17 @@
 
 using System.Collections.Generic;
 using System.Text;
-using AOTools.Cells.ExStorage;
-using AOTools.Cells.SchemaDefinition;
+using AOToolsDelux.Cells.ExStorage;
+using AOToolsDelux.Cells.SchemaDefinition;
 using Autodesk.Revit.UI;
-// using static AOTools.Cells.ExStorage.ExStoreMgr;
+// using static AOToolsDelux.Cells.ExStorage.ExStoreMgr;
 
 #endregion
 
 // username: jeffs
 // created:  7/19/2021 11:09:28 PM
 
-namespace AOTools.Cells.Tests
+namespace AOToolsDelux.Cells.Tests
 {
 /*
 	public class ExStorageTests

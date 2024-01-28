@@ -1,6 +1,6 @@
 ﻿using System.Configuration;
 
-namespace AOTools.Properties {
+namespace AOToolsDelux.Properties {
     
     
     // This class allows you to handle specific events on the settings class:

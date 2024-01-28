@@ -7,7 +7,7 @@
 // created:		1/7/2018 3:47:41 PM
 
 
-namespace AOTools.Utility
+namespace AOToolsDelux.Utility
 {
 
 		/// <remarks/>

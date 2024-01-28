@@ -1,19 +1,27 @@
 #region using
 
 using System.Reflection;
-using Autodesk.Revit.ApplicationServices;
-using Autodesk.Revit.DB.Events;
-using Autodesk.Revit.UI;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Dynamic;
+using System.Windows;
 using System.Windows.Controls;
-using Autodesk.Revit.DB;
+
 using CsDeluxMeasure.RevitSupport;
 using CsDeluxMeasure.UnitsUtil;
+using CsDeluxMeasure.Windows;
 using CsDeluxMeasure.Windows.Support;
+
 using UtilityLibrary;
+
+using Autodesk.Revit.ApplicationServices;
+using Autodesk.Revit.DB.Events;
+using Autodesk.Revit.DB;
+using Autodesk.Revit.UI;
+using CsDeluxMeasure.RevitSupport.ExtEvents;
+using Tests01.RevitSupport;
+using Application = Autodesk.Revit.ApplicationServices.Application;
 
 #endregion
 
@@ -28,10 +36,10 @@ namespace CsDeluxMeasure
 	{
 		public Result OnShutdown(UIControlledApplication a)
 		{
+			if (Mw != null && Mw.IsVisible) Mw.Close();
+
 			return Result.Succeeded;
 		}
-		// application: launch with revit - setup interface elements
-		// display information
 
 		internal const string APP_NAME = "Delux Measure";
 		internal const int MAX_RIBBON_NAME_WIDTH = 20;
@@ -65,16 +73,11 @@ namespace CsDeluxMeasure
 
 		private const string MAIN_WIN_HELP_FILE = "Delux Measure Intro Help.htm";
 
-
 		public const string BTN_NAME_DIVIDER = "?";
 		internal static string BTN_NAME = $"UnitStyle{BTN_NAME_DIVIDER}";
 
-		// private UnitStyles us;
-		private UnitsManager uMgr;
 
-		public static SplitButton sb { get; set; }
-
-		internal UIApplication uiApp;
+		// internal UIApplication uiApp;
 
 		internal static string AddInLocation { get; set; }
 
@@ -84,34 +87,53 @@ namespace CsDeluxMeasure
 		internal string AddinUnitStylesHelpFile => $"{AddInResourcesLocation}\\{MAIN_WIN_HELP_FILE}";
 		internal string AddinUnitStyleOrderHelpFile => $"{AddInResourcesLocation}\\{MAIN_WIN_HELP_FILE}";
 
+		private bool unitsDialogDisplayed = false;
+		
+
+		/* static */
+
+		// will be the revit window
+		public static Window W;
+
+		public static SplitButton sb { get; set; }
+
+		public static UIApplication UiApp;
+		public static UIDocument UiDoc ;
+		public static Application App;
+		public static Document Doc;
+
+		
+		/* objects  */
+
+		public static AppRibbon Me;
+
+		public static MainWindow Mw;
+		public static MiniMain Mm;
+		public static DxMeasure Dx;
+
+		// private UnitStyles us;
+		private UnitsManager uMgr;
 
 		public Result OnStartup(UIControlledApplication app)
 		{
+			// ControlledApplication ctrldApp = app.ControlledApplication;
+			// AddInLocation = ctrldApp.CurrentUserAddinsLocation;
 
-			ControlledApplication ctrldApp = app.ControlledApplication;
-			AddInLocation = ctrldApp.CurrentUserAddinsLocation;
+			R.UcApp = app;
 
-			// Debug.WriteLine($"all user bundle location            | {ctrldApp.AllUsersAddinsLocation}");
-			// Debug.WriteLine($"current user addin location         | {ctrldApp.CurrentUserAddinsLocation}");
-			// Debug.WriteLine($"current user addins data folder path| {ctrldApp.CurrentUsersAddinsDataFolderPath}");
-			// Debug.WriteLine($"current user data folder path       | {ctrldApp.CurrentUsersDataFolderPath}\n");
-			// Debug.WriteLine($"saved addin location                | {AddInLocation}");
-			// Debug.WriteLine($"saved addin location->resources     | {AddInResourcesLocation}");
+			app.DialogBoxShowing += App_DialogBoxShowing;
+			app.Idling += App_Idling;
 
-
+			Me = this;
 
 			try
 			{
-			#if PATH
-				Debug.WriteLine($"@AppRibbon: OnStartup:");
-			#endif
-
 				uMgr = UnitsManager.Instance;
 
 				uMgr.Config();
 				uMgr.ConfigCurrentInList();
 
-				app.ControlledApplication.ApplicationInitialized += OnAppInitalized;
+				// app.ControlledApplication.ApplicationInitialized += OnAppInitalized;
 
 				// create the ribbon tab first - this is the top level
 				// ui item.  below this will be the panel that is "on" the tab
@@ -161,13 +183,6 @@ namespace CsDeluxMeasure
 					ribbonPanel = app.CreateRibbonPanel(tabName, panelName);
 				}
 
-				// ribbonPanel.AddItem(
-				// 	CreateButtonData(
-				// 		BUTTON_NAME, BUTTON_TEXT,
-				// 		SMALLICON, LARGEICON,
-				// 		AddInPath,
-				// 		CLASSPATH_REVITSUPPORT + COMMAND_CLASS_NAME,
-				// 		"Set Model Units to a Style"));
 
 				if (!addSplitButtons(ribbonPanel))
 				{
@@ -181,20 +196,44 @@ namespace CsDeluxMeasure
 			}
 			catch (Exception e)
 			{
-				Debug.WriteLine("exception " + e.Message);
+				// Debug.WriteLine("exception " + e.Message);
 				return Result.Failed;
 			}
 
 
 			return Result.Succeeded;
 		}
-
-		private void OnAppInitalized(object sender, ApplicationInitializedEventArgs e)
+		
+		private void App_Idling(object sender, Autodesk.Revit.UI.Events.IdlingEventArgs e)
 		{
-			Application app = sender as Application;
+			if (!unitsDialogDisplayed) { return; }
 
-			uiApp = new UIApplication(app);
+			unitsDialogDisplayed = false;
+
+			if (Mw==null) { return; }
+
+			Mw.UnitsDialogBoxDisplayed = true;
+
+			Debug.WriteLine("Now Idling");
 		}
+
+		private void App_DialogBoxShowing(object sender, Autodesk.Revit.UI.Events.DialogBoxShowingEventArgs e)
+		{
+			string dialogToWatch = "Dialog_Revit_Units";
+			// Debug.WriteLine($"DialogShowing| {e.DialogId}");
+
+			if (e.DialogId.Equals(dialogToWatch))
+			{
+				unitsDialogDisplayed=true;
+			}
+		}
+
+		// private void OnAppInitalized(object sender, ApplicationInitializedEventArgs e)
+		// {
+		// 	Application app = sender as Application;
+		//
+		// 	// uiApp = new UIApplication(app);
+		// }
 
 		private void CreateButtonFail(string whichButton)
 		{
@@ -207,13 +246,8 @@ namespace CsDeluxMeasure
 		}
 
 		private PushButtonData CreateButtonData(string ButtonName,
-			string ButtonText,
-			string imageFolder,
-			string Image16,
-			string Image32,
-			string dllPath,
-			string dllClass,
-			string ToolTip)
+			string ButtonText, string imageFolder, string Image16, string Image32,
+			string dllPath, string dllClass, string ToolTip)
 		{
 			PushButtonData pdData;
 

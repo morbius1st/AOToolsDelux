@@ -140,6 +140,11 @@ namespace CsDeluxMeasure.Windows.Support
 	{
 		public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
 		{
+			// if (M.W != null)
+			// {
+			// 	M.W.WriteLine1($"converter| value| {value ?? "null"}| source| {parameter ?? "null"}");
+			// }
+
 			return value;
 		}
 

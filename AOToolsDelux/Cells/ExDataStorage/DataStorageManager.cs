@@ -7,21 +7,21 @@ using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
-using AOTools.Cells.ExStorage;
-using AOTools.Cells.Tests;
+using AOToolsDelux.Cells.ExStorage;
+using AOToolsDelux.Cells.Tests;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.DB.ExtensibleStorage;
-using static AOTools.Cells.ExDataStorage.DataStoreIdx;
+using static AOToolsDelux.Cells.ExDataStorage.DataStoreIdx;
 
 #endregion
 
 
-// projname: $projectname$
-// itemname: DataStorageManager
-// username: jeffs
-// created:  8/15/2021 6:39:48 PM
+		// projname: $projectname$
+		// itemname: DataStorageManager
+		// username: jeffs
+		// created:  8/15/2021 6:39:48 PM
 
-namespace AOTools.Cells.ExDataStorage
+namespace AOToolsDelux.Cells.ExDataStorage
 {
 	public enum DataStoreIdx
 	{

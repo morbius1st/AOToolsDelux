@@ -24,7 +24,7 @@ namespace SettingsManager
 		private Dictionary<string, UnitsDataR> appStyles;
 
 		[IgnoreDataMember]
-		public string DataFileVersion => "dxm 0.1";
+		public string DataFileVersion => "dxm 1.0";
 
 		[IgnoreDataMember]
 		public string DataFileDescription => "app setting file for CsDeluxMeasure";

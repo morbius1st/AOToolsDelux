@@ -1,13 +1,13 @@
 ﻿#region + Using Directives
 
 using System;
-using static AOTools.Cells.SchemaDefinition.SchemaRootKey;
+using static AOToolsDelux.Cells.SchemaDefinition.SchemaRootKey;
 #endregion
 
 // user name: jeffs
 // created:   7/3/2021 10:48:37 PM
 
-namespace AOTools.Cells.SchemaDefinition
+namespace AOToolsDelux.Cells.SchemaDefinition
 {
 	public class SchemaDefinitionRoot : ASchemaDef<SchemaRootKey, SchemaDictionaryRoot>
 	{

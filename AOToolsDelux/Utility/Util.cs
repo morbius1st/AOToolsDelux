@@ -6,7 +6,7 @@ using Autodesk.Revit.DB;
 using Autodesk.Revit.UI.Selection;
 using UtilityLibrary;
 
-namespace AOTools.Utility
+namespace AOToolsDelux.Utility
 {
 	internal static class Util
 	{

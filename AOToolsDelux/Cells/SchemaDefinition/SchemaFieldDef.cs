@@ -9,7 +9,7 @@ using Autodesk.Revit.DB.ExtensibleStorage;
 // user name: jeffs
 // created:   7/3/2021 7:16:58 AM
 
-namespace AOTools.Cells.SchemaDefinition
+namespace AOToolsDelux.Cells.SchemaDefinition
 {
 
 	public interface ISchemaFieldDef<TE> where TE : Enum

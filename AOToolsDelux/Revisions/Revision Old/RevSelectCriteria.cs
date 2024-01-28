@@ -1,12 +1,12 @@
 ﻿using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
 
-using static AOTools.SelectCriteria.ECompare;
-using static AOTools.SelectCriteria.Filter;
-using static AOTools.SelectCriteria.EVisibility;
+using static AOToolsDelux.SelectCriteria.ECompare;
+using static AOToolsDelux.SelectCriteria.Filter;
+using static AOToolsDelux.SelectCriteria.EVisibility;
 
 
-namespace AOTools
+namespace AOToolsDelux
 {
 	// selection method:
 	//	this item

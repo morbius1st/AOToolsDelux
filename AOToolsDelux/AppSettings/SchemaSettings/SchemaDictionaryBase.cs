@@ -5,7 +5,7 @@
 
 using System.Collections.Generic;
 
-namespace AOTools.AppSettings.SchemaSettings
+namespace AOToolsDelux.AppSettings.SchemaSettings
 {
 	public class SchemaDictionaryBase<T> : Dictionary<T, SchemaFieldUnit> 
 	{

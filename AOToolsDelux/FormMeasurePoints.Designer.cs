@@ -1,4 +1,4 @@
-﻿namespace AOTools
+﻿namespace AOToolsDelux
 {
 	partial class FormMeasurePoints
 	{

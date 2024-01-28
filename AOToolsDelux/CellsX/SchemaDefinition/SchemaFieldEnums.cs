@@ -7,7 +7,7 @@ using Autodesk.Revit.DB;
 // user name: jeffs
 // created:   7/3/2021 7:21:09 AM
 
-namespace AOTools.Cells.SchemaDefinition
+namespace AOToolsDelux.Cells.SchemaDefinition
 {
 
 	public enum SchemaRootKey

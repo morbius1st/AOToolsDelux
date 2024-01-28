@@ -1,8 +1,8 @@
 ﻿#region Using directives
 
 using System.Runtime.Serialization;
-using static AOTools.AppSettings.RevitSettings.RevitSettingsUnitApp;
-using AOTools.AppSettings.SchemaSettings;
+using static AOToolsDelux.AppSettings.RevitSettings.RevitSettingsUnitApp;
+using AOToolsDelux.AppSettings.SchemaSettings;
 using UtilityLibrary;
 #endregion
 
@@ -11,7 +11,7 @@ using UtilityLibrary;
 // username:	jeffs
 // created:		1/3/2018 8:05:02 PM
 
-namespace AOTools.AppSettings.ConfigSettings
+namespace AOToolsDelux.AppSettings.ConfigSettings
 {
 	// no app settings yet.
 	[DataContract(Namespace = Header.NSpace)]

@@ -9,13 +9,13 @@ using static UtilityLibrary.MessageUtilities;
 #endregion
 
 
-// projname: AOTools.Units
+// projname: AOToolsDelux.Units
 // itemname: UnitStyleDefault
 // username: jeffs
 // created:  12/1/2018 8:04:05 AM
 
 
-namespace AOTools.UnitStyles
+namespace AOToolsDelux.UnitStyles
 {
 	public enum UnitStyleType
 	{

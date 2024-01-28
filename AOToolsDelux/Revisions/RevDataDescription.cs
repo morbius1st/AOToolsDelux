@@ -3,14 +3,14 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Threading;
-using static AOTools.Revisions.EItem;
-using static AOTools.Revisions.EItemType;
-using static AOTools.Revisions.EItemSource;
-using static AOTools.Revisions.EItemUsage;
+using static AOToolsDelux.Revisions.EItem;
+using static AOToolsDelux.Revisions.EItemType;
+using static AOToolsDelux.Revisions.EItemSource;
+using static AOToolsDelux.Revisions.EItemUsage;
 
 
 
-namespace AOTools.Revisions
+namespace AOToolsDelux.Revisions
 {
 	public class RevDataDescription : IEnumerable<KeyValuePair<EItem, DataDescription>>
 	{

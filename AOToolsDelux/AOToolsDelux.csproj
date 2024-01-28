@@ -14,9 +14,9 @@
     <ProjectGuid>{DDC429DE-0FCC-45A7-A152-112E9AB46CC4}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>AOTools</RootNamespace>
-    <AssemblyName>AOTools</AssemblyName>
-    <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
+    <RootNamespace>AOToolsDelux</RootNamespace>
+    <AssemblyName>AOToolsDelux</AssemblyName>
+    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'ToolsDbg2017|AnyCPU' ">
@@ -185,10 +185,12 @@ echo $(AppData)\Autodesk\REVIT\Addins\atd05</PreBuildEvent>
     </Reference>
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
+    <Reference Include="RevitAPI" />
     <Reference Include="RevitAPI">
       <HintPath>..\..\..\..\..\..\..\..\Program Files\Autodesk\Revit 2021\RevitAPI.dll</HintPath>
       <Private>False</Private>
     </Reference>
+    <Reference Include="RevitAPIUI" />
     <Reference Include="RevitAPIUI">
       <HintPath>..\..\..\..\..\..\..\..\Program Files\Autodesk\Revit 2021\RevitAPIUI.dll</HintPath>
       <Private>False</Private>
@@ -281,7 +283,7 @@ echo $(AppData)\Autodesk\REVIT\Addins\atd05</PreBuildEvent>
   </ItemGroup>
   <ItemGroup>
     <Content Include="Cells\Info and Data Organization.txt" />
-    <Content Include="Other\AOTools.addin">
+    <Content Include="Other\AOToolsDelux.addin">
       <SubType>Designer</SubType>
     </Content>
     <Content Include="Other\Cells Notes.txt" />
@@ -306,8 +308,8 @@ echo $(AppData)\Autodesk\REVIT\Addins\atd05</PreBuildEvent>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PostBuildEvent>(copy /y "$(ProjectDir)Other\$(TargetName).addin" "$(AppData)\Autodesk\REVIT\Addins\2020")
-(copy /y "$(TargetPath)" "$(AppData)\Autodesk\REVIT\Addins\2020")</PostBuildEvent>
+    <PostBuildEvent>(copy /y "$(ProjectDir)Other\$(TargetName).addin" "$(AppData)\Autodesk\REVIT\Addins\2021")
+(copy /y "$(TargetPath)" "$(AppData)\Autodesk\REVIT\Addins\2021")</PostBuildEvent>
   </PropertyGroup>
   <PropertyGroup>
     <PreBuildEvent>echo *** Configuration: $(ConfigurationName) ***
@@ -321,7 +323,7 @@ echo $(AppData)\Autodesk\REVIT\Addins\atd06</PreBuildEvent>
   </Target>
   -->
   <Target Name="AfterClean">
-    <Delete Files="$(AppData)\Autodesk\REVIT\Addins\2017\AOTools.addin" />
-    <Delete Files="$(AppData)\Autodesk\REVIT\Addins\2017\AOTools.dll" />
+    <Delete Files="$(AppData)\Autodesk\REVIT\Addins\2017\AOToolsDelux.addin" />
+    <Delete Files="$(AppData)\Autodesk\REVIT\Addins\2017\AOToolsDelux.dll" />
   </Target>
 </Project>

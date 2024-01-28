@@ -17,6 +17,10 @@ using static CsDeluxMeasure.UnitsUtil.UnitsStdUStyles;
 using static CsDeluxMeasure.Windows.Support.UnitStylesMgrWinData.ValMsgNameId;
 using static CsDeluxMeasure.Windows.Support.UnitStylesMgrWinData.ValMsgDescId;
 using static CsDeluxMeasure.Windows.Support.UnitStylesMgrWinData;
+using System.Security.Cryptography;
+using Autodesk.Revit.UI;
+
+
 #endregion
 
 // username: jeffs
@@ -223,8 +227,8 @@ namespace CsDeluxMeasure.UnitsUtil
 				udr.Ustyle.UnitClass = UnitClass.CL_PROJECT;
 			}
 
-			
-
+			// udr.IdArea = UnitsManager.Instance.StdStyles[STYLE_DATA.Project.NameId].IdArea;
+			// udr.SymbolArea = UnitsManager.Instance.StdStyles[STYLE_DATA.Project.NameId].SymbolArea;
 			udr.Ustyle.OrderInRibbon = UnitData.INLIST_UNDEFINED;
 			udr.Ustyle.OrderInDialogLeft = 100;
 			udr.Ustyle.OrderInDialogRight = 100;
@@ -244,7 +248,9 @@ namespace CsDeluxMeasure.UnitsUtil
 			ForgeTypeId symbol = fo.GetSymbolTypeId();
 			UnitSystem usys = (UnitSystem) (int) us.UnitSys;
 
-			UnitsDataR udr = new UnitsDataR(id, symbol, us);
+			UnitsDataR udr = new UnitsDataR(id, symbol, us,  
+				UnitsManager.Instance.StdStyles[us.Name].IdArea,  
+				UnitsManager.Instance.StdStyles[us.Name].SymbolArea);
 			return udr;
 		}
 
@@ -268,7 +274,7 @@ namespace CsDeluxMeasure.UnitsUtil
 		public UStyle USFromRevitFO(FormatOptions fo)
 		{
 			ForgeTypeId id = fo.GetUnitTypeId();
-			ForgeTypeId symbol = fo.GetSymbolTypeId();
+			// ForgeTypeId symbol = fo.GetSymbolTypeId();
 
 			STYLE_DATA sid =GetTypeIdAsStyleId(id);
 
@@ -291,6 +297,7 @@ namespace CsDeluxMeasure.UnitsUtil
 				-1, -1, -1,
 				baseUs.Sample,
 				baseUs.IconId);
+
 
 			return us;
 		}
@@ -342,6 +349,63 @@ namespace CsDeluxMeasure.UnitsUtil
 
 
 		// units
+
+		
+		public static string FormatArea(UnitsDataR udr, double? sample)
+		{
+			if (!sample.HasValue) return "0.0";
+
+			string result = null;
+
+			Units units;
+
+			units = makeStdAreaUnit(udr);
+
+			if (units == null) return result;
+
+			// {
+			// 	string rresult = UtilityLibrary.CsConversions.FromDoubleFeet.ToFeetAndDecimalInches(sample ?? 0.0, udr.Ustyle.Precision, 
+			// 		udr.Ustyle.SuppressLeadZeros ?? true, udr.Ustyle.SuppressTrailZeros ?? false);
+			// 	return rresult;
+			// }
+
+			// if (udr.Ustyle.UnitClass == UnitClass.CL_FT_DEC_IN)
+			// {
+			// 	units = makeStdAreaUnit(udr);
+			//
+			// 	result = UnitFormatUtils.Format(units, SpecTypeId.Area, sample.Value, false);
+			//
+			// 	return result;
+			// }
+
+			// Units units = makeStdAreaUnit(udr);
+
+			// Units units = new Units(UnitSystem.Imperial);
+
+			
+
+			// FormatOptions fOpts = getFormatOptions(udr);
+			// FormatOptions fOpts = new FormatOptions(UnitTypeId.SquareFeet);
+			// fOpts.Accuracy = 0.001;
+			// fOpts.SetSymbolTypeId(SymbolTypeId.FtSup2);
+			// units.SetFormatOptions(SpecTypeId.Area, fOpts);
+
+			// if (units == null) return "N/A";
+
+			try
+			{
+
+				result =  UnitFormatUtils.Format(units, SpecTypeId.Area, sample.Value, false);
+
+			}
+			catch (Exception e)
+			{
+				// Windows.M.W.WriteLine1($"A Exception| {e.Message}");
+			}
+
+
+			return result;
+		}
 
 		public static string FormatLength(UnitsDataR udr, double? sample, bool isEditing)
 		{
@@ -435,7 +499,7 @@ namespace CsDeluxMeasure.UnitsUtil
 
 			try
 			{
-				fmtOpts = getFormatOptions(udr);
+				fmtOpts = setFormatOptionsLength(udr);
 			}
 			catch (Exception e)
 			{
@@ -444,6 +508,50 @@ namespace CsDeluxMeasure.UnitsUtil
 
 			units = new Units(udr.USystem);
 			units.SetFormatOptions(SpecTypeId.Length, fmtOpts);
+
+			return units;
+		}
+
+		
+		public static Units makeStdAreaUnit(UnitsDataR udr)
+		{
+			// if (udr.Ustyle.IsLocked == null) return null;
+			// if problem, return null
+
+			
+			// FormatOptions fOpts = getFormatOptions(udr);
+			// FormatOptions fmtOpts = new FormatOptions(UnitTypeId.SquareFeet);
+
+			// fmtOpts.Accuracy = 0.001;
+			// fmtOpts.SetSymbolTypeId(SymbolTypeId.FtSup2);
+			// units.SetFormatOptions(SpecTypeId.Area, fmtOpts);
+
+			// try
+			// {
+			// 	fmtOpts = setFormatOptionsLength(udr);
+			// }
+			// catch (Exception e)
+			// {
+			// 	return null;
+			// }
+			//
+			// units = new Units(udr.USystem);
+			Units units = null;
+
+			try
+			{
+				FormatOptions fmtOpts;
+
+				fmtOpts = setFormatOptionsArea(udr);
+
+				units = new Units(udr.USystem);
+				units.SetFormatOptions(SpecTypeId.Area, fmtOpts);
+
+			}
+			catch (Exception e)
+			{
+				// CsDeluxMeasure.Windows.M.W.WriteLine1($"B exception| {e.Message}");
+			}
 
 			return units;
 		}
@@ -624,26 +732,15 @@ namespace CsDeluxMeasure.UnitsUtil
 			assignPricTableXref();
 		}
 
-		private static FormatOptions getInitialFormatOptions(UnitsDataR style)
-		{
-			return new FormatOptions(style.Id);
-		}
 
-
-		private static FormatOptions getFormatOptions(UnitsDataR style)
+		private static FormatOptions setFormatOptionsLength(UnitsDataR style)
 		{
 			FormatOptions fmtOpts;
 			UStyle us = style.Ustyle;
 
 			try
 			{
-				// if (style.Id == UnitTypeId.General)
-				// {
-				// 	return null;
-				// }
-
-
-				fmtOpts = getInitialFormatOptions(style);
+				fmtOpts = new FormatOptions(style.Id);
 				fmtOpts.Accuracy = us.Precision;
 
 				if (CanHaveSymbol(style.Id))
@@ -679,13 +776,63 @@ namespace CsDeluxMeasure.UnitsUtil
 			return fmtOpts;
 		}
 
+		private static FormatOptions setFormatOptionsArea(UnitsDataR udr)
+		{
+			FormatOptions fmtOpts;
+			// UStyle us = style.Ustyle;
+
+			try
+			{
+				fmtOpts = new FormatOptions(udr.IdArea); // type Id
+
+				fmtOpts.Accuracy = udr.Ustyle.Precision;
+
+				fmtOpts.SetSymbolTypeId(udr.SymbolArea);
+
+				fmtOpts.SuppressTrailingZeros = setFmtOpt(udr.Ustyle.SuppressTrailZeros);
+
+				// if (CanHaveSymbol(style.Id))
+				// {
+				// 	// fmtOpts.SetSymbolTypeId(style.Symbol);
+				// 	
+				// }
+
+				// if (CanSuppressLeadingZeros(style.Id))
+				// {
+				// 	fmtOpts.SuppressLeadingZeros = setFmtOpt(us.SuppressLeadZeros);
+				// }
+
+				// if (CanSuppressTrailingZeros(style.Id))
+				// {
+				// 	
+				// }
+
+				// if (CanSuppressSpaces(style.Id))
+				// {
+				// 	fmtOpts.SuppressSpaces = setFmtOpt(us.SuppressSpaces);
+				// }
+
+				if (udr.Ustyle.UnitClass != UnitClass.CL_FT_DEC_IN &&
+					CanUsePlusPrefix(udr.Id))
+				{
+					fmtOpts.UsePlusPrefix = setFmtOpt(udr.Ustyle.UsePlusPrefix);
+				}
+
+			}
+			catch (Exception e)
+			{
+				return null;
+			}
+
+			return fmtOpts;
+		}
+
 		private static bool setFmtOpt(bool? opt)
 		{
 			if (opt == null) return false;
 
 			return opt.Value;
 		}
-
 
 		private static string getPrecString(Dictionary<string, string> data, 
 			double precision, string uSym)

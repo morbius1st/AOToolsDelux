@@ -6,7 +6,7 @@ using System.Collections.Generic;
 // File:             SchemaDictionaryBase.cs
 // Created:      2021-07-03 (11:28 PM)
 
-namespace AOTools.Cells.SchemaDefinition
+namespace AOToolsDelux.Cells.SchemaDefinition
 {
 	public abstract class XsDictionaryBase<TE, TD> : Dictionary<TE, TD> 
 		// where TD : ICloneable

@@ -1,6 +1,6 @@
 ﻿using Autodesk.Revit.DB;
 
-namespace AOTools.Utility
+namespace AOToolsDelux.Utility
 {
 	static class XYZExtensions
 	{

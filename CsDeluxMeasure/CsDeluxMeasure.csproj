@@ -35,7 +35,7 @@
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
-    <DebugType>pdbonly</DebugType>
+    <DebugType>full</DebugType>
     <DefineConstants>TRACE;USER_SETTINGS, APP_SETTINGS, SUITE_SETTINGS, MACH_SETTINGS, SITE_SETTINGS</DefineConstants>
     <Optimize>true</Optimize>
     <OutputPath>bin\Release\</OutputPath>
@@ -57,8 +57,15 @@
     <LangVersion>7.3</LangVersion>
     <ErrorReport>prompt</ErrorReport>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Rvt22Rel|AnyCPU'">
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>USER_SETTINGS, APP_SETTINGS, SUITE_SETTINGS, MACH_SETTINGS, SITE_SETTINGS</DefineConstants>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="RevitAddInUtility">
+      <HintPath>..\..\..\..\..\..\..\..\Program Files\Autodesk\Revit 2021\RevitAddInUtility.dll</HintPath>
+    </Reference>
     <Reference Include="RevitAPI">
       <HintPath>C:\Program Files\Autodesk\Revit 2021\RevitAPI.dll</HintPath>
       <Private>False</Private>
@@ -81,6 +88,9 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="..\..\..\UtilityLibrary\UtilityLibrary\ApiCalls.cs">
+      <Link>.Linked\ApiCalls.cs</Link>
+    </Compile>
     <Compile Include="..\..\..\UtilityLibrary\UtilityLibrary\CsConversions.cs">
       <Link>.Linked\CsConversions.cs</Link>
     </Compile>
@@ -94,6 +104,11 @@
       <Link>.Linked\RevitLibrary.cs</Link>
     </Compile>
     <Compile Include="Properties\Annotations.cs" />
+    <Compile Include="RevitSupport\DxMeasure.cs" />
+    <Compile Include="RevitSupport\ExtEvents\ExtEvtId.cs" />
+    <Compile Include="RevitSupport\ExtEvents\ExtEvtHandler.cs" />
+    <Compile Include="RevitSupport\ExtEvents\ExtEvttMake.cs" />
+    <Compile Include="RevitSupport\R.cs" />
     <Compile Include="RevitSupport\RevitInterOp.cs" />
     <Compile Include="RevitSupport\RevitUtil.cs" />
     <Compile Include="Settings\AppSettings.cs" />
@@ -111,6 +126,10 @@
     <Page Include="Windows\About.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Windows\MiniMain.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Windows\Privacy.xaml">
       <Generator>MSBuild:Compile</Generator>
@@ -136,6 +155,8 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Compile Include="UnitsUtil\ChangeValueEventArgs.cs" />
+    <Compile Include="UnitsUtil\CheckBoxChangedEventArgs.cs" />
     <Compile Include="UnitsUtil\UnitData.cs" />
     <Compile Include="UnitsUtil\UnitsInListMgr.cs" />
     <Compile Include="UnitsUtil\UnitsInListsCurrent.cs" />
@@ -151,6 +172,10 @@
     </Compile>
     <Compile Include="Windows\AWindow.cs" />
     <Compile Include="Windows\ColData.cs" />
+    <Compile Include="Windows\M.cs" />
+    <Compile Include="Windows\MiniMain.xaml.cs">
+      <DependentUpon>MiniMain.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Windows\Privacy.xaml.cs">
       <DependentUpon>Privacy.xaml</DependentUpon>
     </Compile>
@@ -163,12 +188,15 @@
     <Compile Include="Windows\Support\CsScrollBarAp.cs" />
     <Compile Include="Windows\Support\CsScrollViewerAp.cs" />
     <Compile Include="Windows\Support\CustomProperties.cs" />
+    <Compile Include="Windows\Support\ExtensionsRectangle.cs" />
+    <Compile Include="Windows\Support\IWin.cs" />
     <Compile Include="Windows\Support\junk.cs" />
     <Compile Include="Windows\Support\UnitStylesMgrWinData.cs" />
     <Compile Include="RevitSupport\UnitStyleCmd.cs" />
     <Compile Include="Windows\Support\Validation.cs" />
     <Compile Include="Windows\Support\ValueConverters.cs" />
     <Compile Include="Windows\Support\VisualStates.cs" />
+    <Compile Include="Windows\Support\WindowApiUtilities.cs" />
     <Compile Include="Windows\Support\XmalMarkup.cs" />
     <Compile Include="Windows\UnitStyleOrder.xaml.cs">
       <DependentUpon>UnitStyleOrder.xaml</DependentUpon>
@@ -228,6 +256,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Page Include="Windows\Support\CsSlider.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Windows\UnitStyleOrder.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -238,7 +270,8 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Other\Delux Measure Main Window Help.htm" />
+    <None Include="Other\Addin.addin" />
+    <None Include="Other\ProcessNotes.txt" />
     <Resource Include="Resources\CreateSheetsAbout v2.png" />
     <Resource Include="Resources\CyberStudio Icon.png" />
     <Resource Include="Resources\CyberStudio Logo - Narrow.png" />
@@ -257,14 +290,20 @@
     <Resource Include="Resources\Delux Measure us-ft 32.png" />
     <Resource Include="Resources\information16.png" />
     <Resource Include="Resources\information32.png" />
-    <Content Include="Other\CsDeluxMeasure.addin" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Other\Delux Measure Intro Help.htm" />
+  </ItemGroup>
+  <ItemGroup />
+  <ItemGroup>
+    <None Include="Other\ViewNotes.txt" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PostBuildEvent>echo Building: $(ConfigurationName)
 echo Testing Revit Version: $(RvtVersion)
 if exist "$(AppData)\Autodesk\REVIT\Addins\$(RvtVersion)" copy "$(ProjectDir)$(OutputPath)$(TargetFileName)" "$(AppData)\Autodesk\REVIT\Addins\$(RvtVersion)"
-if exist "$(AppData)\Autodesk\REVIT\Addins\$(RvtVersion)" copy "$(ProjectDir)other\*.addin" "$(AppData)\Autodesk\REVIT\Addins\$(RvtVersion)"
+if exist "$(AppData)\Autodesk\REVIT\Addins\$(RvtVersion)" copy "$(ProjectDir)other\Addin.addin" "$(AppData)\Autodesk\REVIT\Addins\$(RvtVersion)\$(TargetName).addin"
 if exist "$(AppData)\Autodesk\REVIT\Addins\$(RvtVersion)" xcopy /i/y/s/e "$(ProjectDir)other\Help Files" "$(AppData)\Autodesk\REVIT\Addins\$(RvtVersion)\Resources"
 
 	</PostBuildEvent>

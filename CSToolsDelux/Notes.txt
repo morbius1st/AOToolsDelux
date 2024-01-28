@@ -1,5 +1,9 @@
 ﻿where things are found
 
+dsKey, etc
+CSToolsDelux.ExStorage.Management.ExStoreSupport
+
+
 schema definition
 -> Fields.SchemaInfo.SchemaFields
 	contains the definitions of the schema / each field

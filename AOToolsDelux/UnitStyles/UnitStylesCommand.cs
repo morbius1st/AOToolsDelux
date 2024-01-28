@@ -2,26 +2,26 @@
 
 using System.Collections.Generic;
 using System.Xml;
-using AOTools.AppSettings.ConfigSettings;
+using AOToolsDelux.AppSettings.ConfigSettings;
 using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
 
-using AOTools.AppSettings.RevitSettings;
-using AOTools.AppSettings.SchemaSettings;
+using AOToolsDelux.AppSettings.RevitSettings;
+using AOToolsDelux.AppSettings.SchemaSettings;
 using Autodesk.Revit.DB.ExtensibleStorage;
 using UtilityLibrary;
 
-using static AOTools.AppSettings.SchemaSettings.SchemaAppKey;
-using static AOTools.AppSettings.SchemaSettings.SchemaUsrKey;
-using static AOTools.AppSettings.SettingUtil.SettingsListings;
+using static AOToolsDelux.AppSettings.SchemaSettings.SchemaAppKey;
+using static AOToolsDelux.AppSettings.SchemaSettings.SchemaUsrKey;
+using static AOToolsDelux.AppSettings.SettingUtil.SettingsListings;
 
-using static AOTools.AppSettings.RevitSettings.RevitSettingsMgr;
-using static AOTools.AppSettings.RevitSettings.RevitSettingsUnitUsr;
-using static AOTools.AppSettings.RevitSettings.RevitSettingsUnitApp;
+using static AOToolsDelux.AppSettings.RevitSettings.RevitSettingsMgr;
+using static AOToolsDelux.AppSettings.RevitSettings.RevitSettingsUnitUsr;
+using static AOToolsDelux.AppSettings.RevitSettings.RevitSettingsUnitApp;
 
-using static AOTools.AppSettings.ConfigSettings.SettingsApp;
-using static AOTools.AppSettings.ConfigSettings.SettingsUsr;
+using static AOToolsDelux.AppSettings.ConfigSettings.SettingsApp;
+using static AOToolsDelux.AppSettings.ConfigSettings.SettingsUsr;
 
 
 using static UtilityLibrary.MessageUtilities;
@@ -33,7 +33,7 @@ using static UtilityLibrary.MessageUtilities;
 // created:		1/6/2018 3:55:08 PM
 
 
-namespace AOTools
+namespace AOToolsDelux
 {
 	[Transaction(TransactionMode.Manual)]
 	class UnitStylesCommand : IExternalCommand

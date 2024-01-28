@@ -1,17 +1,17 @@
 #region Namespaces
 
 using System.Windows.Forms;
-using AOTools.Utility;
+using AOToolsDelux.Utility;
 using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
 using View = Autodesk.Revit.DB.View;
 
-using static AOTools.Utility.Util;
+using static AOToolsDelux.Utility.Util;
 
 #endregion
 
-namespace AOTools
+namespace AOToolsDelux
 {
 	[Transaction(TransactionMode.Manual)]
 	public class DxMeasure2 : IExternalCommand

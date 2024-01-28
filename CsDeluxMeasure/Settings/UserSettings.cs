@@ -95,7 +95,13 @@ namespace SettingsManager
 				userStyles = value;
 			}
 		}
-		
+
+		[DataMember(Order = 3)]
+		public bool ShowMiniWin { get; set; } = true;
+
+		[DataMember(Order = 3)]
+		public bool HideMain { get; set; } = true;
+
 		[DataMember]
 		public WindowLocation WinPosUnitStyleMgr { get; set; }
 
@@ -104,6 +110,9 @@ namespace SettingsManager
 		
 		[DataMember]
 		public WindowLocation WinPosDeluxMeasure { get; set; }
+		
+		[DataMember]
+		public WindowLocation WinPosMiniWin { get; set; }
 
 
 	}

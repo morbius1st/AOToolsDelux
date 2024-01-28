@@ -1,0 +1,143 @@
+﻿
+floor plan - DX works
+view name    | Level 1        
+view name    | Plan 2D View   
+view cat     | D2_WITHPLANE   
+view sub cat | D2_HORIZONTAL  
+view 3D      | False          
+view plane ok| True 
+
+
+floor plan callout - DX works
+view info                    
+view name    | Level 1 - Callout 1
+view name    | Plan 2D View   
+view cat     | D2_WITHPLANE   
+view sub cat | D2_HORIZONTAL  
+view 3D      | False          
+view plane ok| True 
+ 
+ 
+ 
+RCP - DX works
+view info                    
+view name    | Level 1        
+view name    | Plan 2D View   
+view cat     | D2_WITHPLANE   
+view sub cat | D2_HORIZONTAL  
+view 3D      | False          
+view plane ok| True 
+
+
+elevation - DX works
+view info                    
+view name    | East           
+view name    | Vertical 2D View
+view cat     | D2_WITHPLANE   
+view sub cat | D2_VERTICAL    
+view 3D      | False          
+view plane ok| False     
+
+
+
+section (vertical) - DX works
+view info                    
+view name    | Section 1      
+view name    | Vertical 2D View
+view cat     | D2_WITHPLANE   
+view sub cat | D2_VERTICAL    
+view 3D      | False          
+view plane ok| False  
+
+
+
+section (horizontal) - DX works
+view info                    
+view name    | Section 2      
+view name    | Vertical 2D View
+view cat     | D2_WITHPLANE   
+view sub cat | D2_VERTICAL    
+view 3D      | False          
+view plane ok| False   
+
+
+section (sloped) - DX works
+view info                    
+view name    | Section 3      
+view name    | Vertical 2D View
+view cat     | D2_WITHPLANE   
+view sub cat | D2_VERTICAL    
+view 3D      | False          
+view plane ok| False   
+
+
+
+detail view
+view info                    
+view name    | Section 1 - Callout 1
+view name    | Drafting View  
+view cat     | D2_WITHOUTPLANE
+view sub cat | D2_DRAFTING    
+view 3D      | False          
+view plane ok| False 
+
+
+drafting view - DX fails
+view info                    
+view name    | Drafting View 1
+view name    | Drafting View  
+view cat     | D2_WITHOUTPLANE
+view sub cat | D2_DRAFTING    
+view 3D      | False          
+view plane ok| False    
+
+
+legend view - DX fails
+view info                    
+view name    | Legend View 1  
+view name    | Other View Type
+view cat     | OTHER          
+view sub cat | OTHER          
+view 3D      | False          
+view plane ok| False 
+
+
+sheet view - DX fails
+view info                    
+view name    | Unnamed        
+view name    | Sheet View     
+view cat     | D2_WITHOUTPLANE
+view sub cat | D2_SHEET       
+view 3D      | False          
+view plane ok| False  
+
+
+orthogonal 3D - DX works (limited)
+view info                    
+view name    | {3D}           
+view name    | 3D View        
+view cat     | D3_WITHPLANE   
+view sub cat | D3_VIEW        
+view 3D      | True           
+view plane ok| True  
+
+
+perspective 3D - DX works (limited)
+view info                    
+view name    | 3D Camera View 1
+view name    | 3D View        
+view cat     | D3_WITHPLANE   
+view sub cat | D3_VIEW        
+view 3D      | True           
+view plane ok| False  
+
+
+family views - DX works
+plan
+view info                    
+view name    | Ground floor   
+view name    | Plan 2D View   
+view cat     | D2_WITHPLANE   
+view sub cat | D2_HORIZONTAL  
+view 3D      | False          
+view plane ok| True 

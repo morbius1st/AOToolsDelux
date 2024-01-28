@@ -9,6 +9,7 @@ using Autodesk.Revit.UI;
 using Autodesk.Revit.UI.Selection;
 using CsDeluxMeasure.Annotations;
 using CsDeluxMeasure.UnitsUtil;
+using CsDeluxMeasure.Windows;
 using UtilityLibrary;
 
 #endregion
@@ -20,10 +21,9 @@ namespace CsDeluxMeasure.RevitSupport
 {
 	public class RevitUtil
 	{
-		internal const ObjectSnapTypes snaps =
-			ObjectSnapTypes.Centers | ObjectSnapTypes.Endpoints | ObjectSnapTypes.Intersections |
-			ObjectSnapTypes.Midpoints | ObjectSnapTypes.Nearest | ObjectSnapTypes.Perpendicular |
-			ObjectSnapTypes.Quadrants | ObjectSnapTypes.Tangents;
+		internal const ObjectSnapTypes snaps = ObjectSnapTypes.Centers | ObjectSnapTypes.Endpoints | 
+			ObjectSnapTypes.Intersections | ObjectSnapTypes.Midpoints |  ObjectSnapTypes.Perpendicular |
+			ObjectSnapTypes.Quadrants; // | ObjectSnapTypes.Tangents;
 
 		internal enum VTtypeCat
 		{
@@ -116,10 +116,17 @@ namespace CsDeluxMeasure.RevitSupport
 
 	public struct PointMeasurements
 	{
+		public string version;
+
 		internal bool IsValid { get; private set; }
+		internal bool IsVoid { get; private set; }
 
 		internal XYZ P1 { get; }
 		internal  XYZ P2 { get; }
+
+
+		internal XYZ P1R { get; }
+		internal  XYZ P2R { get; }
 
 		private XYZ sqDelta;
 
@@ -133,12 +140,40 @@ namespace CsDeluxMeasure.RevitSupport
 		internal double Yz { get; }
 		internal double Xyz { get; }
 
-		public PointMeasurements(XYZ p1, XYZ p2, XYZ origin)
+		internal double Rotation { get; }
+
+		private double area;
+
+		internal double Area
 		{
+			get => area;
+			private set => area = value;
+		}
+			
+
+		public PointMeasurements(  XYZ p1, XYZ p2, XYZ origin, double rotation)
+		{
+			version = "2.0";
+
 			P1 = p1 - origin;
 			P2 = p2 - origin;
 
-			delta = p2 - p1;
+			Rotation = rotation;
+
+			if (!double.IsNaN(rotation))
+			{
+				Transform t = Transform.CreateRotation(XYZ.BasisZ, rotation);
+
+				P1R = t.OfPoint(P1);
+				P2R = t.OfPoint(P2);
+			}
+			else
+			{
+				P1R = p1;
+				P2R = p2;
+			}
+
+			delta = P2R - P1R;
 			sqDelta = delta.Multiply(delta);
 
 			Xy = Math.Sqrt(sqDelta.X + sqDelta.Y);
@@ -148,25 +183,64 @@ namespace CsDeluxMeasure.RevitSupport
 			Xyz = Math.Sqrt(sqDelta.X + sqDelta.Y + sqDelta.Z);
 
 			IsValid = true;
+			IsVoid = false;
+
+			// if (M.W != null) M.W.WriteLine1("calculating area");
+
+			area = -1;
+			area = setArea();
+
+			// if (M.W != null) M.W.WriteLine1($"area calculated| {area} ");
 		}
 
 		public static PointMeasurements InValid()
 		{
-			PointMeasurements pm = new PointMeasurements(XYZ.Zero, XYZ.Zero, XYZ.Zero);
+			PointMeasurements pm = new PointMeasurements(XYZ.Zero, XYZ.Zero, XYZ.Zero, 0);
 			pm.IsValid = false;
+
+			return pm;
+		}
+
+		public static  PointMeasurements SetVoid()
+		{
+			PointMeasurements pm = new PointMeasurements(XYZ.Zero, XYZ.Zero, XYZ.Zero, 0);
+			pm.IsValid = true;
+			pm.IsVoid = true;
 
 			return pm;
 		}
 
 		public static PointMeasurements Zero()
 		{
-			return new PointMeasurements(XYZ.Zero, XYZ.Zero, XYZ.Zero);
+			return new PointMeasurements(XYZ.Zero, XYZ.Zero, XYZ.Zero, 0);
+		}
+
+		private double setArea()
+		{
+			if (dZ == 0)
+			{
+				return Math.Abs(dX * dY);
+			}
+
+			if (dY == 0)
+			{
+				return Math.Abs(dX * dZ);
+			}
+
+			if (dX == 0)
+			{
+				return Math.Abs(dY * dZ);
+			}
+
+			return -1.0;
 		}
 	}
 
 
-	public class PointDistances : INotifyPropertyChanged
+	public class PointDistances // : INotifyPropertyChanged
 	{
+		public string version = "2.0";
+
 		private PointMeasurements points;
 		private UnitsDataR udr;
 
@@ -183,37 +257,44 @@ namespace CsDeluxMeasure.RevitSupport
 
 		public PointMeasurements Points
 		{
-			// get
-			// {
-			// 	return points;
-			// }
+			get
+			{
+				return points;
+			}
 
 			set
 			{
-				points = value;
+				// M.W.WriteLine1($"points set| area| {points.Area}");
+				
+				points = value; 
+				// OnPropertyChanged();
 			}
-		}
+
+		
+	}
 
 		public bool HasPoints => points.IsValid;
 
 
-		public string P_x  =>format(points.dX);
-		public string P_y  =>format(points.dY);
-		public string P_z  =>format(points.dZ);
-		public string P_xy =>format(points.Xy);
-		public string P_xz =>format(points.Xz);
-		public string P_yz =>format(points.Yz);
-		public string P_xyz=>format(points.Xyz);
+		public string P_x  => format(points.dX);
+		public string P_y  => format(points.dY);
+		public string P_z  => format(points.dZ);
+		public string P_xy => format(points.Xy);
+		public string P_xz => format(points.Xz);
+		public string P_yz => format(points.Yz);
+		public string P_xyz => format(points.Xyz);
 
-		public string P1_x  =>format(points.P1.X);
-		public string P1_y  =>format(points.P1.Y);
-		public string P1_z  =>format(points.P1.Z);
+		public string P1_x  => format(points.P1.X);
+		public string P1_y  => format(points.P1.Y);
+		public string P1_z  => format(points.P1.Z);
 
-		public string P2_x  =>format(points.P2.X);
-		public string P2_y  =>format(points.P2.Y);
-		public string P2_z  =>format(points.P2.Z);
+		public string P2_x  => format(points.P2.X);
+		public string P2_y  => format(points.P2.Y);
+		public string P2_z  => format(points.P2.Z);
 
+		public string Area => formatArea(points.Area);
 
+		public string Rotation => formatRotation(points.Rotation);
 
 		private string format(double? d)
 		{
@@ -223,6 +304,32 @@ namespace CsDeluxMeasure.RevitSupport
 			return formatted.IsVoid() ? "null" : formatted;
 		}
 
+		private string formatArea(double? d)
+		{
+
+			if (udr == null || d.Equals(-1.0))
+			{
+				// M.W.WriteLine1($"udr null? | d is {d}");
+
+				return "undefined";
+			}
+
+			string formatted = UnitsSupport.FormatArea(udr, d);
+
+			// M.W.WriteLine1($"formatting area| {formatted ?? "is null"}");
+
+			return formatted.IsVoid() ? "null" : formatted;
+
+		}
+
+		private string formatRotation(double? d)
+		{
+			if (d==null || d.Value == 0) return "No View Rotation";
+
+			double decRotation = d.Value * (180 / Math.PI);
+
+			return $"{decRotation:##.00##°}";
+		}
 
 		public event PropertyChangedEventHandler PropertyChanged;
 

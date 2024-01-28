@@ -5,18 +5,18 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Windows.Input;
-using AOTools.Cells.ExDataStorage;
+using AOToolsDelux.Cells.ExDataStorage;
 using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
-using AOTools.Cells.SchemaDefinition;
-using AOTools.Cells.SchemaCells;
+using AOToolsDelux.Cells.SchemaDefinition;
+using AOToolsDelux.Cells.SchemaCells;
 using static UtilityLibrary.MessageUtilities;
-using AOTools.Cells.ExStorage;
-using AOTools.Cells.Tests;
+using AOToolsDelux.Cells.ExStorage;
+using AOToolsDelux.Cells.Tests;
 using Autodesk.Revit.DB.ExtensibleStorage;
-using static AOTools.Cells.ExStorage.ExStoreMgr;
-using static AOTools.Cells.ExDataStorage.DataStorageManager;
+using static AOToolsDelux.Cells.ExStorage.ExStoreMgr;
+using static AOToolsDelux.Cells.ExDataStorage.DataStorageManager;
 
 #endregion
 
@@ -25,7 +25,7 @@ using static AOTools.Cells.ExDataStorage.DataStorageManager;
 // created:		1/6/2018 3:55:08 PM
 
 
-namespace AOTools
+namespace AOToolsDelux
 {
 	[Transaction(TransactionMode.Manual)]
 	class TestExStore0 : IExternalCommand

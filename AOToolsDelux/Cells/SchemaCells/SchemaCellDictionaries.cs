@@ -5,9 +5,9 @@
 // user name: jeffs
 // created:   7/3/2021 10:49:50 PM
 
-using AOTools.Cells.SchemaDefinition;
+using AOToolsDelux.Cells.SchemaDefinition;
 
-namespace AOTools.Cells.SchemaCells
+namespace AOToolsDelux.Cells.SchemaCells
 {
 	public class SchemaDictionaryApp : SchemaDictionaryBase<SchemaAppKey>
 	{

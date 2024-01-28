@@ -2,9 +2,9 @@
 
 using System;
 using System.Collections.Generic;
-using AOTools.Cells.SchemaCells;
-using AOTools.Cells.SchemaDefinition;
-using AOTools.Utility;
+using AOToolsDelux.Cells.SchemaCells;
+using AOToolsDelux.Cells.SchemaDefinition;
+using AOToolsDelux.Utility;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.DB.ExtensibleStorage;
 using static Autodesk.Revit.DB.ExtensibleStorage.Schema;
@@ -14,7 +14,7 @@ using static Autodesk.Revit.DB.ExtensibleStorage.Schema;
 // user name: jeffs
 // created:   7/4/2021 3:07:57 PM
 
-namespace AOTools.Cells.ExStorage
+namespace AOToolsDelux.Cells.ExStorage
 {
 
 	public enum ExStoreRtnCodes

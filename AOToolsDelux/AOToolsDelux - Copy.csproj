@@ -14,8 +14,8 @@
     <ProjectGuid>{DDC429DE-0FCC-45A7-A152-112E9AB46CC4}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>AOTools</RootNamespace>
-    <AssemblyName>AOTools</AssemblyName>
+    <RootNamespace>AOToolsDelux</RootNamespace>
+    <AssemblyName>AOToolsDelux</AssemblyName>
     <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -282,7 +282,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Cells\Data Organization.txt" />
-    <Content Include="Other\AOTools.addin">
+    <Content Include="Other\AOToolsDelux.addin">
       <SubType>Designer</SubType>
     </Content>
     <Content Include="Other\Cells Notes.txt" />
@@ -321,7 +321,7 @@
   </Target>
   -->
   <Target Name="AfterClean">
-    <Delete Files="$(AppData)\Autodesk\REVIT\Addins\2017\AOTools.addin" />
-    <Delete Files="$(AppData)\Autodesk\REVIT\Addins\2017\AOTools.dll" />
+    <Delete Files="$(AppData)\Autodesk\REVIT\Addins\2017\AOToolsDelux.addin" />
+    <Delete Files="$(AppData)\Autodesk\REVIT\Addins\2017\AOToolsDelux.dll" />
   </Target>
 </Project>

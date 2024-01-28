@@ -1,5 +1,7 @@
 ﻿#region + Using Directives
 
+using CsDeluxMeasure.Windows.Support;
+
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -17,19 +19,31 @@ using UtilityLibrary;
 
 namespace CsDeluxMeasure.Windows
 {
-	public class AWindow : Window, INotifyPropertyChanged
+	public class AWindow // : Window //, INotifyPropertyChanged
 	{
-		public string textMsg01 { get; set; }
+
+		// public bool IsClosed()
+		// {
+		// 	return WindowApiUtilities.GetWindowHandle(this) == IntPtr.Zero;
+		// }
+
+		// public abstract string textMsg01 { get; set; }
+		// public abstract string MessageBoxText { get; set; }
 
 		private int marginSize = 0;
 		private int marginSpaceSize = 2;
 		private string location;
 
-		private static AWindow W;
+		private string message;
 
-		public AWindow()
+		public static AWindow W;
+
+		private IWin w;
+
+		public AWindow(IWin w)
 		{
 			W = this;
+			this.w = w;
 		}
 
 
@@ -53,15 +67,15 @@ namespace CsDeluxMeasure.Windows
 
 		public int ColumnWidth { get; set; } = 30;
 
-		public string MessageBoxText
-		{
-			get => textMsg01;
-			set
-			{
-				textMsg01 = value;
-				OnPropertyChanged();
-			}
-		}
+		// public string MessageBoxText
+		// {
+		// 	get => textMsg01;
+		// 	set
+		// 	{
+		// 		textMsg01 = value;
+		// 		OnPropertyChanged();
+		// 	}
+		// }
 
 		public void MarginClr()
 		{
@@ -82,7 +96,7 @@ namespace CsDeluxMeasure.Windows
 
 		public void MsgClr()
 		{
-			textMsg01 = "";
+			w.textMsg01 = "";
 			ShowMsg();
 		}
 
@@ -131,12 +145,12 @@ namespace CsDeluxMeasure.Windows
 
 		public void WriteNewLine()
 		{
-			textMsg01 += "\n";
+			w.textMsg01 += "\n";
 		}
 
 		public void ShowMsg()
 		{
-			OnPropertyChanged("MessageBoxText");
+			// OnPropertyChanged("MessageBoxText");
 		}
 
 
@@ -525,10 +539,98 @@ namespace CsDeluxMeasure.Windows
 			return msg;
 		}
 
+	#endregion
+
+	#region private methods
+
+		private string margin(string spacer)
+		{
+			if (marginSize == 0) return "";
+
+			return spacer.Repeat(marginSize);
+		}
+
+		private void writeMsg2<T1, T2>(   T1 msg1, T2 msg2,
+			string spacer, int colWidth, string whenNull1, string whenNull2, string divString)
+		{
+			w.textMsg01 += margin(spacer) + fmtMsg(msg1, msg2, whenNull1, whenNull2, divString, colWidth);
+		}
+
+		private void writeMsg2<T1, T2>(    T1 msg1, T2 msg2, int colWidth, string whenNull1, string whenNull2, string divString)
+		{
+			w.textMsg01 += fmtMsg(msg1, msg2, whenNull1, whenNull2, divString, colWidth);
+		}
+
+		private void writeMsg1<T1>(  T1 msg1, int colWidth, string whenNull1, string divString)
+		{
+			w.textMsg01 += fmtMsg(msg1, "", whenNull1, null, divString, colWidth);
+		}
+
+		private string fmtMsg<T1, T2> (    T1 msg1, T2 msg2, string whenNull1, string whenNull2, string divString, int colWidth = -1)
+		{
+			string A;
+			string B;
+
+			if (msg1 is int)
+			{
+				A = fmtInt(Convert.ToInt32(msg1));
+			}
+			else
+			{
+				A = msg1?.ToString();
+
+				if (A == null)
+				{
+					A = whenNull1 ?? "";
+				}
+			}
+
+			if (msg2 is int)
+			{
+				B = fmtInt(Convert.ToInt32(msg2));
+			}
+			else
+			{
+				B = msg2?.ToString();
+
+				if (B == null)
+				{
+					B = whenNull2 ?? "";
+				}
+			}
+
+			return A.PadRight(colWidth == -1 ? ColumnWidth : colWidth) + divString + B;
+		}
+
+		public string fmtInt(int i)
+		{
+			return $"{i,-4}";
+		}
+
+	#endregion
+
+		// protected void OnPropertyChange([CallerMemberName] string memberName = "");
+
+		// public event PropertyChangedEventHandler PropertyChanged;
+		//
+		// // [DebuggerStepThrough]
+		// protected void OnPropertyChanged([CallerMemberName] string memberName = "")
+		// {
+		// 	message = $"on prop| member| {memberName}\n";
+		//
+		// 	if (!memberName.Equals(nameof(MessageBoxText)))
+		// 	{
+		// 		MessageBoxText += message;
+		// 	}
+		//
+		//
+		// 	PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(memberName));
+		// }
+
+
 
 /*
 
-		
 		// private void appendInfo(
 		// 	ref StringBuilder[] sb, string[] s, ColData.JustifyHoriz j,
 		// 	int width , string colDiv, ref bool[] hasRow, bool isHeader = false)
@@ -999,84 +1101,5 @@ namespace CsDeluxMeasure.Windows
 		}
 		*/
 
-	#endregion
-
-	#region private methods
-
-		private string margin(string spacer)
-		{
-			if (marginSize == 0) return "";
-
-			return spacer.Repeat(marginSize);
-		}
-
-		private void writeMsg2<T1, T2>(   T1 msg1, T2 msg2,
-			string spacer, int colWidth, string whenNull1, string whenNull2, string divString)
-		{
-			textMsg01 += margin(spacer) + fmtMsg(msg1, msg2, whenNull1, whenNull2, divString, colWidth);
-		}
-
-		private void writeMsg2<T1, T2>(    T1 msg1, T2 msg2, int colWidth, string whenNull1, string whenNull2, string divString)
-		{
-			textMsg01 += fmtMsg(msg1, msg2, whenNull1, whenNull2, divString, colWidth);
-		}
-
-		private void writeMsg1<T1>(  T1 msg1, int colWidth, string whenNull1, string divString)
-		{
-			textMsg01 += fmtMsg(msg1, "", whenNull1, null, divString, colWidth);
-		}
-
-		private string fmtMsg<T1, T2> (    T1 msg1, T2 msg2, string whenNull1, string whenNull2, string divString, int colWidth = -1)
-		{
-			string A;
-			string B;
-
-			if (msg1 is int)
-			{
-				A = fmtInt(Convert.ToInt32(msg1));
-			}
-			else
-			{
-				A = msg1?.ToString();
-
-				if (A == null)
-				{
-					A = whenNull1 ?? "";
-				}
-			}
-
-			if (msg2 is int)
-			{
-				B = fmtInt(Convert.ToInt32(msg2));
-			}
-			else
-			{
-				B = msg2?.ToString();
-
-				if (B == null)
-				{
-					B = whenNull2 ?? "";
-				}
-			}
-
-			return A.PadRight(colWidth == -1 ? ColumnWidth : colWidth) + divString + B;
-		}
-
-		public string fmtInt(int i)
-		{
-			return $"{i,-4}";
-		}
-
-	#endregion
-
-		// protected void OnPropertyChange([CallerMemberName] string memberName = "");
-
-		public event PropertyChangedEventHandler PropertyChanged;
-
-		[DebuggerStepThrough]
-		protected void OnPropertyChanged([CallerMemberName] string memberName = "")
-		{
-			PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(memberName));
-		}
 	}
 }

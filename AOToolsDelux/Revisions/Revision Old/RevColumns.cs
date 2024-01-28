@@ -1,15 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
-using static AOTools.RevDataKey.ERevDataKey;
-using static AOTools.RevDataKey;
-using static AOTools.RevDataItems.ERevDataItems;
-using static AOTools.RevDataItems;
+using static AOToolsDelux.RevDataKey.ERevDataKey;
+using static AOToolsDelux.RevDataKey;
+using static AOToolsDelux.RevDataItems.ERevDataItems;
+using static AOToolsDelux.RevDataItems;
 
-using static AOTools.RevColumns.EDataSource;
-using static AOTools.RevColumns.ERevDataDerived;
-using static AOTools.RevColumns;
+using static AOToolsDelux.RevColumns.EDataSource;
+using static AOToolsDelux.RevColumns.ERevDataDerived;
+using static AOToolsDelux.RevColumns;
 
-namespace AOTools
+namespace AOToolsDelux
 {
 	class RevColumns
 	{

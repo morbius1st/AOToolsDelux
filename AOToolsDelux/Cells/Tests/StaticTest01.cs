@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 // user name: jeffs
 // created:   9/1/2021 6:38:01 AM
 
-namespace AOTools.Cells.Tests
+namespace AOToolsDelux.Cells.Tests
 {
 	public class StaticTest01
 	{

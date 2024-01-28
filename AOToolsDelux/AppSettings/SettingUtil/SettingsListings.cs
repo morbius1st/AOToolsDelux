@@ -1,17 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
-using AOTools.AppSettings.ConfigSettings;
-using AOTools.AppSettings.RevitSettings;
-using AOTools.AppSettings.SchemaSettings;
+using AOToolsDelux.AppSettings.ConfigSettings;
+using AOToolsDelux.AppSettings.RevitSettings;
+using AOToolsDelux.AppSettings.SchemaSettings;
 using static UtilityLibrary.MessageUtilities;
 
-using static AOTools.AppSettings.ConfigSettings.SettingsApp;
-using static AOTools.AppSettings.ConfigSettings.SettingsUsr;
-using static AOTools.AppSettings.RevitSettings.RevitSettingsUnitApp;
-using static AOTools.AppSettings.RevitSettings.RevitSettingsUnitUsr;
+using static AOToolsDelux.AppSettings.ConfigSettings.SettingsApp;
+using static AOToolsDelux.AppSettings.ConfigSettings.SettingsUsr;
+using static AOToolsDelux.AppSettings.RevitSettings.RevitSettingsUnitApp;
+using static AOToolsDelux.AppSettings.RevitSettings.RevitSettingsUnitUsr;
 
 
-namespace AOTools.AppSettings.SettingUtil
+namespace AOToolsDelux.AppSettings.SettingUtil
 {
 	public static class SettingsListings
 	{

@@ -7,10 +7,10 @@ using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
 using static UtilityLibrary.MessageUtilities;
 
-using AOTools.Cells.ExStorage;
+using AOToolsDelux.Cells.ExStorage;
 using Autodesk.Revit.DB.ExtensibleStorage;
 using InvalidOperationException = Autodesk.Revit.Exceptions.InvalidOperationException;
-using static AOTools.Cells.ExStorage.ExStoreMgr;
+using static AOToolsDelux.Cells.ExStorage.ExStoreMgr;
 
 #endregion
 
@@ -19,7 +19,7 @@ using static AOTools.Cells.ExStorage.ExStoreMgr;
 // created:		1/6/2018 3:55:08 PM
 
 
-namespace AOTools
+namespace AOToolsDelux
 {
 
 	[Transaction(TransactionMode.Manual)]

@@ -1,14 +1,14 @@
 ﻿#region using
 using System;
 using System.Collections.Generic;
-using AOTools.Cells.SchemaCells;
+using AOToolsDelux.Cells.SchemaCells;
 
 #endregion
 
 // username: jeffs
 // created:  7/4/2021 3:54:32 PM
 
-namespace AOTools.Cells.ExStorage
+namespace AOToolsDelux.Cells.ExStorage
 {
 	public class ExStoreCell : IExStore, IExStoreData<SchemaDictionaryCell, List<SchemaDictionaryCell>> //: SchemaDefCells, 
 	{

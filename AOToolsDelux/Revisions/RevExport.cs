@@ -4,7 +4,7 @@ using System.Reflection;
 using X = Microsoft.Office.Interop.Excel;
 
 
-namespace AOTools.Revisions
+namespace AOToolsDelux.Revisions
 {
 	class RevExport
 	{

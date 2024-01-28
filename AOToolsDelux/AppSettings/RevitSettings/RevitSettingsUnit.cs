@@ -2,10 +2,10 @@
 
 using System;
 using System.Collections.Generic;
-using AOTools.AppSettings.SchemaSettings;
+using AOToolsDelux.AppSettings.SchemaSettings;
 using Autodesk.Revit.DB;
-using static AOTools.AppSettings.RevitSettings.RevitSettingsUnitApp;
-using static AOTools.AppSettings.SchemaSettings.SchemaUnitUtil;
+using static AOToolsDelux.AppSettings.RevitSettings.RevitSettingsUnitApp;
+using static AOToolsDelux.AppSettings.SchemaSettings.SchemaUnitUtil;
 
 #endregion
 
@@ -14,7 +14,7 @@ using static AOTools.AppSettings.SchemaSettings.SchemaUnitUtil;
 // created:		1/27/2018 10:26:23 AM
 
 
-namespace AOTools.AppSettings.RevitSettings
+namespace AOToolsDelux.AppSettings.RevitSettings
 {
 	public class RevitSettingsUnitApp : SchemaUnitApp
 	{

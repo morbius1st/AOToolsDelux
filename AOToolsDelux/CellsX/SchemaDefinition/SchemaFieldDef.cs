@@ -1,7 +1,7 @@
 ﻿#region + Using Directives
 
 using System;
-using AOTools.Cells.ExStorage;
+using AOToolsDelux.Cells.ExStorage;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.DB.ExtensibleStorage;
 
@@ -10,7 +10,7 @@ using Autodesk.Revit.DB.ExtensibleStorage;
 // user name: jeffs
 // created:   7/3/2021 7:16:58 AM
 
-namespace AOTools.Cells.SchemaDefinition
+namespace AOToolsDelux.Cells.SchemaDefinition
 {
 
 	// public interface ISchemaFieldDef

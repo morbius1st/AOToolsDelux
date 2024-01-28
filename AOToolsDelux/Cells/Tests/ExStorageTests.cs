@@ -1,25 +1,25 @@
 ﻿#region using
 
 using System;
-using static AOTools.Cells.ExStorage.ExStoreMgr;
+using static AOToolsDelux.Cells.ExStorage.ExStoreMgr;
 using System.Collections.Generic;
 using System.Reflection;
 using System.Text;
 using System.Windows.Forms;
-using AOTools.Cells.ExDataStorage;
-using AOTools.Cells.ExStorage;
-using AOTools.Cells.SchemaDefinition;
+using AOToolsDelux.Cells.ExDataStorage;
+using AOToolsDelux.Cells.ExStorage;
+using AOToolsDelux.Cells.SchemaDefinition;
 using Autodesk.Revit.DB.ExtensibleStorage;
 using Autodesk.Revit.UI;
 using static Autodesk.Revit.DB.ExtensibleStorage.Schema;
-using static AOTools.Cells.ExDataStorage.DataStorageManager;
+using static AOToolsDelux.Cells.ExDataStorage.DataStorageManager;
 
 #endregion
 
 // username: jeffs
 // created:  7/19/2021 11:09:28 PM
 
-namespace AOTools.Cells.Tests
+namespace AOToolsDelux.Cells.Tests
 {
 	public class ExStorageTests
 	{

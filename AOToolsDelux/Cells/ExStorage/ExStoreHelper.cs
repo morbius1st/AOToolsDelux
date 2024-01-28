@@ -1,10 +1,10 @@
 ﻿#region + Using Directives
 
-using AOTools.Cells.ExDataStorage;
-using AOTools.Cells.SchemaCells;
-using AOTools.Cells.SchemaDefinition;
-using AOTools.Cells.Tests;
-using AOTools.Utility;
+using AOToolsDelux.Cells.ExDataStorage;
+using AOToolsDelux.Cells.SchemaCells;
+using AOToolsDelux.Cells.SchemaDefinition;
+using AOToolsDelux.Cells.Tests;
+using AOToolsDelux.Utility;
 
 using Autodesk.Revit.DB;
 using Autodesk.Revit.DB.ExtensibleStorage;
@@ -12,7 +12,7 @@ using Autodesk.Revit.DB.ExtensibleStorage;
 using System;
 using System.Collections.Generic;
 
-using static AOTools.Cells.ExDataStorage.DataStorageManager;
+using static AOToolsDelux.Cells.ExDataStorage.DataStorageManager;
 using static Autodesk.Revit.DB.ExtensibleStorage.Schema;
 
 #endregion
@@ -20,7 +20,7 @@ using static Autodesk.Revit.DB.ExtensibleStorage.Schema;
 // user name: jeffs
 // created:   7/4/2021 3:07:57 PM
 
-namespace AOTools.Cells.ExStorage
+namespace AOToolsDelux.Cells.ExStorage
 {
 	public enum ExStoreRtnCodes
 	{

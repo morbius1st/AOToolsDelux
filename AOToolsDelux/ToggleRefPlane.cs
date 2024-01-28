@@ -7,7 +7,7 @@ using Autodesk.Revit.UI;
 
 #endregion
 
-namespace AOTools
+namespace AOToolsDelux
 {
 	[Transaction(TransactionMode.Manual)]
 	public class ToggleRefPlane : IExternalCommand

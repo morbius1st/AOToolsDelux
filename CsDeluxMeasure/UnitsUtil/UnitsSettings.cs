@@ -82,6 +82,8 @@ namespace CsDeluxMeasure.UnitsUtil
 			AppSettingInfo<AppSettingDataFile> a = AppSettings.Info;
 			UserSettingInfo<UserSettingDataFile> u = UserSettings.Info;
 
+			Dictionary<string, UnitsDataR> b = uStdR.StdStyles;
+
 
 		#if PATH
 			MethodBase mb = new StackTrace().GetFrame(1).GetMethod();

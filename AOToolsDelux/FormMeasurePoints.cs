@@ -1,15 +1,15 @@
 ﻿using System;
 using System.Windows.Forms;
-using AOTools.Utility;
+using AOToolsDelux.Utility;
 using Autodesk.Revit.DB;
 using Form = System.Windows.Forms.Form;
 using Point = System.Drawing.Point;
 
-using static AOTools.Utility.Util;
+using static AOToolsDelux.Utility.Util;
 
-using static AOTools.AppSettings.ConfigSettings.SettingsUsr;
+using static AOToolsDelux.AppSettings.ConfigSettings.SettingsUsr;
 
-namespace AOTools
+namespace AOToolsDelux
 {
 	public partial class FormMeasurePoints : Form
 	{

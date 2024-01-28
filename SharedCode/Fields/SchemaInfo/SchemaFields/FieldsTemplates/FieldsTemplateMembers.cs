@@ -34,7 +34,7 @@ namespace SharedCode.Fields.SchemaInfo.SchemaFields.FieldsTemplates
 				{ VALUE_STR , "Value String" },
 				{ DISP_LEVEL, "Display Level" },
 				{ DISP_ORDER, "Display Order" },
-				{ COL_WIDTH, "Display Width" },
+				{ COL_WIDTH , "Display Width" },
 				{ UNIT_TYPE , "Unit Type" }
 			};
 

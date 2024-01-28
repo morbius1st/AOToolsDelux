@@ -7,7 +7,7 @@ using System;
 using System.Collections.Generic;
 using System.Windows.Forms;
 
-namespace AOTools.Cells.SchemaDefinition
+namespace AOToolsDelux.Cells.SchemaDefinition
 {
 	public abstract class ASchemaDef<TE, TD>
 		where TE : Enum  where TD : SchemaDictionaryBase<TE>, new()

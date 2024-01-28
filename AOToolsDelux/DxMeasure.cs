@@ -2,25 +2,25 @@
 
 using System.Diagnostics;
 using System.Windows.Forms;
-using AOTools.Utility;
+using AOToolsDelux.Utility;
 using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
 using View = Autodesk.Revit.DB.View;
 
-using static AOTools.Utility.Util;
+using static AOToolsDelux.Utility.Util;
 
 using DluxMeasure;
 
 
 #endregion
 
-// projname: AOTools
+// projname: AOToolsDelux
 // itemname: DxMeasure
 // username: jeffs
 // created:  12/1/2018 6:51:01 PM
 
-namespace AOTools
+namespace AOToolsDelux
 {
 
 	[Transaction(TransactionMode.Manual)]

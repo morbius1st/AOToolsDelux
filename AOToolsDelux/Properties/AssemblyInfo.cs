@@ -4,11 +4,11 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("AOTools")]
+[assembly: AssemblyTitle("AOToolsDelux")]
 [assembly: AssemblyDescription("AO Tools")]
 [assembly: AssemblyConfiguration("Release")]
 [assembly: AssemblyCompany("CyberStudio")]
-[assembly: AssemblyProduct("AOTools")]
+[assembly: AssemblyProduct("AOToolsDelux")]
 [assembly: AssemblyCopyright("Copyright 2019 © CyberStudio, Jeff Stuyvesant")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]

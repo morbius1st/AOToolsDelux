@@ -1,9 +1,9 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 
-using static AOTools.RevSummary.EListSubject;
+using static AOToolsDelux.RevSummary.EListSubject;
 
-namespace AOTools
+namespace AOToolsDelux
 {
 	// keep track of some of th columns to allow the 
 	// user to select what they want

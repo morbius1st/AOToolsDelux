@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 
-namespace AOTools.Revisions
+namespace AOToolsDelux.Revisions
 {
 	public partial class RevCloudData2 : IEnumerable
 	{

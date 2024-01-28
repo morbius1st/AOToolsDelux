@@ -2,11 +2,11 @@
 
 using Autodesk.Revit.DB;
 
-using AOTools.AppSettings.RevitSettings;
-using static AOTools.AppSettings.RevitSettings.RevitSettingsUnitUsr;
+using AOToolsDelux.AppSettings.RevitSettings;
+using static AOToolsDelux.AppSettings.RevitSettings.RevitSettingsUnitUsr;
 
 
-namespace AOTools.AppSettings.SchemaSettings
+namespace AOToolsDelux.AppSettings.SchemaSettings
 {
 	public static class SchemaUnitUtil
 	{

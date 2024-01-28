@@ -5,7 +5,7 @@
 // user name: jeffs
 // created:   7/3/2021 10:49:50 PM
 
-namespace AOTools.Cells.SchemaDefinition
+namespace AOToolsDelux.Cells.SchemaDefinition
 {
 	public class SchemaDictionaryRoot : SchemaDictionaryBase<SchemaRootKey>
 	{

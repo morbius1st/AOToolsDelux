@@ -1,10 +1,10 @@
 ﻿#region + Using Directives
 
-using AOTools.Cells.SchemaDefinition;
+using AOToolsDelux.Cells.SchemaDefinition;
 using Autodesk.Revit.UI;
 
-// using static AOTools.Cells.ExStorage.ExStoreApp;
-// using static AOTools.Cells.ExStorage.ExStoreCell;
+// using static AOToolsDelux.Cells.ExStorage.ExStoreApp;
+// using static AOToolsDelux.Cells.ExStorage.ExStoreCell;
 
 #endregion
 
@@ -48,7 +48,7 @@ using Autodesk.Revit.UI;
  */
 
 
-namespace AOTools.Cells.ExStorage
+namespace AOToolsDelux.Cells.ExStorage
 {
 
 	public class ExStoreMgr

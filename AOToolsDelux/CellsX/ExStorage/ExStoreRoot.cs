@@ -2,14 +2,14 @@
 
 using System;
 using System.Linq.Expressions;
-using AOTools.Cells.SchemaDefinition;
+using AOToolsDelux.Cells.SchemaDefinition;
 
 #endregion
 
 // username: jeffs
 // created:  7/4/2021 3:54:15 PM
 
-namespace AOTools.Cells.ExStorage
+namespace AOToolsDelux.Cells.ExStorage
 {
 	public class ExStoreRoot :
 			IExStore<SchemaRootKey, SchemaDictionaryRoot>

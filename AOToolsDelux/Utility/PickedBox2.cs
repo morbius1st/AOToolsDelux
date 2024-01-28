@@ -2,7 +2,7 @@
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI.Selection;
 
-namespace AOTools
+namespace AOToolsDelux
 {
 		class PickedBox2
 	{

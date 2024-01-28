@@ -212,7 +212,9 @@ namespace CSToolsDelux.Fields.ExStorage.ExStorManagement
 
 	#region write
 
-		public ExStoreRtnCodes WriteRootData(SchemaRootData raData, SchemaCellData cData, 
+		public ExStoreRtnCodes WriteRootData(
+			SchemaRootData raData, 
+			SchemaCellData cData, 
 			DataStorage ds)
 		{
 			Transaction t = null;
@@ -225,6 +227,7 @@ namespace CSToolsDelux.Fields.ExStorage.ExStorManagement
 			{
 				bool answer =
 					scMgr.MakeRootSchema(dsKey, raData, cData.DataList.Count);
+
 				if (!answer) return ExStoreRtnCodes.XRC_FAIL;
 
 				Schema schema = scMgr.SchemaList[dsKey].Schema;
@@ -268,9 +271,8 @@ namespace CSToolsDelux.Fields.ExStorage.ExStorManagement
 
 				if (kvp.Value.AFieldsMembers.UnitType != FieldUnitType.UT_UNDEFINED)
 				{
-#pragma warning disable CS0618 // Type or member is obsolete
 					entity.Set(f,  (DataMembers<T, double>) kvp.Value, DisplayUnitType.DUT_GENERAL);
-#pragma warning restore CS0618 // Type or member is obsolete
+
 				}
 				else
 				{

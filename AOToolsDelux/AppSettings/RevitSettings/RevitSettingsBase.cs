@@ -3,19 +3,19 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using AOTools.AppSettings.SchemaSettings;
-using AOTools.AppSettings.SettingUtil;
+using AOToolsDelux.AppSettings.SchemaSettings;
+using AOToolsDelux.AppSettings.SettingUtil;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.DB.ExtensibleStorage;
 using InvalidOperationException = Autodesk.Revit.Exceptions.InvalidOperationException;
 using static Autodesk.Revit.DB.ExtensibleStorage.Schema;
-using static AOTools.AppSettings.RevitSettings.RevitSettingsUnitApp;
-using static AOTools.AppSettings.RevitSettings.RevitSettingsUnitUsr;
-using AOTools.Utility;
+using static AOToolsDelux.AppSettings.RevitSettings.RevitSettingsUnitApp;
+using static AOToolsDelux.AppSettings.RevitSettings.RevitSettingsUnitUsr;
+using AOToolsDelux.Utility;
 using Autodesk.Revit.ApplicationServices;
 using Autodesk.Revit.UI;
 using static UtilityLibrary.MessageUtilities;
-using static AOTools.AppSettings.RevitSettings.RevitSettingsBase.RevitSetgDelRetnCode;
+using static AOToolsDelux.AppSettings.RevitSettings.RevitSettingsBase.RevitSetgDelRetnCode;
 
 #endregion
 
@@ -24,7 +24,7 @@ using static AOTools.AppSettings.RevitSettings.RevitSettingsBase.RevitSetgDelRet
 // created:		1/30/2018 9:10:15 PM
 
 
-namespace AOTools.AppSettings.RevitSettings
+namespace AOToolsDelux.AppSettings.RevitSettings
 {
 	class RevitSettingsBase
 	{

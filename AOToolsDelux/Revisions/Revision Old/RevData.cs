@@ -2,15 +2,15 @@
 using System.Collections.Generic;
 using Autodesk.Revit.DB;
 
-using static AOTools.RevDataKey.ERevDataKey;
-using static AOTools.RevDataItems.ERevDataItems;
+using static AOToolsDelux.RevDataKey.ERevDataKey;
+using static AOToolsDelux.RevDataItems.ERevDataItems;
 
-using static AOTools.SortKey;
+using static AOToolsDelux.SortKey;
 
 
 // read through the database for the revision information and
 // place into a sorted list
-namespace AOTools
+namespace AOToolsDelux
 {
 
 	public static class RevData

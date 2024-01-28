@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace AOTools.Revisions
+namespace AOToolsDelux.Revisions
 {
 	public partial class RevCloudData2
 	{

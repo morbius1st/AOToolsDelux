@@ -64,7 +64,6 @@ namespace CsDeluxMeasure.RevitSupport
 			pbList.Add(pb);
 		}
 
-
 		public void UpdateRibbonButton(ListCollectionView c)
 		{
 			if (c.Count == 0) return;
@@ -167,7 +166,6 @@ namespace CsDeluxMeasure.RevitSupport
 			pbList[idx].LargeImage = iconLg;
 			pbList[idx].Visible = false;
 		}
-
 
 	#endregion
 

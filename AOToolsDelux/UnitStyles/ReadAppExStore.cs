@@ -7,13 +7,13 @@ using System.Text;
 using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
-using AOTools.Cells.SchemaDefinition;
+using AOToolsDelux.Cells.SchemaDefinition;
 using static UtilityLibrary.MessageUtilities;
 
-using AOTools.Cells.ExStorage;
-using AOTools.Cells.Tests;
+using AOToolsDelux.Cells.ExStorage;
+using AOToolsDelux.Cells.Tests;
 using Autodesk.Revit.DB.ExtensibleStorage;
-using static AOTools.Cells.ExStorage.ExStoreMgr;
+using static AOToolsDelux.Cells.ExStorage.ExStoreMgr;
 
 #endregion
 
@@ -22,7 +22,7 @@ using static AOTools.Cells.ExStorage.ExStoreMgr;
 // created:		1/6/2018 3:55:08 PM
 
 
-namespace AOTools
+namespace AOToolsDelux
 {
 
 	[Transaction(TransactionMode.Manual)]

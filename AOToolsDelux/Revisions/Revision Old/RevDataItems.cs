@@ -3,12 +3,12 @@ using System;
 using System.Collections;
 using System.Windows.Forms;
 using Autodesk.Revit.DB;
-using static AOTools.RevDataItems.ERevDataItems;
+using static AOToolsDelux.RevDataItems.ERevDataItems;
 
-using static AOTools.RevColumns;
+using static AOToolsDelux.RevColumns;
 
 
-namespace AOTools
+namespace AOToolsDelux
 {
 	public class RevDataItems : IEnumerable
 	{

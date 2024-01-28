@@ -29,7 +29,9 @@ namespace CsDeluxMeasure.UnitsUtil
 		public int InDlgLeftPos { get; }
 		public int InDlgRightPos { get; }
 
-		public STYLE_DATA(             string typeId, string nameId, string symbol, int inRibbonPos, int inDlgLeftPos, int inDlgRightPos)
+		public STYLE_DATA(string typeId, string nameId, string symbol, 
+
+			int inRibbonPos, int inDlgLeftPos, int inDlgRightPos)
 		{
 			TypeId = typeId;
 			NameId = nameId;
@@ -40,7 +42,7 @@ namespace CsDeluxMeasure.UnitsUtil
 		}
 
 		// cross reference between Revit ForgeTypeId name and standard style Name
-		//                                                                     typeId                  nameId                           nameLong                          in list positions
+		//                                                                     typeId                  nameId                       symbol                          in list positions
 		public static readonly STYLE_DATA Invalid            = new STYLE_DATA(null                  , null, null                             , INLIST_UNDEFINED, INLIST_UNDEFINED, INLIST_UNDEFINED);
 		// note: project is never included in the ribbon list (redundant), and is always in the dialog right and left lists
 		public static readonly STYLE_DATA Project            = new STYLE_DATA("General"             , "Project"                   , ""       , INLIST_UNDEFINED, 100, 100);
@@ -129,7 +131,7 @@ namespace CsDeluxMeasure.UnitsUtil
 				$"{name} Unit Style", 
 				UnitCat.UC_FT_IN_FRAC, 
 				UnitSys.US_IMPERIAL,
-				1.0 / 64.0, 
+				1.0 / 64.0 / 12.0, 
 				// nothing allowed
 				// null,
 				null, true, null, true, true,

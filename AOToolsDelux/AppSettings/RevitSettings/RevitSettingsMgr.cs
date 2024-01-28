@@ -1,11 +1,11 @@
 ﻿#region Using directives
 
 using System.Collections.Generic;
-using AOTools.AppSettings.SchemaSettings;
-using static AOTools.AppSettings.RevitSettings.RevitSettingsBase.RevitSetgDelRetnCode;
-using static AOTools.AppSettings.RevitSettings.RevitSettingsBase;
+using AOToolsDelux.AppSettings.SchemaSettings;
+using static AOToolsDelux.AppSettings.RevitSettings.RevitSettingsBase.RevitSetgDelRetnCode;
+using static AOToolsDelux.AppSettings.RevitSettings.RevitSettingsBase;
 using static UtilityLibrary.MessageUtilities;
-using static AOTools.AppSettings.RevitSettings.RevitSettingsUnitUsr;
+using static AOToolsDelux.AppSettings.RevitSettings.RevitSettingsUnitUsr;
 
 #endregion
 
@@ -14,7 +14,7 @@ using static AOTools.AppSettings.RevitSettings.RevitSettingsUnitUsr;
 // created:		1/7/2018 3:37:43 PM
 
 
-namespace AOTools.AppSettings.RevitSettings
+namespace AOToolsDelux.AppSettings.RevitSettings
 {
 	internal class RevitSettingsMgr : RevitSettingsBase
 	{

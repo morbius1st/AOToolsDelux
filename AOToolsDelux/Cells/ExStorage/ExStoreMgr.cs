@@ -4,14 +4,14 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
-using AOTools.Cells.ExDataStorage;
-using AOTools.Cells.SchemaDefinition;
-using AOTools.Cells.Tests;
+using AOToolsDelux.Cells.ExDataStorage;
+using AOToolsDelux.Cells.SchemaDefinition;
+using AOToolsDelux.Cells.Tests;
 using Autodesk.Revit.DB.ExtensibleStorage;
 using Autodesk.Revit.Exceptions;
 using Autodesk.Revit.UI;
-using static AOTools.Cells.ExDataStorage.DataStoreIdx;
-using static AOTools.Cells.ExDataStorage.DataStorageManager;
+using static AOToolsDelux.Cells.ExDataStorage.DataStoreIdx;
+using static AOToolsDelux.Cells.ExDataStorage.DataStorageManager;
 
 #endregion
 
@@ -112,7 +112,7 @@ using static AOTools.Cells.ExDataStorage.DataStorageManager;
  * **	cell(s) exist	n/a							n/a			true	** probably do not need
  */
 
-namespace AOTools.Cells.ExStorage
+namespace AOToolsDelux.Cells.ExStorage
 {
 	public class ExStoreMgr
 	{

@@ -3,7 +3,7 @@
 using System;
 using System.Collections.Generic;
 using System.Runtime.Serialization;
-using AOTools.AppSettings.RevitSettings;
+using AOToolsDelux.AppSettings.RevitSettings;
 using UtilityLibrary;
 
 //using Autodesk.Revit.DB;
@@ -16,7 +16,7 @@ using UtilityLibrary;
 // created:		1/14/2018 4:28:23 PM
 
 
-namespace AOTools.AppSettings.SchemaSettings
+namespace AOToolsDelux.AppSettings.SchemaSettings
 {
 	// master schema
 	//  field 0 = version

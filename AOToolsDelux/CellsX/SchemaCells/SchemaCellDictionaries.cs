@@ -1,5 +1,5 @@
 ﻿#region + Using Directives
-using AOTools.Cells.SchemaDefinition;
+using AOToolsDelux.Cells.SchemaDefinition;
 #endregion
 
 // user name: jeffs
@@ -7,7 +7,7 @@ using AOTools.Cells.SchemaDefinition;
 
 
 
-namespace AOTools.Cells.SchemaCells
+namespace AOToolsDelux.Cells.SchemaCells
 {
 	public class SchemaDictionaryApp : SchemaDictionaryBase<SchemaAppKey>
 	{

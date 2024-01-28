@@ -244,7 +244,7 @@ namespace CSToolsDelux.Fields.SchemaInfo.SchemaManagement
 
 		private void makeSchemaField<T>(ref SchemaBuilder sbld, AFieldsMembers<T> aFieldsMembers) where T : Enum
 		{
-			Type t = aFieldsMembers.ValueType;
+			// Type t = aFieldsMembers.ValueType;
 
 			FieldBuilder fb = sbld.AddSimpleField(aFieldsMembers.Name, aFieldsMembers.ValueType);
 

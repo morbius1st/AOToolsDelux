@@ -67,6 +67,5 @@ namespace SharedCode.Fields.SchemaInfo.SchemaFields.FieldsTemplates
 			return rowInfo;
 		}
 
-
 	}
 }

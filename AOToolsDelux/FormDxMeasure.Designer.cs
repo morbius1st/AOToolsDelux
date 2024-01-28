@@ -1,6 +1,6 @@
-﻿using AOTools.UnitStyles;
+﻿using AOToolsDelux.UnitStyles;
 
-namespace AOTools
+namespace AOToolsDelux
 {
 	partial class FormDxMeasure
 	{

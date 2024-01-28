@@ -5,14 +5,14 @@ using System.Diagnostics;
 using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
-using AOTools.Cells.SchemaDefinition;
+using AOToolsDelux.Cells.SchemaDefinition;
 using static UtilityLibrary.MessageUtilities;
 
-using AOTools.Cells.ExStorage;
-using AOTools.Cells.Tests;
+using AOToolsDelux.Cells.ExStorage;
+using AOToolsDelux.Cells.Tests;
 using Autodesk.Revit.DB.ExtensibleStorage;
 using Microsoft.Office.Interop.Excel;
-using static AOTools.Cells.ExStorage.ExStoreMgr;
+using static AOToolsDelux.Cells.ExStorage.ExStoreMgr;
 using InvalidOperationException = Autodesk.Revit.Exceptions.InvalidOperationException;
 
 #endregion
@@ -22,7 +22,7 @@ using InvalidOperationException = Autodesk.Revit.Exceptions.InvalidOperationExce
 // created:		1/6/2018 3:55:08 PM
 
 
-namespace AOTools
+namespace AOToolsDelux
 {
 
 	[Transaction(TransactionMode.Manual)]

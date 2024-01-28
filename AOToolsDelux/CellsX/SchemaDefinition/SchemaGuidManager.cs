@@ -10,7 +10,7 @@ using System;
 // username: jeffs
 // created:  7/4/2021 7:38:10 AM
 
-namespace AOTools.Cells.SchemaDefinition
+namespace AOToolsDelux.Cells.SchemaDefinition
 {
 	// concepts here:
 	/*

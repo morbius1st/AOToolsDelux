@@ -1,14 +1,14 @@
 ﻿#region Using directives
 
-using AOTools.AppSettings.RevitSettings;
-using AOTools.Utility;
+using AOToolsDelux.AppSettings.RevitSettings;
+using AOToolsDelux.Utility;
 using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
 
-using static AOTools.AppSettings.RevitSettings.RevitSettingsMgr;
-using static AOTools.AppSettings.RevitSettings.RevitSettingsBase.RevitSetgDelRetnCode;
-using static AOTools.AppSettings.SettingUtil.SettingsListings;
+using static AOToolsDelux.AppSettings.RevitSettings.RevitSettingsMgr;
+using static AOToolsDelux.AppSettings.RevitSettings.RevitSettingsBase.RevitSetgDelRetnCode;
+using static AOToolsDelux.AppSettings.SettingUtil.SettingsListings;
 
 using static UtilityLibrary.MessageUtilities;
 
@@ -19,7 +19,7 @@ using static UtilityLibrary.MessageUtilities;
 // created:		1/14/2018 7:19:43 PM
 
 
-namespace AOTools
+namespace AOToolsDelux
 {
 	[Transaction(TransactionMode.Manual)]
 	class UnitStylesDelete : IExternalCommand

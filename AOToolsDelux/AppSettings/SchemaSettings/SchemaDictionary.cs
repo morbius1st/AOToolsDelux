@@ -1,6 +1,6 @@
 ﻿using System.Runtime.Serialization;
 
-namespace AOTools.AppSettings.SchemaSettings
+namespace AOToolsDelux.AppSettings.SchemaSettings
 {
 //	[CollectionDataContract(Name = "SchemaFields", KeyName = "OrderKey", 
 //		ValueName = "SchemaField", ItemName = "SchemaFieldItem")]

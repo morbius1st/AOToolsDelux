@@ -4,9 +4,9 @@
 // Created:      2021-07-04 (5:12 PM)
 
 using System;
-using AOTools.Cells.SchemaDefinition;
+using AOToolsDelux.Cells.SchemaDefinition;
 
-namespace AOTools.Cells.ExStorage
+namespace AOToolsDelux.Cells.ExStorage
 {
 	public class ExData<T> : IExData
 	{

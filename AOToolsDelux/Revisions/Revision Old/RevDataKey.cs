@@ -1,11 +1,11 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
-using static AOTools.RevDataKey.ERevDataKey;
+using static AOToolsDelux.RevDataKey.ERevDataKey;
 
 using static UtilityLibrary.MessageUtilities2;
 
-namespace AOTools
+namespace AOToolsDelux
 {
 	public class RevDataKey : IEnumerable, IComparable<RevDataKey>
 	{

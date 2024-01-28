@@ -61,6 +61,12 @@ namespace CsDeluxMeasure.UnitsUtil
 		[DataMember(Order = 4)]
 		public abstract T Symbol { get; set; }
 
+		[DataMember(Order = 6)]
+		public abstract T IdArea { get; set; }
+
+		[DataMember(Order = 8)]
+		public abstract T SymbolArea { get; set; }
+
 		[IgnoreDataMember]
 		public abstract string Name { get; set; }
 
@@ -285,12 +291,14 @@ namespace CsDeluxMeasure.UnitsUtil
 		public BitmapImage Ux => CsUtilitiesMedia.GetBitmapImageResource($"{AppRibbon.ICON_FOLDER}/{Ustyle.IconId}");
 
 		public override string Id { get; set; }
-
 		public override string Symbol
 		{
 			get => "sample 1";
 			set { }
 		}
+
+		public override string IdArea { get; set; }
+		public override string SymbolArea { get; set; }
 
 		public override string Sample { get; set; }
 
@@ -379,8 +387,6 @@ namespace CsDeluxMeasure.UnitsUtil
 		private ForgeTypeId symbol;
 		private UStyle ustyle;
 
-		
-
 
 		private string name;
 		private ValMsgNameId nameMsgId;
@@ -394,6 +400,10 @@ namespace CsDeluxMeasure.UnitsUtil
 		private string sample;
 		private bool? isSampleOk;
 
+		// added for area calculation / display
+
+		private ForgeTypeId idArea;
+		private ForgeTypeId symbolArea;
 
 		protected UnitsDataR() { }
 
@@ -403,11 +413,29 @@ namespace CsDeluxMeasure.UnitsUtil
 			Symbol = symbol;
 			Ustyle = us;
 
+			IdArea = null;
+			SymbolArea = null;
+
 			ResetValidateInfo();
 
 			// UStyle.ShowInChanged+= OnShowInPropertyChanged;
 		}
 
+		
+		public UnitsDataR(ForgeTypeId id, ForgeTypeId symbol, UStyle us, ForgeTypeId idA, ForgeTypeId syA)
+		{
+			Id = id;
+			Symbol = symbol;
+			Ustyle = us;
+
+			IdArea= idA;
+			SymbolArea = syA;
+
+			ResetValidateInfo();
+
+			// UStyle.ShowInChanged+= OnShowInPropertyChanged;
+		}
+		
 		[OnDeserialized]
 		void OnDeserialized(StreamingContext context)
 		{
@@ -444,6 +472,30 @@ namespace CsDeluxMeasure.UnitsUtil
 				OnPropertyChanged();
 			}
 		}
+
+		
+		[DataMember(Order = 6)]
+		public override ForgeTypeId IdArea
+		{
+			get => idArea;
+			set
+			{
+				idArea = value;
+				OnPropertyChanged();
+			}
+		}
+
+		[DataMember(Order = 8)]
+		public override ForgeTypeId SymbolArea
+		{
+			get => symbolArea;
+			set
+			{
+				symbolArea = value;
+				OnPropertyChanged();
+			}
+		}
+
 
 		[IgnoreDataMember]
 		public override string Name
@@ -762,7 +814,7 @@ namespace CsDeluxMeasure.UnitsUtil
 
 		public UnitsDataR Clone()
 		{
-			UnitsDataR copy = new UnitsDataR(Id, Symbol, Ustyle.Clone());
+			UnitsDataR copy = new UnitsDataR(Id, Symbol, Ustyle.Clone(), IdArea, SymbolArea);
 
 			copy.Sequence = Sequence;
 
@@ -850,31 +902,6 @@ namespace CsDeluxMeasure.UnitsUtil
 	// 		return 0;
 	// 	}
 	// }
-
-	public class ChangeValueEventArgs<TE> : CancelEventArgs where TE : Enum
-	{
-		public string Proposed { get; }
-		public TE Response { get; set; }
-
-		public ChangeValueEventArgs(string proposed, TE def)
-		{
-			Cancel = false;
-			Proposed = proposed;
-			Response = def;
-		}
-	}
-
-	public class CheckBoxChangedEventArgs : CancelEventArgs
-	{
-		public InList? WhichCheckBox { get; }
-		public int InListOrder { get; set; }
-
-		public CheckBoxChangedEventArgs(InList? whichCheckBox)
-		{
-			WhichCheckBox = whichCheckBox;
-			InListOrder = -1;
-		}
-	}
 
 	public struct WkgInListItemD
 	{
@@ -1141,6 +1168,13 @@ namespace CsDeluxMeasure.UnitsUtil
 			StdStyles.Add(udr.Ustyle.Name, udr);
 		}
 
+		private void addStyleItem(int i, ForgeTypeId uid, ForgeTypeId sid, string name, ForgeTypeId uidA, ForgeTypeId sidA)
+		{
+			UnitsDataR udr = new UnitsDataR(uid, sid, UnitsStdUStyles.StdSysStyles[name], uidA, sidA);
+			udr.Sequence = i;
+			StdStyles.Add(udr.Ustyle.Name, udr);
+		}
+
 		private void initialize()
 		{
 			StdStyles = new Dictionary<string, UnitsDataR>(12);
@@ -1148,14 +1182,14 @@ namespace CsDeluxMeasure.UnitsUtil
 
 			UnitsDataR udr;
 
-			addStyleItem(i++, UnitTypeId.General, null, STYLE_DATA.Project.NameId);
+			addStyleItem(i++, UnitTypeId.General, null, STYLE_DATA.Project.NameId, UnitTypeId.SquareFeet, SymbolTypeId.FtSup2);
 
 
 			// udr = new UnitsDataR(UnitTypeId.General, null, UnitsStdUStyles.StdStyles[STYLE_ID_PROJECT]);
 			// udr.Sequence = i++;
 			// StdStyles.Add(udr.Ustyle.Name, udr);
 			//
-			addStyleItem(i++, UnitTypeId.FeetFractionalInches, null, STYLE_DATA.FtFracIn.NameId);
+			addStyleItem(i++, UnitTypeId.FeetFractionalInches, null, STYLE_DATA.FtFracIn.NameId, UnitTypeId.SquareFeet, SymbolTypeId.FtSup2);
 			//
 			// udr = new UnitsDataR(
 			// 	UnitTypeId.FeetFractionalInches, null,
@@ -1163,7 +1197,7 @@ namespace CsDeluxMeasure.UnitsUtil
 			// udr.Sequence = i++;
 			// StdStyles.Add(STYLE_ID_FT_FRAC_IN, udr);
 			//
-			addStyleItem(i++, UnitTypeId.Custom, null, STYLE_DATA.FtDecIn.NameId);
+			addStyleItem(i++, UnitTypeId.Custom, null, STYLE_DATA.FtDecIn.NameId, UnitTypeId.SquareFeet, SymbolTypeId.FtSup2);
 			//
 			// udr = new UnitsDataR(
 			// 	UnitTypeId.Custom, null,
@@ -1171,7 +1205,7 @@ namespace CsDeluxMeasure.UnitsUtil
 			// udr.Sequence = i++;
 			// StdStyles.Add(STYLE_ID_FT_DEC_IN, udr);
 			//
-			addStyleItem(i++, UnitTypeId.UsSurveyFeet, SymbolTypeId.Usft, STYLE_DATA.UsSurvey.NameId);
+			addStyleItem(i++, UnitTypeId.UsSurveyFeet, SymbolTypeId.Usft, STYLE_DATA.UsSurvey.NameId, UnitTypeId.SquareFeet, SymbolTypeId.FtSup2);
 			//
 			// udr = new UnitsDataR(
 			// 	UnitTypeId.UsSurveyFeet, SymbolTypeId.Usft,
@@ -1179,7 +1213,7 @@ namespace CsDeluxMeasure.UnitsUtil
 			// udr.Sequence = i++;
 			// StdStyles.Add(STYLE_ID_US_SURVEY, udr);
 			//
-			addStyleItem(i++, UnitTypeId.Feet, SymbolTypeId.FootSingleQuote, STYLE_DATA.Feet.NameId);
+			addStyleItem(i++, UnitTypeId.Feet, SymbolTypeId.FootSingleQuote, STYLE_DATA.Feet.NameId, UnitTypeId.SquareFeet, SymbolTypeId.FtSup2);
 			//
 			// udr = new UnitsDataR(
 			// 	UnitTypeId.Feet, SymbolTypeId.Ft,
@@ -1187,7 +1221,7 @@ namespace CsDeluxMeasure.UnitsUtil
 			// udr.Sequence = i++;
 			// StdStyles.Add(STYLE_ID_FEET, udr);
 			//
-			addStyleItem(i++, UnitTypeId.Inches, SymbolTypeId.InchDoubleQuote, STYLE_DATA.DecInches.NameId);
+			addStyleItem(i++, UnitTypeId.Inches, SymbolTypeId.InchDoubleQuote, STYLE_DATA.DecInches.NameId, UnitTypeId.SquareInches, SymbolTypeId.InSup2);
 			//
 			// udr = new UnitsDataR(
 			// 	UnitTypeId.Inches, SymbolTypeId.InchDoubleQuote,
@@ -1195,7 +1229,7 @@ namespace CsDeluxMeasure.UnitsUtil
 			// udr.Sequence = i++;
 			// StdStyles.Add(STYLE_ID_DEC_INCHES, udr);
 			//
-			addStyleItem(i++, UnitTypeId.FractionalInches, null, STYLE_DATA.FracInches.NameId);
+			addStyleItem(i++, UnitTypeId.FractionalInches, null, STYLE_DATA.FracInches.NameId, UnitTypeId.SquareInches, SymbolTypeId.InSup2);
 			//
 			// udr = new UnitsDataR(
 			// 	UnitTypeId.FractionalInches, null,
@@ -1203,7 +1237,7 @@ namespace CsDeluxMeasure.UnitsUtil
 			// udr.Sequence = i++;
 			// StdStyles.Add(STYLE_ID_FRAC_INCHES, udr);
 			//
-			addStyleItem(i++, UnitTypeId.Meters, SymbolTypeId.Meter, STYLE_DATA.Meters.NameId);
+			addStyleItem(i++, UnitTypeId.Meters, SymbolTypeId.Meter, STYLE_DATA.Meters.NameId, UnitTypeId.SquareMeters, SymbolTypeId.MSup2);
 			//
 			// udr = new UnitsDataR(
 			// 	UnitTypeId.Meters, SymbolTypeId.Meter,
@@ -1211,7 +1245,7 @@ namespace CsDeluxMeasure.UnitsUtil
 			// udr.Sequence = i++;
 			// StdStyles.Add(STYLE_ID_METERS, udr);
 			//
-			addStyleItem(i++, UnitTypeId.Decimeters, SymbolTypeId.Dm, STYLE_DATA.Decimeters.NameId);
+			addStyleItem(i++, UnitTypeId.Decimeters, SymbolTypeId.Dm, STYLE_DATA.Decimeters.NameId, UnitTypeId.SquareMeters, SymbolTypeId.MSup2);
 			//
 			// udr = new UnitsDataR(
 			// 	UnitTypeId.Decimeters, SymbolTypeId.Dm,
@@ -1219,7 +1253,7 @@ namespace CsDeluxMeasure.UnitsUtil
 			// udr.Sequence = i++;
 			// StdStyles.Add(STYLE_ID_DECIMETERS, udr);
 			//
-			addStyleItem(i++, UnitTypeId.Centimeters, SymbolTypeId.Cm, STYLE_DATA.Centimeters.NameId);
+			addStyleItem(i++, UnitTypeId.Centimeters, SymbolTypeId.Cm, STYLE_DATA.Centimeters.NameId, UnitTypeId.SquareCentimeters, SymbolTypeId.CmSup2);
 			//
 			// udr = new UnitsDataR(
 			// 	UnitTypeId.Centimeters, SymbolTypeId.Cm,
@@ -1227,7 +1261,7 @@ namespace CsDeluxMeasure.UnitsUtil
 			// udr.Sequence = i++;
 			// StdStyles.Add(STYLE_ID_CENTIMETERS, udr);
 			//
-			addStyleItem(i++, UnitTypeId.Millimeters, SymbolTypeId.Mm, STYLE_DATA.Millimeters.NameId);
+			addStyleItem(i++, UnitTypeId.Millimeters, SymbolTypeId.Mm, STYLE_DATA.Millimeters.NameId, UnitTypeId.SquareMillimeters, SymbolTypeId.MmSup2);
 			//
 			// udr = new UnitsDataR(
 			// 	UnitTypeId.Millimeters, SymbolTypeId.Mm,
@@ -1236,7 +1270,7 @@ namespace CsDeluxMeasure.UnitsUtil
 			// StdStyles.Add(STYLE_ID_MILLIMETERS, udr);
 			//
 			//
-			addStyleItem(i++, UnitTypeId.MetersCentimeters, null, STYLE_DATA.MetersCentimeters.NameId);
+			addStyleItem(i++, UnitTypeId.MetersCentimeters, null, STYLE_DATA.MetersCentimeters.NameId, UnitTypeId.SquareMeters, SymbolTypeId.MSup2);
 			//
 			// udr = new UnitsDataR(
 			// 	UnitTypeId.MetersCentimeters, null,

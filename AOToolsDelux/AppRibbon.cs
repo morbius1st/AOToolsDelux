@@ -3,8 +3,8 @@
 using System;
 using System.Collections.Generic;
 using System.Reflection;
-using AOTools.Cells.ExDataStorage;
-using AOTools.Cells.ExStorage;
+using AOToolsDelux.Cells.ExDataStorage;
+using AOToolsDelux.Cells.ExStorage;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.DB.Events;
 using Autodesk.Revit.DB.ExtensibleStorage;
@@ -13,11 +13,11 @@ using Autodesk.Revit.UI.Events;
 using Application = Autodesk.Revit.ApplicationServices.Application;
 using UtilityLibrary;
 using static UtilityLibrary.MessageUtilities;
-using static AOTools.AppSettings.ConfigSettings.SettingsUsr;
+using static AOToolsDelux.AppSettings.ConfigSettings.SettingsUsr;
 
 #endregion
 
-namespace AOTools
+namespace AOToolsDelux
 {
 
 
@@ -41,10 +41,10 @@ namespace AOTools
 		public static string msg { get; set; }
 
 
-		internal const string APP_NAME = "AOTools";
+		internal const string APP_NAME = "AOToolsDelux";
 		private const string TAB_NAME = "AO Tools";
 
-		private const string NAMESPACE_PREFIX = "AOTools.Resources";
+		private const string NAMESPACE_PREFIX = "AOToolsDelux.Resources";
 		private const string AO_TOOLS_PANEL_NAME = "AO Tools";
 		private const string UNITS_PANEL_NAME = "Project Units";
 		private const string EX_STORE_PANEL_NAME = "Ex Store";
@@ -377,7 +377,7 @@ namespace AOTools
 			pbd = CreateButton(identifier, title,
 				"information16.png", "information16.png",
 				Assembly.GetExecutingAssembly().Location,
-				"AOTools." + identifier, tootTip);
+				"AOToolsDelux." + identifier, tootTip);
 
 			if (pbd == null)
 			{
@@ -490,14 +490,14 @@ namespace AOTools
 			if (!AddPushButton(ribbonPanel, cmdName, btnText,
 				"information16.png",
 				"information32.png",
-				Assembly.GetExecutingAssembly().Location, $"AOTools.{cmdName}",
+				Assembly.GetExecutingAssembly().Location, $"AOToolsDelux.{cmdName}",
 				toolTip))
 
 			{
 				TaskDialog td = new TaskDialog($"AO Tools - {desc}");
 				td.MainIcon = TaskDialogIcon.TaskDialogIconWarning;
 				td.MainInstruction = String.Format(Properties.Resources.ButtonCreateFail,
-					$"AOTools {desc}");
+					$"AOToolsDelux {desc}");
 				td.Show();
 
 				return Result.Failed;
@@ -648,7 +648,7 @@ namespace AOTools
 //			if (!AddPushButton(ribbonPanel, "UnitStyleFtIn", BUTTON_UNIT_FTIN_NAME,
 //				"information16.png",
 //				"information32.png",
-//				Assembly.GetExecutingAssembly().Location, "AOTools.UnitStyles.UnitStyleFeetInchCmd",
+//				Assembly.GetExecutingAssembly().Location, "AOToolsDelux.UnitStyles.UnitStyleFeetInchCmd",
 //					"Set Project Units to Standard Feet & Inches"))
 //			{
 //				// creating the pushbutton failed
@@ -669,7 +669,7 @@ namespace AOTools
 //			if (!AddPushButton(ribbonPanel, "UnitStyleFracIn", BUTTON_UNIT_FRACIN_NAME,
 //				"information16.png",
 //				"information32.png",
-//				Assembly.GetExecutingAssembly().Location, "AOTools.UnitStyles.UnitStyleFracInchCmd",
+//				Assembly.GetExecutingAssembly().Location, "AOToolsDelux.UnitStyles.UnitStyleFracInchCmd",
 //					"Set Project Units to Standard Fractional Inches"))
 //			{
 //				// creating the pushbutton failed
@@ -690,7 +690,7 @@ namespace AOTools
 //			if (!AddPushButton(ribbonPanel, "UnitStyleDecInch", BUTTON_UNIT_DECIN_NAME,
 //				"information16.png",
 //				"information32.png",
-//				Assembly.GetExecutingAssembly().Location, "AOTools.UnitStyles.UnitStyleDecInchCmd",
+//				Assembly.GetExecutingAssembly().Location, "AOToolsDelux.UnitStyles.UnitStyleDecInchCmd",
 //					"Set Project Units to Standard Decimal Inches"))
 //			{
 //				// creating the pushbutton failed
@@ -711,7 +711,7 @@ namespace AOTools
 //			if (!AddPushButton(ribbonPanel, "UnitStyleDecFeet", BUTTON_UNIT_DECFT_NAME,
 //				"information16.png",
 //				"information32.png",
-//				Assembly.GetExecutingAssembly().Location, "AOTools.UnitStyles.UnitStyleDecFeetCmd",
+//				Assembly.GetExecutingAssembly().Location, "AOToolsDelux.UnitStyles.UnitStyleDecFeetCmd",
 //					"Set Project Units to Standard Decimal Feet - Unit Style Dec Ft"))
 //			{
 //				// creating the pushbutton failed

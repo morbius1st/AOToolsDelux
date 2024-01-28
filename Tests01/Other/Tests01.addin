@@ -1,0 +1,20 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<RevitAddIns>
+  <AddIn Type="Command">
+    <Text>Tests01</Text>
+    <Description>Description of Tests01</Description>
+    <Assembly>Tests01.dll</Assembly>
+    <FullClassName>Tests01.Command</FullClassName>
+    <ClientId>c68ae79e-4b63-4e46-9e91-65879562b27a</ClientId>
+    <VendorId>pro.cyberstudio</VendorId>
+    <VendorDescription>CyberStudio</VendorDescription>
+  </AddIn>
+  <AddIn Type="Application">
+    <Name>Application Tests01</Name>
+    <Assembly>Tests01.dll</Assembly>
+    <FullClassName>Tests01.AppRibbon</FullClassName>
+    <ClientId>6d8031be-2719-49f1-b65a-d1df14ea855e</ClientId>
+    <VendorId>pro.cyberstudio</VendorId>
+    <VendorDescription>CyberStudio</VendorDescription>
+  </AddIn>
+</RevitAddIns>

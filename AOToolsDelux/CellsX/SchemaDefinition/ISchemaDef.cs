@@ -6,7 +6,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace AOTools.Cells.SchemaDefinition
+namespace AOToolsDelux.Cells.SchemaDefinition
 {
 	public interface ISchemaDef<TE> // where TE : Enum  where TD : SchemaDictionaryBase<TE>
 	{

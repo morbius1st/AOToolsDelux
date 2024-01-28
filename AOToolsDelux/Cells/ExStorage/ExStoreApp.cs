@@ -1,14 +1,14 @@
 ﻿#region using
 using System;
-using AOTools.Cells.SchemaCells;
-using AOTools.Cells.SchemaDefinition;
+using AOToolsDelux.Cells.SchemaCells;
+using AOToolsDelux.Cells.SchemaDefinition;
 
 #endregion
 
 // username: jeffs
 // created:  7/4/2021 3:54:15 PM
 
-namespace AOTools.Cells.ExStorage
+namespace AOToolsDelux.Cells.ExStorage
 {
 	public class ExStoreApp : IExStore, IExStoreData<SchemaDictionaryApp, SchemaDictionaryApp> //: SchemaDefApp, 
 	{

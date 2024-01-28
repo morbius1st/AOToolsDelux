@@ -6,10 +6,10 @@ using Point = System.Drawing.Point;
 
 using UtilityLibrary;
 
-using AOTools.AppSettings.SchemaSettings;
-using static AOTools.AppSettings.SchemaSettings.SchemaUnitUtil;
+using AOToolsDelux.AppSettings.SchemaSettings;
+using static AOToolsDelux.AppSettings.SchemaSettings.SchemaUnitUtil;
 
-using AOTools.UnitStyles;
+using AOToolsDelux.UnitStyles;
 
 #endregion
 
@@ -17,7 +17,7 @@ using AOTools.UnitStyles;
 // username:	jeffs
 // created:		1/3/2018 8:04:40 PM
 
-namespace AOTools.AppSettings.ConfigSettings
+namespace AOToolsDelux.AppSettings.ConfigSettings
 {
 	[DataContract(Namespace = Header.NSpace)]
 //	[DataContract]

@@ -71,5 +71,4 @@ namespace SharedCode.Fields.SchemaInfo.SchemaFields.FieldsTemplates
 		protected abstract void defineFields();
 
 	}
-
 }

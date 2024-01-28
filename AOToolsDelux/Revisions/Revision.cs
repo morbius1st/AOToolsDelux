@@ -10,12 +10,12 @@
 //
 //using static UtilityLibrary.MessageUtilities2;
 //
-////using static AOTools.SelectCriteria.ESelCompare;
-////using static AOTools.SelectCriteria.ESelVisibility;
+////using static AOToolsDelux.SelectCriteria.ESelCompare;
+////using static AOToolsDelux.SelectCriteria.ESelVisibility;
 //
-//using static AOTools.Revisions.RevisionUtility;
-//using static AOTools.Revisions.SelectCriteria2.ESelCompare;
-//using static AOTools.Revisions.SelectCriteria2.ESelVisibility;
+//using static AOToolsDelux.Revisions.RevisionUtility;
+//using static AOToolsDelux.Revisions.SelectCriteria2.ESelCompare;
+//using static AOToolsDelux.Revisions.SelectCriteria2.ESelVisibility;
 //
 //using UtilityLibrary;
 //
@@ -42,7 +42,7 @@
 
 //
 //
-//namespace AOTools.Revisions
+//namespace AOToolsDelux.Revisions
 //{
 //
 //	[Transaction(TransactionMode.Manual)]

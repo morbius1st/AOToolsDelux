@@ -1,4 +1,5 @@
-﻿<local:AWindow x:Name="MainWin"
+﻿<Window 
+		x:Name="WinMain"
 		x:Class="CsDeluxMeasure.Windows.MainWindow"
 		xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
 		xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
@@ -9,20 +10,29 @@
 		xmlns:cs="clr-namespace:CsDeluxMeasure.Windows.Support"
 		xmlns:util="clr-namespace:CsDeluxMeasure.UnitsUtil"
 		Title="Delux Measure"
-		Width="650"
-		MinWidth="650"
-		MaxWidth="650"
-		Background="{DynamicResource Normal.Window.Background}"
+		Width="680"
+		MinWidth="680"
+		MaxWidth="1100"
 		DataContext="{Binding RelativeSource={RelativeSource Self}}"
-		Foreground="White"
-		ResizeMode="NoResize"
-		SizeToContent="Height"
-		Icon="/CsDeluxMeasure;component/Resources/CyberStudio Icon.png"
 		mc:Ignorable="d"
+		Background="{DynamicResource Normal.Window.Background}"
+		Foreground="White"
+		IsVisibleChanged="MainWindow_OnIsVisibleChanged"
+		ResizeMode="NoResize"
+		SizeToContent="WidthAndHeight"
+		Icon="/CsDeluxMeasure;component/Resources/CyberStudio Icon.png"
 		Loaded="MainWindow_OnLoaded"
-		Closing="MainWindow_OnClosing" PreviewKeyDown="MainWin_ProcessF1" PreviewKeyUp="MainWin_ProcessF1" KeyDown="MainWin_ProcessF1" KeyUp="MainWin_ProcessF1"
+		Closing="MainWindow_OnClosing"
+		PreviewKeyDown="MainWin_ProcessF1"
+		PreviewKeyUp="MainWin_ProcessF1"
+		KeyDown="MainWin_ProcessF1"
+		KeyUp="MainWin_ProcessF1"
+		WindowStartupLocation="Manual"
+		Focusable="False"
 		>
-	<!-- Control.KeyDown="MainWindow_OnKeyDown"  -->
+	<!--  DataContext="{Binding RelativeSource={RelativeSource Self}}"  -->
+	<!--  x:Name="MainWin"  -->
+	<!--  Control.KeyDown="MainWindow_OnKeyDown"  -->
 	<!--  Height="450"  -->
 	<!--    -->
 	<Window.Resources>
@@ -33,16 +43,33 @@
 				<ResourceDictionary Source="ResourceFiles/XamlResources/VisualStates.xaml" />
 			</ResourceDictionary.MergedDictionaries>
 
+			<cs:PassThroughConverter x:Key="ptc" />
+
+
 			<sys:String x:Key="sample">99,999&apos;-11.999&quot;</sys:String>
+			<sys:String x:Key="sampleArea">123,456,789.123456 in2</sys:String>
 
 			<sys:Double x:Key="uw">120</sys:Double>
 
 			<sys:Double x:Key="UnitsTitleFontSize">11</sys:Double>
 
+			<GridLength x:Key="dc0">96</GridLength>
+			<GridLength x:Key="dc1">10</GridLength>
+			<GridLength x:Key="dc2">96</GridLength>
+
+			<GridLength x:Key="uc0">20</GridLength>
+			<GridLength x:Key="uc1">18</GridLength>
+			<GridLength x:Key="uc2">8</GridLength>
+			<GridLength x:Key="uc3">18</GridLength>
+			<GridLength x:Key="uc4">18</GridLength>
+
+
 			<GridLength x:Key="c1">96</GridLength>
+			<GridLength x:Key="c2">84</GridLength>
+			<GridLength x:Key="c3">104</GridLength>
 			<GridLength x:Key="ct">34</GridLength>
 
-			<GridLength x:Key="cPt">20</GridLength>
+			<GridLength x:Key="cPt">22</GridLength>
 			<GridLength x:Key="cGap">25</GridLength>
 
 			<GridLength x:Key="rHdr">18</GridLength>
@@ -73,8 +100,8 @@
 			</Style>
 
 			<Style x:Key="Button.Dark.Style"
-					BasedOn="{StaticResource Button.Normal.Style}"
 					TargetType="Button"
+					BasedOn="{StaticResource Button.Normal.Style}"
 					>
 				<Setter Property="VerticalContentAlignment" Value="Center" />
 				<Setter Property="HorizontalContentAlignment" Value="Center" />
@@ -98,12 +125,14 @@
 				</Style.Triggers>
 			</Style>
 
+
+
 			<Style x:Key="Unit.Tbx"
-					BasedOn="{StaticResource {x:Type TextBox}}"
 					TargetType="TextBox"
+					BasedOn="{StaticResource {x:Type TextBox}}"
 					>
 				<Setter Property="BorderThickness" Value="0" />
-				<Setter Property="Padding" Value="0,2,0,4" />
+				<Setter Property="Padding" Value="0,1,0,2" />
 				<Setter Property="TextAlignment" Value="Center" />
 				<Setter Property="VerticalAlignment" Value="Center" />
 				<Setter Property="HorizontalAlignment" Value="Stretch" />
@@ -112,8 +141,8 @@
 
 
 			<Style x:Key="Unit.Tblk"
-					BasedOn="{StaticResource {x:Type TextBlock}}"
 					TargetType="TextBlock"
+					BasedOn="{StaticResource {x:Type TextBlock}}"
 					>
 				<Setter Property="Padding" Value="0,2,0,4" />
 				<Setter Property="TextAlignment" Value="Center" />
@@ -122,9 +151,35 @@
 				<Setter Property="Background" Value="{StaticResource Unit.Background}" />
 			</Style>
 
-			<Style x:Key="Unit.Ttl.toprow"
-					BasedOn="{StaticResource Unit.Tblk}"
+			<Style x:Key="Sub.Title"
 					TargetType="TextBlock"
+					>
+				<Setter Property="Padding" Value="0,0,0,2" />
+				<Setter Property="TextAlignment" Value="Center" />
+				<Setter Property="VerticalAlignment" Value="Bottom" />
+				<Setter Property="HorizontalAlignment" Value="Left" />
+				<Setter Property="Background" Value="Transparent" />
+				<Setter Property="FontSize" Value="10" />
+				<Setter Property="Margin" Value="0,0,0,0" />
+				<Setter Property="Foreground" Value="DarkGray" />
+			</Style>
+
+
+			<Style x:Key="Unit.Ttl.PtRow"
+					TargetType="TextBlock"
+					BasedOn="{StaticResource Unit.Tblk}"
+					>
+				<Setter Property="HorizontalAlignment" Value="Center" />
+				<Setter Property="VerticalAlignment" Value="Top" />
+				<Setter Property="Background" Value="Transparent" />
+				<Setter Property="FontSize" Value="10" />
+				<Setter Property="Margin" Value="0,0,2,0" />
+				<Setter Property="Foreground" Value="DarkGray" />
+			</Style>
+
+			<Style x:Key="Unit.Ttl.Toprow"
+					TargetType="TextBlock"
+					BasedOn="{StaticResource Unit.Tblk}"
 					>
 				<Setter Property="HorizontalAlignment" Value="Right" />
 				<Setter Property="VerticalAlignment" Value="Top" />
@@ -134,28 +189,28 @@
 				<Setter Property="Foreground" Value="DarkGray" />
 			</Style>
 
-			<Style x:Key="Unit.Ttl.bottrow"
-					BasedOn="{StaticResource Unit.Ttl.toprow}"
+			<Style x:Key="Unit.Ttl.Bottrow"
 					TargetType="TextBlock"
+					BasedOn="{StaticResource Unit.Ttl.Toprow}"
 					>
 
 			</Style>
 
 			<Style x:Key="Unit.Subject"
-					BasedOn="{StaticResource {x:Type TextBlock}}"
 					TargetType="TextBlock"
+					BasedOn="{StaticResource {x:Type TextBlock}}"
 					>
-				<Setter Property="Margin" Value="0,5,10,0" />
+				<Setter Property="Margin" Value="0,5,5,0" />
+				<Setter Property="Padding" Value="0,0,0,0" />
 				<Setter Property="TextAlignment" Value="Center" />
-				<Setter Property="VerticalAlignment" Value="Top" />
+				<Setter Property="VerticalAlignment" Value="Center" />
 				<Setter Property="HorizontalAlignment" Value="Right" />
-				<Setter Property="MinWidth" Value="80" />
 				<Setter Property="FontSize" Value="10" />
 			</Style>
 
 			<Style x:Key="Unit.display"
-					BasedOn="{StaticResource {x:Type TextBlock}}"
 					TargetType="TextBlock"
+					BasedOn="{StaticResource {x:Type TextBlock}}"
 					>
 				<Setter Property="Margin" Value="0,0,0,10" />
 				<Setter Property="TextAlignment" Value="Left" />
@@ -165,8 +220,8 @@
 			</Style>
 
 			<Style x:Key="Pt"
-					BasedOn="{StaticResource Unit.Ttl.toprow}"
 					TargetType="TextBlock"
+					BasedOn="{StaticResource Unit.Ttl.Toprow}"
 					>
 				<Setter Property="HorizontalAlignment" Value="Left" />
 				<Setter Property="VerticalAlignment" Value="Center" />
@@ -180,35 +235,106 @@
 			Margin="15,10,15,10"
 			>
 
+		<Grid.ColumnDefinitions>
+			<ColumnDefinition Width="*" MinWidth="650"/>
+			<ColumnDefinition Width="*" />
+
+		</Grid.ColumnDefinitions>
+
 		<Grid.RowDefinitions>
 			<RowDefinition Height="24" />
-			<RowDefinition Height="{StaticResource rDist}" />
-			<RowDefinition Height="*" />
-			<RowDefinition Height="*" />
-			<RowDefinition Height="90" />
+			<RowDefinition Height="Auto" />
+			<RowDefinition Height="185*" />
+			<RowDefinition Height="182*" />
+			<RowDefinition Height="120" />
 		</Grid.RowDefinitions>
 
-		<TextBlock
-				Grid.Column="0"
+		<StackPanel
+				Grid.Column="1"
+				Grid.Row="0"
+				Grid.RowSpan="5"
+				Width="500"
+				Visibility="Collapsed"
+				>
+			<TextBlock 
+					Margin="0,0,0,0"
+					Width="150"
+					HorizontalAlignment="Left"
+					VerticalAlignment="Top"
+					FontFamily="Consolas"
+					Background="Black"
+					Foreground="White"
+					Text="{Binding PrimeArea,
+											 Mode=OneWay,
+											 FallbackValue='1st area 1',
+											 ConverterParameter='prime area 1',
+											 Converter={StaticResource ptc}}" />
+
+			<TextBlock 
+					
+					Margin="0,0,0,0"
+					Width="150"
+					HorizontalAlignment="Left"
+					VerticalAlignment="Top"
+					FontFamily="Consolas"
+					Background="Black"
+					Foreground="White"
+					Text="{Binding DistancesPrime.Area,
+											 Mode=OneWay,
+											 FallbackValue='1st area 2',
+											 ConverterParameter='prime area 2',
+											 Converter={StaticResource ptc}}" />
+
+			<TextBlock 
+					Margin="0,10,0,0"
+					Width="150"
+					HorizontalAlignment="Left"
+					VerticalAlignment="Top"
+					FontFamily="Consolas"
+					Background="Black"
+					Foreground="White"
+					Text="{Binding SecondArea,
+											 Mode=OneWay,
+											 FallbackValue='2nd area',
+											 ConverterParameter='second area',
+											 Converter={StaticResource ptc}}" />
+
+			<TextBox 
+					Margin="0,20,0,0"
+					Height="500"
+					MaxHeight="500"
+					VerticalAlignment="Top"
+					FontFamily="Consolas"
+					Background="Black"
+					Foreground="White"
+					Text="{Binding MessageBoxText,
+											 RelativeSource={RelativeSource AncestorType=local:MainWindow}}"
+					ScrollViewer.HorizontalScrollBarVisibility="Visible"
+					ScrollViewer.VerticalScrollBarVisibility="Visible"
+					ScrollViewer.CanContentScroll="True" />
+
+			</StackPanel>
+
+
+		<TextBlock Grid.Column="0"
 				Grid.Row="0"
 				Margin="0,0,0,4"
-				Background="Transparent"
 				FontSize="12"
+				Background="Transparent"
 				Text="Note: Selected points are projected into the current Work Plane"
 				/>
 
 
 
-		<Border
-				Grid.Column="0"
+		<Border Grid.Column="0"
 				Grid.Row="1"
 				Margin="0"
 				Padding="0"
-				BorderBrush="Red"
 				BorderThickness="0,1,0,1"
+				BorderBrush="Red"
 				>
 			<Grid x:Name="Grid_DistancesBlock"
-					Margin="0,5,0,5"
+					Margin="0,5,0,0"
 					>
 
 				<Grid.RowDefinitions>
@@ -219,23 +345,28 @@
 
 				<Grid x:Name="Grid_UnitsTitle">
 					<Grid.ColumnDefinitions>
-						<ColumnDefinition Width="{StaticResource c1}" />
+						<ColumnDefinition Width="{StaticResource c2}" />
+						<ColumnDefinition Width="{StaticResource c3}" />
 						<ColumnDefinition Width="*" />
 					</Grid.ColumnDefinitions>
 
-					<TextBlock
-							Grid.Column="0"
+					<TextBlock Grid.Column="0"
 							Grid.Row="0"
 							FontSize="14"
 							FontWeight="Bold"
 							Text="Distances"
 							/>
 
-					<Rectangle
-							Grid.Column="1"
+					<TextBlock Grid.Column="1"
 							Grid.Row="0"
-							Height="4"
+							Text="Orthogonal to View"
+							Style="{StaticResource Sub.Title}"
+							/>
+
+					<Rectangle Grid.Column="2"
+							Grid.Row="0"
 							Margin="0,3,0,0"
+							Height="4"
 							HorizontalAlignment="Stretch"
 							Fill="{StaticResource Horiz.Bar.Grey}"
 							Stroke="{StaticResource Horiz.Bar.Grey}"
@@ -257,17 +388,15 @@
 					</Grid.ColumnDefinitions>
 
 					<Grid.RowDefinitions>
-						<RowDefinition Height="Auto" />
-						<RowDefinition Height="Auto" />
-						<RowDefinition Height="Auto" />
+						<RowDefinition Height="{StaticResource dc0}" />
+						<RowDefinition Height="{StaticResource dc1}" />
+						<RowDefinition Height="{StaticResource dc2}" />
 					</Grid.RowDefinitions>
 
-					<TextBlock
-							Grid.Column="0"
+					<TextBlock Grid.Column="0"
 							Grid.Row="0"
 							RenderTransformOrigin="0.5,0.5"
-							Text="Primary Units"
-							Padding="0,0,10,0"
+							Text="Primary &#013;Units"
 							Style="{StaticResource Unit.Subject}"
 							>
 						<TextBlock.LayoutTransform>
@@ -276,22 +405,26 @@
 					</TextBlock>
 
 					<Grid x:Name="Grid_DistPrimUnits"
-							DockPanel.Dock="Top"
 							Grid.Column="1"
 							Grid.Row="0"
-							Margin="0,0,0,10"
+							Margin="0,0,0,0"
 							HorizontalAlignment="Stretch"
+							DockPanel.Dock="Top"
 							>
 
 						<Grid.RowDefinitions>
 							<!--  x, y, z titles  -->
-							<RowDefinition Height="*" />
+							<RowDefinition Height="{StaticResource uc0}" />
 							<!--  x, y, z values  -->
-							<RowDefinition Height="22" />
-							<!--  x, y, z titles  -->
-							<RowDefinition Height="10" />
+							<RowDefinition Height="{StaticResource uc1}" />
+							<!--  x, y, z space  -->
+							<RowDefinition Height="{StaticResource uc2}" />
 							<!--  x, y, z values  -->
-							<RowDefinition Height="22" />
+							<RowDefinition Height="{StaticResource uc3}" />
+							<!--  x, y, z space  -->
+							<RowDefinition Height="{StaticResource uc2}" />
+							<!--  area  -->
+							<RowDefinition Height="{StaticResource uc4}" />
 
 						</Grid.RowDefinitions>
 
@@ -312,26 +445,27 @@
 						<Grid x:Name="DpTitlePrimary"
 								Grid.Column="0"
 								Grid.ColumnSpan="8"
-								Margin="0,0,0,10"
-								VerticalAlignment="Bottom"
+								Margin="0,0,0,0"
+								VerticalAlignment="Top"
 								>
 
-							<Line
+							<Line VerticalAlignment="Center"
 									StrokeThickness="0.5"
 									Stroke="Red"
 									Y2="2"
-									X2="{Binding ElementName=DpTitlePrimary, Path=ActualWidth}"
-									Y1="2" X1="0"
-									VerticalAlignment="Center"
+									X2="{Binding ElementName=DpTitlePrimary,
+															 Path=ActualWidth}"
+									Y1="2"
+									X1="0"
 									/>
 
-							<TextBlock
-									Padding="5,0,5,0"
+							<TextBlock Padding="5,0,5,0"
 									HorizontalAlignment="Center"
-									Foreground="DarkGray"
-									Text="{Binding SelItemLeftName, FallbackValue='Project Units'}"
-									Background="{DynamicResource Normal.Window.Background}"
 									FontSize="{StaticResource UnitsTitleFontSize}"
+									Background="{DynamicResource Normal.Window.Background}"
+									Foreground="DarkGray"
+									Text="{Binding SelItemLeftName,
+																 FallbackValue='Project Units'}"
 									Style="{StaticResource Unit.Tblk}"
 									/>
 
@@ -339,48 +473,53 @@
 
 						<!--#region > xyz distances-->
 
-						<TextBlock
-								Grid.Column="0"
+						<TextBlock Grid.Column="0"
 								Grid.Row="1"
 								Text="X"
-								Style="{StaticResource Unit.Ttl.toprow}"
+								Style="{StaticResource Unit.Ttl.Toprow}"
 								/>
 
 						<TextBox x:Name="Tbx_Dist1X"
 								Grid.Column="1"
 								Grid.Row="1"
-								Text="{Binding DistancesPrime.P_x, Mode=OneWay, FallbackValue={StaticResource sample}}"
+								Text="{Binding DistancesPrime.P_x,
+															 Mode=OneWay,
+															 FallbackValue={StaticResource sample},
+															 ConverterParameter='dist 1x',
+															 Converter={StaticResource ptc}}"
 								Style="{StaticResource Unit.Tbx}"
 								/>
 						<!--  Text="99,999'-11.999&quot;"  -->
 
 
-						<TextBlock
-								Grid.Column="2"
+						<TextBlock Grid.Column="2"
 								Grid.Row="1"
 								Text="Y"
-								Style="{StaticResource Unit.Ttl.toprow}"
+								Style="{StaticResource Unit.Ttl.Toprow}"
 								/>
 
 						<TextBox x:Name="Tbx_Dist1Y"
 								Grid.Column="3"
 								Grid.Row="1"
-								Text="{Binding DistancesPrime.P_y, Mode=OneWay, FallbackValue={StaticResource sample}}"
+								Text="{Binding DistancesPrime.P_y,
+															 Mode=OneWay,
+															 FallbackValue={StaticResource sample}}"
 								Style="{StaticResource Unit.Tbx}"
 								/>
 
 
-						<TextBlock
-								Grid.Column="4"
+						<TextBlock Grid.Column="4"
 								Grid.Row="1"
 								Text="Z"
-								Style="{StaticResource Unit.Ttl.toprow}"
+								Style="{StaticResource Unit.Ttl.Toprow}"
 								/>
 
 						<TextBox x:Name="Tbx_Dist1Z"
 								Grid.Column="5"
 								Grid.Row="1"
-								Text="{Binding DistancesPrime.P_z, Mode=OneWay, FallbackValue={StaticResource sample}}"
+								Text="{Binding DistancesPrime.P_z,
+															 Mode=OneWay,
+															 FallbackValue={StaticResource sample}}"
 								Style="{StaticResource Unit.Tbx}"
 								/>
 
@@ -388,61 +527,82 @@
 
 						<!--#region > extended distances-->
 
-						<TextBlock
-								Grid.Column="0"
+						<TextBlock Grid.Column="0"
 								Grid.Row="3"
 								Text="XY"
-								Style="{StaticResource Unit.Ttl.bottrow}"
+								Style="{StaticResource Unit.Ttl.Bottrow}"
 								/>
 
 						<TextBox x:Name="Tbx_Dist1Xy"
 								Grid.Column="1"
 								Grid.Row="3"
-								Text="{Binding DistancesPrime.P_xy, Mode=OneWay, FallbackValue={StaticResource sample}}"
+								Text="{Binding DistancesPrime.P_xy,
+															 Mode=OneWay,
+															 FallbackValue={StaticResource sample}}"
 								Style="{StaticResource Unit.Tbx}"
 								/>
 
 
-						<TextBlock
-								Grid.Column="2"
+						<TextBlock Grid.Column="2"
 								Grid.Row="3"
 								Text="XZ"
-								Style="{StaticResource Unit.Ttl.bottrow}"
+								Style="{StaticResource Unit.Ttl.Bottrow}"
 								/>
 
 						<TextBox x:Name="Tbx_Dist1Xz"
 								Grid.Column="3"
 								Grid.Row="3"
-								Text="{Binding DistancesPrime.P_xz, Mode=OneWay, FallbackValue={StaticResource sample}}"
+								Text="{Binding DistancesPrime.P_xz,
+															 Mode=OneWay,
+															 FallbackValue={StaticResource sample}}"
 								Style="{StaticResource Unit.Tbx}"
 								/>
 
 
-						<TextBlock
-								Grid.Column="4"
+						<TextBlock Grid.Column="4"
 								Grid.Row="3"
 								Text="YZ"
-								Style="{StaticResource Unit.Ttl.bottrow}"
+								Style="{StaticResource Unit.Ttl.Bottrow}"
 								/>
 
 						<TextBox x:Name="Tbx_Dist1Yz"
 								Grid.Column="5"
 								Grid.Row="3"
-								Text="{Binding DistancesPrime.P_yz, Mode=OneWay, FallbackValue={StaticResource sample}}"
+								Text="{Binding DistancesPrime.P_yz,
+															 Mode=OneWay,
+															 FallbackValue={StaticResource sample}}"
 								Style="{StaticResource Unit.Tbx}"
 								/>
 
-						<TextBlock
-								Grid.Column="6"
+						<TextBlock Grid.Column="6"
 								Grid.Row="3"
 								Text="XYZ"
-								Style="{StaticResource Unit.Ttl.bottrow}"
+								Style="{StaticResource Unit.Ttl.Bottrow}"
 								/>
 
 						<TextBox x:Name="Tbx_Dist1Xyz"
 								Grid.Column="7"
 								Grid.Row="3"
-								Text="{Binding DistancesPrime.P_xyz, Mode=OneWay, FallbackValue={StaticResource sample}}"
+								Text="{Binding DistancesPrime.P_xyz,
+															 Mode=OneWay,
+															 FallbackValue={StaticResource sample}}"
+								Style="{StaticResource Unit.Tbx}"
+								/>
+
+						<TextBlock Grid.Column="0"
+								Grid.Row="5"
+								Text="Area"
+								Style="{StaticResource Unit.Ttl.Bottrow}"
+								/>
+
+						<TextBox x:Name="Tbx_Area1"
+								Grid.Column="1"
+								Grid.Row="5"
+								Text="{Binding DistancesPrime.Area,
+															 Mode=OneWay,
+															 FallbackValue={StaticResource sampleArea},
+															 ConverterParameter='area 1',
+															 Converter={StaticResource ptc}}"
 								Style="{StaticResource Unit.Tbx}"
 								/>
 
@@ -450,24 +610,22 @@
 					<!--#endregion-->
 
 
-					<Rectangle
-							Grid.Column="1"
+					<Rectangle Grid.Column="1"
 							Grid.Row="1"
-							Height="4"
 							Margin="0,0,0,0"
+							Height="4"
 							HorizontalAlignment="Stretch"
+							VerticalAlignment="Top"
 							Fill="{StaticResource Horiz.Bar.Grey}"
 							Stroke="{StaticResource Horiz.Bar.Grey}"
 							StrokeThickness="0"
 							/>
 
 
-					<TextBlock
-							Grid.Column="0"
+					<TextBlock Grid.Column="0"
 							Grid.Row="2"
 							RenderTransformOrigin="0.5,0.5"
-							Padding="0,0,10,0"
-							Text="Secondary Units"
+							Text="Secondary&#013;Units"
 							Style="{StaticResource Unit.Subject}"
 							>
 						<TextBlock.LayoutTransform>
@@ -477,22 +635,26 @@
 
 
 					<Grid x:Name="Grid_DistSecUnits"
-							DockPanel.Dock="Top"
 							Grid.Column="1"
 							Grid.Row="2"
-							Margin="0,0,0,4"
+							Margin="0,0,0,0"
 							HorizontalAlignment="Stretch"
+							DockPanel.Dock="Top"
 							>
 
 						<Grid.RowDefinitions>
 							<!--  x, y, z titles  -->
-							<RowDefinition />
+							<RowDefinition Height="{StaticResource uc0}" />
 							<!--  x, y, z values  -->
-							<RowDefinition Height="22" />
-							<!--  x, y, z titles  -->
-							<RowDefinition Height="10" />
+							<RowDefinition Height="{StaticResource uc1}" />
+							<!--  x, y, z space  -->
+							<RowDefinition Height="{StaticResource uc2}" />
 							<!--  x, y, z values  -->
-							<RowDefinition Height="22" />
+							<RowDefinition Height="{StaticResource uc3}" />
+							<!--  x, y, z space  -->
+							<RowDefinition Height="{StaticResource uc2}" />
+							<!--  area  -->
+							<RowDefinition Height="{StaticResource uc4}" />
 
 						</Grid.RowDefinitions>
 
@@ -514,26 +676,26 @@
 						<Grid x:Name="DpTitleSecondary"
 								Grid.Column="0"
 								Grid.ColumnSpan="8"
-								Margin="0,0,0,10"
-								VerticalAlignment="Bottom"
+								VerticalAlignment="Top"
 								>
 
-							<Line
+							<Line VerticalAlignment="Center"
 									StrokeThickness="0.5"
 									Stroke="Red"
 									Y2="2"
-									X2="{Binding ElementName=DpTitleSecondary, Path=ActualWidth}"
-									Y1="2" X1="0"
-									VerticalAlignment="Center"
+									X2="{Binding ElementName=DpTitleSecondary,
+															 Path=ActualWidth}"
+									Y1="2"
+									X1="0"
 									/>
 
-							<TextBlock
-									Padding="5,0,5,0"
+							<TextBlock Padding="5,0,5,0"
 									HorizontalAlignment="Center"
-									Text="{Binding SelItemRightName, FallbackValue='Project Units'}"
-									Background="{DynamicResource Normal.Window.Background}"
 									FontSize="{StaticResource UnitsTitleFontSize}"
+									Background="{DynamicResource Normal.Window.Background}"
 									Foreground="DarkGray"
+									Text="{Binding SelItemRightName,
+																 FallbackValue='Project Units'}"
 									Style="{StaticResource Unit.Tblk}"
 									/>
 
@@ -542,48 +704,51 @@
 
 						<!--#region > xyz distances-->
 
-						<TextBlock
-								Grid.Column="0"
+						<TextBlock Grid.Column="0"
 								Grid.Row="1"
 								Text="X"
-								Style="{StaticResource Unit.Ttl.toprow}"
+								Style="{StaticResource Unit.Ttl.Toprow}"
 								/>
 
 						<TextBox x:Name="Tbx_Dist2X"
 								Grid.Column="1"
 								Grid.Row="1"
-								Text="{Binding DistancesSecond.P_x, Mode=OneWay, FallbackValue={StaticResource sample}}"
+								Text="{Binding DistancesSecond.P_x,
+															 Mode=OneWay,
+															 FallbackValue={StaticResource sample}}"
 								Style="{StaticResource Unit.Tbx}"
 								/>
 						<!--  Text="99,999'-11.999&quot;"  -->
 
 
-						<TextBlock
-								Grid.Column="2"
+						<TextBlock Grid.Column="2"
 								Grid.Row="1"
 								Text="Y"
-								Style="{StaticResource Unit.Ttl.toprow}"
+								Style="{StaticResource Unit.Ttl.Toprow}"
 								/>
 
 						<TextBox x:Name="Tbx_Dist2Y"
 								Grid.Column="3"
 								Grid.Row="1"
-								Text="{Binding DistancesSecond.P_y, Mode=OneWay, FallbackValue={StaticResource sample}}"
+								Text="{Binding DistancesSecond.P_y,
+															 Mode=OneWay,
+															 FallbackValue={StaticResource sample}}"
 								Style="{StaticResource Unit.Tbx}"
 								/>
 
 
-						<TextBlock
-								Grid.Column="4"
+						<TextBlock Grid.Column="4"
 								Grid.Row="1"
 								Text="Z"
-								Style="{StaticResource Unit.Ttl.toprow}"
+								Style="{StaticResource Unit.Ttl.Toprow}"
 								/>
 
 						<TextBox x:Name="Tbx_Dist2Z"
 								Grid.Column="5"
 								Grid.Row="1"
-								Text="{Binding DistancesSecond.P_z, Mode=OneWay, FallbackValue={StaticResource sample}}"
+								Text="{Binding DistancesSecond.P_z,
+															 Mode=OneWay,
+															 FallbackValue={StaticResource sample}}"
 								Style="{StaticResource Unit.Tbx}"
 								/>
 
@@ -591,65 +756,84 @@
 
 						<!--#region > extended distances-->
 
-						<TextBlock
-								Grid.Column="0"
+						<TextBlock Grid.Column="0"
 								Grid.Row="3"
 								Text="XY"
-								Style="{StaticResource Unit.Ttl.bottrow}"
+								Style="{StaticResource Unit.Ttl.Bottrow}"
 								/>
 
 						<TextBox x:Name="Tbx_Dist2Xy"
 								Grid.Column="1"
 								Grid.Row="3"
-								Text="{Binding DistancesSecond.P_xy, Mode=OneWay, FallbackValue={StaticResource sample}}"
+								Text="{Binding DistancesSecond.P_xy,
+															 Mode=OneWay,
+															 FallbackValue={StaticResource sample}}"
 								Style="{StaticResource Unit.Tbx}"
 								/>
 
 
-						<TextBlock
-								Grid.Column="2"
+						<TextBlock Grid.Column="2"
 								Grid.Row="3"
 								Text="XZ"
-								Style="{StaticResource Unit.Ttl.bottrow}"
+								Style="{StaticResource Unit.Ttl.Bottrow}"
 								/>
 
 						<TextBox x:Name="Tbx_Dist2Xz"
 								Grid.Column="3"
 								Grid.Row="3"
-								Text="{Binding DistancesSecond.P_xz, Mode=OneWay, FallbackValue={StaticResource sample}}"
+								Text="{Binding DistancesSecond.P_xz,
+															 Mode=OneWay,
+															 FallbackValue={StaticResource sample}}"
 								Style="{StaticResource Unit.Tbx}"
 								/>
 
 
-						<TextBlock
-								Grid.Column="4"
+						<TextBlock Grid.Column="4"
 								Grid.Row="3"
 								Text="YZ"
-								Style="{StaticResource Unit.Ttl.bottrow}"
+								Style="{StaticResource Unit.Ttl.Bottrow}"
 								/>
 
 						<TextBox x:Name="Tbx_Dist2Xyz"
 								Grid.Column="5"
 								Grid.Row="3"
-								Text="{Binding DistancesSecond.P_yz, Mode=OneWay, FallbackValue={StaticResource sample}}"
+								Text="{Binding DistancesSecond.P_yz,
+															 Mode=OneWay,
+															 FallbackValue={StaticResource sample}}"
 								Style="{StaticResource Unit.Tbx}"
 								/>
 
-						<TextBlock
-								Grid.Column="6"
+						<TextBlock Grid.Column="6"
 								Grid.Row="3"
 								Text="XYZ"
-								Style="{StaticResource Unit.Ttl.bottrow}"
+								Style="{StaticResource Unit.Ttl.Bottrow}"
 								/>
 
-						<TextBox
-								Grid.Column="7"
+						<TextBox Grid.Column="7"
 								Grid.Row="3"
-								Text="{Binding DistancesSecond.P_xyz, Mode=OneWay, FallbackValue={StaticResource sample}}"
+								Text="{Binding DistancesSecond.P_xyz,
+															 Mode=OneWay,
+															 FallbackValue={StaticResource sample}}"
 								Style="{StaticResource Unit.Tbx}"
 								/>
 
 						<!--#endregion-->
+
+
+						<TextBlock Grid.Column="0"
+								Grid.Row="5"
+								Text="Area"
+								Style="{StaticResource Unit.Ttl.Bottrow}"
+								/>
+
+						<TextBox x:Name="Tbx_Area2"
+								Grid.Column="1"
+								Grid.Row="5"
+								Text="{Binding DistancesSecond.Area,
+															 Mode=OneWay,
+															 FallbackValue={StaticResource sampleArea}}"
+								Style="{StaticResource Unit.Tbx}"
+								/>
 
 					</Grid>
 
@@ -659,37 +843,44 @@
 
 		</Border>
 
+
 		<Expander x:Name="Xpdr_Coordinates"
 				Grid.Column="0"
 				Grid.Row="2"
 				Margin="0,5,0,0"
-				d:IsExpanded="False"
+				d:IsExpanded="true"
 				>
 			<Expander.Header>
 
 				<Grid x:Name="Grid_CoordinatesTitle"
-						Width="{Binding ActualWidth, RelativeSource={RelativeSource AncestorType={x:Type Expander}}}"
 						Margin="5,0,0,0"
+						Width="{Binding ActualWidth,
+														RelativeSource={RelativeSource AncestorType={x:Type Expander}}}"
 						>
 
 					<Grid.ColumnDefinitions>
 						<ColumnDefinition Width="{StaticResource c1}" />
+						<ColumnDefinition Width="{StaticResource c3}" />
 						<ColumnDefinition Width="*" />
 					</Grid.ColumnDefinitions>
 
-					<TextBlock
-							Grid.Column="0"
+					<TextBlock Grid.Column="0"
 							Grid.Row="0"
 							FontSize="14"
 							FontWeight="Bold"
 							Text="Coordinates"
 							/>
 
-					<Rectangle
-							Grid.Column="1"
+					<TextBlock Grid.Column="1"
 							Grid.Row="0"
-							Height="4"
+							Text="Orthogonal to Model"
+							Style="{StaticResource Sub.Title}"
+							/>
+
+					<Rectangle Grid.Column="2"
+							Grid.Row="0"
 							Margin="0,3,0,0"
+							Height="4"
 							HorizontalAlignment="Stretch"
 							Fill="{StaticResource Horiz.Bar.Grey}"
 							Stroke="{StaticResource Horiz.Bar.Grey}"
@@ -733,7 +924,7 @@
 							Grid.Column="0"
 							Grid.Row="0"
 							RenderTransformOrigin="0.5,0.5"
-							Text="Primary Units"
+							Text="Primary&#013;Units"
 							Style="{StaticResource Unit.Subject}"
 							>
 						<TextBlock.LayoutTransform>
@@ -743,22 +934,22 @@
 
 
 					<Grid x:Name="Grid_CoordPrimUnits"
-							DockPanel.Dock="Top"
 							Grid.Column="1"
 							Grid.Row="0"
 							Margin="0,0,0,10"
 							HorizontalAlignment="Stretch"
+							DockPanel.Dock="Top"
 							>
 
 						<Grid.RowDefinitions>
 							<!--  x, y, z titles  -->
-							<RowDefinition Height="*" />
+							<RowDefinition Height="{StaticResource uc0}" />
 							<!--  x, y, z values  -->
-							<RowDefinition Height="22" />
-							<!--  x, y, z titles  -->
-							<RowDefinition Height="8" />
+							<RowDefinition Height="{StaticResource uc1}" />
+							<!--  x, y, z space  -->
+							<RowDefinition Height="{StaticResource uc2}" />
 							<!--  x, y, z values  -->
-							<RowDefinition Height="22" />
+							<RowDefinition Height="{StaticResource uc3}" />
 							<RowDefinition Height="*" />
 
 						</Grid.RowDefinitions>
@@ -780,63 +971,64 @@
 
 						<!--#region > point 1-->
 
-						<TextBlock
-								Grid.Column="0"
+						<TextBlock Grid.Column="0"
 								Grid.Row="0"
 								HorizontalAlignment="Center"
 								Text="Pt"
 								Style="{StaticResource Pt}"
 								/>
 
-						<TextBlock
-								Grid.Column="0"
+						<TextBlock Grid.Column="0"
 								Grid.Row="1"
 								Text="1st"
 								Style="{StaticResource Pt}"
 								/>
 
-						<TextBlock
-								Grid.Column="1"
+						<TextBlock Grid.Column="1"
 								Grid.Row="0"
 								Text="X"
-								Style="{StaticResource Unit.Ttl.toprow}"
+								Style="{StaticResource Unit.Ttl.PtRow}"
 								/>
 
 						<TextBox x:Name="Tbx_Pt11X"
 								Grid.Column="1"
 								Grid.Row="1"
-								Text="{Binding DistancesPrime.P1_x, Mode=OneWay, FallbackValue='0.00'}"
+								Text="{Binding DistancesPrime.P1_x,
+															 Mode=OneWay,
+															 FallbackValue='0.00'}"
 								Style="{StaticResource Unit.Tbx}"
 								/>
 						<!--  Text="99,999'-11.999&quot;"  -->
 
 
-						<TextBlock
-								Grid.Column="3"
+						<TextBlock Grid.Column="3"
 								Grid.Row="0"
 								Text="Y"
-								Style="{StaticResource Unit.Ttl.toprow}"
+								Style="{StaticResource Unit.Ttl.PtRow}"
 								/>
 
 						<TextBox x:Name="Tbx_Pt11Y"
 								Grid.Column="3"
 								Grid.Row="1"
-								Text="{Binding DistancesPrime.P1_y, Mode=OneWay, FallbackValue='0.00'}"
+								Text="{Binding DistancesPrime.P1_y,
+															 Mode=OneWay,
+															 FallbackValue='0.00'}"
 								Style="{StaticResource Unit.Tbx}"
 								/>
 
 
-						<TextBlock
-								Grid.Column="5"
+						<TextBlock Grid.Column="5"
 								Grid.Row="0"
 								Text="Z"
-								Style="{StaticResource Unit.Ttl.toprow}"
+								Style="{StaticResource Unit.Ttl.PtRow}"
 								/>
 
 						<TextBox x:Name="Tbx_Pt11Z"
 								Grid.Column="5"
 								Grid.Row="1"
-								Text="{Binding DistancesPrime.P1_z, Mode=OneWay, FallbackValue='0.00'}"
+								Text="{Binding DistancesPrime.P1_z,
+															 Mode=OneWay,
+															 FallbackValue='0.00'}"
 								Style="{StaticResource Unit.Tbx}"
 								/>
 
@@ -844,8 +1036,7 @@
 
 						<!--#region > point 2-->
 
-						<TextBlock
-								Grid.Column="0"
+						<TextBlock Grid.Column="0"
 								Grid.Row="3"
 								Text="2nd"
 								Style="{StaticResource Pt}"
@@ -855,7 +1046,9 @@
 						<TextBox x:Name="Tbx_Pt12X"
 								Grid.Column="1"
 								Grid.Row="3"
-								Text="{Binding DistancesPrime.P2_x, Mode=OneWay, FallbackValue='0.00'}"
+								Text="{Binding DistancesPrime.P2_x,
+															 Mode=OneWay,
+															 FallbackValue='0.00'}"
 								Style="{StaticResource Unit.Tbx}"
 								/>
 
@@ -863,7 +1056,9 @@
 						<TextBox x:Name="Tbx_Pt12Y"
 								Grid.Column="3"
 								Grid.Row="3"
-								Text="{Binding DistancesPrime.P2_y, Mode=OneWay, FallbackValue='0.00'}"
+								Text="{Binding DistancesPrime.P2_y,
+															 Mode=OneWay,
+															 FallbackValue='0.00'}"
 								Style="{StaticResource Unit.Tbx}"
 								/>
 
@@ -871,7 +1066,9 @@
 						<TextBox x:Name="Tbx_Pt12Z"
 								Grid.Column="5"
 								Grid.Row="3"
-								Text="{Binding DistancesPrime.P2_z, Mode=OneWay, FallbackValue='0.00'}"
+								Text="{Binding DistancesPrime.P2_z,
+															 Mode=OneWay,
+															 FallbackValue='0.00'}"
 								Style="{StaticResource Unit.Tbx}"
 								/>
 
@@ -881,11 +1078,10 @@
 
 					<!--#endregion-->
 
-					<Rectangle
-							Grid.Column="1"
+					<Rectangle Grid.Column="1"
 							Grid.Row="1"
-							Height="4"
 							Margin="0,0,0,0"
+							Height="4"
 							HorizontalAlignment="Stretch"
 							Fill="{StaticResource Horiz.Bar.Grey}"
 							Stroke="{StaticResource Horiz.Bar.Grey}"
@@ -894,11 +1090,10 @@
 
 					<!--#region > 2ndry Units-->
 
-					<TextBlock
-							Grid.Column="0"
+					<TextBlock Grid.Column="0"
 							Grid.Row="2"
 							RenderTransformOrigin="0.5,0.5"
-							Text="Secondary Units"
+							Text="Secondary&#013;Units"
 							Style="{StaticResource Unit.Subject}"
 							>
 						<TextBlock.LayoutTransform>
@@ -907,22 +1102,22 @@
 					</TextBlock>
 
 					<Grid x:Name="Grid_CoordSecUnits"
-							DockPanel.Dock="Top"
 							Grid.Column="1"
 							Grid.Row="2"
-							Margin="0,5,0,15"
+							Margin="0,5,0,10"
 							HorizontalAlignment="Stretch"
+							DockPanel.Dock="Top"
 							>
 
 						<Grid.RowDefinitions>
 							<!--  x, y, z titles  -->
-							<RowDefinition Height="*" />
+							<RowDefinition Height="{StaticResource uc0}" />
 							<!--  x, y, z values  -->
-							<RowDefinition Height="22" />
-							<!--  x, y, z titles  -->
-							<RowDefinition Height="5" />
+							<RowDefinition Height="{StaticResource uc1}" />
+							<!--  x, y, z space  -->
+							<RowDefinition Height="{StaticResource uc2}" />
 							<!--  x, y, z values  -->
-							<RowDefinition Height="22" />
+							<RowDefinition Height="{StaticResource uc3}" />
 							<RowDefinition Height="*" />
 
 						</Grid.RowDefinitions>
@@ -944,63 +1139,64 @@
 
 						<!--#region > point 1-->
 
-						<TextBlock
-								Grid.Column="0"
+						<TextBlock Grid.Column="0"
 								Grid.Row="0"
 								HorizontalAlignment="Center"
 								Text="Pt"
 								Style="{StaticResource Pt}"
 								/>
 
-						<TextBlock
-								Grid.Column="0"
+						<TextBlock Grid.Column="0"
 								Grid.Row="1"
 								Text="1st"
 								Style="{StaticResource Pt}"
 								/>
 
-						<TextBlock
-								Grid.Column="1"
+						<TextBlock Grid.Column="1"
 								Grid.Row="0"
 								Text="X"
-								Style="{StaticResource Unit.Ttl.toprow}"
+								Style="{StaticResource Unit.Ttl.PtRow}"
 								/>
 
 						<TextBox x:Name="Tbx_Pt21X"
 								Grid.Column="1"
 								Grid.Row="1"
-								Text="{Binding DistancesSecond.P1_x, Mode=OneWay, FallbackValue='0.00'}"
+								Text="{Binding DistancesSecond.P1_x,
+															 Mode=OneWay,
+															 FallbackValue='0.00'}"
 								Style="{StaticResource Unit.Tbx}"
 								/>
 						<!--  Text="99,999'-11.999&quot;"  -->
 
 
-						<TextBlock
-								Grid.Column="3"
+						<TextBlock Grid.Column="3"
 								Grid.Row="0"
 								Text="Y"
-								Style="{StaticResource Unit.Ttl.toprow}"
+								Style="{StaticResource Unit.Ttl.PtRow}"
 								/>
 
 						<TextBox x:Name="Tbx_Pt21Y"
 								Grid.Column="3"
 								Grid.Row="1"
-								Text="{Binding DistancesSecond.P1_y, Mode=OneWay, FallbackValue='0.00'}"
+								Text="{Binding DistancesSecond.P1_y,
+															 Mode=OneWay,
+															 FallbackValue='0.00'}"
 								Style="{StaticResource Unit.Tbx}"
 								/>
 
 
-						<TextBlock
-								Grid.Column="5"
+						<TextBlock Grid.Column="5"
 								Grid.Row="0"
 								Text="Z"
-								Style="{StaticResource Unit.Ttl.toprow}"
+								Style="{StaticResource Unit.Ttl.PtRow}"
 								/>
 
 						<TextBox x:Name="Tbx_Pt21Z"
 								Grid.Column="5"
 								Grid.Row="1"
-								Text="{Binding DistancesSecond.P1_z, Mode=OneWay, FallbackValue='0.00'}"
+								Text="{Binding DistancesSecond.P1_z,
+															 Mode=OneWay,
+															 FallbackValue='0.00'}"
 								Style="{StaticResource Unit.Tbx}"
 								/>
 
@@ -1008,8 +1204,7 @@
 
 						<!--#region > point 2-->
 
-						<TextBlock
-								Grid.Column="0"
+						<TextBlock Grid.Column="0"
 								Grid.Row="3"
 								Text="2nd"
 								Style="{StaticResource Pt}"
@@ -1018,21 +1213,27 @@
 						<TextBox x:Name="Tbx_Pt22X"
 								Grid.Column="1"
 								Grid.Row="3"
-								Text="{Binding DistancesSecond.P2_x, Mode=OneWay, FallbackValue='0.00'}"
+								Text="{Binding DistancesSecond.P2_x,
+															 Mode=OneWay,
+															 FallbackValue='0.00'}"
 								Style="{StaticResource Unit.Tbx}"
 								/>
 
 						<TextBox x:Name="Tbx_Pt22Y"
 								Grid.Column="3"
 								Grid.Row="3"
-								Text="{Binding DistancesSecond.P2_y, Mode=OneWay, FallbackValue='0.00'}"
+								Text="{Binding DistancesSecond.P2_y,
+															 Mode=OneWay,
+															 FallbackValue='0.00'}"
 								Style="{StaticResource Unit.Tbx}"
 								/>
 
 						<TextBox x:Name="Tbx_Pt22Z"
 								Grid.Column="5"
 								Grid.Row="3"
-								Text="{Binding DistancesSecond.P2_z, Mode=OneWay, FallbackValue='0.00'}"
+								Text="{Binding DistancesSecond.P2_z,
+															 Mode=OneWay,
+															 FallbackValue='0.00'}"
 								Style="{StaticResource Unit.Tbx}"
 								/>
 
@@ -1054,12 +1255,13 @@
 				Grid.Column="0"
 				Grid.Row="3"
 				Margin="0,5,0,0"
-				d:IsExpanded="false"
+				d:IsExpanded="true"
 				>
 			<Expander.Header>
 				<Grid x:Name="Grid_SelUnitsHdr"
-						Width="{Binding ActualWidth, RelativeSource={RelativeSource AncestorType={x:Type Expander}}}"
 						Margin="5,0,0,0"
+						Width="{Binding ActualWidth,
+														RelativeSource={RelativeSource AncestorType={x:Type Expander}}}"
 						>
 
 					<Grid.ColumnDefinitions>
@@ -1067,19 +1269,17 @@
 						<ColumnDefinition Width="*" />
 					</Grid.ColumnDefinitions>
 
-					<TextBlock
-							Grid.Column="0"
+					<TextBlock Grid.Column="0"
 							Grid.Row="0"
 							FontSize="14"
 							FontWeight="Bold"
 							Text="Select Units"
 							/>
 
-					<Rectangle
-							Grid.Column="1"
+					<Rectangle Grid.Column="1"
 							Grid.Row="0"
-							Height="4"
 							Margin="0,3,0,0"
+							Height="4"
 							HorizontalAlignment="Stretch"
 							Fill="{StaticResource Horiz.Bar.Grey}"
 							Stroke="{StaticResource Horiz.Bar.Grey}"
@@ -1115,8 +1315,7 @@
 						<RowDefinition Height="Auto" />
 					</Grid.RowDefinitions>
 
-					<TextBlock
-							Grid.Column="0"
+					<TextBlock Grid.Column="0"
 							Grid.Row="0"
 							Text="Primary Units"
 							Style="{StaticResource Unit.display}"
@@ -1126,22 +1325,24 @@
 							Grid.Column="0"
 							Grid.Row="1"
 							Height="120"
+							DataContext="{Binding DialogLeftList,
+																		RelativeSource={RelativeSource AncestorType=local:MainWindow}}"
+							d:DataContext="{d:SampleData}"
 							Background="{StaticResource Unit.Display.Background}"
 							BorderThickness="0"
-							DataContext="{Binding DialogLeftList, ElementName=MainWin}"
+							SelectedIndex="{Binding SelIdxLeft,
+																			RelativeSource={RelativeSource AncestorType=local:MainWindow}}"
+							SelectedItem="{Binding SelItemLeft,
+																		 RelativeSource={RelativeSource AncestorType=local:MainWindow}}"
 							ItemsSource="{Binding}"
-							SelectedIndex="{Binding SelIdxLeft, ElementName=MainWin}"
-							SelectedItem="{Binding SelItemLeft, ElementName=MainWin}"
-							d:DataContext="{d:SampleData}"
 							>
 						<ListBox.ItemTemplate>
 							<DataTemplate DataType="util:UnitsDataR">
 								<StackPanel>
-									<TextBlock
-											Margin="0"
+									<TextBlock Margin="0"
 											Padding="0"
-											Text="{Binding Path=Name}"
 											Foreground="White"
+											Text="{Binding Path=Name}"
 											/>
 								</StackPanel>
 							</DataTemplate>
@@ -1150,8 +1351,7 @@
 					</ListBox>
 
 
-					<TextBlock
-							Grid.Column="2"
+					<TextBlock Grid.Column="2"
 							Grid.Row="0"
 							Text="Secondary Units"
 							Style="{StaticResource Unit.display}"
@@ -1161,22 +1361,24 @@
 							Grid.Column="2"
 							Grid.Row="1"
 							Height="120"
+							DataContext="{Binding DialogRightList,
+																		RelativeSource={RelativeSource AncestorType=local:MainWindow}}"
+							d:DataContext="{d:SampleData}"
 							Background="{StaticResource Unit.Display.Background}"
 							BorderThickness="0"
-							DataContext="{Binding DialogRightList, ElementName=MainWin}"
+							SelectedIndex="{Binding SelIdxRight,
+																			RelativeSource={RelativeSource AncestorType=local:MainWindow}}"
+							SelectedItem="{Binding SelItemRight,
+																		 RelativeSource={RelativeSource AncestorType=local:MainWindow}}"
 							ItemsSource="{Binding}"
-							SelectedIndex="{Binding SelIdxRight, ElementName=MainWin}"
-							SelectedItem="{Binding SelItemRight, ElementName=MainWin}"
-							d:DataContext="{d:SampleData}"
 							>
 						<ListBox.ItemTemplate>
 							<DataTemplate DataType="util:UnitsDataR">
 								<StackPanel>
-									<TextBlock
-											Margin="0"
+									<TextBlock Margin="0"
 											Padding="0"
-											Text="{Binding Path=Name}"
 											Foreground="White"
+											Text="{Binding Path=Name}"
 											/>
 								</StackPanel>
 							</DataTemplate>
@@ -1190,140 +1392,212 @@
 			</Grid>
 		</Expander>
 
-		<Border
-				Grid.Column="0"
+		<Border Grid.Column="0"
 				Grid.Row="4"
 				Margin="0,8,0,0"
-				BorderBrush="Red"
 				BorderThickness="0,1,0,0"
+				BorderBrush="Red"
 				>
 			<Grid x:Name="Grid_FooterBlock"
-					Margin="5,12,0,0"
+					Margin="5,8,0,0"
 					VerticalAlignment="Stretch"
 					>
 
 				<Grid.ColumnDefinitions>
 					<ColumnDefinition />
-					<ColumnDefinition Width="Auto" />
+					<ColumnDefinition Width="auto" />
 
 				</Grid.ColumnDefinitions>
 
 				<Grid.RowDefinitions>
+					<RowDefinition Height="auto" />
 					<RowDefinition Height="Auto" />
+					<RowDefinition Height="Auto" />
+					<RowDefinition Height="auto" />
 					<RowDefinition Height="*" />
 				</Grid.RowDefinitions>
 
-				<CheckBox x:Name="CkBx_WkPlane"
-						Content="Display Work Plane"
-						Grid.Column="0"
+
+				<StackPanel Grid.Column="0"
 						Grid.Row="0"
-						Margin="0,0,0,0"
+						Orientation="Horizontal"
+						>
+					<TextBlock x:Name="Tblk_Rotation"
+							Margin="0,0,15,0"
+							Width="100"
+							VerticalAlignment="Center"
+							FontSize="11"
+							Text="View Rotation"
+							TextWrapping="Wrap"
+							/>
+
+					<TextBox x:Name="Tbx_ViewRotation"
+							Width="150"
+							Text="{Binding DistancesPrime.Rotation,
+														 Mode=OneWay,
+														 FallbackValue='0.00°'}"
+							Style="{StaticResource Unit.Tbx}"
+							/>
+				</StackPanel>
+
+
+				<CheckBox x:Name="CkBx_ShowMinWin"
+						Content="Show Mini Results Window"
+						Grid.Column="0"
+						Grid.Row="1"
+						Margin="0,5,0,0"
 						HorizontalAlignment="Left"
 						VerticalAlignment="Top"
 						Background="Transparent"
-						IsChecked="{Binding ShowWorkplane}"
+						IsChecked="{Binding CkBxShowMiniWin}"
 						>
 
 					<CheckBox.Resources>
 						<Style TargetType="{x:Type Path}">
-							<Setter Property="Stroke" Value="White"/>
-							<Setter Property="StrokeThickness" Value="1"/>
-							<Setter Property="Fill" Value="White"/>
+							<Setter Property="Stroke" Value="White" />
+							<Setter Property="StrokeThickness" Value="1" />
+							<Setter Property="Fill" Value="White" />
 						</Style>
 					</CheckBox.Resources>
 				</CheckBox>
 
+				<CheckBox x:Name="CkBx_UseMinWin"
+						Content="Only Use Mini Results Window"
+						Grid.Column="0"
+						Grid.Row="2"
+						Margin="0,5,0,0"
+						HorizontalAlignment="Left"
+						VerticalAlignment="Top"
+						Background="Transparent"
+						IsChecked="{Binding CkBxHideMain}"
+						>
+
+					<CheckBox.Resources>
+						<Style TargetType="{x:Type Path}">
+							<Setter Property="Stroke" Value="White" />
+							<Setter Property="StrokeThickness" Value="1" />
+							<Setter Property="Fill" Value="DarkGray" />
+						</Style>
+					</CheckBox.Resources>
+				</CheckBox>
+
+
+				<!--  <CheckBox x:Name="CkBx_WkPlane"  -->
+				<!--  Content="Display Work Plane"  -->
+				<!--  Grid.Column="0"  -->
+				<!--  Grid.Row="3"  -->
+				<!--  Margin="0,5,0,0"  -->
+				<!--  HorizontalAlignment="Left"  -->
+				<!--  VerticalAlignment="Top"  -->
+				<!--  Background="Transparent"  -->
+				<!--  IsChecked="{Binding ShowWorkplane}"  -->
+				<!--  >  -->
+				<!--    -->
+				<!-- 	<CheckBox.Resources> -->
+				<!-- 		<Style TargetType="{x:Type Path}"> -->
+				<!-- 			<Setter Property="Stroke" Value="White" /> -->
+				<!-- 			<Setter Property="StrokeThickness" Value="1" /> -->
+				<!-- 			<Setter Property="Fill" Value="White" /> -->
+				<!-- 		</Style> -->
+				<!-- 	</CheckBox.Resources> -->
+				<!-- </CheckBox> -->
+
+
+
 				<TextBlock x:Name="Tblk_Msg"
 						Grid.Column="0"
-						Grid.Row="1"
+						Grid.Row="4"
 						Margin="0,10,15,0"
-						VerticalAlignment="Stretch"
+						VerticalAlignment="Top"
 						FontSize="11"
-						Text="{Binding MessageBoxText, FallbackValue='Today Tomorrow Yesterday'}"
+						Text="{Binding MessageBoxText2,
+													 FallbackValue='Today Tomorrow Yesterday'}"
 						TextWrapping="Wrap"
 						/>
 				<!--  Text="{Binding MessageBoxText, FallbackValue='Today&#013;Tomorrow&#013;Yesterday'}"  -->
 
-
-				<StackPanel
-						Grid.Column="1"
+				<Grid Grid.Column="1"
 						Grid.Row="0"
-						Grid.RowSpan="2"
-						HorizontalAlignment="right"
+						Grid.RowSpan="5"
 						VerticalAlignment="Bottom"
-						Orientation="Vertical"
+						HorizontalAlignment="Right"
 						>
-					<StackPanel
-							VerticalAlignment="Bottom"
-							Orientation="Horizontal"
-							HorizontalAlignment="right"
-							>
 
-						<Button x:Name="Btn_Debug"
-								Visibility="Collapsed"
-								Content="Debug"
-								Height="{StaticResource Normal.Button.Height}"
-								Width="{StaticResource Normal.Button.Width}"
-								Margin="5,5,0,0"
-								Style="{StaticResource Button.Dark.Style}"
-								Template="{StaticResource Button.Normal.ControlTemplate}"
-								Click="Btn_Debug_OnClick"
-								/>
+					<Grid.ColumnDefinitions>
+						<ColumnDefinition Width="Auto" />
+						<ColumnDefinition Width="Auto" />
+					</Grid.ColumnDefinitions>
 
-						<Button
-								Content="Help"
-								Height="{StaticResource Normal.Button.Height}"
-								Width="{StaticResource Normal.Button.Width}"
-								Margin="5,5,0,0"
-								Style="{StaticResource Button.Dark.Style}"
-								Template="{StaticResource Button.Normal.ControlTemplate}"
+					<Grid.RowDefinitions>
+						<RowDefinition Height="*" />
+						<RowDefinition Height="*" />
+						<RowDefinition Height="*" />
+					</Grid.RowDefinitions>
 
-								Click="BtnHelp_OnClick"
-								/>
+					<Button x:Name="Btn_Debug"
+							Content="Debug"
+							Grid.Column="0"
+							Grid.Row="0"
+							Margin="5,5,0,0"
+							Width="{StaticResource Normal.Button.Width}"
+							Height="{StaticResource Normal.Button.Height}"
+							Visibility="Collapsed"
+							Style="{StaticResource Button.Dark.Style}"
+							Template="{StaticResource Button.Normal.ControlTemplate}"
+							Click="Btn_Debug_OnClick"
+							/>
 
-						<Button x:Name="BtnAbout"
-								Content="About"
-								Height="{StaticResource Normal.Button.Height}"
-								Width="{StaticResource Normal.Button.Width}"
-								Margin="5,5,0,0"
-								Style="{StaticResource Button.Dark.Style}"
-								Template="{StaticResource Button.Normal.ControlTemplate}"
-								Click="BtnAbout_OnClick"
-								/>
+					<Button Content="Help"
+							Grid.Column="1"
+							Grid.Row="1"
+							Margin="5,5,0,0"
+							Width="{StaticResource Normal.Button.Width}"
+							Height="{StaticResource Normal.Button.Height}"
+							Style="{StaticResource Button.Dark.Style}"
+							Template="{StaticResource Button.Normal.ControlTemplate}"
+							Click="BtnHelp_OnClick"
+							/>
+
+					<Button x:Name="BtnAbout"
+							Content="About"
+							Grid.Column="1"
+							Grid.Row="0"
+							Margin="5,5,0,0"
+							Width="{StaticResource Normal.Button.Width}"
+							Height="{StaticResource Normal.Button.Height}"
+							Style="{StaticResource Button.Dark.Style}"
+							Template="{StaticResource Button.Normal.ControlTemplate}"
+							Click="BtnAbout_OnClick"
+							/>
+
+					<Button x:Name="Btn_SelPoints"
+							Content="Select Points"
+							Grid.Column="0"
+							Grid.Row="2"
+							Margin="5,5,0,0"
+							Width="{StaticResource Normal.Button.Width}"
+							Height="{StaticResource Normal.Button.Height}"
+							Style="{StaticResource Button.Dark.Style}"
+							Template="{StaticResource Button.Normal.ControlTemplate}"
+							Click="Btn_SelPoints_OnClick"
+							/>
 
 
-					</StackPanel>
+					<Button x:Name="BtnDone"
+							Content="Done"
+							Grid.Column="1"
+							Grid.Row="2"
+							Margin="5,5,0,0"
+							Width="{StaticResource Normal.Button.Width}"
+							Height="{StaticResource Normal.Button.Height}"
+							Style="{StaticResource Button.Dark.Style}"
+							Template="{StaticResource Button.Normal.ControlTemplate}"
+							Click="BtnDone_OnClick"
+							/>
 
-					<StackPanel
-							VerticalAlignment="Bottom"
-							Orientation="Horizontal"
-							HorizontalAlignment="right"
-							>
-						<Button x:Name="Btn_SelPoints"
-								Content="Select Points"
-								Height="{StaticResource Normal.Button.Height}"
-								Width="{StaticResource Normal.Button.Width}"
-								Margin="5,5,0,0"
-								Style="{StaticResource Button.Dark.Style}"
-								Template="{StaticResource Button.Normal.ControlTemplate}"
-								Click="Btn_SelPoints_OnClick"
-								/>
-
-						<Button x:Name="BtnDone"
-								Content="Done"
-								Height="{StaticResource Normal.Button.Height}"
-								Width="{StaticResource Normal.Button.Width}"
-								Margin="5,5,0,0"
-								Style="{StaticResource Button.Dark.Style}"
-								Template="{StaticResource Button.Normal.ControlTemplate}"
-								Click="BtnDone_OnClick"
-								/>
-					</StackPanel>
-
-				</StackPanel>
-
+				</Grid>
 			</Grid>
 		</Border>
 	</Grid>
 
-</local:AWindow>
+</Window>

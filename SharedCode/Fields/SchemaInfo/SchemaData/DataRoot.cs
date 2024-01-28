@@ -17,7 +17,25 @@ namespace SharedCode.Fields.SchemaInfo.SchemaData
 		public override KeyValuePair<SchemaDataStorType, string> DataStorType { get; } = SchemaConstants.SchemaTypeRoot;
 
 		public DataRoot(
-			AFieldsTemp<SchemaRootKey> fields, int idxCount = 1) : base(fields, idxCount) { }
+			AFieldsTemp<SchemaRootKey> fields, int idxCount = 1) : base(fields, idxCount)
+		{
+
+			DataRoot dr = new DataRoot(null, 1);
+
+			//
+			// Dictionary<SchemaRootKey, AFieldsMembers<SchemaRootKey>> a = dr.Fields;
+			// int b = dr.DataIndex;
+			// int c = dr.DataIndexMaxAllowed;
+			// int d = dr.dataIndexCurrent;
+			// int e = dr.dataIndexMaxAllowed;
+			// KeyValuePair<SchemaDataStorType, string> f = dr.DataStorType;
+			// string g = dr.SchemaCreateDate;
+			// Dictionary<SchemaRootKey, AFieldsMembers<SchemaRootKey>> h = dr.Fields;
+			// Dictionary<SchemaRootKey, ADataMembers<SchemaRootKey>> i = dr.Data;
+			// AFieldsTemp<SchemaRootKey> j = dr.FieldsData;
+			// List<Dictionary<SchemaRootKey, ADataMembers<SchemaRootKey>>> k = dr.ListOfDataDictionaries;
+
+		}
 
 		
 		public override string SchemaName => ((DataMembers<SchemaRootKey, string>)ListOfDataDictionaries[0][SchemaRootKey.RK_SCHEMA_NAME]).Value;
