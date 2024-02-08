@@ -14,7 +14,8 @@ namespace CsDeluxMeasure.RevitSupport.ExtEvents
 {
 	public enum ExtEvtId
 	{
-		EI_GETPOINTS
-
+		EI_NONE,
+		EI_MEASURE,
+		// EI_SELECTPOINTS
 	}
 }

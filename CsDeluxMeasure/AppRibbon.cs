@@ -7,7 +7,7 @@ using System.Diagnostics;
 using System.Dynamic;
 using System.Windows;
 using System.Windows.Controls;
-
+using System.Windows.Input;
 using CsDeluxMeasure.RevitSupport;
 using CsDeluxMeasure.UnitsUtil;
 using CsDeluxMeasure.Windows;
@@ -36,7 +36,10 @@ namespace CsDeluxMeasure
 	{
 		public Result OnShutdown(UIControlledApplication a)
 		{
-			if (Mw != null && Mw.IsVisible) Mw.Close();
+			R.Shutdown();
+
+			R.UcApp.DialogBoxShowing -= App_DialogBoxShowing;
+			R.UcApp.Idling -= App_Idling;
 
 			return Result.Succeeded;
 		}
@@ -97,37 +100,45 @@ namespace CsDeluxMeasure
 
 		public static SplitButton sb { get; set; }
 
-		public static UIApplication UiApp;
-		public static UIDocument UiDoc ;
-		public static Application App;
-		public static Document Doc;
-
-		
+		// public static UIApplication UiApp;
+		// public static UIDocument UiDoc ;
+		// public static Application App;
+		// public static Document Doc;
+		//
+		// public static MainWindow Mw;
+		// public static MiniMain Mm;
+		// public static DxMeasure Dx;
+		//
 		/* objects  */
 
 		public static AppRibbon Me;
-
-		public static MainWindow Mw;
-		public static MiniMain Mm;
-		public static DxMeasure Dx;
 
 		// private UnitStyles us;
 		private UnitsManager uMgr;
 
 		public Result OnStartup(UIControlledApplication app)
 		{
-			// ControlledApplication ctrldApp = app.ControlledApplication;
-			// AddInLocation = ctrldApp.CurrentUserAddinsLocation;
+			ControlledApplication ctrldApp = app.ControlledApplication;
+			AddInLocation = ctrldApp.CurrentUserAddinsLocation;
 
 			R.UcApp = app;
 
 			app.DialogBoxShowing += App_DialogBoxShowing;
 			app.Idling += App_Idling;
 
-			Me = this;
+
+			W = RevitLibrary.RvtLibrary.WindowHandle(app.MainWindowHandle);
 
 			try
 			{
+				// W.Activated += WOnActivated;
+				// W.Deactivated += WOnDeactivated;
+				// W.PreviewKeyDown += WOnPreviewKeyDown;
+				// W.KeyDown += WOnPreviewKeyDown;
+				// W.AddHandler(Keyboard.PreviewKeyDownEvent, 
+				// 	new RoutedEventHandler(WOnPreviewKeyDown2), true);
+
+				
 				uMgr = UnitsManager.Instance;
 
 				uMgr.Config();
@@ -203,18 +214,45 @@ namespace CsDeluxMeasure
 
 			return Result.Succeeded;
 		}
-		
+
+		//
+		// private void WOnPreviewKeyDown(object sender, KeyEventArgs e)
+		// {
+		// 	Debug.WriteLine($"revit| got key down| {e.Key.ToString()}");
+		// }
+		//
+		//
+		// private void WOnPreviewKeyDown2(object sender, RoutedEventArgs a)
+		// {
+		// 	string src = ((FrameworkElement) a.Source).Name;
+		// 	string name = ((FrameworkElement) sender).Name;
+		//
+		// 	object o = a.Source;
+		//
+		// 	Debug.WriteLine($"revit| got key down 2");
+		// }
+
+		// private void WOnDeactivated(object sender, EventArgs e)
+		// {
+		// 	Debug.WriteLine("<< revit deactivated");
+		// }
+		//
+		// private void WOnActivated(object sender, EventArgs e)
+		// {
+		// 	Debug.WriteLine(">> revit activated");
+		// }
+
 		private void App_Idling(object sender, Autodesk.Revit.UI.Events.IdlingEventArgs e)
 		{
 			if (!unitsDialogDisplayed) { return; }
 
 			unitsDialogDisplayed = false;
 
-			if (Mw==null) { return; }
+			if (R.Mw==null) { return; }
 
-			Mw.UnitsDialogBoxDisplayed = true;
+			R.Mw.UnitsDialogBoxDisplayed = true;
 
-			Debug.WriteLine("Now Idling");
+			// Debug.WriteLine("Now Idling");
 		}
 
 		private void App_DialogBoxShowing(object sender, Autodesk.Revit.UI.Events.DialogBoxShowingEventArgs e)

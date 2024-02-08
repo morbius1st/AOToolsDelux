@@ -30,6 +30,7 @@ namespace CsDeluxMeasure.RevitSupport
 			OTHER,
 			D2_WITHPLANE,
 			D2_WITHOUTPLANE,
+			D2_NOPLANE,
 			D3_WITHPLANE
 		}
 
@@ -85,9 +86,13 @@ namespace CsDeluxMeasure.RevitSupport
 					VTtypeCat.D3_WITHPLANE, "3D View");
 				break;
 			case ViewType.Detail:
+				vtype = new VType(VTypeSub.D2_DRAFTING,
+					VTtypeCat.D2_WITHOUTPLANE, "Detail View");
+				break;
+			case ViewType.Legend:
 			case ViewType.DraftingView:
 				vtype = new VType(VTypeSub.D2_DRAFTING,
-					VTtypeCat.D2_WITHOUTPLANE, "Drafting View");
+					VTtypeCat.D2_NOPLANE, "Drafting View");
 				break;
 			case ViewType.DrawingSheet:
 				vtype = new VType(VTypeSub.D2_SHEET,
@@ -116,6 +121,8 @@ namespace CsDeluxMeasure.RevitSupport
 
 	public struct PointMeasurements
 	{
+		public bool Is3D { get; set; }
+
 		public string version;
 
 		internal bool IsValid { get; private set; }
@@ -140,6 +147,12 @@ namespace CsDeluxMeasure.RevitSupport
 		internal double Yz { get; }
 		internal double Xyz { get; }
 
+		internal double AngleXy { get; }
+		internal double AngleXz { get; }
+		internal double AngleYz { get; }
+		internal double AngleXyz { get; }
+
+
 		internal double Rotation { get; }
 
 		private double area;
@@ -149,11 +162,12 @@ namespace CsDeluxMeasure.RevitSupport
 			get => area;
 			private set => area = value;
 		}
-			
 
-		public PointMeasurements(  XYZ p1, XYZ p2, XYZ origin, double rotation)
+		public PointMeasurements(XYZ p1, XYZ p2, XYZ origin, double rotation, bool is3D = false)
 		{
-			version = "2.0";
+			version = "3.0";
+
+			Is3D = is3D;
 
 			P1 = p1 - origin;
 			P2 = p2 - origin;
@@ -181,6 +195,11 @@ namespace CsDeluxMeasure.RevitSupport
 			Yz = Math.Sqrt(sqDelta.Y + sqDelta.Z);
 
 			Xyz = Math.Sqrt(sqDelta.X + sqDelta.Y + sqDelta.Z);
+
+			AngleXy = delta.Y != 0 ? Math.Atan(delta.X / delta.Y) : 0.0;
+			AngleXz = delta.X != 0 ? Math.Atan(delta.Z / delta.X) : 0.0;
+			AngleYz = delta.Y != 0 ? Math.Atan(delta.Z / delta.Y) : 0.0;
+			AngleXyz = Xy != 0 ? Math.Atan(delta.Z / Xy) : 0.0;
 
 			IsValid = true;
 			IsVoid = false;
@@ -296,6 +315,11 @@ namespace CsDeluxMeasure.RevitSupport
 
 		public string Rotation => formatRotation(points.Rotation);
 
+		public string A_XY => formatAngle(points.AngleXy);
+		public string A_XZ => formatAngle(points.AngleXz);
+		public string A_YZ => formatAngle(points.AngleYz);
+		public string A_XYZ => formatAngle(points.AngleXyz);
+
 		private string format(double? d)
 		{
 			if (udr == null) return "undefined";
@@ -330,6 +354,14 @@ namespace CsDeluxMeasure.RevitSupport
 
 			return $"{decRotation:##.00##°}";
 		}
+
+		private string formatAngle(double? d)
+		{
+			double decRotation = d.Value * (180 / Math.PI);
+
+			return $"{decRotation:##.00##°}";
+		}
+
 
 		public event PropertyChangedEventHandler PropertyChanged;
 

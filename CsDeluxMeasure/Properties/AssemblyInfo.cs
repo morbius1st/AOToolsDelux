@@ -12,8 +12,8 @@ using System.Windows;
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("CyberStudio")]
 [assembly: AssemblyProduct("CsDeluxMeasure Revit C# .NET Add-In")]
-[assembly: AssemblyCopyright("Copyright 2023 (C) Jeff Stuyvesant, CyberStudio")]
-[assembly: AssemblyTrademark("2023")]
+[assembly: AssemblyCopyright("Copyright 2024 (C) Jeff Stuyvesant, CyberStudio")]
+[assembly: AssemblyTrademark("2024")]
 [assembly: AssemblyCulture("")]
 
 // Setting ComVisible to false makes the types in this assembly not visible
@@ -22,7 +22,7 @@ using System.Windows;
 [assembly: ComVisible(false)]
 
 // The following GUID is for the ID of the typelib if this project is exposed to COM
-[assembly: Guid("24866c5d-fc76-4b03-8069-4a71a0e28d60")]
+[assembly: Guid("14866c5d-fc76-4b03-8069-4a71a0e28d60")]
 
 //In order to begin building localizable applications, set
 //<UICulture>CultureYouAreCodingWith</UICulture> in your .csproj file
@@ -53,5 +53,5 @@ using System.Windows;
 // You can specify all the values or you can default the Build and Revision Numbers
 // by using the '*' as shown below:
 // [assembly: AssemblyVersion("1.0.*")]
-[assembly: AssemblyVersion("1.0.0.0")]
-[assembly: AssemblyFileVersion("1.0.0.0")]
+[assembly: AssemblyVersion("1.3.0.0")]
+[assembly: AssemblyFileVersion("1.3.0.0")]

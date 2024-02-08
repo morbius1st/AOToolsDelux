@@ -28,9 +28,9 @@ namespace Tests01.Functions.GetPoint
 
 		public bool Execute()
 		{
-
 			vd=new ViewData();
 
+			bool result = true;
 			SketchPlane origSp;
 			XYZ startPt;
 			XYZ foundPt;
@@ -39,7 +39,7 @@ namespace Tests01.Functions.GetPoint
 
 			origSp = v.SketchPlane;
 
-			bool result = RevitUtils.isView3D(v);
+			result = RevitUtils.isView3D(v);
 
 			View3D v3d = v as View3D;
 
@@ -126,7 +126,7 @@ namespace Tests01.Functions.GetPoint
 			if (ri == null)
 			{
 				ri = new ReferenceIntersector(v3d);
-				ri.TargetType = FindReferenceTarget.Edge;
+				ri.TargetType = FindReferenceTarget.All;
 			}
 
 			ReferenceWithContext ric = ri.FindNearest(origin, viewDir);

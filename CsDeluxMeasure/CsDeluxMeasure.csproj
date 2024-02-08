@@ -56,9 +56,11 @@
     <PlatformTarget>AnyCPU</PlatformTarget>
     <LangVersion>7.3</LangVersion>
     <ErrorReport>prompt</ErrorReport>
+    <RvtVersion>2021</RvtVersion>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Rvt22Rel|AnyCPU'">
     <OutputPath>bin\Release\</OutputPath>
+    <RvtVersion>2022</RvtVersion>
     <DefineConstants>USER_SETTINGS, APP_SETTINGS, SUITE_SETTINGS, MACH_SETTINGS, SITE_SETTINGS</DefineConstants>
   </PropertyGroup>
   <ItemGroup>
@@ -67,11 +69,11 @@
       <HintPath>..\..\..\..\..\..\..\..\Program Files\Autodesk\Revit 2021\RevitAddInUtility.dll</HintPath>
     </Reference>
     <Reference Include="RevitAPI">
-      <HintPath>C:\Program Files\Autodesk\Revit 2021\RevitAPI.dll</HintPath>
+      <HintPath>..\..\..\..\..\..\..\..\Program Files\Autodesk\Revit 2022\RevitAPI.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="RevitAPIUI">
-      <HintPath>C:\Program Files\Autodesk\Revit 2021\RevitAPIUI.dll</HintPath>
+      <HintPath>..\..\..\..\..\..\..\..\Program Files\Autodesk\Revit 2022\RevitAPIUI.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="System" />
@@ -302,9 +304,9 @@
   <PropertyGroup>
     <PostBuildEvent>echo Building: $(ConfigurationName)
 echo Testing Revit Version: $(RvtVersion)
-if exist "$(AppData)\Autodesk\REVIT\Addins\$(RvtVersion)" copy "$(ProjectDir)$(OutputPath)$(TargetFileName)" "$(AppData)\Autodesk\REVIT\Addins\$(RvtVersion)"
 if exist "$(AppData)\Autodesk\REVIT\Addins\$(RvtVersion)" copy "$(ProjectDir)other\Addin.addin" "$(AppData)\Autodesk\REVIT\Addins\$(RvtVersion)\$(TargetName).addin"
-if exist "$(AppData)\Autodesk\REVIT\Addins\$(RvtVersion)" xcopy /i/y/s/e "$(ProjectDir)other\Help Files" "$(AppData)\Autodesk\REVIT\Addins\$(RvtVersion)\Resources"
+if exist "$(AppData)\Autodesk\REVIT\Addins\$(RvtVersion)" xcopy /i/y/s/e "$(ProjectDir)other\Help Files" "$(AppData)\Autodesk\REVIT\Addins\$(RvtVersion)\CsDeluxMeasure"
+if exist "$(AppData)\Autodesk\REVIT\Addins\$(RvtVersion)" copy "$(ProjectDir)$(OutputPath)$(TargetFileName)" "$(AppData)\Autodesk\REVIT\Addins\$(RvtVersion)\CsDeluxMeasure"
 
 	</PostBuildEvent>
   </PropertyGroup>

@@ -15,6 +15,8 @@ using System.Windows;
 
 using static CsDeluxMeasure.RevitSupport.RevitUtil;
 using CsDeluxMeasure.Windows;
+using SettingsManager;
+using Tests01.RevitSupport;
 using UtilityLibrary;
 
 #endregion
@@ -28,21 +30,26 @@ namespace CsDeluxMeasure.RevitSupport
 	{
 			#region private fields
 
-		private UIDocument uiDoc;
+		// private UIDocument uiDoc;
 
-		private Window revitWindow;
+		// private Window revitWindow;
 
 		private PointMeasurements points;
+
+		private ReferenceIntersector ri;
+
+		private XYZ viewDir;
+		private View3D v3d;
 
 	#endregion
 
 	#region ctor
 
-		public DxMeasure(UIDocument uiDoc)  //  , Window revitWindow)
+		public DxMeasure()  //  , Window revitWindow)
 		{
-			this.uiDoc = uiDoc;
-
-			revitWindow = RevitLibrary.RvtLibrary.WindowHandle(uiDoc.Application.MainWindowHandle);
+			// this.uiDoc = uiDoc;
+			//
+			// revitWindow = RevitLibrary.RvtLibrary.WindowHandle(uiDoc.Application.MainWindowHandle);
 
 			// this.revitWindow = revitWindow;
 		}
@@ -57,12 +64,48 @@ namespace CsDeluxMeasure.RevitSupport
 
 	#region private properties
 
-		private UIDocument _uiDoc => uiDoc;
-		private Document _doc => uiDoc.Document;
+		// private UIDocument _uiDoc => uiDoc;
+		// private Document _doc => uiDoc.Document;
 
 	#endregion
 
 	#region public methods
+
+		public bool MeasurePoints()
+		{
+			bool result;
+
+			R.ActivateRevit();
+
+			/*
+			using (TransactionGroup tg = new TransactionGroup(R.Doc, "Delux Measure"))
+			{
+				tg.Start();
+				{
+					// get the points
+				}
+				tg.RollBack();
+			}
+			*/
+
+			result = Measure();
+
+			if (!result) return result;
+
+			UserSettings.Admin.Read();
+
+			UpdatePoints();
+
+			return result;
+		}
+
+		public void UpdatePoints()
+		{
+			R.Mw.Points = R.Dx.Points;
+			R.Mw.init();
+			R.Mm.Points = R.Dx.Points;
+		}
+
 
 		public void SetPointsToZero()
 		{
@@ -72,19 +115,32 @@ namespace CsDeluxMeasure.RevitSupport
 
 		public bool Measure()
 		{
-			// M.W.WriteLine1("\nmeasure-begin");
+			
+			// R.UpdateDoc();
 
 			bool result;
 
-			View av = _doc.ActiveView;
+			View av = R.Doc.ActiveView;
+
+			View av2 = R.UiDoc.ActiveGraphicalView;
+			bool b1 = R.Doc.IsFamilyDocument;
+
 			RevitUtil.VType vtype = RevitUtil.GetViewType(av);
 
-			dxPrepPlane(av, vtype);
-			result = dxMeasurePoints(av, vtype);
+			using (Transaction t = new Transaction(R.Doc, "Delux Measure Points"))
+			{
+				t.Start();
+				{
+					v3d = av as View3D;
 
-			// Debug.WriteLine("end measure");
+					if (!dxPrepPlane(av, vtype)) return false;
 
-			// M.W.WriteLine1("measure-end\n");
+					result = dxMeasurePoints(av, vtype);
+				}
+
+				t.RollBack();
+			}
+
 			return result;
 		}
 
@@ -92,38 +148,40 @@ namespace CsDeluxMeasure.RevitSupport
 
 	#region private methods
 
-		// view does not have a sketchplane
-		private void dxPrepPlane(View av, RevitUtil.VType vtype)
+		// does view have a viable work plane (or does not need one)
+		private bool dxPrepPlane(View av, RevitUtil.VType vtype)
 		{
-
 			Plane plane = av.SketchPlane?.GetPlane();
 
-			if (plane == null && (vtype.VTCat == RevitUtil.VTtypeCat.D2_WITHPLANE
-				|| vtype.VTCat == RevitUtil.VTtypeCat.D3_WITHPLANE))
+			viewDir = av.ViewDirection.Negate();
+
+			try
 			{
-				// cannot use the current workplane - make a good one
-				using (Transaction t = new Transaction(_doc, "Delux Measure Points"))
+				if ((plane == null && (
+					vtype.VTCat == VTtypeCat.D2_WITHPLANE || 
+					vtype.VTCat == VTtypeCat.D2_WITHOUTPLANE))
+					|| vtype.VTCat == VTtypeCat.D3_WITHPLANE)
 				{
-					t.Start();
-					{
-						plane = Plane.CreateByNormalAndOrigin(
-							_doc.ActiveView.ViewDirection,
-							new XYZ(0, 0, 0));
+					plane = Plane.CreateByNormalAndOrigin(
+						R.Doc.ActiveView.ViewDirection,
+						av.Origin);
+						// new XYZ(0, 0, 0));
 
-						SketchPlane sp = SketchPlane.Create(_doc, plane);
+					SketchPlane sp = SketchPlane.Create(R.Doc, plane);
 
-						av.SketchPlane = sp;
-
-						// av.ShowActiveWorkPlane();
-					}
-					t.Commit();
+					av.SketchPlane = sp;
+					
 				}
 			}
+			catch 
+			{
+				return false;
+			}
 
-			// Debug.WriteLine("end prep plane");
+			return true;
 		}
 
-		private bool dxMeasurePoints(View av, RevitUtil.VType vtype)
+		private bool dxMeasurePoints(View av, VType vtype)
 		{
 			// Debug.WriteLine("begin measure points");
 
@@ -131,25 +189,37 @@ namespace CsDeluxMeasure.RevitSupport
 			// XYZ actualOrigin = XYZ.Zero;
 			XYZ workingOrigin = XYZ.Zero;
 
-			if (RevitUtil.IsPlaneOrientationAcceptable(_uiDoc))
+			// bool b1 = RevitUtil.IsPlaneOrientationAcceptable(R.UiDoc);
+			// bool b2 = vtype.VTCat == VTtypeCat.D2_WITHOUTPLANE;
+			// bool b3 = b1 || b2;
+
+
+			if (RevitUtil.IsPlaneOrientationAcceptable(R.UiDoc)
+				// || vtype.VTCat == VTtypeCat.D2_WITHOUTPLANE
+				|| vtype.VTCat == VTtypeCat.D2_NOPLANE
+				)
 			{
-				Plane p = av.SketchPlane?.GetPlane();
-				string planeName = av.SketchPlane?.Name ?? "No Name";
-
-				if (p != null)
+				if (vtype.VTCat != VTtypeCat.D2_WITHOUTPLANE)
 				{
-					// normal = p.Normal;
-					// actualOrigin = p.Origin;
 
-					if (vtype.VTSub != VTypeSub.D3_VIEW)
+					Plane p = av.SketchPlane?.GetPlane();
+					string planeName = av.SketchPlane?.Name ?? "No Name";
+
+					if (p != null)
 					{
-						workingOrigin = p.Origin;
-					}
-				}
+						// normal = p.Normal;
+						// actualOrigin = p.Origin;
 
+						if (vtype.VTSub != VTypeSub.D3_VIEW)
+						{
+							workingOrigin = p.Origin;
+						}
+					}
+					
+				}
 				// Debug.WriteLine("end 1 measure points");
 
-				return dxGetPoints(workingOrigin);
+				return dxGetPoints(workingOrigin, vtype.VTCat == VTtypeCat.D3_WITHPLANE);
 			}
 			else
 			{
@@ -169,48 +239,26 @@ namespace CsDeluxMeasure.RevitSupport
 			return false;
 		}
 
-		private bool dxGetPoints(XYZ workingOrigin)
+		private bool dxGetPoints(XYZ workingOrigin, bool is3D)
 		{
 			// Debug.WriteLine("begin get points");
 
-			points = GetPts(workingOrigin);
+			points = GetPts(workingOrigin, is3D);
 
 			if (points.IsVoid)
 			{
-				// Debug.WriteLine("end 3 get points");
 				return false;
 			}
 			else
 			if (!points.IsValid)
 			{
 				return false;
-
-
-				/*
-				TaskDialog td = new TaskDialog("Invalid Points Selected");
-				td.MainIcon = TaskDialogIcon.TaskDialogIconWarning;
-				td.MainInstruction = "Please select two points to proceed";
-				td.CommonButtons = TaskDialogCommonButtons.Cancel | TaskDialogCommonButtons.Retry;
-				td.DefaultButton = TaskDialogResult.Retry;
-
-				TaskDialogResult tdResult = td.Show();
-
-				if (tdResult == TaskDialogResult.Cancel)
-				{
-					// Debug.WriteLine("end 2 get points");
-
-					return false;
-				}
-				*/
-
 			}
-
-			// Debug.WriteLine("end 1 get points");
 
 			return true;
 		}
 
-		private PointMeasurements GetPts(XYZ workingOrigin)
+		private PointMeasurements GetPts(XYZ workingOrigin, bool is3D)
 		{
 			// Debug.WriteLine("begin getPts");
 
@@ -219,22 +267,21 @@ namespace CsDeluxMeasure.RevitSupport
 			double rotation;
 			bool atPtOne = true;
 
-
 			try
 			{
-				View avStart = _doc.ActiveView;
+				View avStart = R.Doc.ActiveView;
 
 				rotation = Math.Atan(avStart.UpDirection.X / avStart.UpDirection.Y);
 
 				// Transform t = Transform.CreateRotation(XYZ.BasisZ, rotation);
 				
-				startPoint = _uiDoc.Selection.PickPoint(snaps, "Select Point");
+				startPoint = R.UiDoc.Selection.PickPoint(snaps, "Select Point");
 				// startPoint = _uiDoc.Selection.PickPoint("Select Point");
 
 				atPtOne = false;
 
 				if (startPoint == null) return PointMeasurements.InValid();
-				View avEnd = _doc.ActiveView;
+				View avEnd = R.Doc.ActiveView;
 
 				// cannot change views between points
 				if (avStart.Id.IntegerValue != avEnd.Id.IntegerValue)
@@ -242,9 +289,16 @@ namespace CsDeluxMeasure.RevitSupport
 					return PointMeasurements.InValid();
 				}
 				// endPoint = _uiDoc.Selection.PickPoint(snaps, "Select Point");
-				endPoint = _uiDoc.Selection.PickPoint("Select Point");
+				endPoint = R.UiDoc.Selection.PickPoint("Select Point");
 
 				if (endPoint == null) return PointMeasurements.InValid();
+
+				if (is3D)
+				{
+					startPoint = find3Dpoint(startPoint);
+					endPoint = find3Dpoint(endPoint);
+					rotation = 0;
+				}
 
 			}
 			catch
@@ -254,9 +308,9 @@ namespace CsDeluxMeasure.RevitSupport
 					return PointMeasurements.SetVoid();
 				}
 
-				revitWindow.Activate();
+				R.ActivateRevit();
 
-				User32dll.SendKeyCode(0x01);
+				ApiCalls.SendKeyCode(0x01);
 
 				return PointMeasurements.SetVoid();
 
@@ -265,8 +319,26 @@ namespace CsDeluxMeasure.RevitSupport
 
 			// Debug.WriteLine("end getPts");
 
-			return new PointMeasurements(startPoint, endPoint, workingOrigin, rotation);
+			return new PointMeasurements(startPoint, endPoint, workingOrigin, rotation, is3D);
 		}
+
+		private XYZ find3Dpoint(XYZ origin)
+		{
+			if (ri == null)
+			{
+				ri = new ReferenceIntersector(v3d);
+				ri.TargetType = FindReferenceTarget.All;
+			}
+
+			ReferenceWithContext rc = ri.FindNearest(origin, viewDir);
+
+			if (rc == null) return origin;
+
+			Reference rf = rc.GetReference();
+
+			return rf.GlobalPoint;
+		}
+
 
 	#endregion
 
@@ -276,7 +348,7 @@ namespace CsDeluxMeasure.RevitSupport
 
 	#region event publishing
 
-		public event PropertyChangedEventHandler PropertyChanged;
+		private event PropertyChangedEventHandler PropertyChanged;
 
 		private void OnPropertyChanged([CallerMemberName] string memberName = "")
 		{

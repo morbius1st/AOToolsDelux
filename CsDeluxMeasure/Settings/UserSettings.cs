@@ -100,7 +100,7 @@ namespace SettingsManager
 		public bool ShowMiniWin { get; set; } = true;
 
 		[DataMember(Order = 3)]
-		public bool HideMain { get; set; } = true;
+		public bool OnlyUseMini { get; set; } = true;
 
 		[DataMember]
 		public WindowLocation WinPosUnitStyleMgr { get; set; }

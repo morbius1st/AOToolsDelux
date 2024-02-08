@@ -57,6 +57,8 @@
 			<GridLength x:Key="c2">90</GridLength>
 
 			<system:String x:Key="sample">99,999&apos;-11.999&quot;</system:String>
+			<system:String x:Key="sampleArea">123,456,789.123456 in2</system:String>
+			<system:String x:Key="sampleAngle">180.00°</system:String>
 
 			<SolidColorBrush x:Key="Unit.Background" Color="{StaticResource Gray.450}" />
 			<SolidColorBrush x:Key="Pick.Btn.Foreground.Disabled" Color="{StaticResource Gray.550}" />
@@ -348,23 +350,91 @@
 						Style="{StaticResource Unit.Value.Tblk}"
 						/>
 
-				<!--  AREA  -->
+
+				<!--  begin xy angle  -->
+				<TextBlock Grid.Column="3"
+						Grid.Row="2"
+						Text="XY°"
+						>
+					<TextBlock.Style>
+						<Style TargetType="TextBlock"
+								BasedOn="{StaticResource Unit.Ttl}"
+								>
+							<Setter Property="Visibility" Value="Collapsed" />
+							<Style.Triggers>
+								<DataTrigger Value="true" Binding="{Binding Prime.Points.Is3D}">
+									<Setter Property="Visibility" Value="Visible">
+									</Setter>
+								</DataTrigger>
+							</Style.Triggers>
+						</Style>
+					</TextBlock.Style>
+				</TextBlock>
+
+				<TextBlock x:Name="Tblk_AngXy"
+						Grid.Column="4"
+						Grid.Row="2"
+						Text="{Binding Prime.A_XY, Mode=OneWay, FallbackValue={StaticResource sampleAngle}}"
+						>
+					<TextBlock.Style>
+						<Style TargetType="TextBlock"
+								BasedOn="{StaticResource Unit.Value.Tblk}"
+								>
+							<Setter Property="Visibility" Value="Collapsed" />
+							<Style.Triggers>
+								<DataTrigger Value="true" Binding="{Binding Prime.Points.Is3D}">
+									<Setter Property="Visibility" Value="Visible" />
+								</DataTrigger>
+							</Style.Triggers>
+						</Style>
+					</TextBlock.Style>
+				</TextBlock>
+				<!--  end xy angle  -->
+
+
+				<!-- begin area  or xz angle  -->
 				<TextBlock Grid.Column="5"
 						Grid.Row="2"
-						Text="Area"
-						Style="{StaticResource Unit.Ttl}"
-						/>
-
-
+				>
+					<TextBlock.Style>
+						<Style TargetType="TextBlock"
+								BasedOn="{StaticResource Unit.Ttl}"
+								>
+							<Setter Property="Text" Value="Area">
+							</Setter>
+							<Style.Triggers>
+								<DataTrigger Value="true" Binding="{Binding Prime.Points.Is3D}">
+									<Setter Property="Text" Value="XZ°"/>
+								</DataTrigger>
+							</Style.Triggers>
+						</Style>
+					</TextBlock.Style>
+				</TextBlock>
 
 				<TextBlock x:Name="Tblk_Dist1Area"
 						Grid.Column="6"
 						Grid.Row="2"
-						Text="{Binding Prime.Area,
-													 Mode=OneWay,
-													 FallbackValue={StaticResource sample}}"
-						Style="{StaticResource Unit.Value.Tblk}"
-						/>
+						>
+					<TextBlock.Style>
+						<Style TargetType="TextBlock"
+								BasedOn="{StaticResource Unit.Value.Tblk}"
+								>
+							<Setter Property="Text" Value="{Binding Prime.Area, Mode=OneWay, FallbackValue={StaticResource sampleArea}}">
+							</Setter>
+							<Style.Triggers>
+								<DataTrigger Value="true" Binding="{Binding Prime.Points.Is3D}">
+									<Setter Property="Text" Value="{Binding Prime.A_XZ, Mode=OneWay}" />
+								</DataTrigger>
+							</Style.Triggers>
+						</Style>
+					</TextBlock.Style>
+				</TextBlock>
+				<!-- end area  or xz angle  -->
+
+
+
+
+				<!--  divider  -->
 
 				<Line x:Name="Line"
 						Grid.Column="0"
@@ -475,22 +545,86 @@
 						Style="{StaticResource Unit.Value.Tblk}"
 						/>
 
-				<!--  Area  -->
+				<!--  begin yz angle  -->
+				<TextBlock Grid.Column="3"
+						Grid.Row="6"
+						Text="YZ°"
+				>
+					<TextBlock.Style>
+						<Style TargetType="TextBlock"
+								BasedOn="{StaticResource Unit.Ttl}"
+						>
+							<Setter Property="Visibility" Value="Collapsed" />
+							<Style.Triggers>
+								<DataTrigger Value="true" Binding="{Binding Prime.Points.Is3D}">
+									<Setter Property="Visibility" Value="Visible">
+									</Setter>
+								</DataTrigger>
+							</Style.Triggers>
+						</Style>
+					</TextBlock.Style>
+				</TextBlock>
+
+				<TextBlock
+						Grid.Column="4"
+						Grid.Row="6"
+						Text="{Binding Prime.A_YZ, Mode=OneWay, FallbackValue={StaticResource sampleAngle}}"
+				>
+					<TextBlock.Style>
+						<Style TargetType="TextBlock"
+								BasedOn="{StaticResource Unit.Value.Tblk}"
+						>
+							<Setter Property="Visibility" Value="Collapsed" />
+							<Style.Triggers>
+								<DataTrigger Value="true" Binding="{Binding Prime.Points.Is3D}">
+									<Setter Property="Visibility" Value="Visible" />
+								</DataTrigger>
+							</Style.Triggers>
+						</Style>
+					</TextBlock.Style>
+				</TextBlock>
+				<!--  end xy angle  -->
+
+
+
+				<!-- begin area  or xyz angle  -->
 				<TextBlock Grid.Column="5"
 						Grid.Row="6"
-						Text="Area"
-						Style="{StaticResource Unit.Ttl}"
-						/>
+						>
+					<TextBlock.Style>
+						<Style TargetType="TextBlock"
+								BasedOn="{StaticResource Unit.Ttl}"
+								>
+							<Setter Property="Text" Value="Area">
+							</Setter>
+							<Style.Triggers>
+								<DataTrigger Value="true" Binding="{Binding Prime.Points.Is3D}">
+									<Setter Property="Text" Value="XYZ°"/>
+								</DataTrigger>
+							</Style.Triggers>
+						</Style>
+					</TextBlock.Style>
+				</TextBlock>
 
 				<TextBlock x:Name="Tblk_Dist2Area"
 						Grid.Column="6"
 						Grid.Row="6"
-						Text="{Binding Second.Area,
-													 Mode=OneWay,
-													 FallbackValue={StaticResource sample}}"
-						Style="{StaticResource Unit.Value.Tblk}"
-						/>
-
+						>
+					<TextBlock.Style>
+						<Style TargetType="TextBlock"
+								BasedOn="{StaticResource Unit.Value.Tblk}"
+								>
+							<Setter Property="Text" Value="{Binding Prime.Area, Mode=OneWay, FallbackValue={StaticResource sampleArea}}">
+							</Setter>
+							<Style.Triggers>
+								<DataTrigger Value="true" Binding="{Binding Prime.Points.Is3D}">
+									<Setter Property="Text" Value="{Binding Prime.A_XYZ, Mode=OneWay}" />
+								</DataTrigger>
+							</Style.Triggers>
+						</Style>
+					</TextBlock.Style>
+				</TextBlock>
+				<!-- end area  or xyz angle  -->
 
 
 			</Grid>

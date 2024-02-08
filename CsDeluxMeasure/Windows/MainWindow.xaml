@@ -1,5 +1,4 @@
-﻿<Window 
-		x:Name="WinMain"
+﻿<Window x:Name="WinMain"
 		x:Class="CsDeluxMeasure.Windows.MainWindow"
 		xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
 		xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
@@ -17,24 +16,27 @@
 		mc:Ignorable="d"
 		Background="{DynamicResource Normal.Window.Background}"
 		Foreground="White"
-		IsVisibleChanged="MainWindow_OnIsVisibleChanged"
 		ResizeMode="NoResize"
 		SizeToContent="WidthAndHeight"
 		Icon="/CsDeluxMeasure;component/Resources/CyberStudio Icon.png"
-		Loaded="MainWindow_OnLoaded"
-		Closing="MainWindow_OnClosing"
-		PreviewKeyDown="MainWin_ProcessF1"
-		PreviewKeyUp="MainWin_ProcessF1"
-		KeyDown="MainWin_ProcessF1"
-		KeyUp="MainWin_ProcessF1"
 		WindowStartupLocation="Manual"
 		Focusable="False"
+		Closing="MainWindow_OnClosing"
+		IsVisibleChanged="MainWindow_OnIsVisibleChanged"
+		Loaded="MainWindow_OnLoaded"
+		PreviewKeyDown ="MainWindow_OnPreviewKeyUp"
+		KeyDown="MainWin_ProcessF1"
+		KeyUp="MainWin_ProcessF1"
+		MouseEnter="MainWindow_OnMouseEnter"
+		MouseLeave="MainWindow_OnMouseLeave"
+		Activated="MainWindow_OnActivated"
 		>
-	<!--  DataContext="{Binding RelativeSource={RelativeSource Self}}"  -->
-	<!--  x:Name="MainWin"  -->
-	<!--  Control.KeyDown="MainWindow_OnKeyDown"  -->
-	<!--  Height="450"  -->
-	<!--    -->
+		<!-- GotKeyboardFocus="MainWindow_OnGotKeyboardFocus" -->
+		<!-- PreviewGotKeyboardFocus="MainWindow_OnPreviewGotKeyboardFocus" -->
+		<!-- GotFocus="MainWindow_OnGotFocus" -->
+		<!-- PreviewKeyDown="WinMain_PreviewKeyDown" -->
+		<!-- ContentRendered="WinMain_ContentRendered" -->
+
 	<Window.Resources>
 
 		<ResourceDictionary>
@@ -55,7 +57,7 @@
 
 			<GridLength x:Key="dc0">96</GridLength>
 			<GridLength x:Key="dc1">10</GridLength>
-			<GridLength x:Key="dc2">96</GridLength>
+			<GridLength x:Key="dc2">Auto</GridLength>
 
 			<GridLength x:Key="uc0">20</GridLength>
 			<GridLength x:Key="uc1">18</GridLength>
@@ -236,7 +238,9 @@
 			>
 
 		<Grid.ColumnDefinitions>
-			<ColumnDefinition Width="*" MinWidth="650"/>
+			<ColumnDefinition Width="*"
+					MinWidth="650"
+					/>
 			<ColumnDefinition Width="*" />
 
 		</Grid.ColumnDefinitions>
@@ -249,15 +253,13 @@
 			<RowDefinition Height="120" />
 		</Grid.RowDefinitions>
 
-		<StackPanel
-				Grid.Column="1"
+		<StackPanel Grid.Column="1"
 				Grid.Row="0"
 				Grid.RowSpan="5"
 				Width="500"
 				Visibility="Collapsed"
 				>
-			<TextBlock 
-					Margin="0,0,0,0"
+			<TextBlock Margin="0,0,0,0"
 					Width="150"
 					HorizontalAlignment="Left"
 					VerticalAlignment="Top"
@@ -265,14 +267,13 @@
 					Background="Black"
 					Foreground="White"
 					Text="{Binding PrimeArea,
-											 Mode=OneWay,
-											 FallbackValue='1st area 1',
-											 ConverterParameter='prime area 1',
-											 Converter={StaticResource ptc}}" />
+												 Mode=OneWay,
+												 FallbackValue='1st area 1',
+												 ConverterParameter='prime area 1',
+												 Converter={StaticResource ptc}}"
+					/>
 
-			<TextBlock 
-					
-					Margin="0,0,0,0"
+			<TextBlock Margin="0,0,0,0"
 					Width="150"
 					HorizontalAlignment="Left"
 					VerticalAlignment="Top"
@@ -280,13 +281,13 @@
 					Background="Black"
 					Foreground="White"
 					Text="{Binding DistancesPrime.Area,
-											 Mode=OneWay,
-											 FallbackValue='1st area 2',
-											 ConverterParameter='prime area 2',
-											 Converter={StaticResource ptc}}" />
+												 Mode=OneWay,
+												 FallbackValue='1st area 2',
+												 ConverterParameter='prime area 2',
+												 Converter={StaticResource ptc}}"
+					/>
 
-			<TextBlock 
-					Margin="0,10,0,0"
+			<TextBlock Margin="0,10,0,0"
 					Width="150"
 					HorizontalAlignment="Left"
 					VerticalAlignment="Top"
@@ -294,13 +295,13 @@
 					Background="Black"
 					Foreground="White"
 					Text="{Binding SecondArea,
-											 Mode=OneWay,
-											 FallbackValue='2nd area',
-											 ConverterParameter='second area',
-											 Converter={StaticResource ptc}}" />
+												 Mode=OneWay,
+												 FallbackValue='2nd area',
+												 ConverterParameter='second area',
+												 Converter={StaticResource ptc}}"
+					/>
 
-			<TextBox 
-					Margin="0,20,0,0"
+			<TextBox Margin="0,20,0,0"
 					Height="500"
 					MaxHeight="500"
 					VerticalAlignment="Top"
@@ -308,13 +309,13 @@
 					Background="Black"
 					Foreground="White"
 					Text="{Binding MessageBoxText,
-											 RelativeSource={RelativeSource AncestorType=local:MainWindow}}"
+												 RelativeSource={RelativeSource AncestorType=local:MainWindow}}"
 					ScrollViewer.HorizontalScrollBarVisibility="Visible"
 					ScrollViewer.VerticalScrollBarVisibility="Visible"
-					ScrollViewer.CanContentScroll="True" />
+					ScrollViewer.CanContentScroll="True"
+					/>
 
-			</StackPanel>
-
+		</StackPanel>
 
 		<TextBlock Grid.Column="0"
 				Grid.Row="0"
@@ -323,8 +324,6 @@
 				Background="Transparent"
 				Text="Note: Selected points are projected into the current Work Plane"
 				/>
-
-
 
 		<Border Grid.Column="0"
 				Grid.Row="1"
@@ -346,7 +345,8 @@
 				<Grid x:Name="Grid_UnitsTitle">
 					<Grid.ColumnDefinitions>
 						<ColumnDefinition Width="{StaticResource c2}" />
-						<ColumnDefinition Width="{StaticResource c3}" />
+						<!-- <ColumnDefinition Width="{StaticResource c3}" /> -->
+						<ColumnDefinition Width="auto" />
 						<ColumnDefinition Width="*" />
 					</Grid.ColumnDefinitions>
 
@@ -359,7 +359,9 @@
 
 					<TextBlock Grid.Column="1"
 							Grid.Row="0"
-							Text="Orthogonal to View"
+							Margin="0,0,15,0"
+							Text="{Binding DistancesSubTitle,
+														 FallbackValue='sub-title'}"
 							Style="{StaticResource Sub.Title}"
 							/>
 
@@ -523,6 +525,26 @@
 								Style="{StaticResource Unit.Tbx}"
 								/>
 
+						<!-- removed
+						<TextBlock Grid.Column="6"
+								Grid.Row="1"
+								Text="Area"
+								Visibility="{Binding Pd1_visibility}"
+								Style="{StaticResource Unit.Ttl.Toprow}"
+								/>
+
+						<TextBox x:Name="Tbx_AreaAlt"
+								Grid.Column="7"
+								Grid.Row="1"
+								Visibility="{Binding Pd1_visibility}"
+								Text="{Binding DistancesPrime.Area,
+															 Mode=OneWay,
+															 FallbackValue={StaticResource sampleArea}}"
+								Style="{StaticResource Unit.Tbx}"
+								/>
+								-->
+
+
 						<!--#endregion-->
 
 						<!--#region > extended distances-->
@@ -589,22 +611,165 @@
 								Style="{StaticResource Unit.Tbx}"
 								/>
 
+
+						<!--  begin area or xy angle  -->
 						<TextBlock Grid.Column="0"
 								Grid.Row="5"
-								Text="Area"
-								Style="{StaticResource Unit.Ttl.Bottrow}"
-								/>
+								>
+							<TextBlock.Style>
+								<Style TargetType="TextBlock"
+										BasedOn="{StaticResource Unit.Ttl.Bottrow}"
+										>
+									<Setter Property="Text" Value="Area">
+									</Setter>
+									<Style.Triggers>
+										<DataTrigger Value="true" Binding="{Binding DistancesPrime.Points.Is3D}">
+											<Setter Property="Text" Value="XY°">
+											</Setter>
+										</DataTrigger>
+									</Style.Triggers>
+								</Style>
+							</TextBlock.Style>
+						</TextBlock>
 
-						<TextBox x:Name="Tbx_Area1"
-								Grid.Column="1"
+						<TextBox Grid.Column="1"
 								Grid.Row="5"
-								Text="{Binding DistancesPrime.Area,
+								>
+							<TextBox.Style>
+								<Style TargetType="TextBox"
+										BasedOn="{StaticResource Unit.Tbx}"
+										>
+									<Setter Property="Text" Value="{Binding DistancesPrime.Area, Mode=OneWay, FallbackValue={StaticResource sampleArea}}">
+									</Setter>
+									<Style.Triggers>
+										<DataTrigger Value="true" Binding="{Binding DistancesPrime.Points.Is3D}">
+											<Setter Property="Text" Value="{Binding DistancesPrime.A_XY, Mode=OneWay}" />
+										</DataTrigger>
+									</Style.Triggers>
+								</Style>
+							</TextBox.Style>
+						</TextBox>
+						<!--  end area or xy angle  -->
+
+						<!--  begin xz angle  -->
+						<TextBlock Grid.Column="2"
+								Grid.Row="5"
+								Text="XZ°"
+								>
+							<TextBlock.Style>
+								<Style TargetType="TextBlock"
+										BasedOn="{StaticResource Unit.Ttl.Bottrow}"
+										>
+									<Setter Property="Visibility" Value="Collapsed" />
+									<Style.Triggers>
+										<DataTrigger Value="true" Binding="{Binding DistancesPrime.Points.Is3D}">
+											<Setter Property="Visibility" Value="Visible" />
+										</DataTrigger>
+									</Style.Triggers>
+								</Style>
+							</TextBlock.Style>
+						</TextBlock>
+
+						<TextBox Grid.Column="3"
+								Grid.Row="5"
+								Text="{Binding DistancesPrime.A_XZ,
 															 Mode=OneWay,
-															 FallbackValue={StaticResource sampleArea},
-															 ConverterParameter='area 1',
-															 Converter={StaticResource ptc}}"
-								Style="{StaticResource Unit.Tbx}"
-								/>
+															 FallbackValue='0.00°'}"
+								>
+							<TextBox.Style>
+								<Style TargetType="TextBox"
+										BasedOn="{StaticResource Unit.Tbx}"
+										>
+									<Setter Property="Visibility" Value="Collapsed" />
+									<Style.Triggers>
+										<DataTrigger Value="true" Binding="{Binding DistancesPrime.Points.Is3D}">
+											<Setter Property="Visibility" Value="Visible" />
+										</DataTrigger>
+									</Style.Triggers>
+								</Style>
+							</TextBox.Style>
+						</TextBox>
+						<!--  end xz angle  -->
+
+						<!--  begin Yz angle  -->
+						<TextBlock Grid.Column="4"
+								Grid.Row="5"
+								Text="YZ°"
+								>
+							<TextBlock.Style>
+								<Style TargetType="TextBlock"
+										BasedOn="{StaticResource Unit.Ttl.Bottrow}"
+										>
+									<Setter Property="Visibility" Value="Collapsed" />
+									<Style.Triggers>
+										<DataTrigger Value="true" Binding="{Binding DistancesPrime.Points.Is3D}">
+											<Setter Property="Visibility" Value="Visible" />
+										</DataTrigger>
+									</Style.Triggers>
+								</Style>
+							</TextBlock.Style>
+						</TextBlock>
+
+						<TextBox Grid.Column="5"
+								Grid.Row="5"
+								Text="{Binding DistancesPrime.A_YZ,
+															 Mode=OneWay,
+															 FallbackValue='0.00°'}"
+								>
+							<TextBox.Style>
+								<Style TargetType="TextBox"
+										BasedOn="{StaticResource Unit.Tbx}"
+										>
+									<Setter Property="Visibility" Value="Collapsed" />
+									<Style.Triggers>
+										<DataTrigger Value="true" Binding="{Binding DistancesPrime.Points.Is3D}">
+											<Setter Property="Visibility" Value="Visible" />
+										</DataTrigger>
+									</Style.Triggers>
+								</Style>
+							</TextBox.Style>
+						</TextBox>
+						<!--  end Yz angle  -->
+
+						<!--  begin xyz angle  -->
+						<TextBlock Grid.Column="6"
+								Grid.Row="5"
+								Text="XYZ°"
+								>
+							<TextBlock.Style>
+								<Style TargetType="TextBlock"
+										BasedOn="{StaticResource Unit.Ttl.Bottrow}"
+										>
+									<Setter Property="Visibility" Value="Collapsed" />
+									<Style.Triggers>
+										<DataTrigger Value="true" Binding="{Binding DistancesPrime.Points.Is3D}">
+											<Setter Property="Visibility" Value="Visible" />
+										</DataTrigger>
+									</Style.Triggers>
+								</Style>
+							</TextBlock.Style>
+						</TextBlock>
+
+						<TextBox Grid.Column="7"
+								Grid.Row="5"
+								Text="{Binding DistancesPrime.A_XYZ,
+															 Mode=OneWay,
+															 FallbackValue='0.00°'}"
+								>
+							<TextBox.Style>
+								<Style TargetType="TextBox"
+										BasedOn="{StaticResource Unit.Tbx}"
+										>
+									<Setter Property="Visibility" Value="Collapsed" />
+									<Style.Triggers>
+										<DataTrigger Value="true" Binding="{Binding DistancesPrime.Points.Is3D}">
+											<Setter Property="Visibility" Value="Visible" />
+										</DataTrigger>
+									</Style.Triggers>
+								</Style>
+							</TextBox.Style>
+						</TextBox>
+						<!--  end xyz angle  -->
 
 					</Grid>
 					<!--#endregion-->
@@ -819,12 +984,23 @@
 
 						<!--#endregion-->
 
-
 						<TextBlock Grid.Column="0"
 								Grid.Row="5"
 								Text="Area"
-								Style="{StaticResource Unit.Ttl.Bottrow}"
-								/>
+								>
+							<TextBlock.Style>
+								<Style TargetType="TextBlock"
+										BasedOn="{StaticResource Unit.Ttl.Bottrow}"
+										>
+									<Setter Property="Visibility" Value="Visible" />
+									<Style.Triggers>
+										<DataTrigger Value="true" Binding="{Binding DistancesPrime.Points.Is3D}">
+											<Setter Property="Visibility" Value="Collapsed" />
+										</DataTrigger>
+									</Style.Triggers>
+								</Style>
+							</TextBlock.Style>
+						</TextBlock>
 
 						<TextBox x:Name="Tbx_Area2"
 								Grid.Column="1"
@@ -832,8 +1008,20 @@
 								Text="{Binding DistancesSecond.Area,
 															 Mode=OneWay,
 															 FallbackValue={StaticResource sampleArea}}"
-								Style="{StaticResource Unit.Tbx}"
-								/>
+								>
+							<TextBox.Style>
+								<Style TargetType="TextBox"
+										BasedOn="{StaticResource Unit.Tbx}"
+										>
+									<Setter Property="Visibility" Value="Visible" />
+									<Style.Triggers>
+										<DataTrigger Value="true" Binding="{Binding DistancesPrime.Points.Is3D}">
+											<Setter Property="Visibility" Value="Collapsed" />
+										</DataTrigger>
+									</Style.Triggers>
+								</Style>
+							</TextBox.Style>
+						</TextBox>
 
 					</Grid>
 
@@ -842,7 +1030,6 @@
 			</Grid>
 
 		</Border>
-
 
 		<Expander x:Name="Xpdr_Coordinates"
 				Grid.Column="0"
@@ -1249,8 +1436,6 @@
 
 		</Expander>
 
-
-
 		<Expander x:Name="Xpdr_SelUnits"
 				Grid.Column="0"
 				Grid.Row="3"
@@ -1450,6 +1635,7 @@
 						VerticalAlignment="Top"
 						Background="Transparent"
 						IsChecked="{Binding CkBxShowMiniWin}"
+						IsEnabled="{Binding ShowMiniMainEnable}"
 						>
 
 					<CheckBox.Resources>
@@ -1461,7 +1647,7 @@
 					</CheckBox.Resources>
 				</CheckBox>
 
-				<CheckBox x:Name="CkBx_UseMinWin"
+				<CheckBox x:Name="CkBx_OnlyUseMini"
 						Content="Only Use Mini Results Window"
 						Grid.Column="0"
 						Grid.Row="2"
@@ -1469,7 +1655,7 @@
 						HorizontalAlignment="Left"
 						VerticalAlignment="Top"
 						Background="Transparent"
-						IsChecked="{Binding CkBxHideMain}"
+						IsChecked="{Binding CkBxOnlyUseMini}"
 						>
 
 					<CheckBox.Resources>
@@ -1519,8 +1705,8 @@
 				<Grid Grid.Column="1"
 						Grid.Row="0"
 						Grid.RowSpan="5"
-						VerticalAlignment="Bottom"
 						HorizontalAlignment="Right"
+						VerticalAlignment="Bottom"
 						>
 
 					<Grid.ColumnDefinitions>
@@ -1598,6 +1784,7 @@
 				</Grid>
 			</Grid>
 		</Border>
+
 	</Grid>
 
 </Window>

@@ -72,7 +72,7 @@ view plane ok| False
 
 
 
-detail view
+detail view - DX fails
 view info                    
 view name    | Section 1 - Callout 1
 view name    | Drafting View  

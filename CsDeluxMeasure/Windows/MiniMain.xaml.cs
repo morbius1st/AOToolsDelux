@@ -21,6 +21,7 @@ using CsDeluxMeasure.RevitSupport.ExtEvents;
 using SettingsManager;
 using UtilityLibrary;
 using CsDeluxMeasure.Windows.Support;
+using Tests01.RevitSupport;
 // using Rectangle = Autodesk.Revit.DB.Rectangle;
 using static CsDeluxMeasure.Windows.Support.WindowApiUtilities;
 using Rectangle = System.Drawing.Rectangle;
@@ -37,7 +38,7 @@ namespace CsDeluxMeasure.Windows
 		private PointDistances distancesPrime = new PointDistances();
 		private PointDistances distancesSecond = new PointDistances();
 
-		private UIDocument uiDoc;
+		// private UIDocument uiDoc;
 
 		private ExtEvtHandler exHandler;
 		private ExternalEvent exEvent;
@@ -50,17 +51,17 @@ namespace CsDeluxMeasure.Windows
 		private bool doingMove = false;
 		private bool doingSlider = false;
 
-		public MiniMain(UIDocument uiDoc, ExtEvtHandler exHandler, ExternalEvent exEvent)
+		// public MiniMain(UIDocument uiDoc, ExtEvtHandler exHandler, ExternalEvent exEvent)
+		public MiniMain()
 		{
 			InitializeComponent();
 
-			this.uiDoc = uiDoc;
-			this.exHandler = exHandler;
-			this.exEvent = exEvent;
+			// this.uiDoc = uiDoc;
+			// this.exHandler = exHandler;
+			// this.exEvent = exEvent;
 
-			uiDoc.Application.DialogBoxShowing += Application_DialogBoxShowing;
-			uiDoc.Application.ViewActivating += Application_ViewActivating;
-
+			R.UiDoc.Application.DialogBoxShowing += Application_DialogBoxShowing;
+			R.UiDoc.Application.ViewActivating += Application_ViewActivating;
 		}
 
 		private void Application_ViewActivating(object sender, Autodesk.Revit.UI.Events.ViewActivatingEventArgs e)
@@ -74,7 +75,7 @@ namespace CsDeluxMeasure.Windows
 		{
 			if (e.DialogId.Equals(DialogToWatch))
 			{
-				unitsDialogBoxDisplayed=true;
+				unitsDialogBoxDisplayed = true;
 			}
 		}
 
@@ -107,7 +108,7 @@ namespace CsDeluxMeasure.Windows
 			{
 				unitsDialogBoxDisplayed = value;
 
-				MainWindowCommand.UpdatePoints();
+				R.Dx.UpdatePoints();
 			}
 		}
 
@@ -142,17 +143,18 @@ namespace CsDeluxMeasure.Windows
 				OnPropertyChanged(nameof(Prime));
 				OnPropertyChanged(nameof(Second));
 
-				MainWindowCommand.W.Activate();
+				R.ActivateRevit();
 			}
 		}
 
 
 		private void Btn_Pick_OnClick(object sender, RoutedEventArgs e)
 		{
-			this.MoveFocus(new TraversalRequest(FocusNavigationDirection.First));
+			// this.MoveFocus(new TraversalRequest(FocusNavigationDirection.First));
 
-			MainWindowCommand.SelectPoints();
+			// MainWindowCommand.SelectPoints();
 
+			R.Measure();
 		}
 
 		private void Btn_Dialog_OnClick(object sender, RoutedEventArgs e)
@@ -211,8 +213,6 @@ namespace CsDeluxMeasure.Windows
 			}
 		}
 
-
-
 		// public bool DialogNotVisible
 		// {
 		// 	get => dialogNotVisible;
@@ -258,10 +258,6 @@ namespace CsDeluxMeasure.Windows
 		// 	}
 		// }
 
-
-
-
-
 		public void SetPosition(Window parentWindow)
 		{
 			double t = UserSettings.Data.WinPosMiniWin.Top;
@@ -279,6 +275,19 @@ namespace CsDeluxMeasure.Windows
 			this.Left = l;
 		}
 
+		public void Shutdown()
+		{
+			R.UiDoc.Application.DialogBoxShowing -= Application_DialogBoxShowing;
+			R.UiDoc.Application.ViewActivating -= Application_ViewActivating;
+
+			this.MouseDown -= MiniMain_OnMouseDown;
+			this.Closing -= MiniMain_OnClosing;
+			this.Loaded -= MiniMain_OnLoaded;
+			this.Activated -= Window_Activated;
+			this.MouseEnter -= Window_MouseEnter;
+			this.MouseLeftButtonUp -= Window_MouseLeftButtonUp;
+		}
+
 		private void Btn_Exit_OnClick(object sender, RoutedEventArgs e)
 		{
 			UserSettings.Data.WinPosMiniWin = new WindowLocation(this.Top, this.Left);
@@ -289,7 +298,7 @@ namespace CsDeluxMeasure.Windows
 			this.Hide();
 			Owner.Activate();
 
-			User32dll.SendKeyCode(0x01);
+			ApiCalls.SendKeyCode(0x01);
 		}
 
 		public event PropertyChangedEventHandler PropertyChanged;
@@ -299,14 +308,13 @@ namespace CsDeluxMeasure.Windows
 			PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(memberName));
 		}
 
-
 		private void MiniMain_OnClosing(object sender, CancelEventArgs e)
 		{
 			UserSettings.Data.WinPosMiniWin = new WindowLocation(this.Top, this.Left);
 			UserSettings.Admin.Write();
 
-			uiDoc.Application.DialogBoxShowing -= Application_DialogBoxShowing;
-			uiDoc.Application.ViewActivating -= Application_ViewActivating;
+			R.UiDoc.Application.DialogBoxShowing -= Application_DialogBoxShowing;
+			R.UiDoc.Application.ViewActivating -= Application_ViewActivating;
 		}
 
 		private void MiniMain_OnMouseDown(object sender, MouseButtonEventArgs e)
@@ -325,15 +333,17 @@ namespace CsDeluxMeasure.Windows
 			OnPropertyChanged(nameof(Prime));
 			OnPropertyChanged(nameof(Second));
 
-			// Debug.WriteLine("mm A revit being activated");
+			R.ActivateRevit();
+
+			// Debug.WriteLine("mm A loaded");
 		}
 
 
 		private void Window_Activated(object sender, EventArgs e)
 		{
-			// Debug.WriteLine("mm B revit has been activated");
+			// Debug.WriteLine("mm B activated");
 			if (!DoingMove && !DoingSlider) Owner.Activate();
-        }
+		}
 
 		private void Window_MouseEnter(object sender, MouseEventArgs e)
 		{
@@ -350,13 +360,11 @@ namespace CsDeluxMeasure.Windows
 			Owner.Activate();
 		}
 
-		
 
 		private void slider_MouseEnter(object sender, MouseEventArgs e)
 		{
 			// Debug.WriteLine("slider - mouse enter");
 			DoingSlider = true;
-			
 		}
 
 		private void slider_MouseLeave(object sender, MouseEventArgs e)
@@ -381,9 +389,6 @@ namespace CsDeluxMeasure.Windows
 		// {
 		// 	Debug.WriteLine("mm - mouse left down");
 		// }
-
-
-
 
 
 		// private void ParentWin_Closed(object sender, EventArgs e)
